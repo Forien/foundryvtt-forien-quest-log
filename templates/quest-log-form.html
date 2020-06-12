@@ -1,0 +1,35 @@
+<form>
+    <div class="grid-container">
+
+        <fieldset>
+            <label for="actor">Quest giver:</label>
+            <input type="text" id="actor" name="actor" placeholder="Actor's name or ID"/>
+            <label for="title">Quest's title:</label>
+            <input type="text" id="title" name="title" placeholder=""/>
+        </fieldset>
+        <fieldset class="actor-data-fieldset">
+            <img src="" class="actor-portrait hidden" />
+            <h3 class="actor-name hidden"></h3>
+
+        </fieldset>
+
+        <fieldset class="tinymce-fieldset">
+            <label for="description">Quest description:</label>
+            {{editor target="description" button=true}}
+        </fieldset>
+        <fieldset class="tinymce-fieldset">
+            <label for="gmnotes">GM notes:</label>
+            {{editor target="gmnotes" button=true}}
+        </fieldset>
+        <fieldset class="tasks">
+            <h2>Tasks | <small class="add-new-task">add new</small></h2>
+            <div class="list">
+
+            </div>
+        </fieldset>
+        <div class="footer">
+            <button class="btn" type="submit" name="submit">Submit</button>
+        </div>
+    </div>
+</form>
+

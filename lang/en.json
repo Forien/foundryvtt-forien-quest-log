@@ -1,0 +1,19 @@
+{
+  "ForienQuestLog.InProgress": "In progress",
+  "ForienQuestLog.Completed": "Completed",
+  "ForienQuestLog.Failed": "Failed",
+  "ForienQuestLog.Hidden": "Hidden",
+
+
+  "ForienQuestLog.Buttons.AddNewQuest": "Add new Quest",
+
+  "ForienQuestLog.QuestTypes.InProgress": "Active",
+  "ForienQuestLog.QuestTypes.Completed": "Completed",
+  "ForienQuestLog.QuestTypes.Failed": "Failed",
+  "ForienQuestLog.QuestTypes.Hidden": "Hidden",
+  "ForienQuestLog.Quests": "Quests",
+  "ForienQuestLog.QuestGiver": "Quest Giver",
+  "ForienQuestLog.QuestName": "Title",
+  "ForienQuestLog.QuestTasks": "Tasks",
+  "ForienQuestLog.Actions": "Actions"
+}

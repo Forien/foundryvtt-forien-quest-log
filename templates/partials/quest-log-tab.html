@@ -1,0 +1,38 @@
+<h1>{{localize (lookup questTypes tab)}} {{localize 'ForienQuestLog.Quests'}}</h1>
+
+<table>
+    <tr>
+        <th>{{localize 'ForienQuestLog.QuestGiver'}}</th>
+        <th>{{localize 'ForienQuestLog.QuestName'}}</th>
+        <th>{{localize 'ForienQuestLog.QuestTasks'}}</th>
+        {{#if isGM}}<th>{{localize 'ForienQuestLog.Actions'}}</th>{{/if}}
+    </tr>
+    {{#each quests}}
+    <tr data-quest-id="{{id}}">
+        <td class="img">{{#if src}}<img class="quest-giver-portrait portrait-small" src="{{src}}">{{/if}}</td>
+        <td class="title">{{title}}</td>
+        <td class="tasks">{{tasks.checked}}/{{tasks.total}}</td>
+        {{#if ../isGM}}<td class="actions">hide | complete | fail | delete</td>{{/if}}
+    </tr>
+    {{/each}}
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

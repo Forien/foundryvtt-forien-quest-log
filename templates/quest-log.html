@@ -1,0 +1,31 @@
+<div class="quest-log">
+    <nav class="log-tabs tabs" data-group="primary">
+        <a class="item" data-tab="progress">{{localize 'ForienQuestLog.InProgress'}}</a>
+        <a class="item" data-tab="completed">{{localize 'ForienQuestLog.Completed'}}</a>
+        <a class="item" data-tab="failed">{{localize 'ForienQuestLog.Failed'}}</a>
+        {{#if isGM}}
+        <a class="item" data-tab="hidden">{{localize 'ForienQuestLog.Hidden'}}</a>
+        {{/if}}
+    </nav>
+    <section class="log-body">
+        <div class="tab in-progress" data-group="primary" data-tab="progress">
+            {{> "modules/forien-quest-log/templates/partials/quest-log-tab.html" tab="progress" quests=quests.active}}
+        </div>
+        <div class="tab completed" data-group="primary" data-tab="completed">
+            {{> "modules/forien-quest-log/templates/partials/quest-log-tab.html" tab="completed" quests=quests.completed}}
+        </div>
+        <div class="tab failed" data-group="primary" data-tab="failed">
+            {{> "modules/forien-quest-log/templates/partials/quest-log-tab.html" tab="failed" quests=quests.failed}}
+        </div>
+        {{#if isGM}}
+        <div class="tab hidden" data-group="primary" data-tab="hidden">
+            {{> "modules/forien-quest-log/templates/partials/quest-log-tab.html" tab="hidden" quests=quests.hidden}}
+        </div>
+        {{/if}}
+    </section>
+    <footer>
+        {{#if isGM}}
+        <button class="new-quest-btn">{{localize 'ForienQuestLog.Buttons.AddNewQuest'}}</button>
+        {{/if}}
+    </footer>
+</div>

@@ -1,0 +1,89 @@
+#forien-quest-log nav.log-tabs {
+  display: block;
+  position: absolute;
+  left: -120px;
+  top: 32px;
+  z-index: -10; }
+  #forien-quest-log nav.log-tabs a.item {
+    display: block;
+    width: 125px;
+    height: 32px;
+    overflow: hidden;
+    text-align: right;
+    padding: 7px 15px;
+    margin-bottom: 5px;
+    border: 1px solid #333;
+    background: url("/ui/parchment.jpg") repeat;
+    box-shadow: inset 0 0 0 2000px rgba(133, 133, 133, 0.1); }
+    #forien-quest-log nav.log-tabs a.item.active {
+      border: 2px solid #833;
+      box-shadow: inset 0 0 0 2000px rgba(250, 250, 250, 0.1); }
+#forien-quest-log section.log-body {
+  min-height: 100%;
+  margin-bottom: -40px; }
+  #forien-quest-log section.log-body table {
+    border: none;
+    background: none; }
+    #forien-quest-log section.log-body table tr th {
+      border-bottom: 1px #666 solid; }
+    #forien-quest-log section.log-body table tr td {
+      text-align: center; }
+      #forien-quest-log section.log-body table tr td.title {
+        text-align: left;
+        font-weight: bold;
+        cursor: pointer; }
+        #forien-quest-log section.log-body table tr td.title:hover {
+          text-shadow: 2px 2px 5px rgba(51, 51, 51, 0.4); }
+      #forien-quest-log section.log-body table tr td.img {
+        cursor: pointer; }
+        #forien-quest-log section.log-body table tr td.img img {
+          width: 55px;
+          height: 55px;
+          border: none; }
+    #forien-quest-log section.log-body table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.05); }
+#forien-quest-log footer {
+  height: 40px;
+  padding: 4px; }
+
+#forien-quest-log-form .grid-container {
+  display: grid;
+  grid-template-columns: 50% 50fr;
+  grid-template-rows: auto 240px 217px auto;
+  gap: 1px 1px;
+  grid-template-areas: ". ." ". ." "tasks tasks" "footer footer"; }
+  #forien-quest-log-form .grid-container .tasks {
+    grid-area: tasks; }
+  #forien-quest-log-form .grid-container .footer {
+    grid-area: footer; }
+#forien-quest-log-form fieldset {
+  box-sizing: border-box;
+  margin: 0; }
+  #forien-quest-log-form fieldset.actor-data-fieldset img.actor-portrait {
+    width: 82px;
+    height: 82px;
+    border: none;
+    float: left;
+    margin-right: 12px; }
+  #forien-quest-log-form fieldset.actor-data-fieldset h3.actor-name {
+    line-height: 82px;
+    margin: 0; }
+  #forien-quest-log-form fieldset.actor-data-fieldset .hidden {
+    display: none; }
+  #forien-quest-log-form fieldset.tasks {
+    margin-top: 10px;
+    border: none;
+    overflow: hidden; }
+    #forien-quest-log-form fieldset.tasks .add-new-task {
+      cursor: pointer; }
+    #forien-quest-log-form fieldset.tasks .list {
+      overflow-y: scroll;
+      height: calc(100% - 35px); }
+      #forien-quest-log-form fieldset.tasks .list .task-entry input {
+        width: 97%;
+        margin: 4px; }
+  #forien-quest-log-form fieldset.tinymce-fieldset {
+    min-height: 240px;
+    border: none; }
+
+/*# sourceMappingURL=quest-log.css.map */
