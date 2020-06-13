@@ -4,6 +4,12 @@
 
 This module provides Quest Log system for players and Game Masters to use with Foundry Virtual Table Top
 
+Players need `Create Journal Entry` permission to see `Quest Log` button. Will change it in future updates.
+
+***If something doesn't work, make sure you have the NEWEST version. If you do, [submit an issue](https://github.com/Forien/foundryvtt-forien-quest-log/issues) for write me a [Direct Message on Discord](#Contact)!***
+
+**DISCLAIMER:** Module is work-in-progress, everything is subject to change. I ***do not*** guarantee data backwards-compatibility, so you might lose Quests' data in the future. If you intend on using this for gameplay, always backup before updating. 
+
 
 ## Installation
 
