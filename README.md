@@ -2,12 +2,12 @@
 **[Current version]**: v0.1.0  
 **[Compatibility]**: *FoundryVTT* 0.6.0+
 
-This module is a collection of custom trappings and features for Warhammer Fantasy Role-Play 4th edition game system for Foundry Virtual Table Top
+This module provides Quest Log system for players and Game Masters to use with Foundry Virtual Table Top
 
 
 ## Installation
 
-1. Install Forien's Quest Log using manifest URL: https://raw.githubusercontent.com/Forien/forien-quest-log/master/module.json
+1. Install Forien's Quest Log using manifest URL: https://raw.githubusercontent.com/Forien/foundryvtt-forien-quest-log/master/module.json
 2. While loaded in World, enable Forien's Quest Log module.
 
 
