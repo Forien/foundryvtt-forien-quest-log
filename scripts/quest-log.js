@@ -374,10 +374,14 @@ ForienQuestLog.QuestPreview = class extends FormApplication {
     let content = div.innerText;
 
     content = JSON.parse(content);
+    content = JSON.parse(content);
+
     this.quest = duplicate(content);
 
     content.id = entry._id;
     content = this.parseQuestContent(content);
+
+    console.log(content);
 
     return mergeObject(content, {
       isGM: game.user.isGM
@@ -414,22 +418,27 @@ ForienQuestLog.QuestPreview = class extends FormApplication {
     super.close();
   }
 
+  async getItemFromPack(packId, itemId) {
+    const pack = game.packs.get(packId);
+    if (pack.metadata.entity !== "Item")
+      return;
+    return await pack.getEntity(itemId).then(ent => {
+      // item = duplicate(ent);
+      delete ent._id;
+      return ent;
+    });
+  }
+
   activateListeners(html) {
     super.activateListeners(html);
 
-    html.on("drop", ".rewards-box", (event) => {
+    html.on("drop", ".rewards-box", async (event) => {
       event.preventDefault();
       let item;
       let data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
       if (data.type === 'Item') {
         if (data.pack) {
-          const pack = game.packs.get(data.pack);
-          if (pack.metadata.entity !== "Item")
-            return;
-          pack.getEntity(data.id).then(ent => {
-            item = duplicate(ent);
-            delete item._id;
-          });
+          item = await this.getItemFromPack(data.pack, data.id);
         } else if (data.data) {
           item = data.data;
         } else {
