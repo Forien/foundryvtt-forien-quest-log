@@ -9,14 +9,14 @@
       "url": "https://www.patreon.com/forien"
     }
   ],
-  "version": "0.1.0",
+  "version": "0.1.0-alpha",
   "minimumCoreVersion": "0.6.0",
   "compatibleCoreVersion": "0.6.2",
   "url": "https://github.com/Forien/forien-quest-log",
-  "manifest": "https://raw.githubusercontent.com/Forien/forien-quest-log/v0.1.0/module.json",
-  "download": "https://github.com/Forien/forien-quest-log/archive/v0.1.0.zip",
-  "readme": "https://github.com/Forien/forien-quest-log/blob/v0.1.0/README.md",
-  "changelog": "https://github.com/Forien/forien-quest-log/blob/v0.1.0/changelog.md",
+  "manifest": "https://raw.githubusercontent.com/Forien/forien-quest-log/v0.1.0-alpha/module.json",
+  "download": "https://github.com/Forien/forien-quest-log/archive/v0.1.0-alpha.zip",
+  "readme": "https://github.com/Forien/forien-quest-log/blob/v0.1.0-alpha/README.md",
+  "changelog": "https://github.com/Forien/forien-quest-log/blob/v0.1.0-alpha/changelog.md",
   "bugs": "https://github.com/Forien/forien-quest-log/issues",
   "languages": [
     {

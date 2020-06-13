@@ -31,7 +31,7 @@ ForienQuestLog.QuestLog = class extends Application {
 
   _getHeaderButtons() {
     let buttons = super._getHeaderButtons();
-    FormApplication
+
     return buttons
   }
 
@@ -100,7 +100,7 @@ ForienQuestLog.QuestLog = class extends Application {
   activateListeners(html) {
     super.activateListeners(html);
 
-    html.on("click", ".new-quest-btn", event => {
+    html.on("click", ".new-quest-btn", () => {
       new ForienQuestLog.QuestLogForm({}).render(true);
     });
 
@@ -275,11 +275,11 @@ ForienQuestLog.QuestLogForm = class extends FormApplication {
 
     let folder = this.getHiddenFolder();
 
-    let journal = JournalEntry.create({
+    JournalEntry.create({
       name: title,
       content: JSON.stringify(data),
       folder: folder._id
-    }).then((journal) => {
+    }).then(() => {
       game.questlog.render(true);
       // players don't see Hidden tab, but assistant GM can, so emit anyway
       ForienQuestLog.Socket.refreshQuestLog();
@@ -313,7 +313,7 @@ ForienQuestLog.QuestLogForm = class extends FormApplication {
       }
     });
 
-    html.on("click", ".add-new-task", (event) => {
+    html.on("click", ".add-new-task", () => {
       renderTemplate('modules/forien-quest-log/templates/partials/quest-log-form-task.html', {}).then(el => {
         html.find('.list').append(el);
       });
@@ -345,7 +345,6 @@ ForienQuestLog.QuestPreview = class extends FormApplication {
   }
 
   parseQuestContent(content) {
-    console.log(content);
     let actor = ForienQuestLog.Utils.findActor(content.actor);
     if (actor !== false)
       content.actor = duplicate(actor);
@@ -355,6 +354,14 @@ ForienQuestLog.QuestPreview = class extends FormApplication {
       total: content.tasks.length,
       tasks: content.tasks
     };
+    content.noRewards = (content.rewards === undefined || content.rewards.length === 0);
+    if (content.noRewards) {
+      content.rewards = [];
+    } else {
+      content.rewards.forEach((item) => {
+        item.transfer = JSON.stringify(item.data);
+      })
+    }
 
     return content;
   }
@@ -410,15 +417,44 @@ ForienQuestLog.QuestPreview = class extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
 
-    /*
-    html.on("drop", ".actor-data-fieldset", (event) => {
+    html.on("drop", ".rewards-box", (event) => {
       event.preventDefault();
+      let item;
       let data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
-      if (data.type === 'Actor') {
-        html.find('#actor').val(data.id).change();
+      if (data.type === 'Item') {
+        if (data.pack) {
+          const pack = game.packs.get(data.pack);
+          if (pack.metadata.entity !== "Item")
+            return;
+          pack.getEntity(data.id).then(ent => {
+            item = duplicate(ent);
+            delete item._id;
+          });
+        } else if (data.data) {
+          item = data.data;
+        } else {
+          let witem = game.items.get(data.id);
+          if (!witem)
+            return;
+          item = duplicate(witem);
+        }
+        if (item) {
+          if (this.quest.rewards === undefined) {
+            this.quest.rewards = [];
+          }
+          this.quest.rewards.push({type: "Item", data: item});
+          this.saveQuest();
+        }
       }
     });
-    */
+
+    html.on('dragstart', '.item-reward', (event) => {
+      let dataTransfer = {
+        type: "Item",
+        data: $(event.target).data('transfer')
+      };
+      event.originalEvent.dataTransfer.setData("text/plain", JSON.stringify(dataTransfer));
+    });
 
     html.on("click", '.task input[type="checkbox"]', (event) => {
       let index = $(event.target).data('task-index');
@@ -428,9 +464,9 @@ ForienQuestLog.QuestPreview = class extends FormApplication {
 
     html.on("click", ".open-actor-sheet", (event) => {
       let actorId = $(event.target).data('actor-id');
-        let actor = game.actors.get(actorId);
-        if (actor.permission > 0)
-          actor.sheet.render(true);
+      let actor = game.actors.get(actorId);
+      if (actor.permission > 0)
+        actor.sheet.render(true);
     });
   }
 };

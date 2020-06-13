@@ -4,6 +4,9 @@
   "ForienQuestLog.Failed": "Failed",
   "ForienQuestLog.Hidden": "Hidden",
 
+  "ForienQuestLog.Details": "Details",
+  "ForienQuestLog.GMNotes": "GM Notes",
+
   "ForienQuestLog.Notifications.QuestMoved": "Moved quest to new folder and gave it new status: {target}",
 
   "ForienQuestLog.Buttons.AddNewQuest": "Add new Quest",

@@ -339,6 +339,21 @@ $footer-size: 32px + 2*$footer-padding;
             top: 50%;
             transform: translate(0, -50%);
           }
+
+          .item-reward {
+            margin-bottom: 2px;
+
+            img {
+              width: 34px;
+              height: 34px;
+              margin-right: 8px;
+              float: left;
+            }
+
+            .name {
+              line-height: 34px;
+            }
+          }
         }
       }
     }

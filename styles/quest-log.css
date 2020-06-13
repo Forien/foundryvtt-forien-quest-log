@@ -194,5 +194,14 @@
           position: absolute;
           top: 50%;
           transform: translate(0, -50%); }
+        #forien-quest-preview .quest-body .details .rewards-gc .rewards-box .item-reward {
+          margin-bottom: 2px; }
+          #forien-quest-preview .quest-body .details .rewards-gc .rewards-box .item-reward img {
+            width: 34px;
+            height: 34px;
+            margin-right: 8px;
+            float: left; }
+          #forien-quest-preview .quest-body .details .rewards-gc .rewards-box .item-reward .name {
+            line-height: 34px; }
 
 /*# sourceMappingURL=quest-log.css.map */
