@@ -13,7 +13,7 @@
   "minimumCoreVersion": "0.6.0",
   "compatibleCoreVersion": "0.6.2",
   "url": "https://github.com/Forien/forien-quest-log",
-  "manifest": "https://raw.githubusercontent.com/Forien/foundryvtt-forien-quest-log/v0.1.0-alpha/module.json",
+  "manifest": "https://raw.githubusercontent.com/Forien/foundryvtt-forien-quest-log/master/module.json",
   "download": "https://github.com/Forien/foundryvtt-forien-quest-log/archive/v0.1.0-alpha.zip",
   "readme": "https://github.com/Forien/foundryvtt-forien-quest-log/blob/v0.1.0-alpha/README.md",
   "changelog": "https://github.com/Forien/foundryvtt-forien-quest-log/blob/v0.1.0-alpha/changelog.md",
