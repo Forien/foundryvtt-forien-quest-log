@@ -1,5 +1,5 @@
 # FoundryVTT - Forien's Quest Log
-**[Current version]**: v0.1.0  
+**[Current version]**: v0.1.2-alpha Pre-Release  
 **[Compatibility]**: *FoundryVTT* 0.6.0+
 
 This module provides Quest Log system for players and Game Masters to use with Foundry Virtual Table Top
