@@ -374,8 +374,6 @@ ForienQuestLog.QuestPreview = class extends FormApplication {
     let content = div.innerText;
 
     content = JSON.parse(content);
-    content = JSON.parse(content);
-
     this.quest = duplicate(content);
 
     content.id = entry._id;
