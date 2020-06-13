@@ -6,7 +6,7 @@
   "authors": [
     {
       "name": "Forien",
-      "url": "https://github.com/Forien/forien-quest-log"
+      "url": "https://www.patreon.com/forien"
     }
   ],
   "version": "0.1.0",
@@ -32,10 +32,13 @@
   ],
   "scripts": [
     "./scripts/init.js",
+    "./scripts/add-config.js",
     "./scripts/quest-log.js",
+    "./scripts/socket.js",
     "./scripts/utils.js"
   ],
   "styles": [
     "./styles/quest-log.css"
-  ]
+  ],
+  "socket": true
 }

@@ -8,6 +8,7 @@ $footer-padding: 4px;
 $footer-size: 32px + 2*$footer-padding;
 
 #forien-quest-log {
+  min-width: 500px;
 
   nav.log-tabs {
     display: block;
@@ -47,8 +48,22 @@ $footer-size: 32px + 2*$footer-padding;
       background: none;
 
       tr {
+        height: 30px;
+
         th {
           border-bottom: 1px #666 solid;
+
+          &.quest-giver-col {
+            width: 120px;
+          }
+
+          &.actions-col {
+            width: 100px;
+          }
+
+          &.tasks-col {
+            width: 60px;
+          }
         }
 
         td {
@@ -74,9 +89,20 @@ $footer-size: 32px + 2*$footer-padding;
             }
           }
 
+          &.actions {
+            i.fas {
+              cursor: pointer;
+              margin-right: 5px;
+
+              &:last-of-type {
+                margin-right: 0;
+              }
+            }
+          }
+
         }
 
-        &:nth-child(even) {
+        &:nth-child(2n+3) {
           background: rgba(0, 0, 0, 0.05)
         }
       }
@@ -160,6 +186,161 @@ $footer-size: 32px + 2*$footer-padding;
     &.tinymce-fieldset {
       min-height: 240px;
       border: none;
+
+      .editor {
+        height: 100%;
+
+        .editor-content {
+          height: 100%;
+        }
+      }
+    }
+  }
+}
+
+#forien-quest-preview {
+  min-width: 620px;
+  min-height: 500px;
+
+  .quest-preview {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 1px 1px;
+    grid-template-areas: "." ".";
+    height: 100%;
+  }
+
+  nav {
+    &.quest-tabs {
+      .hidden {
+        display: none;
+      }
+    }
+  }
+
+  .quest-body {
+    height: 100%;
+
+    .details {
+      height: 100%;
+
+      .details-tab {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        gap: 1px 1px;
+        grid-template-areas: "." ".";
+      }
+
+      .grid-container {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: auto 1fr;
+        gap: 1px 1px;
+        grid-template-areas: "quest-giver-gc description-gc description-gc description-gc" "tasks-gc tasks-gc rewards-gc rewards-gc";
+
+        .quest-giver-gc {
+          grid-area: quest-giver-gc;
+          display: grid;
+          grid-template-columns: 1fr;
+          grid-template-rows: 1fr 1fr;
+          gap: 1px 1px;
+          grid-template-areas: "." ".";
+        }
+
+        .description-gc {
+          grid-area: description-gc;
+        }
+
+        .tasks-gc {
+          grid-area: tasks-gc;
+        }
+
+        .rewards-gc {
+          grid-area: rewards-gc;
+          display: grid;
+          grid-template-columns: 1fr;
+          grid-template-rows: auto 1fr;
+          gap: 1px 1px;
+          grid-template-areas: "." ".";
+        }
+      }
+
+      .quest-giver-gc {
+        div {
+          text-align: center;
+
+          span {
+            font-weight: bold;
+            text-align: center;
+          }
+
+          img {
+            width: 82px;
+            height: 82px;
+            border: none;
+          }
+
+          span, img {
+            cursor: pointer;
+          }
+        }
+      }
+
+      .description-gc {
+        .editor {
+          height: 200px;
+
+          .editor-content {
+            height: 200px;
+          }
+        }
+      }
+
+      .tasks-gc {
+        .tasks-box {
+          .task {
+            display: grid;
+            grid-template-columns: 26px 1fr;
+            grid-template-rows: 1fr;
+            gap: 1px 1px;
+            grid-template-areas: ". .";
+
+            i {
+              font-size: 1.6em;
+              line-height: 1.6em;
+              margin-top: -0.4em;
+              color: #229933;
+              position: absolute;
+            }
+
+            .hidden {
+              display: none;
+            }
+          }
+        }
+      }
+
+      .rewards-gc {
+        .rewards-box {
+          height: 100%;
+          position: relative;
+
+          .drop-info {
+            font-size: 1.6em;
+            font-variant: small-caps;
+            text-align: center;
+            color: #666;
+            margin: 0 20px;
+            position: absolute;
+            top: 50%;
+            transform: translate(0, -50%);
+          }
+        }
+      }
     }
   }
 }

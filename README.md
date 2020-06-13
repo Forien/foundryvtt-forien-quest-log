@@ -28,6 +28,10 @@ If you wish to contact me for any reason, reach me out on Discord using my tag: 
 
 * Thanks to Atropos for his relentless work on developing and improving the Foundry VTT
 
+## Support
+
+If you wish to support me, please check out my [Patreon page](https://www.patreon.com/forien). Thanks!
+
 ## License
 
 Forien's Quest Log is a module for Foundry VTT by Forien and is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).

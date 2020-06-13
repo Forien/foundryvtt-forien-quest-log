@@ -4,6 +4,7 @@
   "ForienQuestLog.Failed": "Failed",
   "ForienQuestLog.Hidden": "Hidden",
 
+  "ForienQuestLog.Notifications.QuestMoved": "Moved quest to new folder and gave it new status: {target}",
 
   "ForienQuestLog.Buttons.AddNewQuest": "Add new Quest",
 
@@ -15,5 +16,12 @@
   "ForienQuestLog.QuestGiver": "Quest Giver",
   "ForienQuestLog.QuestName": "Title",
   "ForienQuestLog.QuestTasks": "Tasks",
-  "ForienQuestLog.Actions": "Actions"
+  "ForienQuestLog.Actions": "Actions",
+
+  "ForienQuestLog.showTasks.Enable": "Show tasks in Quest Log",
+  "ForienQuestLog.showTasks.EnableHint": "Decide if or how to show amount of Tasks (objectives) next to Quest's title in Quest Log. This has no effect on Quest individual preview.",
+
+  "ForienQuestLog.showTasks.default": "Show tasks: done/total",
+  "ForienQuestLog.showTasks.onlyCurrent": "Show tasks: done",
+  "ForienQuestLog.showTasks.no": "Hide \"tasks\" column"
 }

@@ -1,0 +1,35 @@
+<section class="details-tab">
+    <h2>{{title}}</h2>
+    <div class="grid-container">
+        <div class="quest-giver-gc">
+            {{#with actor}}
+            <div><img class="open-actor-sheet" data-actor-id="{{_id}}" src="{{img}}"/></div>
+            <div><span class="open-actor-sheet" data-actor-id="{{_id}}">{{name}}</span></div>
+            {{/with}}
+        </div>
+        <div class="description-gc">
+            {{editor target="description" content=description button=true editable=true}}
+        </div>
+        <div class="tasks-gc">
+            <h3>Objectives</h3>
+            <div class="tasks-box">
+                {{#each tasks.tasks}}
+                <div class="task">
+                    {{#if ../isGM}}
+                        <input type="checkbox" name="task[{{@index}}]" data-task-index="{{@index}}" {{checked completed}}/>
+                    {{else}}
+                        <span><i class="fas fa-check {{#unless completed}}hidden{{/unless}}"></i></span>
+                    {{/if}}
+                    <span class="task-name">{{name}}</span>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+        <div class="rewards-gc">
+            <h3>Rewards</h3>
+            <div class="rewards-box">
+                <span class="drop-info">Drag & drop items here to add them as rewards</span>
+            </div>
+        </div>
+    </div>
+</section>

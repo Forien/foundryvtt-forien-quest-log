@@ -1,38 +1,39 @@
 <h1>{{localize (lookup questTypes tab)}} {{localize 'ForienQuestLog.Quests'}}</h1>
-
 <table>
     <tr>
-        <th>{{localize 'ForienQuestLog.QuestGiver'}}</th>
-        <th>{{localize 'ForienQuestLog.QuestName'}}</th>
-        <th>{{localize 'ForienQuestLog.QuestTasks'}}</th>
-        {{#if isGM}}<th>{{localize 'ForienQuestLog.Actions'}}</th>{{/if}}
+        <th class="quest-giver-col">{{localize 'ForienQuestLog.QuestGiver'}}</th>
+        <th class="title-col">{{localize 'ForienQuestLog.QuestName'}}</th>
+        {{#unless (eq showTasks 'no')}}
+        <th class="tasks-col">{{localize 'ForienQuestLog.QuestTasks'}}</th>
+        {{/unless}}
+        {{#if isGM}}
+        <th class="actions-col">{{localize 'ForienQuestLog.Actions'}}</th>
+        {{/if}}
     </tr>
     {{#each quests}}
     <tr data-quest-id="{{id}}">
         <td class="img">{{#if src}}<img class="quest-giver-portrait portrait-small" src="{{src}}">{{/if}}</td>
-        <td class="title">{{title}}</td>
-        <td class="tasks">{{tasks.checked}}/{{tasks.total}}</td>
-        {{#if ../isGM}}<td class="actions">hide | complete | fail | delete</td>{{/if}}
+        <td class="title" data-quest-id="{{id}}">{{title}}</td>
+        {{#unless (eq ../showTasks 'no')}}
+        <td class="tasks">{{tasks.checked}}{{#unless (eq ../showTasks 'onlyCurrent')}}/{{tasks.total}}{{/unless}}</td>
+        {{/unless}}
+        {{#if ../isGM}}
+        <td class="actions">
+            {{#unless (eq ../tab 'active')}}
+            <i class="move fas fa-eye" title="Set as In Progress" data-target="active" data-quest-id="{{id}}"></i>
+            {{/unless}}
+            {{#unless (eq ../tab 'completed')}}
+            <i class="move fas fa-star" title="Set as Completed" data-target="completed" data-quest-id="{{id}}"></i>
+            {{/unless}}
+            {{#unless (eq ../tab 'failed')}}
+            <i class="move fas fa-times" title="Set as Failed" data-target="failed" data-quest-id="{{id}}"></i>
+            {{/unless}}
+            {{#unless (eq ../tab 'hidden')}}
+            <i class="move fas fa-eye-slash" title="Hide" data-target="hidden" data-quest-id="{{id}}"></i>
+            {{/unless}}
+            <i class="delete fas fa-trash" title="Delete" data-quest-id="{{id}}"></i>
+        </td>
+        {{/if}}
     </tr>
     {{/each}}
 </table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
