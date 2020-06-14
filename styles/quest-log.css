@@ -168,13 +168,20 @@
         height: 200px; }
         #forien-quest-preview .quest-body .details .description-gc .editor .editor-content {
           height: 200px; }
+      #forien-quest-preview .quest-body .details .del-btn {
+        cursor: pointer;
+        margin-left: 10px; }
+        #forien-quest-preview .quest-body .details .del-btn i {
+          pointer-events: none; }
+      #forien-quest-preview .quest-body .details .tasks-gc .add-new-task {
+        cursor: pointer; }
       #forien-quest-preview .quest-body .details .tasks-gc .tasks-box .task {
         display: grid;
-        grid-template-columns: 26px 1fr;
+        grid-template-columns: 26px max-content 18px;
         grid-template-rows: 1fr;
         gap: 1px 1px;
-        grid-template-areas: ". ."; }
-        #forien-quest-preview .quest-body .details .tasks-gc .tasks-box .task i {
+        grid-template-areas: ". . ."; }
+        #forien-quest-preview .quest-body .details .tasks-gc .tasks-box .task i.fa-check {
           font-size: 1.6em;
           line-height: 1.6em;
           margin-top: -0.4em;
@@ -203,5 +210,11 @@
             float: left; }
           #forien-quest-preview .quest-body .details .rewards-gc .rewards-box .item-reward .name {
             line-height: 34px; }
+    #forien-quest-preview .quest-body .gmnotes {
+      height: 100%; }
+      #forien-quest-preview .quest-body .gmnotes .editor {
+        height: 100%; }
+        #forien-quest-preview .quest-body .gmnotes .editor .editor-content {
+          height: 100%; }
 
 /*# sourceMappingURL=quest-log.css.map */

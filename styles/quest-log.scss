@@ -300,16 +300,29 @@ $footer-size: 32px + 2*$footer-padding;
         }
       }
 
+      .del-btn {
+        cursor: pointer;
+        margin-left: 10px;
+
+        i {
+          pointer-events: none;
+        }
+      }
+
       .tasks-gc {
+        .add-new-task {
+          cursor: pointer;
+        }
+
         .tasks-box {
           .task {
             display: grid;
-            grid-template-columns: 26px 1fr;
+            grid-template-columns: 26px max-content 18px;
             grid-template-rows: 1fr;
             gap: 1px 1px;
-            grid-template-areas: ". .";
+            grid-template-areas: ". . .";
 
-            i {
+            i.fa-check {
               font-size: 1.6em;
               line-height: 1.6em;
               margin-top: -0.4em;
@@ -354,6 +367,18 @@ $footer-size: 32px + 2*$footer-padding;
               line-height: 34px;
             }
           }
+        }
+      }
+    }
+
+    .gmnotes {
+      height: 100%;
+
+      .editor {
+        height: 100%;
+
+        .editor-content {
+          height: 100%;
         }
       }
     }

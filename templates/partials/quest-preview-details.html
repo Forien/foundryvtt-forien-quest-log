@@ -1,5 +1,5 @@
 <section class="details-tab">
-    <h2>{{title}}</h2>
+    <div class="editable-container"><h2 class="editable" data-target="title">{{title}}</h2></div>
     <div class="grid-container">
         <div class="quest-giver-gc">
             {{#with actor}}
@@ -11,7 +11,7 @@
             {{editor target="description" content=description button=true editable=true}}
         </div>
         <div class="tasks-gc">
-            <h3>Objectives</h3>
+            <h3>Objectives | <small class="add-new-task">add new</small></h3>
             <div class="tasks-box">
                 {{#each tasks.tasks}}
                 <div class="task">
@@ -20,7 +20,10 @@
                     {{else}}
                     <span><i class="fas fa-check {{#unless completed}}hidden{{/unless}}"></i></span>
                     {{/if}}
-                    <span class="task-name">{{name}}</span>
+                    <span class="editable-container"><span class="task-name editable" data-target="task.name" data-index="{{@index}}">{{name}}</span></span>
+                    {{#if ../isGM}}
+                    <span class="del-btn" data-target="tasks" data-index="{{@index}}"><i class="fas fa-times"></i></span>
+                    {{/if}}
                 </div>
                 {{/each}}
             </div>
@@ -31,13 +34,9 @@
                 {{#if noRewards}}
                 <span class="drop-info">Drag & drop items here to add them as rewards</span>
                 {{else}}
-                {{#each rewards}}
-                {{#if (eq type 'Item')}}
-                <div class="item-reward draggable" data-transfer="{{transfer}}" draggable="true"><img src="{{data.img}}"/><span class="name">{{data.name}}</span></div>
-                {{else}}
-                ... how are you seeing this? Non-Item rewards will be supported in future releases
-                {{/if}}
-                {{/each}}
+                    {{#each rewards}}
+                    <div class="{{type}}-reward {{#if ../isGM}}draggable{{/if}}" data-transfer="{{transfer}}" draggable="true"><img src="{{data.img}}"/><span class="name">{{data.name}}</span>{{#if ../isGM}}<span class="del-btn" data-target="rewards" data-index="{{@index}}"><i class="fas fa-times"></i></span>{{/if}}</div>
+                    {{/each}}
                 {{/if}}
             </div>
         </div>

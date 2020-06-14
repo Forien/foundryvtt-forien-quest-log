@@ -360,6 +360,7 @@ ForienQuestLog.QuestPreview = class extends FormApplication {
     } else {
       content.rewards.forEach((item) => {
         item.transfer = JSON.stringify(item.data);
+        item.type = item.type.toLowerCase();
       })
     }
 
@@ -379,31 +380,40 @@ ForienQuestLog.QuestPreview = class extends FormApplication {
     content.id = entry._id;
     content = this.parseQuestContent(content);
 
-    console.log(content);
-
     return mergeObject(content, {
       isGM: game.user.isGM
     });
   }
 
+  async _onSubmit(event, {updateData = null, preventClose = false, preventRender = false} = {}) {
+    event.preventDefault();
+
+    return false;
+  }
+
   async _updateObject(event, formData) {
-    console.log(formData);
-    // @todo
+    event.preventDefault();
+
+    return false;
   }
 
   async _onEditorSave(target, element, content) {
-    const formData = validateForm(this.form);
-    let event = new Event("mcesave");
-    return this._updateObject(event, formData);
-    // @todo
+    this.quest[target] = content;
+    this.saveQuest();
   }
 
   async saveQuest() {
     let entry = game.journal.get(this.questId);
     entry.update({content: JSON.stringify(this.quest)}).then(() => {
-      this.render(true);
-      ForienQuestLog.Socket.refreshQuestPreview(this.questId);
+      this.refresh();
     });
+  }
+
+  async refresh() {
+    this.render(true);
+    if (game.questlog.rendered)
+      game.questlog.render(true);
+    ForienQuestLog.Socket.refreshQuestPreview(this.questId);
   }
 
   render(force = false, options = {}) {
@@ -421,7 +431,6 @@ ForienQuestLog.QuestPreview = class extends FormApplication {
     if (pack.metadata.entity !== "Item")
       return;
     return await pack.getEntity(itemId).then(ent => {
-      // item = duplicate(ent);
       delete ent._id;
       return ent;
     });
@@ -463,6 +472,47 @@ ForienQuestLog.QuestPreview = class extends FormApplication {
       event.originalEvent.dataTransfer.setData("text/plain", JSON.stringify(dataTransfer));
     });
 
+    html.on("click", '.editable', (event) => {
+      let target = $(event.target).data('target');
+      let value = this.quest[target];
+      let index = undefined;
+      if (target === 'task.name') {
+        index = $(event.target).data('index');
+        value = this.quest.tasks[index].name;
+      }
+
+      let input = $(`<input type="text" class="editable-input" value="${value}" data-target="${target}" ${index !== undefined ? `data-index="${index}"` : ``}/>`);
+      let parent = $(event.target).parent('.editable-container');
+
+      parent.html('');
+      parent.append(input);
+      input.focus();
+
+      input.focusout((event) => {
+        let target = $(event.target).data('target');
+        let value = $(event.target).val();
+
+        switch (target) {
+          case 'task.name':
+            let index = $(event.target).data('index');
+            this.quest.tasks[index].name = value;
+            break;
+          default:
+            if (this.quest[target] !== undefined)
+              this.quest[target] = value;
+        }
+        this.saveQuest();
+      });
+    });
+
+    html.on("click", '.del-btn', (event) => {
+      let index = $(event.target).data('index');
+      let target = $(event.target).data('target');
+
+      this.quest[target].splice(index, 1);
+      this.saveQuest();
+    });
+
     html.on("click", '.task input[type="checkbox"]', (event) => {
       let index = $(event.target).data('task-index');
       this.quest.tasks[index].completed = !this.quest.tasks[index].completed;
@@ -474,6 +524,30 @@ ForienQuestLog.QuestPreview = class extends FormApplication {
       let actor = game.actors.get(actorId);
       if (actor.permission > 0)
         actor.sheet.render(true);
+    });
+
+    html.on("click", ".add-new-task", (event) => {
+      let div = $('<div class="task"></div>');
+      let placeholder = $('<span><i class="fas fa-check hidden"></i></span>');
+      let input = $(`<input type="text" class="editable-input" value="" placeholder="f.e. Kill all rats in „The Twisted Ankle” inn" />`);
+      let box = $(event.target).parent().parent('.tasks-gc').find('.tasks-box');
+
+      div.append(placeholder);
+      div.append(input);
+      box.append(div);
+
+      input.focus();
+
+      input.focusout((event) => {
+        let value = $(event.target).val();
+        if (value !== undefined && value.length) {
+          this.quest.tasks.push({
+            name: value,
+            completed: false
+          })
+        }
+        this.saveQuest();
+      });
     });
   }
 };
