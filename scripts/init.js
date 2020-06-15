@@ -23,10 +23,10 @@ Hooks.on("ready", () => {
 });
 
 Hooks.on("renderJournalDirectory", (app, html, data) => {
-  const button = $(`<button class="quest-log-btn">Quest Log</button>`);
-  let footer = html.find(".directory-footer")
+  const button = $(`<button class="quest-log-btn">${game.i18n.localize("ForienQuestLog.QuestLogButton")}</button>`);
+  let footer = html.find(".directory-footer");
   if (footer.length === 0) {
-    footer = $(`<footer class="directory-footer"></footer>`)
+    footer = $(`<footer class="directory-footer"></footer>`);
     html.append(footer);
   }
   footer.append(button);

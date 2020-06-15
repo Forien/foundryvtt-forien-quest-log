@@ -1,0 +1,62 @@
+{
+  "ForienQuestLog.InProgress": "W trakcie",
+  "ForienQuestLog.Completed": "Zakończone",
+  "ForienQuestLog.Failed": "Nieudane",
+  "ForienQuestLog.Hidden": "Ukryte",
+
+  "ForienQuestLog.Details": "Szczegóły",
+  "ForienQuestLog.GMNotes": "Notatki MG",
+  "ForienQuestLog.NewQuest": "Nowa misja",
+
+  "ForienQuestLog.Notifications.QuestMoved": "Przeniesiono misję do nowego folderu, a jej nowy status to: {target}",
+
+  "ForienQuestLog.Buttons.AddNewQuest": "Dodaj nową misję",
+  "ForienQuestLog.Buttons.AddNewTask": "dodaj",
+
+  "ForienQuestLog.QuestTypes.InProgress": "Aktywne",
+  "ForienQuestLog.QuestTypes.Completed": "Zakończone",
+  "ForienQuestLog.QuestTypes.Failed": "Nieudane",
+  "ForienQuestLog.QuestTypes.Hidden": "Ukryte",
+  "ForienQuestLog.Quests": "Misje",
+  "ForienQuestLog.QuestGiver": "Zleceniodawca",
+  "ForienQuestLog.QuestName": "Tytuł",
+  "ForienQuestLog.QuestTasks": "Zadania",
+  "ForienQuestLog.Actions": "Akcje",
+  "ForienQuestLog.Objectives": "Zadania",
+  "ForienQuestLog.Rewards": "Nagrody",
+
+  "ForienQuestLog.showTasks.Enable": "Pokaż zadania w Dzienniku",
+  "ForienQuestLog.showTasks.EnableHint": "Zdecyduj czy, i w jaki sposób wyświetlać ilość Zadań obok tytułu Misji w Dzienniku Misji. Nie wpływa na widoczność Zadań na ekranie podglądu Misji.",
+
+  "ForienQuestLog.showTasks.default": "Pokaż zadania: wykonane/wszystkie",
+  "ForienQuestLog.showTasks.onlyCurrent": "Pokaż zadania: wykonane",
+  "ForienQuestLog.showTasks.no": "Ukryj kolumnę zadań",
+
+  "ForienQuestLog.QuestLogButton": "Dziennik",
+  "ForienQuestLog.QuestForm.Title": "Stwórz nową Misję",
+  "ForienQuestLog.QuestLog.Title": "Dziennik Misji",
+  "ForienQuestLog.QuestPreview.Title": "Podgląd Misji",
+
+  "ForienQuestLog.QuestForm.QuestGiver": "Zleceniodawca",
+  "ForienQuestLog.QuestForm.QuestGiverPlaceholder": "Imię lub ID Aktora",
+  "ForienQuestLog.QuestForm.QuestTitle": "Tytuł misji",
+  "ForienQuestLog.QuestForm.QuestDescription": "Opis misji",
+  "ForienQuestLog.QuestForm.QuestGMNotes": "Notatki MG",
+  "ForienQuestLog.QuestForm.Submit": "Zapisz",
+
+  "ForienQuestLog.SampleTask": "np. Zabij wszystkie szczury w karczmie „Pod Skręconą Kostką”",
+  "ForienQuestLog.DragDropRewards": "Kliknij i Przeciągnij przedmioty w to miejsce, aby dodać je jako nagrody",
+
+  "ForienQuestLog.DeleteDialog.Title": "Usuń {name}",
+  "ForienQuestLog.DeleteDialog.Header": "Na pewno?",
+  "ForienQuestLog.DeleteDialog.Body": "Ta misja i związane z nią dane zostaną utracone na stałe.",
+  "ForienQuestLog.DeleteDialog.Delete": "Usuń",
+  "ForienQuestLog.DeleteDialog.Cancel": "Anuluj",
+
+  "ForienQuestLog.Tooltips.ToggleImage": "Przełącz obraz Aktora/Tokenu",
+  "ForienQuestLog.Tooltips.SetActive": "Ustaw na Aktywną",
+  "ForienQuestLog.Tooltips.SetCompleted": "Ustaw jako Zakończoną",
+  "ForienQuestLog.Tooltips.SetFailed": "Ustaw jako Nieudaną",
+  "ForienQuestLog.Tooltips.Hide": "Ukryj",
+  "ForienQuestLog.Tooltips.Delete": "Usuń"
+}

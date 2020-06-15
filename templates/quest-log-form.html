@@ -2,9 +2,9 @@
     <div class="grid-container">
 
         <fieldset>
-            <label for="actor">Quest giver:</label>
-            <input type="text" id="actor" name="actor" placeholder="Actor's name or ID"/>
-            <label for="title">Quest's title:</label>
+            <label for="actor">{{localize 'ForienQuestLog.QuestForm.QuestGiver'}}:</label>
+            <input type="text" id="actor" name="actor" placeholder="{{localize 'ForienQuestLog.QuestForm.QuestGiverPlaceholder'}}"/>
+            <label for="title">{{localize 'ForienQuestLog.QuestForm.QuestTitle'}}:</label>
             <input type="text" id="title" name="title" placeholder=""/>
         </fieldset>
         <fieldset class="actor-data-fieldset">
@@ -14,21 +14,21 @@
         </fieldset>
 
         <fieldset class="tinymce-fieldset">
-            <label for="description">Quest description:</label>
+            <label for="description">{{localize 'ForienQuestLog.QuestForm.QuestDescription'}}:</label>
             {{editor target="description" button=true editable=true}}
         </fieldset>
         <fieldset class="tinymce-fieldset">
-            <label for="gmnotes">GM notes:</label>
+            <label for="gmnotes">{{localize 'ForienQuestLog.QuestForm.QuestGMNotes'}}:</label>
             {{editor target="gmnotes" button=true editable=true}}
         </fieldset>
         <fieldset class="tasks">
-            <h2>Tasks | <small class="add-new-task">add new</small></h2>
+            <h2>{{localize 'ForienQuestLog.QuestTasks'}} | <small class="add-new-task">{{localize 'ForienQuestLog.Buttons.AddNewTask'}}</small></h2>
             <div class="list">
 
             </div>
         </fieldset>
         <div class="footer">
-            <button class="btn" type="submit" name="submit">Submit</button>
+            <button class="btn" type="submit" name="submit">{{localize 'ForienQuestLog.QuestForm.Submit'}}</button>
         </div>
     </div>
 </form>

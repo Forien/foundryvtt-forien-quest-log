@@ -20,18 +20,18 @@
         {{#if ../isGM}}
         <td class="actions">
             {{#unless (eq ../tab 'active')}}
-            <i class="move fas fa-eye" title="Set as In Progress" data-target="active" data-quest-id="{{id}}"></i>
+            <i class="move fas fa-eye" title="{{localize 'ForienQuestLog.Tooltips.SetActive'}}" data-target="active" data-quest-id="{{id}}"></i>
             {{/unless}}
             {{#unless (eq ../tab 'completed')}}
-            <i class="move fas fa-star" title="Set as Completed" data-target="completed" data-quest-id="{{id}}"></i>
+            <i class="move fas fa-star" title="{{localize 'ForienQuestLog.Tooltips.SetCompleted'}}" data-target="completed" data-quest-id="{{id}}"></i>
             {{/unless}}
             {{#unless (eq ../tab 'failed')}}
-            <i class="move fas fa-times" title="Set as Failed" data-target="failed" data-quest-id="{{id}}"></i>
+            <i class="move fas fa-times" title="{{localize 'ForienQuestLog.Tooltips.SetFailed'}}" data-target="failed" data-quest-id="{{id}}"></i>
             {{/unless}}
             {{#unless (eq ../tab 'hidden')}}
-            <i class="move fas fa-eye-slash" title="Hide" data-target="hidden" data-quest-id="{{id}}"></i>
+            <i class="move fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.Hide'}}" data-target="hidden" data-quest-id="{{id}}"></i>
             {{/unless}}
-            <i class="delete fas fa-trash" title="Delete" data-quest-id="{{id}}"></i>
+            <i class="delete fas fa-trash" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}" data-quest-id="{{id}}"></i>
         </td>
         {{/if}}
     </tr>

@@ -7,12 +7,17 @@ import Socket from "./socket.mjs";
 export default class Quest {
   constructor(data = {}) {
     this._id = data.id || null;
+    this.initData(data);
+  }
+
+  initData(data) {
     this._actor = data.actor || null;
-    this._title = data.title || 'New Quest';
+    this._title = data.title || game.i18n.localize("ForienQuestLog.NewQuest");
     this._description = data.description || '';
     this._gmnotes = data.gmnotes || '';
     this._tasks = [];
     this._rewards = [];
+    this._image = data.image || 'actor';
     this._populated = false;
 
     if (data.tasks !== undefined && Array.isArray(data.tasks))
@@ -47,6 +52,21 @@ export default class Quest {
       this._rewards.splice(index, 1);
   }
 
+  toggleImage() {
+    if (this._image === 'actor') {
+      this._image = 'token';
+    } else {
+      this._image = 'actor';
+    }
+  }
+
+  refresh() {
+    let entry = game.journal.get(this._id);
+    let content = Quest.getContent(entry);
+
+    this.initData(content);
+  }
+
   async save() {
     if (this._populated) {
       throw new Error(`Can't save populated Quest (${this._id})`);
@@ -66,6 +86,8 @@ export default class Quest {
     let actor = Utils.findActor(content.actor);
     if (actor !== false)
       content.actor = duplicate(actor);
+    if (content.image === 'token')
+      content.actor.img = actor.data.token.img;
 
     content.checkedTasks = content.tasks.filter(t => t.completed).length;
     content.totalTasks = content.tasks.length;
@@ -73,6 +95,8 @@ export default class Quest {
     if (content.rewards === undefined) {
       content.rewards = [];
     }
+
+    content.tasks = content.tasks.map((t) => {return new Task(t)});
 
     content.noRewards = (content.rewards.length === 0);
     content.rewards.forEach((item) => {
@@ -132,7 +156,7 @@ export default class Quest {
       game.questlog.render(true);
       Socket.refreshQuestLog();
       let dirname = game.i18n.localize(this.getQuestTypes()[target]);
-      ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved', {target: dirname}), {});
+      ui.notifications.info(game.i18n.format("ForienQuestLog.Notifications.QuestMoved", {target: dirname}), {});
     });
   }
 
@@ -140,18 +164,18 @@ export default class Quest {
     let entry = this.get(questId);
 
     new Dialog({
-      title: `Delete ${entry.name}`,
-      content: "<h3>Are you sure?</h3>" +
-        "<p>This quest and its data will be permanently deleted.</p>",
+      title: game.i18n.format("ForienQuestLog.DeleteDialog.Title", entry.name),
+      content: `<h3>${game.i18n.localize("ForienQuestLog.DeleteDialog.Header")}</h3>` +
+        `<p>${game.i18n.localize("ForienQuestLog.DeleteDialog.Body")}</p>`,
       buttons: {
         yes: {
           icon: '<i class="fas fa-trash"></i>',
-          label: "Delete",
+          label: game.i18n.localize("ForienQuestLog.DeleteDialog.Delete"),
           callback: () => this.deleteConfirm(questId)
         },
         no: {
           icon: '<i class="fas fa-times"></i>',
-          label: "Cancel"
+          label: game.i18n.localize("ForienQuestLog.DeleteDialog.Cancel")
         }
       },
       default: 'yes'
@@ -212,6 +236,15 @@ export default class Quest {
     return this._tasks;
   }
 
+  set image(image) {
+    if (image === 'actor' || image === 'token')
+      this._image = image;
+  }
+
+  get image() {
+    return this._image;
+  }
+
   get rewards() {
     return this._rewards;
   }
@@ -223,7 +256,8 @@ export default class Quest {
       description: this._description,
       gmnotes: this._gmnotes,
       tasks: this._tasks,
-      rewards: this._rewards
+      rewards: this._rewards,
+      image: this._image
     }
   }
 }

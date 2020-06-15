@@ -16,7 +16,7 @@ export default class QuestPreview extends FormApplication {
       height: 540,
       minimizable: true,
       resizable: true,
-      title: "Quest Details",
+      title: game.i18n.localize("ForienQuestLog.QuestPreview.Title"),
       tabs: [{navSelector: ".quest-tabs", contentSelector: ".quest-body", initial: "details"}]
     });
   }
@@ -25,7 +25,6 @@ export default class QuestPreview extends FormApplication {
     let content = duplicate(this.quest);
     content = Quest.populate(content);
 
-    console.log(content);
     return mergeObject(content, {
       isGM: game.user.isGM
     });
@@ -63,6 +62,7 @@ export default class QuestPreview extends FormApplication {
 
   render(force = false, options = {}) {
     game.questPreview = this;
+    if (force) this.quest.refresh();
     return super.render(force, options);
   }
 
@@ -159,7 +159,7 @@ export default class QuestPreview extends FormApplication {
       this.saveQuest();
     });
 
-    html.on("click", '.task input[type="checkbox"]', (event) => {
+    html.on("click", '.task .toggleState', (event) => {
       let index = $(event.target).data('task-index');
       this.quest.tasks[index].toggle();
       this.saveQuest();
@@ -172,10 +172,15 @@ export default class QuestPreview extends FormApplication {
         actor.sheet.render(true);
     });
 
+    html.on("click", ".toggleImage", (event) => {
+      this.quest.toggleImage();
+      this.saveQuest();
+    });
+
     html.on("click", ".add-new-task", (event) => {
       let div = $('<div class="task"></div>');
       let placeholder = $('<span><i class="fas fa-check hidden"></i></span>');
-      let input = $(`<input type="text" class="editable-input" value="" placeholder="f.e. Kill all rats in „The Twisted Ankle” inn" />`);
+      let input = $(`<input type="text" class="editable-input" value="" placeholder="${game.i18n.localize("ForienQuestLog.SampleTask")}" />`);
       let box = $(event.target).parent().parent('.tasks-gc').find('.tasks-box');
 
       div.append(placeholder);
