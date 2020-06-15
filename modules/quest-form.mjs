@@ -63,11 +63,6 @@ export default class QuestForm extends FormApplication {
 
     let folder = this.getHiddenFolder();
 
-    console.log(data);
-    console.log(description);
-    console.log(gmnotes);
-    console.log(JSON.stringify(data));
-
     JournalEntry.create({
       name: title,
       content: JSON.stringify(data),
@@ -110,14 +105,10 @@ export default class QuestForm extends FormApplication {
 
     html.on("click", ".add-new-task", () => {
       renderTemplate('modules/forien-quest-log/templates/partials/quest-log-form-task.html', {}).then(el => {
-        console.log(el);
 
-        console.log($(el));
         html.find('.list').append(el);
         html.find('.del-btn').unbind();
         html.on("click", ".del-btn", (event) => {
-          console.log(event);
-          console.log($(event));
           $(event.target).parent().remove();
         });
       });
