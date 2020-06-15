@@ -4,12 +4,8 @@ import Utils from "../modules/utils.mjs";
 import Socket from "../modules/socket.mjs";
 import ModuleSettings from "../modules/config.mjs";
 
-Hooks.on('init', () => {
+Hooks.once('init', () => {
   ModuleSettings.register();
-
-  if (!game.questlog) {
-    game.questlog = new QuestLog();
-  }
 
   Utils.preloadTemplates();
 
@@ -17,7 +13,10 @@ Hooks.on('init', () => {
   Socket.listen();
 });
 
-Hooks.on("ready", () => {
+Hooks.once("ready", () => {
+  if (!game.questlog)
+    game.questlog = new QuestLog();
+
   if (game.questlog)
     QuestFolder.initializeJournals();
 });
