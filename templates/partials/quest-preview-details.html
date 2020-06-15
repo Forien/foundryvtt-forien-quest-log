@@ -22,7 +22,7 @@
             {{/if}}
         </div>
         <div class="tasks-gc">
-            <h3>{{localize 'ForienQuestLog.Objectives'}} | <small class="add-new-task">{{localize 'ForienQuestLog.Buttons.AddNewTask'}}</small></h3>
+            <h3>{{localize 'ForienQuestLog.Objectives'}} {{#if isGM}}| <small class="add-new-task">{{localize 'ForienQuestLog.Buttons.AddNewTask'}}</small>{{/if}}</h3>
             <div class="tasks-box">
                 {{#each tasks}}
                 <div class="task">

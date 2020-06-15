@@ -17,5 +17,21 @@ export default class ModuleSettings {
         }
       }
     });
+    game.settings.register("forien-quest-log", "navStyle", {
+      name: "ForienQuestLog.navStyle.Enable",
+      hint: "ForienQuestLog.navStyle.EnableHint",
+      scope: "world",
+      config: true,
+      default: "bookmarks",
+      type: String,
+      choices: {
+        "bookmarks": "ForienQuestLog.navStyle.bookmarks",
+        "classic": "ForienQuestLog.navStyle.classic"
+      }, onChange: value => {
+        if (game.questlog && game.questlog.rendered) {
+          game.questlog.render();
+        }
+      }
+    });
   }
 }

@@ -1,12 +1,16 @@
 #forien-quest-log {
-  min-width: 500px; }
-  #forien-quest-log nav.log-tabs {
+  min-width: 500px;
+  /**
+   * Only applies if setting set to Bookmarks.
+   * Shows tabs on the left from the window with custom style
+   */ }
+  #forien-quest-log nav.log-tabs.bookmarks {
     display: block;
     position: absolute;
     left: -120px;
     top: 32px;
     z-index: -10; }
-    #forien-quest-log nav.log-tabs a.item {
+    #forien-quest-log nav.log-tabs.bookmarks a.item {
       display: block;
       width: 125px;
       height: 32px;
@@ -17,12 +21,13 @@
       border: 1px solid #333;
       background: url("/ui/parchment.jpg") repeat;
       box-shadow: inset 0 0 0 2000px rgba(133, 133, 133, 0.1); }
-      #forien-quest-log nav.log-tabs a.item.active {
+      #forien-quest-log nav.log-tabs.bookmarks a.item.active {
         border: 2px solid #833;
         box-shadow: inset 0 0 0 2000px rgba(250, 250, 250, 0.1); }
   #forien-quest-log section.log-body {
-    min-height: 100%;
-    margin-bottom: -40px; }
+    min-height: calc(100% - 40px ); }
+    #forien-quest-log section.log-body.classic {
+      min-height: calc(100% - 60px ); }
     #forien-quest-log section.log-body table {
       border: none;
       background: none; }

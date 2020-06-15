@@ -27,10 +27,14 @@
 
   "ForienQuestLog.showTasks.Enable": "Pokaż zadania w Dzienniku",
   "ForienQuestLog.showTasks.EnableHint": "Zdecyduj czy, i w jaki sposób wyświetlać ilość Zadań obok tytułu Misji w Dzienniku Misji. Nie wpływa na widoczność Zadań na ekranie podglądu Misji.",
-
   "ForienQuestLog.showTasks.default": "Pokaż zadania: wykonane/wszystkie",
   "ForienQuestLog.showTasks.onlyCurrent": "Pokaż zadania: wykonane",
   "ForienQuestLog.showTasks.no": "Ukryj kolumnę zadań",
+
+  "ForienQuestLog.navStyle.Enable": "Styl nawigacji",
+  "ForienQuestLog.navStyle.EnableHint": "Zdecyduj jak chcesz przełączać się między rodzajami Misji.",
+  "ForienQuestLog.navStyle.bookmarks": "Zakładki",
+  "ForienQuestLog.navStyle.classic": "Klasyczne karty",
 
   "ForienQuestLog.QuestLogButton": "Dziennik",
   "ForienQuestLog.QuestForm.Title": "Stwórz nową Misję",

@@ -27,10 +27,14 @@
 
   "ForienQuestLog.showTasks.Enable": "Show tasks in Quest Log",
   "ForienQuestLog.showTasks.EnableHint": "Decide if or how to show amount of Tasks (objectives) next to Quest's title in Quest Log. This has no effect on Quest individual preview.",
-
   "ForienQuestLog.showTasks.default": "Show tasks: done/total",
   "ForienQuestLog.showTasks.onlyCurrent": "Show tasks: done",
   "ForienQuestLog.showTasks.no": "Hide \"tasks\" column",
+
+  "ForienQuestLog.navStyle.Enable": "Navigation style",
+  "ForienQuestLog.navStyle.EnableHint": "Decide how Quest Log's navigation should be displayed.",
+  "ForienQuestLog.navStyle.bookmarks": "Bookmarks",
+  "ForienQuestLog.navStyle.classic": "Classic tabs",
 
   "ForienQuestLog.QuestLogButton": "Quest Log",
   "ForienQuestLog.QuestForm.Title": "Add new Quest",

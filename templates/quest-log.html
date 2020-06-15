@@ -1,5 +1,5 @@
 <div class="quest-log">
-    <nav class="log-tabs tabs" data-group="primary">
+    <nav class="log-tabs tabs {{style}}" data-group="primary">
         <a class="item" data-tab="progress">{{localize 'ForienQuestLog.InProgress'}}</a>
         <a class="item" data-tab="completed">{{localize 'ForienQuestLog.Completed'}}</a>
         <a class="item" data-tab="failed">{{localize 'ForienQuestLog.Failed'}}</a>
@@ -7,7 +7,7 @@
         <a class="item" data-tab="hidden">{{localize 'ForienQuestLog.Hidden'}}</a>
         {{/if}}
     </nav>
-    <section class="log-body">
+    <section class="log-body {{style}}">
         <div class="tab in-progress" data-group="primary" data-tab="progress">
             {{> "modules/forien-quest-log/templates/partials/quest-log-tab.html" tab="active" quests=quests.active}}
         </div>

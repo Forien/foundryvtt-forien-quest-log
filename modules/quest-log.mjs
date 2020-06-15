@@ -22,6 +22,7 @@ export default class QuestLog extends Application {
       options: options,
       isGM: game.user.isGM,
       showTasks: game.settings.get("forien-quest-log", "showTasks"),
+      style: game.settings.get("forien-quest-log", "navStyle"),
       questTypes: Quest.getQuestTypes(),
       quests: Quest.getQuests()
     });
