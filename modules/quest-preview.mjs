@@ -106,6 +106,15 @@ export default class QuestPreview extends FormApplication {
       }
     });
 
+    html.on("drop", ".quest-giver-gc", (event) => {
+      event.preventDefault();
+      let data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+      if (data.type === 'Actor') {
+        this.quest.actor = data.id;
+        this.saveQuest();
+      }
+    });
+
     html.on('dragstart', '.item-reward', (event) => {
       let dataTransfer = {
         type: "Item",

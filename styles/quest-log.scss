@@ -86,6 +86,8 @@ $footer-size: 32px + 2*$footer-padding;
               width: 55px;
               height: 55px;
               border: none;
+              object-fit: cover;
+              border-radius: 4px;
             }
           }
 
@@ -245,7 +247,7 @@ $footer-size: 32px + 2*$footer-padding;
       .grid-container {
         height: 100%;
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1.3fr 0.8fr 1fr;
         grid-template-rows: auto 1fr;
         gap: 1px 1px;
         grid-template-areas: "quest-giver-gc description-gc description-gc description-gc" "tasks-gc tasks-gc rewards-gc rewards-gc";
@@ -254,7 +256,7 @@ $footer-size: 32px + 2*$footer-padding;
           grid-area: quest-giver-gc;
           display: grid;
           grid-template-columns: 1fr;
-          grid-template-rows: 1fr 1fr;
+          grid-template-rows: auto 1fr;
           gap: 1px 1px;
           grid-template-areas: "." ".";
         }
@@ -280,6 +282,7 @@ $footer-size: 32px + 2*$footer-padding;
       .quest-giver-gc {
         div {
           text-align: center;
+          position: relative;
 
           span {
             font-weight: bold;
@@ -287,11 +290,18 @@ $footer-size: 32px + 2*$footer-padding;
           }
 
           img {
-            width: 82px;
-            height: 82px;
+            width: 120px;
+            height: 120px;
             border: none;
+            object-fit: cover;
+            border-radius: 6px;
           }
 
+          .toggleImage {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+          }
 
           span, img, .toggleImage {
             cursor: pointer;
@@ -332,10 +342,11 @@ $footer-size: 32px + 2*$footer-padding;
         .tasks-box {
           .task {
             display: grid;
-            grid-template-columns: 26px max-content 18px;
+            grid-template-columns: 26px auto 18px;
             grid-template-rows: 1fr;
             gap: 1px 1px;
             grid-template-areas: ". . .";
+            margin-right: 15px;
 
             i.state {
               &.fa-check, &.fa-times {

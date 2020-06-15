@@ -1,8 +1,8 @@
 # FoundryVTT - Forien's Quest Log
-**[Current version]**: v0.2.1  
+**[Current version]**: v0.2.2  
 **[Compatibility]**: *FoundryVTT* 0.6.0+
 
-This module provides Quest Log system for players and Game Masters to use with Foundry Virtual Table Top
+This module provides comprehensive Quest Log system for players and Game Masters to use with Foundry Virtual Table Top
 
 ***If something doesn't work, make sure you have the NEWEST version. If you do, [submit an issue](https://github.com/Forien/foundryvtt-forien-quest-log/issues) or write me a [Direct Message on Discord](#Contact)!***
 
@@ -19,6 +19,7 @@ This module provides Quest Log system for players and Game Masters to use with F
 * Quest creator with WYSIWYG editors for description and GM notes
 * Subtasks
 * Draggable Item rewards
+* Fully editable Quest Details window
 
 ## Future plans (current ideas)
 
