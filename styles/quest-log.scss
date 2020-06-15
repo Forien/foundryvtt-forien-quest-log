@@ -292,18 +292,25 @@ $footer-size: 32px + 2*$footer-padding;
             border: none;
           }
 
-          span, img {
+
+          span, img, .toggleImage {
             cursor: pointer;
           }
         }
       }
 
       .description-gc {
+        .description {
+          height: 200px;
+          overflow: auto;
+        }
+
         .editor {
           height: 200px;
 
           .editor-content {
             height: 200px;
+            overflow: auto;
           }
         }
       }
@@ -330,12 +337,20 @@ $footer-size: 32px + 2*$footer-padding;
             gap: 1px 1px;
             grid-template-areas: ". . .";
 
-            i.fa-check {
+            i.state {
+              &.fa-check, &.fa-times {
               font-size: 1.6em;
               line-height: 1.6em;
               margin-top: -0.4em;
-              color: #229933;
               position: absolute;
+              }
+
+              &.fa-check {
+                color: #229933;
+              }
+              &.fa-times {
+                color: #993322;
+              }
             }
 
             .hidden {

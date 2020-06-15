@@ -6,10 +6,12 @@
 
   "ForienQuestLog.Details": "Details",
   "ForienQuestLog.GMNotes": "GM Notes",
+  "ForienQuestLog.NewQuest": "New Quest",
 
   "ForienQuestLog.Notifications.QuestMoved": "Moved quest to new folder and gave it new status: {target}",
 
   "ForienQuestLog.Buttons.AddNewQuest": "Add new Quest",
+  "ForienQuestLog.Buttons.AddNewTask": "add new",
 
   "ForienQuestLog.QuestTypes.InProgress": "Active",
   "ForienQuestLog.QuestTypes.Completed": "Completed",
@@ -20,11 +22,41 @@
   "ForienQuestLog.QuestName": "Title",
   "ForienQuestLog.QuestTasks": "Tasks",
   "ForienQuestLog.Actions": "Actions",
+  "ForienQuestLog.Objectives": "Objectives",
+  "ForienQuestLog.Rewards": "Rewards",
 
   "ForienQuestLog.showTasks.Enable": "Show tasks in Quest Log",
   "ForienQuestLog.showTasks.EnableHint": "Decide if or how to show amount of Tasks (objectives) next to Quest's title in Quest Log. This has no effect on Quest individual preview.",
 
   "ForienQuestLog.showTasks.default": "Show tasks: done/total",
   "ForienQuestLog.showTasks.onlyCurrent": "Show tasks: done",
-  "ForienQuestLog.showTasks.no": "Hide \"tasks\" column"
+  "ForienQuestLog.showTasks.no": "Hide \"tasks\" column",
+
+  "ForienQuestLog.QuestLogButton": "Quest Log",
+  "ForienQuestLog.QuestForm.Title": "Add new Quest",
+  "ForienQuestLog.QuestLog.Title": "Quest Log",
+  "ForienQuestLog.QuestPreview.Title": "Quest Details",
+
+  "ForienQuestLog.QuestForm.QuestGiver": "Quest giver",
+  "ForienQuestLog.QuestForm.QuestGiverPlaceholder": "Actor's name or ID",
+  "ForienQuestLog.QuestForm.QuestTitle": "Quest's title",
+  "ForienQuestLog.QuestForm.QuestDescription": "Quest description",
+  "ForienQuestLog.QuestForm.QuestGMNotes": "GM notes",
+  "ForienQuestLog.QuestForm.Submit": "Submit",
+
+  "ForienQuestLog.SampleTask": "f.e. Kill all rats in „The Twisted Ankle” inn",
+  "ForienQuestLog.DragDropRewards": "Drag & drop items here to add them as rewards",
+
+  "ForienQuestLog.DeleteDialog.Title": "Delete {name}",
+  "ForienQuestLog.DeleteDialog.Header": "Are you sure?",
+  "ForienQuestLog.DeleteDialog.Body": "This quest and its data will be permanently deleted.",
+  "ForienQuestLog.DeleteDialog.Delete": "Delete",
+  "ForienQuestLog.DeleteDialog.Cancel": "Cancel",
+
+  "ForienQuestLog.Tooltips.ToggleImage": "Toggle token/actor image",
+  "ForienQuestLog.Tooltips.SetActive": "Set as In Progress",
+  "ForienQuestLog.Tooltips.SetCompleted": "Set as Completed",
+  "ForienQuestLog.Tooltips.SetFailed": "Set as Failed",
+  "ForienQuestLog.Tooltips.Hide": "Hide",
+  "ForienQuestLog.Tooltips.Delete": "Delete"
 }

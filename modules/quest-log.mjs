@@ -12,7 +12,7 @@ export default class QuestLog extends Application {
       height: 480,
       minimizable: true,
       resizable: true,
-      title: "Quest Log",
+      title: game.i18n.localize("ForienQuestLog.QuestLog.Title"),
       tabs: [{navSelector: ".log-tabs", contentSelector: ".log-body", initial: "progress"}]
     });
   }

@@ -9,7 +9,7 @@ export default class QuestForm extends FormApplication {
     return mergeObject(super.defaultOptions, {
       id: "forien-quest-log-form",
       template: "modules/forien-quest-log/templates/quest-log-form.html",
-      title: "Add new Quest",
+      title: game.i18n.localize("ForienQuestLog.QuestForm.Title"),
       width: 940,
       height: 640,
       closeOnSubmit: true
