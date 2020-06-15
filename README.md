@@ -44,6 +44,7 @@ If you wish to contact me for any reason, reach me out on Discord using my tag: 
 ## Acknowledgments
 
 * Thanks to Atropos for his relentless work on developing and improving the Foundry VTT
+* Thanks to necxelos, TomChristoffer and Kralug for their massive lists of suggestions
 
 ## Support
 
