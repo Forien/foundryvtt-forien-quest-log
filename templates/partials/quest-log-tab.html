@@ -12,10 +12,10 @@
     </tr>
     {{#each quests}}
     <tr data-quest-id="{{id}}">
-        <td class="img">{{#if src}}<img class="quest-giver-portrait portrait-small" src="{{src}}">{{/if}}</td>
+        <td class="img">{{#if actor.img}}<img class="quest-giver-portrait portrait-small" src="{{actor.img}}">{{/if}}</td>
         <td class="title" data-quest-id="{{id}}">{{title}}</td>
         {{#unless (eq ../showTasks 'no')}}
-        <td class="tasks">{{tasks.checked}}{{#unless (eq ../showTasks 'onlyCurrent')}}/{{tasks.total}}{{/unless}}</td>
+        <td class="tasks">{{checkedTasks}}{{#unless (eq ../showTasks 'onlyCurrent')}}/{{totalTasks}}{{/unless}}</td>
         {{/unless}}
         {{#if ../isGM}}
         <td class="actions">

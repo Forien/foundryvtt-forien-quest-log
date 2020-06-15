@@ -179,6 +179,14 @@ $footer-size: 32px + 2*$footer-padding;
             width: 97%;
             margin: 4px;
           }
+
+          .del-btn {
+            cursor: pointer;
+
+            .fa-times {
+              pointer-events: none;
+            }
+          }
         }
       }
     }

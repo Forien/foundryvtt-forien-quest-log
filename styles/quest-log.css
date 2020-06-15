@@ -97,6 +97,10 @@
       #forien-quest-log-form fieldset.tasks .list .task-entry input {
         width: 97%;
         margin: 4px; }
+      #forien-quest-log-form fieldset.tasks .list .task-entry .del-btn {
+        cursor: pointer; }
+        #forien-quest-log-form fieldset.tasks .list .task-entry .del-btn .fa-times {
+          pointer-events: none; }
   #forien-quest-log-form fieldset.tinymce-fieldset {
     min-height: 240px;
     border: none; }

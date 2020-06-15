@@ -1,4 +1,4 @@
-ForienQuestLog.Utils = class {
+export default  class Utils {
  static findActor(actorId) {
     let actor = game.actors.get(actorId);
     if (actor === undefined || actor === null) {

@@ -1,14 +1,10 @@
 # FoundryVTT - Forien's Quest Log
-**[Current version]**: v0.1.2-alpha Pre-Release  
+**[Current version]**: v0.2.0  
 **[Compatibility]**: *FoundryVTT* 0.6.0+
 
 This module provides Quest Log system for players and Game Masters to use with Foundry Virtual Table Top
 
-Players need `Create Journal Entry` permission to see `Quest Log` button. Will change it in future updates.
-
 ***If something doesn't work, make sure you have the NEWEST version. If you do, [submit an issue](https://github.com/Forien/foundryvtt-forien-quest-log/issues) or write me a [Direct Message on Discord](#Contact)!***
-
-**DISCLAIMER:** Module is work-in-progress, everything is subject to change. I ***do not*** guarantee data backwards-compatibility, so you might lose Quests' data in the future. If you intend on using this for gameplay, always backup before updating. 
 
 
 ## Installation
@@ -19,8 +15,23 @@ Players need `Create Journal Entry` permission to see `Quest Log` button. Will c
 
 ## Features
 
+* Quest Log windows that lists all quests divided into `In Progress`, `Completed` and `Failed` tabs
+* Quest creator with WYSIWYG editors for description and GM notes
+* Subtasks
+* Draggable Item rewards
 
-## Future plans
+## Future plans (current ideas)
+
+* hiding individual tasks
+* a toggle "hide future tasks from players"
+* draggable EXP/Money rewards (need to wait for FVTT 0.7.0)
+* reward button to give all target actors all rewards
+* "available quests" tab
+* personal quests
+* chapters
+* quest's splash art/dedicated image
+* quest branching
+* search/filtering
 
 *If you have **any** suggestion or idea on new contents, hit me up on Discord!*
 

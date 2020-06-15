@@ -8,12 +8,12 @@
             {{/with}}
         </div>
         <div class="description-gc">
-            {{editor target="description" content=description button=true editable=true}}
+            {{{editor target="description" content=description button=true editable=true}}}
         </div>
         <div class="tasks-gc">
             <h3>Objectives | <small class="add-new-task">add new</small></h3>
             <div class="tasks-box">
-                {{#each tasks.tasks}}
+                {{#each tasks}}
                 <div class="task">
                     {{#if ../isGM}}
                     <input type="checkbox" name="task[{{@index}}]" data-task-index="{{@index}}" {{checked completed}}/>
