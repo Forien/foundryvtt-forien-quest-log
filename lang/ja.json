@@ -1,0 +1,71 @@
+{
+  "ForienQuestLog.InProgress": "進行中",
+  "ForienQuestLog.Completed": "完了",
+  "ForienQuestLog.Failed": "失敗",
+  "ForienQuestLog.Hidden": "秘匿",
+
+  "ForienQuestLog.Details": "詳細",
+  "ForienQuestLog.GMNotes": "GMノート",
+  "ForienQuestLog.NewQuest": "クエストを追加",
+
+  "ForienQuestLog.Notifications.QuestMoved": "クエストを新たなフォルダに移動し状態を{target}に変更しました。",
+
+  "ForienQuestLog.Buttons.AddNewQuest": "新しいクエストを追加",
+  "ForienQuestLog.Buttons.AddNewTask": "追加",
+
+  "ForienQuestLog.QuestTypes.InProgress": "進行中",
+  "ForienQuestLog.QuestTypes.Completed": "完了",
+  "ForienQuestLog.QuestTypes.Failed": "失敗",
+  "ForienQuestLog.QuestTypes.Hidden": "秘匿",
+  "ForienQuestLog.Quests": "クエスト",
+  "ForienQuestLog.QuestGiver": "クエスト依頼主",
+  "ForienQuestLog.QuestName": "クエスト名",
+  "ForienQuestLog.QuestTasks": "内容",
+  "ForienQuestLog.Actions": "操作",
+  "ForienQuestLog.Objectives": "目標",
+  "ForienQuestLog.Rewards": "報酬",
+
+  "ForienQuestLog.showTasks.Enable": "クエストログにクエスト内容を表示する",
+  "ForienQuestLog.showTasks.EnableHint": "クエストの名前の隣にそのクエストに付随する内容の表示の仕方を設定します。クエストの詳細画面には効果ありません。",
+  "ForienQuestLog.showTasks.default": "完了/合計",
+  "ForienQuestLog.showTasks.onlyCurrent": "完了のみ",
+  "ForienQuestLog.showTasks.no": "内容の列を隠す",
+
+  "ForienQuestLog.navStyle.Enable": "タブのスタイル",
+  "ForienQuestLog.navStyle.EnableHint": "クエストログのタブをどのように表示するのかを設定します。",
+  "ForienQuestLog.navStyle.bookmarks": "しおり風",
+  "ForienQuestLog.navStyle.classic": "クラシック風",
+
+  "ForienQuestLog.titleAlign.Enable": "クエスト名位置合わせ",
+  "ForienQuestLog.titleAlign.EnableHint": "クエストログのクエスト名の位置を調整するための設定です。",
+  "ForienQuestLog.titleAlign.left": "左寄せ",
+  "ForienQuestLog.titleAlign.center": "中央",
+
+  "ForienQuestLog.QuestLogButton": "クエストログ",
+  "ForienQuestLog.QuestForm.Title": "新しいクエストを追加",
+  "ForienQuestLog.QuestLog.Title": "クエストログ",
+  "ForienQuestLog.QuestPreview.Title": "クエスト内容",
+
+  "ForienQuestLog.QuestForm.QuestGiver": "クエスト依頼主",
+  "ForienQuestLog.QuestForm.QuestGiverPlaceholder": "キャラクターの名前またはID",
+  "ForienQuestLog.QuestForm.QuestTitle": "クエスト名",
+  "ForienQuestLog.QuestForm.QuestDescription": "クエスト内容",
+  "ForienQuestLog.QuestForm.QuestGMNotes": "GMノート",
+  "ForienQuestLog.QuestForm.Submit": "保存",
+
+  "ForienQuestLog.SampleTask": "例：魔王を討伐する",
+  "ForienQuestLog.DragDropRewards": "アイテムをここにドラッグ＆ドロップすると報酬として登録できます",
+
+  "ForienQuestLog.DeleteDialog.Title": "{name}を削除",
+  "ForienQuestLog.DeleteDialog.Header": "本当に削除しますか？",
+  "ForienQuestLog.DeleteDialog.Body": "このクエストその内容はすべて削除されます。",
+  "ForienQuestLog.DeleteDialog.Delete": "削除",
+  "ForienQuestLog.DeleteDialog.Cancel": "キャンセル",
+
+  "ForienQuestLog.Tooltips.ToggleImage": "コマ/キャラ画像表示の切り替え",
+  "ForienQuestLog.Tooltips.SetActive": "進行中にする",
+  "ForienQuestLog.Tooltips.SetCompleted": "完了にする",
+  "ForienQuestLog.Tooltips.SetFailed": "失敗にする",
+  "ForienQuestLog.Tooltips.Hide": "秘匿",
+  "ForienQuestLog.Tooltips.Delete": "削除"
+}

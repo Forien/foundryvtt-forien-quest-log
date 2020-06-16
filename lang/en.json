@@ -36,6 +36,11 @@
   "ForienQuestLog.navStyle.bookmarks": "Bookmarks",
   "ForienQuestLog.navStyle.classic": "Classic tabs",
 
+  "ForienQuestLog.titleAlign.Enable": "Quest's title alignment",
+  "ForienQuestLog.titleAlign.EnableHint": "Decide how to position quests' titles in Quest Log's table.",
+  "ForienQuestLog.titleAlign.left": "Aligned to left",
+  "ForienQuestLog.titleAlign.center": "Centered",
+
   "ForienQuestLog.QuestLogButton": "Quest Log",
   "ForienQuestLog.QuestForm.Title": "Add new Quest",
   "ForienQuestLog.QuestLog.Title": "Quest Log",

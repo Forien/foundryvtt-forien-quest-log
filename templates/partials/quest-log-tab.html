@@ -1,10 +1,10 @@
 <h1>{{localize (lookup questTypes tab)}} {{localize 'ForienQuestLog.Quests'}}</h1>
 <table>
     <tr>
-        <th class="quest-giver-col">{{localize 'ForienQuestLog.QuestGiver'}}</th>
-        <th class="title-col">{{localize 'ForienQuestLog.QuestName'}}</th>
+        <th class="quest-giver-col sortable" data-sort="actor">{{localize 'ForienQuestLog.QuestGiver'}}</th>
+        <th class="title-col sortable" data-sort="title">{{localize 'ForienQuestLog.QuestName'}}</th>
         {{#unless (eq showTasks 'no')}}
-        <th class="tasks-col">{{localize 'ForienQuestLog.QuestTasks'}}</th>
+        <th class="tasks-col sortable" data-sort="checkedTasks">{{localize 'ForienQuestLog.QuestTasks'}}</th>
         {{/unless}}
         {{#if isGM}}
         <th class="actions-col">{{localize 'ForienQuestLog.Actions'}}</th>
@@ -12,8 +12,8 @@
     </tr>
     {{#each quests}}
     <tr data-quest-id="{{id}}">
-        <td class="img">{{#if actor.img}}<img class="quest-giver-portrait portrait-small" src="{{actor.img}}">{{/if}}</td>
-        <td class="title" data-quest-id="{{id}}">{{title}}</td>
+        <td class="img">{{#if actor.img}}<img class="quest-giver-portrait portrait-small" src="{{actor.img}}" title="{{actor.name}}">{{/if}}</td>
+        <td class="title {{../titleAlign}}" data-quest-id="{{id}}">{{title}}</td>
         {{#unless (eq ../showTasks 'no')}}
         <td class="tasks">{{checkedTasks}}{{#unless (eq ../showTasks 'onlyCurrent')}}/{{totalTasks}}{{/unless}}</td>
         {{/unless}}

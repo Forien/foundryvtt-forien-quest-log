@@ -43,10 +43,10 @@ $footer-size: 32px + 2*$footer-padding;
   }
 
   section.log-body {
-    min-height: calc(100% - #{$footer-size} );
+    min-height: calc(100% - #{$footer-size});
 
     &.classic {
-      min-height: calc(100% - #{$footer-size + 20px} );
+      min-height: calc(100% - #{$footer-size + 20px});
     }
 
     table {
@@ -70,15 +70,26 @@ $footer-size: 32px + 2*$footer-padding;
           &.tasks-col {
             width: 60px;
           }
+
+          &.sortable {
+            cursor: pointer;
+          }
         }
 
         td {
           text-align: center;
 
           &.title {
-            text-align: left;
             font-weight: bold;
             cursor: pointer;
+
+            &.left {
+              text-align: left;
+            }
+
+            &.center {
+              text-align: center;
+            }
 
             &:hover {
               text-shadow: 2px 2px 5px rgba(51, 51, 51, 0.4);
@@ -356,15 +367,16 @@ $footer-size: 32px + 2*$footer-padding;
 
             i.state {
               &.fa-check, &.fa-times {
-              font-size: 1.6em;
-              line-height: 1.6em;
-              margin-top: -0.4em;
-              position: absolute;
+                font-size: 1.6em;
+                line-height: 1.6em;
+                margin-top: -0.4em;
+                position: absolute;
               }
 
               &.fa-check {
                 color: #229933;
               }
+
               &.fa-times {
                 color: #993322;
               }

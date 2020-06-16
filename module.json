@@ -14,9 +14,9 @@
   "compatibleCoreVersion": "0.6.2",
   "url": "https://github.com/Forien/forien-quest-log",
   "manifest": "https://raw.githubusercontent.com/Forien/foundryvtt-forien-quest-log/master/module.json",
-  "download": "https://github.com/Forien/foundryvtt-forien-quest-log/archive/styling.zip",
-  "readme": "https://github.com/Forien/foundryvtt-forien-quest-log/blob/styling/README.md",
-  "changelog": "https://github.com/Forien/foundryvtt-forien-quest-log/blob/styling/changelog.md",
+  "download": "https://github.com/Forien/foundryvtt-forien-quest-log/archive/v0.2.3.zip",
+  "readme": "https://github.com/Forien/foundryvtt-forien-quest-log/blob/v0.2.3/README.md",
+  "changelog": "https://github.com/Forien/foundryvtt-forien-quest-log/blob/v0.2.3/changelog.md",
   "bugs": "https://github.com/Forien/foundryvtt-forien-quest-log/issues",
   "languages": [
     {
@@ -28,6 +28,11 @@
       "lang": "pl",
       "name": "Polski",
       "path": "lang/pl.json"
+    },
+    {
+      "lang": "ja",
+      "name": "日本語",
+      "path": "lang/ja.json"
     }
   ],
   "esmodules": [

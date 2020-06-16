@@ -36,6 +36,11 @@
   "ForienQuestLog.navStyle.bookmarks": "Zakładki",
   "ForienQuestLog.navStyle.classic": "Klasyczne karty",
 
+  "ForienQuestLog.titleAlign.Enable": "Wyrównanie tytułów Misji",
+  "ForienQuestLog.titleAlign.EnableHint": "Zdecyduj jak wyrównać tytuły Misji w Dzienniku Misji.",
+  "ForienQuestLog.titleAlign.left": "Wyrównaj do lewej",
+  "ForienQuestLog.titleAlign.center": "Wyśrodkuj",
+
   "ForienQuestLog.QuestLogButton": "Dziennik",
   "ForienQuestLog.QuestForm.Title": "Stwórz nową Misję",
   "ForienQuestLog.QuestLog.Title": "Dziennik Misji",
