@@ -96,7 +96,9 @@ export default class Quest {
       content.rewards = [];
     }
 
-    content.tasks = content.tasks.map((t) => {return new Task(t)});
+    content.tasks = content.tasks.map((t) => {
+      return new Task(t)
+    });
 
     content.noRewards = (content.rewards.length === 0);
     content.rewards.forEach((item) => {
@@ -119,7 +121,7 @@ export default class Quest {
     return content;
   }
 
-  static getQuests() {
+  static getQuests(sortTarget = undefined, sortDirection = 'asc') {
     let quests = {};
     for (let [key, value] of Object.entries(QuestFolder.questDirIds)) {
       if (key === 'root') continue;
@@ -130,6 +132,11 @@ export default class Quest {
         let content = this.getContent(entry, true);
         entries.push(content);
       });
+
+      if (sortTarget !== undefined) {
+        entries = this.sort(entries, sortTarget, sortDirection)
+        console.log(entries);
+      }
       quests[key] = entries;
     }
 
@@ -143,6 +150,26 @@ export default class Quest {
       failed: "ForienQuestLog.QuestTypes.Failed",
       hidden: "ForienQuestLog.QuestTypes.Hidden"
     }
+  }
+
+  static sort(entries, sortTarget, sortDirection) {
+    return entries.sort((a, b) => {
+      let targetA;
+      let targetB;
+
+      if (sortTarget === 'actor') {
+        targetA = (a.actor) ? (a.actor.name || 'ZZZZZ') : 'ZZZZZ';
+        targetB = (b.actor) ? (b.actor.name || 'ZZZZZ') : 'ZZZZZ';
+      } else {
+        targetA = a[sortTarget];
+        targetB = b[sortTarget];
+      }
+
+      if (sortDirection === 'asc')
+        return (targetA < targetB) ? -1 : (targetA > targetB) ? 1 : 0;
+
+      return (targetA > targetB) ? -1 : (targetA < targetB) ? 1 : 0;
+    });
   }
 
   static async move(questId, target) {
