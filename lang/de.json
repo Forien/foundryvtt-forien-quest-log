@@ -1,0 +1,71 @@
+{
+  "ForienQuestLog.InProgress": "Laufend",
+  "ForienQuestLog.Completed": "Abgeschlossen",
+  "ForienQuestLog.Failed": "Fehlgeschlagen",
+  "ForienQuestLog.Hidden": "Verborgen",
+
+  "ForienQuestLog.Details": "Details",
+  "ForienQuestLog.GMNotes": "GM Notes",
+  "ForienQuestLog.NewQuest": "Neue Queste",
+
+  "ForienQuestLog.Notifications.QuestMoved": "Die Queste wurde in einen neuen Ordner verschoben und hat nun den Status: {target}",
+
+  "ForienQuestLog.Buttons.AddNewQuest": "Neue Queste",
+  "ForienQuestLog.Buttons.AddNewTask": "Hinzufügen",
+
+  "ForienQuestLog.QuestTypes.InProgress": "Laufende",
+  "ForienQuestLog.QuestTypes.Completed": "Abgeschlossene",
+  "ForienQuestLog.QuestTypes.Failed": "Fehlgeschlagene",
+  "ForienQuestLog.QuestTypes.Hidden": "Verborgene",
+  "ForienQuestLog.Quests": "Questen",
+  "ForienQuestLog.QuestGiver": "Auftraggeber",
+  "ForienQuestLog.QuestName": "Titel",
+  "ForienQuestLog.QuestTasks": "Aufgaben",
+  "ForienQuestLog.Actions": "Aktionen",
+  "ForienQuestLog.Objectives": "Ziele",
+  "ForienQuestLog.Rewards": "Belohnungen",
+
+  "ForienQuestLog.showTasks.Enable": "Zeige Aufgaben im Questenlog",
+  "ForienQuestLog.showTasks.EnableHint": "Lege fest ob und wie die Menge von Aufgaben (Zielen) neben dem Titel der Queste im Questenlog angezeigt wird. Dies hat keine Auswirkung auf die Vorschau einer individuellen Queste.",
+  "ForienQuestLog.showTasks.default": "Zeige Aufgaben: Beendet/Gesamt",
+  "ForienQuestLog.showTasks.onlyCurrent": "Zeige Aufgaben: Beendet",
+  "ForienQuestLog.showTasks.no": "Verberge \"Aufgaben\"-Spalte",
+
+  "ForienQuestLog.navStyle.Enable": "Navigationsstil",
+  "ForienQuestLog.navStyle.EnableHint": "Lege fest, wie die Navigation im Questenlog angezeigt werden soll.",
+  "ForienQuestLog.navStyle.bookmarks": "Lesezeichen",
+  "ForienQuestLog.navStyle.classic": "Klassische Reiter",
+
+  "ForienQuestLog.titleAlign.Enable": "Titelausrichtung der Queste",
+  "ForienQuestLog.titleAlign.EnableHint": "Lege fest, wie die Titel der Questen in der Tabelle im Questenlog positioniert werden sollen.",
+  "ForienQuestLog.titleAlign.left": "Linksbündig",
+  "ForienQuestLog.titleAlign.center": "Zentriert",
+
+  "ForienQuestLog.QuestLogButton": "Questenlog",
+  "ForienQuestLog.QuestForm.Title": "Neue Queste anlegen",
+  "ForienQuestLog.QuestLog.Title": "Questenlog",
+  "ForienQuestLog.QuestPreview.Title": "Details zur Queste",
+
+  "ForienQuestLog.QuestForm.QuestGiver": "Auftraggeber",
+  "ForienQuestLog.QuestForm.QuestGiverPlaceholder": "Name oder ID des Actors",
+  "ForienQuestLog.QuestForm.QuestTitle": "Titel der Queste",
+  "ForienQuestLog.QuestForm.QuestDescription": "Beschreibung der Queste",
+  "ForienQuestLog.QuestForm.QuestGMNotes": "GM notes",
+  "ForienQuestLog.QuestForm.Submit": "Übermitteln",
+
+  "ForienQuestLog.SampleTask": "z.B. Töte alle Ratten in der Schänke „Zum verstauchten Knöchel”",
+  "ForienQuestLog.DragDropRewards": "Ziehe Gegenstände hier hinein, um sie als Belohnung hinzuzufügen",
+
+  "ForienQuestLog.DeleteDialog.Title": "Lösche {name}",
+  "ForienQuestLog.DeleteDialog.Header": "Bist du sicher?",
+  "ForienQuestLog.DeleteDialog.Body": "Diese Queste und ihre Daten werden permanent gelöscht.",
+  "ForienQuestLog.DeleteDialog.Delete": "Löschen",
+  "ForienQuestLog.DeleteDialog.Cancel": "Abbrechen",
+
+  "ForienQuestLog.Tooltips.ToggleImage": "Bild des Token/Actor umschalten",
+  "ForienQuestLog.Tooltips.SetActive": "Stelle auf Laufend",
+  "ForienQuestLog.Tooltips.SetCompleted": "Stelle auf Beendet",
+  "ForienQuestLog.Tooltips.SetFailed": "Stelle auf Fehlgeschlagen",
+  "ForienQuestLog.Tooltips.Hide": "Verbergen",
+  "ForienQuestLog.Tooltips.Delete": "Löschen"
+}

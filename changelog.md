@@ -3,6 +3,9 @@
 ## v0.X.X
 ### v0.2.X
 
+#### v0.2.4
+* Added German translation provided by Discord member Acd-Jake
+
 #### v0.2.3
 * Added Japanese translation provided by Discord member Brother Sharp
 * Added option to sort Quest Log
