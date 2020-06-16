@@ -3,7 +3,13 @@
 ## v0.X.X
 ### v0.2.X
 
-#### 
+#### v0.2.3
+* Added Japanese translation provided by Discord member Brother Sharp
+* Added option to sort Quest Log
+* Hidden "add new task" from players
+* Added option to change rendering style of tabs
+* Added module setting for centering titles in Quest Log
+* Added Actor's name as a tooltip in Quest Log
 
 #### v0.2.2
 * Allowed to change quest giver to existing quest by draggin new actor onto preview
