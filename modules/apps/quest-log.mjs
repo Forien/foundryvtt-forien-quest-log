@@ -1,4 +1,4 @@
-import Quest from "./quest.mjs";
+import Quest from "../entities/quest.mjs";
 import QuestPreview from "./quest-preview.mjs";
 import QuestForm from "./quest-form.mjs";
 

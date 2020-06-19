@@ -1,8 +1,8 @@
-import QuestFolder from "./quest-folder.mjs";
-import Utils from "./utils.mjs";
-import Task from "./task.mjs";
-import Quest from "./quest.mjs";
-import Socket from "./socket.mjs";
+import QuestFolder from "../entities/quest-folder.mjs";
+import Utils from "../utility/utils.mjs";
+import Task from "../entities/task.mjs";
+import Quest from "../entities/quest.mjs";
+import Socket from "../utility/socket.mjs";
 
 export default class QuestForm extends FormApplication {
   /**
@@ -147,7 +147,7 @@ export default class QuestForm extends FormApplication {
     });
 
     html.on("click", ".add-new-task", () => {
-      renderTemplate('modules/forien-quest-log/templates/partials/quest-log-form-task.html', {}).then(el => {
+      renderTemplate('modules/forien-quest-log/templates/partials/quest-form/task.html', {}).then(el => {
 
         html.find('.list').append(el);
         html.find('.del-btn').unbind();

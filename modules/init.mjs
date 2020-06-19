@@ -1,12 +1,12 @@
-import registerApiHooks from "../modules/api/hooks.js";
-import QuestApi from "../modules/api/quest-api.mjs";
-import ModuleSettings from "../modules/config.mjs";
-import QuestFolder from "../modules/quest-folder.mjs";
-import QuestLog from "../modules/quest-log.mjs";
-import Socket from "../modules/socket.mjs";
-import Utils from "../modules/utils.mjs";
-import VersionCheck from "../modules/version-check.mjs";
-import renderWelcomeScreen from "../modules/welcome-screen.mjs";
+import registerApiHooks from "./api/hooks.js";
+import QuestApi from "./api/quest-api.mjs";
+import ModuleSettings from "./utility/config.mjs";
+import QuestFolder from "./entities/quest-folder.mjs";
+import QuestLog from "./apps/quest-log.mjs";
+import Socket from "./utility/socket.mjs";
+import Utils from "./utility/utils.mjs";
+import VersionCheck from "./versioning/version-check.mjs";
+import renderWelcomeScreen from "./versioning/welcome-screen.mjs";
 import constants from "./constants.mjs";
 
 

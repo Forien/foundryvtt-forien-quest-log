@@ -16,11 +16,14 @@ export default  class Utils {
    * Preloads templates for partials
    */
   static preloadTemplates() {
-    loadTemplates([
-      "modules/forien-quest-log/templates/partials/quest-log-tab.html",
-      "modules/forien-quest-log/templates/partials/quest-preview-gmnotes.html",
-      "modules/forien-quest-log/templates/partials/quest-preview-details.html",
-      "modules/forien-quest-log/templates/partials/quest-preview-management.html"
-    ]);
+    let templates = [
+      "templates/partials/quest-log/tab.html",
+      "templates/partials/quest-preview/gmnotes.html",
+      "templates/partials/quest-preview/details.html",
+      "templates/partials/quest-preview/management.html"
+    ];
+
+    templates = templates.map(t => `modules/forien-quest-log/${t}`);
+    loadTemplates(templates);
   }
 };

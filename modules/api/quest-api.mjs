@@ -1,7 +1,7 @@
-import QuestPreview from "../quest-preview.mjs";
-import Quest from "../quest.mjs";
-import Reward from "../reward.mjs";
-import Task from "../task.mjs";
+import QuestPreview from "../apps/quest-preview.mjs";
+import Quest from "../entities/quest.mjs";
+import Reward from "../entities/reward.mjs";
+import Task from "../entities/task.mjs";
 
 /**
  * Quest public Api available under `game.quests.`

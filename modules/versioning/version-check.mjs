@@ -17,7 +17,7 @@ export default class VersionCheck {
       name: `${mN} Version`,
       default: "0.0.0",
       type: String,
-      scope: 'world',
+      scope: 'client',
     });
 
     this._r = true;

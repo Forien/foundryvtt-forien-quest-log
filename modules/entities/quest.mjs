@@ -1,8 +1,8 @@
 import QuestFolder from "./quest-folder.mjs";
 import Reward from "./reward.mjs";
-import Socket from "./socket.mjs";
+import Socket from "../utility/socket.mjs";
 import Task from "./task.mjs";
-import Utils from "./utils.mjs";
+import Utils from "../utility/utils.mjs";
 
 /**
  * Class that acts "kind of" like Entity, to help Manage everything Quest Related

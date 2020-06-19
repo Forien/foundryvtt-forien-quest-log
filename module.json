@@ -46,7 +46,7 @@
     }
   ],
   "esmodules": [
-    "./scripts/init.js"
+    "./modules/init.mjs"
   ],
   "styles": [
     "./styles/init.css"

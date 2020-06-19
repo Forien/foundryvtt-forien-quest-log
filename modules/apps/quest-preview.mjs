@@ -1,5 +1,5 @@
-import Quest from "./quest.mjs";
-import Socket from "./socket.mjs";
+import Quest from "../entities/quest.mjs";
+import Socket from "../utility/socket.mjs";
 
 export default class QuestPreview extends FormApplication {
   /**
@@ -64,6 +64,22 @@ export default class QuestPreview extends FormApplication {
     }
 
     return mergeObject(content, data);
+  }
+
+  /** @override */
+  _getHeaderButtons() {
+    let buttons = super._getHeaderButtons();
+
+    // Share Entry
+    if ( game.user.isGM ) {
+      buttons.unshift({
+        label: game.i18n.localize("ForienQuestLog.QuestPreview.HeaderButtons.Show"),
+        class: "share-image",
+        icon: "fas fa-eye",
+        onclick: () => Socket.showQuestPreview(this.quest.id)
+      });
+    }
+    return buttons;
   }
 
   /**
@@ -149,7 +165,7 @@ export default class QuestPreview extends FormApplication {
    */
   async close() {
     delete game.questPreview;
-    super.close();
+    await super.close();
   }
 
   /**

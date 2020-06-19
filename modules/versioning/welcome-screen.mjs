@@ -1,6 +1,13 @@
-import constants from "../scripts/constants.mjs";
+import constants from "../constants.mjs";
 import VersionCheck from "./version-check.mjs";
 
+
+/**
+ * Based on https://github.com/Moerill/mess
+ * with permission from Moerill
+ *
+ * @author Forien
+ */
 class WelcomeScreen extends Application {
   static get defaultOptions() {
     let title = game.modules.get(constants.moduleName).data.title;
@@ -8,7 +15,7 @@ class WelcomeScreen extends Application {
       template: `modules/forien-quest-log/templates/welcome-screen.html`,
       resizable: true,
       width: 450,
-      height: 600,
+      height: 636,
       classes: ["welcome-screen"],
       title: `${title} - Welcome Screen`
     });

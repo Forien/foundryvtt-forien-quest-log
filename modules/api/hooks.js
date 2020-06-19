@@ -1,5 +1,5 @@
-import Quest from "../quest.mjs";
-import Utils from "../utils.mjs";
+import Quest from "../entities/quest.mjs";
+import Utils from "../utility/utils.mjs";
 
 /**
  * Function for registering API-related Hooks.

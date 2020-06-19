@@ -13,21 +13,21 @@
     <section class="log-body {{style}}">
         {{#if availableTab}}
         <div class="tab available" data-group="primary" data-tab="available">
-            {{> "modules/forien-quest-log/templates/partials/quest-log-tab.html" tab="available" quests=quests.available}}
+            {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="available" quests=quests.available}}
         </div>
         {{/if}}
         <div class="tab in-progress" data-group="primary" data-tab="progress">
-            {{> "modules/forien-quest-log/templates/partials/quest-log-tab.html" tab="active" quests=quests.active}}
+            {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="active" quests=quests.active}}
         </div>
         <div class="tab completed" data-group="primary" data-tab="completed">
-            {{> "modules/forien-quest-log/templates/partials/quest-log-tab.html" tab="completed" quests=quests.completed}}
+            {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="completed" quests=quests.completed}}
         </div>
         <div class="tab failed" data-group="primary" data-tab="failed">
-            {{> "modules/forien-quest-log/templates/partials/quest-log-tab.html" tab="failed" quests=quests.failed}}
+            {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="failed" quests=quests.failed}}
         </div>
         {{#if isGM}}
         <div class="tab hidden" data-group="primary" data-tab="hidden">
-            {{> "modules/forien-quest-log/templates/partials/quest-log-tab.html" tab="hidden" quests=quests.hidden}}
+            {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="hidden" quests=quests.hidden}}
         </div>
         {{/if}}
     </section>

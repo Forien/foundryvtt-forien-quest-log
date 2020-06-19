@@ -4,9 +4,19 @@ export default class Socket {
       type: "questLogRefresh"
     })
   }
+
   static refreshQuestPreview(questId) {
     game.socket.emit("module.forien-quest-log", {
       type: "questPreviewRefresh",
+      payload: {
+        questId: questId
+      }
+    })
+  }
+
+  static showQuestPreview(questId) {
+    game.socket.emit("module.forien-quest-log", {
+      type: "showQuestPreview",
       payload: {
         questId: questId
       }
@@ -26,6 +36,11 @@ export default class Socket {
 
         if (game.questlog.rendered)
           game.questlog.render(true);
+      } else if (data.type === "showQuestPreview") {
+        if (game.questPreview !== undefined)
+          game.questPreview.close().then( () => game.quests.open(data.payload.questId));
+        else
+          game.quests.open(data.payload.questId);
       }
     });
   }

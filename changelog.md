@@ -8,6 +8,7 @@
 * Added option allowing GM to hide any Task and Reward from players.
 * Added "Abstract" type Rewards, which are not "Item" entities, are not draggable, but can have any name and image applied to them. 
 * Added optional Settings option that when checked, allows Players to drag Rewards onto their Actor sheets. (disabled by default)
+* Added "Show Players" button for Quest Details, that will force open Quests Details for all players that have permission to see it.
 * Hidden journal folder for quest data even for GM. Can be turned on back in settings.
 * Changed some module settings to be client-side (centering titles, way of rendering bookmarks).
 * Styling adjustments, including:

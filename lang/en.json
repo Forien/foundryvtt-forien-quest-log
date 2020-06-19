@@ -68,6 +68,8 @@
   "ForienQuestLog.QuestForm.QuestGMNotes": "GM notes",
   "ForienQuestLog.QuestForm.Submit": "Submit",
 
+  "ForienQuestLog.QuestPreview.HeaderButtons.Show": "Show Players",
+
   "ForienQuestLog.SampleTask": "f.e. Kill all rats in „The Twisted Ankle” inn",
   "ForienQuestLog.SampleReward": "f.e. 300 Experience Points",
   "ForienQuestLog.DragDropRewards": "Drag & drop items here to add them as rewards",
