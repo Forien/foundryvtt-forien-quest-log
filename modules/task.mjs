@@ -58,8 +58,22 @@ export default class Task {
     this._hidden = (hidden === true);
   }
 
+  async toggleVisible() {
+    this._hidden = !this._hidden;
+
+    return this._hidden;
+  }
+
   get isValid() {
     return (this._name.length)
+  }
+
+  static create(data = {}) {
+    if (data.name === undefined) {
+      throw new Error(game.i18n.localize("ForienQuestLog.Api.task.create.name"));
+    }
+
+    return new Task(data);
   }
 
   toJSON() {

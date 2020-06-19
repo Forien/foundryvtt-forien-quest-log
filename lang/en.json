@@ -3,10 +3,15 @@
   "ForienQuestLog.Completed": "Completed",
   "ForienQuestLog.Failed": "Failed",
   "ForienQuestLog.Hidden": "Hidden",
+  "ForienQuestLog.Available": "Available",
 
   "ForienQuestLog.Details": "Details",
+  "ForienQuestLog.QuestManagement": "Manage Quest",
   "ForienQuestLog.GMNotes": "GM Notes",
   "ForienQuestLog.NewQuest": "New Quest",
+
+  "ForienQuestLog.IsPersonalQuest": "Is Personal Quest?",
+  "ForienQuestLog.IsPersonalQuestDescription": "Check to mark quest as Personal. It will be invisible to all players except those specifically marked below. Unchecking this option will remove all permissions and move quest to Hidden tab.",
 
   "ForienQuestLog.Notifications.QuestMoved": "Moved quest to new folder and gave it new status: {target}",
 
@@ -24,6 +29,15 @@
   "ForienQuestLog.Actions": "Actions",
   "ForienQuestLog.Objectives": "Objectives",
   "ForienQuestLog.Rewards": "Rewards",
+
+  "ForienQuestLog.showFolder.Enable": "Show quest Folder",
+  "ForienQuestLog.showFolder.EnableHint": "Check to show quest data Folder in Journal tab. For DEBUG purposes only.",
+
+  "ForienQuestLog.availableQuests.Enable": "Show Available Tab",
+  "ForienQuestLog.availableQuests.EnableHint": "Check to show new, \"Available\" tab in Quest Log, where players can see all non-hidden Quests before they are accepted.",
+
+  "ForienQuestLog.allowPlayersDrag.Enable": "Allow Players drag Rewards",
+  "ForienQuestLog.allowPlayersDrag.EnableHint": "Check to allow Players drag Rewards from Quest's Details window to their Owned Actors.",
 
   "ForienQuestLog.showTasks.Enable": "Show tasks in Quest Log",
   "ForienQuestLog.showTasks.EnableHint": "Decide if or how to show amount of Tasks (objectives) next to Quest's title in Quest Log. This has no effect on Quest individual preview.",
@@ -48,13 +62,17 @@
 
   "ForienQuestLog.QuestForm.QuestGiver": "Quest giver",
   "ForienQuestLog.QuestForm.QuestGiverPlaceholder": "Actor's name or ID",
+  "ForienQuestLog.QuestForm.DragDropActor": "Drag & Drop Actor here to set it as Quest Giver",
   "ForienQuestLog.QuestForm.QuestTitle": "Quest's title",
   "ForienQuestLog.QuestForm.QuestDescription": "Quest description",
   "ForienQuestLog.QuestForm.QuestGMNotes": "GM notes",
   "ForienQuestLog.QuestForm.Submit": "Submit",
 
   "ForienQuestLog.SampleTask": "f.e. Kill all rats in „The Twisted Ankle” inn",
+  "ForienQuestLog.SampleReward": "f.e. 300 Experience Points",
   "ForienQuestLog.DragDropRewards": "Drag & drop items here to add them as rewards",
+
+  "ForienQuestLog.QuestPreview.InvalidQuestId": "Cannot open Quest's Preview due to invalid Quest ID.",
 
   "ForienQuestLog.DeleteDialog.Title": "Delete {name}",
   "ForienQuestLog.DeleteDialog.Header": "Are you sure?",
@@ -63,9 +81,25 @@
   "ForienQuestLog.DeleteDialog.Cancel": "Cancel",
 
   "ForienQuestLog.Tooltips.ToggleImage": "Toggle token/actor image",
+  "ForienQuestLog.Tooltips.SetAvailable": "Set as Available",
   "ForienQuestLog.Tooltips.SetActive": "Set as In Progress",
   "ForienQuestLog.Tooltips.SetCompleted": "Set as Completed",
   "ForienQuestLog.Tooltips.SetFailed": "Set as Failed",
   "ForienQuestLog.Tooltips.Hide": "Hide",
-  "ForienQuestLog.Tooltips.Delete": "Delete"
+  "ForienQuestLog.Tooltips.Delete": "Delete",
+  "ForienQuestLog.Tooltips.TaskHidden": "Task is Hidden. Click to show.",
+  "ForienQuestLog.Tooltips.TaskVisible": "Task is Visible. Click to hide.",
+  "ForienQuestLog.Tooltips.RewardHidden": "Reward is Hidden. Click to show.",
+  "ForienQuestLog.Tooltips.RewardVisible": "Reward is Visible. Click to hide.",
+  "ForienQuestLog.Tooltips.AddAbstractReward": "Add abstract reward",
+  "ForienQuestLog.PersonalQuestVisibleFor": "This is personal quest for",
+  "ForienQuestLog.PersonalQuestButNoPlayers": "This is personal quest, but nobody sees it",
+
+  "ForienQuestLog.Api.hooks.createOpenQuestMacro.error.noQuest": "API Error: Can't create macro with invalid Quest ID",
+  "ForienQuestLog.Api.hooks.createOpenQuestMacro.name": "Open „{name}” Quest",
+  "ForienQuestLog.Api.create.title": "API Error: Title property is required to create new Quest",
+  "ForienQuestLog.Api.reward.create.type": "API Error: Type property is required to create new Reward",
+  "ForienQuestLog.Api.reward.create.data": "API Error: Data property with at least {name, img} is required to create new Reward",
+  "ForienQuestLog.Api.task.create.name": "API Error: Name property is required to create new Task",
+  "ForienQuestLog.Api.open": "Cannot open Quest Details. You may lack permissions, Quest might not exist anymore, or provided ID was invalid."
 }

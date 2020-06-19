@@ -1,8 +1,14 @@
+import registerApiHooks from "../modules/api/hooks.js";
+import QuestApi from "../modules/api/quest-api.mjs";
+import ModuleSettings from "../modules/config.mjs";
 import QuestFolder from "../modules/quest-folder.mjs";
 import QuestLog from "../modules/quest-log.mjs";
-import Utils from "../modules/utils.mjs";
 import Socket from "../modules/socket.mjs";
-import ModuleSettings from "../modules/config.mjs";
+import Utils from "../modules/utils.mjs";
+import VersionCheck from "../modules/version-check.mjs";
+import renderWelcomeScreen from "../modules/welcome-screen.mjs";
+import constants from "./constants.mjs";
+
 
 Hooks.once('init', () => {
   ModuleSettings.register();
@@ -19,6 +25,15 @@ Hooks.once("ready", () => {
 
   if (game.questlog)
     QuestFolder.initializeJournals();
+
+  if (!game.quests)
+    game.quests = QuestApi;
+
+  registerApiHooks();
+
+  if (VersionCheck.check(constants.moduleName)) {
+    renderWelcomeScreen();
+  }
 });
 
 Hooks.on("renderJournalDirectory", (app, html, data) => {
@@ -34,7 +49,7 @@ Hooks.on("renderJournalDirectory", (app, html, data) => {
     game.questlog.render(true)
   });
 
-  if (!game.user.isGM) {
+  if (!(game.user.isGM && game.settings.get('forien-quest-log', 'showFolder'))) {
     let folderId = QuestFolder.get('root')._id;
     let folder = html.find(`.folder[data-folder-id="${folderId}"]`);
 

@@ -29,12 +29,22 @@
                     {{#if ../isGM}}
                     <i class="toggleState fas fa-{{state}}" data-task-index="{{@index}}"></i>
                     {{else}}
-                    <span>
+                    <span class="state-container">
+                        <i class="far fa-square state-background"></i>
                         <i class="fas fa-check state {{#unless completed}}hidden{{/unless}}"></i>
                         <i class="fas fa-times state {{#unless failed}}hidden{{/unless}}"></i>
                     </span>
                     {{/if}}
-                    <span class="editable-container"><span class="task-name editable" data-target="task.name" data-index="{{@index}}">{{name}}</span></span>
+                    <span class="editable-container">
+                        {{#if ../isGM}}
+                            {{#if hidden}}
+                            <i class="fas fa-eye-slash toggleHidden" data-target="task" data-index="{{@index}}"title="{{localize 'ForienQuestLog.Tooltips.TaskHidden'}}"></i>
+                            {{else}}
+                            <i class="fas fa-eye toggleHidden" data-target="task" data-index="{{@index}}" title="{{localize 'ForienQuestLog.Tooltips.TaskVisible'}}"></i>
+                            {{/if}}
+                        {{/if}}
+                        <span class="task-name editable" data-target="task.name" data-index="{{@index}}">{{{name}}}</span>
+                    </span>
                     {{#if ../isGM}}
                     <span class="del-btn" data-target="tasks" data-index="{{@index}}"><i class="fas fa-times"></i></span>
                     {{/if}}
@@ -43,13 +53,24 @@
             </div>
         </div>
         <div class="rewards-gc">
-            <h3>{{localize 'ForienQuestLog.Rewards'}}</h3>
+            <h3>{{localize 'ForienQuestLog.Rewards'}}{{#if isGM}} | <small><i class="fas fa-plus-circle add-abstract" title="{{localize 'ForienQuestLog.Tooltips.AddAbstractReward'}}"></i></small>{{/if}}</h3>
             <div class="rewards-box">
                 {{#if noRewards}}
                 <span class="drop-info">{{localize 'ForienQuestLog.DragDropRewards'}}</span>
                 {{else}}
                     {{#each rewards}}
-                    <div class="{{type}}-reward {{#if ../isGM}}draggable{{/if}}" data-transfer="{{transfer}}" draggable="true"><img src="{{data.img}}"/><span class="name">{{data.name}}</span>{{#if ../isGM}}<span class="del-btn" data-target="rewards" data-index="{{@index}}"><i class="fas fa-times"></i></span>{{/if}}</div>
+                        <div class="reward {{type}}-reward {{#if (and ../isGM draggable)}}draggable{{/if}}" {{#if (and ../isGM draggable)}}data-transfer="{{transfer}}" draggable="true"{{/if}}>
+                            <img src="{{data.img}}" data-index="{{@index}}"/>
+                            {{#if ../isGM}}
+                                {{#if hidden}}
+                                <i class="fas fa-eye-slash toggleHidden" data-target="reward" data-index="{{@index}}"title="{{localize 'ForienQuestLog.Tooltips.RewardHidden'}}"></i>
+                                {{else}}
+                                <i class="fas fa-eye toggleHidden" data-target="reward" data-index="{{@index}}" title="{{localize 'ForienQuestLog.Tooltips.RewardVisible'}}"></i>
+                                {{/if}}
+                            {{/if}}
+                            <span class="name">{{data.name}}</span>
+                            {{#if ../isGM}}<span class="del-btn" data-target="rewards" data-index="{{@index}}"><i class="fas fa-times"></i></span>{{/if}}
+                        </div>
                     {{/each}}
                 {{/if}}
             </div>

@@ -5,10 +5,15 @@ import Quest from "./quest.mjs";
 import Socket from "./socket.mjs";
 
 export default class QuestForm extends FormApplication {
+  /**
+   * Default Application options
+   *
+   * @returns {Object}
+   */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       id: "forien-quest-log-form",
-      template: "modules/forien-quest-log/templates/quest-log-form.html",
+      template: "modules/forien-quest-log/templates/quest-form.html",
       title: game.i18n.localize("ForienQuestLog.QuestForm.Title"),
       width: 940,
       height: 640,
@@ -16,6 +21,12 @@ export default class QuestForm extends FormApplication {
     });
   }
 
+  /**
+   * Retrieves Data to be used in rendering template.
+   *
+   * @param options
+   * @returns {Promise<Object>}
+   */
   async getData(options = {}) {
     return mergeObject(super.getData(), {
       options: options,
@@ -23,10 +34,24 @@ export default class QuestForm extends FormApplication {
     });
   }
 
+  /**
+   * Proxy for QuestFolder.get('hidden').
+   * Needed? probably not...
+   *
+   * @returns {*}
+   */
   getHiddenFolder() {
     return QuestFolder.get('hidden');
   }
 
+  /**
+   * Called "on submit". Handles saving Form's data
+   *
+   * @param event
+   * @param formData
+   * @returns {Promise<void>}
+   * @private
+   */
   async _updateObject(event, formData) {
     let actor = Utils.findActor(formData.actor);
 
@@ -74,6 +99,18 @@ export default class QuestForm extends FormApplication {
     });
   }
 
+  /**
+   * Fired whenever any of TinyMCE editors is saved.
+   * Just pass data to object's property, we handle save in one go after submit
+   *
+   * @see _updateObject()
+   *
+   * @param target
+   * @param element
+   * @param content
+   * @returns {Promise<void>}
+   * @private
+   */
   async _onEditorSave(target, element, content) {
     this[target] = content;
 
@@ -81,6 +118,11 @@ export default class QuestForm extends FormApplication {
     // we don't need to submit form on editor save
   }
 
+  /**
+   * Defines all event listeners like click, drag, drop etc.
+   *
+   * @param html
+   */
   activateListeners(html) {
     super.activateListeners(html);
 
@@ -92,6 +134,7 @@ export default class QuestForm extends FormApplication {
       if (actor !== false) {
         html.find('.actor-portrait').attr('src', actor.img).removeClass('hidden');
         html.find('.actor-name').text(actor.name).removeClass('hidden');
+        html.find('.drop-info').text(actor.name).addClass('hidden');
       }
     });
 

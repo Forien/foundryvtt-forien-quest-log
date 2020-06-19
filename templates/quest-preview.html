@@ -1,6 +1,7 @@
 <form class="quest-preview">
     <nav class="quest-tabs tabs" data-group="primary">
         <a class="item {{#unless isGM}}hidden{{/unless}}" data-tab="details">{{localize 'ForienQuestLog.Details'}}</a>
+        <a class="item {{#unless isGM}}hidden{{/unless}}" data-tab="management">{{localize 'ForienQuestLog.QuestManagement'}}</a>
         <a class="item {{#unless isGM}}hidden{{/unless}}" data-tab="gmnotes">{{localize 'ForienQuestLog.GMNotes'}}</a>
     </nav>
     <section class="quest-body">
@@ -8,6 +9,9 @@
             {{> "modules/forien-quest-log/templates/partials/quest-preview-details.html"}}
         </div>
         {{#if isGM}}
+        <div class="tab management" data-group="primary" data-tab="management">
+            {{> "modules/forien-quest-log/templates/partials/quest-preview-management.html"}}
+        </div>
         <div class="tab gmnotes" data-group="primary" data-tab="gmnotes">
             {{> "modules/forien-quest-log/templates/partials/quest-preview-gmnotes.html"}}
         </div>

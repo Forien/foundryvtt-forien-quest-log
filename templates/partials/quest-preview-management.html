@@ -1,0 +1,13 @@
+<section class="part personal-quest">
+    <div class="quest-is-personal">
+        <input id="personal-quest" type="checkbox" class="personal" {{checked personal}}>
+        <label for="personal-quest">{{localize 'ForienQuestLog.IsPersonalQuest'}}</label>
+        <small class="personal-quest-description">{{localize 'ForienQuestLog.IsPersonalQuestDescription'}}</small>
+    </div>
+    <div class="users {{#unless personal}}disabled{{/unless}}">
+    {{#each users}}
+    <label for="personal-{{this.user._id}}">{{this.user.name}}</label>
+    <input id="personal-{{this.user._id}}" data-user-id="{{this.user._id}}" type="checkbox" class="personal-user" data-value="{{eq this.level ../observerLevel}}" {{checked (eq this.level ../observerLevel)}} {{#unless ../personal}}disabled="disabled"{{/unless}}/>
+    {{/each}}
+    </div>
+</section>

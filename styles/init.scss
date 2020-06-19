@@ -1,0 +1,11 @@
+$background: #aaa;
+$background-parchment: url("/ui/parchment.jpg") repeat;
+$background-header: #666;
+$border: #333;
+$border-active: #833;
+
+$footer-padding: 4px;
+$footer-size: 32px + 2*$footer-padding;
+
+@import 'quest-log', 'quest-form', 'quest-preview';
+

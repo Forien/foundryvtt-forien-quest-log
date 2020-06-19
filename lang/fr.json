@@ -1,0 +1,26 @@
+{
+  "ForienQuestLog": {
+    "QuestLogButton": "",
+    "SampleTask": "",
+    "Quests": "",
+    "QuestGiver": "",
+    "QuestName": "",
+    "QuestTasks": "",
+    "Actions": "",
+    "Objectives": "",
+    "Rewards": "",
+    "DragDropRewards": "",
+    "IsPersonalQuest": "",
+    "IsPersonalQuestDescription": "",
+    "Available": "",
+    "InProgress": "",
+    "Completed": "",
+    "Failed": "",
+    "Hidden": "",
+    "Details": "",
+    "QuestManagement": "",
+    "GMNotes": "",
+    "SampleReward": "",
+    "NewQuest": ""
+  }
+}

@@ -27,6 +27,11 @@ export default class QuestFolder {
     return result !== undefined;
   }
 
+  /**
+   * Initializes the creation of quest folders
+   *
+   * @returns {Promise<void>}
+   */
   static async initializeJournals() {
     let dirExists = this.folderExists();
 
@@ -45,11 +50,21 @@ export default class QuestFolder {
     }
   }
 
+  /**
+   * Retrieves instance of specified Quest folder
+   *
+   * @param target
+   * @returns {*}
+   */
   static get(target) {
     return game.journal.directory.folders.find(f => f.name === this.questDirName[target]);
   }
 
-
+  /**
+   * Retrieves IDs of quest folders
+   *
+   * @returns {{hidden: null, root: null, active: null, completed: null, failed: null}}
+   */
   static get questDirIds() {
     return this._questDirIds;
   }

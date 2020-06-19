@@ -1,39 +1,51 @@
 <h1>{{localize (lookup questTypes tab)}} {{localize 'ForienQuestLog.Quests'}}</h1>
-<table>
-    <tr>
-        <th class="quest-giver-col sortable" data-sort="actor">{{localize 'ForienQuestLog.QuestGiver'}}</th>
-        <th class="title-col sortable" data-sort="title">{{localize 'ForienQuestLog.QuestName'}}</th>
-        {{#unless (eq showTasks 'no')}}
-        <th class="tasks-col sortable" data-sort="checkedTasks">{{localize 'ForienQuestLog.QuestTasks'}}</th>
-        {{/unless}}
-        {{#if isGM}}
-        <th class="actions-col">{{localize 'ForienQuestLog.Actions'}}</th>
-        {{/if}}
-    </tr>
-    {{#each quests}}
-    <tr data-quest-id="{{id}}">
-        <td class="img">{{#if actor.img}}<img class="quest-giver-portrait portrait-small" src="{{actor.img}}" title="{{actor.name}}">{{/if}}</td>
-        <td class="title {{../titleAlign}}" data-quest-id="{{id}}">{{title}}</td>
-        {{#unless (eq ../showTasks 'no')}}
-        <td class="tasks">{{checkedTasks}}{{#unless (eq ../showTasks 'onlyCurrent')}}/{{totalTasks}}{{/unless}}</td>
-        {{/unless}}
-        {{#if ../isGM}}
-        <td class="actions">
-            {{#unless (eq ../tab 'active')}}
-            <i class="move fas fa-eye" title="{{localize 'ForienQuestLog.Tooltips.SetActive'}}" data-target="active" data-quest-id="{{id}}"></i>
+<div class="table">
+    <table>
+        <thead>
+        <tr>
+            <th class="quest-giver-col sortable" data-sort="actor">{{localize 'ForienQuestLog.QuestGiver'}}</th>
+            <th class="title-col sortable" data-sort="title">{{localize 'ForienQuestLog.QuestName'}}</th>
+            {{#unless (eq showTasks 'no')}}
+            <th class="tasks-col sortable" data-sort="checkedTasks">{{localize 'ForienQuestLog.QuestTasks'}}</th>
             {{/unless}}
-            {{#unless (eq ../tab 'completed')}}
-            <i class="move fas fa-star" title="{{localize 'ForienQuestLog.Tooltips.SetCompleted'}}" data-target="completed" data-quest-id="{{id}}"></i>
+            {{#if isGM}}
+            <th class="actions-col">{{localize 'ForienQuestLog.Actions'}}</th>
+            {{/if}}
+        </tr>
+        </thead>
+        <tbody>
+        {{#each quests}}
+        <tr class="drag-quest" data-quest-id="{{id}}" draggable="true">
+            <td class="img">{{#if actor.img}}<img class="quest-giver-portrait portrait-small" src="{{actor.img}}" title="{{actor.name}}">{{/if}}</td>
+            <td class="title {{../titleAlign}}" data-quest-id="{{id}}">
+                {{#if (and personal ../isGM)}}
+                <i class="fas fa-user" title="{{users}}"></i>
+                {{/if}}
+                {{title}}
+            </td>
+            {{#unless (eq ../showTasks 'no')}}
+            <td class="tasks">{{checkedTasks}}{{#unless (eq ../showTasks 'onlyCurrent')}}/{{totalTasks}}{{/unless}}</td>
             {{/unless}}
-            {{#unless (eq ../tab 'failed')}}
-            <i class="move fas fa-times" title="{{localize 'ForienQuestLog.Tooltips.SetFailed'}}" data-target="failed" data-quest-id="{{id}}"></i>
-            {{/unless}}
-            {{#unless (eq ../tab 'hidden')}}
-            <i class="move fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.Hide'}}" data-target="hidden" data-quest-id="{{id}}"></i>
-            {{/unless}}
-            <i class="delete fas fa-trash" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}" data-quest-id="{{id}}"></i>
-        </td>
-        {{/if}}
-    </tr>
-    {{/each}}
-</table>
+            {{#if ../isGM}}
+            <td class="actions">
+                {{#if (and (eq ../tab 'hidden') ../availableTab)}}
+                <i class="move fas fa-eye" title="{{localize 'ForienQuestLog.Tooltips.SetAvailable'}}" data-target="available" data-quest-id="{{id}}"></i>
+                {{/if}}
+                {{#if (or (eq ../tab 'hidden') (eq ../tab 'available'))}}
+                <i class="move fas fa-star" title="{{localize 'ForienQuestLog.Tooltips.SetActive'}}" data-target="active" data-quest-id="{{id}}"></i>
+                {{/if}}
+                {{#if (eq ../tab 'active')}}
+                <i class="move fas fa-check" title="{{localize 'ForienQuestLog.Tooltips.SetCompleted'}}" data-target="completed" data-quest-id="{{id}}"></i>
+                <i class="move fas fa-times" title="{{localize 'ForienQuestLog.Tooltips.SetFailed'}}" data-target="failed" data-quest-id="{{id}}"></i>
+                {{/if}}
+                {{#unless (eq ../tab 'hidden')}}
+                <i class="move fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.Hide'}}" data-target="hidden" data-quest-id="{{id}}"></i>
+                {{/unless}}
+                <i class="delete fas fa-trash" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}" data-quest-id="{{id}}"></i>
+            </td>
+            {{/if}}
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>

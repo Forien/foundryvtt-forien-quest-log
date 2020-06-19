@@ -19,7 +19,8 @@ export default  class Utils {
     loadTemplates([
       "modules/forien-quest-log/templates/partials/quest-log-tab.html",
       "modules/forien-quest-log/templates/partials/quest-preview-gmnotes.html",
-      "modules/forien-quest-log/templates/partials/quest-preview-details.html"
+      "modules/forien-quest-log/templates/partials/quest-preview-details.html",
+      "modules/forien-quest-log/templates/partials/quest-preview-management.html"
     ]);
   }
 };
