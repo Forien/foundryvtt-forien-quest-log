@@ -2,6 +2,7 @@ import QuestPreview from "../apps/quest-preview.mjs";
 import Quest from "../entities/quest.mjs";
 import Reward from "../entities/reward.mjs";
 import Task from "../entities/task.mjs";
+import Socket from "../utility/socket.mjs";
 
 /**
  * Quest public Api available under `game.quests.`
@@ -30,6 +31,8 @@ export default class QuestApi {
     } catch (error) {
       if (notif)
         ui.notifications.error(game.i18n.localize("ForienQuestLog.Notifications.CannotOpen"), {});
+      else
+        Socket.userCantOpenQuest();
     }
   }
 

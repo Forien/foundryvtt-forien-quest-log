@@ -1,6 +1,12 @@
 # Changelog
 
-## v0.3.0
+## v0.3.X
+
+## v0.3.1
+* Added Korean translation provided by Discord member KLO
+* Show GM information if players can't see shared quest
+
+#### v0.3.0
 * Added „Personal Quests”, a feature that allows GM to show any Quest to only specific player(s).
 * Added Entity linking to Tasks (for example `@Actor[Vash]` or `@Item[Cursed Sword]`).
     * Fixed Entity linking in Description for players.

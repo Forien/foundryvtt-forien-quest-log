@@ -1,8 +1,9 @@
 # FoundryVTT - Forien's Quest Log
-**[Current version]**: v0.3.0   
+**[Current version]**: v0.3.1   
 **[Compatibility]**: *FoundryVTT* 0.6.0+  
 **[Systems]**: *any*  
-**[Languages]**: *English, German, Japanese, Polish*
+**[Languages]**: *English, German, Japanese, Polish*  
+![GitHub Releases](https://img.shields.io/github/downloads/Forien/foundryvtt-forien-quest-log/latest/total)
 
 This module provides comprehensive Quest Log system for players and Game Masters to use with Foundry Virtual Table Top
 

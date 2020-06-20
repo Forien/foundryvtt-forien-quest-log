@@ -79,6 +79,7 @@
 
     "Notifications": {
       "CannotOpen": "Cannot open Quest Details. You may lack permissions, Quest might not exist anymore, or provided ID was invalid.",
+      "UserCantOpen": "User {user} doesn't have permission to open this quest.",
 
       "QuestMoved": "Moved quest to new folder and gave it new status: {target}"
     },
