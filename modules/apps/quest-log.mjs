@@ -1,4 +1,4 @@
-import Quest from "./quest.mjs";
+import Quest from "../entities/quest.mjs";
 import QuestPreview from "./quest-preview.mjs";
 import QuestForm from "./quest-form.mjs";
 
@@ -6,6 +6,11 @@ export default class QuestLog extends Application {
   sortBy = null;
   sortDirection = 'asc';
 
+  /**
+   * Default Application options
+   *
+   * @returns {Object}
+   */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       id: "forien-quest-log",
@@ -20,29 +25,49 @@ export default class QuestLog extends Application {
     });
   }
 
+  /**
+   * Retrieves Data to be used in rendering template.
+   *
+   * @param options
+   * @returns {Promise<Object>}
+   */
   getData(options = {}) {
+    let available = game.settings.get("forien-quest-log", "availableQuests");
     return mergeObject(super.getData(), {
       options: options,
       isGM: game.user.isGM,
+      availableTab: available,
       showTasks: game.settings.get("forien-quest-log", "showTasks"),
       style: game.settings.get("forien-quest-log", "navStyle"),
       titleAlign: game.settings.get("forien-quest-log", "titleAlign"),
       questTypes: Quest.getQuestTypes(),
-      quests: Quest.getQuests(this.sortBy, this.sortDirection)
+      quests: Quest.getQuests(this.sortBy, this.sortDirection, available)
     });
   }
 
-  toggleSort(target) {
+  /**
+   * Set sort target and toggle direction. Refresh window
+   *
+   * @param target
+   */
+  toggleSort(target, direction = undefined) {
     if (this.sortBy === target) {
       this.sortDirection = (this.sortDirection === 'desc') ? 'asc' : 'desc';
     } else {
       this.sortBy = target;
       this.sortDirection = 'asc';
     }
+    if (direction !== undefined && (direction === 'asc' || direction === 'desc'))
+      this.sortDirection = direction;
 
     this.render(true);
   }
 
+  /**
+   * Defines all event listeners like click, drag, drop etc.
+   *
+   * @param html
+   */
   activateListeners(html) {
     super.activateListeners(html);
 
@@ -70,6 +95,17 @@ export default class QuestLog extends Application {
     html.on("click", ".sortable", event => {
       let el = $(event.target);
       this.toggleSort(el.data('sort'));
+    });
+
+    html.on("dragstart", ".drag-quest", event => {
+      let dataTransfer = {
+        type: "Quest",
+        data: {
+          id: $(event.target).data('quest-id')
+        }
+      };
+      event.originalEvent.dataTransfer.setData("text/plain", JSON.stringify(dataTransfer));
+
     });
   }
 };

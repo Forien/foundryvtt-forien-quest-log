@@ -1,3 +1,7 @@
 .idea/
-foundry.js
 styles/.sass-cache/
+devtool/
+lang/untranslated.json
+node_modules/
+foundry.js
+package.json

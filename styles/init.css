@@ -1,0 +1,346 @@
+#forien-quest-log {
+  min-width: 500px;
+  min-height: 300px;
+  /**
+   * Only applies if setting set to Bookmarks.
+   * Shows tabs on the left from the window with custom style
+   */ }
+  #forien-quest-log div.quest-log {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 1px 1px; }
+    #forien-quest-log div.quest-log.classic {
+      grid-template-rows: auto minmax(0, 1fr) auto; }
+  #forien-quest-log nav.log-tabs.bookmarks {
+    display: block;
+    position: absolute;
+    left: -120px;
+    top: 32px;
+    z-index: -10; }
+    #forien-quest-log nav.log-tabs.bookmarks a.item {
+      display: block;
+      width: 125px;
+      height: 32px;
+      overflow: hidden;
+      text-align: right;
+      padding: 7px 15px;
+      margin-bottom: 5px;
+      border: 1px solid #333;
+      background: url("/ui/parchment.jpg") repeat;
+      box-shadow: inset 0 0 0 2000px rgba(133, 133, 133, 0.1); }
+      #forien-quest-log nav.log-tabs.bookmarks a.item.active {
+        border: 2px solid #833;
+        box-shadow: inset 0 0 0 2000px rgba(250, 250, 250, 0.1); }
+  #forien-quest-log section.log-body.classic {
+    min-height: calc(100% - 60px); }
+  #forien-quest-log section.log-body .tab {
+    height: 100%;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 1px 1px; }
+    #forien-quest-log section.log-body .tab.active {
+      display: grid; }
+    #forien-quest-log section.log-body .tab h1 {
+      margin: 0; }
+    #forien-quest-log section.log-body .tab .table {
+      overflow: auto; }
+      #forien-quest-log section.log-body .tab .table table {
+        margin: 0;
+        border: none;
+        background: none; }
+        #forien-quest-log section.log-body .tab .table table thead {
+          background: none;
+          color: #000;
+          text-shadow: none;
+          border-bottom: none; }
+        #forien-quest-log section.log-body .tab .table table tr {
+          height: 30px; }
+          #forien-quest-log section.log-body .tab .table table tr th {
+            border-bottom: 1px #666 solid; }
+            #forien-quest-log section.log-body .tab .table table tr th.quest-giver-col {
+              width: 120px; }
+            #forien-quest-log section.log-body .tab .table table tr th.actions-col {
+              width: 100px; }
+            #forien-quest-log section.log-body .tab .table table tr th.tasks-col {
+              width: 60px; }
+            #forien-quest-log section.log-body .tab .table table tr th.sortable {
+              cursor: pointer; }
+          #forien-quest-log section.log-body .tab .table table tr td {
+            text-align: center; }
+            #forien-quest-log section.log-body .tab .table table tr td.title {
+              font-weight: bold;
+              cursor: pointer; }
+              #forien-quest-log section.log-body .tab .table table tr td.title.left {
+                text-align: left; }
+              #forien-quest-log section.log-body .tab .table table tr td.title.center {
+                text-align: center; }
+              #forien-quest-log section.log-body .tab .table table tr td.title:hover {
+                text-shadow: 2px 2px 5px rgba(51, 51, 51, 0.4); }
+            #forien-quest-log section.log-body .tab .table table tr td.img {
+              cursor: pointer; }
+              #forien-quest-log section.log-body .tab .table table tr td.img img {
+                width: 55px;
+                height: 55px;
+                border: none;
+                object-fit: cover;
+                border-radius: 4px; }
+            #forien-quest-log section.log-body .tab .table table tr td.actions i.fas {
+              cursor: pointer;
+              margin-right: 5px; }
+              #forien-quest-log section.log-body .tab .table table tr td.actions i.fas:last-of-type {
+                margin-right: 0; }
+          #forien-quest-log section.log-body .tab .table table tr:nth-child(2n) {
+            background: rgba(0, 0, 0, 0.05); }
+  #forien-quest-log footer {
+    height: 40px;
+    padding: 4px; }
+
+#forien-quest-log-form .grid-container {
+  display: grid;
+  grid-template-columns: 50% 50fr;
+  grid-template-rows: auto 240px 217px auto;
+  gap: 1px 1px;
+  grid-template-areas: ". ." ". ." "tasks tasks" "footer footer"; }
+  #forien-quest-log-form .grid-container .tasks {
+    grid-area: tasks; }
+  #forien-quest-log-form .grid-container .footer {
+    grid-area: footer; }
+#forien-quest-log-form fieldset {
+  box-sizing: border-box;
+  margin: 0; }
+  #forien-quest-log-form fieldset.actor-data-fieldset {
+    height: 100%;
+    position: relative; }
+    #forien-quest-log-form fieldset.actor-data-fieldset .drop-info {
+      font-size: 1.4em;
+      font-variant: small-caps;
+      text-align: center;
+      color: #666;
+      opacity: 0.7;
+      margin: 0 20px;
+      position: absolute;
+      top: 50%;
+      transform: translate(0, -50%);
+      padding: 0 10%; }
+    #forien-quest-log-form fieldset.actor-data-fieldset img.actor-portrait {
+      width: 82px;
+      height: 82px;
+      border: none;
+      float: left;
+      margin-right: 12px;
+      object-fit: cover; }
+    #forien-quest-log-form fieldset.actor-data-fieldset h3.actor-name {
+      line-height: 82px;
+      margin: 0; }
+    #forien-quest-log-form fieldset.actor-data-fieldset .hidden {
+      display: none; }
+  #forien-quest-log-form fieldset.tasks {
+    margin-top: 10px;
+    border: none;
+    overflow: hidden; }
+    #forien-quest-log-form fieldset.tasks .add-new-task {
+      cursor: pointer; }
+    #forien-quest-log-form fieldset.tasks .list {
+      overflow-y: scroll;
+      height: calc(100% - 35px); }
+      #forien-quest-log-form fieldset.tasks .list .task-entry input {
+        width: 97%;
+        margin: 4px; }
+      #forien-quest-log-form fieldset.tasks .list .task-entry .del-btn {
+        cursor: pointer; }
+        #forien-quest-log-form fieldset.tasks .list .task-entry .del-btn .fa-times {
+          pointer-events: none; }
+  #forien-quest-log-form fieldset.tinymce-fieldset {
+    min-height: 240px;
+    border: none; }
+    #forien-quest-log-form fieldset.tinymce-fieldset .editor {
+      height: 100%; }
+      #forien-quest-log-form fieldset.tinymce-fieldset .editor .editor-content {
+        height: 100%; }
+
+#forien-quest-preview {
+  min-width: 620px;
+  min-height: 500px; }
+  #forien-quest-preview .window-content {
+    height: 100%; }
+  #forien-quest-preview .quest-preview {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 1px 1px;
+    grid-template-areas: "." ".";
+    height: 100%; }
+  #forien-quest-preview nav.quest-tabs .hidden {
+    display: none; }
+  #forien-quest-preview .quest-body {
+    height: 100%; }
+    #forien-quest-preview .quest-body .details {
+      height: 100%; }
+      #forien-quest-preview .quest-body .details .details-tab {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto minmax(0, 1fr);
+        gap: 1px 1px;
+        grid-template-areas: "." "."; }
+      #forien-quest-preview .quest-body .details .grid-container {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr 0.8fr 1fr;
+        grid-template-rows: 200px minmax(0, 1fr);
+        gap: 1px 1px;
+        grid-template-areas: "quest-giver-gc description-gc description-gc description-gc" "tasks-gc tasks-gc rewards-gc rewards-gc"; }
+        #forien-quest-preview .quest-body .details .grid-container .quest-giver-gc {
+          grid-area: quest-giver-gc;
+          display: grid;
+          grid-template-columns: 1fr;
+          grid-template-rows: auto minmax(0, 1fr);
+          gap: 1px 1px;
+          grid-template-areas: "." "."; }
+        #forien-quest-preview .quest-body .details .grid-container .description-gc {
+          grid-area: description-gc; }
+        #forien-quest-preview .quest-body .details .grid-container .tasks-gc {
+          grid-area: tasks-gc;
+          display: grid;
+          grid-template-columns: 1fr;
+          grid-template-rows: auto minmax(0, 1fr);
+          gap: 1px 1px;
+          grid-template-areas: "." "."; }
+        #forien-quest-preview .quest-body .details .grid-container .rewards-gc {
+          grid-area: rewards-gc;
+          display: grid;
+          grid-template-columns: 1fr;
+          grid-template-rows: auto minmax(0, 1fr);
+          gap: 1px 1px;
+          grid-template-areas: "." "."; }
+      #forien-quest-preview .quest-body .details .quest-giver-gc div {
+        text-align: center;
+        position: relative; }
+        #forien-quest-preview .quest-body .details .quest-giver-gc div span {
+          font-weight: bold;
+          text-align: center; }
+        #forien-quest-preview .quest-body .details .quest-giver-gc div img {
+          width: 120px;
+          height: 120px;
+          border: none;
+          object-fit: cover;
+          border-radius: 6px; }
+        #forien-quest-preview .quest-body .details .quest-giver-gc div .toggleImage {
+          position: absolute;
+          bottom: 5px;
+          right: 5px; }
+        #forien-quest-preview .quest-body .details .quest-giver-gc div span, #forien-quest-preview .quest-body .details .quest-giver-gc div img, #forien-quest-preview .quest-body .details .quest-giver-gc div .toggleImage {
+          cursor: pointer; }
+      #forien-quest-preview .quest-body .details .description-gc .description {
+        height: 100%;
+        overflow: auto; }
+      #forien-quest-preview .quest-body .details .description-gc .editor {
+        height: 100%; }
+        #forien-quest-preview .quest-body .details .description-gc .editor .editor-content {
+          height: 100%;
+          overflow: auto; }
+      #forien-quest-preview .quest-body .details .del-btn {
+        cursor: pointer;
+        margin-left: 10px; }
+        #forien-quest-preview .quest-body .details .del-btn i {
+          pointer-events: none; }
+      #forien-quest-preview .quest-body .details .tasks-gc .add-new-task {
+        cursor: pointer; }
+      #forien-quest-preview .quest-body .details .tasks-gc .tasks-box {
+        overflow: auto; }
+        #forien-quest-preview .quest-body .details .tasks-gc .tasks-box .task {
+          display: grid;
+          grid-template-columns: 26px auto 18px;
+          gap: 1px 1px;
+          grid-template-areas: ". . .";
+          margin-right: 15px;
+          margin-top: 5px;
+          min-height: 20px; }
+          #forien-quest-preview .quest-body .details .tasks-gc .tasks-box .task .editable-container {
+            display: flex;
+            align-items: center; }
+            #forien-quest-preview .quest-body .details .tasks-gc .tasks-box .task .editable-container .toggleHidden {
+              margin-right: 4px; }
+          #forien-quest-preview .quest-body .details .tasks-gc .tasks-box .task .state-container {
+            position: relative; }
+            #forien-quest-preview .quest-body .details .tasks-gc .tasks-box .task .state-container i.state {
+              top: 2px;
+              left: 3px;
+              font-size: 1.1em; }
+              #forien-quest-preview .quest-body .details .tasks-gc .tasks-box .task .state-container i.state.fa-check, #forien-quest-preview .quest-body .details .tasks-gc .tasks-box .task .state-container i.state.fa-times {
+                position: absolute; }
+              #forien-quest-preview .quest-body .details .tasks-gc .tasks-box .task .state-container i.state.fa-check {
+                color: #229933; }
+              #forien-quest-preview .quest-body .details .tasks-gc .tasks-box .task .state-container i.state.fa-times {
+                color: #993322; }
+              #forien-quest-preview .quest-body .details .tasks-gc .tasks-box .task .state-container i.state.hidden {
+                display: none; }
+            #forien-quest-preview .quest-body .details .tasks-gc .tasks-box .task .state-container i.state-background {
+              top: 1px;
+              font-size: 1.35em;
+              position: absolute;
+              opacity: 0.6; }
+      #forien-quest-preview .quest-body .details .rewards-gc .add-abstract {
+        opacity: 0.7;
+        cursor: pointer; }
+      #forien-quest-preview .quest-body .details .rewards-gc .rewards-box {
+        height: 100%;
+        position: relative;
+        overflow: auto; }
+        #forien-quest-preview .quest-body .details .rewards-gc .rewards-box .drop-info {
+          font-size: 1.6em;
+          font-variant: small-caps;
+          text-align: center;
+          color: #666;
+          margin: 0 20px;
+          position: absolute;
+          top: 50%;
+          transform: translate(0, -50%); }
+        #forien-quest-preview .quest-body .details .rewards-gc .rewards-box .reward {
+          margin-bottom: 2px; }
+          #forien-quest-preview .quest-body .details .rewards-gc .rewards-box .reward img {
+            width: 34px;
+            height: 34px;
+            margin-right: 8px;
+            float: left; }
+          #forien-quest-preview .quest-body .details .rewards-gc .rewards-box .reward .name {
+            line-height: 34px; }
+      #forien-quest-preview .quest-body .details i.fas.toggleHidden {
+        cursor: pointer; }
+        #forien-quest-preview .quest-body .details i.fas.toggleHidden.fa-eye-slash {
+          color: #666; }
+    #forien-quest-preview .quest-body .management {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 1px 1px; }
+      #forien-quest-preview .quest-body .management.active {
+        display: grid; }
+      #forien-quest-preview .quest-body .management .part.personal-quest .quest-is-personal {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto auto;
+        gap: 1px 1px;
+        grid-template-areas: ". ." "desc desc"; }
+        #forien-quest-preview .quest-body .management .part.personal-quest .quest-is-personal label {
+          display: flex;
+          align-items: center; }
+        #forien-quest-preview .quest-body .management .part.personal-quest .quest-is-personal .personal-quest-description {
+          grid-area: desc; }
+      #forien-quest-preview .quest-body .management .part.personal-quest .users {
+        display: grid;
+        grid-auto-rows: auto;
+        grid-template-columns: max-content auto;
+        gap: 1px 1px;
+        padding: 8px; }
+        #forien-quest-preview .quest-body .management .part.personal-quest .users.disabled {
+          color: #666666; }
+    #forien-quest-preview .quest-body .gmnotes {
+      height: 100%; }
+      #forien-quest-preview .quest-body .gmnotes .editor {
+        height: 100%; }
+        #forien-quest-preview .quest-body .gmnotes .editor .editor-content {
+          height: 100%; }
+
+/*# sourceMappingURL=init.css.map */

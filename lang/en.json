@@ -1,71 +1,163 @@
 {
-  "ForienQuestLog.InProgress": "In progress",
-  "ForienQuestLog.Completed": "Completed",
-  "ForienQuestLog.Failed": "Failed",
-  "ForienQuestLog.Hidden": "Hidden",
+  "ForienQuestLog": {
+    "NewQuest": "New Quest",
+    "QuestLogButton": "Quest Log",
+    "Quests": "Quests",
+    "SampleReward": "f.e. 300 Experience Points",
+    "SampleTask": "f.e. Kill all rats in „The Twisted Ankle” inn",
 
-  "ForienQuestLog.Details": "Details",
-  "ForienQuestLog.GMNotes": "GM Notes",
-  "ForienQuestLog.NewQuest": "New Quest",
+    "QuestTypes": {
+      "InProgress": "Active",
+      "Completed": "Completed",
+      "Failed": "Failed",
+      "Hidden": "Hidden"
+    },
 
-  "ForienQuestLog.Notifications.QuestMoved": "Moved quest to new folder and gave it new status: {target}",
+    "Buttons": {
+      "AddNewQuest": "Add new Quest",
+      "AddNewTask": "add new"
+    },
 
-  "ForienQuestLog.Buttons.AddNewQuest": "Add new Quest",
-  "ForienQuestLog.Buttons.AddNewTask": "add new",
+    "QuestForm": {
+      "Title": "Add new Quest",
+      "QuestGiver": "Quest giver",
+      "QuestGiverPlaceholder": "Actor's name or ID",
+      "QuestTitle": "Quest's title",
+      "DragDropActor": "Drag & Drop Actor here to set it as Quest Giver",
+      "QuestDescription": "Quest description",
+      "QuestGMNotes": "GM notes",
+      "Submit": "Submit"
+    },
 
-  "ForienQuestLog.QuestTypes.InProgress": "Active",
-  "ForienQuestLog.QuestTypes.Completed": "Completed",
-  "ForienQuestLog.QuestTypes.Failed": "Failed",
-  "ForienQuestLog.QuestTypes.Hidden": "Hidden",
-  "ForienQuestLog.Quests": "Quests",
-  "ForienQuestLog.QuestGiver": "Quest Giver",
-  "ForienQuestLog.QuestName": "Title",
-  "ForienQuestLog.QuestTasks": "Tasks",
-  "ForienQuestLog.Actions": "Actions",
-  "ForienQuestLog.Objectives": "Objectives",
-  "ForienQuestLog.Rewards": "Rewards",
+    "QuestLog": {
+      "Title": "Quest Log",
+      "Table": {
+        "QuestGiver": "Quest Giver",
+        "QuestTitle": "Title",
+        "Tasks": "Tasks",
+        "Actions": "Actions"
+      },
+      "Tabs": {
+        "Available": "Available",
+        "InProgress": "In progress",
+        "Completed": "Completed",
+        "Failed": "Failed",
+        "Hidden": "Hidden"
+      }
+    },
 
-  "ForienQuestLog.showTasks.Enable": "Show tasks in Quest Log",
-  "ForienQuestLog.showTasks.EnableHint": "Decide if or how to show amount of Tasks (objectives) next to Quest's title in Quest Log. This has no effect on Quest individual preview.",
-  "ForienQuestLog.showTasks.default": "Show tasks: done/total",
-  "ForienQuestLog.showTasks.onlyCurrent": "Show tasks: done",
-  "ForienQuestLog.showTasks.no": "Hide \"tasks\" column",
+    "QuestPreview": {
+      "Title": "Quest Details",
+      "Objectives": "Objectives",
+      "Rewards": "Rewards",
+      "DragDropRewards": "Drag & drop items here to add them as rewards",
+      "InvalidQuestId": "Cannot open Quest's Preview due to invalid Quest ID.",
+      "HeaderButtons": {
+        "Show": "Show Players"
+      },
 
-  "ForienQuestLog.navStyle.Enable": "Navigation style",
-  "ForienQuestLog.navStyle.EnableHint": "Decide how Quest Log's navigation should be displayed.",
-  "ForienQuestLog.navStyle.bookmarks": "Bookmarks",
-  "ForienQuestLog.navStyle.classic": "Classic tabs",
+      "Management": {
+        "IsPersonalQuest": "Is Personal Quest?",
+        "IsPersonalQuestDescription": "Check to mark quest as Personal. It will be invisible to all players except those specifically marked below. Unchecking this option will remove all permissions and move quest to Hidden tab."
+      },
 
-  "ForienQuestLog.titleAlign.Enable": "Quest's title alignment",
-  "ForienQuestLog.titleAlign.EnableHint": "Decide how to position quests' titles in Quest Log's table.",
-  "ForienQuestLog.titleAlign.left": "Aligned to left",
-  "ForienQuestLog.titleAlign.center": "Centered",
+      "Tabs": {
+        "Details": "Details",
+        "QuestManagement": "Manage Quest",
+        "GMNotes": "GM Notes"
+      }
 
-  "ForienQuestLog.QuestLogButton": "Quest Log",
-  "ForienQuestLog.QuestForm.Title": "Add new Quest",
-  "ForienQuestLog.QuestLog.Title": "Quest Log",
-  "ForienQuestLog.QuestPreview.Title": "Quest Details",
+    },
 
-  "ForienQuestLog.QuestForm.QuestGiver": "Quest giver",
-  "ForienQuestLog.QuestForm.QuestGiverPlaceholder": "Actor's name or ID",
-  "ForienQuestLog.QuestForm.QuestTitle": "Quest's title",
-  "ForienQuestLog.QuestForm.QuestDescription": "Quest description",
-  "ForienQuestLog.QuestForm.QuestGMNotes": "GM notes",
-  "ForienQuestLog.QuestForm.Submit": "Submit",
+    "DeleteDialog": {
+      "Title": "Delete {name}",
+      "Header": "Are you sure?",
+      "Body": "This quest and its data will be permanently deleted.",
+      "Delete": "Delete",
+      "Cancel": "Cancel"
+    },
 
-  "ForienQuestLog.SampleTask": "f.e. Kill all rats in „The Twisted Ankle” inn",
-  "ForienQuestLog.DragDropRewards": "Drag & drop items here to add them as rewards",
+    "Notifications": {
+      "CannotOpen": "Cannot open Quest Details. You may lack permissions, Quest might not exist anymore, or provided ID was invalid.",
 
-  "ForienQuestLog.DeleteDialog.Title": "Delete {name}",
-  "ForienQuestLog.DeleteDialog.Header": "Are you sure?",
-  "ForienQuestLog.DeleteDialog.Body": "This quest and its data will be permanently deleted.",
-  "ForienQuestLog.DeleteDialog.Delete": "Delete",
-  "ForienQuestLog.DeleteDialog.Cancel": "Cancel",
+      "QuestMoved": "Moved quest to new folder and gave it new status: {target}"
+    },
 
-  "ForienQuestLog.Tooltips.ToggleImage": "Toggle token/actor image",
-  "ForienQuestLog.Tooltips.SetActive": "Set as In Progress",
-  "ForienQuestLog.Tooltips.SetCompleted": "Set as Completed",
-  "ForienQuestLog.Tooltips.SetFailed": "Set as Failed",
-  "ForienQuestLog.Tooltips.Hide": "Hide",
-  "ForienQuestLog.Tooltips.Delete": "Delete"
+    "Settings": {
+      "allowPlayersDrag": {
+        "Enable": "Allow Players drag Rewards",
+        "EnableHint": "Check to allow Players drag Rewards from Quest's Details window to their Owned Actors."
+      },
+      "availableQuests": {
+        "Enable": "Show Available Tab",
+        "EnableHint": "Check to show new, \"Available\" tab in Quest Log, where players can see all non-hidden Quests before they are accepted."
+      },
+      "navStyle": {
+        "Enable": "Navigation style",
+        "EnableHint": "Decide how Quest Log's navigation should be displayed.",
+        "bookmarks": "Bookmarks",
+        "classic": "Classic tabs"
+      },
+      "showFolder": {
+        "Enable": "Show quest Folder",
+        "EnableHint": "Check to show quest data Folder in Journal tab. For DEBUG purposes only."
+      },
+      "showTasks": {
+        "Enable": "Show tasks in Quest Log",
+        "EnableHint": "Decide if or how to show amount of Tasks (objectives) next to Quest's title in Quest Log. This has no effect on Quest individual preview.",
+        "default": "Show tasks: done/total",
+        "onlyCurrent": "Show tasks: done",
+        "no": "Hide \"tasks\" column"
+      },
+      "titleAlign": {
+        "Enable": "Quest's title alignment",
+        "EnableHint": "Decide how to position quests' titles in Quest Log's table.",
+        "left": "Aligned to left",
+        "center": "Centered"
+      }
+    },
+
+    "Tooltips": {
+      "SetAvailable": "Set as Available",
+      "SetActive": "Set as In Progress",
+      "SetCompleted": "Set as Completed",
+      "SetFailed": "Set as Failed",
+      "Hide": "Hide",
+      "Delete": "Delete",
+      "AddAbstractReward": "Add abstract reward",
+      "PersonalQuestButNoPlayers": "This is personal quest, but nobody sees it",
+      "PersonalQuestVisibleFor": "This is personal quest for",
+      "RewardHidden": "Reward is Hidden. Click to show.",
+      "RewardVisible": "Reward is Visible. Click to hide.",
+      "TaskHidden": "Task is Hidden. Click to show.",
+      "TaskVisible": "Task is Visible. Click to hide.",
+      "ToggleImage": "Toggle token/actor image"
+    },
+
+    "Api": {
+      "__COMMENT__": "No need for translating lines starting with 'API ERROR', they show in console for developers only.",
+      "create": {
+        "title": "API Error: Title property is required to create new Quest"
+      },
+      "hooks": {
+        "createOpenQuestMacro": {
+          "name": "Open „{name}” Quest",
+          "error": {
+            "noQuest": "API Error: Can't create macro with invalid Quest ID"
+          }
+        }
+      },
+      "reward": {
+        "create": {
+          "data": "API Error: Data property with at least {name, img} is required to create new Reward",
+          "type": "API Error: Type property is required to create new Reward"
+        }
+      },
+      "task": {
+        "create": {
+          "name": "API Error: Name property is required to create new Task"
+        }
+      }
+    }
+  }
 }

@@ -1,0 +1,95 @@
+<!--
+/**
+ * Based on https://github.com/Moerill/mess
+ * with permission from Moerill
+ */
+-->
+<style>
+    .welcome-screen a[href] {
+        color: #4a52ca;
+    }
+    .welcome-screen .window-content > * {
+        flex: 0;
+    }
+    {{#if wfrp4e}}
+    .welcome-screen .window-content {
+        background: url("/ui/parchment.jpg") repeat !important;
+    }
+    {{/if}}
+</style>
+
+<h1>Thank you for installing and using Forien's Quest Log!</h1>
+<p>Make sure to read the <a href="https://github.com/Forien/foundryvtt-forien-quest-log/blob/master/README.md">README</a>, for important information and to learn about this module's features.</p>
+<h2>Bugs?</h2>
+<p>Check <a href="https://github.com/Forien/foundryvtt-forien-quest-log/issuess?q=is%3Aopen+is%3Aissue+label%3Abug">current list of bugs</a> and if yours is not covered there, create new Issue using Bug Report template.
+<h2>Suggestions? Feature Requests? Feedback?</h2>
+<p>Don't ask me on Discord. Use the <a href="https://github.com/Forien/foundryvtt-forien-quest-log/issues">GitHubs Issue Board</a> for questions, suggestions, bugs, helping other peoples questions getting answered, etc.</p>
+<p>Before you post anything, check the issues board first if your issue, question, etc. has been posted already. If yes, comment on the existing post and/or give it a thumbsup!</p>
+<p>Currently planned features are on the <a href="https://github.com/Forien/foundryvtt-forien-quest-log/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement">GitHubs Issue Board</a> as well. </p>
+
+<p style="font-weight: bold; text-align: right;">Best regards, <br>Forien</p>
+
+<p style="display: flex; flex-flow: row nowrap; align-items: center; justify-content: flex-start;"><input type="checkbox" class='show-again' id="welcome-screen-show-again"/> <label for="welcome-screen-show-again">Don't show this screen again until next update.</label></p>
+<p style="text-align: right">Want to support development? <a href="https://github.com/Forien/foundryvtt-forien-quest-log#support">Click here</a>!</p>
+
+<h1>Changelog</h1>
+<!-- https://markdowntohtml.com/ -->
+<h2 id="v0-3-0">v0.3.0</h2>
+<ul>
+    <li>Added „Personal Quests”, a feature that allows GM to show any Quest to only specific player(s).</li>
+    <li>Added Entity linking to Tasks (for example <code>@Actor[Vash]</code> or <code>@Item[Cursed Sword]</code>).<ul>
+        <li>Fixed Entity linking in Description for players.</li>
+    </ul>
+    </li>
+    <li>Added „Available Tab” as an optional setting. Redone actions so they make more sense in their context.</li>
+    <li>Added option allowing GM to hide any Task and Reward from players.</li>
+    <li>Added &quot;Abstract&quot; type Rewards, which are not &quot;Item&quot; entities, are not draggable, but can have any name and image applied to them. </li>
+    <li>Added optional Settings option that when checked, allows Players to drag Rewards onto their Actor sheets. (disabled by default)</li>
+    <li>Added "Show Players" button for Quest Details, that will force open Quests Details for all players that have permission to see it.</li>
+    <li>Hidden journal folder for quest data even for GM. Can be turned on back in settings.</li>
+    <li>Changed some module settings to be client-side (centering titles, way of rendering bookmarks).</li>
+    <li>Styling adjustments, including:<ul>
+        <li>Fixed floating checkmarks for tasks when tasks overflow box. </li>
+        <li>Added visible indication of each Task to help players distinguish separate tasks.</li>
+        <li>Changed the way Quest Log is scrolling with many quests.</li>
+        <li>Added scrolling to Tasks and Rewards, because people are crazy.</li>
+    </ul>
+    </li>
+    <li>Created API at <code>game.quests</code> for use in Macros and Modules.</li>
+    <li>Using API, allowed to drag&amp;drop Quests from Quest Log onto Hotbar to create an &quot;Open Quest&quot; macro. </li>
+    <li>Provided code comment blocks for most Functions. Not yet a Documentation, but could help those who peek at my module to learn. </li>
+</ul>
+<h2 id="v0-2-x">v0.2.X</h2>
+<h4 id="v0-2-4">v0.2.4</h4>
+<ul>
+    <li>Added German translation provided by Discord member Acd-Jake</li>
+</ul>
+<h4 id="v0-2-3">v0.2.3</h4>
+<ul>
+    <li>Added Japanese translation provided by Discord member Brother Sharp</li>
+    <li>Added option to sort Quest Log</li>
+    <li>Hidden &quot;add new task&quot; from players</li>
+    <li>Added option to change rendering style of tabs</li>
+    <li>Added module setting for centering titles in Quest Log</li>
+    <li>Added Actor&#39;s name as a tooltip in Quest Log</li>
+</ul>
+<h4 id="v0-2-2">v0.2.2</h4>
+<ul>
+    <li>Allowed to change quest giver to existing quest by draggin new actor onto preview</li>
+    <li>Widened and squished Tasks and Rewards boxes respectively to allow better space management</li>
+    <li>Added word wrapping for tasks</li>
+    <li>Fixed distorted Quest Giver&#39;s images</li>
+    <li>Moved window initialization to &#39;ready&#39; hook to fix translation</li>
+</ul>
+<h4 id="v0-2-1">v0.2.1</h4>
+<ul>
+    <li>Fully prepared module for translation - all strings should be translatable</li>
+    <li>Added scroll for overflowing quest&#39;s description</li>
+    <li>Added toggle between Actor&#39;s/Token&#39;s image for Quest Giver&#39;s image</li>
+    <li>Added failed state for tasks</li>
+    <li>Translated to Polish</li>
+</ul>
+<h4 id="v0-2-0">v0.2.0</h4>
+<ul>
+    <li>Initial release</li>
+</ul>

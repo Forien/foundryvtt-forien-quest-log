@@ -1,0 +1,106 @@
+#forien-quest-log-form {
+  .grid-container {
+    display: grid;
+    grid-template-columns: 50% 50fr;
+    grid-template-rows: auto 240px 217px auto;
+    gap: 1px 1px;
+    grid-template-areas: ". ." ". ." "tasks tasks" "footer footer";
+
+    .tasks {
+      grid-area: tasks;
+    }
+
+    .footer {
+      grid-area: footer;
+    }
+  }
+
+
+  fieldset {
+    box-sizing: border-box;
+    margin: 0;
+
+    &.actor-data-fieldset {
+      height: 100%;
+      position: relative;
+
+      .drop-info {
+        font-size: 1.4em;
+        font-variant: small-caps;
+        text-align: center;
+        color: #666;
+        opacity: 0.7;
+        margin: 0 20px;
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+        padding: 0 10%;
+      }
+
+      img {
+        &.actor-portrait {
+          width: 82px;
+          height: 82px;
+          border: none;
+          float: left;
+          margin-right: 12px;
+          object-fit: cover;
+        }
+      }
+
+      h3 {
+        &.actor-name {
+          line-height: 82px;
+          margin: 0;
+        }
+      }
+
+      .hidden {
+        display: none;
+      }
+    }
+
+    &.tasks {
+      margin-top: 10px;
+      border: none;
+      overflow: hidden;
+
+      .add-new-task {
+        cursor: pointer;
+      }
+
+      .list {
+        overflow-y: scroll;
+        height: calc(100% - 35px);
+
+        .task-entry {
+          input {
+            width: 97%;
+            margin: 4px;
+          }
+
+          .del-btn {
+            cursor: pointer;
+
+            .fa-times {
+              pointer-events: none;
+            }
+          }
+        }
+      }
+    }
+
+    &.tinymce-fieldset {
+      min-height: 240px;
+      border: none;
+
+      .editor {
+        height: 100%;
+
+        .editor-content {
+          height: 100%;
+        }
+      }
+    }
+  }
+}
