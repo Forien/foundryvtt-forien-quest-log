@@ -4,8 +4,8 @@ export default class ModuleSettings {
    */
   static register() {
     game.settings.register("forien-quest-log", "showFolder", {
-      name: "ForienQuestLog.showFolder.Enable",
-      hint: "ForienQuestLog.showFolder.EnableHint",
+      name: "ForienQuestLog.Settings.showFolder.Enable",
+      hint: "ForienQuestLog.Settings.showFolder.EnableHint",
       scope: "world",
       config: true,
       default: false,
@@ -14,80 +14,80 @@ export default class ModuleSettings {
     });
 
     game.settings.register("forien-quest-log", "availableQuests", {
-      name: "ForienQuestLog.availableQuests.Enable",
-      hint: "ForienQuestLog.availableQuests.EnableHint",
+      name: "ForienQuestLog.Settings.availableQuests.Enable",
+      hint: "ForienQuestLog.Settings.availableQuests.EnableHint",
       scope: "world",
       config: true,
       default: false,
       type: Boolean,
       onChange: value => {
-        if (game.questlog && game.questlog.rendered)
-          game.questlog.render();
+        if (QuestLog && QuestLog.rendered)
+          QuestLog.render();
       }
     });
 
     game.settings.register("forien-quest-log", "allowPlayersDrag", {
-      name: "ForienQuestLog.allowPlayersDrag.Enable",
-      hint: "ForienQuestLog.allowPlayersDrag.EnableHint",
+      name: "ForienQuestLog.Settings.allowPlayersDrag.Enable",
+      hint: "ForienQuestLog.Settings.allowPlayersDrag.EnableHint",
       scope: "world",
       config: true,
       default: false,
       type: Boolean,
       onChange: value => {
-        if (game.questlog && game.questlog.rendered)
-          game.questlog.render();
+        if (QuestLog && QuestLog.rendered)
+          QuestLog.render();
       }
     });
 
     game.settings.register("forien-quest-log", "showTasks", {
-      name: "ForienQuestLog.showTasks.Enable",
-      hint: "ForienQuestLog.showTasks.EnableHint",
+      name: "ForienQuestLog.Settings.showTasks.Enable",
+      hint: "ForienQuestLog.Settings.showTasks.EnableHint",
       scope: "world",
       config: true,
       default: "default",
       type: String,
       choices: {
-        "default": "ForienQuestLog.showTasks.default",
-        "onlyCurrent": "ForienQuestLog.showTasks.onlyCurrent",
-        "no": "ForienQuestLog.showTasks.no"
+        "default": "ForienQuestLog.Settings.showTasks.default",
+        "onlyCurrent": "ForienQuestLog.Settings.showTasks.onlyCurrent",
+        "no": "ForienQuestLog.Settings.showTasks.no"
       },
       onChange: value => {
-        if (game.questlog && game.questlog.rendered)
-          game.questlog.render();
+        if (QuestLog && QuestLog.rendered)
+          QuestLog.render();
       }
     });
 
     game.settings.register("forien-quest-log", "navStyle", {
-      name: "ForienQuestLog.navStyle.Enable",
-      hint: "ForienQuestLog.navStyle.EnableHint",
+      name: "ForienQuestLog.Settings.navStyle.Enable",
+      hint: "ForienQuestLog.Settings.navStyle.EnableHint",
       scope: "client",
       config: true,
       default: "bookmarks",
       type: String,
       choices: {
-        "bookmarks": "ForienQuestLog.navStyle.bookmarks",
-        "classic": "ForienQuestLog.navStyle.classic"
+        "bookmarks": "ForienQuestLog.Settings.navStyle.bookmarks",
+        "classic": "ForienQuestLog.Settings.navStyle.classic"
       },
       onChange: value => {
-        if (game.questlog && game.questlog.rendered)
-          game.questlog.render();
+        if (QuestLog && QuestLog.rendered)
+          QuestLog.render();
       }
     });
 
     game.settings.register("forien-quest-log", "titleAlign", {
-      name: "ForienQuestLog.titleAlign.Enable",
-      hint: "ForienQuestLog.titleAlign.EnableHint",
+      name: "ForienQuestLog.Settings.titleAlign.Enable",
+      hint: "ForienQuestLog.Settings.titleAlign.EnableHint",
       scope: "client",
       config: true,
       default: "left",
       type: String,
       choices: {
-        "left": "ForienQuestLog.titleAlign.left",
-        "center": "ForienQuestLog.titleAlign.center"
+        "left": "ForienQuestLog.Settings.titleAlign.left",
+        "center": "ForienQuestLog.Settings.titleAlign.center"
       },
       onChange: value => {
-        if (game.questlog && game.questlog.rendered)
-          game.questlog.render();
+        if (QuestLog && QuestLog.rendered)
+          QuestLog.render();
       }
     });
   }

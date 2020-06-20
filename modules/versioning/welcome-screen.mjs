@@ -21,6 +21,12 @@ class WelcomeScreen extends Application {
     });
   }
 
+  getData(options = {}) {
+    options = super.getData(options);;
+    options.wfrp4e = game.system.data.name === 'wfrp4e';
+    return options;
+  }
+
   activateListeners(html) {
     super.activateListeners(html);
 

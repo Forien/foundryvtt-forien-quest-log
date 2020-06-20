@@ -50,13 +50,15 @@ export default class QuestLog extends Application {
    *
    * @param target
    */
-  toggleSort(target) {
+  toggleSort(target, direction = undefined) {
     if (this.sortBy === target) {
       this.sortDirection = (this.sortDirection === 'desc') ? 'asc' : 'desc';
     } else {
       this.sortBy = target;
       this.sortDirection = 'asc';
     }
+    if (direction !== undefined && (direction === 'asc' || direction === 'desc'))
+      this.sortDirection = direction;
 
     this.render(true);
   }

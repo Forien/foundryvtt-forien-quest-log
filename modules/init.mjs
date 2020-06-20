@@ -1,13 +1,13 @@
 import registerApiHooks from "./api/hooks.js";
 import QuestApi from "./api/quest-api.mjs";
-import ModuleSettings from "./utility/config.mjs";
+import QuestLogClass from "./apps/quest-log.mjs";
+import constants from "./constants.mjs";
 import QuestFolder from "./entities/quest-folder.mjs";
-import QuestLog from "./apps/quest-log.mjs";
+import ModuleSettings from "./utility/config.mjs";
 import Socket from "./utility/socket.mjs";
 import Utils from "./utility/utils.mjs";
 import VersionCheck from "./versioning/version-check.mjs";
 import renderWelcomeScreen from "./versioning/welcome-screen.mjs";
-import constants from "./constants.mjs";
 
 
 Hooks.once('init', () => {
@@ -15,25 +15,27 @@ Hooks.once('init', () => {
 
   Utils.preloadTemplates();
 
-  // Allow and process incoming socket data
-  Socket.listen();
+  window.Quests = QuestApi;
+
+  Hooks.call("ForienQuestLog.afterInit");
 });
 
 Hooks.once("ready", () => {
-  if (!game.questlog)
-    game.questlog = new QuestLog();
+  window.QuestLog = new QuestLogClass();
 
-  if (game.questlog)
-    QuestFolder.initializeJournals();
-
-  if (!game.quests)
-    game.quests = QuestApi;
-
-  registerApiHooks();
+  QuestFolder.initializeJournals();
 
   if (VersionCheck.check(constants.moduleName)) {
     renderWelcomeScreen();
+    Utils.updateMacros();
   }
+
+  registerApiHooks();
+
+  // Allow and process incoming socket data
+  Socket.listen();
+
+  Hooks.call("ForienQuestLog.afterReady");
 });
 
 Hooks.on("renderJournalDirectory", (app, html, data) => {
@@ -46,7 +48,7 @@ Hooks.on("renderJournalDirectory", (app, html, data) => {
   footer.append(button);
 
   button.click(ev => {
-    game.questlog.render(true)
+    QuestLog.render(true)
   });
 
   if (!(game.user.isGM && game.settings.get('forien-quest-log', 'showFolder'))) {

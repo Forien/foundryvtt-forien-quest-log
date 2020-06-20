@@ -1,8 +1,8 @@
 <section class="part personal-quest">
     <div class="quest-is-personal">
         <input id="personal-quest" type="checkbox" class="personal" {{checked personal}}>
-        <label for="personal-quest">{{localize 'ForienQuestLog.IsPersonalQuest'}}</label>
-        <small class="personal-quest-description">{{localize 'ForienQuestLog.IsPersonalQuestDescription'}}</small>
+        <label for="personal-quest">{{localize 'ForienQuestLog.QuestPreview.Management.IsPersonalQuest'}}</label>
+        <small class="personal-quest-description">{{localize 'ForienQuestLog.QuestPreview.Management.IsPersonalQuestDescription'}}</small>
     </div>
     <div class="users {{#unless personal}}disabled{{/unless}}">
     {{#each users}}

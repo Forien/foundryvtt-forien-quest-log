@@ -22,7 +22,7 @@
             {{/if}}
         </div>
         <div class="tasks-gc">
-            <h3>{{localize 'ForienQuestLog.Objectives'}} {{#if isGM}}| <small class="add-new-task">{{localize 'ForienQuestLog.Buttons.AddNewTask'}}</small>{{/if}}</h3>
+            <h3>{{localize 'ForienQuestLog.QuestPreview.Objectives'}} {{#if isGM}}| <small class="add-new-task">{{localize 'ForienQuestLog.Buttons.AddNewTask'}}</small>{{/if}}</h3>
             <div class="tasks-box">
                 {{#each tasks}}
                 <div class="task">
@@ -53,10 +53,10 @@
             </div>
         </div>
         <div class="rewards-gc">
-            <h3>{{localize 'ForienQuestLog.Rewards'}}{{#if isGM}} | <small><i class="fas fa-plus-circle add-abstract" title="{{localize 'ForienQuestLog.Tooltips.AddAbstractReward'}}"></i></small>{{/if}}</h3>
+            <h3>{{localize 'ForienQuestLog.QuestPreview.Rewards'}}{{#if isGM}} | <small><i class="fas fa-plus-circle add-abstract" title="{{localize 'ForienQuestLog.Tooltips.AddAbstractReward'}}"></i></small>{{/if}}</h3>
             <div class="rewards-box">
                 {{#if noRewards}}
-                <span class="drop-info">{{localize 'ForienQuestLog.DragDropRewards'}}</span>
+                <span class="drop-info">{{localize 'ForienQuestLog.QuestPreview.DragDropRewards'}}</span>
                 {{else}}
                     {{#each rewards}}
                         <div class="reward {{type}}-reward {{#if (and ../isGM draggable)}}draggable{{/if}}" {{#if (and ../isGM draggable)}}data-transfer="{{transfer}}" draggable="true"{{/if}}>

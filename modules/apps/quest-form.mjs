@@ -93,7 +93,7 @@ export default class QuestForm extends FormApplication {
       content: JSON.stringify(data),
       folder: folder._id
     }).then(() => {
-      game.questlog.render(true);
+      QuestLog.render(true);
       // players don't see Hidden tab, but assistant GM can, so emit anyway
       Socket.refreshQuestLog();
     });

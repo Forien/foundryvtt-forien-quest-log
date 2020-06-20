@@ -26,4 +26,19 @@ export default  class Utils {
     templates = templates.map(t => `modules/forien-quest-log/${t}`);
     loadTemplates(templates);
   }
+
+  /**
+   * Update Macros to use new global API
+   */
+  static updateMacros() {
+    let macros = game.macros.filter(e => e.visible);
+
+    macros.forEach((macro) => {
+      let data = duplicate(macro);
+      data.command = data.command.replace(/game\.questlog\./g, 'QuestLog.');
+      data.command = data.command.replace(/game\.quests\./g, 'Quests.');
+
+      macro.update(data);
+    });
+  }
 };

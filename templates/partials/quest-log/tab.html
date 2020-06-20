@@ -3,13 +3,13 @@
     <table>
         <thead>
         <tr>
-            <th class="quest-giver-col sortable" data-sort="actor">{{localize 'ForienQuestLog.QuestGiver'}}</th>
-            <th class="title-col sortable" data-sort="title">{{localize 'ForienQuestLog.QuestName'}}</th>
+            <th class="quest-giver-col sortable" data-sort="actor">{{localize 'ForienQuestLog.QuestLog.Table.QuestGiver'}}</th>
+            <th class="title-col sortable" data-sort="title">{{localize 'ForienQuestLog.QuestLog.Table.QuestTitle'}}</th>
             {{#unless (eq showTasks 'no')}}
-            <th class="tasks-col sortable" data-sort="checkedTasks">{{localize 'ForienQuestLog.QuestTasks'}}</th>
+            <th class="tasks-col sortable" data-sort="checkedTasks">{{localize 'ForienQuestLog.QuestLog.Table.Tasks'}}</th>
             {{/unless}}
             {{#if isGM}}
-            <th class="actions-col">{{localize 'ForienQuestLog.Actions'}}</th>
+            <th class="actions-col">{{localize 'ForienQuestLog.QuestLog.Table.Actions'}}</th>
             {{/if}}
         </tr>
         </thead>

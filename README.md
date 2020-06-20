@@ -38,6 +38,22 @@ You can **always** check current and up-to-date [planned and requested features 
 
 *If you have **any** suggestion or idea on new contents, hit me up on Discord!*
 
+## Translations
+
+If you are interested in translating my module, simply make a new Pull Request with your changes, or contact me on Discord.
+
+#### How to translate
+
+I maintain both English and Polish translation of this module, so you check on those two to see how translation file can look like. It can be either expanded (nested) JSON like English, or flat JSON like Polish.
+
+Order of Localization Strings inside a `.json` file is indifferent. 
+
+Localization file **must be** either completely flat, or completely expanded (nested). Not partially both. 
+
+#### What is `missing` Folder?
+
+The `lang/missing/` folder contains files for all languages showing all Localization Strings that are in the Module, but are not covered by that Language. For example, there are 6 strings not covered by Polish language, but since they are simply `API Error` messages, there is no need.  
+
 
 ## Contact
 
@@ -50,7 +66,6 @@ If you wish to contact me for any reason, reach me out on Discord using my tag: 
 * Thanks to necxelos, TomChristoffer and Kralug for their massive lists of suggestions
 * Thanks to Brother Sharp for providing Japanese translation
 * Thanks to Acd-Jake for providing German translation
-* Thanks to Logmelna for providing French translation
 
 ## Support
 

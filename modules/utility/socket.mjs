@@ -1,3 +1,5 @@
+import QuestApi from "../api/quest-api.mjs";
+
 export default class Socket {
   static refreshQuestLog() {
     game.socket.emit("module.forien-quest-log", {
@@ -26,21 +28,21 @@ export default class Socket {
   static listen() {
     game.socket.on("module.forien-quest-log", data => {
       if (data.type === "questLogRefresh") {
-        if (game.questlog.rendered)
-          game.questlog.render(true);
+        if (QuestLog.rendered)
+          QuestLog.render(true);
       } else if (data.type === "questPreviewRefresh") {
         if (game.questPreview !== undefined) {
           if (game.questPreview.quest.id === data.payload.questId)
             game.questPreview.render(true);
         }
 
-        if (game.questlog.rendered)
-          game.questlog.render(true);
+        if (QuestLog.rendered)
+          QuestLog.render(true);
       } else if (data.type === "showQuestPreview") {
         if (game.questPreview !== undefined)
-          game.questPreview.close().then( () => game.quests.open(data.payload.questId));
+          game.questPreview.close().then( () => QuestApi.open(data.payload.questId, false));
         else
-          game.quests.open(data.payload.questId);
+          QuestApi.open(data.payload.questId, false);
       }
     });
   }

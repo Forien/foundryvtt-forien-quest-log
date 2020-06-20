@@ -140,8 +140,8 @@ export default class QuestPreview extends FormApplication {
    */
   async refresh() {
     this.render(true);
-    if (game.questlog.rendered)
-      game.questlog.render(true);
+    if (QuestLog.rendered)
+      QuestLog.render(true);
     Socket.refreshQuestPreview(this.quest.id);
   }
 

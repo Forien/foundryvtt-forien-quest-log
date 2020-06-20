@@ -21,13 +21,15 @@ export default class QuestApi {
    * Opens Quest Details for given quest ID
    *
    * @param questId
+   * @param notif
    */
-  static open(questId) {
+  static open(questId, notif = true) {
     try {
       let questPreview = new QuestPreview(questId);
       questPreview.render(true);
     } catch (error) {
-      ui.notifications.error(game.i18n.localize("ForienQuestLog.Api.open"), {});
+      if (notif)
+        ui.notifications.error(game.i18n.localize("ForienQuestLog.Notifications.CannotOpen"), {});
     }
   }
 

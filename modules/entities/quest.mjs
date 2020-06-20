@@ -1,8 +1,8 @@
+import Socket from "../utility/socket.mjs";
+import Utils from "../utility/utils.mjs";
 import QuestFolder from "./quest-folder.mjs";
 import Reward from "./reward.mjs";
-import Socket from "../utility/socket.mjs";
 import Task from "./task.mjs";
-import Utils from "../utility/utils.mjs";
 
 /**
  * Class that acts "kind of" like Entity, to help Manage everything Quest Related
@@ -219,10 +219,13 @@ export default class Quest {
     let actor = Utils.findActor(content.actor);
     let isGM = game.user.isGM;
     let canPlayerDrag = game.settings.get("forien-quest-log", "allowPlayersDrag");
-    if (actor !== false)
+    if (actor !== false) {
       content.actor = duplicate(actor);
-    if (content.image === 'token')
-      content.actor.img = actor.data.token.img;
+      if (content.image === 'token')
+        content.actor.img = actor.data.token.img;
+    } else {
+      content.actor = false;
+    }
 
     content.checkedTasks = content.tasks.filter(t => t.completed).length;
     content.totalTasks = content.tasks.length;
@@ -258,7 +261,7 @@ export default class Quest {
 
       if (content.hidden && isGM && content.personal) {
         content.hidden = false;
-        let users = [`${game.i18n.localize('ForienQuestLog.PersonalQuestVisibleFor')}:`];
+        let users = [`${game.i18n.localize('ForienQuestLog.Tooltips.PersonalQuestVisibleFor')}:`];
 
         for (let perm in entry.data.permission) {
           if (perm === 'default') continue;
@@ -271,7 +274,7 @@ export default class Quest {
         if (users.length > 1) {
           content.users = users.join('\r');
         } else {
-          content.users = game.i18n.localize('ForienQuestLog.PersonalQuestButNoPlayers');
+          content.users = game.i18n.localize('ForienQuestLog.Tooltips.PersonalQuestButNoPlayers');
         }
       }
     }
@@ -353,7 +356,7 @@ export default class Quest {
       completed: "ForienQuestLog.QuestTypes.Completed",
       failed: "ForienQuestLog.QuestTypes.Failed",
       hidden: "ForienQuestLog.QuestTypes.Hidden",
-      available: "ForienQuestLog.Available"
+      available: "ForienQuestLog.QuestLog.Tabs.Available"
     }
   }
 
@@ -415,7 +418,7 @@ export default class Quest {
     let folder = QuestFolder.get(target);
 
     journal.update({folder: folder._id, "permission": permission}).then(() => {
-      game.questlog.render(true);
+      QuestLog.render(true);
       Socket.refreshQuestLog();
       let dirname = game.i18n.localize(this.getQuestTypes()[origTarget]);
       ui.notifications.info(game.i18n.format("ForienQuestLog.Notifications.QuestMoved", {target: dirname}), {});
@@ -461,8 +464,8 @@ export default class Quest {
     let entry = game.journal.get(questId);
 
     entry.delete().then(() => {
-      if (game.questlog.rendered)
-        game.questlog.render(true);
+      if (QuestLog.rendered)
+        QuestLog.render(true);
       Socket.refreshQuestLog();
     });
   }

@@ -14,7 +14,7 @@ export default function registerApiHooks() {
       if (!quest)
         throw new Error(game.i18n.localize("ForienQuestLog.Api.hooks.createOpenQuestMacro.error.noQuest"));
 
-      let command = `game.quests.open("${questId}");`;
+      let command = `Quests.open("${questId}");`;
       let macroData = {
         name: game.i18n.format("ForienQuestLog.Api.hooks.createOpenQuestMacro.name", {name: quest.title}),
         type: "script",
