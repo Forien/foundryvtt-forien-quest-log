@@ -1,5 +1,5 @@
 # FoundryVTT - Forien's Quest Log
-![GitHub Releases](https://img.shields.io/github/downloads/Forien/foundryvtt-forien-quest-log/latest/total)
+![GitHub Releases](https://img.shields.io/github/downloads/Forien/foundryvtt-forien-quest-log/latest/total)  
 **[Current version]**: v0.3.1   
 **[Compatibility]**: *FoundryVTT* 0.6.0+  
 **[Systems]**: *any*  
