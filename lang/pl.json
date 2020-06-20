@@ -12,6 +12,7 @@
 
   "ForienQuestLog.Notifications.QuestMoved": "Przeniesiono misję do nowego folderu, a jej nowy status to: {target}",
   "ForienQuestLog.Notifications.CannotOpen": "Nie można otworzyć okna Misji, gdyż ona nie istnieje, podane ID jest niepoprawne, lub najzwyczajniej nie masz uprawnień do jej wyświetlenia",
+  "ForienQuestLog.Notifications.UserCantOpen": "Użytkownik {user} nie posiada uprawnień do otwarcia tej Misji.",
 
   "ForienQuestLog.Buttons.AddNewQuest": "Dodaj nową misję",
   "ForienQuestLog.Buttons.AddNewTask": "dodaj",

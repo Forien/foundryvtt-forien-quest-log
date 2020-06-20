@@ -25,6 +25,15 @@ export default class Socket {
     })
   }
 
+  static userCantOpenQuest(){
+    game.socket.emit("module.forien-quest-log", {
+      type: "userCantOpenQuest",
+      payload: {
+        user: game.user.name
+      }
+    })
+  }
+
   static listen() {
     game.socket.on("module.forien-quest-log", data => {
       if (data.type === "questLogRefresh") {
@@ -43,7 +52,11 @@ export default class Socket {
           game.questPreview.close().then( () => QuestApi.open(data.payload.questId, false));
         else
           QuestApi.open(data.payload.questId, false);
-      }
+      } else if (data.type === "userCantOpenQuest") {
+        if (game.user.isGM) {
+          ui.notifications.warn(game.i18n.format("ForienQuestLog.Notifications.UserCantOpen", {user: data.payload.user}), {});
+        }
+        }
     });
   }
 };
