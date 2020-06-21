@@ -307,6 +307,9 @@
             float: left; }
           #forien-quest-preview .quest-body .details .rewards-gc .rewards-box .reward .name {
             line-height: 34px; }
+          #forien-quest-preview .quest-body .details .rewards-gc .rewards-box .reward.abstract-reward {
+            opacity: 0.85;
+            font-style: italic; }
       #forien-quest-preview .quest-body .details i.fas.toggleHidden {
         cursor: pointer; }
         #forien-quest-preview .quest-body .details i.fas.toggleHidden.fa-eye-slash {

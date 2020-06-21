@@ -233,6 +233,11 @@
             .name {
               line-height: 34px;
             }
+
+            &.abstract-reward {
+              opacity: 0.85;
+              font-style: italic;
+            }
           }
         }
       }

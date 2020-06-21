@@ -1,0 +1,164 @@
+{
+  "ForienQuestLog": {
+    "NewQuest": "Nouvelle quête",
+    "QuestLogButton": "Journal des quêtes",
+    "Quests": "Quêtes",
+    "SampleReward": "ex : 300 Points d’Expérience",
+    "SampleTask": "ex : Tuer tous les rats dans l’Auberge de „La cheville tordue” ",
+
+    "QuestTypes": {
+      "InProgress": "En cours",
+      "Completed": "Achevée",
+      "Failed": "Échouée",
+      "Hidden": "Cachée"
+    },
+
+    "Buttons": {
+      "AddNewQuest": "Ajouter nouvelle Quête",
+      "AddNewTask": "Ajouter nouvelle Tâche"
+    },
+
+    "QuestForm": {
+      "Title": "Ajouter nouvelle Quête",
+      "QuestGiver": "Commanditaire",
+      "QuestGiverPlaceholder": "Nom ou ID du commanditaire",
+      "QuestTitle": "Nom de la Quête",
+      "DragDropActor": "Glisser/Déposer un acteur ici pour en faire un commanditaire",
+      "QuestDescription": "Description de la quête",
+      "QuestGMNotes": "Notes du MJ",
+      "Submit": "Valider"
+    },
+
+    "QuestLog": {
+      "Title": "Journal de Quête",
+      "Table": {
+        "QuestGiver": "Commanditaire",
+        "QuestTitle": "Nom de la Quête",
+        "Tasks": "Tâche(s)",
+        "Actions": "Actions"
+      },
+      "Tabs": {
+        "Available": "Disponible",
+        "InProgress": "En cours",
+        "Completed": "Achevée",
+        "Failed": "Échouée",
+        "Hidden": "Cachée"
+      }
+    },
+
+    "QuestPreview": {
+      "Title": "Détails sur la quête",
+      "Objectives": "Objectifs",
+      "Rewards": "Récompenses",
+      "DragDropRewards": "Glisser/Déposer les objets ici pour en faire des récompenses",
+      "InvalidQuestId": "Ne peut ouvrir la prévisualisation de la quête en raison d’une ID de Quête invalide.",
+      "HeaderButtons": {
+        "Show": "Montrer aux joueurs"
+      },
+
+      "Management": {
+        "IsPersonalQuest": "Est-ce une quête personnelle ?",
+        "IsPersonalQuestDescription": "Cocher pour donner à la quête un personnage. Cela sera invisible pour tous les joueurs sauf ceux spécifiquement marqués ci-dessous. Décocher cette option retirera toutes les permissions et déplacera la quête dans l’onglet Cachée."
+      },
+
+      "Tabs": {
+        "Details": "Détails",
+        "QuestManagement": "Modifier la Quête",
+        "GMNotes": "Notes MJ"
+      }
+
+    },
+
+    "DeleteDialog": {
+      "Title": "Effacer {name}",
+      "Header": "Êtes-vous sûr ?",
+      "Body": "Cette quête et ces données seront effacées définitivement.",
+      "Delete": "Effacer",
+      "Cancel": "Annuler"
+    },
+
+    "Notifications": {
+      "CannotOpen": "Ne peut ouvrir les détails de la Quête. Soit vous n’avez pas la permission, soit la quête n’existe plus ou l’ID fournie était invalide.",
+      "UserCantOpen": "L'utilisateur {user} n’a pas la permission d'ouvrir cette quête.",
+
+      "QuestMoved": "Quête déplacée dans un nouveau dossier avec un nouveau : {target}"
+    },
+
+    "Settings": {
+      "allowPlayersDrag": {
+        "Enable": "Permettre aux joueurs de récupérer les récompenses",
+        "EnableHint": "Cocher pour autoriser les joueurs à récupérer les récompenses de la fenêtre Détails de la quête à leur propres Acteurs."
+      },
+      "availableQuests": {
+        "Enable": "Montre l’onglet disponible",
+        "EnableHint": "Cocher pour montrer un nouvelle onglet \"Disponible\" dans le journal des quêtes, où les joueurs pourront voir toutes les quêtes non-cachées avant qu’elles soient acceptées."
+      },
+      "navStyle": {
+        "Enable": "Style de navigation ",
+        "EnableHint": "Décider comment la navigation dans le journal de quête sera affichée.",
+        "bookmarks": "Marque-page",
+        "classic": "Onglets classiques"
+      },
+      "showFolder": {
+        "Enable": "Montre le dossier des quêtes",
+        "EnableHint": "Cocher pour montrer le dossier des données de quête dans l’onglet Journal. Seulement pour DÉBUGGER."
+      },
+      "showTasks": {
+        "Enable": "Montre les tâches dans le Journal de quête",
+        "EnableHint": "Décide si ou comment montrer le montant des tâches (objectifs) à côté du titre de la Quête dans le journal de quête. Cela n’a pas d’effet sur la prévisualisation de la Quête individuelle.",
+        "default": "montre les tâches : effectuées/total",
+        "onlyCurrent": "Montre les tâches : effectuées",
+        "no": "Cache la colonne \"tâches\""
+      },
+      "titleAlign": {
+        "Enable": "Alignement du titre de la quête",
+        "EnableHint": "Décide comment positionner les titres de quête dans la table de l’onglet du Journal de quête.",
+        "left": "Alignés à gauche",
+        "center": "Centrés"
+      }
+    },
+
+    "Tooltips": {
+      "SetAvailable": "Définir comme Disponible",
+      "SetActive": "Définir comme En cours",
+      "SetCompleted": "Définir comme Achevée",
+      "SetFailed": "Définir comme Échouée",
+      "Hide": "Cacher",
+      "Delete": "Effacer",
+      "AddAbstractReward": "Ajouter une récompense abstraite",
+      "PersonalQuestButNoPlayers": "C’est une quête personnelle, personne ne peut la voir",
+      "PersonalQuestVisibleFor": "C’est une quête personnelle pour ",
+      "RewardHidden": "Récompense cachée. Cocher pour la montrer.",
+      "RewardVisible": "Récompense visible. Cocher pour la cacher.",
+      "TaskHidden": "Tache cachée. Cocher pour la montrer.",
+      "TaskVisible": "Tâche visible. Cocher pour la cacher.",
+      "ToggleImage": "Activer l’image du token/acteur"
+    },
+
+    "Api": {
+      "__COMMENT__": "No need for translating lines starting with 'API ERROR', they show in console for developers only.",
+      "create": {
+        "title": "API Error: Title property is required to create new Quest"
+      },
+      "hooks": {
+        "createOpenQuestMacro": {
+          "name": "Ouvrir la Quête „{name}”",
+          "error": {
+            "noQuest": "API Error: Can't create macro with invalid Quest ID"
+          }
+        }
+      },
+      "reward": {
+        "create": {
+          "data": "API Error: Data property with at least {name, img} is required to create new Reward",
+          "type": "API Error: Type property is required to create new Reward"
+        }
+      },
+      "task": {
+        "create": {
+          "name": "API Error: Name property is required to create new Task"
+        }
+      }
+    }
+  }
+}
