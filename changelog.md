@@ -2,11 +2,15 @@
 
 ## v0.3.X
 
-## v0.3.1
+### v0.3.2
+* Added French translation provided by Discord members rectulo and Naoki
+* Abstract Rewards now are a little transparent (0.9 opacity) and their text is in italic
+
+### v0.3.1
 * Added Korean translation provided by Discord member KLO
 * Show GM information if players can't see shared quest
 
-#### v0.3.0
+## v0.3.0
 * Added „Personal Quests”, a feature that allows GM to show any Quest to only specific player(s).
 * Added Entity linking to Tasks (for example `@Actor[Vash]` or `@Item[Cursed Sword]`).
     * Fixed Entity linking in Description for players.
@@ -27,12 +31,12 @@
 * Provided code comment blocks for most Functions. Not yet a Documentation, but could help those who peek at my module to learn. 
 
 
-### v0.2.X
+## v0.2.X
 
-#### v0.2.4
+### v0.2.4
 * Added German translation provided by Discord member Acd-Jake
 
-#### v0.2.3
+### v0.2.3
 * Added Japanese translation provided by Discord member Brother Sharp
 * Added option to sort Quest Log
 * Hidden "add new task" from players
@@ -40,19 +44,19 @@
 * Added module setting for centering titles in Quest Log
 * Added Actor's name as a tooltip in Quest Log
 
-#### v0.2.2
+### v0.2.2
 * Allowed to change quest giver to existing quest by draggin new actor onto preview
 * Widened and squished Tasks and Rewards boxes respectively to allow better space management
 * Added word wrapping for tasks
 * Fixed distorted Quest Giver's images
 * Moved window initialization to 'ready' hook to fix translation
 
-#### v0.2.1
+### v0.2.1
 * Fully prepared module for translation - all strings should be translatable
 * Added scroll for overflowing quest's description
 * Added toggle between Actor's/Token's image for Quest Giver's image
 * Added failed state for tasks
 * Translated to Polish
 
-#### v0.2.0
+## v0.2.0
 * Initial release

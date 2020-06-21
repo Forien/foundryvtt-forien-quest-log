@@ -15,14 +15,17 @@ Hooks.once('init', () => {
 
   Utils.preloadTemplates();
 
-  window.Quests = QuestApi;
+  Hooks.callAll("ForienQuestLog.afterInit");
+});
 
-  Hooks.call("ForienQuestLog.afterInit");
+Hooks.once('setup', () => {
+  window.Quests = QuestApi;
+  window.QuestLog = new QuestLogClass();
+
+  Hooks.callAll("ForienQuestLog.afterSetup");
 });
 
 Hooks.once("ready", () => {
-  window.QuestLog = new QuestLogClass();
-
   QuestFolder.initializeJournals();
 
   if (VersionCheck.check(constants.moduleName)) {
@@ -35,7 +38,7 @@ Hooks.once("ready", () => {
   // Allow and process incoming socket data
   Socket.listen();
 
-  Hooks.call("ForienQuestLog.afterReady");
+  Hooks.callAll("ForienQuestLog.afterReady");
 });
 
 Hooks.on("renderJournalDirectory", (app, html, data) => {
