@@ -233,6 +233,8 @@ export default class QuestPreview extends FormApplication {
 
     html.on("click", '.editable', (event) => {
       let target = $(event.target).data('target');
+      if (target === undefined) return;
+
       let value = this.quest[target];
       let index = undefined;
       if (target === 'task.name') {

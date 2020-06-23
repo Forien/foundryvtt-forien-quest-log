@@ -311,9 +311,10 @@ export default class Quest {
    * @param sortTarget      sort by
    * @param sortDirection   sort direction
    * @param availableTab    true if Available tab is visible
+   * @param populate
    * @returns {{}}
    */
-  static getQuests(sortTarget = undefined, sortDirection = 'asc', availableTab = false) {
+  static getQuests(sortTarget = undefined, sortDirection = 'asc', availableTab = false, populate = true) {
     let quests = {};
     for (let [key, value] of Object.entries(QuestFolder.questDirIds)) {
       if (key === 'root') continue;
@@ -321,7 +322,7 @@ export default class Quest {
       let entries = [];
 
       folder.content.forEach(entry => {
-        let content = this.getContent(entry, true);
+        let content = this.getContent(entry, populate);
         entries.push(content);
       });
 
@@ -537,7 +538,7 @@ export default class Quest {
   }
 
   static get collection() {
-    return new QuestsCollection();
+    return QuestsCollection;
   }
 
   get name() {

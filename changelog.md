@@ -2,6 +2,9 @@
 
 ## v0.3.X
 
+### ???
+* Fixed linking Quests in Quest tasks causing stack overflow
+
 ### v0.3.3
 * Fixed editable inputs cutting off text after double quotation character
 * Added popup when attempting to close the Quest Form window without submitting.
