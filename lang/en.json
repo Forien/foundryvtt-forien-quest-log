@@ -77,6 +77,14 @@
       "Cancel": "Cancel"
     },
 
+    "CloseDialog": {
+      "Title": "Leave Form",
+      "Header": "Are you sure?",
+      "Body": "Are you sure you want to close the form? Unsaved data will be lost.",
+      "Discard": "Discard changes",
+      "Cancel": "Cancel"
+    },
+
     "Notifications": {
       "CannotOpen": "Cannot open Quest Details. You may lack permissions, Quest might not exist anymore, or provided ID was invalid.",
       "UserCantOpen": "User {user} doesn't have permission to open this quest.",
@@ -115,6 +123,10 @@
         "EnableHint": "Decide how to position quests' titles in Quest Log's table.",
         "left": "Aligned to left",
         "center": "Centered"
+      },
+      "playersWelcomeScreen": {
+        "Enable": "Display Welcome Screen to Players",
+        "EnableHint": "Uncheck to prevent players from seeing Welcome Screen on log in after an update. They might still see it by clicking 'help' icon in Quest Log."
       }
     },
 

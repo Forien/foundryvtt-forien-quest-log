@@ -1,6 +1,7 @@
 import Quest from "../entities/quest.mjs";
 import QuestPreview from "./quest-preview.mjs";
 import QuestForm from "./quest-form.mjs";
+import renderWelcomeScreen from "../versioning/welcome-screen.mjs";
 
 export default class QuestLog extends Application {
   sortBy = null;
@@ -23,6 +24,19 @@ export default class QuestLog extends Application {
       title: game.i18n.localize("ForienQuestLog.QuestLog.Title"),
       tabs: [{navSelector: ".log-tabs", contentSelector: ".log-body", initial: "progress"}]
     });
+  }
+
+  _getHeaderButtons() {
+    const buttons = super._getHeaderButtons();
+
+    buttons.unshift({
+      label: "",
+      class: "help",
+      icon: "fas fa-question-circle",
+      onclick: ev => renderWelcomeScreen()
+    });
+
+    return buttons
   }
 
   /**

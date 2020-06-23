@@ -8,10 +8,17 @@ import Socket from "./utility/socket.mjs";
 import Utils from "./utility/utils.mjs";
 import VersionCheck from "./versioning/version-check.mjs";
 import renderWelcomeScreen from "./versioning/welcome-screen.mjs";
+import Quest from "./entities/quest.mjs";
 
 
 Hooks.once('init', () => {
   ModuleSettings.register();
+
+  CONST.ENTITY_LINK_TYPES.push("Quest");
+  CONFIG["Quest"] = {
+    entityClass: Quest,
+    sidebarIcon: 'far fa-question-circle',
+  };
 
   Utils.preloadTemplates();
 
@@ -29,7 +36,9 @@ Hooks.once("ready", () => {
   QuestFolder.initializeJournals();
 
   if (VersionCheck.check(constants.moduleName)) {
-    renderWelcomeScreen();
+    if (game.user.isGM || game.settings.get('forien-quest-log', 'playersWelcomeScreen')) {
+      renderWelcomeScreen();
+    }
     Utils.updateMacros();
   }
 

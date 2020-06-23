@@ -240,6 +240,7 @@ export default class QuestPreview extends FormApplication {
         value = this.quest.tasks[index].name;
       }
 
+      value = value.replace(/"/g, '&quot;');
       let input = $(`<input type="text" class="editable-input" value="${value}" data-target="${target}" ${index !== undefined ? `data-index="${index}"` : ``}/>`);
       let parent = $(event.target).parent('.editable-container');
 
