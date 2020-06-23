@@ -7,6 +7,8 @@ assignees: ''
 
 ---
 
+**Module Version:** v0.0.0
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
@@ -28,7 +30,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Foundry Version:** 
 
-**System:** 
+**Game System:** 
 
 **Additional context**
 Add any other context (like other modules installed) about the problem here.
