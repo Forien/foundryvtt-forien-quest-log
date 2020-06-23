@@ -5,6 +5,8 @@ import Quest from "../entities/quest.mjs";
 import Socket from "../utility/socket.mjs";
 
 export default class QuestForm extends FormApplication {
+  submitted = false;
+
   /**
    * Default Application options
    *
@@ -49,7 +51,6 @@ export default class QuestForm extends FormApplication {
    *
    * @param event
    * @param formData
-   * @returns {Promise<void>}
    * @private
    */
   async _updateObject(event, formData) {
@@ -88,15 +89,47 @@ export default class QuestForm extends FormApplication {
 
     let folder = this.getHiddenFolder();
 
-    JournalEntry.create({
+    return JournalEntry.create({
       name: title,
       content: JSON.stringify(data),
       folder: folder._id
-    }).then(() => {
+    }).then((promise) => {
       QuestLog.render(true);
       // players don't see Hidden tab, but assistant GM can, so emit anyway
       Socket.refreshQuestLog();
+      this.submitted = true;
+      return promise;
     });
+  }
+
+
+  async close() {
+    if (this.submitted) {
+      return super.close();
+    }
+
+    new Dialog({
+      title: game.i18n.localize("ForienQuestLog.CloseDialog.Title"),
+      content: `<h3>${game.i18n.localize("ForienQuestLog.CloseDialog.Header")}</h3>
+<p>${game.i18n.localize("ForienQuestLog.CloseDialog.Body")}</p>`,
+      buttons: {
+        no: {
+          icon: `<i class="fas fa-undo"></i>`,
+          label: game.i18n.localize("ForienQuestLog.CloseDialog.Cancel")
+        },
+        yes: {
+          icon: `<i class="far fa-trash-alt"></i>`,
+          label: game.i18n.localize("ForienQuestLog.CloseDialog.Discard"),
+          callback: () => {
+            this.submitted = true;
+            this.close();
+          }
+        }
+      },
+      default: "no"
+    }).render(true);
+
+
   }
 
   /**

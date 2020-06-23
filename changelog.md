@@ -2,6 +2,13 @@
 
 ## v0.3.X
 
+### v0.3.3
+* Fixed editable inputs cutting off text after double quotation character
+* Added popup when attempting to close the Quest Form window without submitting.
+* Added option to link quests in rich text environments with `@Quest[id]` and `@Quest[quest name]`. Hacky way, might be unstable. 
+* Added Configuration setting that allows GM turn off displaying Welcome Screen to players. Enabled by default
+* Added "Help" button in Quest Log's header that allows to open Welcome Screen at any time. 
+
 ### v0.3.2
 * Added French translation provided by Discord members rectulo and Naoki
 * Abstract Rewards now are a little transparent (0.9 opacity) and their text is in italic

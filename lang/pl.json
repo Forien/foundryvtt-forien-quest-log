@@ -52,6 +52,9 @@
   "ForienQuestLog.Settings.titleAlign.left": "Wyrównaj do lewej",
   "ForienQuestLog.Settings.titleAlign.center": "Wyśrodkuj",
 
+  "ForienQuestLog.Settings.playersWelcomeScreen.Enable": "Pokazuj graczom Ekran Powitalny",
+  "ForienQuestLog.Settings.playersWelcomeScreen.EnableHint": "Odznacz, aby graczom nie wyświetlać po zalogowaniu Ekranu Powitalnego z każdą nową wersją. Gracze wciąż mogą go wyświetlić klikając na ikonę \"pomocy\" w Dzienniku Misji.",",",
+
   "ForienQuestLog.QuestForm.Title": "Stwórz nową Misję",
   "ForienQuestLog.QuestForm.QuestGiver": "Zleceniodawca",
   "ForienQuestLog.QuestForm.QuestGiverPlaceholder": "Imię lub ID Aktora",
@@ -80,6 +83,12 @@
   "ForienQuestLog.DeleteDialog.Body": "Ta misja i związane z nią dane zostaną utracone na stałe.",
   "ForienQuestLog.DeleteDialog.Delete": "Usuń",
   "ForienQuestLog.DeleteDialog.Cancel": "Anuluj",
+
+  "ForienQuestLog.CloseDialog.Title": "Opuszczasz formularz",
+  "ForienQuestLog.CloseDialog.Header": "Czy na pewno?",
+  "ForienQuestLog.CloseDialog.Body": "Opuszczasz formularz bez zapisania go. Jeśli to zrobisz, utracisz niezapisane zmiany.",
+  "ForienQuestLog.CloseDialog.Cancel": "Anuluj",
+  "ForienQuestLog.CloseDialog.Discard": "Odrzuć zmiany",
 
   "ForienQuestLog.Tooltips.ToggleImage": "Przełącz obraz Aktora/Tokenu",
   "ForienQuestLog.Tooltips.SetActive": "Ustaw na Aktywną",

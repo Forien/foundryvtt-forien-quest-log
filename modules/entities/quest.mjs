@@ -3,6 +3,7 @@ import Utils from "../utility/utils.mjs";
 import QuestFolder from "./quest-folder.mjs";
 import Reward from "./reward.mjs";
 import Task from "./task.mjs";
+import QuestsCollection from "./collection/quests-collection.mjs";
 
 /**
  * Class that acts "kind of" like Entity, to help Manage everything Quest Related
@@ -535,6 +536,14 @@ export default class Quest {
     this._personal = (value === true);
   }
 
+  static get collection() {
+    return new QuestsCollection();
+  }
+
+  get name() {
+    return this._title;
+  }
+
   toJSON() {
     return {
       actor: this._actor,
@@ -548,3 +557,5 @@ export default class Quest {
     }
   }
 }
+
+window.Quest = Quest;
