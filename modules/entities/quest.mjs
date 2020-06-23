@@ -220,6 +220,7 @@ export default class Quest {
     let actor = Utils.findActor(content.actor);
     let isGM = game.user.isGM;
     let canPlayerDrag = game.settings.get("forien-quest-log", "allowPlayersDrag");
+    let countHidden = game.settings.get("forien-quest-log", "countHidden");
     if (actor !== false) {
       content.actor = duplicate(actor);
       if (content.image === 'token')
@@ -228,8 +229,13 @@ export default class Quest {
       content.actor = false;
     }
 
-    content.checkedTasks = content.tasks.filter(t => t.completed).length;
-    content.totalTasks = content.tasks.length;
+    if (countHidden) {
+      content.checkedTasks = content.tasks.filter(t => t.completed).length;
+      content.totalTasks = content.tasks.length;
+    } else {
+      content.checkedTasks = content.tasks.filter(t => t.hidden === false && t.completed).length;
+      content.totalTasks = content.tasks.filter(t => t.hidden === false).length;
+    }
 
     if (content.rewards === undefined) {
       content.rewards = [];

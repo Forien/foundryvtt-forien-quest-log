@@ -4,6 +4,7 @@
 
 ### ???
 * Fixed linking Quests in Quest tasks causing stack overflow
+* Added Configuration setting to decide if hidden tasks should be counted
 
 ### v0.3.3
 * Fixed editable inputs cutting off text after double quotation character

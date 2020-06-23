@@ -29,6 +29,19 @@ export default class ModuleSettings {
       }
     });
 
+    game.settings.register("forien-quest-log", "countHidden", {
+      name: "ForienQuestLog.Settings.countHidden.Enable",
+      hint: "ForienQuestLog.Settings.countHidden.EnableHint",
+      scope: "world",
+      config: true,
+      default: true,
+      type: Boolean,
+      onChange: value => {
+        if (QuestLog && QuestLog.rendered)
+          QuestLog.render();
+      }
+    });
+
     game.settings.register("forien-quest-log", "showTasks", {
       name: "ForienQuestLog.Settings.showTasks.Enable",
       hint: "ForienQuestLog.Settings.showTasks.EnableHint",

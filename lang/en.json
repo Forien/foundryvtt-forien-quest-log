@@ -101,6 +101,10 @@
         "Enable": "Show Available Tab",
         "EnableHint": "Check to show new, \"Available\" tab in Quest Log, where players can see all non-hidden Quests before they are accepted."
       },
+      "countHidden": {
+        "Enable": "Count hidden Tasks",
+        "EnableHint": "If checked, the number of completed/total tasks will include hidden tasks."
+      },
       "navStyle": {
         "Enable": "Navigation style",
         "EnableHint": "Decide how Quest Log's navigation should be displayed.",
