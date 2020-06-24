@@ -30,4 +30,8 @@ export default class QuestsCollection {
   static get(questId) {
     return Quest.get(questId);
   }
+
+  static get instance() {
+    return this;
+  }
 }

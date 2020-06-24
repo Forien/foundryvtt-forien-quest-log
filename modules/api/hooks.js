@@ -8,7 +8,7 @@ export default function registerApiHooks() {
   // Create "open quest" Macro when Quest is dropped onto Hotbar.
   Hooks.on("hotbarDrop", async (bar, data, slot) => {
     if (data.type === "Quest") {
-      let questId = data.data.id;
+      let questId = data.id;
 
       let quest = Quest.get(questId);
       if (!quest)

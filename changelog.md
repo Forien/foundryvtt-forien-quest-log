@@ -5,6 +5,8 @@
 ### ???
 * Fixed linking Quests in Quest tasks causing stack overflow
 * Added Configuration setting to decide if hidden tasks should be counted
+* Allowed to drag&drop Quests from Quest Log to create rich-text entity links
+* Added "Copy Link" button on Quest Preview window
 
 ### v0.3.3
 * Fixed editable inputs cutting off text after double quotation character

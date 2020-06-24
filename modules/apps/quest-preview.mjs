@@ -71,7 +71,7 @@ export default class QuestPreview extends FormApplication {
     let buttons = super._getHeaderButtons();
 
     // Share Entry
-    if ( game.user.isGM ) {
+    if (game.user.isGM) {
       buttons.unshift({
         label: game.i18n.localize("ForienQuestLog.QuestPreview.HeaderButtons.Show"),
         class: "share-image",
@@ -79,6 +79,23 @@ export default class QuestPreview extends FormApplication {
         onclick: () => Socket.showQuestPreview(this.quest.id)
       });
     }
+
+
+    buttons.unshift({
+      label: '',
+      class: "copy-link",
+      icon: "fas fa-link",
+      onclick: (event) => {
+        const el = document.createElement('textarea');
+        el.value = `@Quest[${this.quest.id}]{${this.quest.title}}`;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        ui.notifications.info(game.i18n.localize("ForienQuestLog.Notifications.LinkCopied"), {});
+      }
+    });
+
     return buttons;
   }
 

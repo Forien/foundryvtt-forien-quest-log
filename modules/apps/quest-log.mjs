@@ -114,9 +114,7 @@ export default class QuestLog extends Application {
     html.on("dragstart", ".drag-quest", event => {
       let dataTransfer = {
         type: "Quest",
-        data: {
-          id: $(event.target).data('quest-id')
-        }
+        id: $(event.target).data('quest-id')
       };
       event.originalEvent.dataTransfer.setData("text/plain", JSON.stringify(dataTransfer));
 

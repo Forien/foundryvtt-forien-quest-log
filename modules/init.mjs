@@ -9,6 +9,7 @@ import Utils from "./utility/utils.mjs";
 import VersionCheck from "./versioning/version-check.mjs";
 import renderWelcomeScreen from "./versioning/welcome-screen.mjs";
 import Quest from "./entities/quest.mjs";
+import QuestsCollection from "./entities/collection/quests-collection.mjs";
 
 
 Hooks.once('init', () => {
@@ -17,6 +18,7 @@ Hooks.once('init', () => {
   CONST.ENTITY_LINK_TYPES.push("Quest");
   CONFIG["Quest"] = {
     entityClass: Quest,
+    collection: QuestsCollection,
     sidebarIcon: 'far fa-question-circle',
   };
 
