@@ -320,6 +320,11 @@
       gap: 1px 1px; }
       #forien-quest-preview .quest-body .management.active {
         display: grid; }
+      #forien-quest-preview .quest-body .management .part.info {
+        grid-column: span 2;
+        grid-row-start: 2; }
+      #forien-quest-preview .quest-body .management .part.info .identity code {
+        user-select: text; }
       #forien-quest-preview .quest-body .management .part.personal-quest .quest-is-personal {
         display: grid;
         grid-template-columns: auto 1fr;

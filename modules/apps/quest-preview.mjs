@@ -52,6 +52,7 @@ export default class QuestPreview extends FormApplication {
       let entry = game.journal.get(this.quest.id);
       data.users = game.users;
       data.observerLevel = CONST.ENTITY_PERMISSIONS.OBSERVER;
+      data.questId = this.quest.id;
 
       data.users = game.users.map(u => {
         if (u.isGM) return;

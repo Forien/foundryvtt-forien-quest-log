@@ -261,6 +261,16 @@
       }
 
       .part {
+        &.info {
+          grid-column: span 2;
+          grid-row-start: 2;
+
+          .identity code {
+            display: none;
+            user-select: text;
+          }
+        }
+
         &.personal-quest {
           .quest-is-personal {
             display: grid;
