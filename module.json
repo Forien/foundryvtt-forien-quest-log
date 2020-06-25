@@ -9,20 +9,25 @@
       "url": "https://www.patreon.com/forien"
     }
   ],
-  "version": "0.3.3",
+  "version": "0.3.4",
   "minimumCoreVersion": "0.6.0",
   "compatibleCoreVersion": "0.6.3",
   "url": "https://github.com/Forien/foundryvtt-forien-quest-log",
   "manifest": "https://raw.githubusercontent.com/Forien/foundryvtt-forien-quest-log/master/module.json",
-  "download": "https://github.com/Forien/foundryvtt-forien-quest-log/releases/download/v0.3.3/v0.3.3.zip",
-  "readme": "https://github.com/Forien/foundryvtt-forien-quest-log/blob/v0.3.3/README.md",
-  "changelog": "https://github.com/Forien/foundryvtt-forien-quest-log/blob/v0.3.3/changelog.md",
+  "download": "https://github.com/Forien/foundryvtt-forien-quest-log/releases/download/v0.3.4/v0.3.4.zip",
+  "readme": "https://github.com/Forien/foundryvtt-forien-quest-log/blob/v0.3.4/README.md",
+  "changelog": "https://github.com/Forien/foundryvtt-forien-quest-log/blob/v0.3.4/changelog.md",
   "bugs": "https://github.com/Forien/foundryvtt-forien-quest-log/issues",
   "languages": [
     {
       "lang": "de",
       "name": "Deutsch",
       "path": "lang/de.json"
+    },
+    {
+      "lang": "es",
+      "name": "Español",
+      "path": "lang/es.json"
     },
     {
       "lang": "en",
@@ -48,11 +53,6 @@
       "lang": "pl",
       "name": "Polski",
       "path": "lang/pl.json"
-    },
-    {
-      "lang": "es",
-      "name": "Español",
-      "path": "lang/es.json"
     }
   ],
   "esmodules": [

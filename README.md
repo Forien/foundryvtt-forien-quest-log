@@ -2,7 +2,7 @@
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/forien/foundryvtt-forien-quest-log?style=for-the-badge)  ![GitHub Releases](https://img.shields.io/github/downloads/Forien/foundryvtt-forien-quest-log/latest/total?style=for-the-badge) ![GitHub All Releases](https://img.shields.io/github/downloads/Forien/foundryvtt-forien-quest-log/total?style=for-the-badge&label=Downloads+total)  
 **[Compatibility]**: *FoundryVTT* 0.6.0+  
 **[Systems]**: *any*  
-**[Languages]**: *English, French, German, Japanese, Korean, Polish*  
+**[Languages]**: *English, French, German, Japanese, Korean, Polish, Spanish*  
 
 This module provides comprehensive Quest Log system for players and Game Masters to use with Foundry Virtual Table Top
 
@@ -68,6 +68,7 @@ If you wish to contact me for any reason, reach me out on Discord using my tag: 
 * Thanks to Acd-Jake for providing German translation
 * Thanks to KLO for providing Korean translation
 * Thanks to rectulo and Naoki for providing French translation
+* Thanks to JJBocanegra for providing Spanish translation
 
 ## Support
 
