@@ -30,6 +30,11 @@
       "path": "lang/en.json"
     },
     {
+      "lang": "es",
+      "name": "Español",
+      "path": "lang/es.json"
+    },
+    {
       "lang": "fr",
       "name": "Français",
       "path": "lang/fr.json"
@@ -48,11 +53,6 @@
       "lang": "pl",
       "name": "Polski",
       "path": "lang/pl.json"
-    },
-    {
-      "lang": "es",
-      "name": "Español",
-      "path": "lang/es.json"
     }
   ],
   "esmodules": [
