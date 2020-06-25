@@ -62,7 +62,7 @@ export default class QuestForm extends FormApplication {
 
     let title = formData.title;
     if (title.length === 0)
-      title = 'New Quest';
+      title = game.i18n.localize("ForienQuestLog.NewQuest");
 
     let tasks = [];
     if (formData.tasks !== undefined) {
