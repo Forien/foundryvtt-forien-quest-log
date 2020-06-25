@@ -2,7 +2,10 @@
     "ForienQuestLog.Api.hooks.createOpenQuestMacro.error.noQuest": "",
     "ForienQuestLog.Api.create.title": "",
     "ForienQuestLog.QuestPreview.InvalidQuestId": "",
+    "ForienQuestLog.Notifications.LinkCopied": "",
     "ForienQuestLog.Api.reward.create.type": "",
     "ForienQuestLog.Api.reward.create.data": "",
-    "ForienQuestLog.Api.task.create.name": ""
+    "ForienQuestLog.Api.task.create.name": "",
+    "ForienQuestLog.Settings.countHidden.Enable": "",
+    "ForienQuestLog.Settings.countHidden.EnableHint": ""
 }
