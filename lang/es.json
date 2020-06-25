@@ -1,0 +1,176 @@
+{
+  "ForienQuestLog": {
+    "NewQuest": "Nueva misión",
+    "QuestLogButton": "Misiones",
+    "Quests": "Misiones",
+    "SampleReward": "p.ej. 300 puntos de experiencia",
+    "SampleTask": "p.ej. Exterminar las ratas de la posada \"El tobillo torcido\"",
+
+    "QuestTypes": {
+      "InProgress": "En curso",
+      "Completed": "Completadas",
+      "Failed": "Fallidas",
+      "Hidden": "Ocultas"
+    },
+
+    "Buttons": {
+      "AddNewQuest": "Añadir nueva misión",
+      "AddNewTask": "Añadir"
+    },
+
+    "QuestForm": {
+      "Title": "Añadir nueva misión",
+      "QuestGiver": "Dador de la misión",
+      "QuestGiverPlaceholder": "Nombre o ID del actor",
+      "QuestTitle": "Nombre de la misión",
+      "DragDropActor": "Arrastra y suelta el actor aquí para establecerlo como dador de la misión",
+      "QuestDescription": "Descripción de la misión",
+      "QuestGMNotes": "Notas del GM",
+      "Submit": "Crear"
+    },
+
+    "QuestLog": {
+      "Title": "Misiones",
+      "Table": {
+        "QuestGiver": "Dador de la misión",
+        "QuestTitle": "Nombre",
+        "Tasks": "Tareas",
+        "Actions": "Acciones"
+      },
+      "Tabs": {
+        "Available": "Disponibles",
+        "InProgress": "En curso",
+        "Completed": "Completadas",
+        "Failed": "Fallidas",
+        "Hidden": "Ocultas"
+      }
+    },
+
+    "QuestPreview": {
+      "Title": "Detalles de la misión",
+      "Objectives": "Objetivos",
+      "Rewards": "Recompensas",
+      "DragDropRewards": "Arrastra y suelta elementos aquí para añadirlos como recompensas",
+      "InvalidQuestId": "No se puede abrir la vista previa de la misión debido a que el ID de la misión no es válido",
+      "HeaderButtons": {
+        "Show": "Mostrar a jugadores"
+      },
+
+      "Management": {
+        "IsPersonalQuest": "¿Es una misión personal?",
+        "IsPersonalQuestDescription": "Marcar la misión como personal. Será invisible para todos los jugadores, excepto para los que están marcados específicamente abajo. Desmarcando esta opción se eliminarán todos los permisos y se moverá la misión a la pestaña \"Ocultas\"."
+      },
+
+      "Tabs": {
+        "Details": "Detalles",
+        "QuestManagement": "Administrar misión",
+        "GMNotes": "Notas del GM"
+      }
+
+    },
+
+    "DeleteDialog": {
+      "Title": "Eliminar {name}",
+      "Header": "¿Estás seguro?",
+      "Body": "Esta misión y todos sus datos serán permanentemente eliminados.",
+      "Delete": "Eliminar",
+      "Cancel": "Cancelar"
+    },
+
+    "CloseDialog": {
+      "Title": "Descartar creación de misión",
+      "Header": "¿Estás seguro?",
+      "Body": "Los datos no guardados se perderán.",
+      "Discard": "Descartar cambios",
+      "Cancel": "Cancelar"
+    },
+
+    "Notifications": {
+      "CannotOpen": "No puedes abrir los detalles de la misión. Puede que te falten permisos, que la misión ya no exista o que el ID sea inválido.",
+      "UserCantOpen": "El usuario {user} no tiene permisos para abrir esta misión.",
+
+      "QuestMoved": "Se movió la misión a una nueva carpeta y se le dio el estado: {target}"
+    },
+
+    "Settings": {
+      "allowPlayersDrag": {
+        "Enable": "Permitir a los jugadores arrastrar las recompensas a sus fichas",
+        "EnableHint": "Marcar para permitir a los jugadores arrastrar las recompensas de la ventana de detalles de la misión a su propia ficha de personaje."
+      },
+      "availableQuests": {
+        "Enable": "Mostrar pestaña \"Disponibles\"",
+        "EnableHint": "Marcar para mostrar la pestaña \"Disponibles\" en el registro de misiones, donde los jugadores podrán ver todas las misiones no ocultas que aún no han sido aceptadas."
+      },
+      "navStyle": {
+        "Enable": "Estilo de navegación",
+        "EnableHint": "Decide como se visualizará el registro de misiones.",
+        "bookmarks": "Marcadores",
+        "classic": "Pestañas clásicas"
+      },
+      "showFolder": {
+        "Enable": "Mostrar carpeta de misiones",
+        "EnableHint": "Marcar para mostrar la carpeta de misiones en la pestaña de \"Apuntes\" Solo para modo DEBUG."
+      },
+      "showTasks": {
+        "Enable": "Mostrar tareas en el registro de misiones",
+        "EnableHint": "Decide si y como se muestra la cantidad de tareas (objetivos) junto al nombre de la misión en el registro de misiones. Esto no tiene efecto en la visualización de la pantalla de detalle de misión.",
+        "default": "Mostrar tareas: completadas / totales",
+        "onlyCurrent": "Mostrar tareas: completadas",
+        "no": "Ocultar columna \"tareas\""
+      },
+      "titleAlign": {
+        "Enable": "Alineación del nombre de la misión",
+        "EnableHint": "Decide como alinear los nombres de misiones en la tabla de registro de misiones.",
+        "left": "Alineado a la izquierda",
+        "center": "Centrado"
+      },
+      "playersWelcomeScreen": {
+        "Enable": "Mostrar mensaje de bienvenida a los jugadores",
+        "EnableHint": "Desmarcar para prevenir que los jugadores vean la pantalla de bienvenida al entrar a la partida después de una actualización. Aún podrán acceder a ella pulsando en el icono de \"Ayuda\" en la cabecera del registro de misiones."
+      }
+    },
+
+    "Tooltips": {
+      "SetAvailable": "Mover a disponibles",
+      "SetActive": "Poner en curso",
+      "SetCompleted": "Completar misión",
+      "SetFailed": "Mover a fallidas",
+      "Hide": "Ocultar",
+      "Delete": "Eliminar",
+      "AddAbstractReward": "Añadir recompensa abstracta",
+      "PersonalQuestButNoPlayers": "Esta es una misión personal, pero ningún jugador puede verla.",
+      "PersonalQuestVisibleFor": "Esta es una misión personal para",
+      "RewardHidden": "La recompensa está oculta. Clic para mostrar.",
+      "RewardVisible": "La recompensa está visible. Clic para ocultar.",
+      "TaskHidden": ".La tarea está oculta. Clic para mostrar.",
+      "TaskVisible": ".La tarea está visible. Clic para ocultar.",
+      "ToggleImage": "Alternar entre imagen de token o actor"
+    },
+
+    "Api": {
+      "__COMMENT__": "No need for translating lines starting with 'API ERROR', they show in console for developers only.",
+      "create": {
+        "title": "API Error: Title property is required to create new Quest"
+      },
+      "hooks": {
+        "createOpenQuestMacro": {
+          "name": "Open „{name}” Quest",
+          "error": {
+            "noQuest": "API Error: Can't create macro with invalid Quest ID"
+          }
+        }
+      },
+      "reward": {
+        "create": {
+          "data": "API Error: Data property with at least {name, img} is required to create new Reward",
+          "type": "API Error: Type property is required to create new Reward"
+        }
+      },
+      "task": {
+        "create": {
+          "name": "API Error: Name property is required to create new Task"
+        }
+      }
+    }
+  }
+}
