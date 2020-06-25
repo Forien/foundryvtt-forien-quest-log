@@ -8,7 +8,7 @@ export default class QuestsCollection {
   static _entities = undefined;
   static get entities() {
     if (this._entities === undefined) {
-      let quests = Quest.getQuests(undefined, 'asc', false, false);
+      let quests = Quest.getQuests();
       let entities = [...quests.active, ...quests.completed, ...quests.failed, ...quests.hidden];
 
       this._entities = entities.map(e => {

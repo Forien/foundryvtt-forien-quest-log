@@ -13,6 +13,7 @@ export default class Quest {
   constructor(data = {}) {
     this._id = data.id || null;
     this.initData(data);
+    this._data = data;
   }
 
   /**
@@ -22,14 +23,15 @@ export default class Quest {
    * @param data
    */
   initData(data) {
-    this._actor = data.actor || null;
+    this._giver = data.giver || null;
     this._title = data.title || game.i18n.localize("ForienQuestLog.NewQuest");
+    this._status = data.status || 'hidden';
     this._description = data.description || '';
     this._gmnotes = data.gmnotes || '';
-    this._tasks = [];
-    this._rewards = [];
     this._image = data.image || 'actor';
     this._personal = data.personal || false;
+    this._tasks = [];
+    this._rewards = [];
     this._populated = false;
 
     if (data.tasks !== undefined && Array.isArray(data.tasks))
@@ -137,8 +139,7 @@ export default class Quest {
     this._personal = !this._personal;
     this.permission = {default: 0};
     if (this._personal === false) {
-      let folder = QuestFolder.get('hidden');
-      this.folder = folder._id;
+      this.status = 'hidden';
     }
   }
 
@@ -153,6 +154,7 @@ export default class Quest {
     if (permission !== CONST.ENTITY_PERMISSIONS.OBSERVER)
       if (permission !== CONST.ENTITY_PERMISSIONS.NONE)
         return;
+
     let user = game.users.get(userId);
     if (user === null) return;
 
@@ -184,9 +186,6 @@ export default class Quest {
     if (this.permission !== undefined) {
       update.permission = this.permission;
     }
-    if (this.folder !== undefined) {
-      update.folder = this.folder;
-    }
 
     let entry = game.journal.get(this._id);
     await entry.update(update, {diff: false});
@@ -217,16 +216,27 @@ export default class Quest {
    * @returns {*}
    */
   static populate(content, entry = undefined) {
-    let actor = Utils.findActor(content.actor);
+    // let actor = Utils.findActor(content.actor);
     let isGM = game.user.isGM;
     let canPlayerDrag = game.settings.get("forien-quest-log", "allowPlayersDrag");
     let countHidden = game.settings.get("forien-quest-log", "countHidden");
-    if (actor !== false) {
-      content.actor = duplicate(actor);
-      if (content.image === 'token')
-        content.actor.img = actor.data.token.img;
-    } else {
-      content.actor = false;
+
+    if (content.giver) {
+      fromUuid(content.giver).then((entity) => {
+        content.giver = duplicate(entity);
+
+        switch (entity.entity) {
+          case Actor.entity:
+            if (content.image === 'token')
+              content.giver.img = entity.data.token.img;
+            break;
+          case Item.entity:
+          case JournalEntry.entity:
+            break;
+          default:
+            content.giver = false;
+        }
+      });
     }
 
     if (countHidden) {
@@ -261,13 +271,7 @@ export default class Quest {
     }
 
     if (entry) {
-      content.hidden = (
-        (isGM && entry.data.permission.default === 0) ||
-        (!isGM && entry.permission < 2)
-      );
-
-      if (content.hidden && isGM && content.personal) {
-        content.hidden = false;
+      if (isGM && content.personal) {
         let users = [`${game.i18n.localize('ForienQuestLog.Tooltips.PersonalQuestVisibleFor')}:`];
 
         for (let perm in entry.data.permission) {
@@ -320,34 +324,30 @@ export default class Quest {
    * @param populate
    * @returns {{}}
    */
-  static getQuests(sortTarget = undefined, sortDirection = 'asc', availableTab = false, populate = true) {
-    let quests = {};
-    for (let [key, value] of Object.entries(QuestFolder.questDirIds)) {
-      if (key === 'root') continue;
-      let folder = game.folders.get(value);
-      let entries = [];
+  static getQuests(sortTarget = undefined, sortDirection = 'asc', availableTab = false, populate = false) {
+    let folder = QuestFolder.get();
+    let entries = [];
 
-      folder.content.forEach(entry => {
-        let content = this.getContent(entry, populate);
-        entries.push(content);
-      });
+    folder.content.forEach(entry => {
+      let content = this.getContent(entry, populate);
+      entries.push(content);
+    });
 
-      if (sortTarget !== undefined) {
-        entries = this.sort(entries, sortTarget, sortDirection)
-      }
-
-      quests[key] = entries;
+    if (sortTarget !== undefined) {
+      entries = this.sort(entries, sortTarget, sortDirection)
     }
 
-    if (availableTab) {
-      let available = [...quests.hidden];
-      available = available.filter(q => q.hidden === false);
-      if (game.user.isGM) {
-        quests.hidden = quests.hidden.filter(q => q.hidden === true);
-      }
-      if (sortTarget !== undefined) {
-        quests.available = this.sort(available, sortTarget, sortDirection);
-      }
+    const quests = {
+      available: entries.filter(e => e.status === 'available'),
+      active: entries.filter(e => e.status === 'active'),
+      completed: entries.filter(e => e.status === 'completed'),
+      failed: entries.filter(e => e.status === 'failed'),
+      hidden: entries.filter(e => e.status === 'hidden')
+    };
+
+    if (!availableTab) {
+      quests.hidden = [...quests.available, ...quests.hidden];
+      quests.hidden = this.sort(quests.hidden, sortTarget, sortDirection)
     }
 
     return quests;
@@ -402,33 +402,31 @@ export default class Quest {
    * Moves Quest (and Journal Entry) to different Folder and updates permissions if needed.
    *
    * @param questId
-   * @param origTarget
+   * @param target
    * @param permission
    * @returns {Promise<void>}
    */
-  static async move(questId, origTarget, permission = undefined) {
+  static async move(questId, target, permission = undefined) {
     let journal = game.journal.get(questId);
     let quest = this.getContent(journal);
     if (permission === undefined) {
       permission = journal.data.permission;
     }
-    let target = origTarget;
 
     if (!quest.personal) {
       permission = {default: CONST.ENTITY_PERMISSIONS.OBSERVER};
-      if (origTarget === 'hidden')
+      if (target === 'hidden')
         permission = {default: CONST.ENTITY_PERMISSIONS.NONE};
     }
 
-    if (origTarget === 'available')
-      target = 'hidden';
+    let content = Quest.getContent(journal);
+    content.status = target;
+    content = JSON.stringify(content);
 
-    let folder = QuestFolder.get(target);
-
-    journal.update({folder: folder._id, "permission": permission}).then(() => {
+    journal.update({content: content, "permission": permission}).then(() => {
       QuestLog.render(true);
       Socket.refreshQuestLog();
-      let dirname = game.i18n.localize(this.getQuestTypes()[origTarget]);
+      let dirname = game.i18n.localize(this.getQuestTypes()[target]);
       ui.notifications.info(game.i18n.format("ForienQuestLog.Notifications.QuestMoved", {target: dirname}), {});
     });
   }
@@ -486,12 +484,12 @@ export default class Quest {
     this._id = value;
   }
 
-  get actor() {
-    return this._actor;
+  get giver() {
+    return this._giver;
   }
 
-  set actor(value) {
-    this._actor = value;
+  set giver(value) {
+    this._giver = value;
   }
 
   get title() {
@@ -543,6 +541,15 @@ export default class Quest {
     this._personal = (value === true);
   }
 
+
+  get status() {
+    return this._status;
+  }
+
+  set status(value) {
+    this._status = value;
+  }
+
   static get collection() {
     return QuestsCollection;
   }
@@ -553,14 +560,15 @@ export default class Quest {
 
   toJSON() {
     return {
-      actor: this._actor,
+      giver: this._giver,
       title: this._title,
+      status: this._status,
       description: this._description,
       gmnotes: this._gmnotes,
-      tasks: this._tasks,
-      rewards: this._rewards,
       personal: this._personal,
-      image: this._image
+      image: this._image,
+      tasks: this._tasks,
+      rewards: this._rewards
     }
   }
 }

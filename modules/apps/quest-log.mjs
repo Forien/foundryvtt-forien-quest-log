@@ -55,7 +55,7 @@ export default class QuestLog extends Application {
       style: game.settings.get("forien-quest-log", "navStyle"),
       titleAlign: game.settings.get("forien-quest-log", "titleAlign"),
       questTypes: Quest.getQuestTypes(),
-      quests: Quest.getQuests(this.sortBy, this.sortDirection, available)
+      quests: Quest.getQuests(this.sortBy, this.sortDirection, available, true)
     });
   }
 

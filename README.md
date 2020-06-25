@@ -1,5 +1,7 @@
 # FoundryVTT - Forien's Quest Log
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/forien/foundryvtt-forien-quest-log?style=for-the-badge)  ![GitHub Releases](https://img.shields.io/github/downloads/Forien/foundryvtt-forien-quest-log/latest/total?style=for-the-badge) ![GitHub All Releases](https://img.shields.io/github/downloads/Forien/foundryvtt-forien-quest-log/total?style=for-the-badge&label=Downloads+total)  
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/forien/foundryvtt-forien-quest-log?style=for-the-badge) 
+![GitHub Releases](https://img.shields.io/github/downloads/Forien/foundryvtt-forien-quest-log/latest/total?style=for-the-badge) 
+![GitHub All Releases](https://img.shields.io/github/downloads/Forien/foundryvtt-forien-quest-log/total?style=for-the-badge&label=Downloads+total)  
 **[Compatibility]**: *FoundryVTT* 0.6.0+  
 **[Systems]**: *any*  
 **[Languages]**: *English, French, German, Japanese, Korean, Polish*  

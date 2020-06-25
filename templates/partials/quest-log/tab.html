@@ -16,7 +16,7 @@
         <tbody>
         {{#each quests}}
         <tr class="drag-quest" data-quest-id="{{id}}" draggable="true">
-            <td class="img">{{#if actor.img}}<img class="quest-giver-portrait portrait-small" src="{{actor.img}}" title="{{actor.name}}">{{/if}}</td>
+            <td class="img">{{#if giver.img}}<img class="quest-giver-portrait portrait-small" src="{{giver.img}}" title="{{giver.name}}">{{/if}}</td>
             <td class="title {{../titleAlign}}" data-quest-id="{{id}}">
                 {{#if (and personal ../isGM)}}
                 <i class="fas fa-user" title="{{users}}"></i>

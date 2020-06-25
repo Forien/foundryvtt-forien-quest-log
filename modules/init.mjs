@@ -35,13 +35,18 @@ Hooks.once('setup', () => {
 });
 
 Hooks.once("ready", () => {
-  QuestFolder.initializeJournals();
+  QuestFolder.initializeJournals().then(() => {
+    if (VersionCheck.check(constants.moduleName)) {
+      console.log('Starting Quest Log migration.');
+      Utils.updateQuests();
+      console.log('Quest Log migration finished.');
+    }
+  });
 
   if (VersionCheck.check(constants.moduleName)) {
     if (game.user.isGM || game.settings.get('forien-quest-log', 'playersWelcomeScreen')) {
       renderWelcomeScreen();
     }
-    Utils.updateMacros();
   }
 
   registerApiHooks();
