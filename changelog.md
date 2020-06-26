@@ -1,13 +1,19 @@
 # Changelog
 
-## v0.3.X
-
-### ???
-* Fixed linking Quests in Quest tasks causing stack overflow
-* Added Configuration setting to decide if hidden tasks should be counted
+## v0.4.0
+* Added support for Item and JournalEntry as quest giver entities.
+  * localization string ForienQuestLog.QuestForm.DragDropActor needs updating for all languages
+  * localization string ForienQuestLog.QuestForm.QuestGiverPlaceholder needs updating for all languages
+* Migrated from quest folders to quest statuses. 
 * Allowed to drag&drop Quests from Quest Log to create rich-text entity links
 * Added "Copy Link" button on Quest Preview window
-* Migrated from quest folders to quest statuses. 
+* Fixed linking Quests in Quest tasks causing stack overflow
+* Added Configuration setting to decide if hidden tasks should be counted
+
+## v0.3.X
+
+### v0.3.4
+* Added Spanish translation provided by GitHub member JJBocanegra
 
 ### v0.3.3
 * Fixed editable inputs cutting off text after double quotation character

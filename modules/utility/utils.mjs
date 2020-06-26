@@ -33,6 +33,7 @@ export default class Utils {
    * Update Quests to use newer, flexible data format
    */
   static updateQuests() {
+    if (!game.user.isGM) return;
     const rootFolder = QuestFolder.get('root');
     let questDirs = {
       active: '_fql_active',
@@ -44,6 +45,7 @@ export default class Utils {
     for (let key in questDirs) {
       const value = questDirs[key];
       let folder = game.journal.directory.folders.find(f => f.name === value);
+      if (folder === undefined) continue;
 
       folder.content.forEach(entry => {
         let content = entry.data.content;

@@ -21,9 +21,9 @@
     "QuestForm": {
       "Title": "Add new Quest",
       "QuestGiver": "Quest giver",
-      "QuestGiverPlaceholder": "Actor's name or ID",
+      "QuestGiverPlaceholder": "Actor's name or entity's UUID",
       "QuestTitle": "Quest's title",
-      "DragDropActor": "Drag & Drop Actor here to set it as Quest Giver",
+      "DragDropActor": "Drag & Drop Actor, Item or JournalEntry here to set it as Quest Giver",
       "QuestDescription": "Quest description",
       "QuestGMNotes": "GM notes",
       "Submit": "Submit"

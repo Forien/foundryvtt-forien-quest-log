@@ -234,8 +234,8 @@ export default class QuestPreview extends FormApplication {
     html.on("drop", ".quest-giver-gc", (event) => {
       event.preventDefault();
       let data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
-      if (data.type === 'Actor') {
-        this.quest.actor = data.id;
+      if (['Actor', 'Item', 'JournalEntry'].includes(data.type)) {
+        this.quest.giver = `${data.type}.${data.id}`;
         this.saveQuest();
       }
     });

@@ -54,10 +54,14 @@ export default class QuestForm extends FormApplication {
    * @private
    */
   async _updateObject(event, formData) {
-    let actor = Utils.findActor(formData.actor);
+    const actor = Utils.findActor(formData.giver);
+    let giver;
 
     if (actor !== false) {
-      actor = actor._id;
+      giver = actor.uuid;
+    } else {
+      let entity = await fromUuid(formData.giver)
+      giver = entity.uuid;
     }
 
     let title = formData.title;
@@ -78,7 +82,7 @@ export default class QuestForm extends FormApplication {
     let gmnotes = (formData.gmnotes !== undefined && formData.gmnotes.length) ? formData.gmnotes : this.gmnotes;
 
     let data = {
-      actor: actor,
+      giver: giver,
       title: title,
       description: description,
       gmnotes: gmnotes,
@@ -159,23 +163,41 @@ export default class QuestForm extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
 
-    html.on("change", "#actor", (event) => {
-      let actorId = $(event.currentTarget).val();
+    html.on("change", "#giver", async (event) => {
+      const giverId = $(event.currentTarget).val();
+      let giver;
 
-      let actor = Utils.findActor(actorId);
+      try {
+        giver = Utils.findActor(giverId);
 
-      if (actor !== false) {
-        html.find('.actor-portrait').attr('src', actor.img).removeClass('hidden');
-        html.find('.actor-name').text(actor.name).removeClass('hidden');
-        html.find('.drop-info').text(actor.name).addClass('hidden');
+        if (giver === false) {
+          giver = await fromUuid(giverId);
+        }
+      } catch (e) {
+        giver = false;
+      }
+
+      if (giver) {
+        if (giver.data.img.length) {
+          html.find('.giver-portrait').attr('src', giver.data.img).removeClass('hidden');
+        } else {
+          html.find('.giver-portrait').addClass('hidden');
+        }
+        html.find('.giver-name').text(giver.name).removeClass('hidden');
+        html.find('.drop-info').addClass('hidden');
+      } else {
+        html.find('.giver-portrait').addClass('hidden');
+        html.find('.giver-name').addClass('hidden');
+        html.find('.drop-info').removeClass('hidden');
       }
     });
 
-    html.on("drop", ".actor-data-fieldset", (event) => {
+    html.on("drop", ".giver-data-fieldset", async (event) => {
       event.preventDefault();
       let data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
-      if (data.type === 'Actor') {
-        html.find('#actor').val(data.id).change();
+      if (['Actor', 'Item', 'JournalEntry'].includes(data.type)) {
+        let uuid = `${data.type}.${data.id}`;
+        html.find('#giver').val(uuid).change();
       }
     });
 
