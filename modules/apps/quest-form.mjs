@@ -69,9 +69,11 @@ export default class QuestForm extends FormApplication {
     if (actor !== false) {
       giver = actor.uuid;
     } else {
-      if (formData.giver) {
+      try {
         let entity = await fromUuid(formData.giver);
         giver = entity.uuid;
+      } catch (e) {
+        giver = null;
       }
     }
 
@@ -113,27 +115,24 @@ export default class QuestForm extends FormApplication {
 
     let folder = this.getHiddenFolder();
 
-    const createdQuest = await JournalEntry.create({
+    return JournalEntry.create({
       name: title,
       content: JSON.stringify(data),
       folder: folder._id,
       permission: {default: permission}
-    }).then((promise) => {
+    }).then((entry) => {
+      if (this.subquest) {
+        this.object.addSubquest(entry._id);
+        this.object.save().then(() => {
+          Socket.refreshQuestPreview(this.object._id);
+        });
+      }
       // players don't see Hidden tab, but assistant GM can, so emit anyway
       Socket.refreshQuestLog();
-      if (this.subquest) {
-        Socket.refreshQuestPreview(this.object._id);
-      }
       this.submitted = true;
-      return promise;
+
+      return entry;
     });
-
-    if (this.subquest) {
-      this.object.addSubquest(createdQuest._id);
-      this.object.save();
-    }
-
-    return createdQuest;
   }
 
 

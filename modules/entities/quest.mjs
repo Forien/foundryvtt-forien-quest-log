@@ -536,6 +536,7 @@ export default class Quest {
       let quest = Quests.get(parentId);
       quest.removeSubquest(questId);
       await quest.save();
+      Socket.refreshQuestPreview(parentId);
     }
 
     entry.delete().then(() => {

@@ -1,71 +1,202 @@
 {
-  "ForienQuestLog.QuestLog.Tabs.InProgress": "進行中",
-  "ForienQuestLog.QuestLog.Tabs.Completed": "完了",
-  "ForienQuestLog.QuestLog.Tabs.Failed": "失敗",
-  "ForienQuestLog.QuestLog.Tabs.Hidden": "秘匿",
+  "ForienQuestLog": {
+    "NewQuest": "クエストを追加",
+    "QuestLogButton": "クエストログ",
+    "Quests": "{0}個のクエスト",
+    "SampleReward": "例：300の経験点",
+    "SampleTask": "例：魔王を討伐する",
 
-  "ForienQuestLog.QuestPreview.Tabs.Details": "詳細",
-  "ForienQuestLog.QuestPreview.Tabs.GMNotes": "GMノート",
-  "ForienQuestLog.NewQuest": "クエストを追加",
+    "QuestTypes": {
+      "InProgress": "進行中",
+      "Completed": "完了",
+      "Failed": "失敗",
+      "Hidden": "秘匿",
+      "Labels": {
+        "available": "受注可能",
+        "active": "進行中",
+        "completed": "完了",
+        "failed": "失敗",
+        "hidden": "秘匿"
+      }
+    },
 
-  "ForienQuestLog.Notifications.QuestMoved": "クエストを新たなフォルダに移動し状態を{target}に変更しました。",
+    "Buttons": {
+      "AddNewQuest": "新しいクエストを追加",
+      "AddNewTask": "追加"
+    },
 
-  "ForienQuestLog.Buttons.AddNewQuest": "新しいクエストを追加",
-  "ForienQuestLog.Buttons.AddNewTask": "追加",
+    "QuestForm": {
+      "Title": "新しいクエストを追加",
+      "QuestGiver": "クエスト依頼主",
+      "QuestGiverPlaceholder": "Actor's name or entity's UUID",
+      "QuestTitle": "クエスト名",
+      "DragDropActor": "キャラクター、アイテムまたは資料をここにドラッグ＆ドロップするとクエストの依頼主として設定できます。",
+      "QuestDescription": "クエスト内容",
+      "QuestGMNotes": "GMノート",
+      "Submit": "保存",
+      "SubquestOf": "{name}のサブクエストです"
+    },
 
-  "ForienQuestLog.QuestTypes.InProgress": "進行中",
-  "ForienQuestLog.QuestTypes.Completed": "完了",
-  "ForienQuestLog.QuestTypes.Failed": "失敗",
-  "ForienQuestLog.QuestTypes.Hidden": "秘匿",
-  "ForienQuestLog.Quests": "クエスト",
-  "ForienQuestLog.QuestLog.Table.QuestGiver": "クエスト依頼主",
-  "ForienQuestLog.QuestLog.Table.QuestTitle": "クエスト名",
-  "ForienQuestLog.QuestLog.Table.Tasks": "内容",
-  "ForienQuestLog.QuestLog.Table.Actions": "操作",
-  "ForienQuestLog.QuestPreview.Objectives": "目標",
-  "ForienQuestLog.QuestPreview.Rewards": "報酬",
+    "QuestLog": {
+      "Title": "クエストログ",
+      "SubTitle": "{0}に含まれています",
+      "Table": {
+        "QuestGiver": "クエスト依頼主",
+        "QuestTitle": "クエスト名",
+        "Tasks": "内容",
+        "Actions": "行動"
+      },
+      "Tabs": {
+        "Available": "受注可能",
+        "InProgress": "進行中",
+        "Completed": "完了",
+        "Failed": "失敗",
+        "Hidden": "秘匿"
+      }
+    },
 
-  "ForienQuestLog.Settings.showTasks.Enable": "クエストログにクエスト内容を表示する",
-  "ForienQuestLog.Settings.showTasks.EnableHint": "クエストの名前の隣にそのクエストに付随する内容の表示の仕方を設定します。クエストの詳細画面には効果ありません。",
-  "ForienQuestLog.Settings.showTasks.default": "完了/合計",
-  "ForienQuestLog.Settings.showTasks.onlyCurrent": "完了のみ",
-  "ForienQuestLog.Settings.showTasks.no": "内容の列を隠す",
+    "QuestPreview": {
+      "Title": "クエスト詳細",
+      "SubTitle": "{0}に含まれています",
+      "Objectives": "目標",
+      "Rewards": "報酬",
+      "DragDropRewards": "アイテムをここにドラッグ＆ドロップすると報酬として設定できます。",
+      "InvalidQuestId": "クエストIDが存在しないため開けません。",
+      "HeaderButtons": {
+        "Show": "プレイヤーに表示"
+      },
 
-  "ForienQuestLog.Settings.navStyle.Enable": "タブのスタイル",
-  "ForienQuestLog.Settings.navStyle.EnableHint": "クエストログのタブをどのように表示するのかを設定します。",
-  "ForienQuestLog.Settings.navStyle.bookmarks": "しおり風",
-  "ForienQuestLog.Settings.navStyle.classic": "クラシック風",
+      "Management": {
+        "IsPersonalQuest": "個人クエスト？",
+        "IsPersonalQuestDescription": "個人クエストとして指定すると、そのプレイヤーにしか視認できなくなります。チェックをすべて外すとクエストが秘匿タブに表示されるようになります。",
+        "SplashArt": "画像",
+        "QuestBranching": "サブクエスト",
+        "AddSubquest": "サブクエストを作成する",
+        "CanPlayerEdit": "プレイヤーに編集権限を与える"
+      },
 
-  "ForienQuestLog.Settings.titleAlign.Enable": "クエスト名位置合わせ",
-  "ForienQuestLog.Settings.titleAlign.EnableHint": "クエストログのクエスト名の位置を調整するための設定です。",
-  "ForienQuestLog.Settings.titleAlign.left": "左寄せ",
-  "ForienQuestLog.Settings.titleAlign.center": "中央",
+      "Tabs": {
+        "Details": "内容",
+        "QuestManagement": "クエスト管理",
+        "GMNotes": "GMノート"
+      }
 
-  "ForienQuestLog.QuestLogButton": "クエストログ",
-  "ForienQuestLog.QuestForm.Title": "新しいクエストを追加",
-  "ForienQuestLog.QuestLog.Title": "クエストログ",
-  "ForienQuestLog.QuestPreview.Title": "クエスト内容",
+    },
 
-  "ForienQuestLog.QuestForm.QuestGiver": "クエスト依頼主",
-  "ForienQuestLog.QuestForm.QuestGiverPlaceholder": "キャラクターの名前またはID",
-  "ForienQuestLog.QuestForm.QuestTitle": "クエスト名",
-  "ForienQuestLog.QuestForm.QuestDescription": "クエスト内容",
-  "ForienQuestLog.QuestForm.QuestGMNotes": "GMノート",
-  "ForienQuestLog.QuestForm.Submit": "保存",
+    "DeleteDialog": {
+      "Title": "{name}を削除します",
+      "Header": "本当によろしいですか？",
+      "Body": "このクエストとその内容はすべて削除されます。",
+      "Delete": "削除",
+      "Cancel": "取り消す"
+    },
 
-  "ForienQuestLog.SampleTask": "例：魔王を討伐する",
-  "ForienQuestLog.QuestPreview.DragDropRewards": "アイテムをここにドラッグ＆ドロップすると報酬として登録できます",
+    "CloseDialog": {
+      "Title": "記入をやめようとしています",
+      "Header": "本当によろしいですか？",
+      "Body": "保存されていない内容は失われます。",
+      "Discard": "保存を破棄する",
+      "Cancel": "戻る"
+    },
 
-  "ForienQuestLog.DeleteDialog.Title": "{name}を削除",
-  "ForienQuestLog.DeleteDialog.Header": "本当に削除しますか？",
-  "ForienQuestLog.DeleteDialog.Body": "このクエストその内容はすべて削除されます。",
-  "ForienQuestLog.DeleteDialog.Delete": "削除",
-  "ForienQuestLog.DeleteDialog.Cancel": "キャンセル",
+    "Notifications": {
+      "CannotOpen": "クエストの内容を開けませんでした。権限が無いかクエストが存在しないかもしれません。",
+      "UserCantOpen": "{user}はこのクエストを開く権限を持っていません。",
+      "LinkCopied": "このクエストのエンティティリンクをコピーしました。",
+      "QuestMoved": "クエストを新たなフォルダに移動し状態を{target}に変更しました。"
+    },
 
-  "ForienQuestLog.Tooltips.ToggleImage": "コマ/キャラ画像表示の切り替え",
-  "ForienQuestLog.Tooltips.SetActive": "進行中にする",
-  "ForienQuestLog.Tooltips.SetCompleted": "完了にする",
-  "ForienQuestLog.Tooltips.SetFailed": "失敗にする",
-  "ForienQuestLog.Tooltips.Hide": "秘匿",
-  "ForienQuestLog.Tooltips.Delete": "削除"
+    "Settings": {
+      "allowPlayersDrag": {
+        "Enable": "報酬のドラッグを許可",
+        "EnableHint": "プレイヤーはクエスト報酬にあるアイテム等を自分のキャラシにドラッグできるようになります。"
+      },
+      "availableQuests": {
+        "Enable": "受注可能タブを表示する",
+        "EnableHint": "許可するとプレイヤーは新たな「受注可能」タブを閲覧できるようになり、受注・秘匿されていないクエストの閲覧が可能となります。"
+      },
+      "countHidden": {
+        "Enable": "隠しタスクをカウントする",
+        "EnableHint": "オンにすることでクエストの合計目標数に隠し目標も含まれるようになります。"
+      },
+      "navStyle": {
+        "Enable": "タブのスタイル",
+        "EnableHint": "クエストログのタブをどのように表示するのかを設定します",
+        "bookmarks": "しおり風",
+        "classic": "クラシック風"
+      },
+      "showFolder": {
+        "Enable": "クエストフォルダーを表示する",
+        "EnableHint": "クエストデータが含まれているフォルダを表示する。デバッグ用。"
+      },
+      "showTasks": {
+        "Enable": "クエストログにクエスト内容を表示する",
+        "EnableHint": "クエストの名前の隣にそのクエストに付随する内容の表示の仕方を設定します。クエストの詳細画面には効果ありません。",
+        "default": "完了/合計",
+        "onlyCurrent": "完了のみ",
+        "no": "内容の列を隠す"
+      },
+      "titleAlign": {
+        "Enable": "クエスト名位置合わせ",
+        "EnableHint": "クエストログのクエスト名の位置を調整するための設定です",
+        "left": "左寄せ",
+        "center": "中央"
+      },
+      "playersWelcomeScreen": {
+        "Enable": "プレイヤーにウェルカム画面を表示する",
+        "EnableHint": "チェックを外すとプレイヤーたちがアップデート後にログインしたときに表示されるウェルカム画面を見えなくなります。クエストログのヘルプボタンを押すことで再び表示できます。"
+      },
+      "allowPlayersAccept": {
+        "Enable": "プレイヤー受注可",
+        "EnableHint": "プレイヤーたちは受注可能タブからクエストを受注することが可能になります。"
+      },
+      "allowPlayersCreate": {
+        "Enable": "プレイヤー作成可",
+        "EnableHint": "チェックをいれることでプレイヤーが独自にクエストを作成できるようになります。プレイヤーが作成したクエストは受注可能タブに表示されます。この機能を使うにはプレイヤーの権限に「資料の作成」を付与している必要があります。"
+      }
+    },
+
+    "Tooltips": {
+      "SetAvailable": "受注可能にする",
+      "SetActive": "進行中にする",
+      "SetCompleted": "完了にする",
+      "SetFailed": "失敗にする",
+      "Hide": "秘匿",
+      "Delete": "削除",
+      "AddAbstractReward": "抽象報酬を設定する",
+      "PersonalQuestButNoPlayers": "これは個人クエストですが誰も見ることができません。",
+      "PersonalQuestVisibleFor": "これは個人クエストです",
+      "RewardHidden": "報酬は秘匿されています。クリックして表示します。",
+      "RewardVisible": "報酬は表示されています。クリックして秘匿します。",
+      "TaskHidden": "内容が秘匿されています。クリックして表示します。",
+      "TaskVisible": "内容が表示されています。クリックして秘匿します。",
+      "ToggleImage": "コマ/キャラの画像切替"
+    },
+
+    "Api": {
+      "__COMMENT__": "No need for translating lines starting with 'API ERROR', they show in console for developers only.",
+      "create": {
+        "title": "API Error: Title property is required to create new Quest"
+      },
+      "hooks": {
+        "createOpenQuestMacro": {
+          "name": "「{name}」クエストを開くt",
+          "error": {
+            "noQuest": "API Error: Can't create macro with invalid Quest ID"
+          }
+        }
+      },
+      "reward": {
+        "create": {
+          "data": "API Error: Data property with at least {name, img} is required to create new Reward",
+          "type": "API Error: Type property is required to create new Reward"
+        }
+      },
+      "task": {
+        "create": {
+          "name": "API Error: Name property is required to create new Task"
+        }
+      }
+    }
+  }
 }

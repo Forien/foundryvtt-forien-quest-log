@@ -1,5 +1,11 @@
 # Changelog
 
+### v0.4.3
+* Fixed error showing up and rejecting submitting Quest Form if Quest Giver is invalid string
+* Fixed Quest Details to properly refresh parent when created subquest
+* Fixed Quest Details to properly refresh parent when deleted subquest
+* Updated translations with help of original contributors
+
 ### v0.4.2
 * Fixed Players list overflowing on Managenemt tab for those crazy people with more than 12 players
 
