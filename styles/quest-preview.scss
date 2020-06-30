@@ -290,6 +290,11 @@
 
       .part {
         &.personal-quest {
+          display: grid;
+          grid-auto-rows: auto minmax(0, 1fr);
+          grid-template-columns: minmax(0, 1fr);
+          gap: 1px 1px;
+
           .quest-is-personal {
             display: grid;
             grid-template-columns: auto 1fr;
@@ -307,18 +312,25 @@
             }
           }
 
-          .users {
-            display: grid;
-            grid-auto-rows: auto;
-            grid-template-columns: max-content auto;
-            gap: 1px 1px;
+          .user-columns {
             padding: 8px;
+            columns: 2;
 
-            &.disabled {
-              color: #666666;
+            .users {
+              height: 100%;
+              break-inside: avoid-column;
 
-              input {
+              .user {
+                break-inside: avoid-column;
+                display: flex;
 
+                &.disabled {
+                  color: #666666;
+                }
+
+                label {
+                  align-self: center;
+                }
               }
             }
           }

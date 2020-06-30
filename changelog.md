@@ -1,6 +1,7 @@
 # Changelog
 
 ### v0.4.1
+* Fixed Players list overflowing on Managenemt tab for those crazy people with 8 or more players
 * Fixed hidden subquests showing empty row to players
 * Fixed deleting subquests not being removed from parents
 * Fixed updating subquests not refreshing Parent's details
