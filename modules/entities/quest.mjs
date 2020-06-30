@@ -82,7 +82,7 @@ export default class Quest {
   /**
    * Deletes Task from Quest
    *
-   * @param index
+   * @param questId
    */
   removeSubquest(questId) {
     this._subquests = this._subquests.filter(id => id !== questId);
@@ -484,7 +484,7 @@ export default class Quest {
     content.status = target;
     content = JSON.stringify(content);
 
-    journal.update({content: content, "permission": permission}).then(() => {
+    return journal.update({content: content, "permission": permission}).then(() => {
       Socket.refreshQuestLog();
       Socket.refreshQuestPreview(questId);
       let dirname = game.i18n.localize(this.getQuestTypes()[target]);

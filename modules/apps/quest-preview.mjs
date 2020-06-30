@@ -182,6 +182,9 @@ export default class QuestPreview extends FormApplication {
     this.render(true);
     Socket.refreshQuestLog();
     Socket.refreshQuestPreview(this.quest.id);
+    if (this.quest.parent) {
+      Socket.refreshQuestPreview(this.quest.parent);
+    }
   }
 
   /**
@@ -252,15 +255,15 @@ export default class QuestPreview extends FormApplication {
     });
 
     if (this.canEdit) {
-      html.on("click", ".actions i", event => {
+      html.on("click", ".actions i", async (event) => {
         const target = $(event.target).data('target');
         const questId = $(event.target).data('id');
         const classList = $(event.target).attr('class');
 
         if (classList.includes('move')) {
-          Quest.move(questId, target);
+          Quest.move(questId, target).then(() => this.refresh());
         } else if (classList.includes('delete')) {
-          Quest.delete(questId);
+          Quest.delete(questId, this.quest.id).then(() => this.refresh());
         }
       });
 

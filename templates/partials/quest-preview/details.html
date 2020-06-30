@@ -50,6 +50,7 @@
             <h3>{{localize 'ForienQuestLog.QuestPreview.Objectives'}} {{#if canEdit}}| <small class="add-new-task">{{localize 'ForienQuestLog.Buttons.AddNewTask'}}</small>{{/if}}</h3>
             <div class="tasks-box">
                 {{#each subquests}}
+                {{#if this.name}}
                 <div class="task">
                     <span class="state-container">
                         <i class="far fa-square state-background"></i>
@@ -57,9 +58,10 @@
                         <i class="fas fa-times state {{#unless (eq status 'failed')}}hidden{{/unless}}"></i>
                     </span>
                     <span>
-                        <span class="quest-name" data-id="{{id}}">{{{name}}}</span>
+                        <span class="quest-name" data-id="{{id}}">{{name}}</span>
                     </span>
                 </div>
+                {{/if}}
                 {{/each}}
                 {{#each tasks}}
                 <div class="task">

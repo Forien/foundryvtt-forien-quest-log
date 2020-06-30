@@ -121,6 +121,9 @@ export default class QuestForm extends FormApplication {
     }).then((promise) => {
       // players don't see Hidden tab, but assistant GM can, so emit anyway
       Socket.refreshQuestLog();
+      if (this.subquest) {
+        Socket.refreshQuestPreview(this.object._id);
+      }
       this.submitted = true;
       return promise;
     });

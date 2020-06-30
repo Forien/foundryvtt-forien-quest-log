@@ -1,5 +1,10 @@
 # Changelog
 
+### v0.4.1
+* Fixed hidden subquests showing empty row to players
+* Fixed deleting subquests not being removed from parents
+* Fixed updating subquests not refreshing Parent's details
+
 ## v0.4.0
 * Added Quest Branching in form of ability to create SubQuests
 * Added support for Item and JournalEntry as quest giver entities.
