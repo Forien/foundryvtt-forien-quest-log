@@ -8,7 +8,7 @@ export default function registerApiHooks() {
   // Create "open quest" Macro when Quest is dropped onto Hotbar.
   Hooks.on("hotbarDrop", async (bar, data, slot) => {
     if (data.type === "Quest") {
-      let questId = data.data.id;
+      let questId = data.id;
 
       let quest = Quest.get(questId);
       if (!quest)
@@ -21,15 +21,20 @@ export default function registerApiHooks() {
         command: command
       };
 
-      let actor = Utils.findActor(quest.actor);
+      let actor = Utils.findActor(quest.giver);
       if (actor) {
         if (quest.image === 'actor')
           macroData.img = actor.img;
         else
           macroData.img = actor.data.token.img;
+      } else {
+        if (quest.giver) {
+          let entity = await fromUuid(quest.giver);
+          macroData.img = entity.img;
+        }
       }
 
-      let macro = game.macros.entities.find(m => (m.command === command));
+      let macro = game.macros.entities.find(m => (m.data.command === command));
       if (!macro) {
         macro = await Macro.create(macroData, {displaySheet: false})
       }

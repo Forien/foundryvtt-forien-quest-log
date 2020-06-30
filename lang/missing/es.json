@@ -1,12 +1,6 @@
 {
-    "ForienQuestLog.Api.hooks.createOpenQuestMacro.error.noQuest": "",
-    "ForienQuestLog.Api.create.title": "",
     "ForienQuestLog.QuestForm.SubquestOf": "",
-    "ForienQuestLog.QuestPreview.InvalidQuestId": "",
     "ForienQuestLog.Notifications.LinkCopied": "",
-    "ForienQuestLog.Api.reward.create.type": "",
-    "ForienQuestLog.Api.reward.create.data": "",
-    "ForienQuestLog.Api.task.create.name": "",
     "ForienQuestLog.Settings.allowPlayersCreate.Enable": "",
     "ForienQuestLog.Settings.allowPlayersCreate.EnableHint": "",
     "ForienQuestLog.Settings.allowPlayersAccept.Enable": "",

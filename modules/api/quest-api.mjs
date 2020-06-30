@@ -5,7 +5,7 @@ import Task from "../entities/task.mjs";
 import Socket from "../utility/socket.mjs";
 
 /**
- * Quest public Api available under `game.quests.`
+ * Quest public Api available under `Quests.`
  */
 export default class QuestApi {
   /**

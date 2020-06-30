@@ -30,9 +30,17 @@ export default class QuestForm extends FormApplication {
    * @returns {Promise<Object>}
    */
   async getData(options = {}) {
+    this.subquest = (this.object._id !== undefined);
+    const parent = this.subquest ? this.object : null;
+
+    if (this.subquest)
+      this.options.title += ` – ${game.i18n.format('ForienQuestLog.QuestForm.SubquestOf', {name: parent.name})}`;
+
     return mergeObject(super.getData(), {
       options: options,
-      isGM: game.user.isGM
+      isGM: game.user.isGM,
+      subquest: this.subquest,
+      parent: parent
     });
   }
 
@@ -54,10 +62,17 @@ export default class QuestForm extends FormApplication {
    * @private
    */
   async _updateObject(event, formData) {
-    let actor = Utils.findActor(formData.actor);
+    const actor = Utils.findActor(formData.giver);
+    let giver = null;
+    let permission = 0;
 
     if (actor !== false) {
-      actor = actor._id;
+      giver = actor.uuid;
+    } else {
+      if (formData.giver) {
+        let entity = await fromUuid(formData.giver);
+        giver = entity.uuid;
+      }
     }
 
     let title = formData.title;
@@ -78,28 +93,44 @@ export default class QuestForm extends FormApplication {
     let gmnotes = (formData.gmnotes !== undefined && formData.gmnotes.length) ? formData.gmnotes : this.gmnotes;
 
     let data = {
-      actor: actor,
+      giver: giver,
       title: title,
       description: description,
       gmnotes: gmnotes,
       tasks: tasks
     };
 
+    if (!game.user.isGM) {
+      data.status = 'available';
+      permission = 3;
+    }
+
+    if (this.subquest) {
+      data.parent = this.object._id;
+    }
+
     data = new Quest(data);
 
     let folder = this.getHiddenFolder();
 
-    return JournalEntry.create({
+    const createdQuest = await JournalEntry.create({
       name: title,
       content: JSON.stringify(data),
-      folder: folder._id
+      folder: folder._id,
+      permission: {default: permission}
     }).then((promise) => {
-      QuestLog.render(true);
       // players don't see Hidden tab, but assistant GM can, so emit anyway
       Socket.refreshQuestLog();
       this.submitted = true;
       return promise;
     });
+
+    if (this.subquest) {
+      this.object.addSubquest(createdQuest._id);
+      this.object.save();
+    }
+
+    return createdQuest;
   }
 
 
@@ -159,23 +190,41 @@ export default class QuestForm extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
 
-    html.on("change", "#actor", (event) => {
-      let actorId = $(event.currentTarget).val();
+    html.on("change", "#giver", async (event) => {
+      const giverId = $(event.currentTarget).val();
+      let giver;
 
-      let actor = Utils.findActor(actorId);
+      try {
+        giver = Utils.findActor(giverId);
 
-      if (actor !== false) {
-        html.find('.actor-portrait').attr('src', actor.img).removeClass('hidden');
-        html.find('.actor-name').text(actor.name).removeClass('hidden');
-        html.find('.drop-info').text(actor.name).addClass('hidden');
+        if (giver === false) {
+          giver = await fromUuid(giverId);
+        }
+      } catch (e) {
+        giver = false;
+      }
+
+      if (giver) {
+        if (giver.data.img.length) {
+          html.find('.giver-portrait').attr('src', giver.data.img).removeClass('hidden');
+        } else {
+          html.find('.giver-portrait').addClass('hidden');
+        }
+        html.find('.giver-name').text(giver.name).removeClass('hidden');
+        html.find('.drop-info').addClass('hidden');
+      } else {
+        html.find('.giver-portrait').addClass('hidden');
+        html.find('.giver-name').addClass('hidden');
+        html.find('.drop-info').removeClass('hidden');
       }
     });
 
-    html.on("drop", ".actor-data-fieldset", (event) => {
+    html.on("drop", ".giver-data-fieldset", async (event) => {
       event.preventDefault();
       let data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
-      if (data.type === 'Actor') {
-        html.find('#actor').val(data.id).change();
+      if (['Actor', 'Item', 'JournalEntry'].includes(data.type)) {
+        let uuid = `${data.type}.${data.id}`;
+        html.find('#giver').val(uuid).change();
       }
     });
 

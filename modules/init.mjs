@@ -9,6 +9,7 @@ import Utils from "./utility/utils.mjs";
 import VersionCheck from "./versioning/version-check.mjs";
 import renderWelcomeScreen from "./versioning/welcome-screen.mjs";
 import Quest from "./entities/quest.mjs";
+import QuestsCollection from "./entities/collection/quests-collection.mjs";
 
 
 Hooks.once('init', () => {
@@ -17,10 +18,12 @@ Hooks.once('init', () => {
   CONST.ENTITY_LINK_TYPES.push("Quest");
   CONFIG["Quest"] = {
     entityClass: Quest,
+    collection: QuestsCollection,
     sidebarIcon: 'far fa-question-circle',
   };
 
   Utils.preloadTemplates();
+  Utils.registerHandlebarsHelpers();
 
   Hooks.callAll("ForienQuestLog.afterInit");
 });
@@ -28,18 +31,24 @@ Hooks.once('init', () => {
 Hooks.once('setup', () => {
   window.Quests = QuestApi;
   window.QuestLog = new QuestLogClass();
+  game.questPreview = {};
 
   Hooks.callAll("ForienQuestLog.afterSetup");
 });
 
 Hooks.once("ready", () => {
-  QuestFolder.initializeJournals();
+  QuestFolder.initializeJournals().then(() => {
+    if (VersionCheck.check(constants.moduleName)) {
+      console.log('Starting Quest Log migration.');
+      Utils.updateQuests();
+      console.log('Quest Log migration finished.');
+    }
+  });
 
   if (VersionCheck.check(constants.moduleName)) {
     if (game.user.isGM || game.settings.get('forien-quest-log', 'playersWelcomeScreen')) {
       renderWelcomeScreen();
     }
-    Utils.updateMacros();
   }
 
   registerApiHooks();

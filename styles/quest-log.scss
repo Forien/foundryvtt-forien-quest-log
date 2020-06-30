@@ -112,6 +112,13 @@
                 font-weight: bold;
                 cursor: pointer;
 
+                small {
+                  display: block;
+                  font-style: italic;
+                  margin-left: 20px;
+                  font-weight: normal;
+                }
+
                 &.left {
                   text-align: left;
                 }

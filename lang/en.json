@@ -2,7 +2,7 @@
   "ForienQuestLog": {
     "NewQuest": "New Quest",
     "QuestLogButton": "Quest Log",
-    "Quests": "Quests",
+    "Quests": "{0} Quests",
     "SampleReward": "f.e. 300 Experience Points",
     "SampleTask": "f.e. Kill all rats in „The Twisted Ankle” inn",
 
@@ -10,7 +10,14 @@
       "InProgress": "Active",
       "Completed": "Completed",
       "Failed": "Failed",
-      "Hidden": "Hidden"
+      "Hidden": "Hidden",
+      "Labels": {
+        "available": "available",
+        "active": "in progress",
+        "completed": "completed",
+        "failed": "failed",
+        "hidden": "hidden"
+      }
     },
 
     "Buttons": {
@@ -21,16 +28,18 @@
     "QuestForm": {
       "Title": "Add new Quest",
       "QuestGiver": "Quest giver",
-      "QuestGiverPlaceholder": "Actor's name or ID",
+      "QuestGiverPlaceholder": "Actor's name or entity's UUID",
       "QuestTitle": "Quest's title",
-      "DragDropActor": "Drag & Drop Actor here to set it as Quest Giver",
+      "DragDropActor": "Drag & Drop Actor, Item or JournalEntry here to set it as Quest Giver",
       "QuestDescription": "Quest description",
       "QuestGMNotes": "GM notes",
-      "Submit": "Submit"
+      "Submit": "Submit",
+      "SubquestOf": "Subquest of {name}"
     },
 
     "QuestLog": {
       "Title": "Quest Log",
+      "SubTitle": "part of: {0}",
       "Table": {
         "QuestGiver": "Quest Giver",
         "QuestTitle": "Title",
@@ -48,6 +57,7 @@
 
     "QuestPreview": {
       "Title": "Quest Details",
+      "SubTitle": "part of: {0}",
       "Objectives": "Objectives",
       "Rewards": "Rewards",
       "DragDropRewards": "Drag & drop items here to add them as rewards",
@@ -58,7 +68,11 @@
 
       "Management": {
         "IsPersonalQuest": "Is Personal Quest?",
-        "IsPersonalQuestDescription": "Check to mark quest as Personal. It will be invisible to all players except those specifically marked below. Unchecking this option will remove all permissions and move quest to Hidden tab."
+        "IsPersonalQuestDescription": "Check to mark quest as Personal. It will be invisible to all players except those specifically marked below. Unchecking this option will remove all permissions and move quest to Hidden tab.",
+        "SplashArt": "Splash Art",
+        "QuestBranching": "Sub Quests",
+        "AddSubquest": "Create Sub Quest",
+        "CanPlayerEdit": "Allow players edit Details"
       },
 
       "Tabs": {
@@ -88,7 +102,7 @@
     "Notifications": {
       "CannotOpen": "Cannot open Quest Details. You may lack permissions, Quest might not exist anymore, or provided ID was invalid.",
       "UserCantOpen": "User {user} doesn't have permission to open this quest.",
-
+      "LinkCopied": "Entity Link for this quest has been copied to clipboard",
       "QuestMoved": "Moved quest to new folder and gave it new status: {target}"
     },
 
@@ -100,6 +114,10 @@
       "availableQuests": {
         "Enable": "Show Available Tab",
         "EnableHint": "Check to show new, \"Available\" tab in Quest Log, where players can see all non-hidden Quests before they are accepted."
+      },
+      "countHidden": {
+        "Enable": "Count hidden Tasks",
+        "EnableHint": "If checked, the number of completed/total tasks will include hidden tasks."
       },
       "navStyle": {
         "Enable": "Navigation style",
@@ -127,6 +145,14 @@
       "playersWelcomeScreen": {
         "Enable": "Display Welcome Screen to Players",
         "EnableHint": "Uncheck to prevent players from seeing Welcome Screen on log in after an update. They might still see it by clicking 'help' icon in Quest Log."
+      },
+      "allowPlayersAccept": {
+        "Enable": "Players can Accept",
+        "EnableHint": "Check to allow players to accept Quests from Available tab."
+      },
+      "allowPlayersCreate": {
+        "Enable": "Players can Create",
+        "EnableHint": "Check to allow players to create Quests. Player created Quests will land in Available tab with Player Edit permissions. REQUIRES 'create journal' core permission."
       }
     },
 

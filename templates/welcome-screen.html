@@ -16,24 +16,97 @@
         background: url("/ui/parchment.jpg") repeat !important;
     }
     {{/if}}
+    .welcome-screen .expand {
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+    }
+
+    .welcome-screen .expand::after {
+        content: "[click to expand]";
+        font-weight: normal;
+        font-size: 12px;
+        color: #333;
+        align-self: flex-end;
+    }
+
+    .welcome-screen .expand.expanded::after {
+        content: "[click to hide]";
+    }
+
+    .welcome-screen section div {
+        min-height: 0;
+        text-align: justify;
+    }
+
+    .welcome-screen section {
+        display: block;
+    }
 </style>
-
 <h1>Thank you for installing and using Forien's Quest Log!</h1>
-<p>Make sure to read the <a href="https://github.com/Forien/foundryvtt-forien-quest-log/blob/master/README.md">README</a>, for important information and to learn about this module's features.</p>
-<h2>Bugs?</h2>
-<p>Check <a href="https://github.com/Forien/foundryvtt-forien-quest-log/issuess?q=is%3Aopen+is%3Aissue+label%3Abug">current list of bugs</a> and if yours is not covered there, create new Issue using Bug Report template.
-<h2>Suggestions? Feature Requests? Feedback?</h2>
-<p>Don't ask me on Discord. Use the <a href="https://github.com/Forien/foundryvtt-forien-quest-log/issues">GitHubs Issue Board</a> for questions, suggestions, bugs, helping other peoples questions getting answered, etc.</p>
-<p>Before you post anything, check the issues board first if your issue, question, etc. has been posted already. If yes, comment on the existing post and/or give it a thumbsup!</p>
-<p>Currently planned features are on the <a href="https://github.com/Forien/foundryvtt-forien-quest-log/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement">GitHubs Issue Board</a> as well. </p>
+<section id="section-{{moduleName}}">
+    <p>Make sure to read the <a href="https://github.com/Forien/foundryvtt-forien-quest-log/blob/master/README.md">README</a> and <a href="https://github.com/Forien/foundryvtt-forien-quest-log/wiki">the Wiki</a>, for important information and to learn about this module's features.</p>
 
-<p style="font-weight: bold; text-align: right;">Best regards, <br>Forien</p>
+    <h2 class="expand" data-target="bugs">Bugs?</h2>
+    <div class="bugs" style="display: none">
+        <p>Check <a href="https://github.com/Forien/foundryvtt-forien-quest-log/issuess?q=is%3Aopen+is%3Aissue+label%3Abug">current list of bugs</a> and if yours is not covered there, create new Issue using Bug Report template.
+    </div>
 
-<p style="display: flex; flex-flow: row nowrap; align-items: center; justify-content: flex-start;"><input type="checkbox" class='show-again' id="welcome-screen-show-again" {{checked isChecked}}/> <label for="welcome-screen-show-again">Don't show this screen again until next update.</label></p>
-<p style="text-align: right">Want to support development? <a href="https://github.com/Forien/foundryvtt-forien-quest-log#support">Click here</a>!</p>
+    <h2 class="expand" data-target="feedback">Suggestions? Feedback?</h2>
+    <div class="feedback" style="display: none">
+        <p>Don't ask me on Discord. Use the <a href="https://github.com/Forien/foundryvtt-forien-quest-log/issues">GitHubs Issue Board</a> for questions, suggestions, bugs, helping other peoples questions getting answered, etc.</p>
+        <p>Before you post anything, check the issues board first if your issue, question, etc. has been posted already. If yes, comment on the existing post and/or give it a thumbsup!</p>
+        <p>Currently planned features are on the <a href="https://github.com/Forien/foundryvtt-forien-quest-log/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement">GitHubs Issue Board</a> as well. </p>
+    </div>
 
+    <!-- temporary -->
+    <h2 class="expand expanded" data-target="help">I need your help…</h2>
+    <div class="help" style="justify-content: stretch">
+        <p>I am currently unemployed and am devoting as much time as I can to building modules and contributing to the Foundry community. Presently, this amounts to many hours a day.</p>
+        <p>Without your support, I'm afraid I will have to greatly reduce the amount of time I can devote to my projects and to you, the wonderful people of the Foundry community.</p>
+        <p>I recognize that not everyone has the resources to do so (which is fine!), but <strong>if you can safely afford that, please consider <a href="https://www.patreon.com/forien" target="_blank">becoming a Patron</a></strong>. ALL contributions help, regardless of level.  It really would mean the world to me and I can't thank you enough for even considering it. Let's build more awesome functionality into FoundryVTT together!</p>
+    </div>
+
+<!--    <p>I feel bad about reaching you like that, but I need to. I am currently unemployed and I spent last month learning and building modules for Foundry. Quest Log is my biggest undertaking in this regard. I work on it pretty much daily, for many hours.</p>-->
+<!--    <p>However, I might not be able to continue to do so and be <em>forced</em> to find a job to simply pay my bills and my free time would shrink drastically.</p>-->
+<!--    <p>So that's why I'm asking for your help. Hundreds of people downloaded this module and I understand that many of you might be in bad situation as well, totally understandable. But please, <strong>if you can safely afford that, please consider <a href="https://www.patreon.com/forien" target="_blank">becoming a Patron</a></strong>. Every little support counts. It would mean world to me and I would really appreciate every help that would allow me to work on this and many more awesome modules as my job!</p>-->
+    <!-- /temporary -->
+
+    <p style="font-weight: bold; text-align: right;">Best regards,<br>Forien</p>
+
+    <p style="display: flex; flex-flow: row nowrap; align-items: center; justify-content: flex-start;"><input type="checkbox" class="show-again-{{moduleName}}" id="welcome-screen-show-again" {{checked isChecked}}/> <label for="welcome-screen-show-again">Don't show this screen again until next update.</label></p>
+    <p style="text-align: right"><strong>Want to support development? <a href="https://github.com/Forien/foundryvtt-forien-quest-log#support">Click here</a>!</strong></p>
+</section>
 <h1>Changelog</h1>
-<!-- https://markdowntohtml.com/ -->
+<h2 id="v040">v0.4.0</h2>
+<ul>
+    <li>Added Quest Branching in form of ability to create SubQuests</li>
+    <li>Added support for Item and JournalEntry as quest giver entities.<ul>
+        <li>localization string <code>ForienQuestLog.QuestForm.DragDropActor</code> needs updating for all languages</li>
+        <li>localization string <code>ForienQuestLog.QuestForm.QuestGiverPlaceholder</code> needs updating for all languages</li>
+        <li>localization string <code>ForienQuestLog.Quests</code> needs updating for all languages</li></ul></li>
+    <li>Added optional Setting to allow Players to create quests<ul>
+        <li>Player also needs "Create Journal Entry" permission</li></ul></li>
+    <li>Added Splash Art / Featured Image for Quests</li>
+    <li>Added optional Setting to allow Players to accept quests</li>
+    <li>Added Quest Setting to allow Players to edit that quest</li>
+    <li>Added "Copy Link" button on Quest Preview window</li>
+    <li>Added Configuration setting to decide if hidden tasks should be counted</li>
+    <li>Added Chinese translation provided by Discord member Ztt1996</li>
+    <li>Added status edit buttons to Quest Details window</li>
+    <li>Added Quest Status to Quest Details window</li>
+    <li>Allowed to drag&amp;drop Quests from Quest Log to create rich-text entity links</li>
+    <li>Allowed for multiple Quest Detail windows to be displayed at once</li>
+    <li>Migrated from quest folders to quest statuses. </li>
+    <li>Fixed linking Quests in Quest tasks causing stack overflow</li>
+    <li>Fixed Secret disappearing from Description</li>
+    <li>Fixed additional Macros being created for opening the Quests while dragging quest to Hotbar</li>
+</ul>
+<h2 id="v03x">v0.3.X</h2>
+<h3 id="v034">v0.3.4</h3>
+<ul>
+    <li>Added Spanish translation provided by GitHub member JJBocanegra</li>
+</ul>
 <h3 id="v033">v0.3.3</h3>
 <ul>
     <li>Fixed editable inputs cutting off text after double quotation character</li>

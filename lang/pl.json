@@ -53,16 +53,16 @@
   "ForienQuestLog.Settings.titleAlign.center": "Wyśrodkuj",
 
   "ForienQuestLog.Settings.playersWelcomeScreen.Enable": "Pokazuj graczom Ekran Powitalny",
-  "ForienQuestLog.Settings.playersWelcomeScreen.EnableHint": "Odznacz, aby graczom nie wyświetlać po zalogowaniu Ekranu Powitalnego z każdą nową wersją. Gracze wciąż mogą go wyświetlić klikając na ikonę \"pomocy\" w Dzienniku Misji.",",",
+  "ForienQuestLog.Settings.playersWelcomeScreen.EnableHint": "Odznacz, aby graczom nie wyświetlać po zalogowaniu Ekranu Powitalnego z każdą nową wersją. Gracze wciąż mogą go wyświetlić klikając na ikonę \"pomocy\" w Dzienniku Misji.",
 
   "ForienQuestLog.QuestForm.Title": "Stwórz nową Misję",
   "ForienQuestLog.QuestForm.QuestGiver": "Zleceniodawca",
-  "ForienQuestLog.QuestForm.QuestGiverPlaceholder": "Imię lub ID Aktora",
+  "ForienQuestLog.QuestForm.QuestGiverPlaceholder": "Imię Aktora lub UUID obiektu",
   "ForienQuestLog.QuestForm.QuestTitle": "Tytuł misji",
   "ForienQuestLog.QuestForm.QuestDescription": "Opis misji",
   "ForienQuestLog.QuestForm.QuestGMNotes": "Notatki MG",
   "ForienQuestLog.QuestForm.Submit": "Zapisz",
-  "ForienQuestLog.QuestForm.DragDropActor": "Przeciągnij Aktora w to miejsce, aby dodać go jako zleceniodawcę",
+  "ForienQuestLog.QuestForm.DragDropActor": "Przeciągnij Aktora, Przedmiot lub Notatkę w to miejsce, aby ustawić jako zleceniodawcę",
 
   "ForienQuestLog.SampleTask": "np. Zabij wszystkie szczury w karczmie „Pod Skręconą Kostką”",
   "ForienQuestLog.SampleReward": "np. „100 Punktów Doświadczenia”",

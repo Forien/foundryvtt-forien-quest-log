@@ -5,24 +5,33 @@
 import Quest from "../quest.mjs";
 
 export default class QuestsCollection {
-  constructor() {
-    let quests = Quest.getQuests();
-    let entities = [...quests.active, ...quests.completed, ...quests.failed, ...quests.hidden];
+  static _entities = undefined;
+  static get entities() {
+    if (this._entities === undefined) {
+      let quests = Quest.getQuests();
+      let entities = [...quests.active, ...quests.completed, ...quests.failed, ...quests.hidden];
 
-    this.entities = entities.map(e => {
-      let data = e;
-      data.name = data.title;
+      this._entities = entities.map(e => {
+        let data = e;
+        data.name = data.title;
 
-      return {
-        _id: e.id,
-        id: e.id,
-        name: e.title,
-        data: data
-      }
-    })
+        return {
+          _id: e.id,
+          id: e.id,
+          name: e.title,
+          data: data
+        }
+      })
+    }
+
+    return this._entities;
   }
 
-  get(questId) {
+  static get(questId) {
     return Quest.get(questId);
+  }
+
+  static get instance() {
+    return this;
   }
 }

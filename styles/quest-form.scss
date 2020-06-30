@@ -20,7 +20,7 @@
     box-sizing: border-box;
     margin: 0;
 
-    &.actor-data-fieldset {
+    &.giver-data-fieldset {
       height: 100%;
       position: relative;
 
@@ -38,7 +38,7 @@
       }
 
       img {
-        &.actor-portrait {
+        &.giver-portrait {
           width: 82px;
           height: 82px;
           border: none;
@@ -49,7 +49,7 @@
       }
 
       h3 {
-        &.actor-name {
+        &.giver-name {
           line-height: 82px;
           margin: 0;
         }

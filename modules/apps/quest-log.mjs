@@ -2,6 +2,7 @@ import Quest from "../entities/quest.mjs";
 import QuestPreview from "./quest-preview.mjs";
 import QuestForm from "./quest-form.mjs";
 import renderWelcomeScreen from "../versioning/welcome-screen.mjs";
+import Socket from "../utility/socket.mjs";
 
 export default class QuestLog extends Application {
   sortBy = null;
@@ -51,11 +52,13 @@ export default class QuestLog extends Application {
       options: options,
       isGM: game.user.isGM,
       availableTab: available,
+      canAccept: game.settings.get("forien-quest-log", "allowPlayersAccept"),
+      canCreate: game.settings.get("forien-quest-log", "allowPlayersCreate"),
       showTasks: game.settings.get("forien-quest-log", "showTasks"),
       style: game.settings.get("forien-quest-log", "navStyle"),
       titleAlign: game.settings.get("forien-quest-log", "titleAlign"),
       questTypes: Quest.getQuestTypes(),
-      quests: Quest.getQuests(this.sortBy, this.sortDirection, available)
+      quests: Quest.getQuests(this.sortBy, this.sortDirection, available, true)
     });
   }
 
@@ -90,10 +93,15 @@ export default class QuestLog extends Application {
     });
 
     html.on("click", ".actions i", event => {
-      let questId = $(event.target).data('quest-id');
-      let classList = $(event.target).attr('class');
+      const canPlayerAccept = game.settings.get("forien-quest-log", "allowPlayersAccept");
+      const target = $(event.target).data('target');
+      const questId = $(event.target).data('quest-id');
+
+      if (target === 'active' && canPlayerAccept) Socket.acceptQuest(questId);
+      if (!game.user.isGM) return;
+
+      const classList = $(event.target).attr('class');
       if (classList.includes('move')) {
-        let target = $(event.target).data('target');
         Quest.move(questId, target);
       } else if (classList.includes('delete')) {
         Quest.delete(questId);
@@ -114,9 +122,7 @@ export default class QuestLog extends Application {
     html.on("dragstart", ".drag-quest", event => {
       let dataTransfer = {
         type: "Quest",
-        data: {
-          id: $(event.target).data('quest-id')
-        }
+        id: $(event.target).data('quest-id')
       };
       event.originalEvent.dataTransfer.setData("text/plain", JSON.stringify(dataTransfer));
 

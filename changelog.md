@@ -1,6 +1,32 @@
 # Changelog
 
+## v0.4.0
+* Added Quest Branching in form of ability to create SubQuests
+* Added support for Item and JournalEntry as quest giver entities.
+    * localization string `ForienQuestLog.QuestForm.DragDropActor` needs updating for all languages
+    * localization string `ForienQuestLog.QuestForm.QuestGiverPlaceholder` needs updating for all languages
+    * localization string `ForienQuestLog.Quests` needs updating for all languages
+* Added optional Setting to allow Players to create quests
+    * Player also needs "Create Journal Entry" permission
+* Added Splash Art / Featured Image for Quests
+* Added optional Setting to allow Players to accept quests
+* Added Quest Setting to allow Players to edit that quest
+* Added "Copy Link" button on Quest Preview window
+* Added Configuration setting to decide if hidden tasks should be counted
+* Added Chinese translation provided by Discord member Ztt1996
+* Added status edit buttons to Quest Details window
+* Added Quest Status to Quest Details window
+* Allowed to drag&drop Quests from Quest Log to create rich-text entity links
+* Allowed for multiple Quest Detail windows to be displayed at once
+* Migrated from quest folders to quest statuses. 
+* Fixed linking Quests in Quest tasks causing stack overflow
+* Fixed Secret disappearing from Description
+* Fixed additional Macros being created for opening the Quests while dragging quest to Hotbar
+
 ## v0.3.X
+
+### v0.3.4
+* Added Spanish translation provided by GitHub member JJBocanegra
 
 ### v0.3.3
 * Fixed editable inputs cutting off text after double quotation character
