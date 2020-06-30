@@ -2,7 +2,7 @@
   "ForienQuestLog": {
     "NewQuest": "Nueva misión",
     "QuestLogButton": "Misiones",
-    "Quests": "Misiones",
+    "Quests": "{0} Misiones",
     "SampleReward": "p.ej. 300 puntos de experiencia",
     "SampleTask": "p.ej. Exterminar las ratas de la posada \"El tobillo torcido\"",
 
@@ -21,16 +21,18 @@
     "QuestForm": {
       "Title": "Añadir nueva misión",
       "QuestGiver": "Dador de la misión",
-      "QuestGiverPlaceholder": "Nombre o ID del actor",
+      "QuestGiverPlaceholder": "Nombre del Actor o UUID de la entidad",
       "QuestTitle": "Nombre de la misión",
-      "DragDropActor": "Arrastra y suelta el actor aquí para establecerlo como dador de la misión",
+      "DragDropActor": "Arrastra y suelta el Actor, Objeto o Apunte aquí para establecerlo como dador de la misión",
       "QuestDescription": "Descripción de la misión",
       "QuestGMNotes": "Notas del GM",
-      "Submit": "Crear"
+      "Submit": "Crear",
+      "SubquestOf": "Submisión de {name}"
     },
 
     "QuestLog": {
       "Title": "Misiones",
+      "SubTitle": "parte de: {0}",
       "Table": {
         "QuestGiver": "Dador de la misión",
         "QuestTitle": "Nombre",
@@ -48,6 +50,7 @@
 
     "QuestPreview": {
       "Title": "Detalles de la misión",
+      "SubTitle": "parte de: {0}",
       "Objectives": "Objetivos",
       "Rewards": "Recompensas",
       "DragDropRewards": "Arrastra y suelta elementos aquí para añadirlos como recompensas",
@@ -58,7 +61,11 @@
 
       "Management": {
         "IsPersonalQuest": "¿Es una misión personal?",
-        "IsPersonalQuestDescription": "Marcar la misión como personal. Será invisible para todos los jugadores, excepto para los que están marcados específicamente abajo. Desmarcando esta opción se eliminarán todos los permisos y se moverá la misión a la pestaña \"Ocultas\"."
+        "IsPersonalQuestDescription": "Marcar la misión como personal. Será invisible para todos los jugadores, excepto para los que están marcados específicamente abajo. Desmarcando esta opción se eliminarán todos los permisos y se moverá la misión a la pestaña \"Ocultas\".",
+        "SplashArt": "Imagen de acompañamiento",
+        "QuestBranching": "Submisiones",
+        "AddSubquest": "Crear submisión",
+        "CanPlayerEdit": "Permitir a los jugadores editar los detalles"
       },
 
       "Tabs": {
@@ -88,7 +95,7 @@
     "Notifications": {
       "CannotOpen": "No puedes abrir los detalles de la misión. Puede que te falten permisos, que la misión ya no exista o que el ID sea inválido.",
       "UserCantOpen": "El usuario {user} no tiene permisos para abrir esta misión.",
-
+      "LinkCopied": "El link a la entidad de esta misión ha sido copiado al portapapeles",
       "QuestMoved": "Se movió la misión a una nueva carpeta y se le dio el estado: {target}"
     },
 
@@ -100,6 +107,10 @@
       "availableQuests": {
         "Enable": "Mostrar pestaña \"Disponibles\"",
         "EnableHint": "Marcar para mostrar la pestaña \"Disponibles\" en el registro de misiones, donde los jugadores podrán ver todas las misiones no ocultas que aún no han sido aceptadas."
+      },
+      "countHidden": {
+        "Enable": "Contar las tareas ocultas",
+        "EnableHint": "Marcar para incluir las tareas ocultas en el número de tareas completadas / totales."
       },
       "navStyle": {
         "Enable": "Estilo de navegación",
@@ -127,6 +138,14 @@
       "playersWelcomeScreen": {
         "Enable": "Mostrar mensaje de bienvenida a los jugadores",
         "EnableHint": "Desmarcar para prevenir que los jugadores vean la pantalla de bienvenida al entrar a la partida después de una actualización. Aún podrán acceder a ella pulsando en el icono de \"Ayuda\" en la cabecera del registro de misiones."
+      },
+      "allowPlayersAccept": {
+        "Enable": "Los jugadores pueden aceptar misiones",
+        "EnableHint": "Marcar para permitir a los jugadores aceptar misiones desde la pestaña \"Disponibles\"."
+      },
+      "allowPlayersCreate": {
+        "Enable": "Los jugadores pueden crear misiones",
+        "EnableHint": "Marcar para permitir a los jugadores crear misiones. Las misiones creadas por ellos aparecerán en la pestaña \"Disponibles\". Requiere tener permisos globales de jugador \"Crear apuntes\"."
       }
     },
 
