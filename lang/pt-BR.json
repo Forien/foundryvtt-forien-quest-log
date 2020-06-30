@@ -10,7 +10,14 @@
       "InProgress": "Ativas",
       "Completed": "Completas",
       "Failed": "Perdidas",
-      "Hidden": "Ocultas"
+      "Hidden": "Ocultas",
+      "Labels": {
+        "available": "disponivel",
+        "active": "em progresso",
+        "completed": "completa",
+        "failed": "perdida",
+        "hidden": "oculta"
+      }
     },
 
     "Buttons": {
@@ -26,11 +33,13 @@
       "DragDropActor": "Arraste e solte ator que entregará a missão aqui",
       "QuestDescription": "Descritivo da Missão",
       "QuestGMNotes": "Notas do Mestre de Jogo",
-      "Submit": "Enviar"
+      "Submit": "Enviar",
+      "SubquestOf": "Desdobramento de {name}"
     },
 
     "QuestLog": {
       "Title": "Registro de Missão",
+      "SubTitle": "parte de: {0}",
       "Table": {
         "QuestGiver": "Missão Entregue por",
         "QuestTitle": "Titulo",
@@ -58,7 +67,11 @@
 
       "Management": {
         "IsPersonalQuest": "É uma Missão Pessoal?",
-        "IsPersonalQuestDescription": "Marque a missão como pessoalCheck to mark quest as Personal. Será invisível para todos os jogadores, exceto aqueles especificamente marcados abaixo. Desmarcar esta opção removerá todas as permissões e moverá a missão para a guia Ocultas."
+        "IsPersonalQuestDescription": "Marque a missão como pessoalCheck to mark quest as Personal. Será invisível para todos os jogadores, exceto aqueles especificamente marcados abaixo. Desmarcar esta opção removerá todas as permissões e moverá a missão para a guia Ocultas.",
+        "SplashArt": "Arte de Exibição",
+        "QuestBranching": "Desdobramento da Missão",
+        "AddSubquest": "Criar um desdobramento",
+        "CanPlayerEdit": "Permitir aos jogadores editar os Detalhes."
       },
 
       "Tabs": {
@@ -88,7 +101,7 @@
     "Notifications": {
       "CannotOpen": "Não é possível abrir os detalhes da missão. Você pode não ter permissões, a Missão pode não existir mais ou o ID é inválido.",
       "UserCantOpen": "o usuário {user} Não tem permissão apra abrir esta missão.",
-
+      "LinkCopied": "Um link da Entidade para esta missão foi copiada na área de transferência",
       "QuestMoved": "A missão foi movida para a nova pasta e deu um novo status: {target}"
     },
 
@@ -100,6 +113,10 @@
       "availableQuests": {
         "Enable": "Exibir Guia de Disponiveis",
         "EnableHint": "Marque para mostrar a nova guia \"Disponível\" no Registro de Missões, onde os jogadores podem ver todas as Missões não ocultas antes de serem aceitas"
+      },
+      "countHidden": {
+        "Enable": "Contar as tarefas ocultas",
+        "EnableHint": "Se ativo, o numero total de tarefas completas/total incluirá as tarefas ocultas."
       },
       "navStyle": {
         "Enable": "Estilo de Navegação",
@@ -127,6 +144,14 @@
       "playersWelcomeScreen": {
         "Enable": "Exibir a Tela de Boas vindas aos Jogadores",
         "EnableHint": "Desmarque para impedir que os jogadores vejam a tela de boas-vindas no login após uma atualização. Eles ainda podem vê-lo clicando no ícone 'ajuda' no Registro de missões."
+      },
+      "allowPlayersAccept": {
+        "Enable": "Jogadores podem Aceitar",
+        "EnableHint": "Ative para permitir que os jogadores possam aceitar Missões na ana Disponiveis."
+      },
+      "allowPlayersCreate": {
+        "Enable": "Jogadores podem Criar",
+        "EnableHint": "Ative para permitir que os jogadores possam criar Missões. Jogadores criam Missões diretamente na aba Disponivel com permissão de edição. REQUER a Permissão de núcleo 'criar diário'."
       }
     },
 
