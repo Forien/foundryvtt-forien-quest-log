@@ -312,24 +312,33 @@
             }
           }
 
-          .user-columns {
-            padding: 8px;
-            columns: 2;
+          .user-column-container {
+            overflow-y: scroll;
+            overflow-x: hidden;
+            width: 100%; /*modify to suit*/
+            height: 100%; /*modify to suit*/
 
-            .users {
-              height: 100%;
-              break-inside: avoid-column;
+            .user-columns {
+              padding: 8px;
+              columns: 2;
+              overflow-y: hidden;
+              overflow-x: hidden;
+              column-fill: balance;
 
-              .user {
-                break-inside: avoid-column;
-                display: flex;
+              .users {
+                height: 100%;
 
-                &.disabled {
-                  color: #666666;
-                }
+                .user {
+                  break-inside: avoid-column;
+                  display: flex;
 
-                label {
-                  align-self: center;
+                  &.disabled {
+                    color: #666666;
+                  }
+
+                  label {
+                    align-self: center;
+                  }
                 }
               }
             }

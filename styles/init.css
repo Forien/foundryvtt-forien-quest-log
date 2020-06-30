@@ -359,19 +359,28 @@
             align-items: center; }
           .forien-quest-preview .quest-body .management .part.personal-quest .quest-is-personal .personal-quest-description {
             grid-area: desc; }
-        .forien-quest-preview .quest-body .management .part.personal-quest .user-columns {
-          padding: 8px;
-          columns: 2; }
-          .forien-quest-preview .quest-body .management .part.personal-quest .user-columns .users {
-            height: 100%;
-            break-inside: avoid-column; }
-            .forien-quest-preview .quest-body .management .part.personal-quest .user-columns .users .user {
-              break-inside: avoid-column;
-              display: flex; }
-              .forien-quest-preview .quest-body .management .part.personal-quest .user-columns .users .user.disabled {
-                color: #666666; }
-              .forien-quest-preview .quest-body .management .part.personal-quest .user-columns .users .user label {
-                align-self: center; }
+        .forien-quest-preview .quest-body .management .part.personal-quest .user-column-container {
+          overflow-y: scroll;
+          overflow-x: hidden;
+          width: 100%;
+          /*modify to suit*/
+          height: 100%;
+          /*modify to suit*/ }
+          .forien-quest-preview .quest-body .management .part.personal-quest .user-column-container .user-columns {
+            padding: 8px;
+            columns: 2;
+            overflow-y: hidden;
+            overflow-x: hidden;
+            column-fill: balance; }
+            .forien-quest-preview .quest-body .management .part.personal-quest .user-column-container .user-columns .users {
+              height: 100%; }
+              .forien-quest-preview .quest-body .management .part.personal-quest .user-column-container .user-columns .users .user {
+                break-inside: avoid-column;
+                display: flex; }
+                .forien-quest-preview .quest-body .management .part.personal-quest .user-column-container .user-columns .users .user.disabled {
+                  color: #666666; }
+                .forien-quest-preview .quest-body .management .part.personal-quest .user-column-container .user-columns .users .user label {
+                  align-self: center; }
       .forien-quest-preview .quest-body .management .part.quest-splash {
         display: grid;
         grid-template-columns: minmax(0, 1fr);

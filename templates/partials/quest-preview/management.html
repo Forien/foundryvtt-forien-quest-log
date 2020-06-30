@@ -4,14 +4,16 @@
         <label for="personal-quest">{{localize 'ForienQuestLog.QuestPreview.Management.IsPersonalQuest'}}</label>
         <small class="personal-quest-description">{{localize 'ForienQuestLog.QuestPreview.Management.IsPersonalQuestDescription'}}</small>
     </div>
-    <div class="user-columns">
-        <div class="users {{#unless personal}}disabled{{/unless}}">
-        {{#each users}}
-        <div class="user">
-            <input id="personal-{{this.user._id}}" data-user-id="{{this.user._id}}" type="checkbox" class="personal-user" data-value="{{gte this.level ../observerLevel}}" {{checked (gte this.level ../observerLevel)}} {{#unless ../personal}}disabled="disabled"{{/unless}}/>
-            <label for="personal-{{this.user._id}}">{{this.user.name}}</label>
-        </div>
-        {{/each}}
+    <div class="user-column-container">
+        <div class="user-columns">
+            <div class="users {{#unless personal}}disabled{{/unless}}">
+            {{#each users}}
+            <div class="user">
+                <input id="personal-{{this.user._id}}" data-user-id="{{this.user._id}}" type="checkbox" class="personal-user" data-value="{{gte this.level ../observerLevel}}" {{checked (gte this.level ../observerLevel)}} {{#unless ../personal}}disabled="disabled"{{/unless}}/>
+                <label for="personal-{{this.user._id}}">{{this.user.name}}</label>
+            </div>
+            {{/each}}
+            </div>
         </div>
     </div>
 </section>
