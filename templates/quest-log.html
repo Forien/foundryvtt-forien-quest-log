@@ -31,7 +31,7 @@
         </div>
         {{/if}}
     </section>
-    {{#if isGM}}
+    {{#if (or isGM canCreate)}}
     <footer>
         <button class="new-quest-btn">{{localize 'ForienQuestLog.Buttons.AddNewQuest'}}</button>
     </footer>

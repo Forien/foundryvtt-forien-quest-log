@@ -23,6 +23,7 @@ Hooks.once('init', () => {
   };
 
   Utils.preloadTemplates();
+  Utils.registerHandlebarsHelpers();
 
   Hooks.callAll("ForienQuestLog.afterInit");
 });
@@ -30,6 +31,7 @@ Hooks.once('init', () => {
 Hooks.once('setup', () => {
   window.Quests = QuestApi;
   window.QuestLog = new QuestLogClass();
+  game.questPreview = {};
 
   Hooks.callAll("ForienQuestLog.afterSetup");
 });

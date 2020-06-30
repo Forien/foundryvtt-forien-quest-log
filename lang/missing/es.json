@@ -1,5 +1,15 @@
 {
+    "ForienQuestLog.QuestForm.SubquestOf": "",
     "ForienQuestLog.Notifications.LinkCopied": "",
+    "ForienQuestLog.Settings.allowPlayersCreate.Enable": "",
+    "ForienQuestLog.Settings.allowPlayersCreate.EnableHint": "",
+    "ForienQuestLog.Settings.allowPlayersAccept.Enable": "",
+    "ForienQuestLog.Settings.allowPlayersAccept.EnableHint": "",
     "ForienQuestLog.Settings.countHidden.Enable": "",
-    "ForienQuestLog.Settings.countHidden.EnableHint": ""
+    "ForienQuestLog.Settings.countHidden.EnableHint": "",
+    "ForienQuestLog.QuestPreview.SubTitle": "",
+    "ForienQuestLog.QuestPreview.Management.SplashArt": "",
+    "ForienQuestLog.QuestPreview.Management.QuestBranching": "",
+    "ForienQuestLog.QuestPreview.Management.AddSubquest": "",
+    "ForienQuestLog.QuestPreview.Management.CanPlayerEdit": ""
 }

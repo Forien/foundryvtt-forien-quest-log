@@ -23,7 +23,7 @@ export default class QuestFolder {
     let dirExists = this.folderExists();
 
     if (!dirExists) {
-      await Folder.create({name: this.questDirName.root, type: "JournalEntry", parent: null});
+      await Folder.create({name: this.questDirName, type: "JournalEntry", parent: null});
     }
 
     let folder = await game.journal.directory.folders.find(f => f.name === this.questDirName);

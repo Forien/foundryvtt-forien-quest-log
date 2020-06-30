@@ -29,6 +29,18 @@ export default class Utils {
     loadTemplates(templates);
   }
 
+  static registerHandlebarsHelpers() {
+    Handlebars.registerHelper('format', function(stringId, ...arrData) {
+      let objData;
+      if (typeof arrData[0] === 'object')
+        objData = arrData[0];
+      else
+        objData = {...arrData};
+
+      return game.i18n.format(stringId, objData);
+    });
+  }
+
   /**
    * Update Quests to use newer, flexible data format
    */
@@ -74,8 +86,6 @@ export default class Utils {
 
         content = JSON.stringify(content);
         entry.update({content: content, folder: rootFolder}, {diff: false});
-        console.log(entry);
-        console.log(JSON.parse(content));
       });
 
       folder.delete();

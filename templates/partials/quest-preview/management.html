@@ -7,7 +7,40 @@
     <div class="users {{#unless personal}}disabled{{/unless}}">
     {{#each users}}
     <label for="personal-{{this.user._id}}">{{this.user.name}}</label>
-    <input id="personal-{{this.user._id}}" data-user-id="{{this.user._id}}" type="checkbox" class="personal-user" data-value="{{eq this.level ../observerLevel}}" {{checked (eq this.level ../observerLevel)}} {{#unless ../personal}}disabled="disabled"{{/unless}}/>
+    <input id="personal-{{this.user._id}}" data-user-id="{{this.user._id}}" type="checkbox" class="personal-user" data-value="{{gte this.level ../observerLevel}}" {{checked (gte this.level ../observerLevel)}} {{#unless ../personal}}disabled="disabled"{{/unless}}/>
     {{/each}}
+    </div>
+</section>
+<section class="part quest-splash">
+    <div class="label">{{localize 'ForienQuestLog.QuestPreview.Management.SplashArt'}}</div>
+    <img class="splash-img" src="{{splash}}"/>
+</section>
+<section class="part subquests">
+    <div class="label">{{localize 'ForienQuestLog.QuestPreview.Management.QuestBranching'}}</div>
+    <ul class="subquests-box">
+        {{#each subquests}}
+        <li class="subquest-item">
+            <span class="subquest">
+                <span class="quest-name" data-id="{{this.id}}">{{this.name}}</span>
+                <span class="actions">
+                    {{#if (eq this.status 'hidden')}}
+                    <i class="move fas fa-star" title="{{localize 'ForienQuestLog.Tooltips.SetActive'}}" data-target="active" data-id="{{this.id}}"></i>
+                    {{/if}}
+                    {{#if (eq this.status 'active')}}
+                    <i class="move fas fa-check" title="{{localize 'ForienQuestLog.Tooltips.SetCompleted'}}" data-target="completed" data-id="{{this.id}}"></i>
+                    <i class="move fas fa-times" title="{{localize 'ForienQuestLog.Tooltips.SetFailed'}}" data-target="failed" data-id="{{this.id}}"></i>
+                    {{/if}}
+                    <i class="delete fas fa-trash" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}" data-id="{{this.id}}"></i>
+                </span>
+            </span>
+        </li>
+        {{/each}}
+    </ul>
+    <button class="btn add-subquest-btn">{{localize 'ForienQuestLog.QuestPreview.Management.AddSubquest'}}</button>
+</section>
+<section class="part other">
+    <div>
+        <input type="checkbox" id="player-edit" {{checked playerEdit}}/>
+        <label for="player-edit">{{localize 'ForienQuestLog.QuestPreview.Management.CanPlayerEdit'}}</label>
     </div>
 </section>

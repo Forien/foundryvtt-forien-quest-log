@@ -1,11 +1,21 @@
 {
     "ForienQuestLog.Api.hooks.createOpenQuestMacro.error.noQuest": "",
     "ForienQuestLog.Api.create.title": "",
+    "ForienQuestLog.QuestForm.SubquestOf": "",
     "ForienQuestLog.QuestPreview.InvalidQuestId": "",
     "ForienQuestLog.Notifications.LinkCopied": "",
     "ForienQuestLog.Api.reward.create.type": "",
     "ForienQuestLog.Api.reward.create.data": "",
     "ForienQuestLog.Api.task.create.name": "",
+    "ForienQuestLog.Settings.allowPlayersCreate.Enable": "",
+    "ForienQuestLog.Settings.allowPlayersCreate.EnableHint": "",
+    "ForienQuestLog.Settings.allowPlayersAccept.Enable": "",
+    "ForienQuestLog.Settings.allowPlayersAccept.EnableHint": "",
     "ForienQuestLog.Settings.countHidden.Enable": "",
-    "ForienQuestLog.Settings.countHidden.EnableHint": ""
+    "ForienQuestLog.Settings.countHidden.EnableHint": "",
+    "ForienQuestLog.QuestPreview.SubTitle": "",
+    "ForienQuestLog.QuestPreview.Management.SplashArt": "",
+    "ForienQuestLog.QuestPreview.Management.QuestBranching": "",
+    "ForienQuestLog.QuestPreview.Management.AddSubquest": "",
+    "ForienQuestLog.QuestPreview.Management.CanPlayerEdit": ""
 }
