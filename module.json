@@ -9,14 +9,14 @@
       "url": "https://www.patreon.com/forien"
     }
   ],
-  "version": "0.4.3",
+  "version": "0.4.4",
   "minimumCoreVersion": "0.6.0",
   "compatibleCoreVersion": "0.6.3",
   "url": "https://github.com/Forien/foundryvtt-forien-quest-log",
   "manifest": "https://raw.githubusercontent.com/Forien/foundryvtt-forien-quest-log/master/module.json",
-  "download": "https://github.com/Forien/foundryvtt-forien-quest-log/releases/download/v0.4.3/v0.4.3.zip",
-  "readme": "https://github.com/Forien/foundryvtt-forien-quest-log/blob/v0.4.3/README.md",
-  "changelog": "https://github.com/Forien/foundryvtt-forien-quest-log/blob/v0.4.3/changelog.md",
+  "download": "https://github.com/Forien/foundryvtt-forien-quest-log/releases/download/v0.4.4/v0.4.4.zip",
+  "readme": "https://github.com/Forien/foundryvtt-forien-quest-log/blob/v0.4.4/README.md",
+  "changelog": "https://github.com/Forien/foundryvtt-forien-quest-log/blob/v0.4.4/changelog.md",
   "bugs": "https://github.com/Forien/foundryvtt-forien-quest-log/issues",
   "languages": [
     {
@@ -58,6 +58,11 @@
       "lang": "pl",
       "name": "Polski",
       "path": "lang/pl.json"
+    },
+    {
+      "lang": "pt-BR",
+      "name": "Português (Brasil)",
+      "path": "lang/pt-BR.json"
     }
   ],
   "esmodules": [

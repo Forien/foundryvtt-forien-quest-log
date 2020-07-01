@@ -1,4 +1,3 @@
-
 #forien-quest-log {
   min-width: 500px;
   min-height: 300px;
@@ -172,4 +171,29 @@
     padding: $footer-padding;
   }
 
+}
+
+/**
+ *  DARK MODE compatibility
+ */
+.dark-mode {
+  #forien-quest-log {
+    nav.log-tabs.bookmarks {
+      a.item {
+        background: $background-parchment-dark;
+      }
+    }
+
+    section.log-body {
+      .tab {
+        .table {
+          table {
+            thead {
+              color: #b5b5b5;
+            }
+          }
+        }
+      }
+    }
+  }
 }

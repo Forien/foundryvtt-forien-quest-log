@@ -102,6 +102,14 @@
     height: 40px;
     padding: 4px; }
 
+/**
+ *  DARK MODE compatibility
+ */
+.dark-mode #forien-quest-log nav.log-tabs.bookmarks a.item {
+  background: url("/modules/dnd5e-dark-mode/ui/parchment_dark.jpg") repeat; }
+.dark-mode #forien-quest-log section.log-body .tab .table table thead {
+  color: #b5b5b5; }
+
 #forien-quest-log-form .grid-container {
   display: grid;
   grid-template-columns: 50% 50fr;

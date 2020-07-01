@@ -1,5 +1,10 @@
 # Changelog
 
+### v0.4.4
+* Added compatibility changes to work with D&D5E Dark Mode module by Stryxin
+* Added Brazilian Portuguese translation thanks to Discord member Innocenti
+* Updated French translation with help of original contributor (Naoki)
+
 ### v0.4.3
 * Fixed error showing up and rejecting submitting Quest Form if Quest Giver is invalid string
 * Fixed Quest Details to properly refresh parent when created subquest

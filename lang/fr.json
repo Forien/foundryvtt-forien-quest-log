@@ -2,7 +2,7 @@
   "ForienQuestLog": {
     "NewQuest": "Nouvelle quête",
     "QuestLogButton": "Journal des quêtes",
-    "Quests": "Quêtes",
+    "Quests": "Quêtes {0}",
     "SampleReward": "ex : 300 Points d’Expérience",
     "SampleTask": "ex : Tuer tous les rats dans l’Auberge de „La cheville tordue” ",
 
@@ -10,7 +10,14 @@
       "InProgress": "En cours",
       "Completed": "Achevée",
       "Failed": "Échouée",
-      "Hidden": "Cachée"
+      "Hidden": "Cachée",
+      "Labels": {
+        "available": "disponibles",
+        "active": "en cours",
+        "completed": "complétées",
+        "failed": "échouées",
+        "hidden": "cachées"
+      }
     },
 
     "Buttons": {
@@ -21,16 +28,18 @@
     "QuestForm": {
       "Title": "Ajouter nouvelle Quête",
       "QuestGiver": "Commanditaire",
-      "QuestGiverPlaceholder": "Nom ou ID du commanditaire",
+      "QuestGiverPlaceholder": "Nom ou ID du commanditaire(Acteur ou Journal)",
       "QuestTitle": "Nom de la Quête",
-      "DragDropActor": "Glisser/Déposer un acteur ici pour en faire un commanditaire",
+      "DragDropActor": "Glisser/Déposer un acteur ou un journal ici pour en faire un commanditaire",
       "QuestDescription": "Description de la quête",
       "QuestGMNotes": "Notes du MJ",
-      "Submit": "Valider"
+      "Submit": "Valider",
+      "SubquestOf": "Quête secondaire de {name}"
     },
 
     "QuestLog": {
       "Title": "Journal de Quête",
+      "SubTitle": "Quête faisant parti de: {0}",
       "Table": {
         "QuestGiver": "Commanditaire",
         "QuestTitle": "Nom de la Quête",
@@ -48,17 +57,22 @@
 
     "QuestPreview": {
       "Title": "Détails sur la quête",
+      "SubTitle": "Quête faisant parti de: {0}",
       "Objectives": "Objectifs",
       "Rewards": "Récompenses",
       "DragDropRewards": "Glisser/Déposer les objets ici pour en faire des récompenses",
-      "InvalidQuestId": "Ne peut ouvrir la prévisualisation de la quête en raison d’une ID de Quête invalide.",
+      "InvalidQuestId": "Impossible d'ouvrir la prévisualisation de la quête en raison d’une ID de Quête invalide.",
       "HeaderButtons": {
         "Show": "Montrer aux joueurs"
       },
 
       "Management": {
         "IsPersonalQuest": "Est-ce une quête personnelle ?",
-        "IsPersonalQuestDescription": "Cocher pour donner à la quête un personnage. Cela sera invisible pour tous les joueurs sauf ceux spécifiquement marqués ci-dessous. Décocher cette option retirera toutes les permissions et déplacera la quête dans l’onglet Cachée."
+        "IsPersonalQuestDescription": "Cocher pour donner à la quête un personnage. Cela sera invisible pour tous les joueurs sauf ceux spécifiquement marqués ci-dessous. Décocher cette option retirera toutes les permissions et déplacera la quête dans l’onglet Cachée.",
+        "SplashArt": "Illustration",
+        "QuestBranching": "Quêtes secondaires",
+        "AddSubquest": "Créer une quête secondaire",
+        "CanPlayerEdit": "Autoriser les joueurs a modifier les détails de la quête"
       },
 
       "Tabs": {
@@ -77,10 +91,18 @@
       "Cancel": "Annuler"
     },
 
+    "CloseDialog": {
+      "Title": "Quitter le Formulaire",
+      "Header": "Êtes vous sûrs ?",
+      "Body": "Êtes vous sûrs de vouloir fermer le formulaire ? Toutes données non sauvegardées serons perdus.",
+      "Discard": "Abandonner les modifications",
+      "Cancel": "Annuler"
+    },
+
     "Notifications": {
       "CannotOpen": "Ne peut ouvrir les détails de la Quête. Soit vous n’avez pas la permission, soit la quête n’existe plus ou l’ID fournie était invalide.",
       "UserCantOpen": "L'utilisateur {user} n’a pas la permission d'ouvrir cette quête.",
-
+      "LinkCopied": "Le lien vers cette quête a était copier dans le presse-papier.",
       "QuestMoved": "Quête déplacée dans un nouveau dossier avec un nouveau : {target}"
     },
 
@@ -92,6 +114,10 @@
       "availableQuests": {
         "Enable": "Montre l’onglet disponible",
         "EnableHint": "Cocher pour montrer un nouvelle onglet \"Disponible\" dans le journal des quêtes, où les joueurs pourront voir toutes les quêtes non-cachées avant qu’elles soient acceptées."
+      },
+      "countHidden": {
+        "Enable": "Montrer le nombre de tâches cachées",
+        "EnableHint": "Cocher pour que le nombre de tâche Completer/Total inclue aussi les tâches cachées."
       },
       "navStyle": {
         "Enable": "Style de navigation ",
@@ -115,6 +141,18 @@
         "EnableHint": "Décide comment positionner les titres de quête dans la table de l’onglet du Journal de quête.",
         "left": "Alignés à gauche",
         "center": "Centrés"
+      },
+      "playersWelcomeScreen": {
+        "Enable": "Affiche un message bienvenue aux Joueurs.",
+        "EnableHint": "Décocher pour empécher les joueurs de voir le message de bienvenue qui apparait aprés une mise a jour, ce dernier est toujours accessible en cliquant sur le bouton 'Aide' trouvable dans le journal quête"
+      },
+      "allowPlayersAccept": {
+        "Enable": "Les joueurs peuvent Accepter",
+        "EnableHint": "Cocher pour permettre aux joueurs d'accepter les quêtes dans l'onglet Disponible"
+      },
+      "allowPlayersCreate": {
+        "Enable": "Les joueurs peuvent créer",
+        "EnableHint": "Cocher pour permettre aux joueurs de créer des Quêtes. Les quêtes créer par des joueurs atterissent dans l'onglet 'Disponible', NECESSITE 'Créer Journal' Permission"
       }
     },
 
