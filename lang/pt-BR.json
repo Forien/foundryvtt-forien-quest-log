@@ -57,6 +57,7 @@
 
     "QuestPreview": {
       "Title": "Detalhes das Missões",
+      "SubTitle": "part of: {0}",
       "Objectives": "Objetivos",
       "Rewards": "Recompensas",
       "DragDropRewards": "Arraste e Solte um item aqui apra recompensas",
