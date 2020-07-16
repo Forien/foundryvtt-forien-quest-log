@@ -208,15 +208,16 @@ export default class QuestForm extends FormApplication {
 
       if (giver) {
         if (giver.data.img.length) {
-          html.find('.giver-portrait').attr('src', giver.data.img).removeClass('hidden');
+          html.find('.giver-portrait').attr({
+          'style': 'background-image:url('+giver.data.img+')',
+          'title': giver.name
+            }).removeClass('hidden');
         } else {
-          html.find('.giver-portrait').addClass('hidden');
+          html.find('.giver-portrait').attr('style','').addClass('hidden');
         }
-        html.find('.giver-name').text(giver.name).removeClass('hidden');
         html.find('.drop-info').addClass('hidden');
       } else {
         html.find('.giver-portrait').addClass('hidden');
-        html.find('.giver-name').addClass('hidden');
         html.find('.drop-info').removeClass('hidden');
       }
     });

@@ -103,6 +103,7 @@ export default class ModuleSettings {
       }
     });
 
+/*
     game.settings.register("forien-quest-log", "titleAlign", {
       name: "ForienQuestLog.Settings.titleAlign.Enable",
       hint: "ForienQuestLog.Settings.titleAlign.EnableHint",
@@ -119,6 +120,7 @@ export default class ModuleSettings {
           QuestLog.render();
       }
     });
+*/
 
     game.settings.register("forien-quest-log", "playersWelcomeScreen", {
       name: "ForienQuestLog.Settings.playersWelcomeScreen.Enable",

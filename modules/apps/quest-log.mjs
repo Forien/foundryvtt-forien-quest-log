@@ -56,7 +56,7 @@ export default class QuestLog extends Application {
       canCreate: game.settings.get("forien-quest-log", "allowPlayersCreate"),
       showTasks: game.settings.get("forien-quest-log", "showTasks"),
       style: game.settings.get("forien-quest-log", "navStyle"),
-      titleAlign: game.settings.get("forien-quest-log", "titleAlign"),
+    //  titleAlign: game.settings.get("forien-quest-log", "titleAlign"),
       questTypes: Quest.getQuestTypes(),
       quests: Quest.getQuests(this.sortBy, this.sortDirection, available, true)
     });
@@ -109,7 +109,9 @@ export default class QuestLog extends Application {
     });
 
     html.on("click", ".title", event => {
-      let questId = $(event.target).data('quest-id');
+      let questId = $(event.target).closest('.title').data('quest-id');
+      console.log($(event.target));
+      console.log(questId);
       let questPreview = new QuestPreview(questId);
       questPreview.render(true);
     });
