@@ -1,13 +1,11 @@
-$background: #aaa;
 $background-parchment: url("/ui/parchment.jpg") repeat;
-//$background-parchment-dark: url("../dnd5e-dark-mode/ui/parchment_dark.jpg") repeat;
 $background-parchment-dark: url("/modules/dnd5e-dark-mode/ui/parchment_dark.jpg") repeat;
-$background-header: #666;
-$border: #333;
-$border-active: #833;
 
-$footer-padding: 4px;
-$footer-size: 32px + 2*$footer-padding;
+$background-color-light: rgba(255,255,255,.5);
+$primary-accent-color: #ff6400;
 
-@import 'quest-log', 'quest-form', 'quest-preview';
+$button-background: #F2F1EA;
+$button-hover: #efefef;
+$button-border: #333;
 
+@import 'quest-general', 'quest-log', 'quest-form', 'quest-preview';
