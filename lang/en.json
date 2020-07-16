@@ -3,47 +3,47 @@
     "NewQuest": "New Quest",
     "QuestLogButton": "Quest Log",
     "Quests": "{0} Quests",
-    "SampleReward": "f.e. 300 Experience Points",
-    "SampleTask": "f.e. Kill all rats in „The Twisted Ankle” inn",
+    "SampleReward": "e.g. 300 Experience Points",
+    "SampleTask": "e.g. Kill all rats in „The Twisted Ankle” inn",
 
     "QuestTypes": {
       "InProgress": "Active",
       "Completed": "Completed",
       "Failed": "Failed",
-      "Hidden": "Hidden",
+      "Hidden": "Inactive",
       "Labels": {
         "available": "available",
         "active": "in progress",
         "completed": "completed",
         "failed": "failed",
-        "hidden": "hidden"
+        "hidden": "inactive"
       }
     },
 
     "Buttons": {
       "AddNewQuest": "Add new Quest",
-      "AddNewTask": "add new"
+      "AddNewTask": "Add new Objective"
     },
 
     "QuestForm": {
       "Title": "Add new Quest",
-      "QuestGiver": "Quest giver",
-      "QuestGiverPlaceholder": "Actor's name or entity's UUID",
-      "QuestTitle": "Quest's title",
-      "DragDropActor": "Drag & Drop Actor, Item or JournalEntry here to set it as Quest Giver",
-      "QuestDescription": "Quest description",
-      "QuestGMNotes": "GM notes",
-      "Submit": "Submit",
+      "QuestGiver": "Quest Source",
+      "QuestGiverPlaceholder": "Enter Actor's name or entity's UUID to set a Quest Source",
+      "QuestTitle": "Quest Title",
+      "DragDropActor": "Drag & Drop Actor, Item or Journal Entry here to set a Quest Source",
+      "QuestDescription": "Quest Description",
+      "QuestGMNotes": "GM Notes",
+      "Submit": "Add to Quest Log",
       "SubquestOf": "Subquest of {name}"
     },
 
     "QuestLog": {
       "Title": "Quest Log",
-      "SubTitle": "part of: {0}",
+      "SubTitle": "Subquest of {0}",
       "Table": {
-        "QuestGiver": "Quest Giver",
+        "QuestGiver": "Quest Source",
         "QuestTitle": "Title",
-        "Tasks": "Tasks",
+        "Tasks": "Objectives",
         "Actions": "Actions"
       },
       "Tabs": {
@@ -51,28 +51,28 @@
         "InProgress": "In progress",
         "Completed": "Completed",
         "Failed": "Failed",
-        "Hidden": "Hidden"
+        "Hidden": "Inactive"
       }
     },
 
     "QuestPreview": {
       "Title": "Quest Details",
-      "SubTitle": "part of: {0}",
+      "SubTitle": "Subquest of {0}",
       "Objectives": "Objectives",
       "Rewards": "Rewards",
       "DragDropRewards": "Drag & drop items here to add them as rewards",
-      "InvalidQuestId": "Cannot open Quest's Preview due to invalid Quest ID.",
+      "InvalidQuestId": "Cannot open Quest Preview due to invalid Quest ID.",
       "HeaderButtons": {
-        "Show": "Show Players"
+        "Show": "Show to Players"
       },
 
       "Management": {
-        "IsPersonalQuest": "Is Personal Quest?",
-        "IsPersonalQuestDescription": "Check to mark quest as Personal. It will be invisible to all players except those specifically marked below. Unchecking this option will remove all permissions and move quest to Hidden tab.",
+        "IsPersonalQuest": "Mark Quest as Personal",
+        "IsPersonalQuestDescription": "This Quest will only be visible to the selected players. Unchecking this option will remove all permissions and set the quest as inactive.",
         "SplashArt": "Splash Art",
         "QuestBranching": "Sub Quests",
-        "AddSubquest": "Create Sub Quest",
-        "CanPlayerEdit": "Allow players edit Details"
+        "AddSubquest": "Create new Sub Quest",
+        "CanPlayerEdit": "Allow Players to edit Quest Details"
       },
 
       "Tabs": {
@@ -102,43 +102,43 @@
     "Notifications": {
       "CannotOpen": "Cannot open Quest Details. You may lack permissions, Quest might not exist anymore, or provided ID was invalid.",
       "UserCantOpen": "User {user} doesn't have permission to open this quest.",
-      "LinkCopied": "Entity Link for this quest has been copied to clipboard",
-      "QuestMoved": "Moved quest to new folder and gave it new status: {target}"
+      "LinkCopied": "Entity Link for this quest has been copied to clipboard.",
+      "QuestMoved": "Moved quest to new folder and gave it new status: {target}."
     },
 
     "Settings": {
       "allowPlayersDrag": {
-        "Enable": "Allow Players drag Rewards",
-        "EnableHint": "Check to allow Players drag Rewards from Quest's Details window to their Owned Actors."
+        "Enable": "Allow Players to drag Rewards to their Inventory",
+        "EnableHint": "Check to allow Players to drag Rewards from a Quest Details window to their owned Actors."
       },
       "availableQuests": {
         "Enable": "Show Available Tab",
-        "EnableHint": "Check to show new, \"Available\" tab in Quest Log, where players can see all non-hidden Quests before they are accepted."
+        "EnableHint": "Check to show the \"Available\" tab in the Quest Log Menu where players can see all non-inactive Quests before they are accepted."
       },
       "countHidden": {
         "Enable": "Count hidden Tasks",
         "EnableHint": "If checked, the number of completed/total tasks will include hidden tasks."
       },
       "navStyle": {
-        "Enable": "Navigation style",
+        "Enable": "Navigation Style",
         "EnableHint": "Decide how Quest Log's navigation should be displayed.",
         "bookmarks": "Bookmarks",
         "classic": "Classic tabs"
       },
       "showFolder": {
-        "Enable": "Show quest Folder",
-        "EnableHint": "Check to show quest data Folder in Journal tab. For DEBUG purposes only."
+        "Enable": "Show Quest Folder",
+        "EnableHint": "Check to show quest data folder in Journal tab. For DEBUG purposes only."
       },
       "showTasks": {
         "Enable": "Show tasks in Quest Log",
-        "EnableHint": "Decide if or how to show amount of Tasks (objectives) next to Quest's title in Quest Log. This has no effect on Quest individual preview.",
-        "default": "Show tasks: done/total",
-        "onlyCurrent": "Show tasks: done",
-        "no": "Hide \"tasks\" column"
+        "EnableHint": "Decide if or how to show the amount of Objectives next to the Quest Title in Quest Log. This has no effect on the Quest Preview.",
+        "default": "Show Objectives: done/total",
+        "onlyCurrent": "Show Objectives: done",
+        "no": "Hide \"Objectives\" column"
       },
       "titleAlign": {
-        "Enable": "Quest's title alignment",
-        "EnableHint": "Decide how to position quests' titles in Quest Log's table.",
+        "Enable": "Quest Title Alignment",
+        "EnableHint": "Decide how to position Quest Titles in the Quest Log Table.",
         "left": "Aligned to left",
         "center": "Centered"
       },
@@ -147,12 +147,12 @@
         "EnableHint": "Uncheck to prevent players from seeing Welcome Screen on log in after an update. They might still see it by clicking 'help' icon in Quest Log."
       },
       "allowPlayersAccept": {
-        "Enable": "Players can Accept",
+        "Enable": "Players can accept Quests",
         "EnableHint": "Check to allow players to accept Quests from Available tab."
       },
       "allowPlayersCreate": {
-        "Enable": "Players can Create",
-        "EnableHint": "Check to allow players to create Quests. Player created Quests will land in Available tab with Player Edit permissions. REQUIRES 'create journal' core permission."
+        "Enable": "Players can create",
+        "EnableHint": "Check to allow players to create Quests. Player created Quests will appear in Available tab with Player Edit permissions. REQUIRES 'create journal' core permission."
       }
     },
 
@@ -161,16 +161,17 @@
       "SetActive": "Set as In Progress",
       "SetCompleted": "Set as Completed",
       "SetFailed": "Set as Failed",
-      "Hide": "Hide",
+      "Hide": "Set as Inactive",
       "Delete": "Delete",
-      "AddAbstractReward": "Add abstract reward",
-      "PersonalQuestButNoPlayers": "This is personal quest, but nobody sees it",
-      "PersonalQuestVisibleFor": "This is personal quest for",
-      "RewardHidden": "Reward is Hidden. Click to show.",
-      "RewardVisible": "Reward is Visible. Click to hide.",
-      "TaskHidden": "Task is Hidden. Click to show.",
-      "TaskVisible": "Task is Visible. Click to hide.",
-      "ToggleImage": "Toggle token/actor image"
+      "Edit": "Edit",
+      "AddAbstractReward": "Add Abstract Reward",
+      "PersonalQuestButNoPlayers": "This is a Personal Quest, but no Players are assigned",
+      "PersonalQuestVisibleFor": "This is a Personal Quest for",
+      "RewardHidden": "Reward is hidden. Click to show.",
+      "RewardVisible": "Reward is visible. Click to hide.",
+      "TaskHidden": "Objective is hidden. Click to show.",
+      "TaskVisible": "Objective is visible. Click to hide.",
+      "ToggleImage": "Toggle Token/Actor image"
     },
 
     "Api": {
@@ -194,7 +195,7 @@
       },
       "task": {
         "create": {
-          "name": "API Error: Name property is required to create new Task"
+          "name": "API Error: Name property is required to create new Objective"
         }
       }
     }
