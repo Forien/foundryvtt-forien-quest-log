@@ -5,7 +5,7 @@
     {{#if ../canEdit}}
     <span class="toggleImage" title="{{localize 'ForienQuestLog.Tooltips.ToggleImage'}}"><i class="fas fa-user-circle"></i></span>
     {{/if}}
-    
+
     {{/with}}
   </div>
 
@@ -13,7 +13,7 @@
     <div class="quest-title">
       <div class="editable-container">
         <h1>
-          {{title}} 
+          {{title}}
         </h1>
       </div>
       {{#if canEdit}}
@@ -24,7 +24,7 @@
     </div>
     <section>
       <div class="quest-details">
-          
+
         <div class="quest-giver-name">
           {{#with giver}}
           <h2 class="open-actor-sheet" data-actor-id="{{_id}}" title="Quest Source">{{name}}</h2>
@@ -50,7 +50,7 @@
         <i class="move fas fa-play" title="{{localize 'ForienQuestLog.Tooltips.SetActive'}}" data-target="active" data-id="{{id}}"></i>
         {{/if}}
         {{#if (eq status 'hidden')}}
-        <i class="move fas fa-exclamation-circle" title="{{localize 'ForienQuestLog.Tooltips.SetAvailable'}}" data-target="available" data-id="{{id}}"></i>
+        <i class="move fas fa-clipboard" title="{{localize 'ForienQuestLog.Tooltips.SetAvailable'}}" data-target="available" data-id="{{id}}"></i>
         {{/if}}
         {{#if (eq status 'active')}}
         <i class="move fas fa-check-circle" title="{{localize 'ForienQuestLog.Tooltips.SetCompleted'}}" data-target="completed" data-id="{{id}}"></i>
@@ -79,9 +79,9 @@
     </div>
     {{/if}}
   </div>
-  
+
   <div class="quest-col-right">
-      
+
     <div class="quest-tasks">
       <header>
         <h2>{{localize 'ForienQuestLog.QuestPreview.Objectives'}}</h2>
@@ -162,7 +162,7 @@
               <i class="del-btn fas fa-trash" data-target="rewards" data-index="{{@index}}" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}"></i>
             </div>
             {{/if}}
-            
+
           </li>
           {{/each}}
         {{/if}}

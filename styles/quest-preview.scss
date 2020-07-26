@@ -210,8 +210,8 @@
         display: flex;
         justify-content: space-between;
       }
-
-      button {
+      
+      .quest-col-right button {
         flex: 0 0 1px;
         white-space: nowrap;
         height: 18px;
@@ -462,8 +462,20 @@
       } 
 
       .quest-settings {
+        display: flex;
+        flex-direction: column;
         flex: 1;
         margin-right: 8px;
+        height: 226px;
+
+        .setting-groups {
+          flex: 0 0 1px;
+
+          .personal-quest-description {
+            font-size: 13px;
+            margin: 4px 0 2px 26px;
+          }
+        }
 
         .input-group {
           display: flex;
@@ -489,25 +501,21 @@
         }
       }
 
-      .personal-quest {
-
-        .personal-quest-settings {
-          margin-left: 26px
-        }
-
-        .personal-quest-description {
-          font-size: 13px;
-          margin: 4px 0 2px 0;
-        }
+      .personal-quest-settings {
+        margin-left: 26px;
+        flex: 1;
+        overflow: hidden;
 
         ul {
           margin: 0;
-          padding: 0;
+          padding: 0 2px 0 0;
           list-style: none;
           display: flex;
           flex-wrap: wrap;
-          width: calc(100% + 4px);
+          width: calc(100% + 2px);
           margin-left: -2px;
+          height: 100%;
+          overflow-y: auto;
 
           &.disabled {
             opacity: .5;
@@ -630,6 +638,29 @@
     
     .gmnotes .editor {
       height: calc(100% - 36px);
+    }
+
+    .tox .tox-toolbar-overlord {
+      background-color: transparent;
+      border-bottom: 1px solid #222;
+      padding-bottom: 4px;
+    }
+
+    .tox .tox-toolbar,
+    .tox .tox-toolbar__overflow,
+    .tox .tox-toolbar__primary {
+      background: transparent;
+      background-color: transparent;
+    }
+
+    .tox.tox-tinymce .tox-tbtn {
+      padding: 0;
+      margin: 0 0 0 4px;
+      width: 32px;
+    }
+
+    .tox.tox-tinymce .tox-tbtn[title="Formats"] {
+      width: 90px;
     }
 
   }

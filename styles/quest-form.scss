@@ -85,6 +85,29 @@
         border-radius: 5px;
         height: calc(100% - 30px);
 
+        .tox .tox-toolbar-overlord {
+          background-color: transparent;
+          border-bottom: 1px solid #222;
+          padding-bottom: 4px;
+        }
+
+        .tox .tox-toolbar,
+        .tox .tox-toolbar__overflow,
+        .tox .tox-toolbar__primary {
+          background: transparent;
+          background-color: transparent;
+        }
+
+        .tox.tox-tinymce .tox-tbtn {
+          padding: 0;
+          margin: 0 0 0 4px;
+          width: 32px;
+        }
+
+        .tox.tox-tinymce .tox-tbtn[title="Formats"] {
+          width: 90px;
+        }
+
         .editor-content {
           height: 100%;
           overflow-y: auto;
