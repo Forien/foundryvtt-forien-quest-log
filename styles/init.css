@@ -190,6 +190,7 @@
 #forien-quest-log-form .actions i.fa-play,
 .window-app.forien-quest-preview .actions i.fa-play {
   font-size: 14px;
+  padding-top: 2px;
 }
 
 #forien-quest-log .actions i:hover,
@@ -446,6 +447,29 @@
   height: calc(100% - 30px);
 }
 
+#forien-quest-log-form .quest-text .editor .tox .tox-toolbar-overlord {
+  background-color: transparent;
+  border-bottom: 1px solid #222;
+  padding-bottom: 4px;
+}
+
+#forien-quest-log-form .quest-text .editor .tox .tox-toolbar,
+#forien-quest-log-form .quest-text .editor .tox .tox-toolbar__overflow,
+#forien-quest-log-form .quest-text .editor .tox .tox-toolbar__primary {
+  background: transparent;
+  background-color: transparent;
+}
+
+#forien-quest-log-form .quest-text .editor .tox.tox-tinymce .tox-tbtn {
+  padding: 0;
+  margin: 0 0 0 4px;
+  width: 32px;
+}
+
+#forien-quest-log-form .quest-text .editor .tox.tox-tinymce .tox-tbtn[title="Formats"] {
+  width: 90px;
+}
+
 #forien-quest-log-form .quest-text .editor .editor-content {
   height: 100%;
   overflow-y: auto;
@@ -674,7 +698,7 @@
   justify-content: space-between;
 }
 
-.window-app.forien-quest-preview .quest-body .quest-info button {
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right button {
   flex: 0 0 1px;
   white-space: nowrap;
   height: 18px;
@@ -682,7 +706,7 @@
   line-height: 1;
 }
 
-.window-app.forien-quest-preview .quest-body .quest-info button i {
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right button i {
   font-size: 10px;
 }
 
@@ -931,8 +955,20 @@
 }
 
 .window-app.forien-quest-preview .quest-body .management .quest-settings {
+  display: flex;
+  flex-direction: column;
   flex: 1;
   margin-right: 8px;
+  height: 226px;
+}
+
+.window-app.forien-quest-preview .quest-body .management .quest-settings .setting-groups {
+  flex: 0 0 1px;
+}
+
+.window-app.forien-quest-preview .quest-body .management .quest-settings .setting-groups .personal-quest-description {
+  font-size: 13px;
+  margin: 4px 0 2px 26px;
 }
 
 .window-app.forien-quest-preview .quest-body .management .quest-settings .input-group {
@@ -958,42 +994,41 @@
   text-overflow: ellipsis;
 }
 
-.window-app.forien-quest-preview .quest-body .management .personal-quest .personal-quest-settings {
+.window-app.forien-quest-preview .quest-body .management .personal-quest-settings {
   margin-left: 26px;
+  flex: 1;
+  overflow: hidden;
 }
 
-.window-app.forien-quest-preview .quest-body .management .personal-quest .personal-quest-description {
-  font-size: 13px;
-  margin: 4px 0 2px 0;
-}
-
-.window-app.forien-quest-preview .quest-body .management .personal-quest ul {
+.window-app.forien-quest-preview .quest-body .management .personal-quest-settings ul {
   margin: 0;
-  padding: 0;
+  padding: 0 2px 0 0;
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  width: calc(100% + 4px);
+  width: calc(100% + 2px);
   margin-left: -2px;
+  height: 100%;
+  overflow-y: auto;
 }
 
-.window-app.forien-quest-preview .quest-body .management .personal-quest ul.disabled {
+.window-app.forien-quest-preview .quest-body .management .personal-quest-settings ul.disabled {
   opacity: .5;
 }
 
-.window-app.forien-quest-preview .quest-body .management .personal-quest ul.disabled li {
+.window-app.forien-quest-preview .quest-body .management .personal-quest-settings ul.disabled li {
   cursor: default;
 }
 
-.window-app.forien-quest-preview .quest-body .management .personal-quest ul.disabled li:hover {
+.window-app.forien-quest-preview .quest-body .management .personal-quest-settings ul.disabled li:hover {
   background: inherit;
 }
 
-.window-app.forien-quest-preview .quest-body .management .personal-quest ul.disabled input, .window-app.forien-quest-preview .quest-body .management .personal-quest ul.disabled label {
+.window-app.forien-quest-preview .quest-body .management .personal-quest-settings ul.disabled input, .window-app.forien-quest-preview .quest-body .management .personal-quest-settings ul.disabled label {
   cursor: default;
 }
 
-.window-app.forien-quest-preview .quest-body .management .personal-quest ul li {
+.window-app.forien-quest-preview .quest-body .management .personal-quest-settings ul li {
   cursor: pointer;
   flex: 0 0 calc(100% / 4 - 4px);
   display: flex;
@@ -1006,11 +1041,11 @@
   overflow: hidden;
 }
 
-.window-app.forien-quest-preview .quest-body .management .personal-quest ul li:hover {
+.window-app.forien-quest-preview .quest-body .management .personal-quest-settings ul li:hover {
   background: rgba(255, 255, 255, 0.6);
 }
 
-.window-app.forien-quest-preview .quest-body .management .personal-quest ul li input, .window-app.forien-quest-preview .quest-body .management .personal-quest ul li label {
+.window-app.forien-quest-preview .quest-body .management .personal-quest-settings ul li input, .window-app.forien-quest-preview .quest-body .management .personal-quest-settings ul li label {
   cursor: pointer;
 }
 
@@ -1094,4 +1129,27 @@
 
 .window-app.forien-quest-preview .quest-body .gmnotes .editor {
   height: calc(100% - 36px);
+}
+
+.window-app.forien-quest-preview .quest-body .tox .tox-toolbar-overlord {
+  background-color: transparent;
+  border-bottom: 1px solid #222;
+  padding-bottom: 4px;
+}
+
+.window-app.forien-quest-preview .quest-body .tox .tox-toolbar,
+.window-app.forien-quest-preview .quest-body .tox .tox-toolbar__overflow,
+.window-app.forien-quest-preview .quest-body .tox .tox-toolbar__primary {
+  background: transparent;
+  background-color: transparent;
+}
+
+.window-app.forien-quest-preview .quest-body .tox.tox-tinymce .tox-tbtn {
+  padding: 0;
+  margin: 0 0 0 4px;
+  width: 32px;
+}
+
+.window-app.forien-quest-preview .quest-body .tox.tox-tinymce .tox-tbtn[title="Formats"] {
+  width: 90px;
 }

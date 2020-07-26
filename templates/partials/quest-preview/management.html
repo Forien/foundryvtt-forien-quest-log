@@ -1,28 +1,26 @@
 <div class="row">
   <section class="quest-settings">
     <h2>Quest Settings</h2>
-    <div class="input-group">
-      <input type="checkbox" id="player-edit" {{checked playerEdit}}/>
-      <label for="player-edit">{{localize 'ForienQuestLog.QuestPreview.Management.CanPlayerEdit'}}</label>
-    </div>
-    <div class="personal-quest">
+    <div class="setting-groups">
+      <div class="input-group">
+        <input type="checkbox" id="player-edit" {{checked playerEdit}}/>
+        <label for="player-edit">{{localize 'ForienQuestLog.QuestPreview.Management.CanPlayerEdit'}}</label>
+      </div>
       <div class="input-group">
         <input id="personal-quest" type="checkbox" class="personal" {{checked personal}}>
         <label for="personal-quest">{{localize 'ForienQuestLog.QuestPreview.Management.IsPersonalQuest'}}</label>
       </div>
-      
-      <div class="personal-quest-settings">
-        <p class="personal-quest-description">{{localize 'ForienQuestLog.QuestPreview.Management.IsPersonalQuestDescription'}}</p>
-        
-        <ul class="users {{#unless personal}}disabled{{/unless}}">
-          {{#each users}}
-          <li class="user" title="{{this.user.name}}">
-            <input id="personal-{{this.user._id}}" data-user-id="{{this.user._id}}" type="checkbox" class="personal-user" data-value="{{gte this.level ../observerLevel}}" {{checked (gte this.level ../observerLevel)}} {{#unless ../personal}}disabled="disabled"{{/unless}}/>
-            <label for="personal-{{this.user._id}}">{{this.user.name}}</label>
-          </li>
-          {{/each}}
-        </ul>
-      </div>
+      <p class="personal-quest-description">{{localize 'ForienQuestLog.QuestPreview.Management.IsPersonalQuestDescription'}}</p>
+    </div>
+    <div class="personal-quest-settings">
+      <ul class="users {{#unless personal}}disabled{{/unless}}">
+        {{#each users}}
+        <li class="user" title="{{this.user.name}}">
+          <input id="personal-{{this.user._id}}" data-user-id="{{this.user._id}}" type="checkbox" class="personal-user" data-value="{{gte this.level ../observerLevel}}" {{checked (gte this.level ../observerLevel)}} {{#unless ../personal}}disabled="disabled"{{/unless}}/>
+          <label for="personal-{{this.user._id}}">{{this.user.name}}</label>
+        </li>
+        {{/each}}
+      </ul>
     </div>
   </section>
 
