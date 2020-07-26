@@ -40,9 +40,11 @@
         </div>
       </div>
 
+      {{#if splash.length}}
       <div class="splash-image-link" style="background-image: url({{splash}})" title="View Quest Image">
         <span><i class="fas fa-eye"></i></span>
       </div>
+      {{/if}}
 
       {{#if canEdit}}
       <div class="actions">
@@ -91,7 +93,7 @@
         <ul>
           {{#each subquests}}
           {{#if this.name}}
-          <li class="task">
+          <li class="task {{#if (eq status 'hidden')}}task-hidden{{/if}}">
             <div class="state-container">
               <span class="state-display">
                 <i class="fas fa-check state {{#unless (eq status 'completed')}}hidden{{/unless}}"></i>
