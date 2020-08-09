@@ -148,7 +148,9 @@
         {{else}}
           {{#each rewards}}
           <li class="reward {{type}}-reward {{#if (and ../isGM draggable)}}draggable{{/if}} {{#if hidden}}reward-hidden{{/if}}" {{#if (and ../canEdit draggable)}}data-transfer="{{transfer}}" draggable="true"{{/if}}>
-            <div class="reward-image" style="background-image: url({{data.img}})" data-index="{{@index}}"></div>
+            <div class="reward-image-container">
+              <div class="reward-image" style="background-image: url({{data.img}})" data-index="{{@index}}"></div>
+            </div>
             <div class="editable-container">
               <p class="reward-name">{{data.name}}</p>
             </div>
