@@ -66,6 +66,9 @@
       "path": "lang/pt-BR.json"
     }
   ],
+  "scripts": [
+    "./scripts/prompt.mjs"
+  ],
   "esmodules": [
     "./modules/init.mjs"
   ],

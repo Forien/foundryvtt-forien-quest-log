@@ -1,13 +1,10 @@
 import registerApiHooks from "./api/hooks.js";
 import QuestApi from "./api/quest-api.mjs";
 import QuestLogClass from "./apps/quest-log.mjs";
-import constants from "./constants.mjs";
 import QuestFolder from "./entities/quest-folder.mjs";
 import ModuleSettings from "./utility/config.mjs";
 import Socket from "./utility/socket.mjs";
 import Utils from "./utility/utils.mjs";
-import VersionCheck from "./versioning/version-check.mjs";
-import renderWelcomeScreen from "./versioning/welcome-screen.mjs";
 import Quest from "./entities/quest.mjs";
 import QuestsCollection from "./entities/collection/quests-collection.mjs";
 
@@ -38,20 +35,6 @@ Hooks.once('setup', () => {
 });
 
 Hooks.once("ready", () => {
-  QuestFolder.initializeJournals().then(() => {
-    if (VersionCheck.check(constants.moduleName)) {
-      console.log('Starting Quest Log migration.');
-      Utils.updateQuests();
-      console.log('Quest Log migration finished.');
-    }
-  });
-
-  if (VersionCheck.check(constants.moduleName)) {
-    if (game.user.isGM || game.settings.get('forien-quest-log', 'playersWelcomeScreen')) {
-      renderWelcomeScreen();
-    }
-  }
-
   registerApiHooks();
 
   // Allow and process incoming socket data
