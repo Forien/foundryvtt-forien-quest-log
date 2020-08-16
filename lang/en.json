@@ -22,13 +22,15 @@
 
     "Buttons": {
       "AddNewQuest": "Add new Quest",
-      "AddNewTask": "Add new Objective"
+      "AddNewTask": "Add new Objective",
+      "AddNewFolder": "Add new Folder"
     },
 
     "QuestForm": {
       "Title": "Add new Quest",
       "QuestGiver": "Quest Source",
       "QuestGiverPlaceholder": "Enter Actor's name or entity's UUID to set a Quest Source",
+      "QuestGiverNamePlaceholder": "You selected custom image, please provide name for Quest Source",
       "QuestTitle": "Quest Title",
       "DragDropActor": "Drag & Drop Actor, Item or Journal Entry here to set a Quest Source",
       "QuestDescription": "Quest Description",

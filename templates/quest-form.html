@@ -3,19 +3,19 @@
     <h2>{{localize 'ForienQuestLog.QuestForm.QuestGiver'}}</h2>
     <section class="source-details">
       <div class="source-image giver-data-fieldset">
-        <div class="giver-portrait hidden" style="background-image: url();" title="">
-        </div>
+        <div class="giver-portrait hidden"></div>
         <span class="drop-info">{{localize 'ForienQuestLog.QuestForm.DragDropActor'}}</span>
+        <input type="hidden" id="sourceImage" name="sourceImage">
       </div>
       <div class="source-info">
         <div class="quest-giver">
           <label for="giver">{{localize 'ForienQuestLog.QuestForm.QuestGiverPlaceholder'}}</label>
           <input type="text" id="giver" name="giver">
         </div>
-        <!-- <div class="quest-giver-name">
+        <div class="quest-giver-name" style="display: none">
           <label for="giver-name">{{localize 'ForienQuestLog.QuestForm.QuestGiverNamePlaceholder'}}</label>
-          <input type="text" id="giver-name" name="giver-name">
-        </div> -->
+          <input type="text" id="giver-name" name="giverName">
+        </div>
       </div>
     </section>
   </header>

@@ -12,7 +12,7 @@
     overflow-y: hidden;
     display: flex;
     flex-direction: column;
-    background: rgba(0,0,0,.1);
+    background: rgba(0, 0, 0, .1);
     padding: 0 0 24px 0;
   }
 
@@ -30,7 +30,7 @@
       .quest-giver-gc {
         width: 100px;
         height: 100px;
-        background-color: rgba(0,0,0,.1);
+        background-color: rgba(0, 0, 0, .1);
         border-radius: 5px;
         flex: 0 0 100px;
         margin-right: 16px;
@@ -42,6 +42,7 @@
           background-size: cover;
           background-position: center;
           cursor: pointer;
+          border-radius: 5px;
         }
 
         .toggleImage {
@@ -55,7 +56,7 @@
           border-radius: 5px;
           width: 22px;
           height: 22px;
-          transition:  color .3s ease;
+          transition: color .3s ease;
 
           &:hover {
             color: $primary-accent-color;
@@ -73,7 +74,7 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        
+
         .quest-title {
           display: flex;
           justify-content: space-between;
@@ -103,12 +104,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: rgba(0,0,0,.3);
+            background: rgba(0, 0, 0, .3);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 28px;
-            color: rgba(255,255,255,.65);
+            color: rgba(255, 255, 255, .65);
             opacity: 1;
             transition: opacity .3s ease;
 
@@ -140,9 +141,9 @@
         section {
           flex: 1;
           display: flex;
-          background: rgba(255,255,255,.15);
+          background: rgba(255, 255, 255, .15);
           border-radius: 5px;
-          overflow: hidden; 
+          overflow: hidden;
         }
 
         .quest-details {
@@ -210,7 +211,7 @@
         display: flex;
         justify-content: space-between;
       }
-      
+
       .quest-col-right button {
         flex: 0 0 1px;
         white-space: nowrap;
@@ -232,7 +233,7 @@
         .description {
           height: calc(100% - 26px);
           overflow: hidden;
-          background: rgba(255,255,255,.4);
+          background: rgba(255, 255, 255, .4);
           border-radius: 5px;
           padding: 8px;
 
@@ -259,7 +260,7 @@
           margin-bottom: 4px;
           flex: 0 0 1px;
         }
-        
+
         .quest-tasks,
         .quest-rewards {
           flex: 0 0 calc(50% - 8px);
@@ -284,7 +285,7 @@
             li {
               display: flex;
               border-radius: 5px;
-              background: rgba(255,255,255,.3);
+              background: rgba(255, 255, 255, .3);
               margin: 0 4px 2px 0;
               align-items: center;
             }
@@ -297,7 +298,7 @@
 
             i {
               min-width: 16px;
-              text-align: center; 
+              text-align: center;
             }
 
             .fa-sort {
@@ -305,7 +306,8 @@
             }
 
             .del-btn {
-              color: rgba(255,0,0,.4);
+              color: rgba(255, 0, 0, .4);
+
               &:hover {
                 color: $primary-accent-color;
               }
@@ -334,14 +336,14 @@
 
         .quest-tasks {
           margin-bottom: 16px;
-          
+
           .toggleState {
             display: flex;
             align-items: center;
             justify-content: center;
             flex: 0 0 32px;
             height: 100%;
-            border-right: 1px solid rgba(0,0,0,.15);
+            border-right: 1px solid rgba(0, 0, 0, .15);
             font-size: 18px;
             cursor: pointer;
             transition: color .3s ease;
@@ -357,12 +359,12 @@
             justify-content: center;
             flex: 0 0 32px;
             height: 100%;
-            border-right: 1px solid rgba(0,0,0,.15);
+            border-right: 1px solid rgba(0, 0, 0, .15);
             font-size: 18px;
 
             .state-display {
-              background: rgba(0,0,0,.05);
-              border: 1px solid rgba(0,0,0,.3);
+              background: rgba(0, 0, 0, .05);
+              border: 1px solid rgba(0, 0, 0, .3);
               width: 16px;
               height: 16px;
               border-radius: 2px;
@@ -394,7 +396,7 @@
           }
 
           .task-hidden {
-            background: rgba(0,0,0,.15);
+            background: rgba(0, 0, 0, .15);
 
             .task-name {
               opacity: .5;
@@ -411,7 +413,7 @@
           .drop-info {
             flex: 1 0 25px;
             line-height: 20px;
-            border: 2px dashed rgba(0,0,0,.5);
+            border: 2px dashed rgba(0, 0, 0, .5);
             border-radius: 5px;
             padding: 0 16px;
             text-align: center;
@@ -422,7 +424,7 @@
           }
 
           .reward-hidden {
-            background: rgba(0,0,0,.15);
+            background: rgba(0, 0, 0, .15);
 
             .reward-image {
               opacity: .5;
@@ -432,15 +434,15 @@
               opacity: .5;
             }
           }
-          
+
           .reward-image-container {
-            height: 100%;            
+            height: 100%;
             flex: 0 0 25px;
             display: flex;
             align-items: center;
             border-radius: 5px 0 0 5px;
             overflow: hidden;
-            background-color: #222; 
+            background-color: #222;
           }
 
           .reward-image {
@@ -463,11 +465,11 @@
     }
 
     .management {
-      
+
       .row {
         display: flex;
         flex: 0 0 1px;
-      } 
+      }
 
       .quest-settings {
         display: flex;
@@ -488,7 +490,7 @@
         .input-group {
           display: flex;
           align-items: center;
-          background: rgba(255,255,255,.4);
+          background: rgba(255, 255, 255, .4);
           border-radius: 5px;
           padding: 2px;
           margin-bottom: 2px;
@@ -546,7 +548,7 @@
             flex: 0 0 calc(100% / 4 - 4px);
             display: flex;
             align-items: center;
-            background: rgba(255,255,255,.4);
+            background: rgba(255, 255, 255, .4);
             border-radius: 5px;
             padding: 2px 8px 2px 2px;
             margin: 2px;
@@ -554,13 +556,13 @@
             overflow: hidden;
 
             &:hover {
-              background: rgba(255,255,255,.6);
+              background: rgba(255, 255, 255, .6);
             }
 
             input, label {
               cursor: pointer;
             }
-          } 
+          }
         }
       }
 
@@ -572,12 +574,12 @@
           height: 200px;
           background-size: cover;
           background-position: center;
-          background-color: rgba(255,255,255,.4);
+          background-color: rgba(255, 255, 255, .4);
           border-radius: 5px;
           cursor: pointer;
 
           &:hover {
-            background-color: rgba(255,255,255,.6);
+            background-color: rgba(255, 255, 255, .6);
           }
         }
       }
@@ -603,7 +605,7 @@
           li {
             display: flex;
             align-items: center;
-            background: rgba(255,255,255,.3);
+            background: rgba(255, 255, 255, .3);
             height: 30px;
             border-radius: 5px;
             margin: 0 4px 2px 0;
@@ -643,7 +645,7 @@
     .editor {
       height: calc(100% - 26px);
     }
-    
+
     .gmnotes .editor {
       height: calc(100% - 36px);
     }

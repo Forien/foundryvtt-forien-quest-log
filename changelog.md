@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.5.0
+* Quest Log UI Overhaul, big thanks to sdenec for designing new UI and for help implementing it!
+* Quests can now have Quest Source that consists of custom image and name, without relying on any existing Entity
+* Quest are now sortable in Quest Log
+* Rewards and Tasks are now sortable in Quest Details
+* You can now click on Item Rewards and preview item sheet.
+* Removed old Welcome Screen
+* Added prompt to install new Workshop's Welcome Screen
+* Tested and bumped compatible core version to 0.7.1
+* [BUG] Subquest inherits description and gm notes from parent
+* [BUG] Error when invalid quest or non-quest journal entry is present in `_fql_quests` folder
+
 ### v0.4.4
 * Added compatibility changes to work with D&D5E Dark Mode module by Stryxin
 * Added Brazilian Portuguese translation thanks to Discord member Innocenti

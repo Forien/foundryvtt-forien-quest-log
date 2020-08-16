@@ -2,7 +2,7 @@
   <div class="quest-giver-gc">
     {{#with giver}}
     <div class="quest-giver-image open-actor-sheet" data-actor-id="{{_id}}" style="background-image: url({{img}})" title="{{name}}"></div>
-    {{#if ../canEdit}}
+    {{#if (and ../canEdit ../image)}}
     <span class="toggleImage" title="{{localize 'ForienQuestLog.Tooltips.ToggleImage'}}"><i class="fas fa-user-circle"></i></span>
     {{/if}}
 
@@ -105,7 +105,7 @@
           {{/if}}
           {{/each}}
           {{#each tasks}}
-          <li class="task {{#if hidden}}task-hidden{{/if}}">
+          <li class="task {{#if hidden}}task-hidden{{/if}}" data-index="{{@index}}">
             {{#if ../canEdit}}
             <i class="toggleState fas fa-{{state}}" data-task-index="{{@index}}"></i>
             {{else}}
@@ -121,7 +121,7 @@
             </div>
             {{#if ../canEdit}}
             <div class="actions">
-              <i class="fas fa-sort"></i>
+              <i class="fas fa-sort" draggable="true"></i>
               <i class="editable fas fa-pen" data-target="task.name" data-index="{{@index}}"  title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
               {{#if hidden}}
               <i class="fas fa-eye toggleHidden" data-target="task" data-index="{{@index}}"title="{{localize 'ForienQuestLog.Tooltips.TaskHidden'}}"></i>
@@ -144,32 +144,29 @@
       </header>
       <div class="quest-box rewards-box">
         <ul>
-        {{#if noRewards}}
-        {{else}}
-          {{#each rewards}}
-          <li class="reward {{type}}-reward {{#if (and ../isGM draggable)}}draggable{{/if}} {{#if hidden}}reward-hidden{{/if}}" {{#if (and ../canEdit draggable)}}data-transfer="{{transfer}}" draggable="true"{{/if}}>
-            <div class="reward-image-container">
-              <div class="reward-image" style="background-image: url({{data.img}})" data-index="{{@index}}"></div>
-            </div>
-            <div class="editable-container">
-              <p class="reward-name">{{data.name}}</p>
-            </div>
-            {{#if ../canEdit}}
-            <div class="actions">
-              <i class="fas fa-sort"></i>
-              <i class="editable fas fa-pen" data-target="reward.name" data-index="{{@index}}" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
-              {{#if hidden}}
-              <i class="fas fa-eye toggleHidden" data-target="reward" data-index="{{@index}}"title="{{localize 'ForienQuestLog.Tooltips.RewardHidden'}}"></i>
-              {{else}}
-              <i class="fas fa-eye-slash toggleHidden" data-target="reward" data-index="{{@index}}" title="{{localize 'ForienQuestLog.Tooltips.RewardVisible'}}"></i>
-              {{/if}}
-              <i class="del-btn fas fa-trash" data-target="rewards" data-index="{{@index}}" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}"></i>
-            </div>
+        {{#each rewards}}
+        <li class="reward {{type}}-reward {{#if (and ../isGM draggable)}}draggable{{/if}} {{#if hidden}}reward-hidden{{/if}}" data-index="{{@index}}" data-transfer="{{transfer}}" {{#if (and ../canEdit draggable)}}draggable="true"{{/if}}>
+          <div class="reward-image-container">
+            <div class="reward-image" style="background-image: url({{data.img}})" data-index="{{@index}}"></div>
+          </div>
+          <div class="editable-container">
+            <p class="reward-name">{{data.name}}</p>
+          </div>
+          {{#if ../canEdit}}
+          <div class="actions">
+            <i class="fas fa-sort" draggable="true"></i>
+            <i class="editable fas fa-pen" data-target="reward.name" data-index="{{@index}}" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
+            {{#if hidden}}
+            <i class="fas fa-eye toggleHidden" data-target="reward" data-index="{{@index}}"title="{{localize 'ForienQuestLog.Tooltips.RewardHidden'}}"></i>
+            {{else}}
+            <i class="fas fa-eye-slash toggleHidden" data-target="reward" data-index="{{@index}}" title="{{localize 'ForienQuestLog.Tooltips.RewardVisible'}}"></i>
             {{/if}}
+            <i class="del-btn fas fa-trash" data-target="rewards" data-index="{{@index}}" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}"></i>
+          </div>
+          {{/if}}
 
-          </li>
-          {{/each}}
-        {{/if}}
+        </li>
+        {{/each}}
         {{#if canEdit}}
           <li class="drop-info {{#unless isGM}}hidden{{/unless}}">{{localize 'ForienQuestLog.QuestPreview.DragDropRewards'}}</li>
         {{/if}}

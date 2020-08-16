@@ -31,6 +31,10 @@ export default class QuestsCollection {
     return Quest.get(questId);
   }
 
+  static getName(name) {
+    return this.entities.find(e => e.name === name);
+  }
+
   static get instance() {
     return this;
   }

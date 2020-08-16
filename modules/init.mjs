@@ -15,7 +15,8 @@ import QuestsCollection from "./entities/collection/quests-collection.mjs";
 Hooks.once('init', () => {
   ModuleSettings.register();
 
-  CONST.ENTITY_LINK_TYPES.push("Quest");
+  CONST.ENTITY_TYPES?.push("Quest");
+  CONST.ENTITY_LINK_TYPES?.push("Quest");
   CONFIG["Quest"] = {
     entityClass: Quest,
     collection: QuestsCollection,
