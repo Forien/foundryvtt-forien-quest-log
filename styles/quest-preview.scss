@@ -1,416 +1,677 @@
-.forien-quest-preview {
-  min-width: 620px;
-  min-height: 500px;
+.window-app.forien-quest-preview {
+  min-width: 940px;
+  min-height: 640px;
 
-  .window-content {
-    height: 100%;
+  .tab.active {
+    display: flex;
+    flex-direction: column;
   }
 
   .quest-preview {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto minmax(0, 1fr);
-    gap: 1px 1px;
-    grid-template-areas: "." ".";
     height: 100%;
-  }
-
-  nav {
-    &.quest-tabs {
-      .hidden {
-        display: none;
-      }
-    }
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, .1);
+    padding: 0 0 24px 0;
   }
 
   .quest-body {
     height: 100%;
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 16px 0 16px;
 
-    .details {
-      height: 100%;
+    .details-header {
+      display: flex;
+      flex: 0 0 1px;
+      margin-bottom: 16px;
 
-      .details-tab {
-        height: 100%;
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto minmax(0, 1fr);
-        gap: 1px 1px;
-        grid-template-areas: "." ".";
-      }
-
-      .grid-container {
-        height: 100%;
-        display: grid;
-        grid-template-columns: 1fr 1.3fr 0.8fr 1fr;
-        grid-template-rows: 200px minmax(0, 1fr);
-        gap: 1px 1px;
-        grid-template-areas: "quest-giver-gc description-gc description-gc description-gc" "tasks-gc tasks-gc rewards-gc rewards-gc";
-
-        .quest-giver-gc {
-          grid-area: quest-giver-gc;
-          display: grid;
-          grid-template-columns: 1fr;
-          grid-template-rows: auto auto minmax(0, 1fr);
-          gap: 1px 1px;
-          grid-template-areas: "." ".";
-        }
-
-        .description-gc {
-          grid-area: description-gc;
-        }
-
-        .tasks-gc {
-          grid-area: tasks-gc;
-          display: grid;
-          grid-template-columns: 1fr;
-          grid-template-rows: auto minmax(0, 1fr);
-          gap: 1px 1px;
-          grid-template-areas: "." ".";
-        }
-
-        .rewards-gc {
-          grid-area: rewards-gc;
-          display: grid;
-          grid-template-columns: 1fr;
-          grid-template-rows: auto minmax(0, 1fr);
-          gap: 1px 1px;
-          grid-template-areas: "." ".";
-        }
-      }
-
-      .details-header {
+      .quest-giver-gc {
+        width: 100px;
+        height: 100px;
+        background-color: rgba(0, 0, 0, .1);
+        border-radius: 5px;
+        flex: 0 0 100px;
+        margin-right: 16px;
         position: relative;
 
-        small {
-          font-size: 0.9rem;
+        .quest-giver-image {
+          height: 100%;
+          width: 100%;
+          background-size: cover;
+          background-position: center;
           cursor: pointer;
-          font-style: italic;
-          margin-left: 20px;
+          border-radius: 5px;
+        }
+
+        .toggleImage {
+          position: absolute;
+          top: 0;
+          left: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: #efefef;
+          border-radius: 5px;
+          width: 22px;
+          height: 22px;
+          transition: color .3s ease;
+
+          &:hover {
+            color: $primary-accent-color;
+          }
+
+          i {
+            font-size: 16px;
+            border-radius: 50%;
+            line-height: 1;
+          }
+        }
+      }
+
+      .quest-setup {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        .quest-title {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .editable-container {
+          flex: 1;
+
+          input {
+            margin-bottom: 8px;
+            height: 28px;
+          }
+        }
+
+        .splash-image-link {
+          flex: 0 0 100px;
+          background-size: cover;
+          background-position: center;
+          position: relative;
+          cursor: pointer;
+
+          span {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, .3);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 28px;
+            color: rgba(255, 255, 255, .65);
+            opacity: 1;
+            transition: opacity .3s ease;
+
+            &:hover {
+              opacity: 0;
+            }
+          }
         }
 
         .actions {
-          position: absolute;
-          right: 0;
-          top: 8px;
+          flex: 0 0 1px;
+          padding: 0 8px;
 
           i {
+            font-size: 18px;
+            transition: color .3s ease;
             cursor: pointer;
+
+            &:hover {
+              color: $primary-accent-color;
+            }
           }
         }
-      }
 
-      .quest-giver-gc {
-        div {
-          text-align: center;
-          position: relative;
+        .quest-title .actions {
+          border: none;
+        }
 
-          span {
-            font-weight: bold;
-            text-align: center;
+        section {
+          flex: 1;
+          display: flex;
+          background: rgba(255, 255, 255, .15);
+          border-radius: 5px;
+          overflow: hidden;
+        }
+
+        .quest-details {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 8px 16px;
+        }
+
+        .quest-giver-name h2 {
+          display: inline-block;
+          margin: 0;
+          border: none;
+          cursor: pointer;
+          transition: color .3s ease;
+
+          &:hover {
+            color: $primary-accent-color;
+          }
+        }
+
+        .quest-status {
+          display: flex;
+
+          p {
+            margin: 0 8px 0 0;
           }
 
-          img {
-            width: 120px;
-            height: 120px;
-            border: none;
-            object-fit: cover;
-            border-radius: 6px;
+          p::after {
+            content: '|';
+            margin-left: 8px;
           }
 
-          .toggleImage {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
+          p:last-child {
+            margin: 0;
           }
 
-          span, img, .toggleImage {
+          p:last-child::after {
+            content: none;
+          }
+
+          .quest-name {
+            transition: color .3s ease;
             cursor: pointer;
+
+            i {
+              font-size: 12px;
+            }
+
+            &:hover {
+              color: $primary-accent-color;
+            }
           }
         }
       }
+    }
 
-      .description-gc {
-        .description {
-          height: 100%;
-          overflow: auto;
-        }
+    .quest-info {
+      display: flex;
+      flex: 1;
+      overflow-y: hidden;
 
-        .editor {
-          height: 100%;
-
-          .editor-content {
-            height: 100%;
-            overflow: auto;
-          }
-        }
+      header {
+        display: flex;
+        justify-content: space-between;
       }
 
-      .del-btn {
-        cursor: pointer;
-        margin-left: 10px;
+      .quest-col-right button {
+        flex: 0 0 1px;
+        white-space: nowrap;
+        height: 18px;
+        font-size: 12px;
+        line-height: 1;
 
         i {
-          pointer-events: none;
+          font-size: 10px;
         }
       }
 
-      .tasks-gc {
-        .add-new-task {
-          cursor: pointer;
+      .quest-description {
+        flex: 0 0 50%;
+        height: 100%;
+        overflow-y: hidden;
+        margin-right: 8px;
+
+        .description {
+          height: calc(100% - 26px);
+          overflow: hidden;
+          background: rgba(255, 255, 255, .4);
+          border-radius: 5px;
+          padding: 8px;
+
+          .description-content {
+            height: 100%;
+            overflow: auto;
+            padding: 0 4px 0 0;
+          }
+        }
+      }
+
+      .quest-col-right {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        h2 {
+          border: none;
+          margin: 0;
         }
 
-        .tasks-box {
-          overflow: auto;
+        header {
+          border-bottom: 2px solid #782e22;
+          margin-bottom: 4px;
+          flex: 0 0 1px;
+        }
 
-          .task {
-            display: grid;
-            grid-template-columns: 26px auto 18px;
-            gap: 1px 1px;
-            grid-template-areas: ". . .";
-            margin-right: 15px;
-            margin-top: 5px;
-            min-height: 20px;
+        .quest-tasks,
+        .quest-rewards {
+          flex: 0 0 calc(50% - 8px);
+          display: flex;
+          flex-direction: column;
+          overflow-y: hidden;
 
-            .quest-name {
-              font-weight: bold;
-              cursor: pointer;
-              font-style: italic;
+          .quest-box {
+            flex: 1;
+            overflow-y: hidden;
+          }
+
+          ul {
+            height: 100%;
+            overflow-y: auto;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+
+            li {
+              display: flex;
+              border-radius: 5px;
+              background: rgba(255, 255, 255, .3);
+              margin: 0 4px 2px 0;
+              align-items: center;
+            }
+          }
+
+          .actions {
+            flex: 0 0 100px;
+            height: 100%;
+            cursor: default;
+
+            i {
+              min-width: 16px;
+              text-align: center;
             }
 
-            .editable-container {
+            .fa-sort {
+              cursor: move;
+            }
+
+            .del-btn {
+              color: rgba(255, 0, 0, .4);
+
+              &:hover {
+                color: $primary-accent-color;
+              }
+            }
+
+            .fa-pen {
+              font-size: 14px;
+            }
+          }
+
+          .editable-container {
+            flex: 1;
+            padding: 4px 8px;
+
+            p {
+              margin: 0;
+            }
+
+            input {
+              padding: 0 4px;
+              line-height: 14px;
+              height: 16px;
+            }
+          }
+        }
+
+        .quest-tasks {
+          margin-bottom: 16px;
+
+          .toggleState {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 32px;
+            height: 100%;
+            border-right: 1px solid rgba(0, 0, 0, .15);
+            font-size: 18px;
+            cursor: pointer;
+            transition: color .3s ease;
+
+            &:hover {
+              color: $primary-accent-color;
+            }
+          }
+
+          .state-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 32px;
+            height: 100%;
+            border-right: 1px solid rgba(0, 0, 0, .15);
+            font-size: 18px;
+
+            .state-display {
+              background: rgba(0, 0, 0, .05);
+              border: 1px solid rgba(0, 0, 0, .3);
+              width: 16px;
+              height: 16px;
+              border-radius: 2px;
               display: flex;
+              justify-content: center;
               align-items: center;
 
-              .toggleHidden {
-                margin-right: 4px;
-              }
-            }
-
-            .state-container {
-              position: relative;
-
               i {
-                &.state {
-                  top: 2px;
-                  left: 3px;
-                  font-size: 1.1em;
-
-                  &.fa-check, &.fa-times {
-                    position: absolute;
-                  }
-
-                  &.fa-check {
-                    color: #229933;
-                  }
-
-                  &.fa-times {
-                    color: #993322;
-                  }
-
-                  &.hidden {
-                    display: none;
-                  }
-                }
-
-                &.state-background {
-                  top: 1px;
-                  font-size: 1.35em;
-                  position: absolute;
-                  opacity: 0.6;
-                }
+                font-size: 11px;
+                line-height: 16px;
               }
             }
           }
-        }
-      }
 
-      .rewards-gc {
+          .quest-name {
+            cursor: pointer;
+            transition: color .3s ease;
+            margin: 0;
+            padding: 4px 8px;
+            display: inline-block;
 
-        .add-abstract {
-          opacity: 0.7;
-          cursor: pointer;
-        }
+            &:hover {
+              color: $primary-accent-color;
+            }
 
-        .rewards-box {
-          height: 100%;
-          position: relative;
-          overflow: auto;
-
-          .drop-info {
-            font-size: 1.6em;
-            font-variant: small-caps;
-            text-align: center;
-            color: #666;
-            margin: 0 20px;
-            position: absolute;
-            top: 50%;
-            transform: translate(0, -50%);
+            i {
+              font-size: 12px;
+            }
           }
+
+          .task-hidden {
+            background: rgba(0, 0, 0, .15);
+
+            .task-name {
+              opacity: .5;
+            }
+          }
+        }
+
+        .quest-rewards {
 
           .reward {
-            margin-bottom: 2px;
+            flex: 0 0 25px;
+          }
 
-            img {
-              width: 34px;
-              height: 34px;
-              margin-right: 8px;
-              float: left;
+          .drop-info {
+            flex: 1 0 25px;
+            line-height: 20px;
+            border: 2px dashed rgba(0, 0, 0, .5);
+            border-radius: 5px;
+            padding: 0 16px;
+            text-align: center;
+            margin-right: 4px;
+            margin-bottom: 4px;
+            background: transparent;
+            justify-content: center;
+          }
+
+          .reward-hidden {
+            background: rgba(0, 0, 0, .15);
+
+            .reward-image {
+              opacity: .5;
             }
 
-            .name {
-              line-height: 34px;
+            .reward-name {
+              opacity: .5;
             }
+          }
 
-            &.abstract-reward {
-              opacity: 0.85;
-              font-style: italic;
-            }
+          .reward-image-container {
+            height: 100%;
+            flex: 0 0 25px;
+            display: flex;
+            align-items: center;
+            border-radius: 5px 0 0 5px;
+            overflow: hidden;
+            background-color: #222;
+          }
+
+          .reward-image {
+            width: 25px;
+            height: 25px;
+            background-size: cover;
+            background-position: center;
+          }
+
+          .reward-name {
+            flex: 1;
+            font-size: 14px;
+            font-weight: 400;
+            margin: 0;
+            padding-right: 8px;
           }
         }
       }
 
-      i.fas.toggleHidden {
-        cursor: pointer;
-
-        &.fa-eye-slash {
-          color: #666;
-        }
-      }
     }
 
     .management {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 1px 1px;
-      height: 100%;
 
-      &.active {
-        display: grid;
+      .row {
+        display: flex;
+        flex: 0 0 1px;
       }
 
-      .part {
-        &.personal-quest {
-          display: grid;
-          grid-auto-rows: auto minmax(0, 1fr);
-          grid-template-columns: minmax(0, 1fr);
-          gap: 1px 1px;
+      .quest-settings {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        margin-right: 8px;
+        height: 226px;
 
-          .quest-is-personal {
-            display: grid;
-            grid-template-columns: auto 1fr;
-            grid-template-rows: auto auto;
-            gap: 1px 1px;
-            grid-template-areas: ". ." "desc desc";
+        .setting-groups {
+          flex: 0 0 1px;
 
-            label {
-              display: flex;
-              align-items: center;
-            }
-
-            .personal-quest-description {
-              grid-area: desc;
-            }
-          }
-
-          .user-column-container {
-            overflow-y: scroll;
-            overflow-x: hidden;
-            width: 100%; /*modify to suit*/
-            height: 100%; /*modify to suit*/
-
-            .user-columns {
-              padding: 8px;
-              columns: 2;
-              overflow-y: hidden;
-              overflow-x: hidden;
-              column-fill: balance;
-
-              .users {
-                height: 100%;
-
-                .user {
-                  break-inside: avoid-column;
-                  display: flex;
-
-                  &.disabled {
-                    color: #666666;
-                  }
-
-                  label {
-                    align-self: center;
-                  }
-                }
-              }
-            }
+          .personal-quest-description {
+            font-size: 13px;
+            margin: 4px 0 2px 26px;
           }
         }
 
-        &.quest-splash {
-          display: grid;
-          grid-template-columns: minmax(0, 1fr);
-          grid-template-rows: auto minmax(0, 1fr);
-          gap: 1px 1px;
-          height: 100%;
-
-          & > * {
-            justify-self: center;
-          }
-
-          .label {
-            font-weight: bold;
-          }
-
-          .splash-img {
-            height: 100%;
-            min-width: 50%;
-            object-fit: cover;
-          }
+        .input-group {
+          display: flex;
+          align-items: center;
+          background: rgba(255, 255, 255, .4);
+          border-radius: 5px;
+          padding: 2px;
+          margin-bottom: 2px;
         }
 
-        &.subquests {
-          display: grid;
-          grid-template-columns: minmax(0, 1fr);
-          grid-template-rows: auto minmax(0, 1fr) auto;
-          gap: 1px 1px;
-          height: 100%;
+        input[type="checkbox"] {
+          flex: 0 0 20px;
+          width: 20px;
+          height: 20px;
+          margin: 0;
+        }
 
-          ul.subquests-box {
-            overflow-y: auto;
+        label {
+          margin: 0 0 0 4px;
+          width: calc(100% - 20px);
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+
+      .personal-quest-settings {
+        margin-left: 26px;
+        flex: 1;
+        overflow: hidden;
+
+        ul {
+          margin: 0;
+          padding: 0 2px 0 0;
+          list-style: none;
+          display: flex;
+          flex-wrap: wrap;
+          width: calc(100% + 2px);
+          margin-left: -2px;
+          height: 100%;
+          overflow-y: auto;
+
+          &.disabled {
+            opacity: .5;
 
             li {
-              .subquest {
-                display: grid;
-                grid-template-columns: minmax(0, 1fr) auto;
-                gap: 1px 1px;
+              cursor: default;
 
-                .quest-name {
-                  font-weight: bold;
-                  cursor: pointer;
-                }
-
-                .actions {
-                  i {
-                    margin-left: 6px;
-                    cursor: pointer;
-                  }
-                }
+              &:hover {
+                background: inherit;
               }
+            }
+
+            input, label {
+              cursor: default;
+            }
+          }
+
+          li {
+            cursor: pointer;
+            flex: 0 0 calc(100% / 4 - 4px);
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, .4);
+            border-radius: 5px;
+            padding: 2px 8px 2px 2px;
+            margin: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+
+            &:hover {
+              background: rgba(255, 255, 255, .6);
+            }
+
+            input, label {
+              cursor: pointer;
             }
           }
         }
       }
-    }
 
-    .gmnotes {
-      height: 100%;
+      .quest-splash {
+        flex: 0 0 calc(100% / 3);
 
-      .editor {
-        height: 100%;
+        .splash-image {
+          width: 100%;
+          height: 200px;
+          background-size: cover;
+          background-position: center;
+          background-color: rgba(255, 255, 255, .4);
+          border-radius: 5px;
+          cursor: pointer;
 
-        .editor-content {
-          height: 100%;
+          &:hover {
+            background-color: rgba(255, 255, 255, .6);
+          }
         }
       }
+
+      .subquests {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        margin-top: 16px;
+        overflow: hidden;
+
+        h2 {
+          flex: 0 0 1px;
+        }
+
+        .subquests-box {
+          flex: 1;
+          overflow-y: auto;
+          margin: 0;
+          padding: 0;
+          list-style: none;
+
+          li {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, .3);
+            height: 30px;
+            border-radius: 5px;
+            margin: 0 4px 2px 0;
+            border: 1px solid transparent;
+            transition: border-color .3s ease, box-shadow .3s ease;
+
+            &:hover {
+              border-color: $primary-accent-color;
+              box-shadow: 0 0 2px $primary-accent-color inset;
+            }
+          }
+
+          h2 {
+            flex: 1;
+            border: none;
+            margin: 0 8px;
+            font-size: 14px;
+            line-height: 30px;
+            cursor: pointer;
+            transition: color .3s ease;
+          }
+
+          .actions {
+            flex: 0 0 100px;
+            height: 100%;
+          }
+        }
+
+        footer {
+          flex: 0 0 1px;
+          margin: 8px 0 0 0;
+        }
+      }
+
     }
+
+    .editor {
+      height: calc(100% - 26px);
+    }
+
+    .gmnotes .editor {
+      height: calc(100% - 36px);
+    }
+
+    .tox .tox-toolbar-overlord {
+      background-color: transparent;
+      border-bottom: 1px solid #222;
+      padding-bottom: 4px;
+    }
+
+    .tox .tox-toolbar,
+    .tox .tox-toolbar__overflow,
+    .tox .tox-toolbar__primary {
+      background: transparent;
+      background-color: transparent;
+    }
+
+    .tox.tox-tinymce .tox-tbtn {
+      padding: 0;
+      margin: 0 0 0 4px;
+      width: 32px;
+    }
+
+    .tox.tox-tinymce .tox-tbtn[title="Formats"] {
+      width: 90px;
+    }
+
   }
 }

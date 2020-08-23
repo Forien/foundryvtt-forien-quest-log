@@ -1,0 +1,162 @@
+#forien-quest-log,
+#forien-quest-log-form,
+.window-app.forien-quest-preview {
+
+	.window-content {
+    padding: 0;
+    height: 100%;
+  }
+
+  .tab {
+  	height: 100%;
+  	display: none;
+
+    &.active {
+      display: block;
+    }
+  }
+
+	h1 {
+    flex: 0 0 1px;
+    font-size: 22px;
+    line-height: 1;
+    font-weight: 700;
+    padding: 0 0 4px 0;
+    margin: 0 0 8px 0;
+  }
+
+  h2 {
+    font-size: 18px;
+    line-height: 1;
+    font-weight: 700;
+    padding: 0 0 2px 0;
+    margin: 0 0 4px 0;
+    border-width: 2px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 3px;
+  }
+
+ 	input[type="text"] {
+    border: none;
+    background: $background-color-light;
+    padding: 4px 8px;
+    box-shadow: 0 0 3px 1px transparent inset;
+    transition: box-shadow .3s ease;
+    height: 26px;
+
+    &:hover {
+      box-shadow: 0 0 0 1px $primary-accent-color inset;
+    }
+  }
+
+  button {
+    background: $button-background;
+    height: 30px;
+    border: 1px solid $button-border;
+    border-radius: 5px;
+    margin: 0 0 0 8px;
+    transition:
+      border-color .3s ease,
+      background .3s ease,
+      box-shadow .3s ease;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 0 2px $primary-accent-color inset;
+      border-color: $primary-accent-color;
+      background: $button-hover;
+    }
+
+    &:first-child {
+    	margin-left: 0;
+    }
+  }
+
+  nav {
+    flex: 0 0 40px;
+    background: rgba(255,255,255,.3);
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 16px;
+
+    .item {
+      text-align: left;
+      flex: 0 0 1px;
+      margin-left: 1rem;
+      white-space: nowrap;
+      transition: color .3s ease;
+
+      &:hover {
+        text-shadow: none;
+        color: $primary-accent-color;
+      }
+
+      &:first-child {
+        margin-left: 0
+      }
+
+      &.active,
+      &.active:hover {
+        font-weight: 700;
+        text-shadow: none;
+        color: inherit;
+      }
+    }
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .editor {
+    height: 100%;
+    padding: 8px;
+    background: $background-color-light;
+    border-radius: 5px;
+
+    .editor-content {
+      height: 100%;
+      padding: 0;
+      padding: 0 4px 0 0;
+      overflow: auto;
+    }
+  }
+
+  .actions {
+      flex: 0 0 100px;
+      border-left: 1px solid rgba(0,0,0,.15);
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      i {
+        font-size: 16px;
+        margin-left: 4px;
+        cursor: pointer;
+        color: rgba(0,0,0,.75);
+        transition: color .3s ease;
+
+        &.delete {
+          color: rgba(255,0,0,.4);
+        }
+
+        &.fa-play {
+          font-size: 14px;
+          padding-top: 2px;
+        }
+
+        &:hover {
+          color: $primary-accent-color;
+        }
+
+        &:first-child {
+          margin: 0;
+        }
+      }
+    }
+
+}

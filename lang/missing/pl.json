@@ -14,8 +14,11 @@
     "ForienQuestLog.Settings.countHidden.Enable": "",
     "ForienQuestLog.Settings.countHidden.EnableHint": "",
     "ForienQuestLog.QuestPreview.SubTitle": "",
+    "ForienQuestLog.Tooltips.Edit": "",
+    "ForienQuestLog.QuestPreview.Management.CanPlayerEdit": "",
     "ForienQuestLog.QuestPreview.Management.SplashArt": "",
     "ForienQuestLog.QuestPreview.Management.QuestBranching": "",
     "ForienQuestLog.QuestPreview.Management.AddSubquest": "",
-    "ForienQuestLog.QuestPreview.Management.CanPlayerEdit": ""
+    "ForienQuestLog.QuestForm.QuestGiverNamePlaceholder": "",
+    "ForienQuestLog.Buttons.AddNewFolder": ""
 }

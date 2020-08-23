@@ -1,7 +1,6 @@
 import Quest from "../entities/quest.mjs";
 import QuestPreview from "./quest-preview.mjs";
 import QuestForm from "./quest-form.mjs";
-import renderWelcomeScreen from "../versioning/welcome-screen.mjs";
 import Socket from "../utility/socket.mjs";
 
 export default class QuestLog extends Application {
@@ -27,19 +26,6 @@ export default class QuestLog extends Application {
     });
   }
 
-  _getHeaderButtons() {
-    const buttons = super._getHeaderButtons();
-
-    buttons.unshift({
-      label: "",
-      class: "help",
-      icon: "fas fa-question-circle",
-      onclick: ev => renderWelcomeScreen()
-    });
-
-    return buttons
-  }
-
   /**
    * Retrieves Data to be used in rendering template.
    *
@@ -56,7 +42,7 @@ export default class QuestLog extends Application {
       canCreate: game.settings.get("forien-quest-log", "allowPlayersCreate"),
       showTasks: game.settings.get("forien-quest-log", "showTasks"),
       style: game.settings.get("forien-quest-log", "navStyle"),
-      titleAlign: game.settings.get("forien-quest-log", "titleAlign"),
+      //  titleAlign: game.settings.get("forien-quest-log", "titleAlign"),
       questTypes: Quest.getQuestTypes(),
       quests: Quest.getQuests(this.sortBy, this.sortDirection, available, true)
     });
@@ -109,7 +95,7 @@ export default class QuestLog extends Application {
     });
 
     html.on("click", ".title", event => {
-      let questId = $(event.target).data('quest-id');
+      let questId = $(event.target).closest('.title').data('quest-id');
       let questPreview = new QuestPreview(questId);
       questPreview.render(true);
     });
@@ -126,6 +112,27 @@ export default class QuestLog extends Application {
       };
       event.originalEvent.dataTransfer.setData("text/plain", JSON.stringify(dataTransfer));
 
+    });
+
+    html.on("drop", ".tab", event => {
+      const dt = event.target.closest('.drag-quest') || null;
+      if (!dt) return;
+
+      const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+      const id = data.id;
+      const journal = game.journal.get(id);
+      if (!journal) return;
+
+      const quest = Quest.get(id);
+      if (!quest) return;
+
+      const sortData = {sortKey: "sort", sortBefore: true};
+      const targetId = dt.dataset.questId;
+      sortData.target = game.journal.get(targetId);
+      const ids = Quest.getQuests()[quest.status].map(q => q.id);
+      sortData.siblings = game.journal.filter(e => (e._id !== data.id && ids.includes(e._id)));
+
+      journal.sortRelative(sortData).then(() => this.render());
     });
   }
 };

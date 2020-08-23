@@ -3,6 +3,7 @@ import QuestFolder from "./quest-folder.mjs";
 import Reward from "./reward.mjs";
 import Task from "./task.mjs";
 import QuestsCollection from "./collection/quests-collection.mjs";
+import constants from "../constants.mjs";
 
 /**
  * Class that acts "kind of" like Entity, to help Manage everything Quest Related
@@ -29,6 +30,7 @@ export default class Quest {
     this._description = data.description || '';
     this._gmnotes = data.gmnotes || '';
     this._image = data.image || 'actor';
+    this._giverName = data.giverName || 'actor';
     this._splash = data.splash || '';
     this._personal = data.personal || false;
     this._parent = data.parent || null;
@@ -208,6 +210,32 @@ export default class Quest {
     this.entryPermission = entryData.permission;
   }
 
+  sortRewards(event, data) {
+    const dt = event.target.closest('li.reward') || null;
+    const index = data.index;
+    let targetIdx = dt?.dataset.index;
+
+    this.sortParts(index, targetIdx, this.rewards)
+  }
+
+  sortTasks(event, data) {
+    const dt = event.target.closest('li.task') || null;
+    const index = data.index;
+    let targetIdx = dt?.dataset.index;
+    this.sortParts(index, targetIdx, this.tasks)
+  }
+
+  sortParts(index, targetIdx, array) {
+    const entry = array.splice(index, 1)[0];
+    if (targetIdx) {
+      if (index < targetIdx) targetIdx--;
+      array.splice(targetIdx, 0, entry);
+    } else {
+      array.push(entry);
+    }
+    this.save().then(() => Socket.refreshQuestPreview(this.id));
+  }
+
   /**
    * Saves Quest to JournalEntry's content, and if needed, moves JournalEntry to different folder.
    * Can also update JournalEntry's permissions.
@@ -262,25 +290,33 @@ export default class Quest {
     let countHidden = game.settings.get("forien-quest-log", "countHidden");
 
     if (content.giver) {
-      fromUuid(content.giver).then((entity) => {
-        if (entity === null) {
-          content.giver = false;
-          return;
-        }
-        content.giver = duplicate(entity);
-
-        switch (entity.entity) {
-          case Actor.entity:
-            if (content.image === 'token')
-              content.giver.img = entity.data.token.img;
-            break;
-          case Item.entity:
-          case JournalEntry.entity:
-            break;
-          default:
+      if (content.giver === 'abstract') {
+        content.giver = {
+          name: content.giverName,
+          img: content.image
+        };
+        content.image = undefined;
+      } else {
+        fromUuid(content.giver).then((entity) => {
+          if (entity === null) {
             content.giver = false;
-        }
-      });
+            return;
+          }
+          content.giver = duplicate(entity);
+
+          switch (entity.entity) {
+            case Actor.entity:
+              if (content.image === 'token')
+                content.giver.img = entity.data.token.img;
+              break;
+            case Item.entity:
+            case JournalEntry.entity:
+              break;
+            default:
+              content.giver = false;
+          }
+        });
+      }
     }
 
     content.isSubquest = false;
@@ -364,8 +400,14 @@ export default class Quest {
   static getContent(entry, populate = false) {
     let content = entry.data.content;
 
-    content = JSON.parse(content);
-    content.id = entry._id;
+    try {
+      content = JSON.parse(content);
+      content.id = entry._id;
+    } catch (e) {
+      console.log(`${constants.moduleLabel} | Quest Folder contains invalid entry. The "${entry.data.name}" is either corrupted Quest Entry, or non-Quest Journal Entry.`);
+      console.error(e);
+      return null;
+    }
 
     if (populate)
       content = this.populate(content, entry);
@@ -388,7 +430,7 @@ export default class Quest {
 
     folder.content.forEach(entry => {
       let content = this.getContent(entry, populate);
-      entries.push(content);
+      if (content) entries.push(content);
     });
 
     if (sortTarget !== undefined) {
@@ -642,6 +684,14 @@ export default class Quest {
     return QuestsCollection;
   }
 
+  get giverName() {
+    return this._giverName;
+  }
+
+  set giverName(value) {
+    this._giverName = value;
+  }
+
   get name() {
     return this._title;
   }
@@ -659,6 +709,7 @@ export default class Quest {
       gmnotes: this._gmnotes,
       personal: this._personal,
       image: this._image,
+      giverName: this._giverName,
       splash: this._splash,
       parent: this._parent,
       subquests: this._subquests,

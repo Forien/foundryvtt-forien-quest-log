@@ -1,106 +1,125 @@
 #forien-quest-log-form {
-  .grid-container {
-    display: grid;
-    grid-template-columns: 50% 50fr;
-    grid-template-rows: auto 240px 217px auto;
-    gap: 1px 1px;
-    grid-template-areas: ". ." ". ." "tasks tasks" "footer footer";
-
-    .tasks {
-      grid-area: tasks;
-    }
-
-    .footer {
-      grid-area: footer;
-    }
-  }
-
-
-  fieldset {
-    box-sizing: border-box;
-    margin: 0;
-
-    &.giver-data-fieldset {
+    
+    form {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      background: rgba(0,0,0,.1);
       height: 100%;
-      position: relative;
+      // overflow-y: hidden;     
+    }
+    
+    form header {
+      flex: 0 0 1px;
 
-      .drop-info {
-        font-size: 1.4em;
-        font-variant: small-caps;
+      .source-details {
+        display: flex;
+      }
+
+      .source-image {
+        flex: 0 0 100px;
+        height: 100px;
+        font-size: 12px;
+        line-height: 1.2;
+        font-weight: 700;
         text-align: center;
-        color: #666;
-        opacity: 0.7;
-        margin: 0 20px;
-        position: absolute;
-        top: 50%;
-        transform: translate(0, -50%);
-        padding: 0 10%;
-      }
+        margin-right: 8px;
 
-      img {
-        &.giver-portrait {
-          width: 82px;
-          height: 82px;
-          border: none;
-          float: left;
-          margin-right: 12px;
-          object-fit: cover;
+        .giver-portrait {
+          width: 100%;
+          height: 100%;
+          background-size: cover;
+          background-position: center;
+          border-radius: 5px;
+        }
+
+        .hidden {
+          display: none;
+        }
+
+        span {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          border: 2px dashed rgba(0,0,0,.5);
+          border-radius: 5px;
+          padding: 8px; 
         }
       }
 
-      h3 {
-        &.giver-name {
-          line-height: 82px;
-          margin: 0;
-        }
+      .source-info {
+        flex: 1;
+        height: 100px;
       }
 
-      .hidden {
-        display: none;
+      .quest-giver {
+        margin-bottom: 8px;
       }
+
+
     }
 
-    &.tasks {
-      margin-top: 10px;
-      border: none;
-      overflow: hidden;
-
-      .add-new-task {
-        cursor: pointer;
-      }
-
-      .list {
-        overflow-y: scroll;
-        height: calc(100% - 35px);
-
-        .task-entry {
-          input {
-            width: 97%;
-            margin: 4px;
-          }
-
-          .del-btn {
-            cursor: pointer;
-
-            .fa-times {
-              pointer-events: none;
-            }
-          }
-        }
-      }
+    .quest-title {
+      margin-top: 8px;
     }
 
-    &.tinymce-fieldset {
-      min-height: 240px;
-      border: none;
+    .quest-text {
+      margin-top: 8px;
+      display: flex;
+      flex: 1;
+      overflow-y: hidden; 
+
+      .quest-description,
+      .quest-notes {
+        flex: 1;
+      }
+
+      .quest-notes {
+        margin-left: 8px;
+      }
 
       .editor {
-        height: 100%;
+        padding: 8px;
+        background: $background-color-light;
+        border-radius: 5px;
+        height: calc(100% - 30px);
+
+        .tox .tox-toolbar-overlord {
+          background-color: transparent;
+          border-bottom: 1px solid #222;
+          padding-bottom: 4px;
+        }
+
+        .tox .tox-toolbar,
+        .tox .tox-toolbar__overflow,
+        .tox .tox-toolbar__primary {
+          background: transparent;
+          background-color: transparent;
+        }
+
+        .tox.tox-tinymce .tox-tbtn {
+          padding: 0;
+          margin: 0 0 0 4px;
+          width: 32px;
+        }
+
+        .tox.tox-tinymce .tox-tbtn[title="Formats"] {
+          width: 90px;
+        }
 
         .editor-content {
           height: 100%;
+          overflow-y: auto;
+          margin: 0;
+          padding: 0 12px 0 0;
         }
       }
+
     }
-  }
+
+    footer {
+      flex: 0 0 1px;
+      margin-top: 8px;
+    }
 }

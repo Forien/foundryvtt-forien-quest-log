@@ -16,6 +16,12 @@ export default class QuestPreview extends FormApplication {
     if (!this.quest) throw new Error(game.i18n.localize("ForienQuestLog.QuestPreview.InvalidQuestId"));
   }
 
+  set object(value) {}
+
+  get object() {
+    return this.quest;
+  }
+
   /**
    * Default Application options
    *
@@ -46,8 +52,8 @@ export default class QuestPreview extends FormApplication {
    * @returns {Promise<Object>}
    */
   async getData(options = {}) {
-    let content = duplicate(this.quest);
-    content = Quest.populate(content, this.quest.entry);
+    let quest = duplicate(this.quest);
+    let content = Quest.populate(quest, this.quest.entry);
     this.canEdit = (content.playerEdit || game.user.isGM);
     this.playerEdit = content.playerEdit;
 
@@ -234,6 +240,21 @@ export default class QuestPreview extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
 
+    html.on('click', '.splash-image-link', (event) => {
+      (new ImagePopout(this.quest.splash, {shareable: true})).render(true)
+    });
+
+    html.on('dragstart', '.fa-sort', (event) => {
+      event.stopPropagation();
+      const li = event.target.closest('li') || null;
+      if (!li) return;
+      let dataTransfer = {
+        mode: "Sort",
+        index: $(li).data('index')
+      };
+      event.originalEvent.dataTransfer.setData("text/plain", JSON.stringify(dataTransfer));
+    });
+
     html.on('dragstart', '.item-reward', (event) => {
       let dataTransfer = {
         type: "Item",
@@ -242,15 +263,23 @@ export default class QuestPreview extends FormApplication {
       event.originalEvent.dataTransfer.setData("text/plain", JSON.stringify(dataTransfer));
     });
 
+    html.on("click", ".item-reward", (event) => {
+      let data = $(event.currentTarget).data('transfer');
+      delete data._id;
+      delete data.permission;
+      let item = new CONFIG.Item.entityClass(data);
+      item.sheet.render(true);
+    });
+
     html.on("click", ".quest-name", (event) => {
-      let id = $(event.target).data('id');
+      let id = $(event.currentTarget).data('id');
       Quests.open(id);
     });
 
     html.on("click", ".open-actor-sheet", (event) => {
       let actorId = $(event.target).data('actor-id');
       let actor = game.actors.get(actorId);
-      if (actor.permission > 0)
+      if (actor?.permission > 0)
         actor.sheet.render(true);
     });
 
@@ -271,7 +300,9 @@ export default class QuestPreview extends FormApplication {
         event.preventDefault();
         let item;
         let data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
-        if (data.type === 'Item') {
+        if (data.mode === 'Sort') {
+          this.quest.sortRewards(event, data);
+        } else if (data.type === 'Item') {
           if (data.pack) {
             item = await this.getItemFromPack(data.pack, data.id);
           } else if (data.data) {
@@ -286,6 +317,14 @@ export default class QuestPreview extends FormApplication {
             this.quest.addReward({type: "Item", data: item});
             this.saveQuest();
           }
+        }
+      });
+
+      html.on("drop", ".tasks-box", async (event) => {
+        event.preventDefault();
+        let data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+        if (data.mode === 'Sort') {
+          this.quest.sortTasks(event, data);
         }
       });
 
@@ -308,10 +347,14 @@ export default class QuestPreview extends FormApplication {
           index = $(event.target).data('index');
           value = this.quest.tasks[index].name;
         }
+        if (target === 'reward.name') {
+          index = $(event.target).data('index');
+          value = this.quest.rewards[index].data.name;
+        }
 
         value = value.replace(/"/g, '&quot;');
         let input = $(`<input type="text" class="editable-input" value="${value}" data-target="${target}" ${index !== undefined ? `data-index="${index}"` : ``}/>`);
-        let parent = $(event.target).parent('.editable-container');
+        let parent = $(event.target).closest('.actions').prev('.editable-container');
 
         parent.html('');
         parent.append(input);
@@ -329,7 +372,7 @@ export default class QuestPreview extends FormApplication {
               break;
             case 'reward.name':
               index = $(event.target).data('index');
-              this.quest.rewards[index].name = value;
+              this.quest.rewards[index].data.name = value;
               break;
             default:
               if (this.quest[target] !== undefined)
@@ -364,14 +407,15 @@ export default class QuestPreview extends FormApplication {
       });
 
       html.on("click", ".add-new-task", (event) => {
-        let div = $('<div class="task"></div>');
+        event.preventDefault();
+        let li = $('<li class="task"></li>');
         let placeholder = $('<span><i class="fas fa-check hidden"></i></span>');
         let input = $(`<input type="text" class="editable-input" value="" placeholder="${game.i18n.localize("ForienQuestLog.SampleTask")}" />`);
-        let box = $(event.target).parent().parent('.tasks-gc').find('.tasks-box');
+        let box = $(event.target).closest('.quest-tasks').find('.tasks-box ul');
 
-        div.append(placeholder);
-        div.append(input);
-        box.append(div);
+        li.append(placeholder);
+        li.append(input);
+        box.append(li);
 
         input.focus();
 
@@ -398,16 +442,16 @@ export default class QuestPreview extends FormApplication {
       });
 
       html.on("click", ".add-abstract", (event) => {
-        let div = $('<div class="reward"></div>');
+        let li = $('<li class="reward"></li>');
         let input = $(`<input type="text" class="editable-input" value="" placeholder="${game.i18n.localize("ForienQuestLog.SampleReward")}" />`);
-        let box = $(event.target).parents('.rewards-gc').find('.rewards-box');
+        let box = $(event.target).closest('.quest-rewards').find('.rewards-box ul');
 
-        $(box).children('.drop-info').each(function () {
-          $(this).remove();
-        });
+        // $(box).children('.drop-info').each(function () {
+        //   $(this).remove();
+        // });
 
-        div.append(input);
-        box.append(div);
+        li.append(input);
+        box.append(li);
 
         input.focus();
 
@@ -426,7 +470,7 @@ export default class QuestPreview extends FormApplication {
         });
       });
 
-      html.on("click", ".abstract-reward img", (event) => {
+      html.on("click", ".abstract-reward .reward-image", (event) => {
         let index = $(event.target).data('index');
         let currentPath = this.quest.rewards[index].data.img;
         new FilePicker({

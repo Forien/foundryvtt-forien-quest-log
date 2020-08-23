@@ -103,6 +103,7 @@ export default class ModuleSettings {
       }
     });
 
+/*
     game.settings.register("forien-quest-log", "titleAlign", {
       name: "ForienQuestLog.Settings.titleAlign.Enable",
       hint: "ForienQuestLog.Settings.titleAlign.EnableHint",
@@ -119,16 +120,7 @@ export default class ModuleSettings {
           QuestLog.render();
       }
     });
-
-    game.settings.register("forien-quest-log", "playersWelcomeScreen", {
-      name: "ForienQuestLog.Settings.playersWelcomeScreen.Enable",
-      hint: "ForienQuestLog.Settings.playersWelcomeScreen.EnableHint",
-      scope: "world",
-      config: true,
-      default: true,
-      type: Boolean
-    });
-
+*/
     game.settings.register("forien-quest-log", "showFolder", {
       name: "ForienQuestLog.Settings.showFolder.Enable",
       hint: "ForienQuestLog.Settings.showFolder.EnableHint",

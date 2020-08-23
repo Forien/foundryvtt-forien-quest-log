@@ -36,12 +36,12 @@ export default class QuestForm extends FormApplication {
     if (this.subquest)
       this.options.title += ` – ${game.i18n.format('ForienQuestLog.QuestForm.SubquestOf', {name: parent.name})}`;
 
-    return mergeObject(super.getData(), {
-      options: options,
+    return {
       isGM: game.user.isGM,
       subquest: this.subquest,
-      parent: parent
-    });
+      parent: parent,
+      options: mergeObject(this.options, options)
+    };
   }
 
   /**
@@ -107,6 +107,12 @@ export default class QuestForm extends FormApplication {
       permission = 3;
     }
 
+    if (formData.giver === 'abstract') {
+      data.giver = formData.giver;
+      data.image = formData.sourceImage;
+      data.giverName = formData.giverName;
+    }
+
     if (this.subquest) {
       data.parent = this.object._id;
     }
@@ -166,6 +172,19 @@ export default class QuestForm extends FormApplication {
   }
 
   /**
+   * Need to override because of earlier bad design caused bug with text editors inheriting parent's data
+   *
+   * @param div
+   * @private
+   */
+  _activateEditor(div) {
+    const temp = this.object;
+    this.object = undefined;
+    super._activateEditor(div);
+    this.object = temp;
+  }
+
+  /**
    * Fired whenever any of TinyMCE editors is saved.
    * Just pass data to object's property, we handle save in one go after submit
    *
@@ -208,15 +227,16 @@ export default class QuestForm extends FormApplication {
 
       if (giver) {
         if (giver.data.img.length) {
-          html.find('.giver-portrait').attr('src', giver.data.img).removeClass('hidden');
+          html.find('.giver-portrait').attr({
+            'style': 'background-image:url(' + giver.data.img + ')',
+            'title': giver.name
+          }).removeClass('hidden');
         } else {
-          html.find('.giver-portrait').addClass('hidden');
+          html.find('.giver-portrait').attr('style', '').addClass('hidden');
         }
-        html.find('.giver-name').text(giver.name).removeClass('hidden');
         html.find('.drop-info').addClass('hidden');
       } else {
         html.find('.giver-portrait').addClass('hidden');
-        html.find('.giver-name').addClass('hidden');
         html.find('.drop-info').removeClass('hidden');
       }
     });
@@ -226,7 +246,8 @@ export default class QuestForm extends FormApplication {
       let data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
       if (['Actor', 'Item', 'JournalEntry'].includes(data.type)) {
         let uuid = `${data.type}.${data.id}`;
-        html.find('#giver').val(uuid).change();
+        html.find('#giver').val(uuid).prop('readonly', false).change();
+        html.find('.quest-giver-name').slideUp();
       }
     });
 
@@ -239,6 +260,21 @@ export default class QuestForm extends FormApplication {
           $(event.target).parent().remove();
         });
       });
+    });
+
+    html.on("click", ".source-image", () => {
+      let currentPath = html.find('.quest-giver-name').val();
+      new FilePicker({
+        type: "image",
+        current: currentPath,
+        callback: path => {
+          html.find('#giver').val('abstract').prop('readonly', true);
+          html.find('#sourceImage').val(path);
+          html.find('.quest-giver-name').slideDown();
+          html.find('.giver-portrait').css('background-image', `url(${path})`).removeClass('hidden');
+          html.find('.drop-info').addClass('hidden');
+        },
+      }).browse(currentPath);
     });
   }
 };

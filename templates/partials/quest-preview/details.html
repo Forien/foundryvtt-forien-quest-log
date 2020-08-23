@@ -1,118 +1,179 @@
-<section class="details-tab">
-    <div class="editable-container details-header">
-        <h2 class="editable" data-target="title">
-            {{title}}
-            {{#if isSubquest}}
-            <small class="quest-name" data-id="{{parent.id}}">{{format 'ForienQuestLog.QuestPreview.SubTitle' parent.name}}</small>
-            {{/if}}
-        </h2>
-        <div class="actions">
-        {{#if canEdit}}
-            {{#if (eq status 'hidden')}}
-            <i class="move fas fa-eye" title="{{localize 'ForienQuestLog.Tooltips.SetAvailable'}}" data-target="available" data-id="{{id}}"></i>
-            {{/if}}
-            {{#if (or (eq status 'hidden') (eq status 'available'))}}
-            <i class="move fas fa-star" title="{{localize 'ForienQuestLog.Tooltips.SetActive'}}" data-target="active" data-id="{{id}}"></i>
-            {{/if}}
-            {{#if (eq status 'active')}}
-            <i class="move fas fa-check" title="{{localize 'ForienQuestLog.Tooltips.SetCompleted'}}" data-target="completed" data-id="{{id}}"></i>
-            <i class="move fas fa-times" title="{{localize 'ForienQuestLog.Tooltips.SetFailed'}}" data-target="failed" data-id="{{id}}"></i>
-            {{/if}}
-            {{#unless (eq status 'hidden')}}
-            <i class="move fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.Hide'}}" data-target="hidden" data-id="{{id}}"></i>
-            {{/unless}}
+<header class="details-header">
+  <div class="quest-giver-gc">
+    {{#with giver}}
+    <div class="quest-giver-image open-actor-sheet" data-actor-id="{{_id}}" style="background-image: url({{img}})" title="{{name}}"></div>
+    {{#if (and ../canEdit ../image)}}
+    <span class="toggleImage" title="{{localize 'ForienQuestLog.Tooltips.ToggleImage'}}"><i class="fas fa-user-circle"></i></span>
+    {{/if}}
+
+    {{/with}}
+  </div>
+
+  <div class="quest-setup">
+    <div class="quest-title">
+      <div class="editable-container">
+        <h1>
+          {{title}}
+        </h1>
+      </div>
+      {{#if canEdit}}
+      <div class="actions">
+        <i class="fas fa-pen editable {{#unless isGM}}hidden{{/unless}}" data-target="title" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
+      </div>
+      {{/if}}
+    </div>
+    <section>
+      <div class="quest-details">
+
+        <div class="quest-giver-name">
+          {{#with giver}}
+          <h2 class="open-actor-sheet" data-actor-id="{{_id}}" title="Quest Source">{{name}}</h2>
+          {{/with}}
+        </div>
+        <div class="quest-status {{this.status}}">
+          <p>
+            Quest is {{this.statusLabel}}
+          </p>
+          {{#if isSubquest}}
+          <p class="quest-name" data-id="{{parent.id}}">{{format 'ForienQuestLog.QuestPreview.SubTitle' parent.name}} <i class="fas fa-link"></i></p>
+          {{/if}}
+        </div>
+      </div>
+
+      {{#if splash.length}}
+      <div class="splash-image-link" style="background-image: url({{splash}})" title="View Quest Image">
+        <span><i class="fas fa-eye"></i></span>
+      </div>
+      {{/if}}
+
+      {{#if canEdit}}
+      <div class="actions">
+        {{#if (or (eq status 'hidden') (eq status 'available'))}}
+        <i class="move fas fa-play" title="{{localize 'ForienQuestLog.Tooltips.SetActive'}}" data-target="active" data-id="{{id}}"></i>
         {{/if}}
-        </div>
+        {{#if (eq status 'hidden')}}
+        <i class="move fas fa-clipboard" title="{{localize 'ForienQuestLog.Tooltips.SetAvailable'}}" data-target="available" data-id="{{id}}"></i>
+        {{/if}}
+        {{#if (eq status 'active')}}
+        <i class="move fas fa-check-circle" title="{{localize 'ForienQuestLog.Tooltips.SetCompleted'}}" data-target="completed" data-id="{{id}}"></i>
+        <i class="move fas fa-times-circle" title="{{localize 'ForienQuestLog.Tooltips.SetFailed'}}" data-target="failed" data-id="{{id}}"></i>
+        {{/if}}
+        {{#unless (eq status 'hidden')}}
+        <i class="move fas fa-stop-circle" title="{{localize 'ForienQuestLog.Tooltips.Hide'}}" data-target="hidden" data-id="{{id}}"></i>
+        {{/unless}}
+      </div>
+      {{/if}}
+    </section>
+
+  </div>
+
+</header>
+
+<div class="quest-info">
+
+  <div class="quest-description">
+    <h2>Quest Description</h2>
+    {{#if canEdit}}
+    {{{editor target="description" content=description button=true editable=true owner=canEdit}}}
+    {{else}}
+    <div class="description">
+      <div class="description-content">{{{description}}}</div>
     </div>
-    <div class="grid-container">
-        <div class="quest-giver-gc">
-            {{#with giver}}
-            <div>
-                <img class="open-actor-sheet" data-actor-id="{{_id}}" src="{{img}}"/>
-                {{#if ../canEdit}}
-                <i class="fas fa-user-circle toggleImage" title="{{localize 'ForienQuestLog.Tooltips.ToggleImage'}}"></i>
-                {{/if}}
+    {{/if}}
+  </div>
+
+  <div class="quest-col-right">
+
+    <div class="quest-tasks">
+      <header>
+        <h2>{{localize 'ForienQuestLog.QuestPreview.Objectives'}}</h2>
+        {{#if canEdit}}<button class="add-new-task"><i class="fas fa-plus"></i> {{localize 'ForienQuestLog.Buttons.AddNewTask'}}</button>{{/if}}
+      </header>
+      <div class="quest-box tasks-box">
+        <ul>
+          {{#each subquests}}
+          {{#if this.name}}
+          <li class="task {{#if (eq status 'hidden')}}task-hidden{{/if}}">
+            <div class="state-container">
+              <span class="state-display">
+                <i class="fas fa-check state {{#unless (eq status 'completed')}}hidden{{/unless}}"></i>
+                <i class="fas fa-times state {{#unless (eq status 'failed')}}hidden{{/unless}}"></i>
+              </span>
             </div>
-            <div>
-                <span class="open-actor-sheet" data-actor-id="{{_id}}">{{name}}</span>
-            </div>
-            {{/with}}
-            <div class="quest-status {{this.status}}">{{this.statusLabel}}</div>
-        </div>
-        <div class="description-gc">
-            {{#if canEdit}}
-            {{{editor target="description" content=description button=true editable=true owner=canEdit}}}
+            <p class="quest-name" data-id="{{id}}">{{name}} <i class="fas fa-link"></i></p>
+          </li>
+          {{/if}}
+          {{/each}}
+          {{#each tasks}}
+          <li class="task {{#if hidden}}task-hidden{{/if}}" data-index="{{@index}}">
+            {{#if ../canEdit}}
+            <i class="toggleState fas fa-{{state}}" data-task-index="{{@index}}"></i>
             {{else}}
-            <div class="description">{{{description}}}</div>
+            <div class="state-container">
+              <span class="state-display">
+                <i class="fas fa-check state {{#unless completed}}hidden{{/unless}}"></i>
+                <i class="fas fa-times state {{#unless failed}}hidden{{/unless}}"></i>
+              </span>
+            </div>
             {{/if}}
-        </div>
-        <div class="tasks-gc">
-            <h3>{{localize 'ForienQuestLog.QuestPreview.Objectives'}} {{#if canEdit}}| <small class="add-new-task">{{localize 'ForienQuestLog.Buttons.AddNewTask'}}</small>{{/if}}</h3>
-            <div class="tasks-box">
-                {{#each subquests}}
-                {{#if this.name}}
-                <div class="task">
-                    <span class="state-container">
-                        <i class="far fa-square state-background"></i>
-                        <i class="fas fa-check state {{#unless (eq status 'completed')}}hidden{{/unless}}"></i>
-                        <i class="fas fa-times state {{#unless (eq status 'failed')}}hidden{{/unless}}"></i>
-                    </span>
-                    <span>
-                        <span class="quest-name" data-id="{{id}}">{{name}}</span>
-                    </span>
-                </div>
-                {{/if}}
-                {{/each}}
-                {{#each tasks}}
-                <div class="task">
-                    {{#if ../canEdit}}
-                    <i class="toggleState fas fa-{{state}}" data-task-index="{{@index}}"></i>
-                    {{else}}
-                    <span class="state-container">
-                        <i class="far fa-square state-background"></i>
-                        <i class="fas fa-check state {{#unless completed}}hidden{{/unless}}"></i>
-                        <i class="fas fa-times state {{#unless failed}}hidden{{/unless}}"></i>
-                    </span>
-                    {{/if}}
-                    <span class="editable-container">
-                        {{#if ../canEdit}}
-                            {{#if hidden}}
-                            <i class="fas fa-eye-slash toggleHidden" data-target="task" data-index="{{@index}}"title="{{localize 'ForienQuestLog.Tooltips.TaskHidden'}}"></i>
-                            {{else}}
-                            <i class="fas fa-eye toggleHidden" data-target="task" data-index="{{@index}}" title="{{localize 'ForienQuestLog.Tooltips.TaskVisible'}}"></i>
-                            {{/if}}
-                        {{/if}}
-                        <span class="task-name editable" data-target="task.name" data-index="{{@index}}">{{{name}}}</span>
-                    </span>
-                    {{#if ../canEdit}}
-                    <span class="del-btn" data-target="tasks" data-index="{{@index}}"><i class="fas fa-times"></i></span>
-                    {{/if}}
-                </div>
-                {{/each}}
+            <div class="editable-container">
+              <p class="task-name">{{{name}}}</p>
             </div>
-        </div>
-        <div class="rewards-gc">
-            <h3>{{localize 'ForienQuestLog.QuestPreview.Rewards'}}{{#if canEdit}} | <small><i class="fas fa-plus-circle add-abstract" title="{{localize 'ForienQuestLog.Tooltips.AddAbstractReward'}}"></i></small>{{/if}}</h3>
-            <div class="rewards-box">
-                {{#if noRewards}}
-                <span class="drop-info">{{localize 'ForienQuestLog.QuestPreview.DragDropRewards'}}</span>
-                {{else}}
-                    {{#each rewards}}
-                        <div class="reward {{type}}-reward {{#if (and ../isGM draggable)}}draggable{{/if}}" {{#if (and ../canEdit draggable)}}data-transfer="{{transfer}}" draggable="true"{{/if}}>
-                            <img src="{{data.img}}" data-index="{{@index}}"/>
-                            {{#if ../canEdit}}
-                                {{#if hidden}}
-                                <i class="fas fa-eye-slash toggleHidden" data-target="reward" data-index="{{@index}}"title="{{localize 'ForienQuestLog.Tooltips.RewardHidden'}}"></i>
-                                {{else}}
-                                <i class="fas fa-eye toggleHidden" data-target="reward" data-index="{{@index}}" title="{{localize 'ForienQuestLog.Tooltips.RewardVisible'}}"></i>
-                                {{/if}}
-                            {{/if}}
-                            <span class="name editable" data-target="reward.name" data-index="{{@index}}">{{data.name}}</span>
-                            {{#if ../canEdit}}<span class="del-btn" data-target="rewards" data-index="{{@index}}"><i class="fas fa-times"></i></span>{{/if}}
-                        </div>
-                    {{/each}}
-                {{/if}}
+            {{#if ../canEdit}}
+            <div class="actions">
+              <i class="fas fa-sort" draggable="true"></i>
+              <i class="editable fas fa-pen" data-target="task.name" data-index="{{@index}}"  title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
+              {{#if hidden}}
+              <i class="fas fa-eye toggleHidden" data-target="task" data-index="{{@index}}"title="{{localize 'ForienQuestLog.Tooltips.TaskHidden'}}"></i>
+              {{else}}
+              <i class="fas fa-eye-slash toggleHidden" data-target="task" data-index="{{@index}}" title="{{localize 'ForienQuestLog.Tooltips.TaskVisible'}}"></i>
+              {{/if}}
+              <i class="del-btn fas fa-trash" data-target="tasks" data-index="{{@index}}" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}"></i>
             </div>
-        </div>
+            {{/if}}
+          </li>
+          {{/each}}
+        </ul>
+      </div>
     </div>
-</section>
+
+    <div class="quest-rewards">
+      <header>
+        <h2>{{localize 'ForienQuestLog.QuestPreview.Rewards'}}</h2>
+        {{#if canEdit}} <button class="add-abstract" title="{{localize 'ForienQuestLog.Tooltips.AddAbstractReward'}}"><i class="fas fa-plus"></i> {{localize 'ForienQuestLog.Tooltips.AddAbstractReward'}}</button>{{/if}}
+      </header>
+      <div class="quest-box rewards-box">
+        <ul>
+        {{#each rewards}}
+        <li class="reward {{type}}-reward {{#if (and ../isGM draggable)}}draggable{{/if}} {{#if hidden}}reward-hidden{{/if}}" data-index="{{@index}}" data-transfer="{{transfer}}" {{#if (and ../canEdit draggable)}}draggable="true"{{/if}}>
+          <div class="reward-image-container">
+            <div class="reward-image" style="background-image: url({{data.img}})" data-index="{{@index}}"></div>
+          </div>
+          <div class="editable-container">
+            <p class="reward-name">{{data.name}}</p>
+          </div>
+          {{#if ../canEdit}}
+          <div class="actions">
+            <i class="fas fa-sort" draggable="true"></i>
+            <i class="editable fas fa-pen" data-target="reward.name" data-index="{{@index}}" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
+            {{#if hidden}}
+            <i class="fas fa-eye toggleHidden" data-target="reward" data-index="{{@index}}"title="{{localize 'ForienQuestLog.Tooltips.RewardHidden'}}"></i>
+            {{else}}
+            <i class="fas fa-eye-slash toggleHidden" data-target="reward" data-index="{{@index}}" title="{{localize 'ForienQuestLog.Tooltips.RewardVisible'}}"></i>
+            {{/if}}
+            <i class="del-btn fas fa-trash" data-target="rewards" data-index="{{@index}}" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}"></i>
+          </div>
+          {{/if}}
+
+        </li>
+        {{/each}}
+        {{#if canEdit}}
+          <li class="drop-info {{#unless isGM}}hidden{{/unless}}">{{localize 'ForienQuestLog.QuestPreview.DragDropRewards'}}</li>
+        {{/if}}
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+</div>

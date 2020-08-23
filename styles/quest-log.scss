@@ -1,199 +1,162 @@
 #forien-quest-log {
   min-width: 500px;
-  min-height: 300px;
+  min-height: 640px;
 
-  div.quest-log {
+  .quest-log {
     height: 100%;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: minmax(0, 1fr) auto;
-    gap: 1px 1px;
-
-    &.classic {
-      grid-template-rows: auto minmax(0, 1fr) auto;
-    }
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    background: rgba(0,0,0,.1);
+    padding: 0 0 24px 0;
   }
 
-  /**
-   * Only applies if setting set to Bookmarks.
-   * Shows tabs on the left from the window with custom style
-   */
-  nav.log-tabs.bookmarks {
-    display: block;
+  .quest-log.bookmarks nav {
     position: absolute;
-    left: -120px;
-    top: 32px;
-    z-index: -10;
+    left: 0;
+    transform: translateX(-100%);
+    flex-direction: column;
+    align-items: flex-end;
+    background: none;
+    padding: 0;
+    flex: 0;
 
-    a.item {
-      display: block;
-      width: 125px;
-      height: 32px;
-      overflow: hidden;
-      text-align: right;
-
-      padding: 7px 15px;
-      margin-bottom: 5px;
-
-      border: 1px solid $border;
+    .item {
       background: $background-parchment;
-      box-shadow: inset 0 0 0 2000px rgba(133, 133, 133, 0.1);
+      text-align: right;
+      margin: 0;
+      margin-bottom: 4px;
+      padding: 8px 16px;
+      width: 150px;
+      border-radius: 5px 0 0 5px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 
+        -5px 0 5px -5px rgba(0, 0, 0, 0.25) inset,
+        0 5px 5px -5px rgba(0, 0, 0, 0.3),
+        0 -5px 5px -5px rgba(0, 0, 0, 0.3),
+        -2px 0 5px -2px rgba(0, 0, 0, 0.3);
+      transition: padding .3s ease, width .3s ease, color .3s ease;
+      
+      &:hover {
+        padding-right: 32px;
+        width: 166px;
+      }
+    }
 
-      &.active {
-        border: 2px solid $border-active;
-        box-shadow: inset 0 0 0 2000px rgba(250, 250, 250, 0.1);
+    .item.active {
+      padding-right: 32px;
+      width: 166px;
+
+      &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(0,0,0,.1);
+        border-radius: 5px 0 0 5px;
+        z-index: -1;
       }
     }
   }
 
-  section.log-body {
+  .quest-log .log-body {
+    flex: 1;
+    overflow-y: hidden;
+    padding: 0 16px;
+  }
 
-    &.classic {
-      min-height: calc(100% - #{$footer-size + 20px});
+  .quest-log .tab {
+    flex-direction: column;
+    padding: 16px 0 0 0;
+
+    &.active {
+      display: flex;
     }
 
-    .tab {
+    .table {
+      flex: 1;
+      overflow-y: auto;
+    }
+  }
+
+  .quest-log .table ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin: 0 4px 2px 0;
+      background: rgba(255, 255, 255, .3);
+      border: 1px solid transparent;
+      border-radius: 5px;
+      height: 42px;
+      transition: border-color .3s ease, box-shadow .3s ease;
+
+      &:hover {
+        border-color: $primary-accent-color;
+        box-shadow: 0 0 2px $primary-accent-color inset;
+      }
+    }
+
+    .img {
+      flex: 0 0 40px;
+      width: 40px;
+      height: 40px;
+      border-radius: 5px 0 0 5px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .personal-quest-icon {
+      margin-left: 8px
+    }
+
+    .title {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       height: 100%;
-      grid-template-columns: 1fr;
-      grid-template-rows: auto 1fr;
-      gap: 1px 1px;
+      padding: 0 8px;
+      cursor: pointer;
 
-      &.active {
-        display: grid;
-      }
-
-      h1 {
+      h2 {
         margin: 0;
+        padding: 0;
+        line-height: 1;
+        border: none;
+        font-size: 16px;
+        font-weight: 700;
       }
 
-      .table {
-        overflow: auto;
-
-        table {
-          margin: 0;
-          border: none;
-          background: none;
-
-          thead {
-            background: none;
-            color: #000;
-            text-shadow: none;
-            border-bottom: none;
-          }
-
-          tr {
-            height: 30px;
-
-            th {
-              border-bottom: 1px #666 solid;
-
-              &.quest-giver-col {
-                width: 120px;
-              }
-
-              &.actions-col {
-                width: 100px;
-              }
-
-              &.tasks-col {
-                width: 60px;
-              }
-
-              &.sortable {
-                cursor: pointer;
-              }
-            }
-
-            td {
-              text-align: center;
-
-              &.title {
-                font-weight: bold;
-                cursor: pointer;
-
-                small {
-                  display: block;
-                  font-style: italic;
-                  margin-left: 20px;
-                  font-weight: normal;
-                }
-
-                &.left {
-                  text-align: left;
-                }
-
-                &.center {
-                  text-align: center;
-                }
-
-                &:hover {
-                  text-shadow: 2px 2px 5px rgba(51, 51, 51, 0.4);
-                }
-              }
-
-              &.img {
-                cursor: pointer;
-
-                img {
-                  width: 55px;
-                  height: 55px;
-                  border: none;
-                  object-fit: cover;
-                  border-radius: 4px;
-                }
-              }
-
-              &.actions {
-                i.fas {
-                  cursor: pointer;
-                  margin-right: 5px;
-
-                  &:last-of-type {
-                    margin-right: 0;
-                  }
-                }
-              }
-
-            }
-
-            &:nth-child(2n) {
-              background: rgba(0, 0, 0, 0.05)
-            }
-          }
-        }
-      }
-
-    }
-  }
-
-  footer {
-    height: $footer-size;
-    padding: $footer-padding;
-  }
-
-}
-
-/**
- *  DARK MODE compatibility
- */
-.dark-mode {
-  #forien-quest-log {
-    nav.log-tabs.bookmarks {
-      a.item {
-        background: $background-parchment-dark;
+      p {
+        margin: 0;
+        padding: 0;
+        font-size: 12px;
+        font-weight: 400;
       }
     }
 
-    section.log-body {
-      .tab {
-        .table {
-          table {
-            thead {
-              color: #b5b5b5;
-            }
-          }
-        }
-      }
+    .tasks {
+      flex: 0 0 60px;
+      border-left: 1px solid rgba(0,0,0,.15);
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
+
+  .quest-log footer {
+    flex: 0 0 1px;
+    padding: 8px 16px 0 16px;
+    display: flex;
+  }
+
 }
