@@ -35,6 +35,7 @@ Hooks.once('setup', () => {
 });
 
 Hooks.once("ready", () => {
+  QuestFolder.initializeJournals();
   registerApiHooks();
 
   // Allow and process incoming socket data

@@ -1,5 +1,8 @@
 # Changelog
 
+### v0.5.1
+* [BUG] "_fql_quests" folder not being created on fresh installs
+
 ## v0.5.0
 * Quest Log UI Overhaul, big thanks to sdenec for designing new UI and for help implementing it!
 * Quests can now have Quest Source that consists of custom image and name, without relying on any existing Entity
