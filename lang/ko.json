@@ -22,18 +22,20 @@
 
     "Buttons": {
       "AddNewQuest": "새 퀘스트 추가",
-      "AddNewTask": "새 목표 추가"
+      "AddNewTask": "새 목표 추가",
+      "AddNewFolder": "새 폴더 추가"
     },
 
     "QuestForm": {
       "Title": "새 퀘스트 추가",
       "QuestGiver": "퀘스트 의뢰인",
-      "QuestGiverPlaceholder": "액터의 이름 혹은 엔티티의 UUID",
+      "QuestGiverPlaceholder": "액터의 이름 혹은 엔티티의 UUID를 입력하십시오",
+      "QuestGiverNamePlaceholder": "커스텀 이미지를 선택하셨습니다, 퀘스트 제공자의 이름을 입력하십시오.",
       "QuestTitle": "퀘스트 제목",
       "DragDropActor": "액터, 아이템, 저널을 여기로 끌어다 놓아 퀘스트 의뢰인을 추가합니다",
       "QuestDescription": "퀘스트 설명",
       "QuestGMNotes": "GM 노트",
-      "Submit": "완료",
+      "Submit": "퀘스트 로그에 추가",
       "SubquestOf": "{name}의 서브 퀘스트"
     },
 
@@ -163,6 +165,7 @@
       "SetFailed": "실패로 설정",
       "Hide": "비공개",
       "Delete": "삭제",
+      "Edit": "수정",
       "AddAbstractReward": "추상적 보상 추가",
       "PersonalQuestButNoPlayers": "이 퀘스트는 개인적인 것이며 누구도 볼 수 없습니다.",
       "PersonalQuestVisibleFor": "다음 플레이어를 위한 개인적인 퀘스트입니다 ",
