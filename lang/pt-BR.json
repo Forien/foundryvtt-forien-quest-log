@@ -22,18 +22,20 @@
 
     "Buttons": {
       "AddNewQuest": "Adicionar Nova Missão",
-      "AddNewTask": "adicionar nova"
+      "AddNewTask": "Adicionar Nova Tarefa",
+      "AddNewFolder": "Adiconar nova Pasta"
     },
 
     "QuestForm": {
       "Title": "Adicionar nova Missão",
       "QuestGiver": "Missão Entregue por",
-      "QuestGiverPlaceholder": "nome do Ator ou ID",
+      "QuestGiverPlaceholder": "Nome do Ator ou UUID do objeto que entregou a Missão",
+      "QuestGiverNamePlaceholder": "You selected custom image, please provide name for Quest Source",
       "QuestTitle": "Titulo da Missão",
       "DragDropActor": "Arraste e solte ator que entregará a missão aqui",
       "QuestDescription": "Descritivo da Missão",
-      "QuestGMNotes": "Notas do Mestre de Jogo",
-      "Submit": "Enviar",
+      "QuestGMNotes": "Notas do Mestre",
+      "Submit": "Adicionar ao Arquivo de Missão",
       "SubquestOf": "Desdobramento de {name}"
     },
 
@@ -163,6 +165,7 @@
       "SetFailed": "Defina como Perdida",
       "Hide": "Esconda",
       "Delete": "Remova",
+      "Edit": "Edite",
       "AddAbstractReward": "Adicionar Recompensa abstrata",
       "PersonalQuestButNoPlayers": "Esta é uma Missão Pessoal, mas ningu[em a vê",
       "PersonalQuestVisibleFor": "Esta é uma missão pessoal para",
