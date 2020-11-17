@@ -10,8 +10,8 @@
     }
   ],
   "version": "0.5.1",
-  "minimumCoreVersion": "0.6.0",
-  "compatibleCoreVersion": "0.7.1",
+  "minimumCoreVersion": "0.7.6",
+  "compatibleCoreVersion": "0.7.7",
   "url": "https://github.com/Forien/foundryvtt-forien-quest-log",
   "manifest": "https://raw.githubusercontent.com/Forien/foundryvtt-forien-quest-log/master/module.json",
   "download": "https://github.com/Forien/foundryvtt-forien-quest-log/releases/download/v0.5.1/v0.5.1.zip",
