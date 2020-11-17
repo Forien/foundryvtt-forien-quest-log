@@ -163,11 +163,13 @@ export default class QuestPreview extends FormApplication {
    * @returns {Promise<void>}
    * @private
    */
-  async _onEditorSave(target, element, content) {
-    this.quest[target] = content;
+  /** @override */
+  saveEditor(name) {
+    const editor = this.editors[name];
+    this.quest[name] = editor.mce.getContent();
+    super.saveEditor(name);
     this.saveQuest();
   }
-
   /**
    * Save associated quest and refresh window
    *
