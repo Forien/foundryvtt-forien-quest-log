@@ -1,16 +1,18 @@
 # FoundryVTT - Forien's Quest Log
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/forien/foundryvtt-forien-quest-log?style=for-the-badge) 
-![GitHub Releases](https://img.shields.io/github/downloads/Forien/foundryvtt-forien-quest-log/latest/total?style=for-the-badge) 
-![GitHub All Releases](https://img.shields.io/github/downloads/Forien/foundryvtt-forien-quest-log/total?style=for-the-badge&label=Downloads+total)  
-**[Compatibility]**: *FoundryVTT* 0.6.0+  
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/death-save/foundryvtt-forien-quest-log?style=for-the-badge) 
+![GitHub Releases](https://img.shields.io/github/downloads/death-save/foundryvtt-forien-quest-log/latest/total?style=for-the-badge) 
+![GitHub All Releases](https://img.shields.io/github/downloads/death-save/foundryvtt-forien-quest-log/total?style=for-the-badge&label=Downloads+total)  
+**[Compatibility]**: *FoundryVTT* 0.7.6-0.7.7  
 **[Systems]**: *any*  
 **[Languages]**: *Chinese, English, French, German, Japanese, Korean, Polish, Portuguese (Brazil), Spanish*  
 
 This module provides comprehensive Quest Log system for players and Game Masters to use with Foundry Virtual Table Top
 
+**NOTE** This is an unofficial forked version of the module maintained by errational (of DEATH SAVE DEVELOPMENT) to provide module continuity while Forien is unavailable.
+
 ## Installation
 
-1. Install Forien's Quest Log using manifest URL: https://raw.githubusercontent.com/Forien/foundryvtt-forien-quest-log/master/module.json
+1. Install Forien's Quest Log using manifest URL: https://github.com/death-save/foundryvtt-forien-quest-log/releases/latest/module.json
 2. While loaded in World, enable **_Forien's Quest Log_** module.
 
 ## Usage
@@ -58,8 +60,10 @@ The `lang/missing/` folder contains files for all languages showing all Localiza
 
 
 ## Contact
+errational can be reached via Discord: `errational#2007` or by raising issues on this repository
+~~If you wish to contact me for any reason, reach me out on Discord using my tag: `Forien#2130`~~
 
-If you wish to contact me for any reason, reach me out on Discord using my tag: `Forien#2130`
+
 
 
 ## Acknowledgments
