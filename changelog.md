@@ -1,6 +1,11 @@
 # Changelog
 
-### v0.5.1
+## v0.5.2
+* [BUG] Quest Preview not saving
+* [BUG] Can't close new Quest Window
+* Provide compatibility with Foundry VTT 0.7.7
+
+## v0.5.1
 * [BUG] "_fql_quests" folder not being created on fresh installs
 
 ## v0.5.0
