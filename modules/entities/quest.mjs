@@ -372,7 +372,11 @@ export default class Quest {
           if (perm === 'default') continue;
           if (entry.data.permission[perm] >= 2) {
             let user = game.users.get(perm);
-            users.push(user.name);
+            if(user !== null) {
+              users.push(user.name);
+            } else {
+              console.log(`Dropping user ${perm} from quest ${entry?.name} as it no longer exists`)
+            }
           }
         }
 
