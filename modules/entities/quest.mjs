@@ -372,11 +372,11 @@ export default class Quest {
           if (perm === 'default') continue;
           if (entry.data.permission[perm] >= 2) {
             let user = game.users.get(perm);
-            if(user !== null) {
-              users.push(user.name);
-            } else {
-              console.log(`Dropping user ${perm} from quest ${entry?.name} as it no longer exists`)
+            if(!user) {
+              console.log(`Forien Quest Log | Dropping user ${perm} from quest ${entry?.name} as it no longer exists`);
+              return;
             }
+            users.push(user.name);
           }
         }
 
