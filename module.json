@@ -7,18 +7,22 @@
     {
       "name": "Forien",
       "url": "https://www.patreon.com/forien"
+    },
+    {
+      "name": "Evan Clarke (errational)",
+      "url": "https://www.patreon.com/deathsave"
     }
   ],
-  "version": "0.5.2",
+  "version": "0.5.3",
   "minimumCoreVersion": "0.7.6",
   "compatibleCoreVersion": "0.7.7",
-  "url": "https://github.com/Forien/foundryvtt-forien-quest-log",
-  "manifest": "https://github.com/death-save/foundryvtt-forien-quest-log/releases/latest/download/module.json",
-  "download": "https://github.com/death-save/foundryvtt-forien-quest-log/releases/latest/download/archive.zip",
-  "readme": "https://github.com/death-save/foundryvtt-forien-quest-log/blob/master/README.md",
-  "changelog": "https://github.com/death-save/foundryvtt-forien-quest-log/releases/latest/",
-  "bugs": "https://github.com/death-save/foundryvtt-forien-quest-log/issues",
-  "wiki": "https://github.com/death-save/foundryvtt-forien-quest-log/wiki",
+  "url": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log",
+  "manifest": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/latest/download/module.json",
+  "download": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/latest/download/archive.zip",
+  "readme": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/blob/master/README.md",
+  "changelog": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/latest/",
+  "bugs": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/issues",
+  "wiki": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/wiki",
   "languages": [
     {
       "lang": "de",
