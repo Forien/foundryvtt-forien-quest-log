@@ -2,7 +2,7 @@
 
 ## v0.5.3
 * [BUG] Quest not loading when user removed from world (@xdy)
-* Add Svenske (Swedish) translation (@xdy)
+* Add Svenska (Swedish) translation (@xdy)
 * Updated release to point to the League fork instead of the death-save one (@eclarke12)
 ## v0.5.2
 * [BUG] Quest Preview not saving
