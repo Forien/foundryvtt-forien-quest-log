@@ -13,7 +13,7 @@ This module provides comprehensive Quest Log system for players and Game Masters
 
 ## Installation
 
-1. Install Forien's Quest Log using manifest URL: https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/latest/module.json
+1. Install Forien's Quest Log using manifest URL: https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/latest/download/module.json
 2. While loaded in World, enable **_Forien's Quest Log_** module.
 
 ## Usage
