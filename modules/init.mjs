@@ -1,6 +1,7 @@
 import registerApiHooks from "./api/hooks.js";
 import QuestApi from "./api/quest-api.mjs";
 import QuestLogClass from "./apps/quest-log.mjs";
+import QuestFloatingWindowClass from "./apps/quest-floating-window.mjs";
 import QuestFolder from "./entities/quest-folder.mjs";
 import ModuleSettings from "./utility/config.mjs";
 import Socket from "./utility/socket.mjs";
@@ -29,6 +30,7 @@ Hooks.once('init', () => {
 Hooks.once('setup', () => {
   window.Quests = QuestApi;
   window.QuestLog = new QuestLogClass();
+  window.QuestFloatingWindow = new QuestFloatingWindowClass();
   game.questPreview = {};
 
   Hooks.callAll("ForienQuestLog.afterSetup");
@@ -46,15 +48,21 @@ Hooks.once("ready", () => {
 
 Hooks.on("renderJournalDirectory", (app, html, data) => {
   const button = $(`<button class="quest-log-btn">${game.i18n.localize("ForienQuestLog.QuestLogButton")}</button>`);
+  const buttonFloatingWindow = $(`<button class="quest-log-btn-floating-window">${game.i18n.localize("ForienQuestLog.QuestLogButton")}</button>`);
   let footer = html.find(".directory-footer");
   if (footer.length === 0) {
     footer = $(`<footer class="directory-footer"></footer>`);
     html.append(footer);
   }
   footer.append(button);
+  footer.append(buttonFloatingWindow);
 
   button.click(ev => {
     QuestLog.render(true)
+  });
+
+  buttonFloatingWindow.click(ev => {
+    QuestFloatingWindow.render(true)
   });
 
   if (!(game.user.isGM && game.settings.get('forien-quest-log', 'showFolder'))) {

@@ -1,0 +1,13 @@
+#forien-quest-log-floating-window {
+    .journal {
+        i {
+            flex: 0 24px;
+            line-height: 34px;
+            text-align: center;
+        }
+    }
+
+    li.folder.collapsed > .folder-header h3 > i:before {
+        content: "\f02e";
+    }
+}
