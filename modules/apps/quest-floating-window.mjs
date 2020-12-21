@@ -66,21 +66,6 @@ export default class QuestFloatingWindow extends Application {
    */
   activateListeners(html) {
     super.activateListeners(html);
-    html.on("click", ".actions i", event => {
-      const canPlayerAccept = game.settings.get("forien-quest-log", "allowPlayersAccept");
-      const target = $(event.target).data('target');
-      const questId = $(event.target).data('quest-id');
-
-      if (target === 'active' && canPlayerAccept) Socket.acceptQuest(questId);
-      if (!game.user.isGM) return;
-
-      const classList = $(event.target).attr('class');
-      if (classList.includes('move')) {
-        Quest.move(questId, target);
-      } else if (classList.includes('delete')) {
-        Quest.delete(questId);
-      }
-    });
 
     html.on("click", ".folder-toggle", event => {
       let questId = $(event.target).closest('.folder-toggle').data('quest-id');
@@ -101,7 +86,8 @@ export default class QuestFloatingWindow extends Application {
       this.toggleSort(el.data('sort'));
     });
 
-    // Open and close folders
+    // Open and close folders on rerender. Data is store in localstorage so
+    // display is consistent after each render.
     for (let quest of Quest.getQuests(this.sortBy, this.sortDirection, false, true).active) {
         $(`.directory-item[data-quest-id='${quest.id}']`).toggleClass('collapsed',localStorage.getItem(`forien.questlog.folderstate-${quest.id}`) === "true");
         $(`.folder-toggle[data-quest-id='${quest.id}'] i`).toggleClass('fas',localStorage.getItem(`forien.questlog.folderstate-${quest.id}`) === "true");
