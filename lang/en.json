@@ -5,6 +5,8 @@
     "Quests": "{0} Quests",
     "SampleReward": "e.g. 300 Experience Points",
     "SampleTask": "e.g. Kill all rats in „The Twisted Ankle” inn",
+    "FloatingQuestWindow": "Floating Quest Window",
+    "NoActiveQuests": "There are no Active quests",
 
     "QuestTypes": {
       "InProgress": "Active",

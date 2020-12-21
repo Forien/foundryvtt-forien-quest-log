@@ -8,10 +8,14 @@ import Socket from "./utility/socket.mjs";
 import Utils from "./utility/utils.mjs";
 import Quest from "./entities/quest.mjs";
 import QuestsCollection from "./entities/collection/quests-collection.mjs";
+import FQLLayer from "./utility/layer.mjs";
+
 
 
 Hooks.once('init', () => {
   ModuleSettings.register();
+
+  FQLLayer.registerLayer();
 
   CONST.ENTITY_TYPES?.push("Quest");
   CONST.ENTITY_LINK_TYPES?.push("Quest");
@@ -48,23 +52,17 @@ Hooks.once("ready", () => {
 
 Hooks.on("renderJournalDirectory", (app, html, data) => {
   const button = $(`<button class="quest-log-btn">${game.i18n.localize("ForienQuestLog.QuestLogButton")}</button>`);
-  const buttonFloatingWindow = $(`<button class="quest-log-btn-floating-window">${game.i18n.localize("ForienQuestLog.QuestLogButton")}</button>`);
   let footer = html.find(".directory-footer");
   if (footer.length === 0) {
     footer = $(`<footer class="directory-footer"></footer>`);
     html.append(footer);
   }
   footer.append(button);
-  footer.append(buttonFloatingWindow);
 
   button.click(ev => {
     QuestLog.render(true)
   });
-
-  buttonFloatingWindow.click(ev => {
-    QuestFloatingWindow.render(true)
-  });
-
+  
   if (!(game.user.isGM && game.settings.get('forien-quest-log', 'showFolder'))) {
     let folderId = QuestFolder.get('root')._id;
     let folder = html.find(`.folder[data-folder-id="${folderId}"]`);
@@ -72,3 +70,35 @@ Hooks.on("renderJournalDirectory", (app, html, data) => {
     folder.remove();
   }
 });
+
+
+Hooks.on("getSceneControlButtons", (controls) => {
+    controls.push({
+      name: "forien-quest-log",
+      title: "ForienQuestLog.QuestLogButton",
+      icon: "fas fa-pen-nib",
+      layer: "FQLLayer",
+      tools: [
+        {
+          name: "forien-quest-log",
+          title: "ForienQuestLog.QuestLogButton",
+          icon: "fas fa-pen-fancy",
+          onClick: () => {
+            QuestLog.render(true)
+          },
+          button: true
+        },
+        {
+          name: "forien-quest-log-floating-window",
+          title: "ForienQuestLog.FloatingQuestWindow",
+          icon: "fas fa-bookmark",
+          onClick: () => {
+            QuestFloatingWindow.render(true)
+          },
+          button: true
+        }
+      ]
+    });
+  });
+
+

@@ -998,7 +998,12 @@
   text-align: center;
 }
 #forien-quest-log-floating-window li.folder.collapsed > .folder-header h3 > i:before {
-  content: "\f02e";
+  content: "";
+}
+#forien-quest-log-floating-window .no-content {
+  text-align: center;
+  margin-top: 50%;
+  display: block;
 }
 
 /*# sourceMappingURL=init.css.map */
