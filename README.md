@@ -5,7 +5,7 @@
 
 **NOTE** This is an unofficial forked version of the module maintained by the [League of Foundry Developers](https://discord.gg/gzemMfHURH) to provide module continuity while Forien is unavailable.
 
-**[Compatibility]**: *FoundryVTT* 0.7.6-0.7.7  
+**[Compatibility]**: *FoundryVTT* 0.7.6-0.7.9  
 **[Systems]**: *any*  
 **[Languages]**: *Chinese, English, French, German, Japanese, Korean, Polish, Portuguese (Brazil), Spanish*  
 
