@@ -8,6 +8,8 @@ export default class Socket {
     game.socket.emit("module.forien-quest-log", {
       type: "questLogRefresh"
     })
+    if (QuestFloatingWindow.rendered)
+          QuestFloatingWindow.render(true);
   }
 
   static refreshQuestPreview(questId) {
@@ -64,6 +66,8 @@ export default class Socket {
       if (data.type === "questLogRefresh") {
         if (QuestLog.rendered)
           QuestLog.render(true);
+        if (QuestFloatingWindow.rendered)
+          QuestFloatingWindow.render(true);
         return;
       }
 
@@ -73,7 +77,8 @@ export default class Socket {
 
         if (QuestLog.rendered)
           QuestLog.render(true);
-
+        if (QuestFloatingWindow.rendered)
+          QuestFloatingWindow.render(true);
         return;
       }
 

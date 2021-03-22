@@ -17,7 +17,7 @@ This module provides comprehensive Quest Log system for players and Game Masters
 2. While loaded in World, enable **_Forien's Quest Log_** module.
 
 ## Usage
-Button to access Quest Log is situated on the bottom of Journal Directory.
+Button to access Quest Log is situated on the bottom of Journal Directory or in the scene controls menu (Pen icon). Scene controls menu has two controls - Pen opens the Quest Log proper, and bookmark icon opens Floating Window that displays quests in fashion similar to MMORPG games.
 
 I think module is quite user-friendly with intuitive UI, however if you are confused and lost, you might want to [check out Wiki](https://github.com/Forien/foundryvtt-forien-quest-log/wiki) or most recent [Release Video](https://www.patreon.com/forien/posts?filters[tag]=quest%20log&filters[media_types]=video).
 

@@ -442,11 +442,11 @@ export default class Quest {
     }
 
     const quests = {
-      available: entries.filter(e => e.status === 'available' && e.parent == null),
+      available: entries.filter(e => e.status === 'available' && e.parent === null),
       active: entries.filter(e => e.status === 'active'),
-      completed: entries.filter(e => e.status === 'completed' && e.parent == null),
-      failed: entries.filter(e => e.status === 'failed' && e.parent == null),
-      hidden: entries.filter(e => e.status === 'hidden' && e.parent == null)
+      completed: entries.filter(e => e.status === 'completed' && e.parent === null),
+      failed: entries.filter(e => e.status === 'failed' && e.parent === null),
+      hidden: entries.filter(e => e.status === 'hidden' && e.parent === null)
     };
 
     if (!availableTab) {
