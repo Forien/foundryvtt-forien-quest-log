@@ -1,4 +1,9 @@
+import QuestTracker from "../apps/QuestTracker.mjs";
+
 export default class ModuleSettings {
+
+  static questTrackerDefault = {top: 80};
+
   /**
    * Registers various configuration settings for Module
    */
@@ -129,6 +134,61 @@ export default class ModuleSettings {
       default: false,
       type: Boolean,
       onChange: value => game.journal.render()
+    });
+
+    game.settings.register("forien-quest-log", "quest-tracker-position", {
+      scope: "client",
+      config: false,
+      default: ModuleSettings.questTrackerDefault,
+    });
+
+    game.settings.register("forien-quest-log", "enableQuestTracker", {
+      name: "ForienQuestLog.WorkshopPUF.Settings.enableQuestTracker.name",
+      hint: "ForienQuestLog.WorkshopPUF.Settings.enableQuestTracker.hint",
+      scope: "world",
+      config: true,
+      default: false,
+      type: Boolean,
+      onChange: value => {
+        if (value && game.modules.get("forien-quest-log")?.active) {
+          QuestTracker.init();
+          ui.questTracker.render(true);
+        } else {
+          ui.questTracker.close();
+        }
+      }
+    });
+
+    game.settings.register("forien-quest-log", "questTrackerBackground", {
+      name: "ForienQuestLog.WorkshopPUF.Settings.questTrackerBackground.name",
+      hint: "ForienQuestLog.WorkshopPUF.Settings.questTrackerBackground.hint",
+      scope: "client",
+      config: true,
+      default: false,
+      type: Boolean,
+      onChange: value => {
+        if (ui.questTracker?.rendered) {
+          ui.questTracker.element.toggleClass('background', value);
+        }
+      }
+    });
+
+    game.settings.register("forien-quest-log", "resetQuestTracker", {
+      name: "ForienQuestLog.WorkshopPUF.Settings.resetQuestTracker.name",
+      hint: "ForienQuestLog.WorkshopPUF.Settings.resetQuestTracker.hint",
+      scope: "client",
+      config: true,
+      default: false,
+      type: Boolean,
+      onChange: value => {
+        if (value) {
+          game.settings.set("forien-quest-log", "quest-tracker-position", ModuleSettings.questTrackerDefault);
+          game.settings.set("forien-quest-log", "resetQuestTracker", false);
+          if (ui.questTracker?.rendered){ 
+            ui.questTracker.render();
+          }
+        }
+      }
     });
   }
 }

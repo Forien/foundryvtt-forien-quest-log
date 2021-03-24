@@ -1006,4 +1006,77 @@
   display: block;
 }
 
+#quest-tracker {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  right: 320px;
+  padding: 5px;
+  color: #ddd;
+  text-shadow: 1px 1px 1px #000;
+}
+#quest-tracker.background {
+  background: #33333399;
+}
+#quest-tracker * {
+  box-sizing: border-box;
+  font-family: "Open Sans", Lato, Signika, sans-serif;
+}
+#quest-tracker .far, #quest-tracker .fas, #quest-tracker .fa {
+  font-family: "Font Awesome 5 Free";
+}
+#quest-tracker .move-handle {
+  position: absolute;
+  top: -20px;
+  left: 4px;
+  color: #ffffff88;
+  text-shadow: none;
+}
+#quest-tracker .entity-link {
+  background: #cccccc66;
+}
+#quest-tracker .title {
+  margin-bottom: 0;
+  cursor: pointer;
+  font-family: Oswald, Montserrat, Signika, sans-serif;
+  font-size: 20px;
+}
+#quest-tracker .description {
+  font-size: 12px;
+  font-style: italic;
+  margin-top: 0;
+}
+#quest-tracker .tasks {
+  list-style: none;
+  margin-bottom: 6px;
+}
+#quest-tracker .tasks .task {
+  position: relative;
+}
+#quest-tracker .tasks .task::before {
+  content: "";
+  position: absolute;
+  margin-right: 4px;
+  font-weight: 400;
+  font-family: "Font Awesome 5 Free";
+  left: -15px;
+  padding-top: 3px;
+}
+#quest-tracker .tasks .task.failed {
+  text-decoration: line-through;
+}
+#quest-tracker .tasks .task.failed::before {
+  content: "";
+  font-weight: 900;
+  padding-left: 1px;
+}
+#quest-tracker .tasks .task.completed {
+  text-decoration: line-through;
+}
+#quest-tracker .tasks .task.completed::before {
+  content: "";
+  font-weight: 900;
+}
+
 /*# sourceMappingURL=init.css.map */

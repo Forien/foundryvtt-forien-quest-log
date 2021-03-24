@@ -1,0 +1,14 @@
+<div id="quest-tracker" class="{{background}}" style="top: {{pos.top}}px; {{#if pos.left}}left: {{pos.left}}px{{/if}}">
+    <div class="move-handle"><i class="fas fa-arrows-alt"></i></div>
+    {{#each quests}}
+    <div class="quest" data-id="{{this.id}}">
+        <h3 class="title">{{this.title}}</h3>
+        <p class="description">{{{this.description}}}</p>
+        <ul class="tasks">
+        {{#each this.tasks}}
+        <li class="task {{this.state}}">{{{this.name}}}</li>
+        {{/each}}
+        </ul>
+    </div>
+    {{/each}}
+</div>

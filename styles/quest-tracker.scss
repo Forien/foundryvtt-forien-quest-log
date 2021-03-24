@@ -1,0 +1,86 @@
+#quest-tracker {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  right: 320px;
+  padding: 5px;
+  color: #ddd;
+  text-shadow: 1px 1px 1px #000;
+
+  &.background {
+    background: #33333399;
+  }
+
+  * {
+    box-sizing: border-box;
+    font-family: "Open Sans", Lato, Signika, sans-serif;
+  }
+
+  .far, .fas, .fa {
+    font-family: "Font Awesome 5 Free";
+  }
+
+  .move-handle {
+    position: absolute;
+    top: -20px;
+    left: 4px;
+    color: #ffffff88;
+    text-shadow: none;
+  }
+
+  .entity-link {
+    background: #cccccc66;
+  }
+
+  .title {
+    margin-bottom: 0;
+    cursor: pointer;
+    font-family: Oswald, Montserrat, Signika, sans-serif;
+    font-size: 20px;
+  }
+
+  .description {
+    font-size: 12px;
+    font-style: italic;
+    margin-top: 0;
+  }
+
+  .tasks {
+    list-style: none;
+    margin-bottom: 6px;
+
+    .task {
+      position: relative;
+
+      &::before {
+        content: "\f0c8";
+        position: absolute;
+        margin-right: 4px;
+        font-weight: 400;
+        font-family: "Font Awesome 5 Free";
+        left: -15px;
+        padding-top: 3px;
+      }
+
+      &.failed {
+        text-decoration: line-through;
+
+        &::before {
+          content: "\f00d";
+          font-weight: 900;
+          padding-left: 1px;
+        }
+      }
+
+      &.completed {
+        text-decoration: line-through;
+
+        &::before {
+          content: "\f00c";
+          font-weight: 900;
+        }
+      }
+    }
+  }
+}

@@ -9,6 +9,7 @@ import Utils from "./utility/utils.mjs";
 import Quest from "./entities/quest.mjs";
 import QuestsCollection from "./entities/collection/quests-collection.mjs";
 import FQLLayer from "./utility/layer.mjs";
+import QuestTracker from "./apps/QuestTracker.mjs";
 
 
 
@@ -43,6 +44,12 @@ Hooks.once('setup', () => {
 Hooks.once("ready", () => {
   QuestFolder.initializeJournals();
   registerApiHooks();
+
+  if (game.settings.get('forien-quest-log', 'enableQuestTracker')){
+    if (game.modules.get("forien-quest-log")?.active){
+      QuestTracker.init();
+    }
+  }
 
   // Allow and process incoming socket data
   Socket.listen();
@@ -101,4 +108,11 @@ Hooks.on("getSceneControlButtons", (controls) => {
     });
   });
 
-
+/**
+ * Need to Update Quest Log with custom Hooks :c
+ */
+Hooks.on("updateJournalEntry", () => {
+  if (ui.questTracker){
+    ui.questTracker.render();
+  }
+});
