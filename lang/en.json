@@ -207,7 +207,7 @@
       "Settings": {
         "enableQuestTracker": {
           "name": "Enable Quest Tracker",
-          "hint": "Check this to enable Quest Tracker HUD window. Requires Forien's Quest Log module installed."
+          "hint": "Check this to enable Quest Tracker HUD window."
         },
         "questTrackerBackground": {
           "name": "Quest Tracker Background",
