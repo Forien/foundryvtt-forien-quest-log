@@ -20,5 +20,7 @@
     "ForienQuestLog.QuestPreview.Management.QuestBranching": "",
     "ForienQuestLog.QuestPreview.Management.AddSubquest": "",
     "ForienQuestLog.QuestForm.QuestGiverNamePlaceholder": "",
-    "ForienQuestLog.Buttons.AddNewFolder": ""
+    "ForienQuestLog.Buttons.AddNewFolder": "",
+    "ForienQuestLog.Tooltips.DeleteQuestGiver": "",
+    "ForienQuestLog.Tooltips.DeleteSplash": ""
 }

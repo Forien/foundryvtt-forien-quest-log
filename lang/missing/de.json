@@ -51,5 +51,7 @@
     "ForienQuestLog.QuestForm.QuestGiverNamePlaceholder": "",
     "ForienQuestLog.QuestLog.Tabs.Available": "",
     "ForienQuestLog.Buttons.AddNewFolder": "",
-    "ForienQuestLog.QuestPreview.Tabs.QuestManagement": ""
+    "ForienQuestLog.QuestPreview.Tabs.QuestManagement": "",
+    "ForienQuestLog.Tooltips.DeleteQuestGiver": "",
+    "ForienQuestLog.Tooltips.DeleteSplash": ""
 }

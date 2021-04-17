@@ -26,7 +26,10 @@
 
   <section class="quest-splash">
     <h2>{{localize 'ForienQuestLog.QuestPreview.Management.SplashArt'}}</h2>
-    <div class="splash-image" style="background-image: url({{splash}})" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}">
+    <div class="splash-image" style="background-image: url({{splash}})" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></div>
+  {{#if splash.length}}
+    <span class="delete-splash" title="{{localize 'ForienQuestLog.Tooltips.DeleteSplash'}}"><i class="fas fa-times"></i></span>
+  {{/if}}
   </section>
 </div>
 <section class="subquests">

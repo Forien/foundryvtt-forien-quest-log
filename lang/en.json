@@ -175,7 +175,9 @@
       "RewardVisible": "Reward is visible. Click to hide.",
       "TaskHidden": "Objective is hidden. Click to show.",
       "TaskVisible": "Objective is visible. Click to hide.",
-      "ToggleImage": "Toggle Token/Actor image"
+      "ToggleImage": "Toggle Token/Actor image",
+      "DeleteQuestGiver": "Delete quest giver",
+      "DeleteSplash": "Delete splash art"
     },
 
     "Api": {

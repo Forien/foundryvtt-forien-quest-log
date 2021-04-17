@@ -170,7 +170,9 @@
       "RewardVisible": "Récompense visible. Cocher pour la cacher.",
       "TaskHidden": "Tache cachée. Cocher pour la montrer.",
       "TaskVisible": "Tâche visible. Cocher pour la cacher.",
-      "ToggleImage": "Activer l’image du token/acteur"
+      "ToggleImage": "Activer l’image du token/acteur",
+      "DeleteQuestGiver": "Supprimer le commanditaire",
+      "DeleteSplash": "Supprimer l'illustration"
     },
 
     "Api": {

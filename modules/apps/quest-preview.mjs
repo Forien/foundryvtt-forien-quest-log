@@ -408,6 +408,12 @@ export default class QuestPreview extends FormApplication {
         });
       });
 
+      html.on("click", ".deleteQuestGiver", (event) => {
+        this.quest.giver = null;
+        this.saveQuest();
+      });
+      
+
       html.on("click", ".add-new-task", (event) => {
         event.preventDefault();
         let li = $('<li class="task"></li>');
@@ -501,7 +507,7 @@ export default class QuestPreview extends FormApplication {
         this.quest.savePermission(userId, permission).then(() => this.saveQuest());
       });
 
-      html.on("click", ".quest-splash", (event) => {
+      html.on("click", ".splash-image", (event) => {
         let currentPath = this.quest.splash;
         new FilePicker({
           type: "image",
@@ -512,6 +518,13 @@ export default class QuestPreview extends FormApplication {
           },
         }).browse(currentPath);
       });
+
+      html.on("click", ".delete-splash", (event) => {
+        event.preventDefault();
+            this.quest.splash = "";
+            this.saveQuest();
+      });
+      
 
       html.on("click", ".add-subquest-btn", (event) => {
         new QuestForm(this.quest, {subquest:true}).render(true);
