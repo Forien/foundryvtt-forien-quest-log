@@ -40,7 +40,6 @@
           height: 100%;
           width: 100%;
           background-size: cover;
-          background-position: center;
           cursor: pointer;
           border-radius: 5px;
         }
@@ -92,6 +91,32 @@
             line-height: 1;
           }
         }
+
+        .changeGiverImgPos {
+          position: absolute;
+          top: 100px-22px;
+          left: 100px-22px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: #efefef;
+          border-radius: 5px;
+          width: 22px;
+          height: 22px;
+          transition: color .3s ease;
+
+          &:hover {
+            color: $primary-accent-color;
+          }
+
+          i {
+            font-size: 16px;
+            border-radius: 50%;
+            line-height: 1;
+          }
+        }
+        
+
       }
 
       .quest-setup {
@@ -117,7 +142,6 @@
         .splash-image-link {
           flex: 0 0 100px;
           background-size: cover;
-          background-position: center;
           position: relative;
           cursor: pointer;
 
@@ -598,7 +622,6 @@
           width: 100%;
           height: 200px;
           background-size: cover;
-          background-position: center;
           background-color: rgba(255, 255, 255, .4);
           border-radius: 5px;
           cursor: pointer;
@@ -631,6 +654,31 @@
             line-height: 1;
           }
         }
+
+        .change-splash-pos {
+          position: absolute;
+          top: 204px;
+          left: 281px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: #efefef;
+          border-radius: 5px;
+          width: 22px;
+          height: 22px;
+          transition: color .3s ease;
+
+          &:hover {
+            color: $primary-accent-color;
+          }
+
+          i {
+            font-size: 16px;
+            border-radius: 50%;
+            line-height: 1;
+          }
+        }
+
       }
 
       .subquests {

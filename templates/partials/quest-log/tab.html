@@ -3,7 +3,7 @@
   <ul>
     {{#each quests}}
     <li class="drag-quest" data-quest-id="{{id}}" draggable="true">
-      {{#if giver.img}}<div class="img quest-giver-portrait portrait-small" style="background-image: url({{giver.img}})" title="{{giver.name}}"></div>{{/if}}
+      {{#if giver.img}}<div class="img quest-giver-portrait portrait-small" style="background-image: url({{giver.img}});background-position: {{this.giverImgPos}};" title="{{giver.name}}"></div>{{/if}}
       {{#if (and personal ../isGM)}}
         <i class="personal-quest-icon fas fa-user" title="{{users}}"></i>
       {{/if}}

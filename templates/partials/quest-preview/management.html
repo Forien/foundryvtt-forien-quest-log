@@ -26,9 +26,10 @@
 
   <section class="quest-splash">
     <h2>{{localize 'ForienQuestLog.QuestPreview.Management.SplashArt'}}</h2>
-    <div class="splash-image" style="background-image: url({{splash}})" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></div>
+    <div class="splash-image" style="background-image: url({{splash}});background-position: {{splashPos}};" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></div>
   {{#if splash.length}}
     <span class="delete-splash" title="{{localize 'ForienQuestLog.Tooltips.DeleteSplash'}}"><i class="fas fa-times"></i></span>
+    <span class="change-splash-pos" title="{{localize 'ForienQuestLog.Tooltips.ChangeSplashPos'}}"><i class="fas fa-arrows-alt"></i></span>
   {{/if}}
   </section>
 </div>

@@ -22,5 +22,7 @@
     "ForienQuestLog.QuestForm.QuestGiverNamePlaceholder": "",
     "ForienQuestLog.Buttons.AddNewFolder": "",
     "ForienQuestLog.Tooltips.DeleteQuestGiver": "",
-    "ForienQuestLog.Tooltips.DeleteSplash": ""
+    "ForienQuestLog.Tooltips.DeleteSplash": "",
+    "ForienQuestLog.Tooltips.ChangeGiverImgPos": "",
+    "ForienQuestLog.Tooltips.ChangeSplashPos": ""
 }

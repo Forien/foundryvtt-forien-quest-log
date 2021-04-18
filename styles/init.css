@@ -313,7 +313,6 @@
   height: 40px;
   border-radius: 5px 0 0 5px;
   background-size: cover;
-  background-position: center;
 }
 
 #forien-quest-log .quest-log .table ul .personal-quest-icon {
@@ -526,7 +525,6 @@
   height: 100%;
   width: 100%;
   background-size: cover;
-  background-position: center;
   cursor: pointer;
   border-radius: 5px;
 }
@@ -579,6 +577,30 @@
   line-height: 1;
 }
 
+.window-app.forien-quest-preview .quest-body .details-header .quest-giver-gc .changeGiverImgPos {
+  position: absolute;
+  top: 78px;
+  left: 78px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #efefef;
+  border-radius: 5px;
+  width: 22px;
+  height: 22px;
+  transition: color .3s ease;
+}
+
+.window-app.forien-quest-preview .quest-body .details-header .quest-giver-gc .changeGiverImgPos:hover {
+  color: #ff6400;
+}
+
+.window-app.forien-quest-preview .quest-body .details-header .quest-giver-gc .changeGiverImgPos i {
+  font-size: 16px;
+  border-radius: 50%;
+  line-height: 1;
+}
+
 .window-app.forien-quest-preview .quest-body .details-header .quest-setup {
   flex: 1;
   display: flex;
@@ -603,7 +625,6 @@
 .window-app.forien-quest-preview .quest-body .details-header .quest-setup .splash-image-link {
   flex: 0 0 100px;
   background-size: cover;
-  background-position: center;
   position: relative;
   cursor: pointer;
 }
@@ -1089,7 +1110,6 @@
   width: 100%;
   height: 200px;
   background-size: cover;
-  background-position: center;
   background-color: rgba(255, 255, 255, 0.4);
   border-radius: 5px;
   cursor: pointer;
@@ -1118,6 +1138,30 @@
 }
 
 .window-app.forien-quest-preview .quest-body .management .quest-splash .delete-splash i {
+  font-size: 16px;
+  border-radius: 50%;
+  line-height: 1;
+}
+
+.window-app.forien-quest-preview .quest-body .management .quest-splash .change-splash-pos {
+  position: absolute;
+  top: 204px;
+  left: 281px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #efefef;
+  border-radius: 5px;
+  width: 22px;
+  height: 22px;
+  transition: color .3s ease;
+}
+
+.window-app.forien-quest-preview .quest-body .management .quest-splash .change-splash-pos:hover {
+  color: #ff6400;
+}
+
+.window-app.forien-quest-preview .quest-body .management .quest-splash .change-splash-pos i {
   font-size: 16px;
   border-radius: 50%;
   line-height: 1;

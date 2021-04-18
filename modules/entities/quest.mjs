@@ -31,7 +31,9 @@ export default class Quest {
     this._gmnotes = data.gmnotes || '';
     this._image = data.image || 'actor';
     this._giverName = data.giverName || 'actor';
+    this._giverImgPos = data.giverImgPos || 'center';
     this._splash = data.splash || '';
+    this._splashPos = data.splashPos || 'center';
     this._personal = data.personal || false;
     this._parent = data.parent || null;
     this._permission = data.permission || 0;
@@ -607,6 +609,14 @@ export default class Quest {
     this._giver = value;
   }
 
+  get giverImgPos() {
+    return this._giverImgPos;
+  }
+
+  set giverImgPos(value) {
+    this._giverImgPos = value;
+  }
+
   get title() {
     return this._title;
   }
@@ -658,6 +668,14 @@ export default class Quest {
 
   get splash() {
     return this._splash;
+  }
+  
+  get splashPos() {
+    return this._splashPos;
+  }
+
+  set splashPos(value) {
+    this._splashPos = value;
   }
 
   get personal() {
@@ -714,6 +732,8 @@ export default class Quest {
       personal: this._personal,
       image: this._image,
       giverName: this._giverName,
+      giverImgPos:this._giverImgPos,
+      splashPos:this._splashPos,
       splash: this._splash,
       parent: this._parent,
       subquests: this._subquests,

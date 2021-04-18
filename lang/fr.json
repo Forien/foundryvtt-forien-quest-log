@@ -172,7 +172,9 @@
       "TaskVisible": "Tâche visible. Cocher pour la cacher.",
       "ToggleImage": "Activer l’image du token/acteur",
       "DeleteQuestGiver": "Supprimer le commanditaire",
-      "DeleteSplash": "Supprimer l'illustration"
+      "DeleteSplash": "Supprimer l'illustration",
+      "ChangeGiverImgPos": "Modifier l'alignement de l'image du commanditaire",
+      "ChangeSplashPos": "Modifier l'alignement de l'image d'illustration"
     },
 
     "Api": {

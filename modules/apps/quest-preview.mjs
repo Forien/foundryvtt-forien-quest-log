@@ -412,6 +412,25 @@ export default class QuestPreview extends FormApplication {
         this.quest.giver = null;
         this.saveQuest();
       });
+
+      html.on("click", ".changeGiverImgPos", (event) => {
+
+        if(this.quest.giverImgPos == 'center')
+        {
+          this.quest.giverImgPos = 'top';
+        }
+        else
+        {
+          if(this.quest.giverImgPos == 'top')
+            this.quest.giverImgPos = 'bottom';
+          else
+           this.quest.giverImgPos = 'center';
+        }
+          
+
+        this.saveQuest();
+      });
+      
       
 
       html.on("click", ".add-new-task", (event) => {
@@ -520,9 +539,23 @@ export default class QuestPreview extends FormApplication {
       });
 
       html.on("click", ".delete-splash", (event) => {
-        event.preventDefault();
             this.quest.splash = "";
             this.saveQuest();
+      });
+
+      html.on("click", ".change-splash-pos", (event) => {
+          if(this.quest.splashPos == 'center')
+          {
+            this.quest.splashPos = 'top';
+          }
+          else
+          {
+            if(this.quest.splashPos == 'top')
+              this.quest.splashPos = 'bottom';
+            else
+             this.quest.splashPos = 'center';
+          }
+        this.saveQuest();
       });
       
 
