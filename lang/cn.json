@@ -5,6 +5,8 @@
     "Quests": "{0}任务",
     "SampleReward": "例如:300点经验值",
     "SampleTask": "例如：消灭鸦阁里所有的不死生物",
+    "FloatingQuestWindow": "浮动任务窗口",
+    "NoActiveQuests": "没有可用任务",
 
     "QuestTypes": {
       "InProgress": "进行中",
@@ -22,13 +24,15 @@
 
     "Buttons": {
       "AddNewQuest": "加入新任务",
-      "AddNewTask": "加入新目标"
+      "AddNewTask": "加入新目标",
+      "AddNewFolder": "添加新文件夹"
     },
 
     "QuestForm": {
       "Title": "添加新任务",
       "QuestGiver": "委托人",
       "QuestGiverPlaceholder": "角色的名字或ID",
+      "QuestGiverNamePlaceholder": "您选择了自定义图像，请提供任务源的名称。",
       "QuestTitle": "任务标题",
       "DragDropActor": "将人物拖到这里以将其设定为委托人",
       "QuestDescription": "任务描述",
@@ -57,6 +61,7 @@
 
     "QuestPreview": {
       "Title": "任务详情",
+      "SubTitle": "支线任务{0}",
       "Objectives": "目标",
       "Rewards": "奖励",
       "DragDropRewards": "将物品拖拽到此处以将其设为奖励",
@@ -66,9 +71,9 @@
       },
 
       "Management": {
-        "IsPersonalQuest": "个人任务？",
+        "IsPersonalQuest": "个人任务",
         "IsPersonalQuestDescription": "勾选以设置任务为个人任务。该任务将仅对以下被标记的玩家显示。反勾选此选项将移除所有任务权限并将该任务移到“隐藏”标签下。",
-        "SplashArt": "Splash Art",
+        "SplashArt": "插画",
         "QuestBranching": "支线任务",
         "AddSubquest": "新建支线任务",
         "CanPlayerEdit": "允许玩家修改任务详情"
@@ -91,9 +96,9 @@
     },
 
     "CloseDialog": {
-      "Title": "Leave Form",
+      "Title": "离开页面",
       "Header": "确定吗？",
-      "Body": "确定你要关闭该表格吗？任何未保存的数据将丢失。",
+      "Body": "确定你要关闭该页面吗？任何未保存的数据将丢失。",
       "Discard": "放弃更改",
       "Cancel": "取消"
     },
@@ -162,6 +167,7 @@
       "SetFailed": "设定为已失败",
       "Hide": "隐藏",
       "Delete": "删除",
+      "Edit": "编辑",
       "AddAbstractReward": "加入非物质奖励",
       "PersonalQuestButNoPlayers": "这是一个个人任务，但是当前没有被分配给任何玩家",
       "PersonalQuestVisibleFor": "该个人任务属于",
@@ -169,31 +175,51 @@
       "RewardVisible": "奖励已可见，点击隐藏。",
       "TaskHidden": "目标已隐藏，点击查看。",
       "TaskVisible": "目标已可见，点击隐藏。",
-      "ToggleImage": "打开或关闭token/角色图片"
+      "ToggleImage": "打开或关闭token/角色图片",
+      "DeleteQuestGiver": "删除发布者",
+      "DeleteSplash": "删除插画",
+      "ChangeGiverImgPos": "更改发布者图像对齐",
+      "ChangeSplashPos": "更改插画对齐"
     },
 
     "Api": {
-      "__COMMENT__": "No need for translating lines starting with 'API ERROR', they show in console for developers only.",
+      "__COMMENT__": "不需要翻译以“API ERROR”开头的行，它们只显示在控制台中供开发人员使用。",
       "create": {
-        "title": "API Error: Title property is required to create new Quest"
+        "title": "API 错误：创建新任务需要任务标题。"
       },
       "hooks": {
         "createOpenQuestMacro": {
-          "name": "打开 „{name}” Quest",
+          "name": "打开 „{name}” 任务",
           "error": {
-            "noQuest": "API Error: Can't create macro with invalid Quest ID"
+            "noQuest": "API 错误：任务ID无效，无法创建宏。"
           }
         }
       },
       "reward": {
         "create": {
-          "data": "API Error: Data property with at least {name, img} is required to create new Reward",
-          "type": "API Error: Type property is required to create new Reward"
+          "data": "API 错误： 创建新奖励需要至少具有{name，img}的数据属性。",
+          "type": "API 错误：类型属性是创建新奖励所必需的。"
         }
       },
       "task": {
         "create": {
-          "name": "API Error: Name property is required to create new Task"
+          "name": "API 错误： 创建新目标需要目标名称。"
+        }
+      }
+    },
+    "WorkshopPUF": {
+      "Settings": {
+        "enableQuestTracker": {
+          "name": "启用任务跟踪器",
+          "hint": "选中此项以启用任务跟踪器HUD窗口。"
+        },
+        "questTrackerBackground": {
+          "name": "任务追踪器背景",
+          "hint": "选中此项可启用任务跟踪器的背景，这可能有助于在某些地图上的可见性。"
+        },
+        "resetQuestTracker": {
+          "name": "重置任务跟踪器位置",
+          "hint": "选中此项可将任务跟踪器的位置重置为默认值。如果你把任务跟踪器移到不能再移动的位置，就用这个。"
         }
       }
     }
