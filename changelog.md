@@ -1,9 +1,26 @@
 # Changelog
 
-## v0.5.3
+## Release 0.5.7
+Buttons to delete and change vertical alignment of quest giver and splash image added courtesy of @Dilomos
+
+## Release 0.5.6
+* Added the QuestTracker from the 'party-unit-frames' project courtesy of @p4535992
+* Added support for Bug Reporter
+* Hopefully fixed the broken release flow...
+
+## Release 0.5.5
+* Failed release, withdrawn
+
+## Release 0.5.4
+* A floating quest window, by Rughalt
+* Translation to zh-tw, by zeteticl
+* Set compatible Foundry version to 0.7.9 (as that is what I tested the above with)
+
+## Release v0.5.3
 * [BUG] Quest not loading when user removed from world (@xdy)
 * Add Svenska (Swedish) translation (@xdy)
 * Updated release to point to the League fork instead of the death-save one (@eclarke12)
+
 ## v0.5.2
 * [BUG] Quest Preview not saving
 * [BUG] Can't close new Quest Window
