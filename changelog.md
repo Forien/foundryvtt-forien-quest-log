@@ -1,5 +1,10 @@
 # Changelog
 
+## Release 0.5.8
+* Set compatible with Foundry 0.7.10
+* Updated Chinese localization courtesy of FuyuEnnju
+* Localization fix courtesy of FuyuEnnju
+
 ## Release 0.5.7
 Buttons to delete and change vertical alignment of quest giver and splash image added courtesy of @Dilomos
 
