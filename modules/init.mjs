@@ -8,16 +8,15 @@ import Socket from "./utility/socket.mjs";
 import Utils from "./utility/utils.mjs";
 import Quest from "./entities/quest.mjs";
 import QuestsCollection from "./entities/collection/quests-collection.mjs";
-import FQLLayer from "./utility/layer.mjs";
 import QuestTracker from "./apps/QuestTracker.mjs";
-
-
 
 Hooks.once('init', () => {
   ModuleSettings.register();
+  Utils.preloadTemplates();
+  Utils.registerHandlebarsHelpers();
+});
 
-  FQLLayer.registerLayer();
-
+Hooks.once('ready', () => {
   CONST.ENTITY_TYPES?.push("Quest");
   CONST.ENTITY_LINK_TYPES?.push("Quest");
   CONFIG["Quest"] = {
@@ -25,9 +24,6 @@ Hooks.once('init', () => {
     collection: QuestsCollection,
     sidebarIcon: 'far fa-question-circle',
   };
-
-  Utils.preloadTemplates();
-  Utils.registerHandlebarsHelpers();
 
   Hooks.callAll("ForienQuestLog.afterInit");
 });
@@ -45,8 +41,8 @@ Hooks.once("ready", () => {
   QuestFolder.initializeJournals();
   registerApiHooks();
 
-  if (game.settings.get('forien-quest-log', 'enableQuestTracker')){
-    if (game.modules.get("forien-quest-log")?.active){
+  if (game.settings.get('forien-quest-log', 'enableQuestTracker')) {
+    if (game.modules.get("forien-quest-log")?.active) {
       QuestTracker.init();
     }
   }
@@ -69,7 +65,7 @@ Hooks.on("renderJournalDirectory", (app, html, data) => {
   button.click(ev => {
     QuestLog.render(true)
   });
-  
+
   if (!(game.user.isGM && game.settings.get('forien-quest-log', 'showFolder'))) {
     let folderId = QuestFolder.get('root')._id;
     let folder = html.find(`.folder[data-folder-id="${folderId}"]`);
@@ -78,41 +74,36 @@ Hooks.on("renderJournalDirectory", (app, html, data) => {
   }
 });
 
+Hooks.on('getSceneControlButtons', (controls) => {
+  const notes = controls
+    .find((c) => c.name === 'notes');
 
-Hooks.on("getSceneControlButtons", (controls) => {
-    controls.push({
-      name: "forien-quest-log",
-      title: "ForienQuestLog.QuestLogButton",
-      icon: "fas fa-pen-nib",
-      layer: "FQLLayer",
-      tools: [
-        {
-          name: "forien-quest-log",
-          title: "ForienQuestLog.QuestLogButton",
-          icon: "fas fa-pen-fancy",
-          onClick: () => {
-            QuestLog.render(true)
-          },
-          button: true
-        },
-        {
-          name: "forien-quest-log-floating-window",
-          title: "ForienQuestLog.FloatingQuestWindow",
-          icon: "fas fa-bookmark",
-          onClick: () => {
-            QuestFloatingWindow.render(true)
-          },
-          button: true
-        }
-      ]
-    });
+  notes.tools.push({
+    name: 'forien-quest-log',
+    title: 'ForienQuestLog.QuestLogButton',
+    icon: 'fas fa-pen-fancy',
+    visible: true,
+    onClick: () => QuestLog.render(true),
+    button: true
   });
+
+  notes.tools.push({
+    name: 'forien-quest-log-floating-window',
+    title: 'ForienQuestLog.FloatingQuestWindow',
+    icon: 'fas fa-bookmark',
+    visible: true,
+    onClick: () => QuestFloatingWindow.render(true),
+    button: true
+  });
+
+});
+
 
 /**
  * Need to Update Quest Log with custom Hooks :c
  */
 Hooks.on("updateJournalEntry", () => {
-  if (ui.questTracker){
+  if (ui.questTracker) {
     ui.questTracker.render();
   }
 });

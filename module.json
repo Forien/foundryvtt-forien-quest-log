@@ -13,9 +13,9 @@
       "url": "https://www.patreon.com/deathsave"
     }
   ],
-  "version": "0.5.4",
-  "minimumCoreVersion": "0.7.6",
-  "compatibleCoreVersion": "0.7.10",
+  "version": "0.6.0",
+  "minimumCoreVersion": "0.8.6",
+  "compatibleCoreVersion": "0.8.6",
   "manifestPlusVersion": "1.1.0",
   "url": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log",
   "manifest": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/latest/download/module.json",
