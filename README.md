@@ -6,7 +6,9 @@
 **NOTE** This is an unofficial forked version of the module maintained by the [League of Foundry Developers](https://discord.gg/gzemMfHURH) to provide module continuity while Forien is unavailable.
 
 **[Compatibility]**: *FoundryVTT* 0.8.6 (as of version 0.6.0)
+
 **[Systems]**: *any*  
+
 **[Languages]**: *Chinese, English, French, German, Japanese, Korean, Polish, Portuguese (Brazil), Spanish*  
 
 This module provides comprehensive Quest Log system for players and Game Masters to use with Foundry Virtual Table Top
