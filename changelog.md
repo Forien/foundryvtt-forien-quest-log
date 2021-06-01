@@ -1,12 +1,16 @@
 # Changelog
 
+## Release 0.6.0
+* Set compatible with Foundry 0.8.6 (and removes compatibility with lower versions)
+* Left sidebar buttons moved from it's own menu (the pen icon) to buttons under the Notes menu (the bookmark icon)
+
 ## Release 0.5.8
 * Set compatible with Foundry 0.7.10
 * Updated Chinese localization courtesy of FuyuEnnju
 * Localization fix courtesy of FuyuEnnju
 
 ## Release 0.5.7
-Buttons to delete and change vertical alignment of quest giver and splash image added courtesy of @Dilomos
+* Buttons to delete and change vertical alignment of quest giver and splash image added courtesy of @Dilomos
 
 ## Release 0.5.6
 * Added the QuestTracker from the 'party-unit-frames' project courtesy of @p4535992
