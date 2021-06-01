@@ -5,7 +5,7 @@
 
 **NOTE** This is an unofficial forked version of the module maintained by the [League of Foundry Developers](https://discord.gg/gzemMfHURH) to provide module continuity while Forien is unavailable.
 
-**[Compatibility]**: *FoundryVTT* 0.7.6-0.7.9  
+**[Compatibility]**: *FoundryVTT* 0.8.6 (as of version 0.6.0)
 **[Systems]**: *any*  
 **[Languages]**: *Chinese, English, French, German, Japanese, Korean, Polish, Portuguese (Brazil), Spanish*  
 
@@ -17,7 +17,7 @@ This module provides comprehensive Quest Log system for players and Game Masters
 2. While loaded in World, enable **_Forien's Quest Log_** module.
 
 ## Usage
-Button to access Quest Log is situated on the bottom of Journal Directory or in the scene controls menu (Pen icon). Scene controls menu has two controls - Pen opens the Quest Log proper, and bookmark icon opens Floating Window that displays quests in fashion similar to MMORPG games.
+Button to access Quest Log is situated on the bottom of Journal Directory or in the scene controls menu under notes/journal entries. There are two controls related to Quest Log- Pen opens the Quest Log proper, and bookmark icon opens Floating Window that displays quests in fashion similar to MMORPG games.
 
 I think module is quite user-friendly with intuitive UI, however if you are confused and lost, you might want to [check out Wiki](https://github.com/Forien/foundryvtt-forien-quest-log/wiki) or most recent [Release Video](https://www.patreon.com/forien/posts?filters[tag]=quest%20log&filters[media_types]=video).
 
