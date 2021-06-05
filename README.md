@@ -1,7 +1,7 @@
 # FoundryVTT - Forien's Quest Log
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/League-of-Foundry-Developers/foundryvtt-forien-quest-log?style=for-the-badge) 
-![GitHub Releases](https://img.shields.io/github/downloads/League-of-Foundry-Developers/foundryvtt-forien-quest-log/latest/total?style=for-the-badge) 
-![GitHub All Releases](https://img.shields.io/github/downloads/League-of-Foundry-Developers/foundryvtt-forien-quest-log/total?style=for-the-badge&label=Downloads+total)  
+![GitHub release](https://img.shields.io/github/release-date/League-of-Foundry-Developers/foundryvtt-forien-quest-log) [![GitHub commits](https://img.shields.io/github/commits-since/League-of-Foundry-Developers/foundryvtt-forien-quest-log/latest)](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/commits/) ![the latest version zip](https://img.shields.io/github/downloads/League-of-Foundry-Developers/foundryvtt-forien-quest-log/latest/module.zip) ![Forge installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2Ftwodsix)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) 
+[![Foundry Hub Endorsements](https://img.shields.io/endpoint?logoColor=white&url=https%3A%2F%2Fwww.foundryvtt-hub.com%2Fwp-json%2Fhubapi%2Fv1%2Fpackage%2Fforien-quest-log%2Fshield%2Fendorsements)](https://www.foundryvtt-hub.com/package/forien-quest-log/)
 
 **NOTE** This is an unofficial forked version of the module maintained by the [League of Foundry Developers](https://discord.gg/gzemMfHURH) to provide module continuity while Forien is unavailable.
 
