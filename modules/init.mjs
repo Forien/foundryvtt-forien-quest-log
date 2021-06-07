@@ -14,17 +14,6 @@ Hooks.once('init', () => {
   ModuleSettings.register();
   Utils.preloadTemplates();
   Utils.registerHandlebarsHelpers();
-});
-
-Hooks.once('ready', () => {
-  CONST.ENTITY_TYPES?.push("Quest");
-  CONST.ENTITY_LINK_TYPES?.push("Quest");
-  CONFIG["Quest"] = {
-    entityClass: Quest,
-    collection: QuestsCollection,
-    sidebarIcon: 'far fa-question-circle',
-  };
-
   Hooks.callAll("ForienQuestLog.afterInit");
 });
 
@@ -38,6 +27,14 @@ Hooks.once('setup', () => {
 });
 
 Hooks.once("ready", () => {
+  CONST.ENTITY_TYPES?.push("Quest");
+  CONST.ENTITY_LINK_TYPES?.push("Quest");
+  CONFIG["Quest"] = {
+    entityClass: Quest,
+    collection: QuestsCollection,
+    sidebarIcon: 'far fa-question-circle',
+  };
+
   QuestFolder.initializeJournals();
   registerApiHooks();
 
