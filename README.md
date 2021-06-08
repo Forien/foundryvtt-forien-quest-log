@@ -67,8 +67,10 @@ The `lang/missing/` folder contains files for all languages showing all Localiza
 
 
 ## Contact
-[League of Foundry Developers](https://discord.gg/gzemMfHURH)
-~~If you wish to contact me for any reason, reach me out on Discord using my tag: `Forien#2130`~~
+
+We request that you contact Forien#2130 for permission to use the name **Forien's Quest Log** in your fanworks, self-promotions, and advertisements. Do not use Forien's name or the names of other contributors without permission.
+
+Join the [League of Foundry Developers Discord server](https://discord.gg/gzemMfHURH) for other questions.
 
 ## Acknowledgments
 
@@ -91,4 +93,4 @@ If you wish to support module development, please consider [becoming Patron](htt
 
 Forien's Quest Log is a module for Foundry VTT by Forien and is licensed under a [MIT License](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/blob/master/LICENSE). List of contributors in [AUTHORS file](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/blob/master/AUTHORS).
 
-This work is licensed under Foundry Virtual Tabletop [EULA - Limited License Agreement for module development from May 29, 2020](https://foundryvtt.com/article/license/).
+This work is licensed under Foundry Virtual Tabletop [EULA - Limited License Agreement for module development from February 17, 2021](https://foundryvtt.com/article/license/).
