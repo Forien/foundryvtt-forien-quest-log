@@ -4,6 +4,7 @@ import Reward from "./reward.mjs";
 import Task from "./task.mjs";
 import QuestsCollection from "./collection/quests-collection.mjs";
 import constants from "../constants.mjs";
+import Utils from "../utility/utils.mjs";
 
 /**
  * Class that acts "kind of" like Entity, to help Manage everything Quest Related
@@ -250,7 +251,7 @@ export default class Quest {
     }
 
     let update = {
-      content: JSON.stringify(this)
+      content: Utils.encodeJE(this.toJSON())
     };
     if (this.entryPermission !== undefined) {
       update.permission = this.entryPermission;
@@ -404,10 +405,10 @@ export default class Quest {
    * @returns {*}
    */
   static getContent(entry, populate = false) {
-    let content = entry.data.content;
+    let content;
 
     try {
-      content = JSON.parse(content);
+      content = Utils.decodeJE(entry.data.content);
       content.id = entry._id;
     } catch (e) {
       console.log(`${constants.moduleLabel} | Quest Folder contains invalid entry. The "${entry.data.name}" is either corrupted Quest Entry, or non-Quest Journal Entry.`);
@@ -530,7 +531,7 @@ export default class Quest {
 
     let content = Quest.getContent(journal);
     content.status = target;
-    content = JSON.stringify(content);
+    content = Utils.encodeJE(content);
 
     return journal.update({content: content, "permission": permission}).then(() => {
       Socket.refreshQuestLog();

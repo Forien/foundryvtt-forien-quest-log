@@ -123,7 +123,7 @@ export default class QuestForm extends FormApplication {
 
     return JournalEntry.create({
       name: title,
-      content: JSON.stringify(data),
+      content: Utils.encodeJE(data),
       folder: folder._id,
       permission: {default: permission}
     }).then((entry) => {
