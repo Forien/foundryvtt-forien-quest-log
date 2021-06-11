@@ -411,9 +411,34 @@ export default class Quest {
       content = Utils.decodeJE(entry.data.content);
       content.id = entry._id;
     } catch (e) {
-      console.log(`${constants.moduleLabel} | Quest Folder contains invalid entry. The "${entry.data.name}" is either corrupted Quest Entry, or non-Quest Journal Entry.`);
-      console.error(e);
-      return null;
+      let loaded = false;
+      let oldLoadError;
+
+      // Attempt to load old quest format which is raw JSON. Store any error in 'oldLoadError'.
+      try {
+        console.log(`${constants.moduleLabel} | Quest Folder contains invalid entry. Will try to read old quest format for "${entry.data.name}".`);
+        // Strip leading / trailing HTML tags in case someone attempted to look at / modify the JE.
+        let entryContent = entry.data.content;
+        entryContent = entryContent.replace(/^<p>/, '');
+        entryContent = entryContent.replace(/<\/p>$/, '');
+
+        const encoded = Utils.encodeJE(JSON.parse(entryContent));
+        content = Utils.decodeJE(encoded);
+        content.id = entry._id;
+        console.log(`${constants.moduleLabel} | Quest Folder contained old quest format in "${entry.data.name}". Please save this quest again to convert.`);
+        loaded = true;
+      } catch (e2) {
+        oldLoadError = e2;
+      }
+
+      // If loading has failed to load old format data then potentially log both errors.
+      if (!loaded) {
+        console.log(`${constants.moduleLabel} | Quest Folder contains invalid entry. The "${entry.data.name}" is either corrupted Quest Entry, or non-Quest Journal Entry.`);
+        console.error(e);
+        if (oldLoadError)
+          console.error(oldLoadError);
+        return null;
+      }
     }
 
     if (populate)
