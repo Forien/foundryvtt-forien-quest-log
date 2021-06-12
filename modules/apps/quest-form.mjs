@@ -3,6 +3,7 @@ import Utils from "../utility/utils.mjs";
 import Task from "../entities/task.mjs";
 import Quest from "../entities/quest.mjs";
 import Socket from "../utility/socket.mjs";
+import constants from "../constants.mjs";
 
 export default class QuestForm extends FormApplication {
   submitted = false;
@@ -123,9 +124,13 @@ export default class QuestForm extends FormApplication {
 
     return JournalEntry.create({
       name: title,
-      content: Utils.encodeJE(data),
       folder: folder._id,
-      permission: {default: permission}
+      permission: {default: permission},
+      flags: {
+        [constants.moduleName]: {
+          json: data.toJSON()
+        }
+      }
     }).then((entry) => {
       if (this.subquest) {
         this.object.addSubquest(entry._id);
@@ -140,7 +145,6 @@ export default class QuestForm extends FormApplication {
       return entry;
     });
   }
-
 
   async close(options) {
     if (this.submitted) {

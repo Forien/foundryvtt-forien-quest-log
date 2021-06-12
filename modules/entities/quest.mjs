@@ -251,8 +251,13 @@ export default class Quest {
     }
 
     let update = {
-      content: Utils.encodeJE(this.toJSON())
+      name: typeof this._title === 'string' && this._title.length > 0 ? this._title :
+        game.i18n.localize("ForienQuestLog.NewQuest"),
+      flags: {
+        [constants.moduleName]: { json: this.toJSON() }
+      }
     };
+
     if (this.entryPermission !== undefined) {
       update.permission = this.entryPermission;
     }
@@ -394,52 +399,29 @@ export default class Quest {
     return content;
   }
 
-
-  /**
-   * Retrieves JournalEntry's content (which is Quest's data) and optionally populates it.
-   *
-   * @see populate()
-   *
-   * @param entry
-   * @param populate
-   * @returns {*}
-   */
   static getContent(entry, populate = false) {
     let content;
 
-    try {
-      content = Utils.decodeJE(entry.data.content);
-      content.id = entry._id;
-    } catch (e) {
-      let loaded = false;
-      let oldLoadError;
+    content = entry.getFlag(constants.moduleName, 'json');
 
-      // Attempt to load old quest format which is raw JSON. Store any error in 'oldLoadError'.
+    // Attempt to load old quest format which is raw JSON stored in content of JE.
+    if (content === void 0) {
       try {
         console.log(`${constants.moduleLabel} | Quest Folder contains invalid entry. Will try to read old quest format for "${entry.data.name}".`);
         // Strip leading / trailing HTML tags in case someone attempted to look at / modify the JE.
         let entryContent = entry.data.content;
         entryContent = entryContent.replace(/^<p>/, '');
         entryContent = entryContent.replace(/<\/p>$/, '');
-
-        const encoded = Utils.encodeJE(JSON.parse(entryContent));
-        content = Utils.decodeJE(encoded);
-        content.id = entry._id;
+        content = JSON.parse(entryContent);
         console.log(`${constants.moduleLabel} | Quest Folder contained old quest format in "${entry.data.name}". Please save this quest again to convert.`);
-        loaded = true;
-      } catch (e2) {
-        oldLoadError = e2;
-      }
-
-      // If loading has failed to load old format data then potentially log both errors.
-      if (!loaded) {
+      } catch (e) {
         console.log(`${constants.moduleLabel} | Quest Folder contains invalid entry. The "${entry.data.name}" is either corrupted Quest Entry, or non-Quest Journal Entry.`);
         console.error(e);
-        if (oldLoadError)
-          console.error(oldLoadError);
         return null;
       }
     }
+
+    content.id = entry._id;
 
     if (populate)
       content = this.populate(content, entry);
@@ -556,9 +538,13 @@ export default class Quest {
 
     let content = Quest.getContent(journal);
     content.status = target;
-    content = Utils.encodeJE(content);
 
-    return journal.update({content: content, "permission": permission}).then(() => {
+    return journal.update({
+      flags: {
+        [constants.moduleName]: { json: content }
+      },
+      "permission": permission
+    }).then(() => {
       Socket.refreshQuestLog();
       Socket.refreshQuestPreview(questId);
       let dirname = game.i18n.localize(this.getQuestTypes()[target]);
@@ -648,7 +634,7 @@ export default class Quest {
   }
 
   set title(value) {
-    this._title = value;
+    this._title = typeof value === 'string' && value.length > 0 ? value : game.i18n.localize("ForienQuestLog.NewQuest");
   }
 
   get description() {
