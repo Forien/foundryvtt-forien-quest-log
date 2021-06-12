@@ -35,6 +35,8 @@ Hooks.once("ready", () => {
     sidebarIcon: 'far fa-question-circle',
   };
 
+  game.collections.set("Quest", QuestsCollection);
+
   QuestFolder.initializeJournals();
   registerApiHooks();
 

@@ -116,12 +116,6 @@ export default class QuestForm extends FormApplication {
       permission = 3;
     }
 
-    if (formData.giver === 'abstract') {
-      data.giver = formData.giver;
-      data.image = formData.sourceImage;
-      data.giverName = formData.giverName;
-    }
-
     if (this.subquest) {
       data.parent = this.object.id;
     }
@@ -238,9 +232,10 @@ export default class QuestForm extends FormApplication {
       }
 
       if (giver) {
-        if (giver.data.img.length) {
+        if (giver?.img?.length || giver?.token?.img.length) {
+          const image = giver?.token?.img ? giver.token.img : giver.img;
           html.find('.giver-portrait').attr({
-            'style': 'background-image:url(' + giver.data.img + ')',
+            'style': 'background-image:url(' + image + ')',
             'title': giver.name
           }).removeClass('hidden');
         } else {

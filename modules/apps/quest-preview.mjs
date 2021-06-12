@@ -55,7 +55,10 @@ export default class QuestPreview extends FormApplication {
   async getData(options = {}) {
     let quest = duplicate(this.quest);
     let content = Quest.populate(quest, this.quest.entry);
-    this.canEdit = (content.playerEdit || game.user.isGM);
+
+    // WAS (06/11/21) this.canEdit = (content.playerEdit || game.user.isGM);
+    // Due to the new document model in 0.8.x+ player editing is temporarily removed.
+    this.canEdit = game.user.isGM;
     this.playerEdit = content.playerEdit;
 
     let data = {

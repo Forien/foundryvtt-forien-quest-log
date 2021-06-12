@@ -296,34 +296,25 @@ export default class Quest {
     let canPlayerDrag = game.settings.get("forien-quest-log", "allowPlayersDrag");
     let countHidden = game.settings.get("forien-quest-log", "countHidden");
 
-    if (content.giver) {
-      if (content.giver === 'abstract') {
-        content.giver = {
-          name: content.giverName,
-          img: content.image
-        };
-        content.image = undefined;
-      } else {
-        fromUuid(content.giver).then((entity) => {
-          if (entity === null) {
-            content.giver = false;
-            return;
-          }
-          content.giver = duplicate(entity);
+    // Quest giver initially is potentially a string before population. This check makes sure that if populate
+    // is invoked again this section is skipped.
+    if (typeof content.giver === 'string') {
+      fromUuid(content.giver).then((document) => {
+        if (document === null) {
+          content.giver = false;
+          return;
+        }
 
-          switch (entity.entity) {
-            case Actor.entity:
-              if (content.image === 'token')
-                content.giver.img = entity.data.token.img;
-              break;
-            case Item.entity:
-            case JournalEntry.entity:
-              break;
-            default:
-              content.giver = false;
-          }
-        });
-      }
+        switch (document.documentName) {
+          case Actor.documentName:
+          case Item.documentName:
+          case JournalEntry.documentName:
+            content.giver = duplicate(document);
+            break;
+          default:
+            content.giver = false;
+        }
+      });
     }
 
     content.isSubquest = false;
