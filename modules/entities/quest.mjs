@@ -4,6 +4,7 @@ import Reward from "./reward.mjs";
 import Task from "./task.mjs";
 import QuestsCollection from "./collection/quests-collection.mjs";
 import constants from "../constants.mjs";
+import QuestPreview from "../apps/quest-preview.mjs";
 
 /**
  * Class that acts "kind of" like Entity, to help Manage everything Quest Related
@@ -270,9 +271,6 @@ export default class Quest {
     if (!entry) return undefined;
     let content = this.getContent(entry);
     content.permission = entry.permission;
-
-    if (entry.permission < 2) return undefined;
-
     return new Quest(content, entry);
   }
 
@@ -742,6 +740,43 @@ export default class Quest {
       tasks: this._tasks,
       rewards: this._rewards
     }
+  }
+
+// Document simulation -----------------------------------------------------------------------------------------------
+
+  /**
+   * The canonical name of this Document type, for example "Actor".
+   * @type {string}
+   */
+  static get documentName() {
+    return "Quest";
+  }
+
+  get documentName() {
+    return "Quest";
+  }
+
+  /**
+   * This mirrors document.sheet and is used in TextEditor._onClickContentLink
+   * @returns {QuestPreview}
+   */
+  get sheet() {
+    return new QuestPreview(this._id);
+  }
+
+  /**
+   * Test whether a certain User has a requested permission level (or greater) over the Document.
+   * This mirrors document.testUserPermission and forwards on the request to the backing journal entry.
+   *
+   * @param {documents.BaseUser} user       The User being tested
+   * @param {string|number} permission      The permission level from ENTITY_PERMISSIONS to test
+   * @param {object} options                Additional options involved in the permission test
+   * @param {boolean} [options.exact=false]     Require the exact permission level requested?
+   * @return {boolean}                      Does the user have this permission level over the Document?
+   */
+  testUserPermission(user, permission, options) {
+    const entry = game.journal.get(this._id);
+    return entry.testUserPermission(user, permission, options);
   }
 }
 

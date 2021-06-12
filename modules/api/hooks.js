@@ -43,15 +43,4 @@ export default function registerApiHooks() {
     }
     return false;
   });
-
-  // open quest details on link click
-  $('body').on("click", "a.entity-link[data-entity='Quest']", function (event) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    const a = event.currentTarget;
-
-    Quests.open(a.dataset.id);
-
-    return false;
-  });
 }
