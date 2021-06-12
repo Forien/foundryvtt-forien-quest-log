@@ -25,6 +25,14 @@ export default class QuestForm extends FormApplication {
   }
 
   /**
+   * Provide TinyMCE overrides.
+   * @override
+   */
+  activateEditor(name, options={}, initialContent="") {
+    super.activateEditor(name, Object.assign({}, options, Utils.tinyMCEOptions()), initialContent);
+  }
+
+  /**
    * Retrieves Data to be used in rendering template.
    *
    * @param options

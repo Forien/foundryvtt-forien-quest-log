@@ -1,6 +1,7 @@
 import Quest from "../entities/quest.mjs";
 import Socket from "../utility/socket.mjs";
 import QuestForm from "./quest-form.mjs";
+import Utils from "../utility/utils.mjs";
 
 export default class QuestPreview extends FormApplication {
   /**
@@ -232,6 +233,14 @@ export default class QuestPreview extends FormApplication {
       delete ent.id;
       return ent;
     });
+  }
+
+  /**
+   * Provide TinyMCE overrides.
+   * @override
+   */
+  activateEditor(name, options={}, initialContent="") {
+    super.activateEditor(name, Object.assign({}, options, Utils.tinyMCEOptions()), initialContent);
   }
 
   /**
