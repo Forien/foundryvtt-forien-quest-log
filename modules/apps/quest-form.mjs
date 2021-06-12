@@ -31,7 +31,7 @@ export default class QuestForm extends FormApplication {
    * @returns {Promise<Object>}
    */
   async getData(options = {}) {
-    this.subquest = (this.object._id !== undefined);
+    this.subquest = (this.object.id !== undefined);
     const parent = this.subquest ? this.object : null;
 
     if (this.subquest)
@@ -115,7 +115,7 @@ export default class QuestForm extends FormApplication {
     }
 
     if (this.subquest) {
-      data.parent = this.object._id;
+      data.parent = this.object.id;
     }
 
     data = new Quest(data);
@@ -124,7 +124,7 @@ export default class QuestForm extends FormApplication {
 
     return JournalEntry.create({
       name: title,
-      folder: folder._id,
+      folder: folder.id,
       permission: {default: permission},
       flags: {
         [constants.moduleName]: {
@@ -133,9 +133,9 @@ export default class QuestForm extends FormApplication {
       }
     }).then((entry) => {
       if (this.subquest) {
-        this.object.addSubquest(entry._id);
+        this.object.addSubquest(entry.id);
         this.object.save().then(() => {
-          Socket.refreshQuestPreview(this.object._id);
+          Socket.refreshQuestPreview(this.object.id);
         });
       }
       // players don't see Hidden tab, but assistant GM can, so emit anyway

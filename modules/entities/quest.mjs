@@ -421,7 +421,7 @@ export default class Quest {
       }
     }
 
-    content.id = entry._id;
+    content.id = entry.id;
 
     if (populate)
       content = this.populate(content, entry);

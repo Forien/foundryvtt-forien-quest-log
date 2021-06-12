@@ -130,7 +130,7 @@ export default class QuestLog extends Application {
       const targetId = dt.dataset.questId;
       sortData.target = game.journal.get(targetId);
       const ids = Quest.getQuests()[quest.status].map(q => q.id);
-      sortData.siblings = game.journal.filter(e => (e._id !== data.id && ids.includes(e._id)));
+      sortData.siblings = game.journal.filter(e => (e.id !== data.id && ids.includes(e._id)));
 
       journal.sortRelative(sortData).then(() => this.render());
     });

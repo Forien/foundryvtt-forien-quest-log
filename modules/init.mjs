@@ -64,7 +64,7 @@ Hooks.on("renderJournalDirectory", (app, html, data) => {
   });
 
   if (!(game.user.isGM && game.settings.get('forien-quest-log', 'showFolder'))) {
-    let folderId = QuestFolder.get('root')._id;
+    let folderId = QuestFolder.get().id;
     let folder = html.find(`.folder[data-folder-id="${folderId}"]`);
 
     folder.remove();

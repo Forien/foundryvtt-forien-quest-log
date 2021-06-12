@@ -72,7 +72,7 @@ export default class QuestPreview extends FormApplication {
         if (u.isGM) return;
         return {
           user: u,
-          level: entry.data.permission[u._id],
+          level: entry.data.permission[u.id],
           hidden: u.isGM
         };
       }).filter(u => u !== undefined);
@@ -229,7 +229,7 @@ export default class QuestPreview extends FormApplication {
     if (pack.metadata.entity !== "Item")
       return;
     return await pack.getEntity(itemId).then(ent => {
-      delete ent._id;
+      delete ent.id;
       return ent;
     });
   }
@@ -267,7 +267,7 @@ export default class QuestPreview extends FormApplication {
 
     html.on("click", ".item-reward", (event) => {
       let data = $(event.currentTarget).data('transfer');
-      delete data._id;
+      delete data.id;
       delete data.permission;
       let item = new CONFIG.Item.entityClass(data);
       item.sheet.render(true);

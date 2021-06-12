@@ -27,7 +27,7 @@ export default class QuestFolder {
     }
 
     let folder = await game.journal.directory.folders.find(f => f.name === this.questDirName);
-    this._questDirId = folder._id;
+    this._questDirId = folder.id;
   }
 
   /**

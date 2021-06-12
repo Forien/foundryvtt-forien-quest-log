@@ -1,7 +1,7 @@
 <header class="details-header">
   <div class="quest-giver-gc">
     {{#with giver}}
-    <div class="quest-giver-image open-actor-sheet " data-actor-id="{{_id}}" style="background-image: url({{img}});background-position: {{../giverImgPos}};" title="{{name}}"></div>
+    <div class="quest-giver-image open-actor-sheet " data-actor-id="{{id}}" style="background-image: url({{img}});background-position: {{../giverImgPos}};" title="{{name}}"></div>
     {{#if (and ../canEdit ../image)}}
     <span class="toggleImage" title="{{localize 'ForienQuestLog.Tooltips.ToggleImage'}}"><i class="fas fa-user-circle"></i></span>
     <span class="deleteQuestGiver" title="{{localize 'ForienQuestLog.Tooltips.DeleteQuestGiver'}}"><i class="fas fa-times"></i></span>
@@ -29,7 +29,7 @@
 
         <div class="quest-giver-name">
           {{#with giver}}
-          <h2 class="open-actor-sheet" data-actor-id="{{_id}}" title="Quest Source">{{name}}</h2>
+          <h2 class="open-actor-sheet" data-actor-id="{{id}}" title="Quest Source">{{name}}</h2>
           {{/with}}
         </div>
         <div class="quest-status {{this.status}}">

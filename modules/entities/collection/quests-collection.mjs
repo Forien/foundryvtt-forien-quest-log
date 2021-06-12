@@ -16,7 +16,6 @@ export default class QuestsCollection {
         data.name = data.title;
 
         return {
-          _id: e.id,
           id: e.id,
           name: e.title,
           data: data
