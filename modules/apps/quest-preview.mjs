@@ -299,9 +299,17 @@ console.log(`!! QuestPreview - ctor - quest.giverdata: ${typeof this.quest.giver
       delete data.id;
       delete data.permission;
 
-      // TODO: Verify if a new item needs to be created to render the sheet.
-      let item = await CONFIG.Item.documentClass.create(data);
-      item.sheet.render(true);
+      try
+      {
+        const item = new CONFIG.Item.documentClass(data);
+        if (typeof item?.sheet.options === 'object')
+        {
+          item.sheet.options.submitOnClose = false;
+          item.sheet.options.submitOnChange = false;
+          item.sheet.render(true);
+        }
+      }
+      catch(err) { /* */ }
     });
 
     html.on("click", ".quest-name", (event) => {
