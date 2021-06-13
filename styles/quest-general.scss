@@ -5,6 +5,8 @@
 	.window-content {
     padding: 0;
     height: 100%;
+    overflow-x: unset;
+    overflow-y: unset;
   }
 
   .tab {
