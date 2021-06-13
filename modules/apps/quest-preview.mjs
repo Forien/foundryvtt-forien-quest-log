@@ -15,6 +15,8 @@ export default class QuestPreview extends FormApplication {
     super(options);
     this.quest = Quest.get(questId);
     if (!this.quest) throw new Error(game.i18n.localize("ForienQuestLog.QuestPreview.InvalidQuestId"));
+
+console.log(`!! QuestPreview - ctor - quest.giverdata: ${typeof this.quest.giverdata} quest: ${JSON.stringify(this.quest)}`);
   }
 
   set object(value) {}
@@ -230,9 +232,11 @@ export default class QuestPreview extends FormApplication {
    */
   async getItemFromPack(packId, itemId) {
     const pack = game.packs.get(packId);
-    if (pack.metadata.entity !== "Item")
+
+    if (pack.documentName !== "Item") {
       return;
-    return await pack.getEntity(itemId).then(ent => {
+    }
+    return await pack.getDocument(itemId).then(ent => {
       delete ent.id;
       return ent;
     });
@@ -258,11 +262,24 @@ export default class QuestPreview extends FormApplication {
       (new ImagePopout(this.quest.splash, {shareable: true})).render(true)
     });
 
-    html.on('dragstart', '.fa-sort', (event) => {
+    html.on('dragstart', '.quest-rewards .fa-sort', (event) => {
       event.stopPropagation();
       const li = event.target.closest('li') || null;
       if (!li) return;
       let dataTransfer = {
+        type: "Reward",
+        mode: "Sort",
+        index: $(li).data('index')
+      };
+      event.originalEvent.dataTransfer.setData("text/plain", JSON.stringify(dataTransfer));
+    });
+
+    html.on('dragstart', '.quest-tasks .fa-sort', (event) => {
+      event.stopPropagation();
+      const li = event.target.closest('li') || null;
+      if (!li) return;
+      let dataTransfer = {
+        type: "Task",
         mode: "Sort",
         index: $(li).data('index')
       };
@@ -277,11 +294,13 @@ export default class QuestPreview extends FormApplication {
       event.originalEvent.dataTransfer.setData("text/plain", JSON.stringify(dataTransfer));
     });
 
-    html.on("click", ".item-reward", (event) => {
+    html.on("click", ".item-reward .editable-container", async (event) => {
       let data = $(event.currentTarget).data('transfer');
       delete data.id;
       delete data.permission;
-      let item = new CONFIG.Item.entityClass(data);
+
+      // TODO: Verify if a new item needs to be created to render the sheet.
+      let item = await CONFIG.Item.documentClass.create(data);
       item.sheet.render(true);
     });
 
@@ -313,8 +332,15 @@ export default class QuestPreview extends FormApplication {
       html.on("drop", ".rewards-box", async (event) => {
         event.preventDefault();
         let item;
-        let data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
-        if (data.mode === 'Sort') {
+
+        let data;
+        try {
+          data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+        } catch(e) {
+          return;
+        }
+
+        if (data.mode === 'Sort' && data.type === 'Reward') {
           this.quest.sortRewards(event, data);
         } else if (data.type === 'Item') {
           if (data.pack) {
@@ -337,7 +363,8 @@ export default class QuestPreview extends FormApplication {
       html.on("drop", ".tasks-box", async (event) => {
         event.preventDefault();
         let data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
-        if (data.mode === 'Sort') {
+
+        if (data.mode === 'Sort' && data.type === 'Task') {
           this.quest.sortTasks(event, data);
         }
       });

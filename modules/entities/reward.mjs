@@ -5,6 +5,18 @@ export default class Reward {
     this._hidden = data.hidden || false;
   }
 
+  // TODO: Consider removing (06/12/21) mleahy
+  static create(data = {}) {
+    if (data.type === undefined) {
+      throw new Error(game.i18n.localize("ForienQuestLog.Api.reward.create.type"));
+    }
+    if (data.data === undefined || data.data.name === undefined || data.data.img === undefined) {
+      throw new Error(game.i18n.localize("ForienQuestLog.Api.reward.create.data"));
+    }
+
+    return new Reward(data);
+  }
+
   get type() {
     return this._type;
   }
@@ -37,17 +49,6 @@ export default class Reward {
     this._hidden = !this._hidden;
 
     return this._hidden;
-  }
-
-  static create(data = {}) {
-    if (data.type === undefined) {
-      throw new Error(game.i18n.localize("ForienQuestLog.Api.reward.create.type"));
-    }
-    if (data.data === undefined || data.data.name === undefined || data.data.img === undefined) {
-      throw new Error(game.i18n.localize("ForienQuestLog.Api.reward.create.data"));
-    }
-
-    return new Reward(data);
   }
 
   toJSON() {

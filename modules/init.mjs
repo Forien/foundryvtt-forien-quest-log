@@ -9,6 +9,7 @@ import Utils from "./utility/utils.mjs";
 import Quest from "./entities/quest.mjs";
 import QuestsCollection from "./entities/collection/quests-collection.mjs";
 import QuestTracker from "./apps/QuestTracker.mjs";
+import QuestPreview from "./apps/quest-preview.mjs";
 
 Hooks.once('init', () => {
   ModuleSettings.register();
@@ -27,12 +28,17 @@ Hooks.once('setup', () => {
 });
 
 Hooks.once("ready", () => {
+  // TODO verify that these values exist or a substitute.
   CONST.ENTITY_TYPES?.push("Quest");
   CONST.ENTITY_LINK_TYPES?.push("Quest");
+
+  // TODO switch to documentClass / sheetClass
   CONFIG["Quest"] = {
     entityClass: Quest,
+    // documentClass: Quest,
     collection: QuestsCollection,
     sidebarIcon: 'far fa-question-circle',
+    // sheetClass: QuestPreview
   };
 
   game.collections.set("Quest", QuestsCollection);

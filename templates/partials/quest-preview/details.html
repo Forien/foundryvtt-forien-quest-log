@@ -1,6 +1,6 @@
 <header class="details-header">
   <div class="quest-giver-gc">
-    {{#with giver}}
+    {{#with data_giver}}
     <div class="quest-giver-image open-actor-sheet " data-actor-id="{{id}}" style="background-image: url({{img}});background-position: {{../giverImgPos}};" title="{{name}}"></div>
     {{#if (and ../canEdit ../image)}}
     <span class="toggleImage" title="{{localize 'ForienQuestLog.Tooltips.ToggleImage'}}"><i class="fas fa-user-circle"></i></span>
@@ -28,7 +28,7 @@
       <div class="quest-details">
 
         <div class="quest-giver-name">
-          {{#with giver}}
+          {{#with data_giver}}
           <h2 class="open-actor-sheet" data-actor-id="{{id}}" title="Quest Source">{{name}}</h2>
           {{/with}}
         </div>
@@ -37,7 +37,7 @@
             Quest is {{this.statusLabel}}
           </p>
           {{#if isSubquest}}
-          <p class="quest-name" data-id="{{parent.id}}">{{format 'ForienQuestLog.QuestPreview.SubTitle' parent.name}} <i class="fas fa-link"></i></p>
+          <p class="quest-name" data-id="{{data_parent.id}}">{{format 'ForienQuestLog.QuestPreview.SubTitle' data_parent.title}} <i class="fas fa-link"></i></p>
           {{/if}}
         </div>
       </div>
@@ -93,7 +93,7 @@
       </header>
       <div class="quest-box tasks-box">
         <ul>
-          {{#each subquests}}
+          {{#each data_subquest}}
           {{#if this.name}}
           <li class="task {{#if (eq status 'hidden')}}task-hidden{{/if}}">
             <div class="state-container">
@@ -106,7 +106,7 @@
           </li>
           {{/if}}
           {{/each}}
-          {{#each tasks}}
+          {{#each data_tasks}}
           <li class="task {{#if hidden}}task-hidden{{/if}}" data-index="{{@index}}">
             {{#if ../canEdit}}
             <i class="toggleState fas fa-{{state}}" data-task-index="{{@index}}"></i>
@@ -146,13 +146,13 @@
       </header>
       <div class="quest-box rewards-box">
         <ul>
-        {{#each rewards}}
-        <li class="reward {{type}}-reward {{#if (and ../isGM draggable)}}draggable{{/if}} {{#if hidden}}reward-hidden{{/if}}" data-index="{{@index}}" data-transfer="{{transfer}}" {{#if (and ../canEdit draggable)}}draggable="true"{{/if}}>
+        {{#each data_rewards}}
+        <li class="reward {{type}}-reward {{#if (and ../isGM draggable)}}draggable{{/if}} {{#if hidden}}reward-hidden{{/if}}" data-index="{{@index}}" {{#if (and ../canEdit draggable)}}draggable="true"{{/if}}>
           <div class="reward-image-container">
-            <div class="reward-image" style="background-image: url({{data.img}})" data-index="{{@index}}"></div>
+            <div class="reward-image" style="background-image: url({{img}})" data-index="{{@index}}"></div>
           </div>
-          <div class="editable-container">
-            <p class="reward-name">{{data.name}}</p>
+          <div class="editable-container" data-transfer="{{transfer}}">
+            <p class="reward-name">{{name}}</p>
           </div>
           {{#if ../canEdit}}
           <div class="actions">

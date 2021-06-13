@@ -3,7 +3,7 @@
   <ul>
     {{#each quests}}
     <li class="drag-quest" data-quest-id="{{id}}" draggable="true">
-      {{#if giver.img}}<div class="img quest-giver-portrait portrait-small" style="background-image: url({{giver.img}});background-position: {{this.giverImgPos}};" title="{{giver.name}}"></div>{{/if}}
+      {{#if data_giver.img}}<div class="img quest-giver-portrait portrait-small" style="background-image: url({{data_giver.img}});background-position: {{this.giverImgPos}};" title="{{data_giver.name}}"></div>{{/if}}
       {{#if (and personal ../isGM)}}
         <i class="personal-quest-icon fas fa-user" title="{{users}}"></i>
       {{/if}}
@@ -11,7 +11,7 @@
         
         <h2>{{title}}</h2>
         {{#if isSubquest}}
-        <p class="subquest">{{format 'ForienQuestLog.QuestPreview.SubTitle' parent.name}}</p>
+        <p class="subquest">{{format 'ForienQuestLog.QuestPreview.SubTitle' data_parent.title}}</p>
         {{/if}}
       </div>
       {{#unless (eq ../showTasks 'no')}}

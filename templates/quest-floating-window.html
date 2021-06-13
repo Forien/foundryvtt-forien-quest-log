@@ -11,7 +11,7 @@
             </header>
 
             <ol class="subdirectory">
-                {{#each subquests}}
+                {{#each data_subquest}}
                 {{#if this.name}}
                     <li class="directory-item entity journal flexrow {{#if (eq status 'hidden')}}task-hidden{{/if}}" data-entity-id="0z5dbNtuPgGOQ8ey" style="display: flex;">
                         {{#if (eq status 'completed')}}
@@ -31,7 +31,7 @@
                     </li>
                 {{/if}}
                 {{/each}}
-                {{#each tasks}}
+                {{#each data_tasks}}
                 <li class="directory-item entity journal flexrow" data-entity-id="0z5dbNtuPgGOQ8ey" style="display: flex;">
                     {{#if completed}}
                         <i class="fas fa-check-square"></i>

@@ -1,6 +1,5 @@
 import Quest from "../entities/quest.mjs";
 import QuestPreview from "./quest-preview.mjs";
-import Socket from "../utility/socket.mjs";
 
 export default class QuestFloatingWindow extends Application {
   sortBy = null;

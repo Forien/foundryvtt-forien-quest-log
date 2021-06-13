@@ -42,6 +42,7 @@ export default class QuestForm extends FormApplication {
     this.subquest = (this.object.id !== undefined);
     const parent = this.subquest ? this.object : null;
 
+console.log(`!! QuestForm - getData - this.subquest: ${this.subquest} - parent / this.object: ${parent}`);
     if (this.subquest)
       this.options.title += ` – ${game.i18n.format('ForienQuestLog.QuestForm.SubquestOf', {name: parent.name})}`;
 
@@ -77,14 +78,17 @@ export default class QuestForm extends FormApplication {
 
     if (actor !== false) {
       giver = actor.uuid;
+console.log(`!! quest-form - _updateObject - 0 - giver: ${giver}`);
     } else {
       try {
-        let entity = await fromUuid(formData.giver);
+        const entity = await fromUuid(formData.giver);
         giver = entity.uuid;
+console.log(`!! quest-form - _updateObject - 1 - giver: ${giver}`);
       } catch (e) {
         giver = null;
       }
     }
+console.log(`!! quest-form - _updateObject - 2 - giver: ${giver}`);
 
     let title = formData.title;
     if (title.length === 0)
@@ -100,8 +104,10 @@ export default class QuestForm extends FormApplication {
       });
     }
 
-    let description = (formData.description !== undefined && formData.description.length) ? formData.description : this.description;
-    let gmnotes = (formData.gmnotes !== undefined && formData.gmnotes.length) ? formData.gmnotes : this.gmnotes;
+    const description = (formData.description !== undefined && formData.description.length) ? formData.description :
+      this.description;
+
+    const gmnotes = (formData.gmnotes !== undefined && formData.gmnotes.length) ? formData.gmnotes : this.gmnotes;
 
     let data = {
       giver: giver,
@@ -116,11 +122,21 @@ export default class QuestForm extends FormApplication {
       permission = 3;
     }
 
+    if (formData.giver === 'abstract') {
+      data.giver = formData.giver;
+      data.image = formData.sourceImage;
+      data.giverName = formData.giverName;
+    }
+
     if (this.subquest) {
       data.parent = this.object.id;
     }
 
+console.log(`!! quest-form - _updateObject - 3 - this.subquest: ${this.subquest} data: ${JSON.stringify(data)}`);
+
     data = new Quest(data);
+
+console.log(`!! quest-form - _updateObject - 4 - this.subquest: ${this.subquest} data: ${JSON.stringify(data)}`);
 
     let folder = this.getHiddenFolder();
 
@@ -173,8 +189,6 @@ export default class QuestForm extends FormApplication {
       },
       default: "no"
     }).render(true);
-
-
   }
 
   /**
@@ -221,21 +235,26 @@ export default class QuestForm extends FormApplication {
       const giverId = $(event.currentTarget).val();
       let giver;
 
+console.log(`!! quest-form - #giver change - A - giverId: ${giverId}`);
       try {
         giver = Utils.findActor(giverId);
-
+console.log(`!! quest-form - #giver change - 0 - giver: ${giver}`);
         if (giver === false) {
+
           giver = await fromUuid(giverId);
+
+console.log(`!! quest-form - #giver change - 1 - giver: ${giver}`);
         }
       } catch (e) {
         giver = false;
       }
 
+console.log(`!! quest-form - #giver change - 2 - giver: ${giver}`);
+
       if (giver) {
-        if (giver?.img?.length || giver?.token?.img.length) {
-          const image = giver?.token?.img ? giver.token.img : giver.img;
+        if (giver?.img?.length) {
           html.find('.giver-portrait').attr({
-            'style': 'background-image:url(' + image + ')',
+            'style': 'background-image:url(' + giver.img + ')',
             'title': giver.name
           }).removeClass('hidden');
         } else {

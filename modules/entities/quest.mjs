@@ -13,6 +13,7 @@ import QuestPreview from "../apps/quest-preview.mjs";
 export default class Quest {
   constructor(data = {}, entry = null) {
     this._id = data.id || null;
+    this._populated = false;
     this.initData(data);
     this.entry = entry;
     this._data = data;
@@ -41,7 +42,6 @@ export default class Quest {
     this._subquests = data.subquests || [];
     this._tasks = [];
     this._rewards = [];
-    this._populated = false;
 
     if (data.tasks !== undefined && Array.isArray(data.tasks))
       this._tasks = data.tasks.map((task) => {
@@ -249,6 +249,7 @@ export default class Quest {
     if (this._populated) {
       throw new Error(`Can't save populated Quest (${this._id})`);
     }
+console.log(`!! Quest - save - this._populated: ${this._populated} - is giver object: ${typeof this._giver === 'object'}`);
 
     let update = {
       name: typeof this._title === 'string' && this._title.length > 0 ? this._title :
@@ -289,37 +290,72 @@ export default class Quest {
    * @returns {*}
    */
   static populate(content, entry = undefined) {
-    // let actor = Utils.findActor(content.actor);
     let isGM = game.user.isGM;
     let canPlayerDrag = game.settings.get("forien-quest-log", "allowPlayersDrag");
     let countHidden = game.settings.get("forien-quest-log", "countHidden");
 
-    // Quest giver initially is potentially a string before population. This check makes sure that if populate
-    // is invoked again this section is skipped.
-    if (typeof content.giver === 'string') {
-      fromUuid(content.giver).then((document) => {
-        if (document === null) {
-          content.giver = false;
-          return;
-        }
+    content._populated = true;
+console.log(`!!! Quest - populate - content.title: ${content.title}`);
 
-        switch (document.documentName) {
-          case Actor.documentName:
-          case Item.documentName:
-          case JournalEntry.documentName:
-            content.giver = duplicate(document);
-            break;
-          default:
-            content.giver = false;
-        }
-      });
+    if (content.giver) {
+      if (content.giver === 'abstract') {
+        // content.giver = {
+        //   name: content.giverName,
+        //   img: content.image
+        // };
+        // content.image = undefined;
+        content.data_giver = {
+          name: content.giverName,
+          img: content.image
+        };
+      } else if (typeof content.giver === 'string') {
+        fromUuid(content.giver).then((document) => {
+          if (document === null) {
+            content.data_giver = {};
+            return;
+          }
+
+          switch (document.documentName) {
+            case Actor.documentName:
+              content.data_giver = {
+                name: document.name,
+                img: document.img
+              };
+              break;
+
+            case Item.documentName:
+            case JournalEntry.documentName:
+              content.data_giver = {
+                name: document.name,
+                img: document.img
+              };
+
+              break;
+            default:
+              content.data_giver = {};
+          }
+console.log(`!!!!! Quest - populate - A - end of data_giver promise - data_giver: ${typeof content.data_giver}`);
+        });
+      }
     }
 
     content.isSubquest = false;
     if (content.parent !== null) {
       content.isSubquest = true;
-      content.parent = Quest.get(content.parent);
+
+      const parentData = Quest.get(content.parent);
+      content.data_parent = {
+        id: content.parent,
+        giver: parentData.giver,
+        title: parentData.title,
+        status: parentData.status
+      }
     }
+    else {
+      content.data_parent = {};
+    }
+
+console.log(`!!!! Quest - populate (0) - content.isSubquest: ${content.isSubquest} - data_parent: ${JSON.stringify(content.data_parent)}`)
     content.statusLabel = game.i18n.localize(`ForienQuestLog.QuestTypes.Labels.${content.status}`);
 
     if (countHidden) {
@@ -330,34 +366,52 @@ export default class Quest {
       content.totalTasks = content.tasks.filter(t => t.hidden === false).length;
     }
 
-    if (content.rewards === undefined) {
-      content.rewards = [];
-    }
-
-    content.tasks = content.tasks.map((t) => {
+    content.data_tasks = content.tasks.map((t) => {
       let task = new Task(t);
       task.name = TextEditor.enrichHTML(task.name);
       return task;
     });
 
-    content.noRewards = (content.rewards.length === 0);
-    content.rewards.forEach((item) => {
-      item.transfer = JSON.stringify(item.data);
-      item.type = item.type.toLowerCase();
-      item.draggable = ((isGM || canPlayerDrag) && item.type !== 'abstract');
+    if (content.rewards === undefined) {
+      content.data_rewards = [];
+    }
+
+    content.data_rewards = content.rewards.map((item) => {
+      return {
+        id: item.id,
+        name: item.data.name,
+        img: item.data.img,
+        type: item.type.toLowerCase(),
+        hidden: item.hidden,
+        draggable: ((isGM || canPlayerDrag) && item.type !== 'abstract'),
+        transfer: JSON.stringify(item.data)
+      }
     });
-    content.subquests = (content.subquests !== undefined)
-      ? content.subquests.map(questId => Quest.get(questId))
-      : [];
+
+    content.data_subquest = (content.subquests !== undefined) ? content.subquests.map(questId => {
+      const subData = Quest.get(questId);
+
+      return subData ? {
+        id: questId,
+        giver: subData.giver,
+        name: subData.title, title:
+        subData.title,
+        status: subData.status
+      } : void 0
+    }) : [];
+
+    // Filter out any missing subquest data.
+    content.data_subquest = content.data_subquest.filter(value => value !== void 0);
+
+console.log(`!!!! Quest - populate - (1) content.data_subquest.length: ${content.data_subquest.length}`)
 
     if (entry)
       content.playerEdit = Object.values(entry.data.permission).some(p => p === 3);
 
-
     if (!(isGM || content.playerEdit)) {
       content.description = TextEditor.enrichHTML(content.description);
-      content.tasks = content.tasks.filter(t => t.hidden === false);
-      content.rewards = content.rewards.filter(r => r.hidden === false);
+      content.data_tasks = content.data_tasks.filter(t => t.hidden === false);
+      content.data_rewards = content.data_rewards.filter(r => r.hidden === false);
     }
 
     if (entry) {
@@ -383,6 +437,8 @@ export default class Quest {
         }
       }
     }
+
+console.log(`!!!!! Quest - populate - B - end of populate - data_giver: ${typeof content.data_giver} - content.toJSON: ${JSON.stringify(content)}`);
 
     return content;
   }
@@ -411,8 +467,9 @@ export default class Quest {
 
     content.id = entry.id;
 
-    if (populate)
+    if (populate) {
       content = this.populate(content, entry);
+    }
 
     return content;
   }
@@ -509,8 +566,11 @@ export default class Quest {
    * @returns {Promise<void>}
    */
   static async move(questId, target, permission = undefined) {
-    let journal = game.journal.get(questId);
-    let quest = this.getContent(journal);
+    const journal = game.journal.get(questId);
+    const quest = Quest.get(questId);
+
+    // let quest = this.getContent(journal);
+
     if (permission === undefined) {
       permission = journal.data.permission;
     }
@@ -524,12 +584,17 @@ export default class Quest {
       }
     }
 
-    let content = Quest.getContent(journal);
-    content.status = target;
+    // let content = Quest.getContent(journal);
+    // content.status = target;
+if (quest._populated) {
+  throw new Error('Can not save populated data.');
+}
 
+    quest.status = target;
+console.log(`!!!! Quest - move - quest: ${JSON.stringify(quest.toJSON())}`);
     return journal.update({
       flags: {
-        [constants.moduleName]: { json: content }
+        [constants.moduleName]: { json: quest.toJSON() }
       },
       "permission": permission
     }).then(() => {
@@ -732,8 +797,8 @@ export default class Quest {
       personal: this._personal,
       image: this._image,
       giverName: this._giverName,
-      giverImgPos:this._giverImgPos,
-      splashPos:this._splashPos,
+      giverImgPos: this._giverImgPos,
+      splashPos: this._splashPos,
       splash: this._splash,
       parent: this._parent,
       subquests: this._subquests,
