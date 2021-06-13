@@ -21,6 +21,7 @@ export default function registerApiHooks() {
         command: command
       };
 
+      // TODO: More robust handling of quest images. First attempt to select quest sn
       let actor = Utils.findActor(quest.giver);
       if (actor) {
         if (quest.image === 'actor')
@@ -34,7 +35,7 @@ export default function registerApiHooks() {
         }
       }
 
-      let macro = game.macros.entities.find(m => (m.data.command === command));
+      let macro = game.macros.contents.find(m => (m.data.command === command));
       if (!macro) {
         macro = await Macro.create(macroData, {displaySheet: false})
       }
