@@ -230,7 +230,7 @@ export default class QuestForm extends FormApplication
 
          if (uuid !== void 0)
          {
-            html.find('#giver').val(uuid).prop('readonly', false).change();
+            html.find('#giver').val(uuid).change();
             html.find('.quest-giver-name').slideUp();
          }
       });
@@ -256,7 +256,7 @@ export default class QuestForm extends FormApplication
             current: currentPath,
             callback: (path) =>
             {
-               html.find('#giver').val('abstract').prop('readonly', true);
+               html.find('#giver').val('abstract');
                html.find('#sourceImage').val(path);
                html.find('.quest-giver-name').slideDown();
                html.find('.giver-portrait').css('background-image', `url(${path})`).removeClass('hidden');
