@@ -87,7 +87,6 @@ export default class QuestForm extends FormApplication
       if (actor !== false)
       {
          giver = actor.uuid;
-console.log(`!! quest-form - _updateObject - 0 - giver: ${giver}`);
       }
       else
       {
@@ -95,14 +94,12 @@ console.log(`!! quest-form - _updateObject - 0 - giver: ${giver}`);
          {
             const entity = await fromUuid(formData.giver);
             giver = entity.uuid;
-console.log(`!! quest-form - _updateObject - 1 - giver: ${giver}`);
          }
          catch (e)
          {
             giver = null;
          }
       }
-console.log(`!! quest-form - _updateObject - 2 - giver: ${giver}`);
 
       let title = formData.title;
       if (title.length === 0)
@@ -154,11 +151,7 @@ console.log(`!! quest-form - _updateObject - 2 - giver: ${giver}`);
          data.parent = this.object.id;
       }
 
-console.log(`!! quest-form - _updateObject - 3 - this.subquest: ${this.subquest} data: ${JSON.stringify(data)}`);
-
       data = new Quest(data);
-
-console.log(`!! quest-form - _updateObject - 4 - this.subquest: ${this.subquest} data: ${JSON.stringify(data)}`);
 
       const folder = this.getHiddenFolder();
 

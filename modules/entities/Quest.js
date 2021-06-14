@@ -1,10 +1,12 @@
-import Socket           from '../utility/Socket.js';
-import QuestFolder      from './QuestFolder.js';
-import Reward           from './Reward.js';
-import Task             from './Task.js';
-import QuestsCollection from './collection/QuestsCollection.js';
-import QuestPreview     from '../apps/QuestPreview.js';
-import constants        from '../constants.js';
+import Socket              from '../utility/Socket.js';
+import QuestFolder         from './QuestFolder.js';
+import Reward              from './Reward.js';
+import Task                from './Task.js';
+import QuestsCollection    from './collection/QuestsCollection.js';
+import QuestPreview        from '../apps/QuestPreview.js';
+import constants           from '../constants.js';
+
+import { migrateData_070 } from '../utility/migrateData.js';
 
 /**
  * Class that acts "kind of" like Entity, to help Manage everything Quest Related
@@ -283,6 +285,11 @@ export default class Quest
       });
    }
 
+   /**
+    * @param {string}   questId - The unique ID for the JE storing the quest.
+    *
+    * @returns {Quest} Returns the loaded quest.
+    */
    static get(questId)
    {
       const entry = game.journal.get(questId);
@@ -293,6 +300,12 @@ export default class Quest
       }
 
       const content = this.getContent(entry);
+
+      if (!content)
+      {
+         return null;
+      }
+
       content.permission = entry.permission;
 
       return new Quest(content, entry);
@@ -307,22 +320,9 @@ export default class Quest
       // Attempt to load old quest format which is raw JSON stored in content of JE.
       if (content === void 0)
       {
-         try
-         {
-            console.log(`${constants.moduleLabel} | Quest Folder contains invalid entry. Will try to read old quest format for '${entry.data.name}'.`);
-            // Strip leading / trailing HTML tags in case someone attempted to look at / modify the JE.
-            let entryContent = entry.data.content;
-            entryContent = entryContent.replace(/^<p>/, '');
-            entryContent = entryContent.replace(/<\/p>$/, '');
-            content = JSON.parse(entryContent);
-            console.log(`${constants.moduleLabel} | Quest Folder contained old quest format in '${entry.data.name}'. Please save this quest again to convert.`);
-         }
-         catch (e)
-         {
-            console.log(`${constants.moduleLabel} | Quest Folder contains invalid entry. The '${entry.data.name}' is either corrupted Quest Entry, or non-Quest Journal Entry.`);
-            console.error(e);
-            return null;
-         }
+         content = migrateData_070(entry);
+
+         if (content === null) { return null; }
       }
 
       content.id = entry.id;
@@ -355,18 +355,21 @@ export default class Quest
     *
     * @param availableTab    true if Available tab is visible
     *
-    * @param populate
-    *
     * @returns {SortedQuests}
     */
    static getQuests(sortTarget = undefined, sortDirection = 'asc', availableTab = false)
    {
       const folder = QuestFolder.get();
+
+      /**
+       * @type {Quest[]}
+       */
       let entries = [];
 
       for (const entry of folder.content)
       {
          const content = this.getContent(entry);
+
          if (content)
          {
             entries.push(content);
@@ -421,21 +424,8 @@ export default class Quest
       this._subquests = data.subquests || [];
       this._tasks = [];
       this._rewards = [];
-
-      if (data.tasks !== undefined && Array.isArray(data.tasks))
-      {
-         this._tasks = data.tasks.map((task) =>
-         {
-            return new Task(task);
-         });
-      }
-      if (data.rewards !== undefined && Array.isArray(data.rewards))
-      {
-         this._rewards = data.rewards.map((reward) =>
-         {
-            return new Reward(reward);
-         });
-      }
+      this._tasks = Array.isArray(data.tasks) ? data.tasks.map((task) => new Task(task)) : [];
+      this._rewards = Array.isArray(data.rewards) ? data.rewards.map((reward) => new Reward(reward)) : [];
    }
 
    /**
@@ -629,17 +619,17 @@ export default class Quest
     *
     * @see getQuests()
     *
-    * @param entries
+    * @param {Quest[]} quests - An array of Quests to sort.
     *
     * @param sortTarget
     *
     * @param sortDirection
     *
-    * @returns -1 | 0 | 1
+    * @returns {Quest[]} Sorted Quest array.
     */
-   static sort(entries, sortTarget, sortDirection)
+   static sort(quests, sortTarget, sortDirection)
    {
-      return entries.sort((a, b) =>
+      return quests.sort((a, b) =>
       {
          let targetA;
          let targetB;

@@ -143,6 +143,18 @@ export default class QuestLog extends Application
    {
       const available = game.settings.get('forien-quest-log', 'availableQuests');
 
+      let quests;
+
+      try
+      {
+         quests = await ViewData.createSorted(Quest.getQuests(this.sortBy, this.sortDirection, available));
+      }
+      catch (err)
+      {
+console.log(`!!!!! QuestLog - getData - quests getQuests failed`);
+console.error(err);
+      }
+
       return mergeObject(super.getData(), {
          options,
          isGM: game.user.isGM,
@@ -153,7 +165,8 @@ export default class QuestLog extends Application
          style: game.settings.get('forien-quest-log', 'navStyle'),
          // titleAlign: game.settings.get('forien-quest-log', 'titleAlign'),
          questTypes: Quest.getQuestTypes(),
-         quests: await ViewData.createSorted(Quest.getQuests(this.sortBy, this.sortDirection, available))
+//         quests: await ViewData.createSorted(Quest.getQuests(this.sortBy, this.sortDirection, available))
+         quests
       });
    }
 
