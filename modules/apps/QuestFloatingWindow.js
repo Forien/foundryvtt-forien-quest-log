@@ -1,5 +1,5 @@
-import Quest         from '../entities/quest.js';
-import QuestPreview  from './quest-preview.js';
+import Quest         from '../entities/Quest.js';
+import QuestPreview  from './QuestPreview.js';
 import ViewData      from './ViewData.js';
 
 export default class QuestFloatingWindow extends Application

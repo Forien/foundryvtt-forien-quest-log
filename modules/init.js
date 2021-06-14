@@ -1,14 +1,14 @@
-import QuestAPI                  from './api/quest-api.js';
-import QuestLogClass             from './apps/quest-log.js';
-import QuestFloatingWindowClass  from './apps/quest-floating-window.js';
-import QuestFolder               from './entities/quest-folder.js';
-import ModuleSettings            from './utility/config.js';
-import Socket                    from './utility/socket.js';
-import Utils                     from './utility/utils.js';
-import Quest                     from './entities/quest.js';
-import QuestsCollection          from './entities/collection/quests-collection.js';
+import QuestAPI                  from './api/QuestAPI.js';
+import QuestLogClass             from './apps/QuestLog.js';
+import QuestFloatingWindowClass  from './apps/QuestFloatingWindow.js';
+import QuestFolder               from './entities/QuestFolder.js';
+import ModuleSettings            from './utility/ModuleSettings.js';
+import Socket                    from './utility/Socket.js';
+import Utils                     from './utility/Utils.js';
+import Quest                     from './entities/Quest.js';
+import QuestsCollection          from './entities/collection/QuestsCollection.js';
 import QuestTracker              from './apps/QuestTracker.js';
-import registerApiHooks          from './api/hooks.js';
+import registerApiHooks          from './api/registerApiHooks.js';
 
 Hooks.once('init', () =>
 {

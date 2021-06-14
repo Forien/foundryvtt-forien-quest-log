@@ -2,7 +2,7 @@
  * Class that acts "kind of" like Entity, to help Manage everything Quest Related
  * in a more structured way, than to call JournalEntry every time.
  */
-import Quest from '../quest.js';
+import Quest from '../Quest.js';
 
 export default class QuestsCollection
 {

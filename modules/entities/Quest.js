@@ -1,9 +1,9 @@
-import Socket           from '../utility/socket.js';
-import QuestFolder      from './quest-folder.js';
-import Reward           from './reward.js';
-import Task             from './task.js';
-import QuestsCollection from './collection/quests-collection.js';
-import QuestPreview     from '../apps/quest-preview.js';
+import Socket           from '../utility/Socket.js';
+import QuestFolder      from './QuestFolder.js';
+import Reward           from './Reward.js';
+import Task             from './Task.js';
+import QuestsCollection from './collection/QuestsCollection.js';
+import QuestPreview     from '../apps/QuestPreview.js';
 import constants        from '../constants.js';
 
 /**

@@ -1,5 +1,5 @@
-import Quest from '../entities/quest.js';
-import Utils from '../utility/utils.js';
+import Quest from '../entities/Quest.js';
+import Utils from '../utility/Utils.js';
 
 /**
  * Function for registering API-related Hooks.

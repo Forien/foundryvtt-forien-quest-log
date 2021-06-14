@@ -1,8 +1,8 @@
-import QuestFolder   from '../entities/quest-folder.js';
-import Utils         from '../utility/utils.js';
-import Task          from '../entities/task.js';
-import Quest         from '../entities/quest.js';
-import Socket        from '../utility/socket.js';
+import QuestFolder   from '../entities/QuestFolder.js';
+import Utils         from '../utility/Utils.js';
+import Task          from '../entities/Task.js';
+import Quest         from '../entities/Quest.js';
+import Socket        from '../utility/Socket.js';
 import constants     from '../constants.js';
 
 export default class QuestForm extends FormApplication
