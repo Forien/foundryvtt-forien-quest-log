@@ -321,9 +321,12 @@ export default class QuestPreview extends FormApplication
          {
             event.preventDefault();
             const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
-            if (['Actor', 'Item', 'JournalEntry'].includes(data.type))
+
+            const uuid = Utils.getUUID(data, ['Actor', 'Item', 'JournalEntry']);
+
+            if (uuid !== void 0)
             {
-               this.quest.giver = `${data.type}.${data.id}`;
+               this.quest.giver = uuid;
                this.saveQuest();
             }
          });
@@ -636,7 +639,7 @@ export default class QuestPreview extends FormApplication
    async getData(options = {}) // eslint-disable-line no-unused-vars
    {
       const quest = duplicate(this.quest);
-      const content = Quest.populate(quest, this.quest.entry);
+      const content = await Quest.populate(quest, this.quest.entry);
 
       // WAS (06/11/21) this.canEdit = (content.playerEdit || game.user.isGM);
       // Due to the new document model in 0.8.x+ player editing is temporarily removed.
@@ -725,10 +728,13 @@ export default class QuestPreview extends FormApplication
    render(force = false, options = {})
    {
       game.questPreview[this.quest.id] = this;
+
+console.log(`!!! QuestPreview - render`);
       if (force)
       {
          this.quest.refresh();
       }
+
       return super.render(force, options);
    }
 

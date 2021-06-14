@@ -1,5 +1,25 @@
 export default class Utils
 {
+   /**
+    * Builds a UUID for the given actor / journal / item data.
+    *
+    * @param {object}   data - document data
+    *
+    * @param {string[]|undefined} type - Provide a list of Document types to build a UUID from given data. If the type
+    *                                    doesn't match the data undefined is returned. If type is undefined any document
+    *                                    will match.
+    *
+    * @returns {string|undefined}
+    */
+   static getUUID(data, type = void 0)
+   {
+      // 'type' doesn't match the data type.
+      if (Array.isArray(type) && !type.includes(data.type)) { return void 0; }
+      if (typeof type === 'string' && data.type !== type) { return void 0; }
+
+      return typeof data.pack === 'string' ? `Compendium.${data.pack}.${data.id}` : `${data.type}.${data.id}`;
+   }
+
    static findActor(actorId)
    {
       let actor = game.actors.get(actorId);
