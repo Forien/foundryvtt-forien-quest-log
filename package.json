@@ -8,7 +8,10 @@
     "Michael Leahy <support@typhonjs.io> (https://github.com/typhonrt)"
   ],
   "devDependencies": {
+    "@typhonjs-config/eslint-config": "^0.2.0",
+    "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
     "autoprefixer": "^10",
+    "eslint": "^7",
     "postcss": "^8",
     "postcss-cli": "^8",
     "postcss-preset-env": "^6",
@@ -16,6 +19,7 @@
   },
   "scripts": {
     "build-css": "npm run sass && npm run postcss",
+    "eslint": "eslint .",
     "sass": "sass ./styles/init.scss ./styles/init.css",
     "postcss": "postcss ./styles/init.css -p sass -u autoprefixer postcss-preset-env -m -o ./styles/init.css"
   }

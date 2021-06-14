@@ -11,6 +11,10 @@
     {
       "name": "Evan Clarke (errational)",
       "url": "https://www.patreon.com/deathsave"
+    },
+    {
+      "name": "Michael Leahy (TyphonJS)",
+      "url": "https://github.com/typhonrt"
     }
   ],
   "version": "0.6.0",
@@ -83,10 +87,10 @@
     }
   ],
   "scripts": [
-    "./scripts/prompt.mjs"
+    "./scripts/prompt.js"
   ],
   "esmodules": [
-    "./modules/init.mjs"
+    "./modules/init.js"
   ],
   "styles": [
     "./styles/init.css"
