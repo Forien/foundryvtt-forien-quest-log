@@ -290,9 +290,6 @@ export default class Quest
       if (!entry)
       {
          throw new Error(game.i18n.localize('ForienQuestLog.QuestPreview.InvalidQuestId'));
-
-         // TODO REMOVE?
-         // return undefined;
       }
 
       const content = this.getContent(entry);
@@ -301,7 +298,6 @@ export default class Quest
       return new Quest(content, entry);
    }
 
-   // TODO REMOVE populate
    static getContent(entry)
    {
       let content;
@@ -330,12 +326,6 @@ export default class Quest
       }
 
       content.id = entry.id;
-
-      // TODO REMOVE
-      // if (populate)
-      // {
-      //    await this.populate(content, entry);
-      // }
 
       return content;
    }
@@ -368,15 +358,15 @@ export default class Quest
     * @param populate
     *
     * @returns {SortedQuests}
-    */ // TODO REMOVE POPULATE
-   static getQuests(sortTarget = undefined, sortDirection = 'asc', availableTab = false, populate = false)
+    */
+   static getQuests(sortTarget = undefined, sortDirection = 'asc', availableTab = false)
    {
       const folder = QuestFolder.get();
       let entries = [];
 
       for (const entry of folder.content)
       {
-         const content = this.getContent(entry, populate);
+         const content = this.getContent(entry);
          if (content)
          {
             entries.push(content);
