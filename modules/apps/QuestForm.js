@@ -266,7 +266,6 @@ console.log(`!! quest-form - #giver change - 2 - giver: ${giver}`);
       {
          renderTemplate('modules/forien-quest-log/templates/partials/quest-form/task.html', {}).then((el) =>
          {
-
             html.find('.list').append(el);
             html.find('.del-btn').unbind();
             html.on('click', '.del-btn', (event) =>

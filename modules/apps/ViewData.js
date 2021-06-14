@@ -83,20 +83,35 @@ export default class ViewData
                switch (document.documentName)
                {
                   case Actor.documentName:
+                  {
+                     const actorImage = document.img;
+                     const tokenImage = document?.data?.token?.img;
+                     const hasTokenImg = typeof tokenImage === 'string' && tokenImage !== actorImage;
+
                      data.data_giver = {
                         name: document.name,
-                        img: document.img
+                        img: quest.image !== 'actor' && hasTokenImg ? tokenImage : actorImage,
+                        hasTokenImg
+                     };
+                     break;
+                  }
+
+                  case Item.documentName:
+                     data.data_giver = {
+                        name: document.name,
+                        img: document.img,
+                        hasTokenImg: false
                      };
                      break;
 
-                  case Item.documentName:
                   case JournalEntry.documentName:
                      data.data_giver = {
                         name: document.name,
-                        img: document.img
+                        img: document.data.img,
+                        hasTokenImg: false
                      };
-
                      break;
+
                   default:
                      data.data_giver = {};
                }

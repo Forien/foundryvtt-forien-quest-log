@@ -421,7 +421,6 @@ export default class QuestPreview extends FormApplication
 
          html.on('click', '.changeGiverImgPos', () =>
          {
-
             if (this.quest.giverImgPos === 'center')
             {
                this.quest.giverImgPos = 'top';

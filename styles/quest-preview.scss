@@ -33,8 +33,26 @@
         background-color: rgba(0, 0, 0, .1);
         border-radius: 5px;
         flex: 0 0 100px;
-        margin-right: 16px;
+        margin-right: 8px;
         position: relative;
+
+        font-size: 12px;
+        line-height: 1.2;
+        font-weight: 700;
+        text-align: center;
+
+        .hidden {
+          display: none;
+        }
+
+        span {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          border: 2px dashed rgba(0,0,0,.5);
+          border-radius: 5px;
+        }
 
         .quest-giver-image {
           height: 100%;
