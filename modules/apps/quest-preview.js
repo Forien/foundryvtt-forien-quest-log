@@ -1,7 +1,8 @@
+import QuestForm  from './quest-form.js';
+import ViewData   from './ViewData.js';
 import QuestAPI   from '../api/quest-api.js';
 import Quest      from '../entities/quest.js';
 import Socket     from '../utility/socket.js';
-import QuestForm  from './quest-form.js';
 import Utils      from '../utility/utils.js';
 
 export default class QuestPreview extends FormApplication
@@ -10,20 +11,15 @@ export default class QuestPreview extends FormApplication
     * Since Quest Preview shows data for single Quest, it needs a Quest instance or
     * there is no point in rendering it.
     *
-    * @param questId
+    * @param {Quest}   quest
     *
-    * @param options
+    * @param {object}   options
     */
-   constructor(questId, options = {})
+   constructor(quest, options = {})
    {
       super(options);
-      this.quest = Quest.get(questId);
-      if (!this.quest)
-      {
-         throw new Error(game.i18n.localize('ForienQuestLog.QuestPreview.InvalidQuestId'));
-      }
 
-      console.log(`!! QuestPreview - ctor - quest.giverdata: ${typeof this.quest.giverdata} quest: ${JSON.stringify(this.quest)}`);
+      this.quest = quest;
    }
 
    /**
@@ -442,7 +438,6 @@ export default class QuestPreview extends FormApplication
                }
             }
 
-
             this.saveQuest();
          });
 
@@ -638,8 +633,7 @@ export default class QuestPreview extends FormApplication
     */
    async getData(options = {}) // eslint-disable-line no-unused-vars
    {
-      const quest = duplicate(this.quest);
-      const content = await Quest.populate(quest, this.quest.entry);
+      const content = await ViewData.create(this.quest);
 
       // WAS (06/11/21) this.canEdit = (content.playerEdit || game.user.isGM);
       // Due to the new document model in 0.8.x+ player editing is temporarily removed.
@@ -697,12 +691,6 @@ export default class QuestPreview extends FormApplication
       });
    }
 
-   // TODO: REMOVE?
-   getQuestName()
-   {
-      return this.quest.name;
-   }
-
    /**
     * Refreshes the Quest Details window and emits Socket so other players get updated view as well
     *
@@ -723,13 +711,13 @@ export default class QuestPreview extends FormApplication
     * When rendering window, add reference to global variable.
     *
     * @see close()
-    * @returns {Promise<void>}
+    * @returns {Promise<Application>}
     */
-   render(force = false, options = {})
+   async render(force = false, options = {})
    {
+      // TODO REMOVE?
       game.questPreview[this.quest.id] = this;
 
-console.log(`!!! QuestPreview - render`);
       if (force)
       {
          this.quest.refresh();

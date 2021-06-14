@@ -1,5 +1,6 @@
 import Quest         from '../entities/quest.js';
 import QuestPreview  from './quest-preview.js';
+import ViewData      from './ViewData.js';
 
 export default class QuestFloatingWindow extends Application
 {
@@ -52,7 +53,8 @@ export default class QuestFloatingWindow extends Application
       html.on('click', '.quest-open', (event) =>
       {
          const questId = $(event.target).closest('.quest-open').data('quest-id');
-         const questPreview = new QuestPreview(questId);
+         const quest = Quest.get(questId);
+         const questPreview = new QuestPreview(quest);
          questPreview.render(true);
       });
 
@@ -64,7 +66,7 @@ export default class QuestFloatingWindow extends Application
 
       // Open and close folders on rerender. Data is store in localstorage so
       // display is consistent after each render.
-      for (const quest of Quest.getQuests(this._sortBy, this._sortDirection, false, true).active)
+      for (const quest of Quest.getQuests(this._sortBy, this._sortDirection, false).active)
       {
          $(`.directory-item[data-quest-id='${quest.id}']`).toggleClass('collapsed',
           localStorage.getItem(`forien.questlog.folderstate-${quest.id}`) === 'true');
@@ -81,9 +83,10 @@ export default class QuestFloatingWindow extends Application
     * Retrieves Data to be used in rendering template.
     *
     * @param options
+    *
     * @returns {Promise<Object>}
     */
-   getData(options = {})
+   async getData(options = {})
    {
       return mergeObject(super.getData(), {
          options,
@@ -91,7 +94,7 @@ export default class QuestFloatingWindow extends Application
          showTasks: game.settings.get('forien-quest-log', 'showTasks'),
          style: game.settings.get('forien-quest-log', 'navStyle'),
          questTypes: Quest.getQuestTypes(),
-         quests: Quest.getQuests(this._sortBy, this._sortDirection, false, true)
+         quests: await ViewData.createSorted(Quest.getQuests(this._sortBy, this._sortDirection, false))
       });
    }
 

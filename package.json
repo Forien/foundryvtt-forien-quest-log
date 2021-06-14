@@ -1,5 +1,5 @@
 {
-  "name": "forein-quest-log",
+  "name": "forien-quest-log",
   "description": "This package.json just provides a PostCSS build script for Sass to CSS",
   "license": "MIT",
   "private": true,

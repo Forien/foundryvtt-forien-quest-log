@@ -21,7 +21,7 @@ export default function registerApiHooks()
 
          const command = `Quests.open('${questId}');`;
          const macroData = {
-            name: game.i18n.format('ForienQuestLog.Api.hooks.createOpenQuestMacro.name', {name: quest.title}),
+            name: game.i18n.format('ForienQuestLog.Api.hooks.createOpenQuestMacro.name', { name: quest.title }),
             type: 'script',
             command
          };
@@ -48,7 +48,7 @@ export default function registerApiHooks()
             }
          }
 
-         let macro = game.macros.contents.find(m => (m.data.command === command));
+         let macro = game.macros.contents.find((m) => (m.data.command === command));
          if (!macro)
          {
             macro = await Macro.create(macroData, { displaySheet: false });

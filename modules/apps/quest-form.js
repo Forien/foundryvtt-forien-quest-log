@@ -73,7 +73,9 @@ export default class QuestForm extends FormApplication
     * Called 'on submit'. Handles saving Form's data
     *
     * @param event
+    *
     * @param formData
+    *
     * @private
     */
    async _updateObject(event, formData)
@@ -85,7 +87,7 @@ export default class QuestForm extends FormApplication
       if (actor !== false)
       {
          giver = actor.uuid;
-         console.log(`!! quest-form - _updateObject - 0 - giver: ${giver}`);
+console.log(`!! quest-form - _updateObject - 0 - giver: ${giver}`);
       }
       else
       {
@@ -93,14 +95,14 @@ export default class QuestForm extends FormApplication
          {
             const entity = await fromUuid(formData.giver);
             giver = entity.uuid;
-            console.log(`!! quest-form - _updateObject - 1 - giver: ${giver}`);
+console.log(`!! quest-form - _updateObject - 1 - giver: ${giver}`);
          }
          catch (e)
          {
             giver = null;
          }
       }
-      console.log(`!! quest-form - _updateObject - 2 - giver: ${giver}`);
+console.log(`!! quest-form - _updateObject - 2 - giver: ${giver}`);
 
       let title = formData.title;
       if (title.length === 0)
@@ -152,11 +154,11 @@ export default class QuestForm extends FormApplication
          data.parent = this.object.id;
       }
 
-      console.log(`!! quest-form - _updateObject - 3 - this.subquest: ${this.subquest} data: ${JSON.stringify(data)}`);
+console.log(`!! quest-form - _updateObject - 3 - this.subquest: ${this.subquest} data: ${JSON.stringify(data)}`);
 
       data = new Quest(data);
 
-      console.log(`!! quest-form - _updateObject - 4 - this.subquest: ${this.subquest} data: ${JSON.stringify(data)}`);
+console.log(`!! quest-form - _updateObject - 4 - this.subquest: ${this.subquest} data: ${JSON.stringify(data)}`);
 
       const folder = this.getHiddenFolder();
 
@@ -211,17 +213,17 @@ export default class QuestForm extends FormApplication
          const giverId = $(event.currentTarget).val();
          let giver;
 
-         console.log(`!! quest-form - #giver change - A - giverId: ${giverId}`);
+console.log(`!! quest-form - #giver change - A - giverId: ${giverId}`);
          try
          {
             giver = Utils.findActor(giverId);
-            console.log(`!! quest-form - #giver change - 0 - giver: ${giver}`);
+console.log(`!! quest-form - #giver change - 0 - giver: ${giver}`);
             if (giver === false)
             {
 
                giver = await fromUuid(giverId);
 
-               console.log(`!! quest-form - #giver change - 1 - giver: ${giver}`);
+console.log(`!! quest-form - #giver change - 1 - giver: ${giver}`);
             }
          }
          catch (e)
@@ -229,7 +231,7 @@ export default class QuestForm extends FormApplication
             giver = false;
          }
 
-         console.log(`!! quest-form - #giver change - 2 - giver: ${giver}`);
+console.log(`!! quest-form - #giver change - 2 - giver: ${giver}`);
 
          if (giver)
          {
@@ -257,9 +259,11 @@ export default class QuestForm extends FormApplication
       {
          event.preventDefault();
          const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
-         if (['Actor', 'Item', 'JournalEntry'].includes(data.type))
+
+         const uuid = Utils.getUUID(data, ['Actor', 'Item', 'JournalEntry']);
+
+         if (uuid !== void 0)
          {
-            const uuid = `${data.type}.${data.id}`;
             html.find('#giver').val(uuid).prop('readonly', false).change();
             html.find('.quest-giver-name').slideUp();
          }
@@ -354,6 +358,7 @@ export default class QuestForm extends FormApplication
    }
 
    /**
+    * // TODO: REMOVE?
     * Proxy for QuestFolder.get('hidden').
     * Needed? probably not...
     *

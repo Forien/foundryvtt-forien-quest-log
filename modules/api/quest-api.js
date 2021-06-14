@@ -69,7 +69,8 @@ export default class QuestAPI
    {
       try
       {
-         const questPreview = new QuestPreview(questId);
+         const quest = Quest.get(questId);
+         const questPreview = new QuestPreview(quest);
          questPreview.render(true);
       }
       catch (error)

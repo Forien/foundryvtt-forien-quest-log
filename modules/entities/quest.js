@@ -15,7 +15,6 @@ export default class Quest
    constructor(data = {}, entry = null)
    {
       this._id = data.id || null;
-      this._populated = false;
       this.initData(data);
       this.entry = entry;
       this._data = data;
@@ -287,9 +286,13 @@ export default class Quest
    static get(questId)
    {
       const entry = game.journal.get(questId);
+
       if (!entry)
       {
-         return undefined;
+         throw new Error(game.i18n.localize('ForienQuestLog.QuestPreview.InvalidQuestId'));
+
+         // TODO REMOVE?
+         // return undefined;
       }
 
       const content = this.getContent(entry);
@@ -298,7 +301,8 @@ export default class Quest
       return new Quest(content, entry);
    }
 
-   static getContent(entry, populate = false)
+   // TODO REMOVE populate
+   static getContent(entry)
    {
       let content;
 
@@ -327,10 +331,11 @@ export default class Quest
 
       content.id = entry.id;
 
-      if (populate)
-      {
-         content = this.populate(content, entry);
-      }
+      // TODO REMOVE
+      // if (populate)
+      // {
+      //    await this.populate(content, entry);
+      // }
 
       return content;
    }
@@ -362,21 +367,21 @@ export default class Quest
     *
     * @param populate
     *
-    * @returns {{}}
-    */
+    * @returns {SortedQuests}
+    */ // TODO REMOVE POPULATE
    static getQuests(sortTarget = undefined, sortDirection = 'asc', availableTab = false, populate = false)
    {
       const folder = QuestFolder.get();
       let entries = [];
 
-      folder.content.forEach((entry) =>
+      for (const entry of folder.content)
       {
          const content = this.getContent(entry, populate);
          if (content)
          {
             entries.push(content);
          }
-      });
+      }
 
       if (sortTarget !== undefined)
       {
@@ -459,8 +464,6 @@ export default class Quest
       const journal = game.journal.get(questId);
       const quest = Quest.get(questId);
 
-      // let quest = this.getContent(journal);
-
       if (permission === undefined)
       {
          permission = journal.data.permission;
@@ -481,15 +484,8 @@ export default class Quest
          }
       }
 
-      // let content = Quest.getContent(journal);
-      // content.status = target;
-      if (quest._populated)
-      {
-         throw new Error('Can not save populated data.');
-      }
-
       quest.status = target;
-console.log(`!!!! Quest - move - quest: ${JSON.stringify(quest.toJSON())}`);
+
       return journal.update({
          flags: {
             [constants.moduleName]: { json: quest.toJSON() }
@@ -502,207 +498,6 @@ console.log(`!!!! Quest - move - quest: ${JSON.stringify(quest.toJSON())}`);
          const dirname = game.i18n.localize(this.getQuestTypes()[target]);
          ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved', { target: dirname }), {});
       });
-   }
-
-   /**
-    * Populates content with a lot of additional data, that doesn't necessarily have to be saved
-    * with Quest itself, such as Actor's data.
-    *
-    * This method also performs content manipulation, for example enriching HTML or calculating amount
-    * of done/total tasks etc.
-    *
-    * Be advised, that even if `content` parameter is Quest object, after populating it cannot be saved.
-    * If you need to keep Quest instance to be edited and saved, duplicate() it and populate copy.
-    *
-    * @param content
-    *
-    * @param entry
-    *
-    * @returns {*}
-    */
-   static populate(content, entry = undefined)
-   {
-      const isGM = game.user.isGM;
-      const canPlayerDrag = game.settings.get('forien-quest-log', 'allowPlayersDrag');
-      const countHidden = game.settings.get('forien-quest-log', 'countHidden');
-
-      content._populated = true;
-      console.log(`!!! Quest - populate - content.title: ${content.title}`);
-
-      if (content.giver)
-      {
-         if (content.giver === 'abstract')
-         {
-            // content.giver = {
-            //   name: content.giverName,
-            //   img: content.image
-            // };
-            // content.image = undefined;
-            content.data_giver = {
-               name: content.giverName,
-               img: content.image
-            };
-         }
-         else if (typeof content.giver === 'string')
-         {
-            fromUuid(content.giver).then((document) =>
-            {
-               if (document === null)
-               {
-                  content.data_giver = {};
-                  return;
-               }
-
-               switch (document.documentName)
-               {
-                  case Actor.documentName:
-                     content.data_giver = {
-                        name: document.name,
-                        img: document.img
-                     };
-                     break;
-
-                  case Item.documentName:
-                  case JournalEntry.documentName:
-                     content.data_giver = {
-                        name: document.name,
-                        img: document.img
-                     };
-
-                     break;
-                  default:
-                     content.data_giver = {};
-               }
-console.log(`!!!!! Quest - populate - A - end of data_giver promise - data_giver: ${typeof content.data_giver}`);
-            });
-         }
-      }
-
-      content.isSubquest = false;
-      if (content.parent !== null)
-      {
-         content.isSubquest = true;
-
-         const parentData = Quest.get(content.parent);
-         content.data_parent = {
-            id: content.parent,
-            giver: parentData.giver,
-            title: parentData.title,
-            status: parentData.status
-         };
-      }
-      else
-      {
-         content.data_parent = {};
-      }
-
-console.log(`!!!! Quest - populate (0) - content.isSubquest: ${content.isSubquest} - data_parent: ${JSON.stringify(content.data_parent)}`);
-      content.statusLabel = game.i18n.localize(`ForienQuestLog.QuestTypes.Labels.${content.status}`);
-
-      if (countHidden)
-      {
-         content.checkedTasks = content.tasks.filter((t) => t.completed).length;
-         content.totalTasks = content.tasks.length;
-      }
-      else
-      {
-         content.checkedTasks = content.tasks.filter((t) => t.hidden === false && t.completed).length;
-         content.totalTasks = content.tasks.filter((t) => t.hidden === false).length;
-      }
-
-      content.data_tasks = content.tasks.map((t) =>
-      {
-         const task = new Task(t);
-         task.name = TextEditor.enrichHTML(task.name);
-         return task;
-      });
-
-      if (content.rewards === undefined)
-      {
-         content.data_rewards = [];
-      }
-
-      content.data_rewards = content.rewards.map((item) =>
-      {
-         return {
-            id: item.id,
-            name: item.data.name,
-            img: item.data.img,
-            type: item.type.toLowerCase(),
-            hidden: item.hidden,
-            draggable: ((isGM || canPlayerDrag) && item.type !== 'abstract'),
-            transfer: JSON.stringify(item.data)
-         };
-      });
-
-      content.data_subquest = (content.subquests !== undefined) ? content.subquests.map((questId) =>
-      {
-         const subData = Quest.get(questId);
-
-         return subData ? {
-            id: questId,
-            giver: subData.giver,
-            name: subData.title, title:
-            subData.title,
-            status: subData.status
-         } : void 0;
-      }) : [];
-
-      // Filter out any missing subquest data.
-      content.data_subquest = content.data_subquest.filter((value) => value !== void 0);
-
-console.log(`!!!! Quest - populate - (1) content.data_subquest.length: ${content.data_subquest.length}`);
-
-      if (entry)
-      {
-         content.playerEdit = Object.values(entry.data.permission).some((p) => p === 3);
-      }
-
-      if (!(isGM || content.playerEdit))
-      {
-         content.description = TextEditor.enrichHTML(content.description);
-         content.data_tasks = content.data_tasks.filter((t) => t.hidden === false);
-         content.data_rewards = content.data_rewards.filter((r) => r.hidden === false);
-      }
-
-      if (entry)
-      {
-         if (isGM && content.personal)
-         {
-            const users = [`${game.i18n.localize('ForienQuestLog.Tooltips.PersonalQuestVisibleFor')}:`];
-
-            for (const perm in entry.data.permission)
-            {
-               if (perm === 'default')
-               {
-                  continue;
-               }
-               if (entry.data.permission[perm] >= 2)
-               {
-                  const user = game.users.get(perm);
-                  if (!user)
-                  {
-                     console.log(`Forien Quest Log | Dropping user ${perm} from quest ${entry?.name} as it no longer exists`);
-                     return;
-                  }
-                  users.push(user.name);
-               }
-            }
-
-            if (users.length > 1)
-            {
-               content.users = users.join('\r');
-            }
-            else
-            {
-               content.users = game.i18n.localize('ForienQuestLog.Tooltips.PersonalQuestButNoPlayers');
-            }
-         }
-      }
-
-      console.log(`!!!!! Quest - populate - B - end of populate - data_giver: ${typeof content.data_giver} - content.toJSON: ${JSON.stringify(content)}`);
-
-      return content;
    }
 
    /**
@@ -760,12 +555,6 @@ console.log(`!!!! Quest - populate - (1) content.data_subquest.length: ${content
     */
    async save()
    {
-      if (this._populated)
-      {
-         throw new Error(`Can't save populated Quest (${this._id})`);
-      }
-console.log(`!! Quest - save - this._populated: ${this._populated} - is giver object: ${typeof this._giver === 'object'}`);
-
       const update = {
          name: typeof this._title === 'string' && this._title.length > 0 ? this._title :
           game.i18n.localize('ForienQuestLog.NewQuest'),
@@ -784,6 +573,7 @@ console.log(`!! Quest - save - this._populated: ${this._populated} - is giver ob
    }
 
    /**
+    * TODO REVIEW - OLD PERMISSION SYSTEM - LIKELY REMOVE
     * Saves new permissions for users. Used by Personal Quests feature.
     *
     * @param userId
@@ -1024,7 +814,7 @@ console.log(`!! Quest - save - this._populated: ${this._populated} - is giver ob
     */
    get sheet()
    {
-      return new QuestPreview(this._id);
+      return new QuestPreview(this);
    }
 
    /**

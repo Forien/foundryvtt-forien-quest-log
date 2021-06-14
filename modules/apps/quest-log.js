@@ -1,4 +1,5 @@
 import Quest         from '../entities/quest.js';
+import ViewData      from './ViewData.js';
 import QuestPreview  from './quest-preview.js';
 import QuestForm     from './quest-form.js';
 import Socket        from '../utility/socket.js';
@@ -16,7 +17,7 @@ export default class QuestLog extends Application
    /**
     * Default Application options
     *
-    * @returns {Object}
+    * @returns {object}
     */
    static get defaultOptions()
    {
@@ -76,7 +77,8 @@ export default class QuestLog extends Application
       html.on('click', '.title', (event) =>
       {
          const questId = $(event.target).closest('.title').data('quest-id');
-         const questPreview = new QuestPreview(questId);
+         const quest = Quest.get(questId);
+         const questPreview = new QuestPreview(quest);
          questPreview.render(true);
       });
 
@@ -121,7 +123,9 @@ export default class QuestLog extends Application
          const sortData = { sortKey: 'sort', sortBefore: true };
          const targetId = dt.dataset.questId;
          sortData.target = game.journal.get(targetId);
+
          const ids = Quest.getQuests()[quest.status].map((q) => q.id);
+
          sortData.siblings = game.journal.filter((e) => (e.id !== data.id && ids.includes(e._id)));
 
          journal.sortRelative(sortData).then(() => this.render());
@@ -135,9 +139,10 @@ export default class QuestLog extends Application
     *
     * @returns {Promise<Object>}
     */
-   getData(options = {})
+   async getData(options = {})
    {
       const available = game.settings.get('forien-quest-log', 'availableQuests');
+
       return mergeObject(super.getData(), {
          options,
          isGM: game.user.isGM,
@@ -148,7 +153,7 @@ export default class QuestLog extends Application
          style: game.settings.get('forien-quest-log', 'navStyle'),
          // titleAlign: game.settings.get('forien-quest-log', 'titleAlign'),
          questTypes: Quest.getQuestTypes(),
-         quests: Quest.getQuests(this.sortBy, this.sortDirection, available, true)
+         quests: await ViewData.createSorted(Quest.getQuests(this.sortBy, this.sortDirection, available))
       });
    }
 
