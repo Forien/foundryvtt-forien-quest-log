@@ -6,6 +6,12 @@ import Utils from '../utility/Utils.js';
  */
 export default function registerApiHooks()
 {
+   // Open quest log
+   Hooks.on('forienQuestLogOpen', () =>
+   {
+      QuestLog.render(true);
+   });
+
    // Create 'open quest' Macro when Quest is dropped onto Hotbar.
    Hooks.on('hotbarDrop', async (bar, data, slot) =>
    {
