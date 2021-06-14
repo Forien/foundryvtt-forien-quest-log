@@ -20,23 +20,6 @@ export default class Utils
       return typeof data.pack === 'string' ? `Compendium.${data.pack}.${data.id}` : `${data.type}.${data.id}`;
    }
 
-   static findActor(actorId)
-   {
-      let actor = game.actors.get(actorId);
-
-      if (actor === undefined || actor === null)
-      {
-         actor = game.actors.find((a) => a.name === actorId);
-      }
-
-      if (actor === undefined || actor === null)
-      {
-         return false;
-      }
-
-      return actor;
-   }
-
    /**
     * Preloads templates for partials
     */

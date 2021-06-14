@@ -64,60 +64,7 @@ export default class ViewData
       const canPlayerDrag = game.settings.get('forien-quest-log', 'allowPlayersDrag');
       const countHidden = game.settings.get('forien-quest-log', 'countHidden');
 
-      if (data.giver)
-      {
-         if (data.giver === 'abstract')
-         {
-            data.data_giver = {
-               name: data.giverName,
-               img: data.image
-            };
-         }
-         else if (typeof data.giver === 'string')
-         {
-            const document = await fromUuid(data.giver);
-            data.data_giver = {};
-
-            if (document !== null)
-            {
-               switch (document.documentName)
-               {
-                  case Actor.documentName:
-                  {
-                     const actorImage = document.img;
-                     const tokenImage = document?.data?.token?.img;
-                     const hasTokenImg = typeof tokenImage === 'string' && tokenImage !== actorImage;
-
-                     data.data_giver = {
-                        name: document.name,
-                        img: quest.image !== 'actor' && hasTokenImg ? tokenImage : actorImage,
-                        hasTokenImg
-                     };
-                     break;
-                  }
-
-                  case Item.documentName:
-                     data.data_giver = {
-                        name: document.name,
-                        img: document.img,
-                        hasTokenImg: false
-                     };
-                     break;
-
-                  case JournalEntry.documentName:
-                     data.data_giver = {
-                        name: document.name,
-                        img: document.data.img,
-                        hasTokenImg: false
-                     };
-                     break;
-
-                  default:
-                     data.data_giver = {};
-               }
-            }
-         }
-      }
+      data.data_giver = await ViewData.giverFromQuest(quest);
 
       data.isSubquest = false;
       if (data.parent !== null)
@@ -238,6 +185,74 @@ export default class ViewData
             else
             {
                data.users = game.i18n.localize('ForienQuestLog.Tooltips.PersonalQuestButNoPlayers');
+            }
+         }
+      }
+
+      return data;
+   }
+
+   static async giverFromQuest(quest)
+   {
+      let data = {};
+
+      if (quest.giver === 'abstract')
+      {
+         data = {
+            name: quest.giverName,
+            img: quest.image,
+            hasTokenImg: false
+         };
+      }
+      else if (typeof quest.giver === 'string')
+      {
+         data = ViewData.giverFromUUID(quest.giver, quest.image);
+      }
+
+      return data;
+   }
+
+   static async giverFromUUID(uuid, imageType = 'actor')
+   {
+      let data = {};
+
+      if (typeof uuid === 'string')
+      {
+         const document = await fromUuid(uuid);
+
+         if (document !== null)
+         {
+            switch (document.documentName)
+            {
+               case Actor.documentName:
+               {
+                  const actorImage = document.img;
+                  const tokenImage = document?.data?.token?.img;
+                  const hasTokenImg = typeof tokenImage === 'string' && tokenImage !== actorImage;
+
+                  data = {
+                     name: document.name,
+                     img: imageType === 'token' && hasTokenImg ? tokenImage : actorImage,
+                     hasTokenImg
+                  };
+                  break;
+               }
+
+               case Item.documentName:
+                  data = {
+                     name: document.name,
+                     img: document.img,
+                     hasTokenImg: false
+                  };
+                  break;
+
+               case JournalEntry.documentName:
+                  data = {
+                     name: document.name,
+                     img: document.data.img,
+                     hasTokenImg: false
+                  };
+                  break;
             }
          }
       }

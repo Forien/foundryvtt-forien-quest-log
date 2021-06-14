@@ -5,7 +5,7 @@
     {{/if}}
     {{#with data_giver}}
     <div class="quest-giver-image open-actor-sheet " data-actor-id="{{id}}" style="background-image: url({{img}});background-position: {{../giverImgPos}};" title="{{name}}"></div>
-    {{#if (and ../canEdit ../image)}}
+    {{#if (and ../canEdit ../image img)}}
       {{#if hasTokenImg}}
       <span class="toggleImage" title="{{localize 'ForienQuestLog.Tooltips.ToggleImage'}}"><i class="fas fa-user-circle"></i></span>
       {{/if}}

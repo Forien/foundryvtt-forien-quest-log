@@ -460,10 +460,7 @@
   font-weight: 700;
   text-align: center;
 }
-.window-app.forien-quest-preview .quest-body .details-header .quest-giver-gc .hidden {
-  display: none;
-}
-.window-app.forien-quest-preview .quest-body .details-header .quest-giver-gc span {
+.window-app.forien-quest-preview .quest-body .details-header .quest-giver-gc .drop-info {
   display: flex;
   justify-content: center;
   align-items: center;

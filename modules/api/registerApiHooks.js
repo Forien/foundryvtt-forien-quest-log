@@ -1,5 +1,5 @@
-import Quest from '../entities/Quest.js';
-import Utils from '../utility/Utils.js';
+import Quest      from '../entities/Quest.js';
+import ViewData   from '../apps/ViewData.js';
 
 /**
  * Function for registering API-related Hooks.
@@ -25,34 +25,16 @@ export default function registerApiHooks()
             throw new Error(game.i18n.localize('ForienQuestLog.Api.hooks.createOpenQuestMacro.error.noQuest'));
          }
 
+         // TODO: CHANGEAPI TO THE NEW API LOCATION
          const command = `Quests.open('${questId}');`;
+
          const macroData = {
             name: game.i18n.format('ForienQuestLog.Api.hooks.createOpenQuestMacro.name', { name: quest.title }),
             type: 'script',
             command
          };
 
-         // TODO: More robust handling of quest images. First attempt to select quest sn
-         const actor = Utils.findActor(quest.giver);
-         if (actor)
-         {
-            if (quest.image === 'actor')
-            {
-               macroData.img = actor.img;
-            }
-            else
-            {
-               macroData.img = actor.data.token.img;
-            }
-         }
-         else
-         {
-            if (quest.giver)
-            {
-               const entity = await fromUuid(quest.giver);
-               macroData.img = entity.img;
-            }
-         }
+         macroData.img = quest.splash.length ? quest.splash : (await ViewData.giverFromQuest(quest)).img;
 
          let macro = game.macros.contents.find((m) => (m.data.command === command));
          if (!macro)

@@ -1,3 +1,4 @@
+import ViewData      from './ViewData.js';
 import QuestFolder   from '../entities/QuestFolder.js';
 import Utils         from '../utility/Utils.js';
 import Task          from '../entities/Task.js';
@@ -80,25 +81,17 @@ export default class QuestForm extends FormApplication
     */
    async _updateObject(event, formData)
    {
-      const actor = Utils.findActor(formData.giver);
-      let giver = null;
+      let giver;
       let permission = 0;
 
-      if (actor !== false)
+      try
       {
-         giver = actor.uuid;
+         const entity = await fromUuid(formData.giver);
+         giver = entity.uuid;
       }
-      else
+      catch (e)
       {
-         try
-         {
-            const entity = await fromUuid(formData.giver);
-            giver = entity.uuid;
-         }
-         catch (e)
-         {
-            giver = null;
-         }
+         giver = null;
       }
 
       let title = formData.title;
@@ -204,27 +197,7 @@ export default class QuestForm extends FormApplication
       html.on('change', '#giver', async (event) =>
       {
          const giverId = $(event.currentTarget).val();
-         let giver;
-
-console.log(`!! quest-form - #giver change - A - giverId: ${giverId}`);
-         try
-         {
-            giver = Utils.findActor(giverId);
-console.log(`!! quest-form - #giver change - 0 - giver: ${giver}`);
-            if (giver === false)
-            {
-
-               giver = await fromUuid(giverId);
-
-console.log(`!! quest-form - #giver change - 1 - giver: ${giver}`);
-            }
-         }
-         catch (e)
-         {
-            giver = false;
-         }
-
-console.log(`!! quest-form - #giver change - 2 - giver: ${giver}`);
+         const giver = await ViewData.giverFromUUID(giverId);
 
          if (giver)
          {
@@ -335,7 +308,6 @@ console.log(`!! quest-form - #giver change - 2 - giver: ${giver}`);
       this.subquest = (this.object.id !== undefined);
       const parent = this.subquest ? this.object : null;
 
-      console.log(`!! QuestForm - getData - this.subquest: ${this.subquest} - parent / this.object: ${parent}`);
       if (this.subquest)
       {
          this.options.title += ` – ${game.i18n.format('ForienQuestLog.QuestForm.SubquestOf', { name: parent.name })}`;
