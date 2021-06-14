@@ -126,7 +126,7 @@ export default class QuestLog extends Application
 
          const ids = Quest.getQuests()[quest.status].map((q) => q.id);
 
-         sortData.siblings = game.journal.filter((e) => (e.id !== data.id && ids.includes(e._id)));
+         sortData.siblings = game.journal.filter((e) => (e.id !== data.id && ids.includes(e.id)));
 
          journal.sortRelative(sortData).then(() => this.render());
       });
