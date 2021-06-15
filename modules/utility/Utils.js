@@ -20,6 +20,30 @@ export default class Utils
       return typeof data.pack === 'string' ? `Compendium.${data.pack}.${data.id}` : `${data.type}.${data.id}`;
    }
 
+   static async loadItemSheetUUID(data, { editable = false } = {})
+   {
+      const uuid = typeof data === 'string' ? data : data.uuid;
+
+      try
+      {
+         const itemData = await fromUuid(uuid);
+
+         if (itemData !== null)
+         {
+            const itemCls = getDocumentClass('Item');
+            const item = new itemCls(itemData.data);
+
+            if (typeof item?.sheet.options === 'object')
+            {
+               item.sheet.options.submitOnClose = editable;
+               item.sheet.options.submitOnChange = editable;
+               item.sheet.render(true);
+            }
+         }
+      }
+      catch (err) { /* */ }
+   }
+
    /**
     * Preloads templates for partials
     */

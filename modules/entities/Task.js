@@ -66,16 +66,6 @@ export default class Task
       return 'square';
    }
 
-   static create(data = {})
-   {
-      if (data.name === undefined)
-      {
-         throw new Error(game.i18n.localize('ForienQuestLog.Api.task.create.name'));
-      }
-
-      return new Task(data);
-   }
-
    toJSON()
    {
       return {

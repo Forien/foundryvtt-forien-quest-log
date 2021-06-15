@@ -202,24 +202,11 @@ export default class QuestPreview extends FormApplication
          event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dataTransfer));
       });
 
-      html.on('click', '.item-reward .editable-container', (event) =>
+      html.on('click', '.item-reward .editable-container', async (event) =>
       {
+         event.stopPropagation();
          const data = $(event.currentTarget).data('transfer');
-         delete data.id;
-         delete data.permission;
-
-         try
-         {
-            const item = new CONFIG.Item.documentClass(data);
-            if (typeof item?.sheet.options === 'object')
-            {
-               item.sheet.options.submitOnClose = false;
-               item.sheet.options.submitOnChange = false;
-               item.sheet.render(true);
-            }
-         }
-         catch (err)
-         { /* */ }
+         await Utils.loadItemSheetUUID(data);
       });
 
       html.on('click', '.quest-name', (event) =>
@@ -259,7 +246,6 @@ export default class QuestPreview extends FormApplication
          html.on('drop', '.rewards-box', async (event) =>
          {
             event.preventDefault();
-            let item;
 
             let data;
             try
@@ -277,28 +263,14 @@ export default class QuestPreview extends FormApplication
             }
             else if (data.type === 'Item')
             {
-               if (data.pack)
-               {
-                  item = await this.getItemFromPack(data.pack, data.id);
-               }
-               else if (data.data)
-               {
-                  item = data.data;
-               }
-               else
-               {
-                  const witem = game.items.get(data.id);
-                  if (!witem)
-                  {
-                     return;
-                  }
-                  item = duplicate(witem);
-               }
-               if (item)
-               {
-                  this.quest.addReward({ type: 'Item', data: item });
-                  this.saveQuest();
-               }
+               const uuid = Utils.getUUID(data);
+
+               const item = await ViewData.giverFromUUID(uuid);
+
+               item.uuid = uuid;
+
+               this.quest.addReward({ type: 'Item', data: item, hidden: true });
+               this.saveQuest();
             }
          });
 
@@ -666,28 +638,6 @@ export default class QuestPreview extends FormApplication
       }
 
       return mergeObject(content, data);
-   }
-
-   /**
-    * Retrieves Item from Compendium
-    *
-    * @param packId
-    *
-    * @param itemId
-    */
-   async getItemFromPack(packId, itemId)
-   {
-      const pack = game.packs.get(packId);
-
-      if (pack.documentName !== 'Item')
-      {
-         return;
-      }
-      return await pack.getDocument(itemId).then((ent) =>
-      {
-         delete ent.id;
-         return ent;
-      });
    }
 
    /**
