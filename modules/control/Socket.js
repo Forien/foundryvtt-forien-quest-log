@@ -1,5 +1,5 @@
 import QuestAPI   from '../api/QuestAPI.js';
-import Quest      from '../entities/Quest.js';
+import Quest      from '../model/Quest.js';
 
 export default class Socket
 {

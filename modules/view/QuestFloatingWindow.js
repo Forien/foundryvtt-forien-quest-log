@@ -1,4 +1,4 @@
-import Quest         from '../entities/Quest.js';
+import Quest         from '../model/Quest.js';
 import QuestPreview  from './QuestPreview.js';
 import ViewData      from './ViewData.js';
 

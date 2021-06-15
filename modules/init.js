@@ -1,14 +1,14 @@
 import QuestAPI                  from './api/QuestAPI.js';
-import QuestLogClass             from './apps/QuestLog.js';
-import QuestFloatingWindowClass  from './apps/QuestFloatingWindow.js';
-import QuestFolder               from './entities/QuestFolder.js';
-import ModuleSettings            from './utility/ModuleSettings.js';
-import Socket                    from './utility/Socket.js';
-import Utils                     from './utility/Utils.js';
-import Quest                     from './entities/Quest.js';
-import QuestsCollection          from './entities/collection/QuestsCollection.js';
-import QuestTracker              from './apps/QuestTracker.js';
-import registerApiHooks          from './api/registerApiHooks.js';
+import QuestLogClass             from './view/QuestLog.js';
+import QuestFloatingWindowClass  from './view/QuestFloatingWindow.js';
+import QuestFolder               from './model/QuestFolder.js';
+import ModuleSettings            from './control/ModuleSettings.js';
+import Socket                    from './control/Socket.js';
+import Utils                     from './utils/Utils.js';
+import Quest                     from './model/Quest.js';
+import QuestsCollection          from './model/QuestsCollection.js';
+import QuestTracker              from './view/QuestTracker.js';
+import registerHooks          from './control/registerHooks.js';
 
 Hooks.once('init', () =>
 {
@@ -46,7 +46,7 @@ Hooks.once('ready', () =>
    game.collections.set('Quest', QuestsCollection);
 
    QuestFolder.initializeJournals();
-   registerApiHooks();
+   registerHooks();
 
    if (game.settings.get('forien-quest-log', 'enableQuestTracker'))
    {
@@ -60,65 +60,4 @@ Hooks.once('ready', () =>
    Socket.listen();
 
    Hooks.callAll('ForienQuestLog.afterReady');
-});
-
-Hooks.on('renderJournalDirectory', (app, html) =>
-{
-   const button = $(`<button class="quest-log-btn">${game.i18n.localize('ForienQuestLog.QuestLogButton')}</button>`);
-   let footer = html.find('.directory-footer');
-   if (footer.length === 0)
-   {
-      footer = $(`<footer class="directory-footer"></footer>`);
-      html.append(footer);
-   }
-   footer.append(button);
-
-   button.click(() =>
-   {
-      QuestLog.render(true);
-   });
-
-   if (!(game.user.isGM && game.settings.get('forien-quest-log', 'showFolder')))
-   {
-      const folderId = QuestFolder.get().id;
-      const folder = html.find(`.folder[data-folder-id="${folderId}"]`);
-
-      folder.remove();
-   }
-});
-
-Hooks.on('getSceneControlButtons', (controls) =>
-{
-   const notes = controls.find((c) => c.name === 'notes');
-
-   notes.tools.push({
-      name: 'forien-quest-log',
-      title: 'ForienQuestLog.QuestLogButton',
-      icon: 'fas fa-pen-fancy',
-      visible: true,
-      onClick: () => QuestLog.render(true),
-      button: true
-   });
-
-   notes.tools.push({
-      name: 'forien-quest-log-floating-window',
-      title: 'ForienQuestLog.FloatingQuestWindow',
-      icon: 'fas fa-bookmark',
-      visible: true,
-      onClick: () => QuestFloatingWindow.render(true),
-      button: true
-   });
-
-});
-
-
-/**
- * Need to Update Quest Log with custom Hooks :c
- */
-Hooks.on('updateJournalEntry', () =>
-{
-   if (ui.questTracker)
-   {
-      ui.questTracker.render();
-   }
 });

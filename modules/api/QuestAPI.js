@@ -1,8 +1,8 @@
-import QuestPreview  from '../apps/QuestPreview.js';
-import Quest         from '../entities/Quest.js';
-import Reward        from '../entities/Reward.js';
-import Task          from '../entities/Task.js';
-import Socket        from '../utility/Socket.js';
+import QuestPreview  from '../view/QuestPreview.js';
+import Quest         from '../model/Quest.js';
+import Reward        from '../model/Reward.js';
+import Task          from '../model/Task.js';
+import Socket        from '../control/Socket.js';
 
 /**
  * Quest public Api available under `Quests.`

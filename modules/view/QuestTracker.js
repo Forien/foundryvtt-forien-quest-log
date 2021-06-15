@@ -1,6 +1,6 @@
 import RepositionableApplication from './RepositionableApplication.js';
 import QuestAPI                  from '../api/QuestAPI.js';
-import Quest                     from '../entities/Quest.js';
+import Quest                     from '../model/Quest.js';
 import constants                 from '../constants.js';
 
 export default class QuestTracker extends RepositionableApplication

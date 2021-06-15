@@ -1,12 +1,12 @@
-import Socket              from '../utility/Socket.js';
+import Socket              from '../control/Socket.js';
 import QuestFolder         from './QuestFolder.js';
 import Reward              from './Reward.js';
 import Task                from './Task.js';
-import QuestsCollection    from './collection/QuestsCollection.js';
-import QuestPreview        from '../apps/QuestPreview.js';
+import QuestsCollection    from './QuestsCollection.js';
+import QuestPreview        from '../view/QuestPreview.js';
 import constants           from '../constants.js';
 
-import { migrateData_070 } from '../utility/migrateData.js';
+import { migrateData_070 } from '../utils/migrateData.js';
 
 /**
  * Class that acts "kind of" like Entity, to help Manage everything Quest Related

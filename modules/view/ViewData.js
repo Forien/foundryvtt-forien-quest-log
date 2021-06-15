@@ -1,6 +1,6 @@
-import Reward           from '../entities/Reward.js';
-import Task             from '../entities/Task.js';
-import Quest            from '../entities/Quest.js';
+import Reward           from '../model/Reward.js';
+import Task             from '../model/Task.js';
+import Quest            from '../model/Quest.js';
 
 export default class ViewData
 {
