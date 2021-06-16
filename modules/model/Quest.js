@@ -642,40 +642,38 @@ export default class Quest
       });
    }
 
-   sortParts(index, targetIdx, array)
+   async sortParts(index, targetIdx, array)
    {
       const entry = array.splice(index, 1)[0];
+
       if (targetIdx)
       {
-         if (index < targetIdx)
-         {
-            targetIdx--;
-         }
          array.splice(targetIdx, 0, entry);
       }
       else
       {
          array.push(entry);
       }
-      this.save().then(() => Socket.refreshQuestPreview(this.id));
+
+      await this.save();
+
+      Socket.refreshQuestPreview(this.id);
    }
 
-   sortRewards(event, data)
+   async sortRewards(event, data)
    {
       const dt = event.target.closest('li.reward') || null;
       const index = data.index;
       const targetIdx = dt?.dataset.index;
-
-      this.sortParts(index, targetIdx, this.rewards);
+      return this.sortParts(index, targetIdx, this.rewards);
    }
 
-   sortTasks(event, data)
+   async sortTasks(event, data)
    {
       const dt = event.target.closest('li.task') || null;
       const index = data.index;
       const targetIdx = dt?.dataset.index;
-
-      this.sortParts(index, targetIdx, this.tasks);
+      return this.sortParts(index, targetIdx, this.tasks);
    }
 
    toJSON()

@@ -273,7 +273,7 @@ export default class QuestPreview extends FormApplication
 
             if (data.mode === 'Sort' && data.type === 'Reward')
             {
-               this.quest.sortRewards(event, data);
+               await this.quest.sortRewards(event, data);
             }
             else if (data.type === 'Item')
             {
@@ -295,7 +295,7 @@ export default class QuestPreview extends FormApplication
 
             if (data.mode === 'Sort' && data.type === 'Task')
             {
-               this.quest.sortTasks(event, data);
+               await this.quest.sortTasks(event, data);
             }
          });
 
