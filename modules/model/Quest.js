@@ -276,18 +276,11 @@ export default class Quest
    {
       const entry = game.journal.get(questId);
 
-      if (!entry)
-      {
-         return null;
-         // throw new Error(game.i18n.localize('ForienQuestLog.QuestPreview.InvalidQuestId'));
-      }
+      if (!entry) { return null; }
 
       const content = this.getContent(entry);
 
-      if (!content)
-      {
-         return null;
-      }
+      if (!content) { return null; }
 
       content.permission = entry.permission;
 
@@ -340,7 +333,7 @@ export default class Quest
     *
     * @returns {SortedQuests}
     */
-   static getQuests(sortTarget = undefined, sortDirection = 'asc', availableTab = false)
+   static getQuests(sortTarget = void 0, sortDirection = 'asc', availableTab = false)
    {
       const folder = QuestFolder.get();
 

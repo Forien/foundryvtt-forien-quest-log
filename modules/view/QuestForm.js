@@ -5,6 +5,9 @@ import Quest         from '../model/Quest.js';
 import Utils         from '../utils/Utils.js';
 import constants     from '../constants.js';
 
+// A single module private reference to only one close dialog.
+let s_CLOSE_DIALOG;
+
 export default class QuestForm extends FormApplication
 {
    /**
@@ -18,8 +21,8 @@ export default class QuestForm extends FormApplication
 
       this._submitted = false;
 
-      this.parentId = parentId;
-      this.subquest = parentId !== void 0;
+      this._parentId = parentId;
+      this._subquest = parentId !== void 0;
    }
 
    /**
@@ -33,6 +36,7 @@ export default class QuestForm extends FormApplication
          id: 'forien-quest-log-form',
          template: 'modules/forien-quest-log/templates/quest-form.html',
          title: game.i18n.localize('ForienQuestLog.QuestForm.Title'),
+         minimizable: false,
          width: 940,
          height: 640,
          closeOnSubmit: true
@@ -62,10 +66,11 @@ export default class QuestForm extends FormApplication
    async _updateObject(event, formData)
    {
       let giver;
-      let permission = 0;
+      let permission = CONST.ENTITY_PERMISSIONS.NONE;
 
       try
       {
+         // This is a sanity filter to make sure giver is an actual UUID that resolves. If not set it to null.
          const entity = await fromUuid(formData.giver);
          giver = entity.uuid;
       }
@@ -80,10 +85,10 @@ export default class QuestForm extends FormApplication
          title = game.i18n.localize('ForienQuestLog.NewQuest');
       }
 
-      const description = (formData.description !== undefined && formData.description.length) ? formData.description :
+      const description = (formData.description !== void 0 && formData.description.length) ? formData.description :
        this.description;
 
-      const gmnotes = (formData.gmnotes !== undefined && formData.gmnotes.length) ? formData.gmnotes : this.gmnotes;
+      const gmnotes = (formData.gmnotes !== void 0 && formData.gmnotes.length) ? formData.gmnotes : this.gmnotes;
 
       let data = {
          giver,
@@ -95,7 +100,7 @@ export default class QuestForm extends FormApplication
       if (!game.user.isGM)
       {
          data.status = 'available';
-         permission = 3;
+         permission = CONST.ENTITY_PERMISSIONS.OWNER;
       }
 
       if (formData.giver === 'abstract')
@@ -105,10 +110,7 @@ export default class QuestForm extends FormApplication
          data.giverName = formData.giverName;
       }
 
-      if (this.subquest)
-      {
-         data.parent = this.parentId;
-      }
+      if (this._subquest) { data.parent = this._parentId; }
 
       data = new Quest(data);
 
@@ -123,9 +125,9 @@ export default class QuestForm extends FormApplication
          }
       });
 
-      if (this.subquest)
+      if (this._subquest)
       {
-         const parentQuest = await Quest.get(this.parentId);
+         const parentQuest = await Quest.get(this._parentId);
          parentQuest.addSubquest(entry.id);
          await parentQuest.save();
 
@@ -135,8 +137,6 @@ export default class QuestForm extends FormApplication
       // players don't see Hidden tab, but assistant GM can, so emit anyway
       Socket.refreshQuestLog();
       this._submitted = true;
-
-      return entry;
    }
 
    /**
@@ -227,34 +227,60 @@ export default class QuestForm extends FormApplication
       });
    }
 
+   /**
+    * Provides a semi-modal dialog to inform the user that they will delete the quest data. However if the user
+    * confirms quitting or if they select the 'add new quest' button to add a quest then closing of QuestForm
+    * commences.
+    *
+    * @override
+    * @inheritDoc
+    */
    async close(options)
    {
       if (this._submitted)
       {
+         if (s_CLOSE_DIALOG)
+         {
+            s_CLOSE_DIALOG.close();
+            s_CLOSE_DIALOG = void 0;
+         }
+
          return super.close(options);
       }
 
-      new Dialog({
-         title: game.i18n.localize('ForienQuestLog.CloseDialog.Title'),
-         content: `<h3>${game.i18n.localize('ForienQuestLog.CloseDialog.Header')}</h3>
+      if (!s_CLOSE_DIALOG)
+      {
+         s_CLOSE_DIALOG = new Dialog({
+            title: game.i18n.localize('ForienQuestLog.CloseDialog.Title'),
+            content: `<h3>${game.i18n.localize('ForienQuestLog.CloseDialog.Header')}</h3>
 <p>${game.i18n.localize('ForienQuestLog.CloseDialog.Body')}</p>`,
-         buttons: {
-            no: {
-               icon: `<i class="fas fa-undo"></i>`,
-               label: game.i18n.localize('ForienQuestLog.CloseDialog.Cancel')
-            },
-            yes: {
-               icon: `<i class="far fa-trash-alt"></i>`,
-               label: game.i18n.localize('ForienQuestLog.CloseDialog.Discard'),
-               callback: () =>
-               {
-                  this._submitted = true;
-                  this.close();
+            buttons: {
+               no: {
+                  icon: `<i class="fas fa-undo"></i>`,
+                  label: game.i18n.localize('ForienQuestLog.CloseDialog.Cancel'),
+                  callback: () =>
+                  {
+                     s_CLOSE_DIALOG = void 0;
+                  }
+               },
+               yes: {
+                  icon: `<i class="far fa-trash-alt"></i>`,
+                  label: game.i18n.localize('ForienQuestLog.CloseDialog.Discard'),
+                  callback: () =>
+                  {
+                     this._submitted = true;
+                     s_CLOSE_DIALOG = void 0;
+                     this.close();
+                  }
                }
-            }
-         },
-         default: 'no'
-      }).render(true);
+            },
+            default: 'no'
+         }).render(true);
+      }
+      else
+      {
+         s_CLOSE_DIALOG.bringToTop();
+      }
    }
 
    /**
@@ -265,16 +291,16 @@ export default class QuestForm extends FormApplication
     */
    async getData(options = {})
    {
-      if (this.subquest)
+      if (this._subquest)
       {
-         const parentQuest = await Quest.get(this.parentId);
+         const parentQuest = await Quest.get(this._parentId);
          this.options.title += ` – ${game.i18n.format('ForienQuestLog.QuestForm.SubquestOf', 
           { name: parentQuest.name })}`;
       }
 
       return {
          isGM: game.user.isGM,
-         subquest: this.subquest,
+         subquest: this._subquest,
          options: mergeObject(this.options, options)
       };
    }

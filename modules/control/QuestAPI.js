@@ -8,23 +8,6 @@ import QuestPreview  from '../view/QuestPreview.js';
 export default class QuestAPI
 {
    /**
-    * Creates new Quest programmatically through API
-    *
-    * @param data
-    *
-    * @returns {Quest}
-    */
-   static create(data = {})
-   {
-      if (data.title === undefined)
-      {
-         throw new Error(game.i18n.localize('ForienQuestLog.Api.create.title'));
-      }
-
-      return new Quest({});
-   }
-
-   /**
     * Retrieves Quest instance for given quest ID
     *
     * @param questId
@@ -33,13 +16,12 @@ export default class QuestAPI
     */
    static get(questId)
    {
-      // TODO: EVALUATE THROWING HERE
-      // if (!entry)
-      // {
-      //    throw new Error(game.i18n.localize('ForienQuestLog.QuestPreview.InvalidQuestId'));
-      // }
-
       return Quest.get(questId);
+   }
+
+   static getQuests()
+   {
+      return Quest.getQuests()
    }
 
    /**
@@ -47,9 +29,9 @@ export default class QuestAPI
     *
     * @param questId
     *
-    * @param notif
+    * @param notify
     */
-   static open(questId, notif = true)
+   static open(questId, notify = true)
    {
       try
       {
@@ -59,7 +41,7 @@ export default class QuestAPI
       }
       catch (error)
       {
-         if (notif)
+         if (notify)
          {
             ui.notifications.error(game.i18n.localize('ForienQuestLog.Notifications.CannotOpen'), {});
          }
