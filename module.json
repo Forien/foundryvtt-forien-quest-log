@@ -86,9 +86,6 @@
       "path": "lang/sv.json"
     }
   ],
-  "scripts": [
-    "./scripts/prompt.js"
-  ],
   "esmodules": [
     "./modules/init.js"
   ],

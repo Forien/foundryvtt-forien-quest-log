@@ -1,3 +1,6 @@
+/**
+ * Original FQL Welcome screen. Currently disabled as the information may be out of date.
+ *
 (() =>
 {
    const module = "Forien's Quest Log";
@@ -9,14 +12,15 @@
    const manifest = 'https://raw.githubusercontent.com/Foundry-Workshop/welcome-screen/master/module.json';
    const wsID = 'workshop-welcome-screen';
 
-   let testSetup = async () =>
+   const testSetup = async () =>
    {
       let response = {};
       try
       {
+         // eslint-disable-next-line no-undef
          response = await fetch(SetupConfiguration.setupURL, {
             method: "POST",
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({})
          });
       }
@@ -28,20 +32,20 @@
       return response.status !== 403;
    };
 
-   let tryInstall = async () =>
+   const tryInstall = async () =>
    {
-      let test = await testSetup();
-
-      if (test === true)
+      if (await testSetup())
       {
          ui.notifications.active = [];
-         ui.notifications.info("Preparing to download module…", {permanent: true});
+         ui.notifications.info("Preparing to download module…", { permanent: true });
          const notif = ui.notifications.active[0];
-         game.socket.on("progress", data =>
+         game.socket.on("progress", (data) =>
          {
             notif.html(data.msg);
          });
-         await SetupConfiguration.installPackage({type: "module", manifest: manifest});
+
+         // eslint-disable-next-line no-undef
+         await SetupConfiguration.installPackage({ type: "module", manifest });
          await game.shutDown();
       }
       else
@@ -63,30 +67,30 @@
             }
          })._render(true).then(() =>
          {
-            document.getElementById("workshop-welcome-screen-manifest").onclick = function ()
+            document.getElementById("workshop-welcome-screen-manifest").onclick = function()
             {
                this.select();
                document.execCommand('copy');
                ui.notifications.info("Manifest URL copied!", {});
-            }
+            };
          });
       }
    };
 
-   let installPrompt = () =>
+   const installPrompt = () =>
    {
       if (window.workshopWS.app)
       {
          return;
       }
-      game.settings.register(wsID, 'showPrompt', {scope: "client", config: false, default: true});
+      game.settings.register(wsID, 'showPrompt', { scope: "client", config: false, default: true });
       if (!game.settings.get(wsID, 'showPrompt'))
       {
          return;
       }
 
-      let authors = Object.keys(window.workshopWS.authors).join(' and ');
-      let modules = window.workshopWS.modules.map(m => `<li>${m}</li>`).join('');
+      const authors = Object.keys(window.workshopWS.authors).join(' and ');
+      const modules = window.workshopWS.modules.map((m) => `<li>${m}</li>`).join('');
 
       window.workshopWS.app = new Dialog({
           title: `Install Welcome Screen for Foundry Workshop's modules?`,
@@ -99,30 +103,30 @@
                 label: "Never show again",
                 callback: () =>
                 {
-                   game.settings.set(wsID, 'showPrompt', false)
+                   game.settings.set(wsID, 'showPrompt', false);
                 }
              },
              install: {
                 label: "Install",
                 callback: () =>
                 {
-                   tryInstall()
+                   tryInstall();
                 }
              }
           },
           default: 'install'
        },
-       {id: `${wsID}-install-prompt`, width: 420, height: 540});
+       { id: `${wsID}-install-prompt`, width: 420, height: 540 });
       window.workshopWS.app.render(true);
    };
 
-   let enablePrompt = () =>
+   const enablePrompt = () =>
    {
       if (window.workshopWS.app)
       {
          return;
       }
-      game.settings.register(wsID, 'showPrompt', {scope: "client", config: false, default: true});
+      game.settings.register(wsID, 'showPrompt', { scope: "client", config: false, default: true });
       if (!game.settings.get(wsID, 'showPrompt'))
       {
          return;
@@ -139,7 +143,7 @@
                label: "Never show again",
                callback: () =>
                {
-                  game.settings.set(wsID, 'showPrompt', false)
+                  game.settings.set(wsID, 'showPrompt', false);
                }
             },
             install: {
@@ -147,7 +151,7 @@
                callback: () =>
                {
                   const settings = game.settings.get("core", ModuleManagement.CONFIG_SETTING);
-                  const setting = mergeObject(settings, {[wsID]: true});
+                  const setting = mergeObject(settings, { [wsID]: true });
                   game.settings.set("core", ModuleManagement.CONFIG_SETTING, setting);
                }
             }
@@ -194,3 +198,4 @@
       }
    });
 })();
+*/
