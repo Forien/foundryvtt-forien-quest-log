@@ -1159,18 +1159,18 @@
   left: -15px;
   padding-top: 3px;
 }
-#quest-tracker .tasks .task.failed {
+#quest-tracker .tasks .task.minus-square {
   text-decoration: line-through;
 }
-#quest-tracker .tasks .task.failed::before {
+#quest-tracker .tasks .task.minus-square::before {
   content: "";
   font-weight: 900;
   padding-left: 1px;
 }
-#quest-tracker .tasks .task.completed {
+#quest-tracker .tasks .task.check-square {
   text-decoration: line-through;
 }
-#quest-tracker .tasks .task.completed::before {
+#quest-tracker .tasks .task.check-square::before {
   content: "";
   font-weight: 900;
 }

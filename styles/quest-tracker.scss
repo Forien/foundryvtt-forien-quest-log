@@ -63,7 +63,7 @@
         padding-top: 3px;
       }
 
-      &.failed {
+      &.minus-square {
         text-decoration: line-through;
 
         &::before {
@@ -73,7 +73,7 @@
         }
       }
 
-      &.completed {
+      &.check-square {
         text-decoration: line-through;
 
         &::before {

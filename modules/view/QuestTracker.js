@@ -98,14 +98,8 @@ export default class QuestTracker extends RepositionableApplication
          id: q.id,
          source: q.giver,
          title: q.title,
-         image: q.image,
          description: this.truncate(q.description, 120),
-         tasks: q.tasks.filter((t) => t.hidden === false).map((t) =>
-         {
-            t.name = TextEditor.enrichHTML(t.name);
-            t.state = t.completed ? 'completed' : (t.failed ? 'failed' : '');
-            return t;
-         })
+         tasks: q.tasks.filter((t) => t.hidden === false).map((t) => t.toJSON())
       }));
    }
 
