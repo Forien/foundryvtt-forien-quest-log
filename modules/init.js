@@ -5,7 +5,7 @@ import QuestAPI            from './control/QuestAPI.js';
 import Quest               from './model/Quest.js';
 import QuestFolder         from './model/QuestFolder.js';
 import QuestsCollection    from './model/QuestsCollection.js';
-import QuestLogFloating from './view/QuestLogFloating.js';
+import QuestLogFloating    from './view/QuestLogFloating.js';
 import QuestLog            from './view/QuestLog.js';
 import QuestTracker        from './view/QuestTracker.js';
 import Utils               from './utils/Utils.js';
@@ -70,4 +70,29 @@ Hooks.once('ready', () =>
    Socket.listen();
 
    Hooks.callAll('ForienQuestLog.afterReady');
+});
+
+Hooks.on('renderJournalDirectory', (app, html) =>
+{
+   const button = $(`<button class="quest-log-btn">${game.i18n.localize('ForienQuestLog.QuestLogButton')}</button>`);
+   let footer = html.find('.directory-footer');
+   if (footer.length === 0)
+   {
+      footer = $(`<footer class="directory-footer"></footer>`);
+      html.append(footer);
+   }
+   footer.append(button);
+
+   button.click(() =>
+   {
+      Utils.getFQLPublicAPI().questLog.render(true);
+   });
+
+   if (!(game.user.isGM && game.settings.get('forien-quest-log', 'showFolder')))
+   {
+      const folderId = QuestFolder.get().id;
+      const folder = html.find(`.folder[data-folder-id="${folderId}"]`);
+
+      folder.remove();
+   }
 });

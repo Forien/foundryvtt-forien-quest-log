@@ -1,7 +1,7 @@
 import Quest         from '../model/Quest.js';
-import QuestFolder   from '../model/QuestFolder.js';
 import ViewData      from '../view/ViewData.js';
 import Utils         from '../utils/Utils.js';
+import constants     from '../constants.js';
 
 /**
  * Function for registering API-related Hooks.
@@ -29,8 +29,7 @@ export default function registerHooks()
             throw new Error(game.i18n.localize('ForienQuestLog.Api.hooks.createOpenQuestMacro.error.noQuest'));
          }
 
-         // TODO: CHANGEAPI TO THE NEW API LOCATION
-         const command = `Quests.open('${questId}');`;
+         const command = `game.modules.get('${constants.moduleName}').public.QuestAPI.open('${questId}');`;
 
          const macroData = {
             name: game.i18n.format('ForienQuestLog.Api.hooks.createOpenQuestMacro.name', { name: quest.title }),
@@ -51,31 +50,6 @@ export default function registerHooks()
       return false;
    });
 
-   Hooks.on('renderJournalDirectory', (app, html) =>
-   {
-      const button = $(`<button class="quest-log-btn">${game.i18n.localize('ForienQuestLog.QuestLogButton')}</button>`);
-      let footer = html.find('.directory-footer');
-      if (footer.length === 0)
-      {
-         footer = $(`<footer class="directory-footer"></footer>`);
-         html.append(footer);
-      }
-      footer.append(button);
-
-      button.click(() =>
-      {
-         fqlPublicAPI.questLog.render(true);
-      });
-
-      if (!(game.user.isGM && game.settings.get('forien-quest-log', 'showFolder')))
-      {
-         const folderId = QuestFolder.get().id;
-         const folder = html.find(`.folder[data-folder-id="${folderId}"]`);
-
-         folder.remove();
-      }
-   });
-
    Hooks.on('getSceneControlButtons', (controls) =>
    {
       const notes = controls.find((c) => c.name === 'notes');
@@ -83,7 +57,7 @@ export default function registerHooks()
       notes.tools.push({
          name: 'forien-quest-log',
          title: 'ForienQuestLog.QuestLogButton',
-         icon: 'fas fa-pen-fancy',
+         icon: 'fas fa-scroll',
          visible: true,
          onClick: () => fqlPublicAPI.questLog.render(true),
          button: true
@@ -92,13 +66,12 @@ export default function registerHooks()
       notes.tools.push({
          name: 'forien-quest-log-floating-window',
          title: 'ForienQuestLog.FloatingQuestWindow',
-         icon: 'fas fa-bookmark',
+         icon: 'fas fa-receipt',
          visible: true,
          onClick: () => fqlPublicAPI.questLogFloating.render(true),
          button: true
       });
    });
-
 
    /**
     * Need to Update Quest Log with custom Hooks :c
