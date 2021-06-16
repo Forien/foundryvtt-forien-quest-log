@@ -1,3 +1,4 @@
+import FQLDialog     from './FQLDialog.js';
 import ViewData      from './ViewData.js';
 import QuestPreview  from './QuestPreview.js';
 import QuestForm     from './QuestForm.js';
@@ -45,10 +46,10 @@ export default class QuestLog extends Application
 
       html.on('click', '.new-quest-btn', () =>
       {
-         new QuestForm({}).render(true);
+         new QuestForm().render(true);
       });
 
-      html.on('click', '.actions i', (event) =>
+      html.on('click', '.actions i', async (event) =>
       {
          const canPlayerAccept = game.settings.get('forien-quest-log', 'allowPlayersAccept');
          const target = $(event.target).data('target');
@@ -70,7 +71,12 @@ export default class QuestLog extends Application
          }
          else if (classList.includes('delete'))
          {
-            Quest.delete(questId);
+            const quest = Quest.get(questId);
+
+            if (quest && await FQLDialog.confirmDelete(quest))
+            {
+               await quest.delete();
+            }
          }
       });
 
@@ -165,7 +171,6 @@ console.error(err);
          style: game.settings.get('forien-quest-log', 'navStyle'),
          // titleAlign: game.settings.get('forien-quest-log', 'titleAlign'),
          questTypes: Quest.getQuestTypes(),
-//         quests: await ViewData.createSorted(Quest.getQuests(this.sortBy, this.sortDirection, available))
          quests
       });
    }

@@ -33,6 +33,12 @@ export default class QuestAPI
     */
    static get(questId)
    {
+      // TODO: EVALUATE THROWING HERE
+      // if (!entry)
+      // {
+      //    throw new Error(game.i18n.localize('ForienQuestLog.QuestPreview.InvalidQuestId'));
+      // }
+
       return Quest.get(questId);
    }
 

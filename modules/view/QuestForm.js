@@ -7,11 +7,19 @@ import constants     from '../constants.js';
 
 export default class QuestForm extends FormApplication
 {
-   constructor(object = {}, options = {})
+   /**
+    * @param subquest
+    * @param parentId
+    * @param options
+    */
+   constructor({ parentId = void 0, ...options } = {})
    {
-      super(object, options);
+      super({}, options);
 
       this._submitted = false;
+
+      this.parentId = parentId;
+      this.subquest = parentId !== void 0;
    }
 
    /**
@@ -99,12 +107,12 @@ export default class QuestForm extends FormApplication
 
       if (this.subquest)
       {
-         data.parent = this.object.id;
+         data.parent = this.parentId;
       }
 
       data = new Quest(data);
 
-      return JournalEntry.create({
+      const entry = await JournalEntry.create({
          name: title,
          folder: QuestFolder.get().id,
          permission: { default: permission },
@@ -113,22 +121,22 @@ export default class QuestForm extends FormApplication
                json: data.toJSON()
             }
          }
-      }).then((entry) =>
-      {
-         if (this.subquest)
-         {
-            this.object.addSubquest(entry.id);
-            this.object.save().then(() =>
-            {
-               Socket.refreshQuestPreview(this.object.id);
-            });
-         }
-         // players don't see Hidden tab, but assistant GM can, so emit anyway
-         Socket.refreshQuestLog();
-         this._submitted = true;
-
-         return entry;
       });
+
+      if (this.subquest)
+      {
+         const parentQuest = await Quest.get(this.parentId);
+         parentQuest.addSubquest(entry.id);
+         await parentQuest.save();
+
+         Socket.refreshQuestPreview(parentQuest.id);
+      }
+
+      // players don't see Hidden tab, but assistant GM can, so emit anyway
+      Socket.refreshQuestLog();
+      this._submitted = true;
+
+      return entry;
    }
 
    /**
@@ -261,18 +269,16 @@ export default class QuestForm extends FormApplication
     */
    async getData(options = {})
    {
-      this.subquest = (this.object.id !== undefined);
-      const parent = this.subquest ? this.object : null;
-
       if (this.subquest)
       {
-         this.options.title += ` – ${game.i18n.format('ForienQuestLog.QuestForm.SubquestOf', { name: parent.name })}`;
+         const parentQuest = await Quest.get(this.parentId);
+         this.options.title += ` – ${game.i18n.format('ForienQuestLog.QuestForm.SubquestOf', 
+          { name: parentQuest.name })}`;
       }
 
       return {
          isGM: game.user.isGM,
          subquest: this.subquest,
-         parent,
          options: mergeObject(this.options, options)
       };
    }

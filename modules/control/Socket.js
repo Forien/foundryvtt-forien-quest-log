@@ -20,6 +20,7 @@ export default class Socket
       {
          game.questPreview[questId].close();
       }
+
       game.socket.emit('module.forien-quest-log', {
          type: 'closeQuest',
          payload: {

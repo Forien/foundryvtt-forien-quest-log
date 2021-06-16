@@ -222,65 +222,49 @@ export default class Quest
       }
    }
 
-   /**
-    * Calls a delete quest dialog.
-    *
-    * @param questId
-    *
-    * @param parentId
-    *
-    * @returns {Promise<void>}
-    */
-   static async delete(questId, parentId = null)
+   async delete()
    {
-      const entry = this.get(questId);
+      const parentQuest = Quest.get(this.parent);
+      let parentId = null;
 
-      new Dialog({
-         title: game.i18n.format('ForienQuestLog.DeleteDialog.Title', entry.name),
-         content: `<h3>${game.i18n.localize('ForienQuestLog.DeleteDialog.Header')}</h3>` +
-          `<p>${game.i18n.localize('ForienQuestLog.DeleteDialog.Body')}</p>`,
-         buttons: {
-            yes: {
-               icon: '<i class="fas fa-trash"></i>',
-               label: game.i18n.localize('ForienQuestLog.DeleteDialog.Delete'),
-               callback: () => this.deleteConfirm(questId, parentId)
-            },
-            no: {
-               icon: '<i class="fas fa-times"></i>',
-               label: game.i18n.localize('ForienQuestLog.DeleteDialog.Cancel')
-            }
-         },
-         default: 'yes'
-      }).render(true);
-   }
-
-   /**
-    * Called when user confirms the delete.
-    * Deletes the Quest by deleting related JournalEntry.
-    *
-    * @param questId
-    *
-    * @param parentId
-    *
-    * @returns {Promise<void>}
-    */
-   static async deleteConfirm(questId, parentId = null)
-   {
-      const entry = game.journal.get(questId);
-
-      if (parentId !== null)
+      // Remove this quest from any parent
+      if (parentQuest)
       {
-         const quest = Quest.get(parentId);
-         quest.removeSubquest(questId);
-         await quest.save();
-         Socket.refreshQuestPreview(parentId);
+         parentId = parentQuest.id;
+         parentQuest.removeSubquest(this.id);
       }
 
-      entry.delete().then(() =>
+      // Update children to point to any new parent.
+      for (const childId of this.subquests)
       {
-         Socket.refreshQuestLog();
-         Socket.closeQuest(questId);
-      });
+         const childQuest = Quest.get(childId);
+         if (childQuest)
+         {
+            childQuest.parent = parentId;
+            await childQuest.save();
+            Socket.refreshQuestPreview(childQuest.id);
+
+            // Update parent with new subquests.
+            if (parentQuest)
+            {
+               parentQuest.addSubquest(childQuest.id);
+            }
+         }
+      }
+
+      if (parentQuest)
+      {
+         await parentQuest.save();
+         Socket.refreshQuestPreview(parentQuest.id);
+      }
+
+      if (this.entry)
+      {
+         await this.entry.delete();
+      }
+
+      Socket.closeQuest(this.id);
+      Socket.refreshQuestLog();
    }
 
    /**
@@ -294,7 +278,8 @@ export default class Quest
 
       if (!entry)
       {
-         throw new Error(game.i18n.localize('ForienQuestLog.QuestPreview.InvalidQuestId'));
+         return null;
+         // throw new Error(game.i18n.localize('ForienQuestLog.QuestPreview.InvalidQuestId'));
       }
 
       const content = this.getContent(entry);
@@ -533,6 +518,11 @@ export default class Quest
     */
    async save()
    {
+      const entry = game.journal.get(this._id);
+
+      // If the entry doesn't exist or the user can't modify the journal entry via ownership then early out.
+      if (!entry || !entry.canUserModify(game.user, 'update')) { return; }
+
       const update = {
          name: typeof this._title === 'string' && this._title.length > 0 ? this._title :
           game.i18n.localize('ForienQuestLog.NewQuest'),
@@ -546,8 +536,9 @@ export default class Quest
          update.permission = this.entryPermission;
       }
 
-      const entry = game.journal.get(this._id);
       await entry.update(update, { diff: false });
+
+      return this._id;
    }
 
    /**

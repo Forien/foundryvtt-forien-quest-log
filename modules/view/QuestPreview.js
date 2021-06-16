@@ -1,3 +1,4 @@
+import FQLDialog  from './FQLDialog.js';
 import QuestForm  from './QuestForm.js';
 import ViewData   from './ViewData.js';
 import QuestAPI   from '../control/QuestAPI.js';
@@ -240,7 +241,12 @@ export default class QuestPreview extends FormApplication
             }
             else if (classList.includes('delete'))
             {
-               Quest.delete(questId, this.quest.id).then(() => this.refresh());
+               const quest = Quest.get(questId);
+
+               if (quest && await FQLDialog.confirmDelete(quest))
+               {
+                  await quest.delete();
+               }
             }
          });
 
@@ -572,7 +578,7 @@ export default class QuestPreview extends FormApplication
 
          html.on('click', '.add-subquest-btn', () =>
          {
-            new QuestForm(this.quest, { subquest: true }).render(true);
+            new QuestForm({ parentId: this.quest.id }).render(true);
          });
 
          html.on('click', '#player-edit', (event) =>
@@ -654,6 +660,7 @@ export default class QuestPreview extends FormApplication
 
       Socket.refreshQuestLog();
       Socket.refreshQuestPreview(this.quest.id);
+
       if (this.quest.parent)
       {
          Socket.refreshQuestPreview(this.quest.parent);

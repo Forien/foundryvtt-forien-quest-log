@@ -69,12 +69,15 @@ export default class ViewData
          data.isSubquest = true;
 
          const parentData = Quest.get(data.parent);
-         data.data_parent = {
-            id: data.parent,
-            giver: parentData.giver,
-            title: parentData.title,
-            status: parentData.status
-         };
+         if (parentData)
+         {
+            data.data_parent = {
+               id: data.parent,
+               giver: parentData.giver,
+               title: parentData.title,
+               status: parentData.status
+            };
+         }
       }
       else
       {
@@ -126,6 +129,7 @@ export default class ViewData
          for (const questId of data.subquests)
          {
             const subData = Quest.get(questId);
+
             if (subData)
             {
                data.data_subquest.push({
