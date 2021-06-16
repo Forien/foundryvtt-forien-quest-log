@@ -1,34 +1,12 @@
-import QuestPreview  from '../view/QuestPreview.js';
+import Socket        from './Socket.js';
 import Quest         from '../model/Quest.js';
-import Reward        from '../model/Reward.js';
-import Task          from '../model/Task.js';
-import Socket        from '../control/Socket.js';
+import QuestPreview  from '../view/QuestPreview.js';
 
 /**
  * Quest public Api available under `Quests.`
  */
 export default class QuestAPI
 {
-   /**
-    * Tunnel to `game.quests.reward.create()`. Creates new Reward programmatically through API.
-    *
-    * @returns {Reward}
-    */
-   static get reward()
-   {
-      return Reward;
-   }
-
-   /**
-    * Tunnel to `game.quests.task.create()`. Creates new Task programmatically through API.
-    *
-    * @returns {Task}
-    */
-   static get task()
-   {
-      return Task;
-   }
-
    /**
     * Creates new Quest programmatically through API
     *

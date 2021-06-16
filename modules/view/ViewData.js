@@ -1,11 +1,8 @@
-import Reward           from '../model/Reward.js';
-import Task             from '../model/Task.js';
-import Quest            from '../model/Quest.js';
+import Quest from '../model/Quest.js';
 
 export default class ViewData
 {
    /**
-    *
     * @param {SortedQuests}   sortedQuests
     *
     * @returns {Promise<object>}
@@ -57,8 +54,8 @@ export default class ViewData
       data.parent = quest.parent || null;
       data.permission = quest.permission || 0;
       data.subquests = quest.subquests || [];
-      data.tasks = Array.isArray(quest.tasks) ? quest.tasks.map((task) => new Task(task)) : [];
-      data.rewards = Array.isArray(quest.rewards) ? quest.rewards.map((reward) => new Reward(reward)) : [];
+      data.tasks = Array.isArray(quest.tasks) ? quest.tasks.map((task) => task.toJSON()) : [];
+      data.rewards = Array.isArray(quest.rewards) ? quest.rewards.map((reward) => reward.toJSON()) : [];
 
       const isGM = game.user.isGM;
       const canPlayerDrag = game.settings.get('forien-quest-log', 'allowPlayersDrag');
@@ -97,9 +94,9 @@ export default class ViewData
          data.totalTasks = data.tasks.filter((t) => t.hidden === false).length;
       }
 
-      data.data_tasks = data.tasks.map((t) =>
+      // TODO EVALUATE: We no longer are allowing user data to be enriched / currently escaping
+      data.data_tasks = data.tasks.map((task) =>
       {
-         const task = new Task(t);
          task.name = TextEditor.enrichHTML(task.name);
          return task;
       });

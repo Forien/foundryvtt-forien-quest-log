@@ -1,8 +1,6 @@
-import Socket              from '../control/Socket.js';
 import QuestFolder         from './QuestFolder.js';
-import Reward              from './Reward.js';
-import Task                from './Task.js';
 import QuestsCollection    from './QuestsCollection.js';
+import Socket              from '../control/Socket.js';
 import QuestPreview        from '../view/QuestPreview.js';
 import constants           from '../constants.js';
 
@@ -372,7 +370,7 @@ export default class Quest
 
          if (content)
          {
-            entries.push(content);
+            entries.push(new Quest(content, entry));
          }
       }
 
@@ -817,5 +815,171 @@ export default class Quest
       return entry.testUserPermission(user, permission, options);
    }
 }
+
+class Reward
+{
+   constructor(data = {})
+   {
+      this._type = data.type || null;
+      this._data = data.data || {};
+      this._hidden = data.hidden || false;
+   }
+
+   get data()
+   {
+      return this._data;
+   }
+
+   set data(data)
+   {
+      this._data = data;
+   }
+
+   get hidden()
+   {
+      return this._hidden;
+   }
+
+   set hidden(value)
+   {
+      this._hidden = value;
+   }
+
+   get isValid()
+   {
+      return (this._type !== null);
+   }
+
+   get type()
+   {
+      return this._type;
+   }
+
+   set type(type)
+   {
+      this._type = type;
+   }
+
+   toJSON()
+   {
+      return JSON.parse(JSON.stringify({
+         type: this._type,
+         data: this._data,
+         hidden: this._hidden
+      }));
+   }
+
+   async toggleVisible()
+   {
+      this._hidden = !this._hidden;
+
+      return this._hidden;
+   }
+}
+
+class Task
+{
+   constructor(data = {})
+   {
+      this._name = data.name || null;
+      this._completed = data.completed || false;
+      this._failed = data.failed || false;
+      this._hidden = data.hidden || false;
+   }
+
+   get completed()
+   {
+      return this._completed;
+   }
+
+   set completed(completed)
+   {
+      this._completed = (completed === true);
+   }
+
+   get failed()
+   {
+      return this._failed;
+   }
+
+   set failed(failed)
+   {
+      this._failed = (failed === true);
+   }
+
+   get hidden()
+   {
+      return this._hidden;
+   }
+
+   set hidden(hidden)
+   {
+      this._hidden = (hidden === true);
+   }
+
+   get isValid()
+   {
+      return (this._name.length);
+   }
+
+   get name()
+   {
+      return this._name;
+   }
+
+   set name(name)
+   {
+      this._name = name;
+   }
+
+   get state()
+   {
+      if (this._completed)
+      {
+         return 'check-square';
+      }
+      else if (this._failed)
+      {
+         return 'minus-square';
+      }
+      return 'square';
+   }
+
+   toJSON()
+   {
+      return JSON.parse(JSON.stringify({
+         name: this._name,
+         completed: this._completed,
+         failed: this._failed,
+         hidden: this._hidden,
+         state: this.state
+      }));
+   }
+
+   toggle()
+   {
+      if (this._completed === false && this._failed === false)
+      {
+         this._completed = true;
+      }
+      else if (this._completed === true)
+      {
+         this._failed = true;
+         this._completed = false;
+      }
+      else
+      {
+         this._failed = false;
+      }
+   }
+
+   async toggleVisible()
+   {
+      this._hidden = !this._hidden;
+
+      return this._hidden;
+   }
+}
+
 
 window.Quest = Quest;

@@ -1,6 +1,6 @@
-import Quest      from '../model/Quest.js';
-import ViewData   from '../view/ViewData.js';
-import QuestFolder from '../model/QuestFolder.js';
+import Quest         from '../model/Quest.js';
+import QuestFolder   from '../model/QuestFolder.js';
+import ViewData      from '../view/ViewData.js';
 
 /**
  * Function for registering API-related Hooks.

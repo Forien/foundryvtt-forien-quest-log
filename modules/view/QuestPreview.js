@@ -1,8 +1,8 @@
 import QuestForm  from './QuestForm.js';
 import ViewData   from './ViewData.js';
-import QuestAPI   from '../api/QuestAPI.js';
-import Quest      from '../model/Quest.js';
+import QuestAPI   from '../control/QuestAPI.js';
 import Socket     from '../control/Socket.js';
+import Quest      from '../model/Quest.js';
 import Utils      from '../utils/Utils.js';
 
 export default class QuestPreview extends FormApplication

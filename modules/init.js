@@ -1,14 +1,14 @@
-import QuestAPI                  from './api/QuestAPI.js';
-import QuestLogClass             from './view/QuestLog.js';
-import QuestFloatingWindowClass  from './view/QuestFloatingWindow.js';
-import QuestFolder               from './model/QuestFolder.js';
-import ModuleSettings            from './control/ModuleSettings.js';
-import Socket                    from './control/Socket.js';
-import Utils                     from './utils/Utils.js';
-import Quest                     from './model/Quest.js';
-import QuestsCollection          from './model/QuestsCollection.js';
-import QuestTracker              from './view/QuestTracker.js';
-import registerHooks          from './control/registerHooks.js';
+import ModuleSettings      from './control/ModuleSettings.js';
+import registerHooks       from './control/registerHooks.js';
+import Socket              from './control/Socket.js';
+import QuestAPI            from './control/QuestAPI.js';
+import Quest               from './model/Quest.js';
+import QuestFolder         from './model/QuestFolder.js';
+import QuestsCollection    from './model/QuestsCollection.js';
+import QuestFloatingWindow from './view/QuestFloatingWindow.js';
+import QuestLog            from './view/QuestLog.js';
+import QuestTracker        from './view/QuestTracker.js';
+import Utils               from './utils/Utils.js';
 
 Hooks.once('init', () =>
 {
@@ -21,8 +21,8 @@ Hooks.once('init', () =>
 Hooks.once('setup', () =>
 {
    window.Quests = QuestAPI;
-   window.QuestLog = new QuestLogClass();
-   window.QuestFloatingWindow = new QuestFloatingWindowClass();
+   window.QuestLog = new QuestLog();
+   window.QuestFloatingWindow = new QuestFloatingWindow();
    game.questPreview = {};
 
    Hooks.callAll('ForienQuestLog.afterSetup');

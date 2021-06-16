@@ -1,9 +1,8 @@
 import ViewData      from './ViewData.js';
-import QuestFolder   from '../model/QuestFolder.js';
-import Utils         from '../utils/Utils.js';
-import Task          from '../model/Task.js';
-import Quest         from '../model/Quest.js';
 import Socket        from '../control/Socket.js';
+import QuestFolder   from '../model/QuestFolder.js';
+import Quest         from '../model/Quest.js';
+import Utils         from '../utils/Utils.js';
 import constants     from '../constants.js';
 
 export default class QuestForm extends FormApplication
@@ -34,7 +33,7 @@ export default class QuestForm extends FormApplication
 
    /**
     * Need to override because of earlier bad design caused bug with text editors inheriting parent's data
-    *
+    * TODO: EVALUATE THIS METHOD
     * @param div
     *
     * @private
@@ -100,19 +99,6 @@ export default class QuestForm extends FormApplication
          title = game.i18n.localize('ForienQuestLog.NewQuest');
       }
 
-      let tasks = [];
-      if (formData.tasks !== undefined)
-      {
-         if (!Array.isArray(formData.tasks))
-         {
-            formData.tasks = [formData.tasks];
-         }
-         tasks = formData.tasks.filter((t) => t.length > 0).map((t) =>
-         {
-            return new Task({ name: t });
-         });
-      }
-
       const description = (formData.description !== undefined && formData.description.length) ? formData.description :
        this.description;
 
@@ -122,8 +108,7 @@ export default class QuestForm extends FormApplication
          giver,
          title,
          description,
-         gmnotes,
-         tasks
+         gmnotes
       };
 
       if (!game.user.isGM)

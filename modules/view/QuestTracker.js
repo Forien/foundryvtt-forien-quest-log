@@ -1,5 +1,5 @@
 import RepositionableApplication from './RepositionableApplication.js';
-import QuestAPI                  from '../api/QuestAPI.js';
+import QuestAPI                  from '../control/QuestAPI.js';
 import Quest                     from '../model/Quest.js';
 import constants                 from '../constants.js';
 

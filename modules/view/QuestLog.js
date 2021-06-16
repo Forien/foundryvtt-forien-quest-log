@@ -1,8 +1,8 @@
-import Quest         from '../model/Quest.js';
 import ViewData      from './ViewData.js';
 import QuestPreview  from './QuestPreview.js';
 import QuestForm     from './QuestForm.js';
 import Socket        from '../control/Socket.js';
+import Quest         from '../model/Quest.js';
 
 export default class QuestLog extends Application
 {
