@@ -59,10 +59,8 @@ export default class QuestLog extends Application
          {
             Socket.acceptQuest(questId);
          }
-         if (!game.user.isGM)
-         {
-            return;
-         }
+
+         if (!game.user.isGM) { return; }
 
          const classList = $(event.target).attr('class');
          if (classList.includes('move'))
@@ -105,27 +103,20 @@ export default class QuestLog extends Application
 
       });
 
-      html.on('drop', '.tab', (event) =>
+      // TODO: EVALUATE SEEMS LIKE NOTHING IS HAPPENING IN THIS DROP CALLBACK
+      html.on('drop', '.tab', async (event) =>
       {
          const dt = event.target.closest('.drag-quest') || null;
-         if (!dt)
-         {
-            return;
-         }
+         if (!dt) { return; }
 
          const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
          const id = data.id;
+
          const journal = game.journal.get(id);
-         if (!journal)
-         {
-            return;
-         }
+         if (!journal) { return; }
 
          const quest = Quest.get(id);
-         if (!quest)
-         {
-            return;
-         }
+         if (!quest) { return; }
 
          const sortData = { sortKey: 'sort', sortBefore: true };
          const targetId = dt.dataset.questId;
@@ -135,7 +126,9 @@ export default class QuestLog extends Application
 
          sortData.siblings = game.journal.filter((e) => (e.id !== data.id && ids.includes(e.id)));
 
-         journal.sortRelative(sortData).then(() => this.render());
+         await journal.sortRelative(sortData);
+
+         this.render();
       });
    }
 

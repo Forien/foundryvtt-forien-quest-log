@@ -200,17 +200,13 @@ export default class QuestForm extends FormApplication
          }
       });
 
-      html.on('click', '.add-new-task', () =>
+      html.on('click', '.add-new-task', async () =>
       {
-         renderTemplate('modules/forien-quest-log/templates/partials/quest-form/task.html', {}).then((el) =>
-         {
-            html.find('.list').append(el);
-            html.find('.del-btn').unbind();
-            html.on('click', '.del-btn', (event) =>
-            {
-               $(event.target).parent().remove();
-            });
-         });
+         const el = await renderTemplate('modules/forien-quest-log/templates/partials/quest-form/task.html', {});
+
+         html.find('.list').append(el);
+         html.find('.del-btn').unbind();
+         html.on('click', '.del-btn', (event) => { $(event.target).parent().remove(); });
       });
 
       html.on('click', '.source-image', () =>
