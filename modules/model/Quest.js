@@ -414,25 +414,23 @@ export default class Quest
    /**
     * Moves Quest (and Journal Entry) to different Folder and updates permissions if needed.
     *
-    * @param questId
-    *
     * @param target
     *
     * @param permission
     *
     * @returns {Promise<void>}
     */
-   static async move(questId, target, permission = undefined)
+   async move(target, permission = undefined)
    {
-      const journal = game.journal.get(questId);
-      const quest = Quest.get(questId);
+      // TODO: REMOVE WHEN ALL QUESTS HAVE JOURNAL ENTRIES GUARANTEED
+      if (!this.entry) { return; }
 
       if (permission === undefined)
       {
-         permission = journal.data.permission;
+         permission = this.entry.data.permission;
       }
 
-      if (!quest.personal)
+      if (!this.personal)
       {
          if (permission.default < CONST.ENTITY_PERMISSIONS.OWNER)
          {
@@ -447,20 +445,21 @@ export default class Quest
          }
       }
 
-      quest.status = target;
+      this.status = target;
 
-      return journal.update({
+      await this.entry.update({
          flags: {
-            [constants.moduleName]: { json: quest.toJSON() }
+            [constants.moduleName]: { json: this.toJSON() }
          },
          permission
-      }).then(() =>
-      {
-         Socket.refreshQuestLog();
-         Socket.refreshQuestPreview(questId);
-         const dirname = game.i18n.localize(this.getQuestTypes()[target]);
-         ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved', { target: dirname }), {});
       });
+
+      Socket.refreshQuestLog();
+      Socket.refreshQuestPreview(this.id);
+
+      const dirname = game.i18n.localize(Quest.getQuestTypes()[target]);
+
+      ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved', { target: dirname }), {});
    }
 
    /**

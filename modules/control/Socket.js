@@ -31,7 +31,7 @@ export default class Socket
 
    static listen()
    {
-      game.socket.on('module.forien-quest-log', (data) =>
+      game.socket.on('module.forien-quest-log', async (data) =>
       {
          const fqlPublicAPI = Utils.getFQLPublicAPI();
 
@@ -89,7 +89,8 @@ export default class Socket
          {
             if (game.user.isGM)
             {
-               Quest.move(data.payload.questId, 'active');
+               const quest = Quest.get(data.payload.questId);
+               if (quest) { await quest.move('active'); }
             }
          }
 

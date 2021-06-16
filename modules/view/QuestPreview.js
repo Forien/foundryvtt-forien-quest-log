@@ -237,7 +237,14 @@ export default class QuestPreview extends FormApplication
 
             if (classList.includes('move'))
             {
-               Quest.move(questId, target).then(() => this.refresh());
+               const quest = Quest.get(questId);
+
+               if (quest && await quest.move(target))
+               {
+                  this.refresh();
+               }
+
+               // Quest.move(questId, target).then(() => this.refresh());
             }
             else if (classList.includes('delete'))
             {

@@ -67,7 +67,8 @@ export default class QuestLog extends Application
          const classList = $(event.target).attr('class');
          if (classList.includes('move'))
          {
-            Quest.move(questId, target);
+            const quest = Quest.get(questId);
+            if (quest) { await quest.move(target); }
          }
          else if (classList.includes('delete'))
          {
