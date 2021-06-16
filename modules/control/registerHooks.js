@@ -1,16 +1,19 @@
 import Quest         from '../model/Quest.js';
 import QuestFolder   from '../model/QuestFolder.js';
 import ViewData      from '../view/ViewData.js';
+import Utils         from '../utils/Utils.js';
 
 /**
  * Function for registering API-related Hooks.
  */
 export default function registerHooks()
 {
+   const fqlPublicAPI = Utils.getFQLPublicAPI();
+
    // Open quest log
    Hooks.on('ForienQuestLog.Open.QuestLog', () =>
    {
-      QuestLog.render(true);
+      fqlPublicAPI.questLog.render(true);
    });
 
    // Create 'open quest' Macro when Quest is dropped onto Hotbar.
@@ -61,7 +64,7 @@ export default function registerHooks()
 
       button.click(() =>
       {
-         QuestLog.render(true);
+         fqlPublicAPI.questLog.render(true);
       });
 
       if (!(game.user.isGM && game.settings.get('forien-quest-log', 'showFolder')))
@@ -82,7 +85,7 @@ export default function registerHooks()
          title: 'ForienQuestLog.QuestLogButton',
          icon: 'fas fa-pen-fancy',
          visible: true,
-         onClick: () => QuestLog.render(true),
+         onClick: () => fqlPublicAPI.questLog.render(true),
          button: true
       });
 
@@ -91,10 +94,9 @@ export default function registerHooks()
          title: 'ForienQuestLog.FloatingQuestWindow',
          icon: 'fas fa-bookmark',
          visible: true,
-         onClick: () => QuestFloatingWindow.render(true),
+         onClick: () => fqlPublicAPI.questLogFloating.render(true),
          button: true
       });
-
    });
 
 

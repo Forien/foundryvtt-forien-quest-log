@@ -1,4 +1,5 @@
-import QuestTracker from '../view/QuestTracker.js';
+import QuestTracker  from '../view/QuestTracker.js';
+import Utils         from '../utils/Utils.js';
 
 const s_QUEST_TRACKER_DEFAULT = { top: 80 };
 
@@ -18,10 +19,11 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            // TODO: Need to replace this with game.modules.get(...).QuestLog
-            if (QuestLog && QuestLog.rendered)
+            const fqlPublicAPI = Utils.getFQLPublicAPI();
+
+            if (fqlPublicAPI.questLog.rendered)
             {
-               QuestLog.render();
+               fqlPublicAPI.questLog.render();
             }
          }
       });
@@ -35,10 +37,11 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            // TODO: Need to replace this with game.modules.get(...).QuestLog
-            if (QuestLog && QuestLog.rendered)
+            const fqlPublicAPI = Utils.getFQLPublicAPI();
+
+            if (fqlPublicAPI.questLog.rendered)
             {
-               QuestLog.render();
+               fqlPublicAPI.questLog.render();
             }
          }
       });
@@ -52,10 +55,11 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            // TODO: Need to replace this with game.modules.get(...).QuestLog
-            if (QuestLog && QuestLog.rendered)
+            const fqlPublicAPI = Utils.getFQLPublicAPI();
+
+            if (fqlPublicAPI.questLog.rendered)
             {
-               QuestLog.render();
+               fqlPublicAPI.questLog.render();
             }
          }
       });
@@ -69,10 +73,11 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            // TODO: Need to replace this with game.modules.get(...).QuestLog
-            if (QuestLog && QuestLog.rendered)
+            const fqlPublicAPI = Utils.getFQLPublicAPI();
+
+            if (fqlPublicAPI.questLog.rendered)
             {
-               QuestLog.render();
+               fqlPublicAPI.questLog.render();
             }
          }
       });
@@ -86,10 +91,11 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            // TODO: Need to replace this with game.modules.get(...).QuestLog
-            if (QuestLog && QuestLog.rendered)
+            const fqlPublicAPI = Utils.getFQLPublicAPI();
+
+            if (fqlPublicAPI.questLog.rendered)
             {
-               QuestLog.render();
+               fqlPublicAPI.questLog.render();
             }
          }
       });
@@ -108,10 +114,11 @@ export default class ModuleSettings
          },
          onChange: () =>
          {
-            // TODO: Need to replace this with game.modules.get(...).QuestLog
-            if (QuestLog && QuestLog.rendered)
+            const fqlPublicAPI = Utils.getFQLPublicAPI();
+
+            if (fqlPublicAPI.questLog.rendered)
             {
-               QuestLog.render();
+               fqlPublicAPI.questLog.render();
             }
          }
       });
@@ -129,14 +136,16 @@ export default class ModuleSettings
          },
          onChange: () =>
          {
-            // TODO: Need to replace this with game.modules.get(...).QuestLog
-            if (QuestLog && QuestLog.rendered)
+            const fqlPublicAPI = Utils.getFQLPublicAPI();
+
+            if (fqlPublicAPI.questLog.rendered)
             {
-               QuestLog.render();
+               fqlPublicAPI.questLog.render();
             }
          }
       });
 
+      // TODO: EXAMINE DEADCODE
       /*
           game.settings.register('forien-quest-log', 'titleAlign', {
             name: 'ForienQuestLog.Settings.titleAlign.Enable',

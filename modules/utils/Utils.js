@@ -1,5 +1,31 @@
+import constants from '../constants.js';
+
 export default class Utils
 {
+   /**
+    * A convenience method to return the module data object for FQL.
+    *
+    * This is a scoped location where we can store any FQL data.
+    *
+    * @returns {object} The FQL module data object.
+    */
+   static getModuleData()
+   {
+      return game.modules.get(constants.moduleName);
+   }
+
+   /**
+    * A convenience method to return the module data object for FQL.
+    *
+    * This is a scoped location where we can store any FQL data.
+    *
+    * @returns {FQLPublicAPI} The FQL module data object.
+    */
+   static getFQLPublicAPI()
+   {
+      return this.getModuleData().public;
+   }
+
    /**
     * Builds a UUID for the given actor / journal / item data.
     *

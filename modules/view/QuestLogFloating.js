@@ -2,7 +2,7 @@ import QuestPreview  from './QuestPreview.js';
 import ViewData      from './ViewData.js';
 import Quest         from '../model/Quest.js';
 
-export default class QuestFloatingWindow extends Application
+export default class QuestLogFloating extends Application
 {
    constructor(options = {})
    {

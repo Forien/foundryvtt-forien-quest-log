@@ -1,5 +1,6 @@
-import QuestAPI   from './QuestAPI.js';
 import Quest      from '../model/Quest.js';
+import QuestAPI   from '../control/QuestAPI.js';
+import Utils      from '../utils/Utils.js';
 
 export default class Socket
 {
@@ -31,15 +32,17 @@ export default class Socket
    {
       game.socket.on('module.forien-quest-log', (data) =>
       {
+         const fqlPublicAPI = Utils.getFQLPublicAPI();
+
          if (data.type === 'questLogRefresh')
          {
-            if (QuestLog.rendered)
+            if (fqlPublicAPI.questLog.rendered)
             {
-               QuestLog.render(true);
+               fqlPublicAPI.questLog.render(true);
             }
-            if (QuestFloatingWindow.rendered)
+            if (fqlPublicAPI.questLogFloating.rendered)
             {
-               QuestFloatingWindow.render(true);
+               fqlPublicAPI.questLogFloating.render(true);
             }
             return;
          }
@@ -51,13 +54,13 @@ export default class Socket
                game.questPreview[data.payload.questId].render(true);
             }
 
-            if (QuestLog.rendered)
+            if (fqlPublicAPI.questLog.rendered)
             {
-               QuestLog.render(true);
+               fqlPublicAPI.questLog.render(true);
             }
-            if (QuestFloatingWindow.rendered)
+            if (fqlPublicAPI.questLogFloating.rendered)
             {
-               QuestFloatingWindow.render(true);
+               fqlPublicAPI.questLogFloating.render(true);
             }
             return;
          }
@@ -80,6 +83,7 @@ export default class Socket
             return;
          }
 
+         // TODO: Can this be removed if we can subscribe to JournalEntry changes?
          if (data.type === 'acceptQuest')
          {
             if (game.user.isGM)
@@ -98,23 +102,27 @@ export default class Socket
       });
    }
 
+   // TODO: Can this be removed if we can subscribe to JournalEntry changes?
    static refreshQuestLog()
    {
-      if (QuestLog.rendered)
+      const fqlPublicAPI = Utils.getFQLPublicAPI();
+
+      if (fqlPublicAPI.questLog.rendered)
       {
-         QuestLog.render(true);
+         fqlPublicAPI.questLog.render(true);
       }
 
       game.socket.emit('module.forien-quest-log', {
          type: 'questLogRefresh'
       });
 
-      if (QuestFloatingWindow.rendered)
+      if (fqlPublicAPI.questLogFloating.rendered)
       {
-         QuestFloatingWindow.render(true);
+         fqlPublicAPI.questLogFloating.render(true);
       }
    }
 
+   // TODO: Can this be removed if we can subscribe to JournalEntry changes?
    static refreshQuestPreview(questId)
    {
       if (game.questPreview[questId] !== undefined)

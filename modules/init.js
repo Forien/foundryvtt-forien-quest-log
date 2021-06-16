@@ -5,7 +5,7 @@ import QuestAPI            from './control/QuestAPI.js';
 import Quest               from './model/Quest.js';
 import QuestFolder         from './model/QuestFolder.js';
 import QuestsCollection    from './model/QuestsCollection.js';
-import QuestFloatingWindow from './view/QuestFloatingWindow.js';
+import QuestLogFloating from './view/QuestLogFloating.js';
 import QuestLog            from './view/QuestLog.js';
 import QuestTracker        from './view/QuestTracker.js';
 import Utils               from './utils/Utils.js';
@@ -20,9 +20,19 @@ Hooks.once('init', () =>
 
 Hooks.once('setup', () =>
 {
-   window.Quests = QuestAPI;
-   window.QuestLog = new QuestLog();
-   window.QuestFloatingWindow = new QuestFloatingWindow();
+   const moduleData = Utils.getModuleData();
+
+   /**
+    * @type {FQLPublicAPI}
+    */
+   moduleData.public = {
+      QuestAPI,
+      questLog: new QuestLog(),
+      questLogFloating: new QuestLogFloating()
+   };
+
+   Object.freeze(moduleData.public);
+
    game.questPreview = {};
 
    Hooks.callAll('ForienQuestLog.afterSetup');

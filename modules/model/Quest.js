@@ -980,6 +980,3 @@ class Task
       return this._hidden;
    }
 }
-
-
-window.Quest = Quest;
