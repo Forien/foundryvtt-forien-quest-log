@@ -16,6 +16,12 @@ export default function registerHooks()
       fqlPublicAPI.questLog.render(true);
    });
 
+   // Open quest log floating window
+   Hooks.on('ForienQuestLog.Open.QuestLogFloating', () =>
+   {
+      fqlPublicAPI.questLogFloating.render(true);
+   });
+
    // Create 'open quest' Macro when Quest is dropped onto Hotbar.
    Hooks.on('hotbarDrop', async (bar, data, slot) =>
    {
@@ -66,7 +72,7 @@ export default function registerHooks()
       notes.tools.push({
          name: 'forien-quest-log-floating-window',
          title: 'ForienQuestLog.FloatingQuestWindow',
-         icon: 'fas fa-receipt',
+         icon: 'fas fa-tasks',
          visible: true,
          onClick: () => fqlPublicAPI.questLogFloating.render(true),
          button: true

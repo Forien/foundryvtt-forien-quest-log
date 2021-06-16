@@ -140,6 +140,7 @@ export default class QuestPreview extends FormApplication
 
    /**
     * Provide TinyMCE overrides.
+    *
     * @override
     */
    activateEditor(name, options = {}, initialContent = '')
@@ -586,21 +587,23 @@ export default class QuestPreview extends FormApplication
    /**
     * When closing window, remove reference from global variable.
     *
-    * @see render()
+    * Save the quest on close with no refresh of data.
+    *
     * @returns {Promise<void>}
+    * @inheritDoc
     */
-   async close()
+   async close(options)
    {
       delete game.questPreview[this.quest.id];
-      await super.close();
+      await this.saveQuest({ refresh: false });
+      return super.close(options);
    }
 
    /**
     * Retrieves Data to be used in rendering template.
     *
-    * @returns {Promise<Object>}
-    *
     * @override
+    * @inheritDoc
     */
    async getData(options = {}) // eslint-disable-line no-unused-vars
    {
@@ -648,6 +651,7 @@ export default class QuestPreview extends FormApplication
    async refresh()
    {
       this.render(true);
+
       Socket.refreshQuestLog();
       Socket.refreshQuestPreview(this.quest.id);
       if (this.quest.parent)
@@ -660,11 +664,10 @@ export default class QuestPreview extends FormApplication
     * When rendering window, add reference to global variable.
     *
     * @see close()
-    * @returns {Promise<Application>}
+    * @inheritDoc
     */
    async render(force = false, options = {})
    {
-      // TODO REMOVE?
       game.questPreview[this.quest.id] = this;
 
       if (force)
@@ -676,23 +679,14 @@ export default class QuestPreview extends FormApplication
    }
 
    /**
-    * When editor is saved, we want to update and save quest.
-    *
-    * @param target
-    *
-    * @param element
-    *
-    * @param content
+    * When editor is saved we simply save the quest. The editor content if any is available is saved inside 'saveQuest'.
     *
     * @returns {Promise<void>}
     * @private
     * @override
     */
-   saveEditor(name)
+   async saveEditor()
    {
-      const editor = this.editors[name];
-      this.quest[name] = editor.mce.getContent();
-      super.saveEditor(name);
       this.saveQuest();
    }
 
@@ -701,11 +695,21 @@ export default class QuestPreview extends FormApplication
     *
     * @returns {Promise<void>}
     */
-   async saveQuest()
+   async saveQuest({ refresh = true } = {})
    {
-      this.quest.save().then(() =>
+      for (const key of Object.keys(this.editors))
       {
-         this.refresh();
-      });
+         const editor = this.editors[key];
+
+         if (editor.mce)
+         {
+            this.quest[key] = editor.mce.getContent();
+            await super.saveEditor(key);
+         }
+      }
+
+      await this.quest.save();
+
+      return refresh ? this.refresh() : void 0;
    }
 }

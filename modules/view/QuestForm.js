@@ -32,51 +32,24 @@ export default class QuestForm extends FormApplication
    }
 
    /**
-    * Need to override because of earlier bad design caused bug with text editors inheriting parent's data
-    * TODO: EVALUATE THIS METHOD
-    * @param div
+    * Do not handle submitting data when the event is 'mcesave' for TinyMCE saving data.
     *
     * @private
+    * @override
+    * @inheritDoc
     */
-   _activateEditor(div)
+   async _onSubmit(event, options)
    {
-      const temp = this.object;
-      this.object = undefined;
-      super._activateEditor(div);
-      this.object = temp;
+      if (event && event.type === 'mcesave') { return; }
+      return super._onSubmit(event, options);
    }
 
    /**
-    * Fired whenever any of TinyMCE editors is saved.
-    * Just pass data to object's property, we handle save in one go after submit
-    *
-    * @see _updateObject()
-    *
-    * @param target
-    *
-    * @param element
-    *
-    * @param content
-    *
-    * @returns {Promise<void>}
-    * @private
-    */
-   async _onEditorSave(target, element, content)
-   {
-      this[target] = content;
-
-      // keep function to override parent function
-      // we don't need to submit form on editor save
-   }
-
-   /**
-    * Called 'on submit'. Handles saving Form's data
-    *
-    * @param event
-    *
-    * @param formData
+    * Called 'on submit'. Handles saving the form data.
     *
     * @private
+    * @override
+    * @inheritDoc
     */
    async _updateObject(event, formData)
    {
@@ -131,11 +104,9 @@ export default class QuestForm extends FormApplication
 
       data = new Quest(data);
 
-      const folder = this.getHiddenFolder();
-
       return JournalEntry.create({
          name: title,
-         folder: folder.id,
+         folder: QuestFolder.get().id,
          permission: { default: permission },
          flags: {
             [constants.moduleName]: {
@@ -173,7 +144,8 @@ export default class QuestForm extends FormApplication
    /**
     * Defines all event listeners like click, drag, drop etc.
     *
-    * @param html
+    * @override
+    * @inheritDoc
     */
    activateListeners(html)
    {
@@ -284,9 +256,8 @@ export default class QuestForm extends FormApplication
    /**
     * Retrieves Data to be used in rendering template.
     *
-    * @param options
-    *
-    * @returns {Promise<Object>}
+    * @override
+    * @inheritDoc
     */
    async getData(options = {})
    {
@@ -307,14 +278,18 @@ export default class QuestForm extends FormApplication
    }
 
    /**
-    * // TODO: REMOVE?
-    * Proxy for QuestFolder.get('hidden').
-    * Needed? probably not...
+    * Fired whenever any of TinyMCE editors is saved.
+    * Just pass data to object's property, we handle save in one go after submit
     *
-    * @returns {*}
+    * @override
+    * @inheritDoc
     */
-   getHiddenFolder()
+   async saveEditor(name, options)
    {
-      return QuestFolder.get('hidden');
+      const editor = this.editors[name];
+
+      if (editor.mce) { this[name] = editor.mce.getContent(); }
+
+      return super.saveEditor(name, options);
    }
 }

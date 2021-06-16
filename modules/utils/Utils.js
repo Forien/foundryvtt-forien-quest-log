@@ -137,9 +137,20 @@ export default class Utils
          file_picker_types: 'image media',
          media_alt_source: false,
          media_poster: false,
-         // Currently there is no easy way to remove the 'embed' tab from TinyMCE / media plugin; this hides it.
          setup: (editor) =>
          {
+            // Close the editor on 'esc' key pressed; reset content; invoke the registered Foundry save callback with
+            // a deferral via setTimeout.
+            editor.on('keydown', ((e) =>
+            {
+               if (e.keyCode === 27)
+               {
+                  editor.resetContent();
+                  setTimeout(() => editor.execCallback('save_onsavecallback'), 0);
+               }
+            }));
+
+            // Currently there is no easy way to remove the 'embed' tab from TinyMCE / media plugin; this hides it.
             editor.on('ExecCommand', (event) =>
             {
                const command = event.command;
