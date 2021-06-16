@@ -65,7 +65,7 @@ export default function registerHooks()
          title: 'ForienQuestLog.QuestLogButton',
          icon: 'fas fa-scroll',
          visible: true,
-         onClick: () => fqlPublicAPI.questLog.render(true),
+         onClick: () => fqlPublicAPI.questLog.render(true, { focus: true }),
          button: true
       });
 
@@ -74,7 +74,7 @@ export default function registerHooks()
          title: 'ForienQuestLog.FloatingQuestWindow',
          icon: 'fas fa-tasks',
          visible: true,
-         onClick: () => fqlPublicAPI.questLogFloating.render(true),
+         onClick: () => fqlPublicAPI.questLogFloating.render(true, { focus: true }),
          button: true
       });
    });

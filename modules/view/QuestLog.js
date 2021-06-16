@@ -84,7 +84,7 @@ export default class QuestLog extends Application
          const questId = $(event.target).closest('.title').data('quest-id');
          const quest = Quest.get(questId);
          const questPreview = new QuestPreview(quest);
-         questPreview.render(true);
+         questPreview.render(true, { focus: true });
       });
 
       html.on('click', '.sortable', (event) =>
