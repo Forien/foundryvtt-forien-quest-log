@@ -1,9 +1,9 @@
 import FQLDialog  from './FQLDialog.js';
 import QuestForm  from './QuestForm.js';
 import ViewData   from './ViewData.js';
+import Fetch      from '../control/Fetch.js';
 import QuestAPI   from '../control/QuestAPI.js';
 import Socket     from '../control/Socket.js';
-import Quest      from '../model/Quest.js';
 import Utils      from '../utils/Utils.js';
 
 export default class QuestPreview extends FormApplication
@@ -223,7 +223,7 @@ export default class QuestPreview extends FormApplication
 
             if (classList.includes('move'))
             {
-               const quest = Quest.get(questId);
+               const quest = Fetch.quest(questId);
 
                if (quest && await quest.move(target))
                {
@@ -232,7 +232,7 @@ export default class QuestPreview extends FormApplication
             }
             else if (classList.includes('delete'))
             {
-               const quest = Quest.get(questId);
+               const quest = Fetch.quest(questId);
 
                if (quest && await FQLDialog.confirmDelete(quest))
                {
@@ -257,7 +257,10 @@ export default class QuestPreview extends FormApplication
 
             if (data.mode === 'Sort' && data.type === 'Reward')
             {
-               await this.quest.sortRewards(event, data);
+               const dt = event.target.closest('li.reward') || null;
+               this.quest.sortRewards(data.index, dt?.dataset.index);
+               await this.quest.save();
+               Socket.refreshQuestPreview(this.quest.id);
             }
             else if (data.type === 'Item')
             {
@@ -279,7 +282,10 @@ export default class QuestPreview extends FormApplication
 
             if (data.mode === 'Sort' && data.type === 'Task')
             {
-               await this.quest.sortTasks(event, data);
+               const dt = event.target.closest('li.task') || null;
+               this.quest.sortTasks(data.index, dt?.dataset.index);
+               await this.quest.save();
+               Socket.refreshQuestPreview(this.quest.id);
             }
          });
 

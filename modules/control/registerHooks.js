@@ -1,7 +1,7 @@
-import Quest         from '../model/Quest.js';
+import Fetch         from '../control/Fetch.js';
+import { constants } from '../model/constants.js';
 import ViewData      from '../view/ViewData.js';
 import Utils         from '../utils/Utils.js';
-import constants     from '../constants.js';
 
 /**
  * Function for registering API-related Hooks.
@@ -29,7 +29,7 @@ export default function registerHooks()
       {
          const questId = data.id;
 
-         const quest = Quest.get(questId);
+         const quest = Fetch.quest(questId);
          if (!quest)
          {
             throw new Error(game.i18n.localize('ForienQuestLog.Api.hooks.createOpenQuestMacro.error.noQuest'));

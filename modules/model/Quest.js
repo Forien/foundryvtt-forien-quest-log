@@ -1,10 +1,7 @@
-import QuestFolder         from './QuestFolder.js';
-import QuestsCollection    from './QuestsCollection.js';
-import Socket              from '../control/Socket.js';
-import QuestPreview        from '../view/QuestPreview.js';
-import constants           from '../constants.js';
-
-import { migrateData_070 } from '../utils/migrateData.js';
+import Fetch                     from '../control/Fetch.js';
+import Socket                    from '../control/Socket.js';
+import QuestPreview              from '../view/QuestPreview.js';
+import { constants, questTypes } from './constants.js';
 
 /**
  * Class that acts "kind of" like Entity, to help Manage everything Quest Related
@@ -18,11 +15,6 @@ export default class Quest
       this.initData(data);
       this.entry = entry;
       this._data = data;
-   }
-
-   static get collection()
-   {
-      return QuestsCollection;
    }
 
    get description()
@@ -224,7 +216,7 @@ export default class Quest
 
    async delete()
    {
-      const parentQuest = Quest.get(this.parent);
+      const parentQuest = Fetch.quest(this.parent);
       let parentId = null;
 
       // Remove this quest from any parent
@@ -237,7 +229,7 @@ export default class Quest
       // Update children to point to any new parent.
       for (const childId of this.subquests)
       {
-         const childQuest = Quest.get(childId);
+         const childQuest = Fetch.quest(childId);
          if (childQuest)
          {
             childQuest.parent = parentId;
@@ -265,114 +257,6 @@ export default class Quest
 
       Socket.closeQuest(this.id);
       Socket.refreshQuestLog();
-   }
-
-   /**
-    * @param {string}   questId - The unique ID for the JE storing the quest.
-    *
-    * @returns {Quest} Returns the loaded quest.
-    */
-   static get(questId)
-   {
-      const entry = game.journal.get(questId);
-
-      if (!entry) { return null; }
-
-      const content = this.getContent(entry);
-
-      if (!content) { return null; }
-
-      content.permission = entry.permission;
-
-      return new Quest(content, entry);
-   }
-
-   static getContent(entry)
-   {
-      let content;
-
-      content = entry.getFlag(constants.moduleName, 'json');
-
-      // Attempt to load old quest format which is raw JSON stored in content of JE.
-      if (content === void 0)
-      {
-         content = migrateData_070(entry);
-
-         if (content === null) { return null; }
-      }
-
-      content.id = entry.id;
-
-      return content;
-   }
-
-   /**
-    * Returns localization strings for quest types (statuses)
-    *
-    * @returns {{hidden: string, available: string, active: string, completed: string, failed: string}}
-    */
-   static getQuestTypes()
-   {
-      return {
-         active: 'ForienQuestLog.QuestTypes.InProgress',
-         completed: 'ForienQuestLog.QuestTypes.Completed',
-         failed: 'ForienQuestLog.QuestTypes.Failed',
-         hidden: 'ForienQuestLog.QuestTypes.Hidden',
-         available: 'ForienQuestLog.QuestLog.Tabs.Available'
-      };
-   }
-
-   /**
-    * Retrieves all Quests, grouped by folders.
-    *
-    * @param sortTarget      sort by
-    *
-    * @param sortDirection   sort direction
-    *
-    * @param availableTab    true if Available tab is visible
-    *
-    * @returns {SortedQuests}
-    */
-   static getQuests(sortTarget = void 0, sortDirection = 'asc', availableTab = false)
-   {
-      const folder = QuestFolder.get();
-
-      /**
-       * @type {Quest[]}
-       */
-      let entries = [];
-
-      for (const entry of folder.content)
-      {
-         const content = this.getContent(entry);
-
-         if (content)
-         {
-            entries.push(new Quest(content, entry));
-         }
-      }
-
-      if (sortTarget !== undefined)
-      {
-         entries = this.sort(entries, sortTarget, sortDirection);
-      }
-
-      // Note the condition on 'e.parent === null' as this prevents sub quests from displaying in these categories
-      const quests = {
-         available: entries.filter((e) => e.status === 'available' && e.parent === null),
-         active: entries.filter((e) => e.status === 'active'),
-         completed: entries.filter((e) => e.status === 'completed' && e.parent === null),
-         failed: entries.filter((e) => e.status === 'failed' && e.parent === null),
-         hidden: entries.filter((e) => e.status === 'hidden' && e.parent === null)
-      };
-
-      if (!availableTab)
-      {
-         quests.hidden = [...quests.available, ...quests.hidden];
-         quests.hidden = this.sort(quests.hidden, sortTarget, sortDirection);
-      }
-
-      return quests;
    }
 
    /**
@@ -450,7 +334,7 @@ export default class Quest
       Socket.refreshQuestLog();
       Socket.refreshQuestPreview(this.id);
 
-      const dirname = game.i18n.localize(Quest.getQuestTypes()[target]);
+      const dirname = game.i18n.localize(questTypes[target]);
 
       ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved', { target: dirname }), {});
    }
@@ -461,7 +345,7 @@ export default class Quest
    refresh()
    {
       const entry = game.journal.get(this._id);
-      const content = Quest.getContent(entry);
+      const content = Fetch.content(entry);
 
       this.initData(content);
    }
@@ -510,6 +394,7 @@ export default class Quest
     */
    async save()
    {
+      // TODO: use this.entry and create a mirror of canUserModify
       const entry = game.journal.get(this._id);
 
       // If the entry doesn't exist or the user can't modify the journal entry via ownership then early out.
@@ -593,78 +478,18 @@ export default class Quest
       this.entryPermission = entryData.permission;
    }
 
-   /**
-    * Sort function to sort quests.
-    *
-    * @see getQuests()
-    *
-    * @param {Quest[]} quests - An array of Quests to sort.
-    *
-    * @param sortTarget
-    *
-    * @param sortDirection
-    *
-    * @returns {Quest[]} Sorted Quest array.
-    */
-   static sort(quests, sortTarget, sortDirection)
+   sortRewards(index, targetIdx)
    {
-      return quests.sort((a, b) =>
-      {
-         let targetA;
-         let targetB;
-
-         if (sortTarget === 'actor')
-         {
-            targetA = (a.actor) ? (a.actor.name || 'ZZZZZ') : 'ZZZZZ';
-            targetB = (b.actor) ? (b.actor.name || 'ZZZZZ') : 'ZZZZZ';
-         }
-         else
-         {
-            targetA = a[sortTarget];
-            targetB = b[sortTarget];
-         }
-
-         if (sortDirection === 'asc')
-         {
-            return (targetA < targetB) ? -1 : (targetA > targetB) ? 1 : 0;
-         }
-
-         return (targetA > targetB) ? -1 : (targetA < targetB) ? 1 : 0;
-      });
+      const entry = this.rewards.splice(index, 1)[0];
+      if (targetIdx) { this.rewards.splice(targetIdx, 0, entry); }
+      else { this.rewards.push(entry); }
    }
 
-   async sortParts(index, targetIdx, array)
+   sortTasks(index, targetIdx)
    {
-      const entry = array.splice(index, 1)[0];
-
-      if (targetIdx)
-      {
-         array.splice(targetIdx, 0, entry);
-      }
-      else
-      {
-         array.push(entry);
-      }
-
-      await this.save();
-
-      Socket.refreshQuestPreview(this.id);
-   }
-
-   async sortRewards(event, data)
-   {
-      const dt = event.target.closest('li.reward') || null;
-      const index = data.index;
-      const targetIdx = dt?.dataset.index;
-      return this.sortParts(index, targetIdx, this.rewards);
-   }
-
-   async sortTasks(event, data)
-   {
-      const dt = event.target.closest('li.task') || null;
-      const index = data.index;
-      const targetIdx = dt?.dataset.index;
-      return this.sortParts(index, targetIdx, this.tasks);
+      const entry = this.tasks.splice(index, 1)[0];
+      if (targetIdx) { this.tasks.splice(targetIdx, 0, entry); }
+      else { this.tasks.push(entry); }
    }
 
    toJSON()

@@ -1,5 +1,5 @@
 import Socket        from './Socket.js';
-import Quest         from '../model/Quest.js';
+import Fetch         from '../control/Fetch.js';
 import QuestPreview  from '../view/QuestPreview.js';
 
 /**
@@ -16,12 +16,12 @@ export default class QuestAPI
     */
    static get(questId)
    {
-      return Quest.get(questId);
+      return Fetch.quest(questId);
    }
 
    static getQuests()
    {
-      return Quest.getQuests()
+      return Fetch.sorted();
    }
 
    /**
@@ -35,7 +35,7 @@ export default class QuestAPI
    {
       try
       {
-         const quest = Quest.get(questId);
+         const quest = Fetch.quest(questId);
          const questPreview = new QuestPreview(quest);
          questPreview.render(true);
       }

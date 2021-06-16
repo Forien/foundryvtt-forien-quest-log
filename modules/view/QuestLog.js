@@ -1,9 +1,10 @@
-import FQLDialog     from './FQLDialog.js';
-import ViewData      from './ViewData.js';
-import QuestPreview  from './QuestPreview.js';
-import QuestForm     from './QuestForm.js';
-import Socket        from '../control/Socket.js';
-import Quest         from '../model/Quest.js';
+import FQLDialog        from './FQLDialog.js';
+import ViewData         from './ViewData.js';
+import QuestPreview     from './QuestPreview.js';
+import QuestForm        from './QuestForm.js';
+import Fetch            from '../control/Fetch.js';
+import Socket           from '../control/Socket.js';
+import { questTypes }   from '../model/constants.js';
 
 export default class QuestLog extends Application
 {
@@ -65,12 +66,12 @@ export default class QuestLog extends Application
          const classList = $(event.target).attr('class');
          if (classList.includes('move'))
          {
-            const quest = Quest.get(questId);
+            const quest = Fetch.quest(questId);
             if (quest) { await quest.move(target); }
          }
          else if (classList.includes('delete'))
          {
-            const quest = Quest.get(questId);
+            const quest = Fetch.quest(questId);
 
             if (quest && await FQLDialog.confirmDelete(quest))
             {
@@ -82,7 +83,7 @@ export default class QuestLog extends Application
       html.on('click', '.title', (event) =>
       {
          const questId = $(event.target).closest('.title').data('quest-id');
-         const quest = Quest.get(questId);
+         const quest = Fetch.quest(questId);
          const questPreview = new QuestPreview(quest);
          questPreview.render(true, { focus: true });
       });
@@ -115,14 +116,14 @@ export default class QuestLog extends Application
          const journal = game.journal.get(id);
          if (!journal) { return; }
 
-         const quest = Quest.get(id);
+         const quest = Fetch.quest(id);
          if (!quest) { return; }
 
          const sortData = { sortKey: 'sort', sortBefore: true };
          const targetId = dt.dataset.questId;
          sortData.target = game.journal.get(targetId);
 
-         const ids = Quest.getQuests()[quest.status].map((q) => q.id);
+         const ids = Fetch.sorted()[quest.status].map((q) => q.id);
 
          sortData.siblings = game.journal.filter((e) => (e.id !== data.id && ids.includes(e.id)));
 
@@ -147,7 +148,11 @@ export default class QuestLog extends Application
 
       try
       {
-         quests = await ViewData.createSorted(Quest.getQuests(this.sortBy, this.sortDirection, available));
+         quests = await ViewData.createSorted(Fetch.sorted({
+            target: this.sortBy,
+            direction: this.sortDirection,
+            available
+         }));
       }
       catch (err)
       {
@@ -164,7 +169,7 @@ console.error(err);
          showTasks: game.settings.get('forien-quest-log', 'showTasks'),
          style: game.settings.get('forien-quest-log', 'navStyle'),
          // titleAlign: game.settings.get('forien-quest-log', 'titleAlign'),
-         questTypes: Quest.getQuestTypes(),
+         questTypes,
          quests
       });
    }

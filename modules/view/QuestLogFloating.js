@@ -1,6 +1,7 @@
-import QuestPreview  from './QuestPreview.js';
-import ViewData      from './ViewData.js';
-import Quest         from '../model/Quest.js';
+import QuestPreview     from './QuestPreview.js';
+import ViewData         from './ViewData.js';
+import Fetch            from '../control/Fetch.js';
+import { questTypes }   from '../model/constants.js';
 
 export default class QuestLogFloating extends Application
 {
@@ -53,7 +54,7 @@ export default class QuestLogFloating extends Application
       html.on('click', '.quest-open', (event) =>
       {
          const questId = $(event.target).closest('.quest-open').data('quest-id');
-         const quest = Quest.get(questId);
+         const quest = Fetch.quest(questId);
          const questPreview = new QuestPreview(quest);
          questPreview.render(true);
       });
@@ -66,7 +67,7 @@ export default class QuestLogFloating extends Application
 
       // Open and close folders on rerender. Data is store in localstorage so
       // display is consistent after each render.
-      for (const quest of Quest.getQuests(this._sortBy, this._sortDirection, false).active)
+      for (const quest of Fetch.sorted({ target: this._sortBy, direction: this._sortDirection }).active)
       {
          $(`.directory-item[data-quest-id='${quest.id}']`).toggleClass('collapsed',
           localStorage.getItem(`forien.questlog.folderstate-${quest.id}`) === 'true');
@@ -93,8 +94,8 @@ export default class QuestLogFloating extends Application
          isGM: game.user.isGM,
          showTasks: game.settings.get('forien-quest-log', 'showTasks'),
          style: game.settings.get('forien-quest-log', 'navStyle'),
-         questTypes: Quest.getQuestTypes(),
-         quests: await ViewData.createSorted(Quest.getQuests(this._sortBy, this._sortDirection, false))
+         questTypes,
+         quests: await ViewData.createSorted(Fetch.sorted({ target: this._sortBy, direction: this._sortDirection }))
       });
    }
 

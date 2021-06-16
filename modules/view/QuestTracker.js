@@ -1,7 +1,7 @@
 import RepositionableApplication from './RepositionableApplication.js';
+import Fetch                     from '../control/Fetch.js';
 import QuestAPI                  from '../control/QuestAPI.js';
-import Quest                     from '../model/Quest.js';
-import constants                 from '../constants.js';
+import { constants }             from '../model/constants.js';
 
 export default class QuestTracker extends RepositionableApplication
 {
@@ -92,7 +92,7 @@ export default class QuestTracker extends RepositionableApplication
 
    prepareQuests()
    {
-      const quests = Quest.getQuests();
+      const quests = Fetch.sorted();
 
       return quests.active.map((q) => ({
          id: q.id,

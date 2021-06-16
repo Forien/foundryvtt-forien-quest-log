@@ -1,4 +1,4 @@
-import Quest from '../model/Quest.js';
+import Fetch from '../control/Fetch.js';
 
 export default class ViewData
 {
@@ -68,7 +68,7 @@ export default class ViewData
       {
          data.isSubquest = true;
 
-         const parentData = Quest.get(data.parent);
+         const parentData = Fetch.quest(data.parent);
          if (parentData)
          {
             data.data_parent = {
@@ -128,7 +128,7 @@ export default class ViewData
       {
          for (const questId of data.subquests)
          {
-            const subData = Quest.get(questId);
+            const subData = Fetch.quest(questId);
 
             if (subData)
             {

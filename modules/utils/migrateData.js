@@ -1,4 +1,4 @@
-import constants from '../constants.js';
+import { constants } from '../model/constants.js';
 
 /**
  * Attempts to migrate data from FQL 0.6.0 or prior to new 0.7.0 data format. This function also attempts to reverse any

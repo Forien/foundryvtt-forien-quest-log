@@ -1,4 +1,4 @@
-import Quest      from '../model/Quest.js';
+import Fetch      from '../control/Fetch.js';
 import QuestAPI   from '../control/QuestAPI.js';
 import Utils      from '../utils/Utils.js';
 
@@ -89,7 +89,7 @@ export default class Socket
          {
             if (game.user.isGM)
             {
-               const quest = Quest.get(data.payload.questId);
+               const quest = Fetch.quest(data.payload.questId);
                if (quest) { await quest.move('active'); }
             }
          }

@@ -1,4 +1,4 @@
-import constants from '../constants.js';
+import { constants } from '../model/constants.js';
 
 export default class Utils
 {

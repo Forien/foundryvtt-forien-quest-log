@@ -1,9 +1,10 @@
 import ViewData      from './ViewData.js';
+import Fetch         from '../control/Fetch.js';
 import Socket        from '../control/Socket.js';
 import QuestFolder   from '../model/QuestFolder.js';
 import Quest         from '../model/Quest.js';
 import Utils         from '../utils/Utils.js';
-import constants     from '../constants.js';
+import { constants } from '../model/constants.js';
 
 // A single module private reference to only one close dialog.
 let s_CLOSE_DIALOG;
@@ -127,7 +128,7 @@ export default class QuestForm extends FormApplication
 
       if (this._subquest)
       {
-         const parentQuest = await Quest.get(this._parentId);
+         const parentQuest = await Fetch.quest(this._parentId);
          parentQuest.addSubquest(entry.id);
          await parentQuest.save();
 
@@ -293,7 +294,7 @@ export default class QuestForm extends FormApplication
    {
       if (this._subquest)
       {
-         const parentQuest = await Quest.get(this._parentId);
+         const parentQuest = await Fetch.quest(this._parentId);
          this.options.title += ` – ${game.i18n.format('ForienQuestLog.QuestForm.SubquestOf', 
           { name: parentQuest.name })}`;
       }
