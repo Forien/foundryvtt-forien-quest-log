@@ -1,7 +1,7 @@
 <header class="details-header">
   <div class="quest-giver-gc">
     {{#if (eq giver null)}}
-    <span class="drop-info">{{localize 'ForienQuestLog.QuestForm.DragDropActor'}}</span>
+    <span class="drop-info">{{localize 'ForienQuestLog.QuestPreview.DragDropActor'}}</span>
     {{/if}}
     {{#with data_giver}}
     <div class="quest-giver-image open-actor-sheet " data-actor-id="{{id}}" style="background-image: url({{img}});background-position: {{../giverImgPos}};" title="{{name}}"></div>

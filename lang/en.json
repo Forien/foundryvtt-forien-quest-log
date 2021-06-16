@@ -31,12 +31,12 @@
     "QuestForm": {
       "Title": "Add new Quest",
       "QuestGiver": "Quest Source",
-      "QuestGiverPlaceholder": "Enter Actor's name or entity's UUID to set a Quest Source",
-      "QuestGiverNamePlaceholder": "You selected custom image, please provide name for Quest Source",
-      "QuestTitle": "Quest Title",
-      "DragDropActor": "Drag & Drop Actor, Item or Journal Entry here to set a Quest Source",
-      "QuestDescription": "Quest Description",
-      "QuestGMNotes": "GM Notes",
+      "QuestGiverPlaceholder": "Entity / Actor UUID:",
+      "QuestGiverNamePlaceholder": "Please provide a name for custom Quest Source:",
+      "QuestTitle": "Quest Title:",
+      "DragDropActor": "Drag & Drop Actor, Item or Journal Entry or left click to set a custom source.",
+      "QuestDescription": "Quest Description:",
+      "QuestGMNotes": "GM Notes:",
       "Submit": "Add to Quest Log",
       "SubquestOf": "Subquest of {name}"
     },
@@ -62,9 +62,10 @@
     "QuestPreview": {
       "Title": "Quest Details",
       "SubTitle": "Subquest of {0}",
-      "Objectives": "Objectives",
-      "Rewards": "Rewards",
-      "DragDropRewards": "Drag & drop items here to add them as rewards",
+      "Objectives": "Objectives:",
+      "Rewards": "Rewards:",
+      "DragDropActor": "Drag & Drop Actor, Item or Journal Entry to set quest source.",
+      "DragDropRewards": "Drag & drop items here to add them as rewards.",
       "InvalidQuestId": "Cannot open Quest Preview due to invalid Quest ID.",
       "HeaderButtons": {
         "Show": "Show to Players"
@@ -73,8 +74,9 @@
       "Management": {
         "IsPersonalQuest": "Mark Quest as Personal",
         "IsPersonalQuestDescription": "This Quest will only be visible to the selected players. Unchecking this option will remove all permissions and set the quest as inactive.",
-        "SplashArt": "Splash Art",
-        "QuestBranching": "Sub Quests",
+        "QuestSettings": "Quest Settings:",
+        "SplashArt": "Splash Art:",
+        "QuestBranching": "Sub Quests:",
         "AddSubquest": "Create new Sub Quest",
         "CanPlayerEdit": "Allow Players to edit Quest Details"
       },
@@ -84,7 +86,6 @@
         "QuestManagement": "Manage Quest",
         "GMNotes": "GM Notes"
       }
-
     },
 
     "DeleteDialog": {
@@ -185,25 +186,25 @@
     "Api": {
       "__COMMENT__": "No need for translating lines starting with 'API ERROR', they show in console for developers only.",
       "create": {
-        "title": "API Error: Title property is required to create new Quest"
+        "title": "API Error: Title property is required to create new Quest."
       },
       "hooks": {
         "createOpenQuestMacro": {
-          "name": "Open „{name}” Quest",
+          "name": "Open - {name}",
           "error": {
-            "noQuest": "API Error: Can't create macro with invalid Quest ID"
+            "noQuest": "API Error: Can't create macro with invalid Quest ID."
           }
         }
       },
       "reward": {
         "create": {
-          "data": "API Error: Data property with at least {name, img} is required to create new Reward",
-          "type": "API Error: Type property is required to create new Reward"
+          "data": "API Error: Data property with at least {name, img} is required to create new Reward.",
+          "type": "API Error: Type property is required to create new Reward."
         }
       },
       "task": {
         "create": {
-          "name": "API Error: Name property is required to create new Objective"
+          "name": "API Error: Name property is required to create new Objective."
         }
       }
     },
@@ -223,6 +224,5 @@
         }
       }
     }
-
   }
 }
