@@ -7,9 +7,9 @@ import constants     from '../constants.js';
 
 export default class QuestForm extends FormApplication
 {
-   constructor(options = {})
+   constructor(object = {}, options = {})
    {
-      super(void 0, options);
+      super(object, options);
 
       this._submitted = false;
    }
