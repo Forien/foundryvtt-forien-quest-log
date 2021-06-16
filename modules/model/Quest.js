@@ -547,10 +547,8 @@ export default class Quest
     * @param userId
     *
     * @param permission
-    *
-    * @returns {Promise<void>}
     */
-   async savePermission(userId, permission)
+   savePermission(userId, permission)
    {
       if ([
          CONST.ENTITY_PERMISSIONS.OWNER,
@@ -700,60 +698,40 @@ export default class Quest
    /**
     * Toggles Actor image between sheet's and token's images
     */
-   async toggleImage()
+   toggleImage()
    {
-      if (this._image === 'actor')
-      {
-         this._image = 'token';
-      }
-      else
-      {
-         this._image = 'actor';
-      }
+      this._image = this._image === 'actor' ? 'token' : 'actor';
    }
 
    /**
     * Toggles quest between Public and Personal. In both cases, it hides the quest from everyone.
     * If new status is public, then hide it.
-    *
-    * @returns {Promise<void>}
     */
-   async togglePersonal()
+   togglePersonal()
    {
       this._personal = !this._personal;
       this.entryPermission = { default: 0 };
-      if (this._personal === false)
-      {
-         this.status = 'hidden';
-      }
+      if (!this._personal) { this.status = 'hidden'; }
    }
 
    /**
     * Toggles visibility of Reward
     *
-    * @param index
-    * @returns {Promise<void>}
+    * @param {number}   index - Reward index
     */
-   async toggleReward(index)
+   toggleReward(index)
    {
-      if (this._rewards[index] !== undefined)
-      {
-         return await this._rewards[index].toggleVisible();
-      }
+      this._rewards[index]?.toggleVisible();
    }
 
    /**
     * Toggles visibility of Task
     *
-    * @param index
-    * @returns {Promise<void>}
+    * @param {number}   index - Task index
     */
-   async toggleTask(index)
+   toggleTask(index)
    {
-      if (this._tasks[index] !== undefined)
-      {
-         return await this._tasks[index].toggleVisible();
-      }
+      this._tasks[index]?.toggleVisible();
    }
 
 // Document simulation -----------------------------------------------------------------------------------------------
@@ -857,7 +835,7 @@ class Reward
       }));
    }
 
-   async toggleVisible()
+   toggleVisible()
    {
       this._hidden = !this._hidden;
 

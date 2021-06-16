@@ -18,7 +18,7 @@ export default class QuestPreview extends FormApplication
     */
    constructor(quest, options = {})
    {
-      super(options);
+      super(void 0, options);
 
       this.quest = quest;
    }
@@ -37,6 +37,8 @@ export default class QuestPreview extends FormApplication
          height: 540,
          minimizable: true,
          resizable: true,
+         submitOnChange: false,
+         submitOnClose: false,
          title: game.i18n.localize('ForienQuestLog.QuestPreview.Title'),
          tabs: [{ navSelector: '.quest-tabs', contentSelector: '.quest-body', initial: 'details' }]
       });
@@ -53,7 +55,6 @@ export default class QuestPreview extends FormApplication
       return this.quest;
    }
 
-   // TODO: REMOVE? If the intention is to only provide a getter then this can be removed.
    set object(value) {}
 
    /** @override */
@@ -107,37 +108,26 @@ export default class QuestPreview extends FormApplication
    /**
     * This might be a FormApplication, but we don't want Submit event to fire.
     *
-    * @param event
-    *
-    * @returns {Promise<boolean>}
     * @private
+    * @inheritDoc
     */
    async _onSubmit(event)
    {
       event.preventDefault();
-
       return false;
    }
 
    /**
     * This method is called upon form submission after form data is validated.
     *
-    * @param {Event} event       The initial triggering submission event
-    *
-    * @param {object} formData   The object of validated form data with which to update the object
-    *
-    * @returns {Promise}         A Promise which resolves once the update operation has completed
-    *
     * @override
     * @private
+    * @inheritDoc
     */
    async _updateObject(event, formData) // eslint-disable-line no-unused-vars
    {
       event.preventDefault();
    }
-
-   // TODO: REMOVE the below overridden methods as they intend to stop form submission / and update.
-   // instead pass in options to FormApplication to prevent these actions.
 
    /**
     * Provide TinyMCE overrides.
@@ -167,10 +157,8 @@ export default class QuestPreview extends FormApplication
       {
          event.stopPropagation();
          const li = event.target.closest('li') || null;
-         if (!li)
-         {
-            return;
-         }
+         if (!li) { return; }
+
          const dataTransfer = {
             type: 'Reward',
             mode: 'Sort',
@@ -183,10 +171,8 @@ export default class QuestPreview extends FormApplication
       {
          event.stopPropagation();
          const li = event.target.closest('li') || null;
-         if (!li)
-         {
-            return;
-         }
+         if (!li) { return; }
+
          const dataTransfer = {
             type: 'Task',
             mode: 'Sort',
@@ -241,10 +227,8 @@ export default class QuestPreview extends FormApplication
 
                if (quest && await quest.move(target))
                {
-                  this.refresh();
+                  await this.refresh();
                }
-
-               // Quest.move(questId, target).then(() => this.refresh());
             }
             else if (classList.includes('delete'))
             {
@@ -284,7 +268,7 @@ export default class QuestPreview extends FormApplication
                item.uuid = uuid;
 
                this.quest.addReward({ type: 'Item', data: item, hidden: true });
-               this.saveQuest();
+               await this.saveQuest();
             }
          });
 
@@ -299,7 +283,7 @@ export default class QuestPreview extends FormApplication
             }
          });
 
-         html.on('drop', '.quest-giver-gc', (event) =>
+         html.on('drop', '.quest-giver-gc', async (event) =>
          {
             event.preventDefault();
             const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
@@ -309,17 +293,15 @@ export default class QuestPreview extends FormApplication
             if (uuid !== void 0)
             {
                this.quest.giver = uuid;
-               this.saveQuest();
+               await this.saveQuest();
             }
          });
 
          html.on('click', '.editable', (event) =>
          {
             const target = $(event.target).data('target');
-            if (target === undefined)
-            {
-               return;
-            }
+
+            if (target === undefined) { return; }
 
             let value = this.quest[target];
             let index = undefined;
@@ -342,7 +324,7 @@ export default class QuestPreview extends FormApplication
             parent.append(input);
             input.focus();
 
-            input.focusout((event) =>
+            input.focusout(async (event) =>
             {
                const targetOut = $(event.target).data('target');
                const valueOut = $(event.target).val();
@@ -354,21 +336,21 @@ export default class QuestPreview extends FormApplication
                      indexOut = $(event.target).data('index');
                      this.quest.tasks[indexOut].name = valueOut;
                      break;
+
                   case 'reward.name':
                      indexOut = $(event.target).data('index');
                      this.quest.rewards[indexOut].data.name = valueOut;
                      break;
+
                   default:
-                     if (this.quest[targetOut] !== undefined)
-                     {
-                        this.quest[targetOut] = valueOut;
-                     }
+                     if (this.quest[targetOut] !== void 0) { this.quest[targetOut] = valueOut; }
+                     break;
                }
-               this.saveQuest();
+               await this.saveQuest();
             });
          });
 
-         html.on('click', '.del-btn', (event) =>
+         html.on('click', '.del-btn', async (event) =>
          {
             const index = $(event.target).data('index');
             const target = $(event.target).data('target');
@@ -381,31 +363,30 @@ export default class QuestPreview extends FormApplication
             {
                this.quest.removeReward(index);
             }
-            this.saveQuest();
+
+            await this.saveQuest();
          });
 
-         html.on('click', '.task .toggleState', (event) =>
+         html.on('click', '.task .toggleState', async (event) =>
          {
             const index = $(event.target).data('task-index');
             this.quest.tasks[index].toggle();
-            this.saveQuest();
+            await this.saveQuest();
          });
 
-         html.on('click', '.toggleImage', () =>
+         html.on('click', '.toggleImage', async () =>
          {
-            this.quest.toggleImage().then(() =>
-            {
-               this.saveQuest();
-            });
+            this.quest.toggleImage();
+            await this.saveQuest();
          });
 
-         html.on('click', '.deleteQuestGiver', () =>
+         html.on('click', '.deleteQuestGiver', async () =>
          {
             this.quest.giver = null;
-            this.saveQuest();
+            await this.saveQuest();
          });
 
-         html.on('click', '.changeGiverImgPos', () =>
+         html.on('click', '.changeGiverImgPos', async () =>
          {
             if (this.quest.giverImgPos === 'center')
             {
@@ -413,17 +394,10 @@ export default class QuestPreview extends FormApplication
             }
             else
             {
-               if (this.quest.giverImgPos === 'top')
-               {
-                  this.quest.giverImgPos = 'bottom';
-               }
-               else
-               {
-                  this.quest.giverImgPos = 'center';
-               }
+               this.quest.giverImgPos = this.quest.giverImgPos === 'top' ? 'bottom' : 'center';
             }
 
-            this.saveQuest();
+            await this.saveQuest();
          });
 
 
@@ -446,29 +420,31 @@ export default class QuestPreview extends FormApplication
 
             input.focus();
 
-            input.focusout((event) =>
+            input.focusout(async (event) =>
             {
                const value = $(event.target).val();
                if (value !== undefined && value.length)
                {
                   this.quest.addTask({ name: value });
                }
-               this.saveQuest();
+               await this.saveQuest();
             });
          });
 
-         html.on('click', '.toggleHidden', (event) =>
+         html.on('click', '.toggleHidden', async (event) =>
          {
             const target = $(event.target).data('target');
             const index = $(event.target).data('index');
 
             if (target === 'task')
             {
-               this.quest.toggleTask(index).then(() => this.saveQuest());
+               this.quest.toggleTask(index);
+               await this.saveQuest();
             }
             else if (target === 'reward')
             {
-               this.quest.toggleReward(index).then(() => this.saveQuest());
+               this.quest.toggleReward(index);
+               await this.saveQuest();
             }
          });
 
@@ -481,16 +457,12 @@ export default class QuestPreview extends FormApplication
 
             const box = $(event.target).closest('.quest-rewards').find('.rewards-box ul');
 
-            // $(box).children('.drop-info').each(function () {
-            //   $(this).remove();
-            // });
-
             li.append(input);
             box.append(li);
 
             input.focus();
 
-            input.focusout((event) =>
+            input.focusout(async (event) =>
             {
                const value = $(event.target).val();
                if (value !== undefined && value.length)
@@ -503,21 +475,21 @@ export default class QuestPreview extends FormApplication
                      type: 'Abstract'
                   });
                }
-               this.saveQuest();
+               await this.saveQuest();
             });
          });
 
-         html.on('click', '.abstract-reward .reward-image', (event) =>
+         html.on('click', '.abstract-reward .reward-image', async (event) =>
          {
             const index = $(event.target).data('index');
             const currentPath = this.quest.rewards[index].data.img;
-            new FilePicker({
+            await new FilePicker({
                type: 'image',
                current: currentPath,
-               callback: (path) =>
+               callback: async (path) =>
                {
                   this.quest.rewards[index].data.img = path;
-                  this.saveQuest();
+                  await this.saveQuest();
                },
             }).browse(currentPath);
          });
@@ -525,44 +497,43 @@ export default class QuestPreview extends FormApplication
 
       if (game.user.isGM)
       {
-         html.on('click', '#personal-quest', () =>
+         html.on('click', '#personal-quest', async () =>
          {
-            this.quest.togglePersonal().then(() =>
-            {
-               this.saveQuest();
-            });
+            this.quest.togglePersonal();
+            await this.saveQuest();
          });
 
-         html.on('click', '.personal-user', (event) =>
+         html.on('click', '.personal-user', async (event) =>
          {
             const userId = $(event.target).data('user-id');
             const value = $(event.target).data('value');
             const permission = value ? 0 : (this.playerEdit ? 3 : 2);
 
-            this.quest.savePermission(userId, permission).then(() => this.saveQuest());
+            this.quest.savePermission(userId, permission);
+            await this.saveQuest();
          });
 
-         html.on('click', '.splash-image', () =>
+         html.on('click', '.splash-image', async () =>
          {
             const currentPath = this.quest.splash;
-            new FilePicker({
+            await new FilePicker({
                type: 'image',
                current: currentPath,
-               callback: (path) =>
+               callback: async (path) =>
                {
                   this.quest.splash = path;
-                  this.saveQuest();
+                  await this.saveQuest();
                },
             }).browse(currentPath);
          });
 
-         html.on('click', '.delete-splash', () =>
+         html.on('click', '.delete-splash', async () =>
          {
             this.quest.splash = '';
-            this.saveQuest();
+            await this.saveQuest();
          });
 
-         html.on('click', '.change-splash-pos', () =>
+         html.on('click', '.change-splash-pos', async () =>
          {
             if (this.quest.splashPos === 'center')
             {
@@ -570,16 +541,10 @@ export default class QuestPreview extends FormApplication
             }
             else
             {
-               if (this.quest.splashPos === 'top')
-               {
-                  this.quest.splashPos = 'bottom';
-               }
-               else
-               {
-                  this.quest.splashPos = 'center';
-               }
+               this.quest.splashPos = this.quest.splashPos === 'top' ? 'bottom' : 'center';
             }
-            this.saveQuest();
+
+            await this.saveQuest();
          });
 
 
@@ -588,11 +553,12 @@ export default class QuestPreview extends FormApplication
             new QuestForm({ parentId: this.quest.id }).render(true);
          });
 
-         html.on('click', '#player-edit', (event) =>
+         html.on('click', '#player-edit', async (event) =>
          {
             const checked = $(event.target).prop('checked');
             const permission = checked ? 3 : 2;
-            this.quest.savePermission('*', permission).then(() => this.saveQuest());
+            this.quest.savePermission('*', permission);
+            await this.saveQuest();
          });
       }
    }
@@ -684,10 +650,7 @@ export default class QuestPreview extends FormApplication
    {
       game.questPreview[this.quest.id] = this;
 
-      if (force)
-      {
-         this.quest.refresh();
-      }
+      if (force) { this.quest.refresh(); }
 
       return super.render(force, options);
    }
@@ -695,13 +658,12 @@ export default class QuestPreview extends FormApplication
    /**
     * When editor is saved we simply save the quest. The editor content if any is available is saved inside 'saveQuest'.
     *
-    * @returns {Promise<void>}
-    * @private
     * @override
+    * @inheritDoc
     */
    async saveEditor()
    {
-      this.saveQuest();
+      return this.saveQuest();
    }
 
    /**
