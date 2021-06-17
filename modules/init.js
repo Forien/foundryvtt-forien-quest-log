@@ -7,6 +7,7 @@ import QuestFolder         from './model/QuestFolder.js';
 import QuestsCollection    from './model/QuestsCollection.js';
 import QuestLogFloating    from './view/QuestLogFloating.js';
 import QuestLog            from './view/QuestLog.js';
+import QuestPreview        from './view/QuestPreview.js';
 import QuestTracker        from './view/QuestTracker.js';
 import Utils               from './utils/Utils.js';
 
@@ -47,10 +48,10 @@ Hooks.once('ready', () =>
    // TODO switch to documentClass / sheetClass
    CONFIG['Quest'] = {
       entityClass: Quest,
-      // documentClass: Quest,
+      documentClass: Quest,
       collection: QuestsCollection,
-      sidebarIcon: 'far fa-question-circle',
-      // sheetClass: QuestPreview
+      sidebarIcon: 'fas fa-scroll',
+      sheetClass: QuestPreview
    };
 
    game.collections.set('Quest', QuestsCollection);

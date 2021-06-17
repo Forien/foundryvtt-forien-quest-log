@@ -11,158 +11,15 @@ export default class Quest
 {
    constructor(data = {}, entry = null)
    {
-      this._id = data.id || null;
+      this.id = data.id || null;
       this.initData(data);
       this.entry = entry;
       this._data = data;
    }
 
-   get description()
-   {
-      return this._description;
-   }
-
-   set description(value)
-   {
-      this._description = value;
-   }
-
-   get giver()
-   {
-      return this._giver;
-   }
-
-   set giver(value)
-   {
-      this._giver = value;
-   }
-
-   get giverImgPos()
-   {
-      return this._giverImgPos;
-   }
-
-   set giverImgPos(value)
-   {
-      this._giverImgPos = value;
-   }
-
-   get giverName()
-   {
-      return this._giverName;
-   }
-
-   set giverName(value)
-   {
-      this._giverName = value;
-   }
-
-   get gmnotes()
-   {
-      return this._gmnotes;
-   }
-
-   set gmnotes(value)
-   {
-      this._gmnotes = value;
-   }
-
-   get id()
-   {
-      return this._id;
-   }
-
-   set id(value)
-   {
-      this._id = value;
-   }
-
-   get image()
-   {
-      return this._image;
-   }
-
-   set image(image)
-   {
-      if (image === 'actor' || image === 'token')
-      {
-         this._image = image;
-      }
-   }
-
    get name()
    {
       return this._title;
-   }
-
-   get parent()
-   {
-      return this._parent;
-   }
-
-   set parent(value)
-   {
-      this._parent = value;
-   }
-
-   get permission()
-   {
-      return this._permission;
-   }
-
-   get personal()
-   {
-      return this._personal;
-   }
-
-   set personal(value)
-   {
-      this._personal = (value === true);
-   }
-
-   get rewards()
-   {
-      return this._rewards;
-   }
-
-   get splash()
-   {
-      return this._splash;
-   }
-
-   set splash(splash)
-   {
-      this._splash = splash;
-   }
-
-   get splashPos()
-   {
-      return this._splashPos;
-   }
-
-   set splashPos(value)
-   {
-      this._splashPos = value;
-   }
-
-   get status()
-   {
-      return this._status;
-   }
-
-   set status(value)
-   {
-      this._status = value;
-   }
-
-   get subquests()
-   {
-      return this._subquests;
-   }
-
-   get tasks()
-   {
-      return this._tasks;
    }
 
    get title()
@@ -184,10 +41,7 @@ export default class Quest
    addReward(data = {})
    {
       const reward = new Reward(data);
-      if (reward.isValid)
-      {
-         this._rewards.push(reward);
-      }
+      if (reward.type !== null) { this.rewards.push(reward); }
    }
 
    /**
@@ -197,7 +51,7 @@ export default class Quest
     */
    addSubquest(questId)
    {
-      this._subquests.push(questId);
+      this.subquests.push(questId);
    }
 
    /**
@@ -208,10 +62,7 @@ export default class Quest
    addTask(data = {})
    {
       const task = new Task(data);
-      if (task.isValid)
-      {
-         this._tasks.push(task);
-      }
+      if (task.name.length) { this.tasks.push(task); }
    }
 
    async delete()
@@ -268,24 +119,24 @@ export default class Quest
     */
    initData(data)
    {
-      this._giver = data.giver || null;
+      this.giver = data.giver || null;
       this._title = data.title || game.i18n.localize('ForienQuestLog.NewQuest');
-      this._status = data.status || 'hidden';
-      this._description = data.description || '';
-      this._gmnotes = data.gmnotes || '';
-      this._image = data.image || 'actor';
-      this._giverName = data.giverName || 'actor';
-      this._giverImgPos = data.giverImgPos || 'center';
-      this._splash = data.splash || '';
-      this._splashPos = data.splashPos || 'center';
-      this._personal = data.personal || false;
-      this._parent = data.parent || null;
-      this._permission = data.permission || 0;
-      this._subquests = data.subquests || [];
-      this._tasks = [];
-      this._rewards = [];
-      this._tasks = Array.isArray(data.tasks) ? data.tasks.map((task) => new Task(task)) : [];
-      this._rewards = Array.isArray(data.rewards) ? data.rewards.map((reward) => new Reward(reward)) : [];
+      this.status = data.status || 'hidden';
+      this.description = data.description || '';
+      this.gmnotes = data.gmnotes || '';
+      this.image = data.image || 'actor';
+      this.giverName = data.giverName || 'actor';
+      this.giverImgPos = data.giverImgPos || 'center';
+      this.splash = data.splash || '';
+      this.splashPos = data.splashPos || 'center';
+      this.personal = data.personal || false;
+      this.parent = data.parent || null;
+      this.permission = data.permission || 0;
+      this.subquests = data.subquests || [];
+      this.tasks = [];
+      this.rewards = [];
+      this.tasks = Array.isArray(data.tasks) ? data.tasks.map((task) => new Task(task)) : [];
+      this.rewards = Array.isArray(data.rewards) ? data.rewards.map((reward) => new Reward(reward)) : [];
    }
 
    /**
@@ -297,12 +148,12 @@ export default class Quest
     *
     * @returns {Promise<void>}
     */
-   async move(target, permission = undefined)
+   async move(target, permission = void 0)
    {
       // TODO: REMOVE WHEN ALL QUESTS HAVE JOURNAL ENTRIES GUARANTEED
       if (!this.entry) { return; }
 
-      if (permission === undefined)
+      if (permission === void 0)
       {
          permission = this.entry.data.permission;
       }
@@ -344,7 +195,7 @@ export default class Quest
     */
    refresh()
    {
-      const entry = game.journal.get(this._id);
+      const entry = game.journal.get(this.id);
       const content = Fetch.content(entry);
 
       this.initData(content);
@@ -353,37 +204,31 @@ export default class Quest
    /**
     * Deletes Reward from Quest
     *
-    * @param index
+    * @param {number} index
     */
    removeReward(index)
    {
-      if (this._rewards[index] !== undefined)
-      {
-         this._rewards.splice(index, 1);
-      }
+      if (this.rewards[index] !== void 0) { this.rewards.splice(index, 1); }
    }
 
    /**
     * Deletes Task from Quest
     *
-    * @param questId
+    * @param {number} questId
     */
    removeSubquest(questId)
    {
-      this._subquests = this._subquests.filter((id) => id !== questId);
+      this.subquests = this.subquests.filter((id) => id !== questId);
    }
 
    /**
     * Deletes Task from Quest
     *
-    * @param index
+    * @param {number} index
     */
    removeTask(index)
    {
-      if (this._tasks[index] !== undefined)
-      {
-         this._tasks.splice(index, 1);
-      }
+      if (this.tasks[index] !== void 0) { this.tasks.splice(index, 1); }
    }
 
    /**
@@ -394,8 +239,7 @@ export default class Quest
     */
    async save()
    {
-      // TODO: use this.entry and create a mirror of canUserModify
-      const entry = game.journal.get(this._id);
+      const entry = game.journal.get(this.id);
 
       // If the entry doesn't exist or the user can't modify the journal entry via ownership then early out.
       if (!entry || !entry.canUserModify(game.user, 'update')) { return; }
@@ -408,14 +252,14 @@ export default class Quest
          }
       };
 
-      if (this.entryPermission !== undefined)
+      if (this.entryPermission !== void 0)
       {
          update.permission = this.entryPermission;
       }
 
       await entry.update(update, { diff: false });
 
-      return this._id;
+      return this.id;
    }
 
    /**
@@ -437,7 +281,7 @@ export default class Quest
          return;
       }
 
-      const entryData = duplicate(game.journal.get(this._id));
+      const entryData = duplicate(game.journal.get(this.id));
       let permissionData;
 
       if (userId === '*')
@@ -495,21 +339,21 @@ export default class Quest
    toJSON()
    {
       return {
-         giver: this._giver,
+         giver: this.giver,
          title: this._title,
-         status: this._status,
-         description: this._description,
-         gmnotes: this._gmnotes,
-         personal: this._personal,
-         image: this._image,
-         giverName: this._giverName,
-         giverImgPos: this._giverImgPos,
-         splashPos: this._splashPos,
-         splash: this._splash,
-         parent: this._parent,
-         subquests: this._subquests,
-         tasks: this._tasks,
-         rewards: this._rewards
+         status: this.status,
+         description: this.description,
+         gmnotes: this.gmnotes,
+         personal: this.personal,
+         image: this.image,
+         giverName: this.giverName,
+         giverImgPos: this.giverImgPos,
+         splashPos: this.splashPos,
+         splash: this.splash,
+         parent: this.parent,
+         subquests: this.subquests,
+         tasks: this.tasks,
+         rewards: this.rewards
       };
    }
 
@@ -518,7 +362,7 @@ export default class Quest
     */
    toggleImage()
    {
-      this._image = this._image === 'actor' ? 'token' : 'actor';
+      this.image = this.image === 'actor' ? 'token' : 'actor';
    }
 
    /**
@@ -527,9 +371,9 @@ export default class Quest
     */
    togglePersonal()
    {
-      this._personal = !this._personal;
+      this.personal = !this.personal;
       this.entryPermission = { default: 0 };
-      if (!this._personal) { this.status = 'hidden'; }
+      if (!this.personal) { this.status = 'hidden'; }
    }
 
    /**
@@ -539,7 +383,7 @@ export default class Quest
     */
    toggleReward(index)
    {
-      this._rewards[index]?.toggleVisible();
+      this.rewards[index]?.toggleVisible();
    }
 
    /**
@@ -549,7 +393,7 @@ export default class Quest
     */
    toggleTask(index)
    {
-      this._tasks[index]?.toggleVisible();
+      this.tasks[index]?.toggleVisible();
    }
 
 // Document simulation -----------------------------------------------------------------------------------------------
@@ -595,7 +439,7 @@ export default class Quest
     */
    testUserPermission(user, permission, options)
    {
-      const entry = game.journal.get(this._id);
+      const entry = game.journal.get(this.id);
       return entry.testUserPermission(user, permission, options);
    }
 }
@@ -604,60 +448,24 @@ class Reward
 {
    constructor(data = {})
    {
-      this._type = data.type || null;
-      this._data = data.data || {};
-      this._hidden = data.hidden || false;
-   }
-
-   get data()
-   {
-      return this._data;
-   }
-
-   set data(data)
-   {
-      this._data = data;
-   }
-
-   get hidden()
-   {
-      return this._hidden;
-   }
-
-   set hidden(value)
-   {
-      this._hidden = value;
-   }
-
-   get isValid()
-   {
-      return (this._type !== null);
-   }
-
-   get type()
-   {
-      return this._type;
-   }
-
-   set type(type)
-   {
-      this._type = type;
+      this.type = data.type || null;
+      this.data = data.data || {};
+      this.hidden = data.hidden || false;
    }
 
    toJSON()
    {
       return JSON.parse(JSON.stringify({
-         type: this._type,
-         data: this._data,
-         hidden: this._hidden
+         type: this.type,
+         data: this.data,
+         hidden: this.hidden
       }));
    }
 
    toggleVisible()
    {
-      this._hidden = !this._hidden;
-
-      return this._hidden;
+      this.hidden = !this.hidden;
+      return this.hidden;
    }
 }
 
@@ -665,64 +473,19 @@ class Task
 {
    constructor(data = {})
    {
-      this._name = data.name || null;
-      this._completed = data.completed || false;
-      this._failed = data.failed || false;
-      this._hidden = data.hidden || false;
-   }
-
-   get completed()
-   {
-      return this._completed;
-   }
-
-   set completed(completed)
-   {
-      this._completed = (completed === true);
-   }
-
-   get failed()
-   {
-      return this._failed;
-   }
-
-   set failed(failed)
-   {
-      this._failed = (failed === true);
-   }
-
-   get hidden()
-   {
-      return this._hidden;
-   }
-
-   set hidden(hidden)
-   {
-      this._hidden = (hidden === true);
-   }
-
-   get isValid()
-   {
-      return (this._name.length);
-   }
-
-   get name()
-   {
-      return this._name;
-   }
-
-   set name(name)
-   {
-      this._name = name;
+      this.name = data.name || null;
+      this.completed = data.completed || false;
+      this.failed = data.failed || false;
+      this.hidden = data.hidden || false;
    }
 
    get state()
    {
-      if (this._completed)
+      if (this.completed)
       {
          return 'check-square';
       }
-      else if (this._failed)
+      else if (this.failed)
       {
          return 'minus-square';
       }
@@ -732,35 +495,35 @@ class Task
    toJSON()
    {
       return JSON.parse(JSON.stringify({
-         name: this._name,
-         completed: this._completed,
-         failed: this._failed,
-         hidden: this._hidden,
+         name: this.name,
+         completed: this.completed,
+         failed: this.failed,
+         hidden: this.hidden,
          state: this.state
       }));
    }
 
    toggle()
    {
-      if (this._completed === false && this._failed === false)
+      if (this.completed === false && this.failed === false)
       {
-         this._completed = true;
+         this.completed = true;
       }
-      else if (this._completed === true)
+      else if (this.completed === true)
       {
-         this._failed = true;
-         this._completed = false;
+         this.failed = true;
+         this.completed = false;
       }
       else
       {
-         this._failed = false;
+         this.failed = false;
       }
    }
 
-   async toggleVisible()
+   toggleVisible()
    {
-      this._hidden = !this._hidden;
+      this.hidden = !this.hidden;
 
-      return this._hidden;
+      return this.hidden;
    }
 }

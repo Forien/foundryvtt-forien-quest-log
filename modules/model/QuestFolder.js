@@ -11,7 +11,7 @@ export default class QuestFolder
    {
       const result = game.journal.directory.folders.find((f) => f.name === s_QUEST_DIR_NAME);
 
-      return result !== undefined;
+      return result !== void 0;
    }
 
    /**
@@ -38,6 +38,6 @@ export default class QuestFolder
          await Folder.create({ name: s_QUEST_DIR_NAME, type: 'JournalEntry', parent: null });
       }
 
-      await game.journal.directory.folders.find((f) => f.name === s_QUEST_DIR_NAME);
+      game.journal.directory.folders.find((f) => f.name === s_QUEST_DIR_NAME);
    }
 }
