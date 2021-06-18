@@ -185,7 +185,7 @@ export default class ModuleSettings
          hint: 'ForienQuestLog.WorkshopPUF.Settings.questTrackerBackground.hint',
          scope: 'client',
          config: true,
-         default: false,
+         default: true,
          type: Boolean,
          onChange: (value) =>
          {
