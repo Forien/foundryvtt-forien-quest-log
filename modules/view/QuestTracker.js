@@ -76,15 +76,8 @@ export default class QuestTracker extends RepositionableApplication
          id: q.id,
          source: q.giver,
          name: q.name,
-         description: this.truncate(q.description, 120),
-         tasks: q.tasks.filter((t) => t.hidden === false).map((t) => t.toJSON())
+         tasks: game.user.isGM ? q.tasks.map((t) => t.toJSON()) :
+          q.tasks.filter((t) => t.hidden === false).map((t) => t.toJSON())
       }));
-   }
-
-   truncate(str, n)
-   {
-      str = $(`<p>${str}</p>`).text();
-
-      return (str.length > n) ? `${str.substr(0, n - 1)}&hellip;` : str;
    }
 }

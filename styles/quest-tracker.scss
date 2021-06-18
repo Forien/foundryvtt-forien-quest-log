@@ -40,15 +40,13 @@
     font-size: 20px;
   }
 
-  .description {
-    font-size: 12px;
-    font-style: italic;
-    margin-top: 0;
-  }
-
   .tasks {
     list-style: none;
     margin-bottom: 6px;
+
+    #hidden {
+      color: #ffffff88;
+    }
 
     .task {
       position: relative;
@@ -60,7 +58,6 @@
         font-weight: 400;
         font-family: "Font Awesome 5 Free";
         left: -15px;
-        padding-top: 3px;
       }
 
       &.minus-square {

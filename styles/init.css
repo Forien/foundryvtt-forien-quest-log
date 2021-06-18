@@ -1086,14 +1086,12 @@
   font-family: Oswald, Montserrat, Signika, sans-serif;
   font-size: 20px;
 }
-#quest-tracker .description {
-  font-size: 12px;
-  font-style: italic;
-  margin-top: 0;
-}
 #quest-tracker .tasks {
   list-style: none;
   margin-bottom: 6px;
+}
+#quest-tracker .tasks #hidden {
+  color: rgba(255,255,255,0.53333);
 }
 #quest-tracker .tasks .task {
   position: relative;
@@ -1105,7 +1103,6 @@
   font-weight: 400;
   font-family: "Font Awesome 5 Free";
   left: -15px;
-  padding-top: 3px;
 }
 #quest-tracker .tasks .task.minus-square {
   text-decoration: line-through;
