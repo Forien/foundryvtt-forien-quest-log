@@ -1,6 +1,6 @@
-import Fetch      from '../control/Fetch.js';
-import QuestAPI   from '../control/QuestAPI.js';
-import Utils      from '../utils/Utils.js';
+import Fetch      from './Fetch.js';
+import QuestAPI   from './QuestAPI.js';
+import Utils      from './Utils.js';
 
 export default class Socket
 {

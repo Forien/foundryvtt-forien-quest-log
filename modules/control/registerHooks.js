@@ -1,7 +1,7 @@
-import Fetch         from '../control/Fetch.js';
+import Enrich        from './Enrich.js';
+import Fetch         from './Fetch.js';
+import Utils         from './Utils.js';
 import { constants } from '../model/constants.js';
-import Enrich      from './Enrich.js';
-import Utils         from '../utils/Utils.js';
 
 /**
  * Function for registering API-related Hooks.

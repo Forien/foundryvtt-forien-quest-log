@@ -2,9 +2,9 @@ import FQLDialog     from './FQLDialog.js';
 import Enrich        from '../control/Enrich.js';
 import Fetch         from '../control/Fetch.js';
 import Socket        from '../control/Socket.js';
-import QuestFolder   from '../model/QuestFolder.js';
+import Utils         from '../control/Utils.js';
 import Quest         from '../model/Quest.js';
-import Utils         from '../utils/Utils.js';
+import QuestFolder   from '../model/QuestFolder.js';
 import { constants } from '../model/constants.js';
 
 export default class QuestForm extends FormApplication

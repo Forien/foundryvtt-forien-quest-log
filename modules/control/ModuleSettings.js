@@ -1,5 +1,4 @@
-import QuestTracker  from '../view/QuestTracker.js';
-import Utils         from '../utils/Utils.js';
+import Utils   from './Utils.js';
 
 const s_QUEST_TRACKER_DEFAULT = { top: 80 };
 

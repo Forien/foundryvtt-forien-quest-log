@@ -1,7 +1,7 @@
 import Quest               from '../model/Quest.js';
 import QuestFolder         from '../model/QuestFolder.js';
 import { constants }       from '../model/constants.js';
-import { migrateData_070 } from '../utils/migrateData.js';
+import { migrateData_070 } from './migrateData.js';
 
 export default class Fetch
 {

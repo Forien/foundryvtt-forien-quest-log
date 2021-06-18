@@ -1,6 +1,5 @@
+import Fetch         from './Fetch.js';
 import Socket        from './Socket.js';
-import Fetch         from '../control/Fetch.js';
-import QuestPreview  from '../view/QuestPreview.js';
 
 /**
  * Quest public Api available under `Quests.`
@@ -37,7 +36,6 @@ export default class QuestAPI
       {
          const quest = Fetch.quest(questId);
 
-console.log(`!!!!! QuestAPI - questId: ${questId} - quest: ${quest}`);
          if (quest === null)
          {
             if (notify)
@@ -51,8 +49,7 @@ console.log(`!!!!! QuestAPI - questId: ${questId} - quest: ${quest}`);
             return;
          }
 
-         const questPreview = new QuestPreview(quest);
-         questPreview.render(true, { focus: true });
+         quest.sheet.render(true, { focus: true });
       }
       catch (error)
       {

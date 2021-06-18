@@ -8,7 +8,7 @@
  *
  * Both of these really need to be modal and there are no default modal implementations in Foundry, so a
  * modal dialog in the style of Foundry GUI is a future addition. For the time being simple confirm prompts are being
- * but this was the previous dialog code.
+ * used but this was the previous dialog code.
  */
 export default class FQLDialog
 {

@@ -4,8 +4,8 @@ import Enrich           from '../control/Enrich.js';
 import Fetch            from '../control/Fetch.js';
 import QuestAPI         from '../control/QuestAPI.js';
 import Socket           from '../control/Socket.js';
+import Utils            from '../control/Utils.js';
 import { questTypes }   from '../model/constants.js';
-import Utils            from '../utils/Utils.js';
 
 export default class QuestPreview extends FormApplication
 {

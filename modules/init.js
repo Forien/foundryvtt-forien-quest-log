@@ -2,6 +2,7 @@ import ModuleSettings      from './control/ModuleSettings.js';
 import registerHooks       from './control/registerHooks.js';
 import Socket              from './control/Socket.js';
 import QuestAPI            from './control/QuestAPI.js';
+import Utils               from './control/Utils.js';
 import Quest               from './model/Quest.js';
 import QuestFolder         from './model/QuestFolder.js';
 import QuestsCollection    from './model/QuestsCollection.js';
@@ -9,7 +10,6 @@ import QuestLogFloating    from './view/QuestLogFloating.js';
 import QuestLog            from './view/QuestLog.js';
 import QuestPreview        from './view/QuestPreview.js';
 import QuestTracker        from './view/QuestTracker.js';
-import Utils               from './utils/Utils.js';
 
 Hooks.once('init', () =>
 {
