@@ -61,5 +61,15 @@ export function migrateData_070(entry)
    content.name = content.title;
    delete content.title;
 
+   // Old FQL will often store the entire actor data as the giver, so if it is not a string then set to null.
+   if (typeof content.giver !== 'string')
+   {
+      content.giver = null;
+   }
+
+   // As things go the rewards format for the new FQL is minimal / only stores UUID and basic info. Can't support old
+   // rewards format.
+   content.rewards = [];
+
    return content;
 }
