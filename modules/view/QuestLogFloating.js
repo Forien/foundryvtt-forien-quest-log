@@ -1,6 +1,6 @@
-import QuestPreview     from './QuestPreview.js';
 import Enrich           from '../control/Enrich.js';
 import Fetch            from '../control/Fetch.js';
+import QuestAPI         from '../control/QuestAPI.js';
 import { questTypes }   from '../model/constants.js';
 
 export default class QuestLogFloating extends Application
@@ -51,9 +51,7 @@ export default class QuestLogFloating extends Application
       html.on('click', '.quest-open', (event) =>
       {
          const questId = $(event.target).closest('.quest-open').data('quest-id');
-         const quest = Fetch.quest(questId);
-         const questPreview = new QuestPreview(quest);
-         questPreview.render(true);
+         QuestAPI.open({ questId });
       });
 
       // Open and close folders on rerender. Data is store in localstorage so

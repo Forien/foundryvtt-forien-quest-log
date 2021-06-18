@@ -35,7 +35,7 @@ export default function registerHooks()
             throw new Error(game.i18n.localize('ForienQuestLog.Api.hooks.createOpenQuestMacro.error.noQuest'));
          }
 
-         const command = `game.modules.get('${constants.moduleName}').public.QuestAPI.open('${questId}');`;
+         const command = `game.modules.get('${constants.moduleName}').public.QuestAPI.open({ questId: '${questId}' });`;
 
          const macroData = {
             name: game.i18n.format('ForienQuestLog.Api.hooks.createOpenQuestMacro.name', { name: quest.name }),

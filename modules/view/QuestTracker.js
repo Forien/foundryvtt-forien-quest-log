@@ -42,8 +42,8 @@ export default class QuestTracker extends RepositionableApplication
 
    static _onClick(event)
    {
-      const id = event.currentTarget.dataset.id;
-      QuestAPI.open(id);
+      const questId = event.currentTarget.dataset.id;
+      QuestAPI.open({ questId });
    }
 
    /** @override */

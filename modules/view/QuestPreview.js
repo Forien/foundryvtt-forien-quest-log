@@ -228,8 +228,8 @@ export default class QuestPreview extends FormApplication
 
       html.on('click', '.quest-name', (event) =>
       {
-         const id = $(event.currentTarget).data('id');
-         QuestAPI.open(id);
+         const questId = $(event.currentTarget).data('id');
+         QuestAPI.open({ questId });
       });
 
       html.on('click', '.open-actor-sheet', async (event) =>
@@ -253,9 +253,7 @@ export default class QuestPreview extends FormApplication
 
                if (quest && await quest.move(target))
                {
-                  Socket.refreshQuestPreview(quest.id);
-
-                  if (quest.parent) { Socket.refreshQuestPreview(quest.parent, false); }
+                  Socket.refreshQuestPreview({ questId: quest.parent ? [quest.parent, quest.id] : quest.id });
 
                   const dirname = game.i18n.localize(questTypes[target]);
                   ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
@@ -292,7 +290,7 @@ export default class QuestPreview extends FormApplication
                const dt = event.target.closest('li.reward') || null;
                this.quest.sortRewards(data.index, dt?.dataset.index);
                await this.quest.save();
-               Socket.refreshQuestPreview(this.quest.id);
+               Socket.refreshQuestPreview({ questId: this.quest.id });
             }
             else if (data.type === 'Item' && data._fqlDrop === void 0)
             {
@@ -315,7 +313,7 @@ export default class QuestPreview extends FormApplication
                const dt = event.target.closest('li.task') || null;
                this.quest.sortTasks(data.index, dt?.dataset.index);
                await this.quest.save();
-               Socket.refreshQuestPreview(this.quest.id);
+               Socket.refreshQuestPreview({ questId: this.quest.id });
             }
          });
 
@@ -675,7 +673,10 @@ export default class QuestPreview extends FormApplication
     */
    async refresh()
    {
-      Socket.refreshQuestPreview(this.quest.parent ? [this.quest.parent, this.quest.id] : this.quest.id);
+      Socket.refreshQuestPreview({
+         questId: this.quest.parent ? [this.quest.parent, this.quest.id] : this.quest.id,
+         focus: false
+      });
 
       this.render(true, { focus: true });
    }
@@ -685,8 +686,9 @@ export default class QuestPreview extends FormApplication
     *
     * @see close()
     * @inheritDoc
+    * @override
     */
-   async render(force = false, options)
+   async render(force = false, options = { focus: true })
    {
       Utils.getFQLPublicAPI().questPreview[this.quest.id] = this;
 

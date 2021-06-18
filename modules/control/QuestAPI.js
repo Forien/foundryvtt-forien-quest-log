@@ -1,5 +1,6 @@
-import Fetch         from './Fetch.js';
-import Socket        from './Socket.js';
+import Fetch   from './Fetch.js';
+import Socket  from './Socket.js';
+import Utils   from './Utils.js';
 
 /**
  * Quest public Api available under `Quests.`
@@ -26,14 +27,26 @@ export default class QuestAPI
    /**
     * Opens Quest Details for given quest ID
     *
-    * @param questId
+    * @param {object}   options - Optional parameters.
     *
-    * @param notify
+    * @param {string}   options.questId - Quest ID string to open.
+    *
+    * @param {boolean}  [options.notify=true] - Post UI notification on any error.
     */
-   static open(questId, notify = true)
+   static open({ questId, notify = true })
    {
       try
       {
+         const questPreview = Utils.getFQLPublicAPI().questPreview[questId];
+
+         // Optimization to render an existing open QuestPreview with the given quest ID instead of opening a new
+         // app / view.
+         if (questPreview !== void 0)
+         {
+            questPreview.render(true, { focus: true });
+            return;
+         }
+
          const quest = Fetch.quest(questId);
 
          if (quest === null)

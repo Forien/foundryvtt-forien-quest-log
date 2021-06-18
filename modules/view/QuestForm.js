@@ -132,7 +132,7 @@ export default class QuestForm extends FormApplication
          parentQuest.addSubquest(entry.id);
          await parentQuest.save();
 
-         Socket.refreshQuestPreview(parentQuest.id);
+         Socket.refreshQuestPreview({ questId: parentQuest.id });
       }
 
       // players don't see Hidden tab, but assistant GM can, so emit anyway

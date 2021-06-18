@@ -1,8 +1,8 @@
 import FQLDialog        from './FQLDialog.js';
-import QuestPreview     from './QuestPreview.js';
 import QuestForm        from './QuestForm.js';
 import Enrich           from '../control/Enrich.js';
 import Fetch            from '../control/Fetch.js';
+import QuestAPI         from '../control/QuestAPI.js';
 import Socket           from '../control/Socket.js';
 import { questTypes }   from '../model/constants.js';
 
@@ -68,12 +68,7 @@ export default class QuestLog extends Application
             {
                await quest.move(target);
 
-               Socket.refreshQuestPreview(quest.id);
-
-               if (quest.parent)
-               {
-                  Socket.refreshQuestPreview(quest.parent, false);
-               }
+               Socket.refreshQuestPreview({ questId: quest.parent ? [quest.parent, quest.id] : quest.id });
 
                const dirname = game.i18n.localize(questTypes[target]);
                ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
@@ -94,9 +89,7 @@ export default class QuestLog extends Application
       html.on('click', '.title', (event) =>
       {
          const questId = $(event.target).closest('.title').data('quest-id');
-         const quest = Fetch.quest(questId);
-         const questPreview = new QuestPreview(quest);
-         questPreview.render(true, { focus: true });
+         QuestAPI.open({ questId });
       });
 
       html.on('dragstart', '.drag-quest', (event) =>

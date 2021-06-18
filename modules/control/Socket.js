@@ -36,7 +36,7 @@ export default class Socket
       if (typeof deleteData === 'object')
       {
          this.closeQuest(deleteData.deleteID);
-         this.refreshQuestPreview(deleteData.savedIDs);
+         this.refreshQuestPreview({ questId: deleteData.savedIDs });
       }
    }
 
@@ -91,7 +91,7 @@ export default class Socket
 
          if (data.type === 'showQuestPreview')
          {
-            QuestAPI.open(data.payload.questId, false);
+            QuestAPI.open({ questId: data.payload.questId, notify: false });
 
             return;
          }
@@ -153,11 +153,15 @@ export default class Socket
    /**
     * Sends a message indicating which quest preview windows need to be updated.
     *
-    * @param {string|string[]}   questId - A single quest ID or an array of IDs to update.
+    * @param {object}            options - Optional parameters.
     *
-    * @param {boolean}           [updateLog=true] - Updates the quest log and all other GUI apps if true.
+    * @param {string|string[]}   options.questId - A single quest ID or an array of IDs to update.
+    *
+    * @param {boolean}           [options.updateLog=true] - Updates the quest log and all other GUI apps if true.
+    *
+    * @param {object}            [options.options] - Any options to pass onto QuestPreview render method invocation.
     */
-   static refreshQuestPreview(questId, updateLog = true)
+   static refreshQuestPreview({ questId, updateLog = true, ...options })
    {
       const fqlPublicAPI = Utils.getFQLPublicAPI();
 
@@ -167,7 +171,7 @@ export default class Socket
          {
             if (fqlPublicAPI.questPreview[id] !== undefined)
             {
-               fqlPublicAPI.questPreview[id].render(true);
+               fqlPublicAPI.questPreview[id].render(true, options);
             }
          }
       }
@@ -175,7 +179,7 @@ export default class Socket
       {
          if (fqlPublicAPI.questPreview[questId] !== undefined)
          {
-            fqlPublicAPI.questPreview[questId].render(true);
+            fqlPublicAPI.questPreview[questId].render(true, options);
          }
       }
 
