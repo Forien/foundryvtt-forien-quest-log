@@ -49,36 +49,28 @@ export default class Fetch
    /**
     * Retrieves all Quests, grouped by folders.
     *
-    * @param target      sort by
+    * @param {object}   options - Optional parameters.
     *
-    * @param direction   sort direction
+    * @param {string}   options.target - sort by target index.
     *
-    * @param available    true if Available tab is visible
+    * @param {string}   [options.direction] - sort direction.
+    *
+    * @param {boolean}  [options.available] - true if Available tab is visible.
+    *
+    * @param {Function} [options.sortFunc] - Custom sort function.
     *
     * @returns {SortedQuests}
     */
-   static sorted({ target = void 0, direction = 'asc', available = false } = {})
+   static sorted({ target = void 0, sortFunc = s_SORT, ...options } = {})
    {
-      const folder = QuestFolder.get();
-
       /**
        * @type {Quest[]}
        */
-      let entries = [];
-
-      for (const entry of folder.content)
-      {
-         const content = this.content(entry);
-
-         if (content)
-         {
-            entries.push(new Quest(content, entry));
-         }
-      }
+      let entries = this.allQuests();
 
       if (target !== void 0)
       {
-         entries = s_SORT(entries, target, direction);
+         entries = entries.sort(sortFunc(target, options));
       }
 
       // Note the condition on 'e.parent === null' as this prevents sub quests from displaying in these categories
@@ -90,10 +82,10 @@ export default class Fetch
          hidden: entries.filter((e) => e.status === 'hidden' && e.parent === null)
       };
 
-      if (!available)
+      if (typeof options.available === 'boolean' && !options.available)
       {
          quests.hidden = [...quests.available, ...quests.hidden];
-         quests.hidden = s_SORT(quests.hidden, target, direction);
+         quests.hidden = quests.hidden.sort(sortFunc(target, options));
       }
 
       return quests;
@@ -123,19 +115,15 @@ export default class Fetch
 /**
  * Sort function to sort quests.
  *
- * @see getQuests()
+ * @param {string}   target - target index.
  *
- * @param {Quest[]} quests - An array of Quests to sort.
- *
- * @param target
- *
- * @param direction
+ * @param {object}   options - Optional parameters
  *
  * @returns {Quest[]} Sorted Quest array.
  */
-function s_SORT(quests, target, direction)
+function s_SORT(target, options)
 {
-   return quests.sort((a, b) =>
+   return (a, b) =>
    {
       let targetA;
       let targetB;
@@ -151,11 +139,11 @@ function s_SORT(quests, target, direction)
          targetB = b[target];
       }
 
-      if (direction === 'asc')
+      if (options.direction === 'asc')
       {
          return (targetA < targetB) ? -1 : (targetA > targetB) ? 1 : 0;
       }
 
       return (targetA > targetB) ? -1 : (targetA < targetB) ? 1 : 0;
-   });
+   };
 }
