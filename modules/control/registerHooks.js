@@ -1,6 +1,6 @@
 import Fetch         from '../control/Fetch.js';
 import { constants } from '../model/constants.js';
-import ViewData      from '../view/ViewData.js';
+import Enrich      from './Enrich.js';
 import Utils         from '../utils/Utils.js';
 
 /**
@@ -43,7 +43,7 @@ export default function registerHooks()
             command
          };
 
-         macroData.img = quest.splash.length ? quest.splash : (await ViewData.giverFromQuest(quest)).img;
+         macroData.img = quest.splash.length ? quest.splash : (await Enrich.giverFromQuest(quest)).img;
 
          let macro = game.macros.contents.find((m) => (m.data.command === command));
          if (!macro)

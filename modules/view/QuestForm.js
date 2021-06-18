@@ -1,4 +1,4 @@
-import ViewData      from './ViewData.js';
+import Enrich        from '../control/Enrich.js';
 import Fetch         from '../control/Fetch.js';
 import Socket        from '../control/Socket.js';
 import QuestFolder   from '../model/QuestFolder.js';
@@ -164,7 +164,7 @@ export default class QuestForm extends FormApplication
       html.on('change', '#giver', async (event) =>
       {
          const giverId = $(event.currentTarget).val();
-         const giver = await ViewData.giverFromUUID(giverId);
+         const giver = await Enrich.giverFromUUID(giverId);
 
          if (giver)
          {

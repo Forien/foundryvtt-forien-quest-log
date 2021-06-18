@@ -1,13 +1,87 @@
-import Fetch from '../control/Fetch.js';
+import Fetch from './Fetch.js';
 
-export default class ViewData
+/**
+ * Enrich populates content with a lot of additional data that doesn't necessarily have to be saved
+ * with the Quest itself such as Actor data.
+ *
+ * All enrich methods should only be used in getData of various Foundry apps / views.
+ */
+export default class Enrich
 {
+   static async giverFromQuest(quest)
+   {
+      let data = {};
+
+      if (quest.giver === 'abstract')
+      {
+         data = {
+            name: quest.giverName,
+            img: quest.image,
+            hasTokenImg: false
+         };
+      }
+      else if (typeof quest.giver === 'string')
+      {
+         data = Enrich.giverFromUUID(quest.giver, quest.image);
+      }
+
+      return data;
+   }
+
+   static async giverFromUUID(uuid, imageType = 'actor')
+   {
+      let data = {};
+
+      if (typeof uuid === 'string')
+      {
+         const document = await fromUuid(uuid);
+
+         if (document !== null)
+         {
+            switch (document.documentName)
+            {
+               case Actor.documentName:
+               {
+                  const actorImage = document.img;
+                  const tokenImage = document?.data?.token?.img;
+                  const hasTokenImg = typeof tokenImage === 'string' && tokenImage !== actorImage;
+
+                  data = {
+                     name: document.name,
+                     img: imageType === 'token' && hasTokenImg ? tokenImage : actorImage,
+                     hasTokenImg
+                  };
+                  break;
+               }
+
+               case Item.documentName:
+                  data = {
+                     name: document.name,
+                     img: document.img,
+                     hasTokenImg: false
+                  };
+                  break;
+
+               case JournalEntry.documentName:
+                  data = {
+                     name: document.name,
+                     img: document.data.img,
+                     hasTokenImg: false
+                  };
+                  break;
+            }
+         }
+      }
+
+      return data;
+   }
+
    /**
     * @param {SortedQuests}   sortedQuests
     *
     * @returns {Promise<object>}
     */
-   static async createSorted(sortedQuests)
+   static async sorted(sortedQuests)
    {
       const data = {};
 
@@ -16,7 +90,7 @@ export default class ViewData
          data[key] = [];
          for (const quest of sortedQuests[key])
          {
-            const questView = await ViewData.create(quest);
+            const questView = await Enrich.quest(quest);
             data[key].push(questView);
          }
       }
@@ -25,9 +99,6 @@ export default class ViewData
    }
 
    /**
-    * Populates content with a lot of additional data, that doesn't necessarily have to be saved
-    * with Quest itself, such as Actor's data.
-    *
     * This method also performs content manipulation, for example enriching HTML or calculating amount
     * of done/total tasks etc.
     *
@@ -35,7 +106,7 @@ export default class ViewData
     *
     * @returns {Promise<object>} A single quest view or SortedQuests upgraded
     */
-   static async create(quest)
+   static async quest(quest)
    {
       const data = {};
 
@@ -61,7 +132,7 @@ export default class ViewData
       const canPlayerDrag = game.settings.get('forien-quest-log', 'allowPlayersDrag');
       const countHidden = game.settings.get('forien-quest-log', 'countHidden');
 
-      data.data_giver = await ViewData.giverFromQuest(quest);
+      data.data_giver = await Enrich.giverFromQuest(quest);
 
       data.isSubquest = false;
       if (data.parent !== null)
@@ -185,74 +256,6 @@ export default class ViewData
             else
             {
                data.users = game.i18n.localize('ForienQuestLog.Tooltips.PersonalQuestButNoPlayers');
-            }
-         }
-      }
-
-      return data;
-   }
-
-   static async giverFromQuest(quest)
-   {
-      let data = {};
-
-      if (quest.giver === 'abstract')
-      {
-         data = {
-            name: quest.giverName,
-            img: quest.image,
-            hasTokenImg: false
-         };
-      }
-      else if (typeof quest.giver === 'string')
-      {
-         data = ViewData.giverFromUUID(quest.giver, quest.image);
-      }
-
-      return data;
-   }
-
-   static async giverFromUUID(uuid, imageType = 'actor')
-   {
-      let data = {};
-
-      if (typeof uuid === 'string')
-      {
-         const document = await fromUuid(uuid);
-
-         if (document !== null)
-         {
-            switch (document.documentName)
-            {
-               case Actor.documentName:
-               {
-                  const actorImage = document.img;
-                  const tokenImage = document?.data?.token?.img;
-                  const hasTokenImg = typeof tokenImage === 'string' && tokenImage !== actorImage;
-
-                  data = {
-                     name: document.name,
-                     img: imageType === 'token' && hasTokenImg ? tokenImage : actorImage,
-                     hasTokenImg
-                  };
-                  break;
-               }
-
-               case Item.documentName:
-                  data = {
-                     name: document.name,
-                     img: document.img,
-                     hasTokenImg: false
-                  };
-                  break;
-
-               case JournalEntry.documentName:
-                  data = {
-                     name: document.name,
-                     img: document.data.img,
-                     hasTokenImg: false
-                  };
-                  break;
             }
          }
       }

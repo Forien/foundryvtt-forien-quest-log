@@ -1,5 +1,5 @@
 import QuestPreview     from './QuestPreview.js';
-import ViewData         from './ViewData.js';
+import Enrich           from '../control/Enrich.js';
 import Fetch            from '../control/Fetch.js';
 import { questTypes }   from '../model/constants.js';
 
@@ -95,7 +95,7 @@ export default class QuestLogFloating extends Application
          showTasks: game.settings.get('forien-quest-log', 'showTasks'),
          style: game.settings.get('forien-quest-log', 'navStyle'),
          questTypes,
-         quests: await ViewData.createSorted(Fetch.sorted({ target: this._sortBy, direction: this._sortDirection }))
+         quests: await Enrich.sorted(Fetch.sorted({ target: this._sortBy, direction: this._sortDirection }))
       });
    }
 

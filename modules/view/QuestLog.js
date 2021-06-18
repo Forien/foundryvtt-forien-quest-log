@@ -1,7 +1,7 @@
 import FQLDialog        from './FQLDialog.js';
-import ViewData         from './ViewData.js';
 import QuestPreview     from './QuestPreview.js';
 import QuestForm        from './QuestForm.js';
+import Enrich           from '../control/Enrich.js';
 import Fetch            from '../control/Fetch.js';
 import Socket           from '../control/Socket.js';
 import { questTypes }   from '../model/constants.js';
@@ -161,7 +161,7 @@ export default class QuestLog extends Application
 
       try
       {
-         quests = await ViewData.createSorted(Fetch.sorted({
+         quests = await Enrich.sorted(Fetch.sorted({
             target: this.sortBy,
             direction: this.sortDirection,
             available

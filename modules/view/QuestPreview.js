@@ -1,6 +1,6 @@
 import FQLDialog        from './FQLDialog.js';
 import QuestForm        from './QuestForm.js';
-import ViewData         from './ViewData.js';
+import Enrich           from '../control/Enrich.js';
 import Fetch            from '../control/Fetch.js';
 import QuestAPI         from '../control/QuestAPI.js';
 import Socket           from '../control/Socket.js';
@@ -279,7 +279,7 @@ export default class QuestPreview extends FormApplication
             {
                const uuid = Utils.getUUID(data);
 
-               const item = await ViewData.giverFromUUID(uuid);
+               const item = await Enrich.giverFromUUID(uuid);
 
                item.uuid = uuid;
 
@@ -605,7 +605,7 @@ export default class QuestPreview extends FormApplication
     */
    async getData(options = {}) // eslint-disable-line no-unused-vars
    {
-      const content = await ViewData.create(this.quest);
+      const content = await Enrich.quest(this.quest);
 
       // WAS (06/11/21) this.canEdit = (content.playerEdit || game.user.isGM);
       // Due to the new document model in 0.8.x+ player editing is temporarily removed.
