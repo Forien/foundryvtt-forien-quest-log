@@ -243,8 +243,7 @@ export default class QuestForm extends FormApplication
       }
 
       // TODO: Replace 'confirm' with a Foundry style modal dialog when one is created.
-
-      if (FQLDialog.confirmClose())
+      if (await FQLDialog.confirmClose())
       {
          this._submitted = true;
          return super.close(options);
