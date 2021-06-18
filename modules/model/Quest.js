@@ -275,6 +275,9 @@ export default class Quest
 
    sortTasks(index, targetIdx)
    {
+      // If there are sub quests in the objectives above an undefined targetIdx can occur.
+      if (!targetIdx) { return; }
+
       const entry = this.tasks.splice(index, 1)[0];
       if (targetIdx) { this.tasks.splice(targetIdx, 0, entry); }
       else { this.tasks.push(entry); }
