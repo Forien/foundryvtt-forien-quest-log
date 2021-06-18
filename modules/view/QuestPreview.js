@@ -579,7 +579,7 @@ export default class QuestPreview extends FormApplication
     */
    async close(options)
    {
-      delete game.questPreview[this.quest.id];
+      delete Utils.getFQLPublicAPI().questPreview[this.quest.id];
       await this.saveQuest({ refresh: false });
       return super.close(options);
    }
@@ -654,7 +654,7 @@ export default class QuestPreview extends FormApplication
     */
    async render(force = false, options = {})
    {
-      game.questPreview[this.quest.id] = this;
+      Utils.getFQLPublicAPI().questPreview[this.quest.id] = this;
 
       if (force) { this.quest.refresh(); }
 

@@ -16,9 +16,11 @@ export default class Socket
 
    static closeQuest(questId)
    {
-      if (game.questPreview[questId] !== undefined)
+      const publicAPI = Utils.getFQLPublicAPI();
+
+      if (publicAPI.questPreview[questId] !== undefined)
       {
-         game.questPreview[questId].close();
+         publicAPI.questPreview[questId].close();
       }
 
       game.socket.emit('module.forien-quest-log', {
@@ -50,9 +52,9 @@ export default class Socket
 
          if (data.type === 'questPreviewRefresh')
          {
-            if (game.questPreview[data.payload.questId] !== undefined)
+            if (fqlPublicAPI.questPreview[data.payload.questId] !== undefined)
             {
-               game.questPreview[data.payload.questId].render(true);
+               fqlPublicAPI.questPreview[data.payload.questId].render(true);
             }
 
             if (fqlPublicAPI.questLog.rendered)
@@ -96,9 +98,9 @@ export default class Socket
 
          if (data.type === 'closeQuest')
          {
-            if (game.questPreview[data.payload.questId] !== undefined)
+            if (fqlPublicAPI.questPreview[data.payload.questId] !== undefined)
             {
-               game.questPreview[data.payload.questId].close();
+               await fqlPublicAPI.questPreview[data.payload.questId].close();
             }
          }
       });
@@ -127,9 +129,11 @@ export default class Socket
    // TODO: Can this be removed if we can subscribe to JournalEntry changes?
    static refreshQuestPreview(questId)
    {
-      if (game.questPreview[questId] !== undefined)
+      const fqlPublicAPI = Utils.getFQLPublicAPI();
+
+      if (fqlPublicAPI.questPreview[questId] !== undefined)
       {
-         game.questPreview[questId].render(true);
+         fqlPublicAPI.questPreview[questId].render(true);
       }
 
       game.socket.emit('module.forien-quest-log', {

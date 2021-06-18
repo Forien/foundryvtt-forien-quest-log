@@ -29,12 +29,11 @@ Hooks.once('setup', () =>
    moduleData.public = {
       QuestAPI,
       questLog: new QuestLog(),
-      questLogFloating: new QuestLogFloating()
+      questLogFloating: new QuestLogFloating(),
+      questPreview: {}
    };
 
    Object.freeze(moduleData.public);
-
-   game.questPreview = {};
 
    Hooks.callAll('ForienQuestLog.afterSetup');
 });

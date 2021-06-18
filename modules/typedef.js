@@ -6,6 +6,8 @@
  * @property {QuestLog} questLog - The main quest log app instance.
  *
  * @property {QuestLogFloating} questLogFloating - The floating quest log window instance.
+ *
+ * @property {object<string, QuestPreview>} questPreview - The open quest preview app / windows.
  */
 
 /**
