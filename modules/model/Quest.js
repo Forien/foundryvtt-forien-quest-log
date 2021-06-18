@@ -29,17 +29,12 @@ export default class Quest
 
    get name()
    {
-      return this._title;
+      return this._name;
    }
 
-   get title()
+   set name(value)
    {
-      return this._title;
-   }
-
-   set title(value)
-   {
-      this._title =
+      this._name =
        typeof value === 'string' && value.length > 0 ? value : game.i18n.localize('ForienQuestLog.NewQuest');
    }
 
@@ -130,7 +125,7 @@ export default class Quest
    initData(data)
    {
       this.giver = data.giver || null;
-      this._title = data.title || game.i18n.localize('ForienQuestLog.NewQuest');
+      this.name = data.name || game.i18n.localize('ForienQuestLog.NewQuest');
       this.status = data.status || 'hidden';
       this.description = data.description || '';
       this.gmnotes = data.gmnotes || '';
@@ -255,7 +250,7 @@ export default class Quest
       if (!entry || !entry.canUserModify(game.user, 'update')) { return; }
 
       const update = {
-         name: typeof this._title === 'string' && this._title.length > 0 ? this._title :
+         name: typeof this._name === 'string' && this._name.length > 0 ? this._name :
           game.i18n.localize('ForienQuestLog.NewQuest'),
          flags: {
             [constants.moduleName]: { json: this.toJSON() }
@@ -350,7 +345,7 @@ export default class Quest
    {
       return {
          giver: this.giver,
-         title: this._title,
+         name: this._name,
          status: this.status,
          description: this.description,
          gmnotes: this.gmnotes,

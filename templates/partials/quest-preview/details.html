@@ -17,15 +17,15 @@
   </div>
 
   <div class="quest-setup">
-    <div class="quest-title">
+    <div class="quest-name">
       <div class="editable-container">
         <h1>
-          {{title}}
+          {{name}}
         </h1>
       </div>
       {{#if canEdit}}
       <div class="actions">
-        <i class="fas fa-pen editable {{#unless isGM}}hidden{{/unless}}" data-target="title" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
+        <i class="fas fa-pen editable {{#unless isGM}}hidden{{/unless}}" data-target="name" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
       </div>
       {{/if}}
     </div>
@@ -42,7 +42,7 @@
             Quest is {{this.statusLabel}}
           </p>
           {{#if isSubquest}}
-          <p class="quest-name" data-id="{{data_parent.id}}">{{format 'ForienQuestLog.QuestPreview.SubTitle' data_parent.title}} <i class="fas fa-link"></i></p>
+          <p class="quest-name" data-id="{{data_parent.id}}">{{format 'ForienQuestLog.QuestPreview.SubTitle' data_parent.name}} <i class="fas fa-link"></i></p>
           {{/if}}
         </div>
       </div>

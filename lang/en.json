@@ -33,7 +33,7 @@
       "QuestGiver": "Quest Source",
       "QuestGiverPlaceholder": "Entity / Actor UUID:",
       "QuestGiverNamePlaceholder": "Please provide a name for custom Quest Source:",
-      "QuestTitle": "Quest Title:",
+      "QuestName": "Quest Name:",
       "DragDropActor": "Drag & Drop Actor, Item or Journal Entry or left click to set a custom source.",
       "QuestDescription": "Quest Description:",
       "QuestGMNotes": "GM Notes:",

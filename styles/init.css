@@ -369,7 +369,7 @@
 #forien-quest-log-form form header .quest-giver {
   margin-bottom: 8px;
 }
-#forien-quest-log-form .quest-title {
+#forien-quest-log-form .quest-name {
   margin-top: 8px;
 }
 #forien-quest-log-form .quest-text {
@@ -544,7 +544,7 @@
   display: flex;
   flex-direction: column;
 }
-.window-app.forien-quest-preview .quest-body .details-header .quest-setup .quest-title {
+.window-app.forien-quest-preview .quest-body .details-header .quest-setup .quest-name {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -593,7 +593,7 @@
 .window-app.forien-quest-preview .quest-body .details-header .quest-setup .actions i:hover {
   color: #ff6400;
 }
-.window-app.forien-quest-preview .quest-body .details-header .quest-setup .quest-title .actions {
+.window-app.forien-quest-preview .quest-body .details-header .quest-setup .quest-name .actions {
   border: none;
 }
 .window-app.forien-quest-preview .quest-body .details-header .quest-setup section {

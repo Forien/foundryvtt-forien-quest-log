@@ -80,10 +80,11 @@ export default class QuestForm extends FormApplication
          giver = null;
       }
 
-      let title = formData.title;
-      if (title.length === 0)
+      let name = formData.name;
+
+      if (name.length === 0)
       {
-         title = game.i18n.localize('ForienQuestLog.NewQuest');
+         name = game.i18n.localize('ForienQuestLog.NewQuest');
       }
 
       const description = (formData.description !== void 0 && formData.description.length) ? formData.description :
@@ -93,7 +94,7 @@ export default class QuestForm extends FormApplication
 
       let data = {
          giver,
-         title,
+         name,
          description,
          gmnotes
       };
@@ -116,7 +117,7 @@ export default class QuestForm extends FormApplication
       data = new Quest(data);
 
       const entry = await JournalEntry.create({
-         name: title,
+         name,
          folder: QuestFolder.get().id,
          permission: { default: permission },
          flags: {

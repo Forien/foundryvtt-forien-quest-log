@@ -41,7 +41,7 @@ export default class ViewData
 
       data.id = quest.id;
       data.giver = quest.giver || null;
-      data.title = quest.title || game.i18n.localize('ForienQuestLog.NewQuest');
+      data.name = quest.name || game.i18n.localize('ForienQuestLog.NewQuest');
       data.status = quest.status || 'hidden';
       data.description = quest.description || '';
       data.gmnotes = quest.gmnotes || '';
@@ -74,7 +74,7 @@ export default class ViewData
             data.data_parent = {
                id: data.parent,
                giver: parentData.giver,
-               title: parentData.title,
+               name: parentData.name,
                status: parentData.status
             };
          }
@@ -135,8 +135,7 @@ export default class ViewData
                data.data_subquest.push({
                   id: questId,
                   giver: subData.giver,
-                  name: subData.title, title:
-                  subData.title,
+                  name: subData.name,
                   status: subData.status
                });
             }

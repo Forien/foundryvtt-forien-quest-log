@@ -17,7 +17,7 @@ export default class QuestsCollection
 
             return {
                id: e.id,
-               name: e.title,
+               name: e.name,
                data
             };
          });

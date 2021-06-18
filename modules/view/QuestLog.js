@@ -153,6 +153,7 @@ export default class QuestLog extends Application
             direction: this.sortDirection,
             available
          }));
+console.log(`!!!!!!!!! QuestLog - getData - quests: ${JSON.stringify(quests)}`);
       }
       catch (err)
       {

@@ -9,9 +9,9 @@
       {{/if}}
       <div class="title {{../titleAlign}}" data-quest-id="{{id}}">
         
-        <h2>{{title}}</h2>
+        <h2>{{name}}</h2>
         {{#if isSubquest}}
-        <p class="subquest">{{format 'ForienQuestLog.QuestPreview.SubTitle' data_parent.title}}</p>
+        <p class="subquest">{{format 'ForienQuestLog.QuestPreview.SubTitle' data_parent.name}}</p>
         {{/if}}
       </div>
       {{#unless (eq ../showTasks 'no')}}

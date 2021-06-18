@@ -93,7 +93,7 @@ export default class QuestPreview extends FormApplication
          onclick: () =>
          {
             const el = document.createElement('textarea');
-            el.value = `@Quest[${this.quest.id}]{${this.quest.title}}`;
+            el.value = `@Quest[${this.quest.id}]{${this.quest.name}}`;
             document.body.appendChild(el);
             el.select();
             document.execCommand('copy');

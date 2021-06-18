@@ -57,5 +57,9 @@ export function migrateData_070(entry)
       return null;
    }
 
+   // Convert title to name; all new Quest use `name` instead of `title` to match Foundry document model
+   content.name = content.title;
+   delete content.title;
+
    return content;
 }

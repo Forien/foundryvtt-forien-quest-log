@@ -97,7 +97,7 @@ export default class QuestTracker extends RepositionableApplication
       return quests.active.map((q) => ({
          id: q.id,
          source: q.giver,
-         title: q.title,
+         name: q.name,
          description: this.truncate(q.description, 120),
          tasks: q.tasks.filter((t) => t.hidden === false).map((t) => t.toJSON())
       }));
