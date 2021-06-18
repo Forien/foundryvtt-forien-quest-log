@@ -56,8 +56,6 @@ export default class QuestLog extends Application
          const target = $(event.target).data('target');
          const questId = $(event.target).data('quest-id');
 
-console.log(`!!!! QuestLog - click .action i - questId: ${questId}`);
-
          if (target === 'active' && canPlayerAccept)
          {
             Socket.acceptQuest(questId);
@@ -117,34 +115,6 @@ console.log(`!!!! QuestLog - click .action i - questId: ${questId}`);
          };
          event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dataTransfer));
 
-      });
-
-      // TODO: EVALUATE SEEMS LIKE NOTHING IS HAPPENING IN THIS DROP CALLBACK
-      html.on('drop', '.tab', async (event) =>
-      {
-         const dt = event.target.closest('.drag-quest') || null;
-         if (!dt) { return; }
-
-         const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
-         const id = data.id;
-
-         const journal = game.journal.get(id);
-         if (!journal) { return; }
-
-         const quest = Fetch.quest(id);
-         if (!quest) { return; }
-
-         const sortData = { sortKey: 'sort', sortBefore: true };
-         const targetId = dt.dataset.questId;
-         sortData.target = game.journal.get(targetId);
-
-         const ids = Fetch.sorted()[quest.status].map((q) => q.id);
-
-         sortData.siblings = game.journal.filter((e) => (e.id !== data.id && ids.includes(e.id)));
-
-         await journal.sortRelative(sortData);
-
-         this.render();
       });
    }
 
