@@ -56,6 +56,8 @@ export default class QuestLog extends Application
          const target = $(event.target).data('target');
          const questId = $(event.target).data('quest-id');
 
+console.log(`!!!! QuestLog - click .action i - questId: ${questId}`);
+
          if (target === 'active' && canPlayerAccept)
          {
             Socket.acceptQuest(questId);

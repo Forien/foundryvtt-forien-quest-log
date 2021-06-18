@@ -1,3 +1,4 @@
+import FQLDialog     from './FQLDialog.js';
 import Enrich        from '../control/Enrich.js';
 import Fetch         from '../control/Fetch.js';
 import Socket        from '../control/Socket.js';
@@ -5,9 +6,6 @@ import QuestFolder   from '../model/QuestFolder.js';
 import Quest         from '../model/Quest.js';
 import Utils         from '../utils/Utils.js';
 import { constants } from '../model/constants.js';
-
-// A single module private reference to only one close dialog.
-let s_CLOSE_DIALOG;
 
 export default class QuestForm extends FormApplication
 {
@@ -241,47 +239,15 @@ export default class QuestForm extends FormApplication
    {
       if (this._submitted)
       {
-         if (s_CLOSE_DIALOG)
-         {
-            s_CLOSE_DIALOG.close();
-            s_CLOSE_DIALOG = void 0;
-         }
-
          return super.close(options);
       }
 
-      if (!s_CLOSE_DIALOG)
+      // TODO: Replace 'confirm' with a Foundry style modal dialog when one is created.
+
+      if (FQLDialog.confirmClose())
       {
-         s_CLOSE_DIALOG = new Dialog({
-            title: game.i18n.localize('ForienQuestLog.CloseDialog.Title'),
-            content: `<h3>${game.i18n.localize('ForienQuestLog.CloseDialog.Header')}</h3>
-<p>${game.i18n.localize('ForienQuestLog.CloseDialog.Body')}</p>`,
-            buttons: {
-               no: {
-                  icon: `<i class="fas fa-undo"></i>`,
-                  label: game.i18n.localize('ForienQuestLog.CloseDialog.Cancel'),
-                  callback: () =>
-                  {
-                     s_CLOSE_DIALOG = void 0;
-                  }
-               },
-               yes: {
-                  icon: `<i class="far fa-trash-alt"></i>`,
-                  label: game.i18n.localize('ForienQuestLog.CloseDialog.Discard'),
-                  callback: () =>
-                  {
-                     this._submitted = true;
-                     s_CLOSE_DIALOG = void 0;
-                     this.close();
-                  }
-               }
-            },
-            default: 'no'
-         }).render(true);
-      }
-      else
-      {
-         s_CLOSE_DIALOG.bringToTop();
+         this._submitted = true;
+         return super.close(options);
       }
    }
 
