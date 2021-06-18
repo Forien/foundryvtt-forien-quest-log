@@ -1,6 +1,8 @@
 import Fetch         from '../control/Fetch.js';
-import QuestPreview  from '../view/QuestPreview.js';
 import { constants } from './constants.js';
+
+// Stores any Foundry sheet class to be used to render quest. Primarily used in content linking.
+let SheetClass;
 
 /**
  * Class that acts "kind of" like Entity, to help Manage everything Quest Related
@@ -120,50 +122,13 @@ export default class Quest
          savedIDs
       };
    }
-   // async delete()
-   // {
-   //    const parentQuest = Fetch.quest(this.parent);
-   //    let parentId = null;
-   //
-   //    // Remove this quest from any parent
-   //    if (parentQuest)
-   //    {
-   //       parentId = parentQuest._id;
-   //       parentQuest.removeSubquest(this._id);
-   //    }
-   //
-   //    // Update children to point to any new parent.
-   //    for (const childId of this.subquests)
-   //    {
-   //       const childQuest = Fetch.quest(childId);
-   //       if (childQuest)
-   //       {
-   //          childQuest.parent = parentId;
-   //          await childQuest.save();
-   //          Socket.refreshQuestPreview(childQuest._id);
-   //
-   //          // Update parent with new subquests.
-   //          if (parentQuest)
-   //          {
-   //             parentQuest.addSubquest(childQuest._id);
-   //          }
-   //       }
-   //    }
-   //
-   //    if (parentQuest)
-   //    {
-   //       await parentQuest.save();
-   //       Socket.refreshQuestPreview(parentQuest._id);
-   //    }
-   //
-   //    if (this.entry)
-   //    {
-   //       await this.entry.delete();
-   //    }
-   //
-   //    Socket.closeQuest(this._id);
-   //    Socket.refreshQuestLog();
-   // }
+
+   /**
+    * Returns any stored Foundry sheet class.
+    *
+    * @returns {*}
+    */
+   static getSheet() { return SheetClass; }
 
    /**
     * Normally would be in constructor(), but is extracted for usage in different methods as well
@@ -372,6 +337,13 @@ export default class Quest
       this.entryPermission = entryData.permission;
    }
 
+   /**
+    * Sets any stored Foundry sheet class.
+    *
+    * @returns {*}
+    */
+   static setSheet(NewSheetClass) { SheetClass = NewSheetClass; }
+
    sortRewards(index, targetIdx)
    {
       const entry = this.rewards.splice(index, 1)[0];
@@ -466,11 +438,11 @@ export default class Quest
    /**
     * This mirrors document.sheet and is used in TextEditor._onClickContentLink
     *
-    * @returns {QuestPreview}
+    * @returns {object} An associated sheet instance.
     */
    get sheet()
    {
-      return new QuestPreview(this);
+      return SheetClass ? new SheetClass(this) : void 0;
    }
 
    /**

@@ -13,6 +13,9 @@ import Utils               from './utils/Utils.js';
 
 Hooks.once('init', () =>
 {
+   // Set the sheet to render quests.
+   Quest.setSheet(QuestPreview);
+
    ModuleSettings.register();
    Utils.preloadTemplates();
    Utils.registerHandlebarsHelpers();
