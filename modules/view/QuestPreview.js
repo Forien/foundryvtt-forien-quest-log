@@ -1,10 +1,11 @@
-import FQLDialog  from './FQLDialog.js';
-import QuestForm  from './QuestForm.js';
-import ViewData   from './ViewData.js';
-import Fetch      from '../control/Fetch.js';
-import QuestAPI   from '../control/QuestAPI.js';
-import Socket     from '../control/Socket.js';
-import Utils      from '../utils/Utils.js';
+import FQLDialog        from './FQLDialog.js';
+import QuestForm        from './QuestForm.js';
+import ViewData         from './ViewData.js';
+import Fetch            from '../control/Fetch.js';
+import QuestAPI         from '../control/QuestAPI.js';
+import Socket           from '../control/Socket.js';
+import { questTypes }   from '../model/constants.js';
+import Utils            from '../utils/Utils.js';
 
 export default class QuestPreview extends FormApplication
 {
@@ -227,7 +228,18 @@ export default class QuestPreview extends FormApplication
 
                if (quest && await quest.move(target))
                {
-                  await this.refresh();
+                  // Socket.refreshQuestLog();
+                  Socket.refreshQuestPreview(quest.id);
+
+                  if (quest.parent)
+                  {
+                     Socket.refreshQuestPreview(quest.parent, false);
+                  }
+
+                  const dirname = game.i18n.localize(questTypes[target]);
+                  ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved', { target: dirname }), {});
+
+                  // await this.refresh();
                }
             }
             else if (classList.includes('delete'))
@@ -236,7 +248,7 @@ export default class QuestPreview extends FormApplication
 
                if (quest && await FQLDialog.confirmDelete(quest))
                {
-                  await quest.delete();
+                  Socket.deleteQuest(await quest.delete());
                }
             }
          });
@@ -637,12 +649,12 @@ export default class QuestPreview extends FormApplication
    {
       this.render(true);
 
-      Socket.refreshQuestLog();
       Socket.refreshQuestPreview(this.quest.id);
 
       if (this.quest.parent)
       {
-         Socket.refreshQuestPreview(this.quest.parent);
+         // Pass false to not update quest log twice.
+         Socket.refreshQuestPreview(this.quest.parent, false);
       }
    }
 

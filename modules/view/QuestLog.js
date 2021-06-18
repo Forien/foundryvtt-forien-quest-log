@@ -67,7 +67,20 @@ export default class QuestLog extends Application
          if (classList.includes('move'))
          {
             const quest = Fetch.quest(questId);
-            if (quest) { await quest.move(target); }
+            if (quest)
+            {
+               await quest.move(target);
+
+               Socket.refreshQuestPreview(quest.id);
+
+               if (quest.parent)
+               {
+                  Socket.refreshQuestPreview(quest.parent, false);
+               }
+
+               const dirname = game.i18n.localize(questTypes[target]);
+               ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved', { target: dirname }), {});
+            }
          }
          else if (classList.includes('delete'))
          {
@@ -75,7 +88,7 @@ export default class QuestLog extends Application
 
             if (quest && await FQLDialog.confirmDelete(quest))
             {
-               await quest.delete();
+               Socket.deleteQuest(await quest.delete());
             }
          }
       });
@@ -153,7 +166,6 @@ export default class QuestLog extends Application
             direction: this.sortDirection,
             available
          }));
-console.log(`!!!!!!!!! QuestLog - getData - quests: ${JSON.stringify(quests)}`);
       }
       catch (err)
       {

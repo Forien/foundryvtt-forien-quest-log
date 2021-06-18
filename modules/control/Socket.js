@@ -31,6 +31,15 @@ export default class Socket
       });
    }
 
+   static deleteQuest(deleteData)
+   {
+      if (typeof deleteData === 'object')
+      {
+         this.closeQuest(deleteData.deleteID);
+         this.refreshQuestPreview(deleteData.savedIDs);
+      }
+   }
+
    static listen()
    {
       game.socket.on('module.forien-quest-log', async (data) =>
@@ -52,18 +61,24 @@ export default class Socket
 
          if (data.type === 'questPreviewRefresh')
          {
-            if (fqlPublicAPI.questPreview[data.payload.questId] !== undefined)
-            {
-               fqlPublicAPI.questPreview[data.payload.questId].render(true);
-            }
+            const questId = data.payload.questId;
 
-            if (fqlPublicAPI.questLog.rendered)
+            if (Array.isArray(questId))
             {
-               fqlPublicAPI.questLog.render(true);
+               for (const id of questId)
+               {
+                  if (fqlPublicAPI.questPreview[id] !== undefined)
+                  {
+                     fqlPublicAPI.questPreview[id].render(true);
+                  }
+               }
             }
-            if (fqlPublicAPI.questLogFloating.rendered)
+            else
             {
-               fqlPublicAPI.questLogFloating.render(true);
+               if (fqlPublicAPI.questPreview[questId] !== undefined)
+               {
+                  fqlPublicAPI.questPreview[questId].render(true);
+               }
             }
             return;
          }
@@ -86,7 +101,6 @@ export default class Socket
             return;
          }
 
-         // TODO: Can this be removed if we can subscribe to JournalEntry changes?
          if (data.type === 'acceptQuest')
          {
             if (game.user.isGM)
@@ -106,7 +120,6 @@ export default class Socket
       });
    }
 
-   // TODO: Can this be removed if we can subscribe to JournalEntry changes?
    static refreshQuestLog()
    {
       const fqlPublicAPI = Utils.getFQLPublicAPI();
@@ -126,15 +139,35 @@ export default class Socket
       }
    }
 
-   // TODO: Can this be removed if we can subscribe to JournalEntry changes?
-   static refreshQuestPreview(questId)
+   /**
+    * Sends a message indicating which quest preview windows need to be updated.
+    *
+    * @param {string|string[]}   questId - A single quest ID or an array of IDs to update.
+    *
+    * @param {boolean}           [updateLog=true] - Updates the quest log and all other GUI apps if true.
+    */
+   static refreshQuestPreview(questId, updateLog = true)
    {
       const fqlPublicAPI = Utils.getFQLPublicAPI();
 
-      if (fqlPublicAPI.questPreview[questId] !== undefined)
+      if (Array.isArray(questId))
       {
-         fqlPublicAPI.questPreview[questId].render(true);
+         for (const id of questId)
+         {
+            if (fqlPublicAPI.questPreview[id] !== undefined)
+            {
+               fqlPublicAPI.questPreview[id].render(true);
+            }
+         }
       }
+      else
+      {
+         if (fqlPublicAPI.questPreview[questId] !== undefined)
+         {
+            fqlPublicAPI.questPreview[questId].render(true);
+         }
+      }
+
 
       game.socket.emit('module.forien-quest-log', {
          type: 'questPreviewRefresh',
@@ -142,6 +175,9 @@ export default class Socket
             questId
          }
       });
+
+      // Also update the quest log and other GUIs
+      if (updateLog) { this.refreshQuestLog(); }
    }
 
    static showQuestPreview(questId)

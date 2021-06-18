@@ -1,7 +1,6 @@
-import Fetch                     from '../control/Fetch.js';
-import Socket                    from '../control/Socket.js';
-import QuestPreview              from '../view/QuestPreview.js';
-import { constants, questTypes } from './constants.js';
+import Fetch         from '../control/Fetch.js';
+import QuestPreview  from '../view/QuestPreview.js';
+import { constants } from './constants.js';
 
 /**
  * Class that acts "kind of" like Entity, to help Manage everything Quest Related
@@ -75,6 +74,9 @@ export default class Quest
       const parentQuest = Fetch.quest(this.parent);
       let parentId = null;
 
+      // Stores the quest IDs which have been saved and need GUI / display aspects updated.
+      const savedIDs = [];
+
       // Remove this quest from any parent
       if (parentQuest)
       {
@@ -89,8 +91,9 @@ export default class Quest
          if (childQuest)
          {
             childQuest.parent = parentId;
+
             await childQuest.save();
-            Socket.refreshQuestPreview(childQuest._id);
+            savedIDs.push(childQuest._id);
 
             // Update parent with new subquests.
             if (parentQuest)
@@ -103,7 +106,7 @@ export default class Quest
       if (parentQuest)
       {
          await parentQuest.save();
-         Socket.refreshQuestPreview(parentQuest._id);
+         savedIDs.push(parentQuest._id);
       }
 
       if (this.entry)
@@ -111,9 +114,56 @@ export default class Quest
          await this.entry.delete();
       }
 
-      Socket.closeQuest(this._id);
-      Socket.refreshQuestLog();
+      // Return the delete and saved IDs.
+      return {
+         deleteID: this._id,
+         savedIDs
+      };
    }
+   // async delete()
+   // {
+   //    const parentQuest = Fetch.quest(this.parent);
+   //    let parentId = null;
+   //
+   //    // Remove this quest from any parent
+   //    if (parentQuest)
+   //    {
+   //       parentId = parentQuest._id;
+   //       parentQuest.removeSubquest(this._id);
+   //    }
+   //
+   //    // Update children to point to any new parent.
+   //    for (const childId of this.subquests)
+   //    {
+   //       const childQuest = Fetch.quest(childId);
+   //       if (childQuest)
+   //       {
+   //          childQuest.parent = parentId;
+   //          await childQuest.save();
+   //          Socket.refreshQuestPreview(childQuest._id);
+   //
+   //          // Update parent with new subquests.
+   //          if (parentQuest)
+   //          {
+   //             parentQuest.addSubquest(childQuest._id);
+   //          }
+   //       }
+   //    }
+   //
+   //    if (parentQuest)
+   //    {
+   //       await parentQuest.save();
+   //       Socket.refreshQuestPreview(parentQuest._id);
+   //    }
+   //
+   //    if (this.entry)
+   //    {
+   //       await this.entry.delete();
+   //    }
+   //
+   //    Socket.closeQuest(this._id);
+   //    Socket.refreshQuestLog();
+   // }
 
    /**
     * Normally would be in constructor(), but is extracted for usage in different methods as well
@@ -187,12 +237,7 @@ export default class Quest
          permission
       });
 
-      Socket.refreshQuestLog();
-      Socket.refreshQuestPreview(this._id);
-
-      const dirname = game.i18n.localize(questTypes[target]);
-
-      ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved', { target: dirname }), {});
+      return this._id;
    }
 
    /**
@@ -240,7 +285,7 @@ export default class Quest
     * Saves Quest to JournalEntry's content, and if needed, moves JournalEntry to different folder.
     * Can also update JournalEntry's permissions.
     *
-    * @returns {Promise<void>}
+    * @returns {Promise<string>} The ID of the quest saved.
     */
    async save()
    {
