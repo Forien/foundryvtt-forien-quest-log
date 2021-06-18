@@ -107,6 +107,23 @@ export default class QuestPreview extends FormApplication
    }
 
    /**
+    * Close any tracked permission control app / dialog when tabs change.
+    *
+    * @private
+    * @inheritDoc
+    */
+   _onChangeTab(event, tabs, active)
+   {
+      if (this._permControl)
+      {
+         this._permControl.close();
+         this._permControl = void 0;
+      }
+
+      super._onChangeTab(event, tabs, active);
+   }
+
+   /**
     * This might be a FormApplication, but we don't want Submit event to fire.
     *
     * @private
@@ -514,31 +531,33 @@ export default class QuestPreview extends FormApplication
 
       if (game.user.isGM)
       {
-         // TODO REMOVE
-         html.on('click', '#personal-quest', async () =>
+         html.on('click', '.configure-perm-btn', () =>
          {
-            this.quest.togglePersonal();
-            await this.saveQuest();
-         });
+            if (this.quest.entry)
+            {
+               if (!this._permControl)
+               {
+                  this._permControl = new PermissionControl(this.quest.entry, {
+                     top: Math.min(this.position.top, window.innerHeight - 350),
+                     left: this.position.left + 125
+                  });
 
-         // TODO REMOVE
-         html.on('click', '.personal-user', async (event) =>
-         {
-            const userId = $(event.target).data('user-id');
-            const value = $(event.target).data('value');
-            const permission = value ? 0 : (this.playerEdit ? 3 : 2);
+                  Hooks.once('closePermissionControl', (app) =>
+                  {
+                     if (app.appId === this._permControl.appId)
+                     {
+                        this._permControl = void 0;
+                        this.refresh();
+                     }
+                  });
+               }
 
-            this.quest.savePermission(userId, permission);
-            await this.saveQuest();
-         });
-
-         // TODO REMOVE
-         html.on('click', '#player-edit', async (event) =>
-         {
-            const checked = $(event.target).prop('checked');
-            const permission = checked ? 3 : 2;
-            this.quest.savePermission('*', permission);
-            await this.saveQuest();
+               this._permControl.render(true, {
+                  top: Math.min(this.position.top, window.innerHeight - 350),
+                  left: this.position.left + 125,
+                  focus: true
+               });
+            }
          });
 
          html.on('click', '.splash-image', async () =>
@@ -578,6 +597,13 @@ export default class QuestPreview extends FormApplication
 
          html.on('click', '.add-subquest-btn', () =>
          {
+            // If a permission control app / dialog is open close it.
+            if (this._permControl)
+            {
+               this._permControl.close();
+               this._permControl = void 0;
+            }
+
             new QuestForm({ parentId: this.quest.id }).render(true);
          });
       }
@@ -594,6 +620,14 @@ export default class QuestPreview extends FormApplication
    async close(options)
    {
       delete Utils.getFQLPublicAPI().questPreview[this.quest.id];
+
+      // If a permission control app / dialog is open close it.
+      if (this._permControl)
+      {
+         this._permControl.close();
+         this._permControl = void 0;
+      }
+
       await this.saveQuest({ refresh: false });
       return super.close(options);
    }
@@ -618,26 +652,6 @@ export default class QuestPreview extends FormApplication
          isGM: game.user.isGM,
          canEdit: this.canEdit
       };
-
-      if (game.user.isGM)
-      {
-         const entry = game.journal.get(this.quest.id);
-         data.users = game.users;
-         data.observerLevel = CONST.ENTITY_PERMISSIONS.OBSERVER;
-
-         data.users = game.users.map((u) =>
-         {
-            if (u.isGM)
-            {
-               return;
-            }
-            return {
-               user: u,
-               level: entry.data.permission[u.id],
-               hidden: u.isGM
-            };
-         }).filter((u) => u !== undefined);
-      }
 
       return mergeObject(content, data);
    }
@@ -707,5 +721,20 @@ export default class QuestPreview extends FormApplication
       await this.quest.save();
 
       return refresh ? this.refresh() : void 0;
+   }
+
+   /**
+    * Invoked by Socket to update this quest preview. If the current user no longer has permission then close the app.
+    */
+   socketRefresh()
+   {
+      if (this.quest && this.quest.isObservable)
+      {
+         this.render(true);
+      }
+      else
+      {
+         this.close();
+      }
    }
 }

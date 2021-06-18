@@ -71,17 +71,19 @@ export default class Socket
             {
                for (const id of questId)
                {
-                  if (fqlPublicAPI.questPreview[id] !== undefined)
+                  const questPreview = fqlPublicAPI.questPreview[id];
+                  if (questPreview !== undefined)
                   {
-                     fqlPublicAPI.questPreview[id].render(true);
+                     questPreview.socketRefresh();
                   }
                }
             }
             else
             {
-               if (fqlPublicAPI.questPreview[questId] !== undefined)
+               const questPreview = fqlPublicAPI.questPreview[questId];
+               if (questPreview !== undefined)
                {
-                  fqlPublicAPI.questPreview[questId].render(true);
+                  questPreview.socketRefresh();
                }
             }
             return;

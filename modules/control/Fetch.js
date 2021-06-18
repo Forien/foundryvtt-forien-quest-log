@@ -106,8 +106,6 @@ export default class Fetch
 
       if (!content) { return null; }
 
-      content.permission = entry.permission;
-
       return new Quest(content, entry);
    }
 }

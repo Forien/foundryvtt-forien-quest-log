@@ -542,11 +542,6 @@
 
         .setting-groups {
           flex: 0 0 1px;
-
-          .personal-quest-description {
-            font-size: 13px;
-            margin: 4px 0 2px 26px;
-          }
         }
 
         .input-group {
@@ -570,61 +565,6 @@
           width: calc(100% - 20px);
           overflow: hidden;
           text-overflow: ellipsis;
-        }
-      }
-
-      .personal-quest-settings {
-        margin-left: 26px;
-        flex: 1;
-        overflow: hidden;
-
-        ul {
-          margin: 0;
-          padding: 0 2px 0 0;
-          list-style: none;
-          display: flex;
-          flex-wrap: wrap;
-          width: calc(100% + 2px);
-          margin-left: -2px;
-          height: 100%;
-          overflow-y: auto;
-
-          &.disabled {
-            opacity: .5;
-
-            li {
-              cursor: default;
-
-              &:hover {
-                background: inherit;
-              }
-            }
-
-            input, label {
-              cursor: default;
-            }
-          }
-
-          li {
-            cursor: pointer;
-            flex: 0 0 calc(100% / 4 - 4px);
-            display: flex;
-            align-items: center;
-            background: rgba(255, 255, 255, .4);
-            border-radius: 5px;
-            padding: 2px 8px 2px 2px;
-            margin: 2px;
-            white-space: nowrap;
-            overflow: hidden;
-
-            &:hover {
-              background: rgba(255, 255, 255, .6);
-            }
-
-            input, label {
-              cursor: pointer;
-            }
-          }
         }
       }
 

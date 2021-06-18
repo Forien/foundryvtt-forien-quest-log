@@ -124,9 +124,7 @@ export default class Enrich
       data.giverImgPos = quest.giverImgPos || 'center';
       data.splash = quest.splash || '';
       data.splashPos = quest.splashPos || 'center';
-      data.personal = quest.personal || false;
       data.parent = quest.parent || null;
-      data.permission = quest.permission || 0;
       data.subquests = quest.subquests || [];
       data.tasks = Array.isArray(quest.tasks) ? quest.tasks.map((task) => task.toJSON()) : [];
       data.rewards = Array.isArray(quest.rewards) ? quest.rewards.map((reward) => reward.toJSON()) : [];
@@ -173,11 +171,11 @@ export default class Enrich
       }
 
       // TODO EVALUATE: We no longer are allowing user data to be enriched / currently escaping
-      // data.data_tasks = data.tasks.map((task) =>
-      // {
-      //    task.name = TextEditor.enrichHTML(task.name);
-      //    return task;
-      // });
+      data.data_tasks = data.tasks.map((task) =>
+      {
+         task.name = TextEditor.enrichHTML(task.name);
+         return task;
+      });
 
       data.data_rewards = data.rewards.map((item) =>
       {
@@ -213,51 +211,14 @@ export default class Enrich
          }
       }
 
-      if (quest.entry)
-      {
-         data.playerEdit = Object.values(quest.entry.data.permission).some((p) => p === 3);
-      }
+      data.playerEdit = quest.isOwner;
 
-      if (!(isGM || data.playerEdit))
+      data.description = TextEditor.enrichHTML(data.description);
+
+      if (!isGM)
       {
-         data.description = TextEditor.enrichHTML(data.description);
          data.data_tasks = data.data_tasks.filter((t) => t.hidden === false);
          data.data_rewards = data.data_rewards.filter((r) => r.hidden === false);
-      }
-
-      if (quest.entry)
-      {
-         if (isGM && data.personal)
-         {
-            const users = [`${game.i18n.localize('ForienQuestLog.Tooltips.PersonalQuestVisibleFor')}:`];
-
-            for (const perm in quest.entry.data.permission)
-            {
-               if (perm === 'default')
-               {
-                  continue;
-               }
-               if (quest.entry.data.permission[perm] >= 2)
-               {
-                  const user = game.users.get(perm);
-                  if (!user)
-                  {
-                     console.log(`Forien Quest Log | Dropping user ${perm} from quest ${quest.entry?.name} as it no longer exists`);
-                     return;
-                  }
-                  users.push(user.name);
-               }
-            }
-
-            if (users.length > 1)
-            {
-               data.users = users.join('\r');
-            }
-            else
-            {
-               data.users = game.i18n.localize('ForienQuestLog.Tooltips.PersonalQuestButNoPlayers');
-            }
-         }
       }
 
       return data;

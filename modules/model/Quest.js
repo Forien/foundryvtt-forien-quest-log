@@ -28,6 +28,18 @@ export default class Quest
       this._id = id;
    }
 
+   get isObservable()
+   {
+      return game.user.isGM ||
+       (this.entry && this.entry.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER));
+   }
+
+   get isOwner()
+   {
+      return game.user.isGM ||
+       (this.entry && this.entry.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OWNER));
+   }
+
    get name()
    {
       return this._name;
@@ -149,9 +161,7 @@ export default class Quest
       this.giverImgPos = data.giverImgPos || 'center';
       this.splash = data.splash || '';
       this.splashPos = data.splashPos || 'center';
-      this.personal = data.personal || false;
       this.parent = data.parent || null;
-      this.permission = data.permission || 0;
       this.subquests = data.subquests || [];
       this.tasks = [];
       this.rewards = [];
@@ -160,46 +170,23 @@ export default class Quest
    }
 
    /**
-    * Moves Quest (and Journal Entry) to different Folder and updates permissions if needed.
+    * Moves Quest (and Journal Entry) to different Folder.
     *
     * @param target
     *
-    * @param permission
-    *
     * @returns {Promise<void>}
     */
-   async move(target, permission = void 0)
+   async move(target)
    {
       // TODO: REMOVE WHEN ALL QUESTS HAVE JOURNAL ENTRIES GUARANTEED
       if (!this.entry) { return; }
-
-      if (permission === void 0)
-      {
-         permission = this.entry.data.permission;
-      }
-
-      if (!this.personal)
-      {
-         if (permission.default < CONST.ENTITY_PERMISSIONS.OWNER)
-         {
-            if (target === 'hidden')
-            {
-               permission = { default: CONST.ENTITY_PERMISSIONS.NONE };
-            }
-            else
-            {
-               permission = { default: CONST.ENTITY_PERMISSIONS.OBSERVER };
-            }
-         }
-      }
 
       this.status = target;
 
       await this.entry.update({
          flags: {
             [constants.moduleName]: { json: this.toJSON() }
-         },
-         permission
+         }
       });
 
       return this._id;
@@ -267,74 +254,9 @@ export default class Quest
          }
       };
 
-      if (this.entryPermission !== void 0)
-      {
-         update.permission = this.entryPermission;
-      }
-
       await entry.update(update, { diff: false });
 
       return this._id;
-   }
-
-   /**
-    * TODO REVIEW - OLD PERMISSION SYSTEM - LIKELY REMOVE
-    * Saves new permissions for users. Used by Personal Quests feature.
-    *
-    * @param userId
-    *
-    * @param permission
-    */
-   savePermission(userId, permission)
-   {
-      if ([
-         CONST.ENTITY_PERMISSIONS.OWNER,
-         CONST.ENTITY_PERMISSIONS.OBSERVER,
-         CONST.ENTITY_PERMISSIONS.NONE
-      ].includes(permission) === false)
-      {
-         return;
-      }
-
-      const entryData = duplicate(game.journal.get(this._id));
-      let permissionData;
-
-      if (userId === '*')
-      {
-         permissionData = entryData.permission;
-      }
-      else
-      {
-         permissionData = { [userId]: userId };
-      }
-
-      for (const p in permissionData)
-      {
-         if (this.personal && p === 'default')
-         {
-            continue;
-         }
-         if (p !== 'default')
-         {
-            const user = game.users.get(p);
-            if (user === null)
-            {
-               delete entryData.permission[p];
-               continue;
-            }
-         }
-
-         if (permission === CONST.ENTITY_PERMISSIONS.NONE && p !== 'default')
-         {
-            delete entryData.permission[p];
-         }
-         else
-         {
-            entryData.permission[p] = permission;
-         }
-      }
-
-      this.entryPermission = entryData.permission;
    }
 
    /**
@@ -366,7 +288,6 @@ export default class Quest
          status: this.status,
          description: this.description,
          gmnotes: this.gmnotes,
-         personal: this.personal,
          image: this.image,
          giverName: this.giverName,
          giverImgPos: this.giverImgPos,
@@ -385,17 +306,6 @@ export default class Quest
    toggleImage()
    {
       this.image = this.image === 'actor' ? 'token' : 'actor';
-   }
-
-   /**
-    * Toggles quest between Public and Personal. In both cases, it hides the quest from everyone.
-    * If new status is public, then hide it.
-    */
-   togglePersonal()
-   {
-      this.personal = !this.personal;
-      this.entryPermission = { default: 0 };
-      if (!this.personal) { this.status = 'hidden'; }
    }
 
    /**

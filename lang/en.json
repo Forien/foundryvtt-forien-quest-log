@@ -74,13 +74,11 @@
       },
 
       "Management": {
-        "IsPersonalQuest": "Mark Quest as Personal",
-        "IsPersonalQuestDescription": "This Quest will only be visible to the selected players. Unchecking this option will remove all permissions and set the quest as inactive.",
         "QuestSettings": "Quest Settings:",
+        "ConfigurePermissions": "Configure Permissions",
         "SplashArt": "Splash Art:",
         "QuestBranching": "Sub Quests:",
-        "AddSubquest": "Create new Sub Quest",
-        "CanPlayerEdit": "Allow Players to edit Quest Details"
+        "AddSubquest": "Create new Sub Quest"
       },
 
       "Tabs": {
