@@ -10,6 +10,8 @@
 
   &.background {
     background: #33333399;
+    border: 2px solid #11111177;
+    border-radius: 5px;
   }
 
   * {
@@ -23,7 +25,7 @@
 
   .move-handle {
     position: absolute;
-    top: -20px;
+    top: -18px;
     left: 4px;
     color: #ffffff88;
     text-shadow: none;
