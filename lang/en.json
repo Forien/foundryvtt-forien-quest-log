@@ -141,12 +141,6 @@
         "onlyCurrent": "Show Objectives: done",
         "no": "Hide \"Objectives\" column"
       },
-      "titleAlign": {
-        "Enable": "Quest Title Alignment",
-        "EnableHint": "Decide how to position Quest Titles in the Quest Log Table.",
-        "left": "Aligned to left",
-        "center": "Centered"
-      },
       "playersWelcomeScreen": {
         "Enable": "Display Welcome Screen to Players",
         "EnableHint": "Uncheck to prevent players from seeing Welcome Screen on log in after an update. They might still see it by clicking 'help' icon in Quest Log."

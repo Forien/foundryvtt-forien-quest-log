@@ -145,26 +145,6 @@ export default class ModuleSettings
          }
       });
 
-      // TODO: EXAMINE DEADCODE
-      /*
-          game.settings.register('forien-quest-log', 'titleAlign', {
-            name: 'ForienQuestLog.Settings.titleAlign.Enable',
-            hint: 'ForienQuestLog.Settings.titleAlign.EnableHint',
-            scope: 'client',
-            config: true,
-            default: 'left',
-            type: String,
-            choices: {
-              'left': 'ForienQuestLog.Settings.titleAlign.left',
-              'center': 'ForienQuestLog.Settings.titleAlign.center'
-            },
-            onChange: value => {
-              if (QuestLog && QuestLog.rendered)
-                QuestLog.render();
-            }
-          });
-      */
-
       game.settings.register('forien-quest-log', 'showFolder', {
          name: 'ForienQuestLog.Settings.showFolder.Enable',
          hint: 'ForienQuestLog.Settings.showFolder.EnableHint',

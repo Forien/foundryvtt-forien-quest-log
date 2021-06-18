@@ -153,7 +153,6 @@ console.error(err);
          canCreate: game.settings.get('forien-quest-log', 'allowPlayersCreate'),
          showTasks: game.settings.get('forien-quest-log', 'showTasks'),
          style: game.settings.get('forien-quest-log', 'navStyle'),
-         // titleAlign: game.settings.get('forien-quest-log', 'titleAlign'),
          questTypes,
          quests
       });
@@ -165,7 +164,7 @@ console.error(err);
     * @param target
     *
     * @param direction
-    */
+    */ // TODO REMOVE - Any setting to sorting should be a global one that effects all views
    toggleSort(target, direction = undefined)
    {
       if (this.sortBy === target)
