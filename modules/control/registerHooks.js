@@ -38,7 +38,7 @@ export default function registerHooks()
          const command = `game.modules.get('${constants.moduleName}').public.QuestAPI.open('${questId}');`;
 
          const macroData = {
-            name: game.i18n.format('ForienQuestLog.Api.hooks.createOpenQuestMacro.name', { name: quest.title }),
+            name: game.i18n.format('ForienQuestLog.Api.hooks.createOpenQuestMacro.name', { name: quest.name }),
             type: 'script',
             command
          };
