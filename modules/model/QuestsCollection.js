@@ -14,7 +14,6 @@ export default class QuestsCollection
          this._entities = entities.map((e) =>
          {
             const data = e;
-            data.name = data.title;
 
             return {
                id: e.id,

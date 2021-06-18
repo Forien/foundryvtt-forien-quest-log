@@ -11,10 +11,20 @@ export default class Quest
 {
    constructor(data = {}, entry = null)
    {
-      this.id = data.id || null;
+      this._id = data.id || null;  // Foundry in the TextEditor system to create content links looks for `_id` & name.
       this.initData(data);
       this.entry = entry;
-      this._data = data;
+      this.data = data;
+   }
+
+   get id()
+   {
+      return this._id;
+   }
+
+   set id(id)
+   {
+      this._id = id;
    }
 
    get name()
@@ -73,8 +83,8 @@ export default class Quest
       // Remove this quest from any parent
       if (parentQuest)
       {
-         parentId = parentQuest.id;
-         parentQuest.removeSubquest(this.id);
+         parentId = parentQuest._id;
+         parentQuest.removeSubquest(this._id);
       }
 
       // Update children to point to any new parent.
@@ -85,12 +95,12 @@ export default class Quest
          {
             childQuest.parent = parentId;
             await childQuest.save();
-            Socket.refreshQuestPreview(childQuest.id);
+            Socket.refreshQuestPreview(childQuest._id);
 
             // Update parent with new subquests.
             if (parentQuest)
             {
-               parentQuest.addSubquest(childQuest.id);
+               parentQuest.addSubquest(childQuest._id);
             }
          }
       }
@@ -98,7 +108,7 @@ export default class Quest
       if (parentQuest)
       {
          await parentQuest.save();
-         Socket.refreshQuestPreview(parentQuest.id);
+         Socket.refreshQuestPreview(parentQuest._id);
       }
 
       if (this.entry)
@@ -106,7 +116,7 @@ export default class Quest
          await this.entry.delete();
       }
 
-      Socket.closeQuest(this.id);
+      Socket.closeQuest(this._id);
       Socket.refreshQuestLog();
    }
 
@@ -183,7 +193,7 @@ export default class Quest
       });
 
       Socket.refreshQuestLog();
-      Socket.refreshQuestPreview(this.id);
+      Socket.refreshQuestPreview(this._id);
 
       const dirname = game.i18n.localize(questTypes[target]);
 
@@ -195,7 +205,7 @@ export default class Quest
     */
    refresh()
    {
-      const entry = game.journal.get(this.id);
+      const entry = game.journal.get(this._id);
       const content = Fetch.content(entry);
 
       this.initData(content);
@@ -239,7 +249,7 @@ export default class Quest
     */
    async save()
    {
-      const entry = game.journal.get(this.id);
+      const entry = game.journal.get(this._id);
 
       // If the entry doesn't exist or the user can't modify the journal entry via ownership then early out.
       if (!entry || !entry.canUserModify(game.user, 'update')) { return; }
@@ -259,7 +269,7 @@ export default class Quest
 
       await entry.update(update, { diff: false });
 
-      return this.id;
+      return this._id;
    }
 
    /**
@@ -281,7 +291,7 @@ export default class Quest
          return;
       }
 
-      const entryData = duplicate(game.journal.get(this.id));
+      const entryData = duplicate(game.journal.get(this._id));
       let permissionData;
 
       if (userId === '*')
@@ -439,7 +449,7 @@ export default class Quest
     */
    testUserPermission(user, permission, options)
    {
-      const entry = game.journal.get(this.id);
+      const entry = game.journal.get(this._id);
       return entry.testUserPermission(user, permission, options);
    }
 }
