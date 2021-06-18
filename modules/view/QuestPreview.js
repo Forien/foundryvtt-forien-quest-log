@@ -22,6 +22,8 @@ export default class QuestPreview extends FormApplication
       super(void 0, options);
 
       this.quest = quest;
+
+      this.options.title = game.i18n.format('ForienQuestLog.QuestPreview.Title', this.quest);
    }
 
    /**
@@ -256,7 +258,8 @@ export default class QuestPreview extends FormApplication
                   if (quest.parent) { Socket.refreshQuestPreview(quest.parent, false); }
 
                   const dirname = game.i18n.localize(questTypes[target]);
-                  ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved', { target: dirname }), {});
+                  ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
+                   { target: dirname }), {});
                }
             }
             else if (classList.includes('delete'))
@@ -365,6 +368,11 @@ export default class QuestPreview extends FormApplication
 
                switch (targetOut)
                {
+                  case 'name':
+                     this.quest.name = valueOut;
+                     this.options.title = game.i18n.format('ForienQuestLog.QuestPreview.Title', this.quest);
+                     break;
+
                   case 'task.name':
                      indexOut = $(event.target).data('index');
                      this.quest.tasks[indexOut].name = valueOut;
@@ -663,15 +671,9 @@ export default class QuestPreview extends FormApplication
     */
    async refresh()
    {
-      this.render(true);
+      Socket.refreshQuestPreview(this.quest.parent ? [this.quest.parent, this.quest.id] : this.quest.id);
 
-      Socket.refreshQuestPreview(this.quest.id);
-
-      if (this.quest.parent)
-      {
-         // Pass false to not update quest log twice.
-         Socket.refreshQuestPreview(this.quest.parent, false);
-      }
+      this.render(true, { focus: true });
    }
 
    /**
@@ -680,7 +682,7 @@ export default class QuestPreview extends FormApplication
     * @see close()
     * @inheritDoc
     */
-   async render(force = false, options = { focus: true })
+   async render(force = false, options)
    {
       Utils.getFQLPublicAPI().questPreview[this.quest.id] = this;
 

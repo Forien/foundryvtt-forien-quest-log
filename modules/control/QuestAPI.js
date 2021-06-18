@@ -36,6 +36,21 @@ export default class QuestAPI
       try
       {
          const quest = Fetch.quest(questId);
+
+console.log(`!!!!! QuestAPI - questId: ${questId} - quest: ${quest}`);
+         if (quest === null)
+         {
+            if (notify)
+            {
+               ui.notifications.error(game.i18n.localize('ForienQuestLog.Notifications.CannotOpen'));
+            }
+            else
+            {
+               Socket.userCantOpenQuest();
+            }
+            return;
+         }
+
          const questPreview = new QuestPreview(quest);
          questPreview.render(true, { focus: true });
       }
@@ -43,7 +58,7 @@ export default class QuestAPI
       {
          if (notify)
          {
-            ui.notifications.error(game.i18n.localize('ForienQuestLog.Notifications.CannotOpen'), {});
+            ui.notifications.error(game.i18n.localize('ForienQuestLog.Notifications.CannotOpen'));
          }
          else
          {

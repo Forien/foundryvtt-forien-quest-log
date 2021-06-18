@@ -62,7 +62,7 @@
     },
 
     "QuestPreview": {
-      "Title": "Quest Details",
+      "Title": "Quest Details - {name}",
       "SubTitle": "Subquest of {0}",
       "Objectives": "Objectives:",
       "Rewards": "Rewards:",
