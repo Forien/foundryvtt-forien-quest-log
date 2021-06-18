@@ -173,27 +173,23 @@ export default class Enrich
       }
 
       // TODO EVALUATE: We no longer are allowing user data to be enriched / currently escaping
-      data.data_tasks = data.tasks.map((task) =>
-      {
-         task.name = TextEditor.enrichHTML(task.name);
-         return task;
-      });
-
-      if (data.rewards === undefined)
-      {
-         data.data_rewards = [];
-      }
+      // data.data_tasks = data.tasks.map((task) =>
+      // {
+      //    task.name = TextEditor.enrichHTML(task.name);
+      //    return task;
+      // });
 
       data.data_rewards = data.rewards.map((item) =>
       {
+         const type = item.type.toLowerCase();
+
          return {
-            id: item.id,
             name: item.data.name,
             img: item.data.img,
-            type: item.type.toLowerCase(),
+            type,
             hidden: item.hidden,
-            draggable: ((isGM || canPlayerDrag) && item.type !== 'abstract'),
-            transfer: JSON.stringify(item.data)
+            draggable: ((isGM || canPlayerDrag) && type !== 'abstract'),
+            transfer: type !== 'abstract' ? JSON.stringify({ uuid: item.data.uuid }) : void 0
          };
       });
 

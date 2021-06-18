@@ -47,10 +47,52 @@ export default class Utils
    }
 
    /**
+    * Gets a document for the given UUID. An error message will post if the UUID is invalid and a warning
+    * message will be posted if the current `game.user` does not have permission to view the document.
+    *
+    * @param {string|object}  data - The UUID as a string or object with UUID key as a string.
+    *
+    * @returns {Promise<void>}
+    */
+   static async getDocumentFromUUID(data)
+   {
+      const uuid = typeof data === 'string' ? data : data.uuid;
+
+      let document = null;
+
+      try
+      {
+         const doc = await fromUuid(uuid);
+
+         if (doc === null)
+         {
+            ui.notifications.error(game.i18n.format('ForienQuestLog.NoDocument', { uuid }));
+            return null;
+         }
+
+         if (!doc.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER))
+         {
+            ui.notifications.warn('ForienQuestLog.NoPermission', { localize: true });
+            return null;
+         }
+
+         document = doc;
+      }
+      catch (err)
+      {
+         ui.notifications.error(game.i18n.format('ForienQuestLog.NoDocument', { uuid }));
+      }
+
+      return document;
+   }
+
+   /**
     * Shows a document sheet for the given UUID. An error message will post if the UUID is invalid and a warning
     * message will be posted if the current `game.user` does not have permission to view the document.
     *
     * @param {string|object}  data - The UUID as a string or object with UUID key as a string.
+    *
+    * @param {object}         options - Options to pass to sheet render method.
     *
     * @returns {Promise<void>}
     */
@@ -65,13 +107,13 @@ export default class Utils
          if (document === null)
          {
             ui.notifications.error(game.i18n.format('ForienQuestLog.NoDocument', { uuid }));
-            return;
+            return null;
          }
 
          if (!document.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER))
          {
             ui.notifications.warn('ForienQuestLog.NoPermission', { localize: true });
-            return;
+            return null;
          }
 
          if (document?.sheet)
@@ -79,7 +121,11 @@ export default class Utils
             document.sheet.render(true, options);
          }
       }
-      catch (err) { /* */ }
+      catch (err)
+      {
+         ui.notifications.error(game.i18n.format('ForienQuestLog.NoDocument', { uuid }));
+         return null;
+      }
    }
 
    /**

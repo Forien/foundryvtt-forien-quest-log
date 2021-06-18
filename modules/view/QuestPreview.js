@@ -182,13 +182,21 @@ export default class QuestPreview extends FormApplication
          event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dataTransfer));
       });
 
-      html.on('dragstart', '.item-reward', (event) =>
+      html.on('dragstart', '.item-reward', async (event) =>
       {
-         const dataTransfer = {
-            type: 'Item',
-            data: $(event.target).data('transfer')
-         };
-         event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dataTransfer));
+         const data = $(event.target).data('transfer');
+
+         const document = await Utils.getDocumentFromUUID(data);
+
+         if (document !== null)
+         {
+            const dataTransfer = {
+               _fqlDrop: false,
+               type: 'Item',
+               data: document.data
+            };
+            event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dataTransfer));
+         }
       });
 
       html.on('click', '.item-reward .editable-container', async (event) =>
@@ -209,7 +217,7 @@ export default class QuestPreview extends FormApplication
       {
          const actorId = $(event.target).data('actor-id');
 
-         await Utils.showSheetFromUUID(actorId);
+         await Utils.showSheetFromUUID(actorId, { editable: false });
       });
 
       if (this.canEdit)
@@ -226,18 +234,12 @@ export default class QuestPreview extends FormApplication
 
                if (quest && await quest.move(target))
                {
-                  // Socket.refreshQuestLog();
                   Socket.refreshQuestPreview(quest.id);
 
-                  if (quest.parent)
-                  {
-                     Socket.refreshQuestPreview(quest.parent, false);
-                  }
+                  if (quest.parent) { Socket.refreshQuestPreview(quest.parent, false); }
 
                   const dirname = game.i18n.localize(questTypes[target]);
                   ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved', { target: dirname }), {});
-
-                  // await this.refresh();
                }
             }
             else if (classList.includes('delete'))
@@ -272,7 +274,7 @@ export default class QuestPreview extends FormApplication
                await this.quest.save();
                Socket.refreshQuestPreview(this.quest.id);
             }
-            else if (data.type === 'Item')
+            else if (data.type === 'Item' && data._fqlDrop === void 0)
             {
                const uuid = Utils.getUUID(data);
 
@@ -439,7 +441,7 @@ export default class QuestPreview extends FormApplication
                const value = $(event.target).val();
                if (value !== undefined && value.length)
                {
-                  this.quest.addTask({ name: value });
+                  this.quest.addTask({ name: value, hidden: game.user.isGM });
                }
                await this.saveQuest();
             });
@@ -484,8 +486,9 @@ export default class QuestPreview extends FormApplication
                   this.quest.addReward({
                      data: {
                         name: value,
-                        img: 'icons/svg/mystery-man.svg'
+                        img: 'icons/svg/mystery-man.svg',
                      },
+                     hidden: true,
                      type: 'Abstract'
                   });
                }
@@ -511,12 +514,14 @@ export default class QuestPreview extends FormApplication
 
       if (game.user.isGM)
       {
+         // TODO REMOVE
          html.on('click', '#personal-quest', async () =>
          {
             this.quest.togglePersonal();
             await this.saveQuest();
          });
 
+         // TODO REMOVE
          html.on('click', '.personal-user', async (event) =>
          {
             const userId = $(event.target).data('user-id');
@@ -524,6 +529,15 @@ export default class QuestPreview extends FormApplication
             const permission = value ? 0 : (this.playerEdit ? 3 : 2);
 
             this.quest.savePermission(userId, permission);
+            await this.saveQuest();
+         });
+
+         // TODO REMOVE
+         html.on('click', '#player-edit', async (event) =>
+         {
+            const checked = $(event.target).prop('checked');
+            const permission = checked ? 3 : 2;
+            this.quest.savePermission('*', permission);
             await this.saveQuest();
          });
 
@@ -565,14 +579,6 @@ export default class QuestPreview extends FormApplication
          html.on('click', '.add-subquest-btn', () =>
          {
             new QuestForm({ parentId: this.quest.id }).render(true);
-         });
-
-         html.on('click', '#player-edit', async (event) =>
-         {
-            const checked = $(event.target).prop('checked');
-            const permission = checked ? 3 : 2;
-            this.quest.savePermission('*', permission);
-            await this.saveQuest();
          });
       }
    }
@@ -660,7 +666,7 @@ export default class QuestPreview extends FormApplication
     * @see close()
     * @inheritDoc
     */
-   async render(force = false, options = {})
+   async render(force = false, options = { focus: true })
    {
       Utils.getFQLPublicAPI().questPreview[this.quest.id] = this;
 
