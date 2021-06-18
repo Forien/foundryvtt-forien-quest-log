@@ -206,6 +206,7 @@ export default class QuestPreview extends FormApplication
 
       html.on('click', '.open-actor-sheet', (event) =>
       {
+// TODO NOT OPENING
          const actorId = $(event.target).data('actor-id');
          const actor = game.actors.get(actorId);
          if (actor?.permission > 0)

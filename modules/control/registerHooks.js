@@ -13,13 +13,13 @@ export default function registerHooks()
    // Open quest log
    Hooks.on('ForienQuestLog.Open.QuestLog', () =>
    {
-      fqlPublicAPI.questLog.render(true);
+      fqlPublicAPI.questLog.render(true, { focus: true });
    });
 
    // Open quest log floating window
    Hooks.on('ForienQuestLog.Open.QuestLogFloating', () =>
    {
-      fqlPublicAPI.questLogFloating.render(true);
+      fqlPublicAPI.questLogFloating.render(true, { focus: true });
    });
 
    // Create 'open quest' Macro when Quest is dropped onto Hotbar.

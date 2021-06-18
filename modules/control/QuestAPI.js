@@ -37,7 +37,7 @@ export default class QuestAPI
       {
          const quest = Fetch.quest(questId);
          const questPreview = new QuestPreview(quest);
-         questPreview.render(true);
+         questPreview.render(true, { focus: true });
       }
       catch (error)
       {
