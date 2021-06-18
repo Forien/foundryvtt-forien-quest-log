@@ -7,6 +7,8 @@
     "SampleTask": "e.g. Kill all rats in „The Twisted Ankle” inn",
     "FloatingQuestWindow": "Floating Quest Window",
     "NoActiveQuests": "There are no Active quests",
+    "NoDocument": "An entity could not be loaded for UUID: {uuid}",
+    "NoPermission": "You do not have sufficient permissions to view this entity sheet.",
 
     "QuestTypes": {
       "InProgress": "Active",

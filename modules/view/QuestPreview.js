@@ -195,7 +195,8 @@ export default class QuestPreview extends FormApplication
       {
          event.stopPropagation();
          const data = $(event.currentTarget).data('transfer');
-         await Utils.loadItemSheetUUID(data);
+
+         await Utils.showSheetFromUUID(data, { editable: false });
       });
 
       html.on('click', '.quest-name', (event) =>
@@ -204,15 +205,11 @@ export default class QuestPreview extends FormApplication
          QuestAPI.open(id);
       });
 
-      html.on('click', '.open-actor-sheet', (event) =>
+      html.on('click', '.open-actor-sheet', async (event) =>
       {
-// TODO NOT OPENING
          const actorId = $(event.target).data('actor-id');
-         const actor = game.actors.get(actorId);
-         if (actor?.permission > 0)
-         {
-            actor.sheet.render(true);
-         }
+
+         await Utils.showSheetFromUUID(actorId);
       });
 
       if (this.canEdit)
@@ -280,8 +277,6 @@ export default class QuestPreview extends FormApplication
                const uuid = Utils.getUUID(data);
 
                const item = await Enrich.giverFromUUID(uuid);
-
-               item.uuid = uuid;
 
                this.quest.addReward({ type: 'Item', data: item, hidden: true });
                await this.saveQuest();

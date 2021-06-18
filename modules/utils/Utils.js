@@ -46,25 +46,37 @@ export default class Utils
       return typeof data.pack === 'string' ? `Compendium.${data.pack}.${data.id}` : `${data.type}.${data.id}`;
    }
 
-   static async loadItemSheetUUID(data, { editable = false } = {})
+   /**
+    * Shows a document sheet for the given UUID. An error message will post if the UUID is invalid and a warning
+    * message will be posted if the current `game.user` does not have permission to view the document.
+    *
+    * @param {string|object}  data - The UUID as a string or object with UUID key as a string.
+    *
+    * @returns {Promise<void>}
+    */
+   static async showSheetFromUUID(data, options = {})
    {
       const uuid = typeof data === 'string' ? data : data.uuid;
 
       try
       {
-         const itemData = await fromUuid(uuid);
+         const document = await fromUuid(uuid);
 
-         if (itemData !== null)
+         if (document === null)
          {
-            const itemCls = getDocumentClass('Item');
-            const item = new itemCls(itemData.data);
+            ui.notifications.error(game.i18n.format('ForienQuestLog.NoDocument', { uuid }));
+            return;
+         }
 
-            if (typeof item?.sheet.options === 'object')
-            {
-               item.sheet.options.submitOnClose = editable;
-               item.sheet.options.submitOnChange = editable;
-               item.sheet.render(true);
-            }
+         if (!document.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER))
+         {
+            ui.notifications.warn('ForienQuestLog.NoPermission', { localize: true });
+            return;
+         }
+
+         if (document?.sheet)
+         {
+            document.sheet.render(true, options);
          }
       }
       catch (err) { /* */ }

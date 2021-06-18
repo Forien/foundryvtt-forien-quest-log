@@ -47,6 +47,7 @@ export default class Enrich
                   const hasTokenImg = typeof tokenImage === 'string' && tokenImage !== actorImage;
 
                   data = {
+                     uuid,
                      name: document.name,
                      img: imageType === 'token' && hasTokenImg ? tokenImage : actorImage,
                      hasTokenImg
@@ -56,6 +57,7 @@ export default class Enrich
 
                case Item.documentName:
                   data = {
+                     uuid,
                      name: document.name,
                      img: document.img,
                      hasTokenImg: false
@@ -64,6 +66,7 @@ export default class Enrich
 
                case JournalEntry.documentName:
                   data = {
+                     uuid,
                      name: document.name,
                      img: document.data.img,
                      hasTokenImg: false
@@ -133,6 +136,7 @@ export default class Enrich
       const countHidden = game.settings.get('forien-quest-log', 'countHidden');
 
       data.data_giver = await Enrich.giverFromQuest(quest);
+      data.data_giver.id = quest.giver;
 
       data.isSubquest = false;
       if (data.parent !== null)
