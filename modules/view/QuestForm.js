@@ -65,7 +65,7 @@ export default class QuestForm extends FormApplication
    async _updateObject(event, formData)
    {
       let giver;
-      let permission = CONST.ENTITY_PERMISSIONS.NONE;
+      let permission = CONST.ENTITY_PERMISSIONS.OBSERVER;
 
       try
       {
@@ -97,6 +97,7 @@ export default class QuestForm extends FormApplication
          gmnotes
       };
 
+      // TODO: CONSIDER THAT A USER SHOULD PROBABLY NOT BE CREATING QUESTS
       if (!game.user.isGM)
       {
          data.status = 'available';

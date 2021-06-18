@@ -72,12 +72,33 @@ export default class QuestTracker extends RepositionableApplication
    {
       const quests = Fetch.sorted();
 
-      return quests.active.map((q) => ({
-         id: q.id,
-         source: q.giver,
-         name: q.name,
-         tasks: game.user.isGM ? q.tasks.map((t) => t.toJSON()) :
-          q.tasks.filter((t) => t.hidden === false).map((t) => t.toJSON())
-      }));
+      return quests.active.map((q) =>
+      {
+         // Map subquest status to task state.
+         const subquests = q.subquests.map((s) =>
+         {
+            const subquest = Fetch.quest(s);
+            let state = 'square';
+            switch (subquest.status)
+            {
+               case 'completed':
+                  state = 'check-square';
+                  break;
+               case 'failed':
+                  state = 'minus-square';
+                  break;
+            }
+            return { name: subquest.name, hidden: subquest.status === 'hidden', state };
+         });
+
+         return {
+            id: q.id,
+            source: q.giver,
+            name: q.name,
+            subquests: game.user.isGM ? subquests : subquests.filter((s) => !s.hidden),
+            tasks: game.user.isGM ? q.tasks.map((t) => t.toJSON()) :
+             q.tasks.filter((t) => !t.hidden).map((t) => t.toJSON())
+         };
+      });
    }
 }

@@ -4,6 +4,10 @@
     <div class="quest" data-id="{{this.id}}">
         <h3 class="title">{{this.name}}</h3>
         <ul class="tasks">
+        {{#each this.subquests}}
+<!--        <li class="task {{this.state}}" {{#if this.hidden}}id="hidden"{{/if}}>{{this.name}}</li>-->
+        <li class="task {{this.state}}" {{#if this.hidden}}id="hidden"{{/if}}>{{this.name}}</li>
+        {{/each}}
         {{#each this.tasks}}
         <li class="task {{this.state}}" {{#if this.hidden}}id="hidden"{{/if}}>{{this.name}}</li>
         {{/each}}
