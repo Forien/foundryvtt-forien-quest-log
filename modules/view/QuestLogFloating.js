@@ -8,9 +8,6 @@ export default class QuestLogFloating extends Application
    constructor(options = {})
    {
       super(options);
-
-      this._sortBy = null;
-      this._sortDirection = 'asc';
    }
 
    /**
@@ -59,15 +56,9 @@ export default class QuestLogFloating extends Application
          questPreview.render(true);
       });
 
-      html.on('click', '.sortable', (event) =>
-      {
-         const el = $(event.target);
-         this.toggleSort(el.data('sort'));
-      });
-
       // Open and close folders on rerender. Data is store in localstorage so
       // display is consistent after each render.
-      for (const quest of Fetch.sorted({ target: this._sortBy, direction: this._sortDirection }).active)
+      for (const quest of Fetch.sorted().active)
       {
          $(`.directory-item[data-quest-id='${quest.id}']`).toggleClass('collapsed',
           localStorage.getItem(`forien.questlog.folderstate-${quest.id}`) === 'true');
@@ -95,31 +86,7 @@ export default class QuestLogFloating extends Application
          showTasks: game.settings.get('forien-quest-log', 'showTasks'),
          style: game.settings.get('forien-quest-log', 'navStyle'),
          questTypes,
-         quests: await Enrich.sorted(Fetch.sorted({ target: this._sortBy, direction: this._sortDirection }))
+         quests: await Enrich.sorted(Fetch.sorted())
       });
-   }
-
-   /**
-    * Set sort target and toggle direction. Refresh window
-    *
-    * @param target
-    */
-   toggleSort(target, direction = undefined)
-   {
-      if (this._sortBy === target)
-      {
-         this._sortDirection = (this._sortDirection === 'desc') ? 'asc' : 'desc';
-      }
-      else
-      {
-         this._sortBy = target;
-         this._sortDirection = 'asc';
-      }
-      if (direction !== undefined && (direction === 'asc' || direction === 'desc'))
-      {
-         this._sortDirection = direction;
-      }
-
-      this.render(true);
    }
 }

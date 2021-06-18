@@ -11,9 +11,6 @@ export default class QuestLog extends Application
    constructor(options = {})
    {
       super(options);
-
-      this._sortBy = null;
-      this._sortDirection = 'asc';
    }
 
    /**
@@ -79,7 +76,8 @@ export default class QuestLog extends Application
                }
 
                const dirname = game.i18n.localize(questTypes[target]);
-               ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved', { target: dirname }), {});
+               ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
+                { target: dirname }), {});
             }
          }
          else if (classList.includes('delete'))
@@ -99,12 +97,6 @@ export default class QuestLog extends Application
          const quest = Fetch.quest(questId);
          const questPreview = new QuestPreview(quest);
          questPreview.render(true, { focus: true });
-      });
-
-      html.on('click', '.sortable', (event) =>
-      {
-         const el = $(event.target);
-         this.toggleSort(el.data('sort'));
       });
 
       html.on('dragstart', '.drag-quest', (event) =>
@@ -133,11 +125,7 @@ export default class QuestLog extends Application
 
       try
       {
-         quests = await Enrich.sorted(Fetch.sorted({
-            target: this.sortBy,
-            direction: this.sortDirection,
-            available
-         }));
+         quests = await Enrich.sorted(Fetch.sorted({ available }));
       }
       catch (err)
       {
@@ -156,31 +144,5 @@ console.error(err);
          questTypes,
          quests
       });
-   }
-
-   /**
-    * Set sort target and toggle direction. Refresh window
-    *
-    * @param target
-    *
-    * @param direction
-    */ // TODO REMOVE - Any setting to sorting should be a global one that effects all views
-   toggleSort(target, direction = undefined)
-   {
-      if (this.sortBy === target)
-      {
-         this.sortDirection = (this.sortDirection === 'desc') ? 'asc' : 'desc';
-      }
-      else
-      {
-         this.sortBy = target;
-         this.sortDirection = 'asc';
-      }
-      if (direction !== undefined && (direction === 'asc' || direction === 'desc'))
-      {
-         this.sortDirection = direction;
-      }
-
-      this.render(true);
    }
 }
