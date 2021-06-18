@@ -636,7 +636,11 @@ export default class QuestPreview extends FormApplication
          this._permControl = void 0;
       }
 
-      await this.saveQuest({ refresh: false });
+      if (this.quest.isOwner)
+      {
+         await this.saveQuest({ refresh: false });
+      }
+
       return super.close(options);
    }
 
