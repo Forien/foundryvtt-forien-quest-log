@@ -30,7 +30,8 @@ Hooks.once('setup', () =>
       QuestAPI,
       questLog: new QuestLog(),
       questLogFloating: new QuestLogFloating(),
-      questPreview: {}
+      questPreview: {},
+      questTracker: new QuestTracker()
    };
 
    Object.freeze(moduleData.public);
@@ -62,7 +63,7 @@ Hooks.once('ready', () =>
    {
       if (game.modules.get('forien-quest-log')?.active)
       {
-         QuestTracker.init();
+         Utils.getFQLPublicAPI().questTracker.render(true);
       }
    }
 

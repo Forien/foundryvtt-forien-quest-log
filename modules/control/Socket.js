@@ -56,6 +56,10 @@ export default class Socket
             {
                fqlPublicAPI.questLogFloating.render(true);
             }
+            if (fqlPublicAPI?.questTracker.rendered)
+            {
+               fqlPublicAPI.questTracker.render(true);
+            }
             return;
          }
 
@@ -129,14 +133,19 @@ export default class Socket
          fqlPublicAPI.questLog.render(true);
       }
 
-      game.socket.emit('module.forien-quest-log', {
-         type: 'questLogRefresh'
-      });
-
       if (fqlPublicAPI.questLogFloating.rendered)
       {
          fqlPublicAPI.questLogFloating.render(true);
       }
+
+      if (fqlPublicAPI?.questTracker.rendered)
+      {
+         fqlPublicAPI.questTracker.render(true);
+      }
+
+      game.socket.emit('module.forien-quest-log', {
+         type: 'questLogRefresh'
+      });
    }
 
    /**

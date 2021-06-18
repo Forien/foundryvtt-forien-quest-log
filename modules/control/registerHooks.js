@@ -78,15 +78,4 @@ export default function registerHooks()
          button: true
       });
    });
-
-   /**
-    * Need to Update Quest Log with custom Hooks :c
-    */
-   Hooks.on('updateJournalEntry', () =>
-   {
-      if (ui.questTracker)
-      {
-         ui.questTracker.render();
-      }
-   });
 }

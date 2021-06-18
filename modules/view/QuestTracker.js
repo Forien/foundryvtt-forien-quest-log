@@ -33,17 +33,10 @@ export default class QuestTracker extends RepositionableApplication
       {
          switch (event.originalEvent.button)
          {
-            case 2:
-               QuestTracker._onRightClick(event);
-               break;
             case 0:
             default:
                QuestTracker._onClick(event);
          }
-      }
-      else
-      {
-         QuestTracker._onDoubleClick(event);
       }
    }
 
@@ -52,10 +45,6 @@ export default class QuestTracker extends RepositionableApplication
       const id = event.currentTarget.dataset.id;
       QuestAPI.open(id);
    }
-
-   static _onDoubleClick(event) {}  // eslint-disable-line no-unused-vars
-
-   static _onRightClick(event) {}   // eslint-disable-line no-unused-vars
 
    /** @override */
    activateListeners(html)
@@ -77,17 +66,6 @@ export default class QuestTracker extends RepositionableApplication
       }
 
       return options;
-   }
-
-   static init()
-   {
-      if (ui.questTracker instanceof this)
-      {
-         return;
-      }
-      const instance = new this();
-      ui.questTracker = instance;
-      instance.render(true);
    }
 
    prepareQuests()

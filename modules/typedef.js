@@ -7,6 +7,8 @@
  *
  * @property {QuestLogFloating} questLogFloating - The floating quest log window instance.
  *
+ * @property {QuestTracker} questTracker - The floating quest tracker.
+ *
  * @property {object<string, QuestPreview>} questPreview - The open quest preview app / windows.
  */
 

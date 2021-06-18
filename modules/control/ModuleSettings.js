@@ -192,12 +192,11 @@ export default class ModuleSettings
          {
             if (value && game.modules.get('forien-quest-log')?.active)
             {
-               QuestTracker.init();
-               ui.questTracker.render(true);
+               Utils.getFQLPublicAPI().questTracker.render(true, { focus: true });
             }
             else
             {
-               ui.questTracker.close();
+               Utils.getFQLPublicAPI()?.questTracker.close();
             }
          }
       });
@@ -211,9 +210,9 @@ export default class ModuleSettings
          type: Boolean,
          onChange: (value) =>
          {
-            if (ui.questTracker?.rendered)
+            if (Utils.getFQLPublicAPI()?.questTracker.rendered)
             {
-               ui.questTracker.element.toggleClass('background', value);
+               Utils.getFQLPublicAPI().questTracker.element.toggleClass('background', value);
             }
          }
       });
@@ -231,9 +230,9 @@ export default class ModuleSettings
             {
                game.settings.set('forien-quest-log', 'quest-tracker-position', s_QUEST_TRACKER_DEFAULT);
                game.settings.set('forien-quest-log', 'resetQuestTracker', false);
-               if (ui.questTracker?.rendered)
+               if (Utils.getFQLPublicAPI()?.questTracker.rendered)
                {
-                  ui.questTracker.render();
+                  Utils.getFQLPublicAPI().questTracker.render();
                }
             }
          }
