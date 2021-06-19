@@ -10,7 +10,7 @@ import QuestLogFloating    from './view/QuestLogFloating.js';
 import QuestLog            from './view/QuestLog.js';
 import QuestPreview        from './view/QuestPreview.js';
 import QuestTracker        from './view/QuestTracker.js';
-
+CONFIG.debug.hooks = true;
 Hooks.once('init', () =>
 {
    // Set the sheet to render quests.
@@ -97,6 +97,19 @@ Hooks.on('renderJournalDirectory', (app, html) =>
       const folderId = QuestFolder.get().id;
       const folder = html.find(`.folder[data-folder-id="${folderId}"]`);
 
-      folder.remove();
+      if (folder) { folder.remove(); }
    }
+});
+
+/**
+ * Remove option item for quest journal folder when any journal entry is rendered. This prevents users from placing
+ * non-quest journals into the quest journal folder.
+ */
+Hooks.on('renderJournalSheet', (app, html) =>
+{
+   const folderId = QuestFolder.get().id;
+
+   const option = html.find(`option[value="${folderId}"]`);
+
+   if (option) { option.remove(); }
 });
