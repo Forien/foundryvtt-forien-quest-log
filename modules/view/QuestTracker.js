@@ -68,6 +68,12 @@ export default class QuestTracker extends RepositionableApplication
       return options;
    }
 
+   /**
+    * Prepares the quest data. Take note that Fetch.quest() for subquests can return null if the journal entry is
+    * not available, so you must handle that case.
+    *
+    * @returns {{name: *, id: *, source: Document.giver|null|*, tasks: *, subquests: *}[]} Template data
+    */
    prepareQuests()
    {
       const quests = Fetch.sorted();
@@ -78,6 +84,9 @@ export default class QuestTracker extends RepositionableApplication
          const subquests = q.subquests.map((s) =>
          {
             const subquest = Fetch.quest(s);
+
+            if (!subquest) { return null; }
+
             let state = 'square';
             switch (subquest.status)
             {
@@ -95,7 +104,7 @@ export default class QuestTracker extends RepositionableApplication
             id: q.id,
             source: q.giver,
             name: q.name,
-            subquests: game.user.isGM ? subquests : subquests.filter((s) => !s.hidden),
+            subquests: game.user.isGM ? subquests : subquests.filter((s) => s !== null && !s.hidden),
             tasks: game.user.isGM ? q.tasks.map((t) => t.toJSON()) :
              q.tasks.filter((t) => !t.hidden).map((t) => t.toJSON())
          };

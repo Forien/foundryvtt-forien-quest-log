@@ -128,11 +128,14 @@ export default class QuestForm extends FormApplication
 
       if (this._subquest)
       {
-         const parentQuest = await Fetch.quest(this._parentId);
-         parentQuest.addSubquest(entry.id);
-         await parentQuest.save();
+         const parentQuest = Fetch.quest(this._parentId);
 
-         Socket.refreshQuestPreview({ questId: parentQuest.id });
+         if (parentQuest)
+         {
+            parentQuest.addSubquest(entry.id);
+            await parentQuest.save();
+            Socket.refreshQuestPreview({ questId: parentQuest.id });
+         }
       }
 
       // players don't see Hidden tab, but assistant GM can, so emit anyway
@@ -261,9 +264,12 @@ export default class QuestForm extends FormApplication
    {
       if (this._subquest)
       {
-         const parentQuest = await Fetch.quest(this._parentId);
-         this.options.title += ` – ${game.i18n.format('ForienQuestLog.QuestForm.SubquestOf', 
-          { name: parentQuest.name })}`;
+         const parentQuest = Fetch.quest(this._parentId);
+         if (parentQuest)
+         {
+            this.options.title += ` – ${game.i18n.format('ForienQuestLog.QuestForm.SubquestOf',
+             { name: parentQuest.name })}`;
+         }
       }
 
       return {
