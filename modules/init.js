@@ -10,7 +10,7 @@ import QuestLogFloating    from './view/QuestLogFloating.js';
 import QuestLog            from './view/QuestLog.js';
 import QuestPreview        from './view/QuestPreview.js';
 import QuestTracker        from './view/QuestTracker.js';
-CONFIG.debug.hooks = true;
+
 Hooks.once('init', () =>
 {
    // Set the sheet to render quests.
