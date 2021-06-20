@@ -1,5 +1,4 @@
 import ModuleSettings            from './ModuleSettings.js';
-import Fetch                     from './control/Fetch.js';
 import registerHooks             from './control/registerHooks.js';
 import Socket                    from './control/Socket.js';
 import QuestAPI                  from './control/QuestAPI.js';
@@ -38,17 +37,24 @@ Hooks.once('setup', () =>
       questLogFloating: new QuestLogFloating(),
       questPreview: {},
       questTracker: new QuestTracker(),
-      renderAll: function(force = false, options = {})
+      closeAll: function({ questPreview = false, ...options } = {})
       {
-         if (this.questLog.rendered)
-         {
-            this.questLog.render(force, options);
-         }
+         if (this.questLog.rendered) { this.questLog.close(options); }
+         if (this.questLogFloating.rendered) { this.questLogFloating.close(options); }
+         if (this.questTracker.rendered) { this.questTracker.close(options); }
 
-         if (this.questLogFloating.rendered)
+         if (questPreview)
          {
-            this.questLogFloating.render(force, options);
+            for (const qp of Object.values(this.questPreview))
+            {
+               qp.close(options);
+            }
          }
+      },
+      renderAll: function({ force = false, questPreview = false, ...options } = {})
+      {
+         if (this.questLog.rendered) { this.questLog.render(force, options); }
+         if (this.questLogFloating.rendered) { this.questLogFloating.render(force, options); }
 
          if (Utils.isQuestTrackerVisible())
          {
@@ -57,6 +63,14 @@ Hooks.once('setup', () =>
          else
          {
             this.questTracker.close();
+         }
+
+         if (questPreview)
+         {
+            for (const qp of Object.values(this.questPreview))
+            {
+               if (qp.rendered) { qp.render(force, options); }
+            }
          }
       }
    };

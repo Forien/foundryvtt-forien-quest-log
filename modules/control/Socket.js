@@ -48,7 +48,7 @@ export default class Socket
 
          if (data.type === 'questLogRefresh')
          {
-            Utils.getFQLPublicAPI().renderAll(true);
+            Utils.getFQLPublicAPI().renderAll({ force: true });
             return;
          }
 
@@ -117,7 +117,7 @@ export default class Socket
 
    static refreshQuestLog()
    {
-      Utils.getFQLPublicAPI().renderAll(true);
+      Utils.getFQLPublicAPI().renderAll({ force: true });
 
       game.socket.emit('module.forien-quest-log', {
          type: 'questLogRefresh'

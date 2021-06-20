@@ -1,7 +1,7 @@
-import Enrich        from './Enrich.js';
-import Fetch         from './Fetch.js';
-import Utils         from './Utils.js';
-import {constants, settings} from '../model/constants.js';
+import Enrich                                from './Enrich.js';
+import Fetch                                 from './Fetch.js';
+import Utils                                 from './Utils.js';
+import { constants, noteControls, settings } from '../model/constants.js';
 
 /**
  * Function for registering API-related Hooks.
@@ -24,7 +24,7 @@ export default function registerHooks()
    {
       if (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers))
       {
-         fqlPublicAPI.questLogFloating.render(true, {focus: true});
+         fqlPublicAPI.questLogFloating.render(true, { focus: true });
       }
    });
 
@@ -67,24 +67,7 @@ export default function registerHooks()
       if (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers))
       {
          const notes = controls.find((c) => c.name === 'notes');
-
-         notes.tools.push({
-            name: 'forien-quest-log',
-            title: 'ForienQuestLog.QuestLogButton',
-            icon: 'fas fa-scroll',
-            visible: true,
-            onClick: () => fqlPublicAPI.questLog.render(true, {focus: true}),
-            button: true
-         });
-
-         notes.tools.push({
-            name: 'forien-quest-log-floating-window',
-            title: 'ForienQuestLog.FloatingQuestWindow',
-            icon: 'fas fa-tasks',
-            visible: true,
-            onClick: () => fqlPublicAPI.questLogFloating.render(true, {focus: true}),
-            button: true
-         });
+         if (notes) { notes.tools.push(...noteControls); }
       }
    });
 }

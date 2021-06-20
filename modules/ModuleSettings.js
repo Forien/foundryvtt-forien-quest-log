@@ -1,5 +1,5 @@
-import Utils                     from './control/Utils.js';
-import { constants, settings }   from './model/constants.js';
+import Utils                                 from './control/Utils.js';
+import { constants, noteControls, settings } from './model/constants.js';
 
 const s_QUEST_TRACKER_DEFAULT = { top: 80 };
 
@@ -153,15 +153,36 @@ export default class ModuleSettings
          config: true,
          default: false,
          type: Boolean,
-         onChange: () =>
+         onChange: (value) =>
          {
+            const fqlPublicAPI = Utils.getFQLPublicAPI();
+
             if (Utils.isQuestTrackerVisible())
             {
-               Utils.getFQLPublicAPI().questTracker.render(true, { focus: true });
+               fqlPublicAPI.questTracker.render(true, { focus: true });
             }
             else
             {
-               Utils.getFQLPublicAPI()?.questTracker.close();
+               fqlPublicAPI.questTracker.close();
+            }
+
+            if (!game.user.isGM)
+            {
+               // Hide all FQL windows from non GM user and remove the ui.controls for FQL.
+               if (value)
+               {
+                  fqlPublicAPI.closeAll({ questPreview: true });
+
+                  const notes = ui.controls.controls.find((c) => c.name === 'notes');
+                  if (notes) { notes.tools = notes.tools.filter((c) => !c.name.startsWith(constants.moduleName)); }
+               }
+               else  // Add back ui.controls
+               {
+                  const notes = ui.controls.controls.find((c) => c.name === 'notes');
+                  if (notes) { notes.tools.push(...noteControls); }
+               }
+
+               ui.controls.render(true);
             }
 
             game.journal.render();

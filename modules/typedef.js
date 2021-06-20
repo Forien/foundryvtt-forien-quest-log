@@ -11,6 +11,8 @@
  *
  * @property {object<string, QuestPreview>} questPreview - The open quest preview app / windows.
  *
+ * @property {Function} closeAll - Convenience function to close all windows.
+ *
  * @property {Function} renderAll - Convenience function to render all windows / apps except QuestPreview.
  */
 

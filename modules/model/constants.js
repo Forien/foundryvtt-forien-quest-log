@@ -1,3 +1,5 @@
+import Utils from '../control/Utils.js';
+
 const constants = {
    moduleName: 'forien-quest-log',
    moduleLabel: `Forien's Quest Log`,
@@ -25,4 +27,28 @@ const settings = {
    showTasks: 'showTasks'
 };
 
-export { constants, questTypes, settings };
+/**
+ * Defines the left-hand UI control note buttons.
+ *
+ * @type {*[]}
+ */
+const noteControls = [
+   {
+      name: constants.moduleName,
+      title: 'ForienQuestLog.QuestLogButton',
+      icon: 'fas fa-scroll',
+      visible: true,
+      onClick: () => Utils.getFQLPublicAPI().questLog.render(true, { focus: true }),
+      button: true
+   },
+   {
+      name: 'forien-quest-log-floating-window',
+      title: 'ForienQuestLog.FloatingQuestWindow',
+      icon: 'fas fa-tasks',
+      visible: true,
+      onClick: () => Utils.getFQLPublicAPI().questLogFloating.render(true, { focus: true }),
+      button: true
+   }
+];
+
+export { constants, noteControls, questTypes, settings };
