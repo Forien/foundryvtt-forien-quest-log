@@ -39,7 +39,7 @@ export default async function()
 
             await entry.update({
                content: '',
-               permission: { default: CONST.ENTITY_PERMISSIONS.OBSERVER }, // TODO: GET DEFAULT CONFIG SETTING
+               permission: { default: CONST.ENTITY_PERMISSIONS.OBSERVER },
                flags: {
                   [constants.moduleName]: { json: quest.toJSON() }
                }
