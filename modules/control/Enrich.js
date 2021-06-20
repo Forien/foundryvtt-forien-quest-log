@@ -136,7 +136,10 @@ export default class Enrich
       data.data_giver = await Enrich.giverFromQuest(quest);
       data.data_giver.id = quest.giver;
 
+      data.statusLabel = game.i18n.localize(`ForienQuestLog.QuestTypes.Labels.${data.status}`);
+
       data.isSubquest = false;
+
       if (data.parent !== null)
       {
          data.isSubquest = true;
@@ -157,23 +160,58 @@ export default class Enrich
          data.data_parent = {};
       }
 
-      data.statusLabel = game.i18n.localize(`ForienQuestLog.QuestTypes.Labels.${data.status}`);
+      data.data_subquest = [];
+
+      if (data.subquests !== void 0)
+      {
+         for (const questId of data.subquests)
+         {
+            const subData = Fetch.quest(questId);
+
+            if (subData)
+            {
+
+               data.data_subquest.push({
+                  id: questId,
+                  giver: subData.giver,
+                  name: subData.name,
+                  status: subData.status,
+                  isObservable: subData.isObservable
+               });
+            }
+         }
+      }
 
       if (countHidden)
       {
          data.checkedTasks = data.tasks.filter((t) => t.completed).length;
-         data.totalTasks = data.tasks.length;
+
+         const finishedSubquests = data.data_subquest.filter((s) => s.status === 'completed').length;
+
+         data.checkedTasks += finishedSubquests;
+
+         data.totalTasks = data.tasks.length + data.data_subquest.length;
       }
       else
       {
          data.checkedTasks = data.tasks.filter((t) => t.hidden === false && t.completed).length;
-         data.totalTasks = data.tasks.filter((t) => t.hidden === false).length;
+
+         const finishedSubquests = data.data_subquest.filter(
+          (s) => s.isObservable && s.status === 'completed').length;
+
+         data.checkedTasks += finishedSubquests;
+
+         data.totalTasks = data.tasks.filter((t) => t.hidden === false).length +
+          data.data_subquest.filter((s) => s.isObservable && s.status !== 'hidden').length;
       }
 
-      // TODO EVALUATE: We no longer are allowing user data to be enriched / currently escaping
       data.data_tasks = data.tasks.map((task) =>
       {
-         task.name = TextEditor.enrichHTML(task.name);
+         // Note: We no longer are allowing user data to be enriched / currently escaping in Handlebars template.
+         // XSS vulnerability w/ script data entered by user. This may change in the future as it might be possible to
+         // provide a regex to verify and only upgrade content links and avoid scripts though that is a hard task.
+         // task.name = TextEditor.enrichHTML(task.name);
+
          return task;
       });
 
@@ -190,26 +228,6 @@ export default class Enrich
             transfer: type !== 'abstract' ? JSON.stringify({ uuid: item.data.uuid }) : void 0
          };
       });
-
-      data.data_subquest = [];
-
-      if (data.subquests !== void 0)
-      {
-         for (const questId of data.subquests)
-         {
-            const subData = Fetch.quest(questId);
-
-            if (subData)
-            {
-               data.data_subquest.push({
-                  id: questId,
-                  giver: subData.giver,
-                  name: subData.name,
-                  status: subData.status
-               });
-            }
-         }
-      }
 
       data.playerEdit = quest.isOwner;
 
