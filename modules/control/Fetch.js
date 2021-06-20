@@ -1,7 +1,6 @@
 import Quest               from '../model/Quest.js';
 import QuestFolder         from '../model/QuestFolder.js';
 import { constants }       from '../model/constants.js';
-import { migrateData_070 } from './migrateData.js';
 
 export default class Fetch
 {
@@ -29,17 +28,7 @@ export default class Fetch
 
    static content(entry)
    {
-      let content;
-
-      content = entry.getFlag(constants.moduleName, 'json');
-
-      // Attempt to load old quest format which is raw JSON stored in content of JE.
-      if (content === void 0)
-      {
-         content = migrateData_070(entry);
-
-         if (content === null) { return null; }
-      }
+      const content = entry.getFlag(constants.moduleName, 'json');
 
       content.id = entry.id;
 

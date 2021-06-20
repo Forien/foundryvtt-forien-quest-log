@@ -1,4 +1,5 @@
-import Utils   from './Utils.js';
+import Utils         from './control/Utils.js';
+import { constants } from './model/constants.js';
 
 const s_QUEST_TRACKER_DEFAULT = { top: 80 };
 
@@ -9,7 +10,7 @@ export default class ModuleSettings
     */
    static register()
    {
-      game.settings.register('forien-quest-log', 'availableQuests', {
+      game.settings.register(constants.moduleName, 'availableQuests', {
          name: 'ForienQuestLog.Settings.availableQuests.Enable',
          hint: 'ForienQuestLog.Settings.availableQuests.EnableHint',
          scope: 'world',
@@ -27,7 +28,7 @@ export default class ModuleSettings
          }
       });
 
-      game.settings.register('forien-quest-log', 'allowPlayersDrag', {
+      game.settings.register(constants.moduleName, 'allowPlayersDrag', {
          name: 'ForienQuestLog.Settings.allowPlayersDrag.Enable',
          hint: 'ForienQuestLog.Settings.allowPlayersDrag.EnableHint',
          scope: 'world',
@@ -45,7 +46,7 @@ export default class ModuleSettings
          }
       });
 
-      game.settings.register('forien-quest-log', 'allowPlayersCreate', {
+      game.settings.register(constants.moduleName, 'allowPlayersCreate', {
          name: 'ForienQuestLog.Settings.allowPlayersCreate.Enable',
          hint: 'ForienQuestLog.Settings.allowPlayersCreate.EnableHint',
          scope: 'world',
@@ -63,7 +64,7 @@ export default class ModuleSettings
          }
       });
 
-      game.settings.register('forien-quest-log', 'allowPlayersAccept', {
+      game.settings.register(constants.moduleName, 'allowPlayersAccept', {
          name: 'ForienQuestLog.Settings.allowPlayersAccept.Enable',
          hint: 'ForienQuestLog.Settings.allowPlayersAccept.EnableHint',
          scope: 'world',
@@ -81,7 +82,7 @@ export default class ModuleSettings
          }
       });
 
-      game.settings.register('forien-quest-log', 'countHidden', {
+      game.settings.register(constants.moduleName, 'countHidden', {
          name: 'ForienQuestLog.Settings.countHidden.Enable',
          hint: 'ForienQuestLog.Settings.countHidden.EnableHint',
          scope: 'world',
@@ -99,7 +100,7 @@ export default class ModuleSettings
          }
       });
 
-      game.settings.register('forien-quest-log', 'showTasks', {
+      game.settings.register(constants.moduleName, 'showTasks', {
          name: 'ForienQuestLog.Settings.showTasks.Enable',
          hint: 'ForienQuestLog.Settings.showTasks.EnableHint',
          scope: 'world',
@@ -122,7 +123,7 @@ export default class ModuleSettings
          }
       });
 
-      game.settings.register('forien-quest-log', 'navStyle', {
+      game.settings.register(constants.moduleName, 'navStyle', {
          name: 'ForienQuestLog.Settings.navStyle.Enable',
          hint: 'ForienQuestLog.Settings.navStyle.EnableHint',
          scope: 'client',
@@ -144,7 +145,7 @@ export default class ModuleSettings
          }
       });
 
-      game.settings.register('forien-quest-log', 'showFolder', {
+      game.settings.register(constants.moduleName, 'showFolder', {
          name: 'ForienQuestLog.Settings.showFolder.Enable',
          hint: 'ForienQuestLog.Settings.showFolder.EnableHint',
          scope: 'world',
@@ -154,13 +155,13 @@ export default class ModuleSettings
          onChange: () => game.journal.render()
       });
 
-      game.settings.register('forien-quest-log', 'quest-tracker-position', {
+      game.settings.register(constants.moduleName, 'quest-tracker-position', {
          scope: 'client',
          config: false,
          default: s_QUEST_TRACKER_DEFAULT,
       });
 
-      game.settings.register('forien-quest-log', 'enableQuestTracker', {
+      game.settings.register(constants.moduleName, 'enableQuestTracker', {
          name: 'ForienQuestLog.WorkshopPUF.Settings.enableQuestTracker.name',
          hint: 'ForienQuestLog.WorkshopPUF.Settings.enableQuestTracker.hint',
          scope: 'world',
@@ -169,7 +170,7 @@ export default class ModuleSettings
          type: Boolean,
          onChange: (value) =>
          {
-            if (value && game.modules.get('forien-quest-log')?.active)
+            if (value && game.modules.get(constants.moduleName)?.active)
             {
                Utils.getFQLPublicAPI().questTracker.render(true, { focus: true });
             }
@@ -180,7 +181,7 @@ export default class ModuleSettings
          }
       });
 
-      game.settings.register('forien-quest-log', 'questTrackerBackground', {
+      game.settings.register(constants.moduleName, 'questTrackerBackground', {
          name: 'ForienQuestLog.WorkshopPUF.Settings.questTrackerBackground.name',
          hint: 'ForienQuestLog.WorkshopPUF.Settings.questTrackerBackground.hint',
          scope: 'client',
@@ -196,7 +197,7 @@ export default class ModuleSettings
          }
       });
 
-      game.settings.register('forien-quest-log', 'resetQuestTracker', {
+      game.settings.register(constants.moduleName, 'resetQuestTracker', {
          name: 'ForienQuestLog.WorkshopPUF.Settings.resetQuestTracker.name',
          hint: 'ForienQuestLog.WorkshopPUF.Settings.resetQuestTracker.hint',
          scope: 'client',
@@ -207,8 +208,8 @@ export default class ModuleSettings
          {
             if (value)
             {
-               game.settings.set('forien-quest-log', 'quest-tracker-position', s_QUEST_TRACKER_DEFAULT);
-               game.settings.set('forien-quest-log', 'resetQuestTracker', false);
+               game.settings.set(constants.moduleName, 'quest-tracker-position', s_QUEST_TRACKER_DEFAULT);
+               game.settings.set(constants.moduleName, 'resetQuestTracker', false);
                if (Utils.getFQLPublicAPI()?.questTracker.rendered)
                {
                   Utils.getFQLPublicAPI().questTracker.render();

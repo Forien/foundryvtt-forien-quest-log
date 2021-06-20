@@ -1,4 +1,4 @@
-import ModuleSettings      from './control/ModuleSettings.js';
+import ModuleSettings      from './ModuleSettings.js';
 import registerHooks       from './control/registerHooks.js';
 import Socket              from './control/Socket.js';
 import QuestAPI            from './control/QuestAPI.js';
@@ -10,12 +10,14 @@ import QuestLogFloating    from './view/QuestLogFloating.js';
 import QuestLog            from './view/QuestLog.js';
 import QuestPreview        from './view/QuestPreview.js';
 import QuestTracker        from './view/QuestTracker.js';
+import DBMigration         from '../database/DBMigration.js';
 
 Hooks.once('init', () =>
 {
    // Set the sheet to render quests.
    Quest.setSheet(QuestPreview);
 
+   DBMigration.register();
    ModuleSettings.register();
    Utils.preloadTemplates();
    Utils.registerHandlebarsHelpers();
@@ -40,6 +42,11 @@ Hooks.once('setup', () =>
    Object.freeze(moduleData.public);
 
    Hooks.callAll('ForienQuestLog.afterSetup');
+});
+
+Hooks.once('ready', async () =>
+{
+   await DBMigration.migrate();
 });
 
 Hooks.once('ready', () =>
