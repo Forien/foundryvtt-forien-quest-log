@@ -206,14 +206,21 @@ export default class QuestPreview extends FormApplication
          const data = $(event.target).data('transfer');
 
          const document = await Utils.getDocumentFromUUID(data);
-
          if (document !== null)
          {
+            const uuidData = Utils.getDataFromUUID(data);
+
             const dataTransfer = {
                _fqlDrop: false,
                type: 'Item',
-               data: document.data
+               data: document.data,
+               uuid: data.uuid,
+               id: document.id
             };
+
+            // Add compendium pack info if applicable
+            if (uuidData && uuidData.pack) { dataTransfer.pack = uuidData.pack; }
+
             event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dataTransfer));
          }
       });

@@ -27,23 +27,29 @@ export default class Utils
    }
 
    /**
-    * Builds a UUID for the given actor / journal / item data.
+    * Parses a UUID and returns the component data parts.
     *
-    * @param {object}   data - document data
+    * @param {string|object}  data - The UUID as a string or object with UUID key as a string.
     *
-    * @param {string[]|undefined} type - Provide a list of Document types to build a UUID from given data. If the type
-    *                                    doesn't match the data undefined is returned. If type is undefined any document
-    *                                    will match.
-    *
-    * @returns {string|undefined}
+    * @returns {{id: string, type: string}|{id: string, type: string, pack: string}|*} UUID data parts
     */
-   static getUUID(data, type = void 0)
+   static getDataFromUUID(data)
    {
-      // 'type' doesn't match the data type.
-      if (Array.isArray(type) && !type.includes(data.type)) { return void 0; }
-      if (typeof type === 'string' && data.type !== type) { return void 0; }
+      const uuid = typeof data === 'string' ? data : data.uuid;
 
-      return typeof data.pack === 'string' ? `Compendium.${data.pack}.${data.id}` : `${data.type}.${data.id}`;
+      if (typeof uuid !== 'string') { return void 0; }
+
+      const match = uuid.match(/(\w+)/gm);
+
+      switch (match.length)
+      {
+         case 2:
+            return { type: match[0], id: match[1] };
+         case 4:
+            return { type: match[0], pack: `${match[1]}.${match[2]}`, id: match[3] };
+         default:
+            return void 0;
+      }
    }
 
    /**
@@ -84,6 +90,26 @@ export default class Utils
       }
 
       return document;
+   }
+
+   /**
+    * Builds a UUID for the given actor / journal / item data.
+    *
+    * @param {object}   data - document data
+    *
+    * @param {string[]|undefined} type - Provide a list of Document types to build a UUID from given data. If the type
+    *                                    doesn't match the data undefined is returned. If type is undefined any document
+    *                                    will match.
+    *
+    * @returns {string|undefined} UUID
+    */
+   static getUUID(data, type = void 0)
+   {
+      // 'type' doesn't match the data type.
+      if (Array.isArray(type) && !type.includes(data.type)) { return void 0; }
+      if (typeof type === 'string' && data.type !== type) { return void 0; }
+
+      return typeof data.pack === 'string' ? `Compendium.${data.pack}.${data.id}` : `${data.type}.${data.id}`;
    }
 
    /**
