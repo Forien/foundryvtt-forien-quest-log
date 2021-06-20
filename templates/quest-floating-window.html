@@ -6,7 +6,7 @@
         <li class="directory-item folder flexcol collapsed" data-quest-id="{{id}}" style="display: flex;">
             <header class="folder-header flexrow">
                 <h3 class="{{#if tasks}}folder-toggle{{/if}}" data-quest-id="{{id}}">
-                    <i class="fas fa-bookmark"></i>{{name}}</h3>
+                    <i class="fas fa-bookmark"></i>{{name}} {{taskCountLabel}}</h3>
                     <a class="quest-open create-entity" data-quest-id="{{id}}"><i class="fas fa-pen-nib fa-fw"></i></a>
             </header>
 
@@ -32,7 +32,7 @@
                 {{/if}}
                 {{/each}}
                 {{#each data_tasks}}
-                <li class="directory-item entity journal flexrow" data-entity-id="0z5dbNtuPgGOQ8ey" style="display: flex;">
+                <li class="directory-item entity journal flexrow {{#if hidden}}task-hidden{{/if}}" data-entity-id="0z5dbNtuPgGOQ8ey" style="display: flex;">
                     {{#if completed}}
                         <i class="fas fa-check-square"></i>
                     {{else}}

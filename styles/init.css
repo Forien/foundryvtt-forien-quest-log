@@ -1050,6 +1050,9 @@
   margin-top: 50%;
   display: block;
 }
+#forien-quest-log-floating-window .task-hidden {
+  color: rgba(255,255,255,0.53333);
+}
 
 #quest-tracker {
   position: absolute;
