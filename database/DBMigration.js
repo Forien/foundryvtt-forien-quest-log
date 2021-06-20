@@ -1,14 +1,12 @@
+import Socket        from '../modules/control/Socket.js';
+
 import dbSchema_1    from './dbSchema_1.js';
 
 import { constants } from '../modules/model/constants.js';
 
 const migrateImpl = {
    0: () => {},   // Schema level 0 is a noop / assume all data is stored in JE content.
-   1: dbSchema_1, // Migrate to schema 1 transferring any old data to JE flags.
-   2: () => { console.log('!!! migrate - 2'); },
-   3: () => { console.log('!!! migrate - 3'); },
-   4: () => { console.log('!!! migrate - 4'); },
-   5: () => { console.log('!!! migrate - 5'); },
+   1: dbSchema_1  // Migrate to schema 1 transferring any old data to JE flags.
 };
 
 export default class DBMigration
@@ -20,35 +18,38 @@ export default class DBMigration
    {
       try
       {
-         const schemaVersion = game.settings.get(constants.moduleName, this.setting);
+         // Registers the DB Schema world setting. By default this is 0. The `0.7.0` release of FQL has a schema of `1`.
+         game.settings.register(constants.moduleName, this.setting, {
+            scope: 'world',
+            config: false,
+            default: 0,
+            type: Number
+         });
 
-console.log(`DBMigration migrate - 0 - schemaVersion: ${schemaVersion}`);
+         const schemaVersion = game.settings.get(constants.moduleName, this.setting);
 
          // The DB schema matches the current version
          if (schemaVersion === this.version) { return; }
 
-         for (let cntr = schemaVersion; cntr <=  this.version; cntr++)
+         ui.notifications.info(game.i18n.localize('ForienQuestLog.Migration.Start'));
+
+         for (let version = schemaVersion; version <=  this.version; version++)
          {
-            await migrateImpl[cntr]();
+            if (version !== 0)
+            {
+               ui.notifications.info(game.i18n.format('ForienQuestLog.Migration.Schema', { version }));
+            }
+
+            await migrateImpl[version]();
          }
+
+         ui.notifications.info(game.i18n.localize('ForienQuestLog.Migration.Complete'));
+
+         Socket.refreshQuestLog();
       }
       catch (err)
       {
-console.log(`An error has been detected in Forien Quest Log DB migration.`);
-console.error(err);
+         console.error(err);
       }
-   }
-
-   /**
-    * Registers the DB Schema world setting. By default this is 0. The `0.7.0` release of FQL has a schema of `1`.
-    */
-   static register()
-   {
-      game.settings.register(constants.moduleName, this.setting, {
-         scope: 'world',
-         config: false,
-         default: 0,
-         type: Number
-      });
    }
 }

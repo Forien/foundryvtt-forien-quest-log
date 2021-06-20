@@ -30,7 +30,7 @@ export default class Fetch
    {
       const content = entry.getFlag(constants.moduleName, 'json');
 
-      content.id = entry.id;
+      if (content) { content.id = entry.id; }
 
       return content;
    }

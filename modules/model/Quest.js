@@ -161,12 +161,47 @@ export default class Quest
       this.giverImgPos = data.giverImgPos || 'center';
       this.splash = data.splash || '';
       this.splashPos = data.splashPos || 'center';
+      this.location = data.location || null;
+      this.priority = data.priority || 0;
+      this.type = data.type || null;
       this.parent = data.parent || null;
       this.subquests = data.subquests || [];
       this.tasks = [];
       this.rewards = [];
       this.tasks = Array.isArray(data.tasks) ? data.tasks.map((task) => new Task(task)) : [];
       this.rewards = Array.isArray(data.rewards) ? data.rewards.map((reward) => new Reward(reward)) : [];
+
+      if (typeof data.date === 'object')
+      {
+         this.date = data.date;
+      }
+      else
+      {
+         this.date = {
+            create: Date.now(),
+         };
+
+         switch (this.status)
+         {
+            case 'active':
+               this.date.active = Date.now();
+               this.date.end = null;
+               break;
+
+            case 'completed':
+            case 'failed':
+               this.date.active = Date.now();
+               this.date.end = Date.now();
+               break;
+
+            case 'hidden':
+            case 'available':
+            default:
+               this.date.active = null;
+               this.date.end = null;
+               break;
+         }
+      }
    }
 
    /**
@@ -182,6 +217,27 @@ export default class Quest
       if (!this.entry) { return; }
 
       this.status = target;
+
+      // Update the tracked date data based on status.
+      switch (this.status)
+      {
+         case 'active':
+            this.date.active = Date.now();
+            this.date.end = null;
+            break;
+
+         case 'completed':
+         case 'failed':
+            this.date.end = Date.now();
+            break;
+
+         case 'hidden':
+         case 'available':
+         default:
+            this.date.active = null;
+            this.date.end = null;
+            break;
+      }
 
       await this.entry.update({
          flags: {
@@ -296,10 +352,14 @@ export default class Quest
          giverImgPos: this.giverImgPos,
          splashPos: this.splashPos,
          splash: this.splash,
+         location: this.location,
+         priority: this.priority,
+         type: this.type,
          parent: this.parent,
          subquests: this.subquests,
          tasks: this.tasks,
-         rewards: this.rewards
+         rewards: this.rewards,
+         date: this.date
       };
    }
 

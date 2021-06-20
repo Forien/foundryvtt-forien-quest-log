@@ -1,15 +1,6 @@
 --- commit
 
-New DB fields
-  - Add time DB entry with: start, end, created
-  - Add location DB entry
-  - Add type DB entry to describe type of quest
-  - Add priority sort order field
-
-DB migration
-  - set DB version number in module settings
-  - migrate in init of module to DB level in settings
-    - add new DB fields
+Test if _fql_quests is hidden from JE popout
 
 --- commit
 
@@ -22,6 +13,7 @@ DB migration
 Module Settings
   - GM only tool option #22: Provide option to select default permission for new quest creation (NONE, OBSERVER, OWNER)
     - Option to hide Quest Log button in journal folder view & don't add quest log nav menu buttons for non GM users.
+  - Make sure to use this configuration option in the DB migration!
 
 --- commit
 
@@ -98,6 +90,11 @@ Api.hooks.createOpenQuestMacro
 Lang file additions:
 ForienQuestLog.NoDocument
 ForienQuestLog.NoPermission
+
+ForienQuestLog.Migration.CouldNotMigrate
+ForienQuestLog.Migration.Start
+ForienQuestLog.Migration.Schema
+ForienQuestLog.Migration.Complete
 
 QuestPreview.DragDropActor
 QuestPreview.Management.QuestSettings

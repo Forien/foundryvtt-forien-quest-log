@@ -1,6 +1,7 @@
 const constants = {
    moduleName: 'forien-quest-log',
-   moduleLabel: `Forien's Quest Log`
+   moduleLabel: `Forien's Quest Log`,
+   flagDB: 'json'
 };
 
 /**

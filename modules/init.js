@@ -17,7 +17,6 @@ Hooks.once('init', () =>
    // Set the sheet to render quests.
    Quest.setSheet(QuestPreview);
 
-   DBMigration.register();
    ModuleSettings.register();
    Utils.preloadTemplates();
    Utils.registerHandlebarsHelpers();
@@ -46,7 +45,8 @@ Hooks.once('setup', () =>
 
 Hooks.once('ready', async () =>
 {
-   await DBMigration.migrate();
+   // Only attempt to run DB migration for GM.
+   if (game.user.isGM) { await DBMigration.migrate(); }
 });
 
 Hooks.once('ready', () =>

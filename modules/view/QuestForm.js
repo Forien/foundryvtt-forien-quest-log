@@ -113,6 +113,7 @@ export default class QuestForm extends FormApplication
 
       if (this._subquest) { data.parent = this._parentId; }
 
+      // Creating a new quest will add any missing data / schema.
       data = new Quest(data);
 
       const entry = await JournalEntry.create({

@@ -177,6 +177,13 @@
       "ChangeSplashPos": "Change Splash alignement"
     },
 
+    "Migration": {
+      "CouldNotMigrate": "Forien's Quest Log - Could not migrate quest: '{name}'",
+      "Start": "Forien's Quest Log - Migrating data, please do not reload.",
+      "Schema": "Forien's Quest Log - Migrating data to schema version '{version}'",
+      "Complete": "Forien's Quest Log - Migrating data complete."
+    },
+
     "Api": {
       "__COMMENT__": "No need for translating lines starting with 'API ERROR', they show in console for developers only.",
       "create": {
