@@ -125,17 +125,26 @@ export default class Enrich
       data.giverImgPos = quest.giverImgPos || 'center';
       data.splash = quest.splash || '';
       data.splashPos = quest.splashPos || 'center';
+      data.location = quest.location || null;
+      data.priority = quest.priority || 0;
+      data.type = quest.type || null;
       data.parent = quest.parent || null;
       data.subquests = quest.subquests || [];
       data.tasks = Array.isArray(quest.tasks) ? quest.tasks.map((task) => task.toJSON()) : [];
       data.rewards = Array.isArray(quest.rewards) ? quest.rewards.map((reward) => reward.toJSON()) : [];
 
+      data.date = typeof quest.date === 'object' ? quest.date : { create: null, start: null, end: null };
+
       const isGM = game.user.isGM;
-      const canPlayerDrag = game.settings.get('forien-quest-log', 'allowPlayersDrag');
-      const countHidden = game.settings.get('forien-quest-log', 'countHidden');
+      const canPlayerDrag = game.settings.get(constants.moduleName, 'allowPlayersDrag');
+      const countHidden = game.settings.get(constants.moduleName, 'countHidden');
+
+      data.playerEdit = quest.isOwner;
+      data.description = TextEditor.enrichHTML(data.description);
 
       data.data_giver = await Enrich.giverFromQuest(quest);
       data.data_giver.id = quest.giver;
+
 
       data.statusLabel = game.i18n.localize(`ForienQuestLog.QuestTypes.Labels.${data.status}`);
 
@@ -256,10 +265,6 @@ export default class Enrich
             transfer: type !== 'abstract' ? JSON.stringify({ uuid: item.data.uuid }) : void 0
          };
       });
-
-      data.playerEdit = quest.isOwner;
-
-      data.description = TextEditor.enrichHTML(data.description);
 
       if (!isGM)
       {

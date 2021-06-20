@@ -166,14 +166,15 @@ export default class Quest
       this.type = data.type || null;
       this.parent = data.parent || null;
       this.subquests = data.subquests || [];
-      this.tasks = [];
-      this.rewards = [];
       this.tasks = Array.isArray(data.tasks) ? data.tasks.map((task) => new Task(task)) : [];
       this.rewards = Array.isArray(data.rewards) ? data.rewards.map((reward) => new Reward(reward)) : [];
 
       if (typeof data.date === 'object')
       {
          this.date = data.date;
+         if (typeof data.date.create === 'number') { data.date.create = new Date(data.date.create); }
+         if (typeof data.date.start === 'number') { data.date.start = new Date(data.date.start); }
+         if (typeof data.date.end === 'number') { data.date.end = new Date(data.date.end); }
       }
       else
       {
@@ -184,20 +185,20 @@ export default class Quest
          switch (this.status)
          {
             case 'active':
-               this.date.active = Date.now();
+               this.date.start = Date.now();
                this.date.end = null;
                break;
 
             case 'completed':
             case 'failed':
-               this.date.active = Date.now();
+               this.date.start = Date.now();
                this.date.end = Date.now();
                break;
 
             case 'hidden':
             case 'available':
             default:
-               this.date.active = null;
+               this.date.start = null;
                this.date.end = null;
                break;
          }
