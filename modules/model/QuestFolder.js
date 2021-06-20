@@ -27,7 +27,7 @@ export default class QuestFolder
    /**
     * Initializes the creation of quest folders
     *
-    * @returns {Promise<void>}
+    * @returns {Promise<*>}
     */
    static async initializeJournals()
    {
@@ -38,6 +38,6 @@ export default class QuestFolder
          await Folder.create({ name: s_QUEST_DIR_NAME, type: 'JournalEntry', parent: null });
       }
 
-      game.journal.directory.folders.find((f) => f.name === s_QUEST_DIR_NAME);
+      return game.journal.directory.folders.find((f) => f.name === s_QUEST_DIR_NAME);
    }
 }
