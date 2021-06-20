@@ -913,12 +913,13 @@
   width: 100%;
   height: 200px;
   background-size: cover;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(0, 0, 0, 0.1);
+  border: 2px dashed rgba(0, 0, 0, 0.5);
   border-radius: 5px;
   cursor: pointer;
 }
 .window-app.forien-quest-preview .quest-body .management .quest-splash .splash-image:hover {
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(0, 0, 0, 0.075);
 }
 .window-app.forien-quest-preview .quest-body .management .quest-splash .delete-splash {
   position: absolute;
