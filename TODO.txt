@@ -1,0 +1,123 @@
+--- commit
+
+New DB fields
+  - Add time DB entry with: start, end, created
+  - Add location DB entry
+  - Add type DB entry to describe type of quest
+  - Add priority sort order field
+
+DB migration
+  - set DB version number in module settings
+  - migrate in init of module to DB level in settings
+    - add new DB fields
+
+--- commit
+
+- when player owner
+  - allow edit quest details
+  - edit objectives (no delete / no visibility of hidden items)
+
+--- commit
+
+Module Settings
+  - GM only tool option #22: Provide option to select default permission for new quest creation (NONE, OBSERVER, OWNER)
+    - Option to hide Quest Log button in journal folder view & don't add quest log nav menu buttons for non GM users.
+
+--- commit
+
+Enrich:
+- Evaluate providing a better sort algorithm
+  - sort by parent / child relationships with only parent quest name being alpha sorted
+  - provide parent / child indent levels and show in QuestLog
+
+- Handle the case when a subquest references a parent quest that has been removed.
+- Handle the case when a quest references a subquest that has been removed.
+
+--- commit
+
+Quest Log / Enrich
+  - Count Subquests in checkedTasks and totalTasks #4 - simply add subquests to task count
+
+--- commit
+
+Quest Preview
+  - Quest to Subquest alteration #29: Allow option selection box to select new parent.
+
+--- commit
+
+Quest sorting
+  - Hidden Quests #30: Hide parent and subquests if hidden from user
+
+--- commit
+
+UI / UX
+
+- Splash Art
+  x light gray background
+  x dashed border
+  - default message to "Click to set image".
+  - swap out border background when image set.
+
+- QuestTracker
+  - Issue #26: Hide tasks module setting option
+  - When there are no active quests don't render the quest tracker
+
+- QuestForm buttons for quest giver
+  - figure out the Sass / CSS
+  - hook up JS interaction
+
+- Evaluate showing just a completed view with failed / not failed state
+
+------------------------------
+Notes:
+
+QuestPreview.js
+ - had to prevent user from clicking on the item.
+ - doesn't seem to implement personal quest
+
+--------
+
+Lang file changes:
+QuestForm.QuestGiverPlaceholder
+QuestForm.QuestGiverNamePlaceholder
+QuestForm.QuestTitle
+QuestForm.DragDropActor
+QuestForm.QuestDescription
+QuestForm.QuestGMNotes
+QuestForm.QuestTitle -> QuestForm.QuestName
+
+QuestPreview.Title
+QuestPreview.Objectives
+QuestPreview.Rewards
+QuestPreview.DragDropRewards
+QuestPreview.Management.SplashArt
+QuestPreview.Management.QuestBranching
+
+Api.hooks.createOpenQuestMacro
+
+Lang file additions:
+ForienQuestLog.NoDocument
+ForienQuestLog.NoPermission
+
+QuestPreview.DragDropActor
+QuestPreview.Management.QuestSettings
+
+--
+
+Lang file removal:
+QuestPreview.Management.CanPlayerEdit
+QuestPreview.Management.IsPersonalQuest
+QuestPreview.Management.IsPersonalQuestDescription
+
+ForienQuestLog.Settings.titleAlign.Enable
+ForienQuestLog.Settings.titleAlign.EnableHint
+ForienQuestLog.Settings.titleAlign.left
+ForienQuestLog.Settings.titleAlign.center
+
+--------
+
+Documentation Notes:
+
+New Hooks
+  - ForienQuestLog.Open.QuestLog
+  - ForienQuestLog.Open.QuestLogFloating
