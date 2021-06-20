@@ -230,6 +230,10 @@
           "name": "Quest Tracker Background",
           "hint": "Check this to enable background for Quest Tracker, which might help with visibility on certain maps."
         },
+        "questTrackerTasks": {
+          "name": "Show Quest Tracker Tasks",
+          "hint": "Check this to enable the display of tasks in the Quest Tracker."
+        },
         "resetQuestTracker": {
           "name": "Reset Quest Tracker Position",
           "hint": "Check this to reset position of Quest Tracker to default. Use this if you moved Quest Tracker into position where you cannot move it anymore."

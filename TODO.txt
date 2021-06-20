@@ -1,3 +1,5 @@
+Look at QuestLogFloating to set hidden items grayed out for GM
+
 --- commit
 
 - when player owner
@@ -13,11 +15,6 @@ Enrich:
 
 - Handle the case when a subquest references a parent quest that has been removed.
 - Handle the case when a quest references a subquest that has been removed.
-
---- commit
-
-Quest Log / Enrich
-  - Count Subquests in checkedTasks and totalTasks #4 - simply add subquests to task count
 
 --- commit
 
@@ -87,6 +84,9 @@ ForienQuestLog.Migration.Complete
 
 QuestPreview.DragDropActor
 QuestPreview.Management.QuestSettings
+
+ForienQuestLog.WorkshopPUF.Settings.questTrackerTasks.name
+ForienQuestLog.WorkshopPUF.Settings.questTrackerTasks.hint
 
 --
 

@@ -10,6 +10,8 @@
  * @property {QuestTracker} questTracker - The floating quest tracker.
  *
  * @property {object<string, QuestPreview>} questPreview - The open quest preview app / windows.
+ *
+ * @property {Function} renderAll - Convenience function to render all windows / apps except QuestPreview.
  */
 
 /**

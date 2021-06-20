@@ -48,18 +48,7 @@ export default class Socket
 
          if (data.type === 'questLogRefresh')
          {
-            if (fqlPublicAPI.questLog.rendered)
-            {
-               fqlPublicAPI.questLog.render(true);
-            }
-            if (fqlPublicAPI.questLogFloating.rendered)
-            {
-               fqlPublicAPI.questLogFloating.render(true);
-            }
-            if (fqlPublicAPI?.questTracker.rendered)
-            {
-               fqlPublicAPI.questTracker.render(true);
-            }
+            Utils.getFQLPublicAPI().renderAll(true);
             return;
          }
 
@@ -128,22 +117,7 @@ export default class Socket
 
    static refreshQuestLog()
    {
-      const fqlPublicAPI = Utils.getFQLPublicAPI();
-
-      if (fqlPublicAPI.questLog.rendered)
-      {
-         fqlPublicAPI.questLog.render(true);
-      }
-
-      if (fqlPublicAPI.questLogFloating.rendered)
-      {
-         fqlPublicAPI.questLogFloating.render(true);
-      }
-
-      if (fqlPublicAPI?.questTracker.rendered)
-      {
-         fqlPublicAPI.questTracker.render(true);
-      }
+      Utils.getFQLPublicAPI().renderAll(true);
 
       game.socket.emit('module.forien-quest-log', {
          type: 'questLogRefresh'

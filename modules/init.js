@@ -1,4 +1,5 @@
 import ModuleSettings            from './ModuleSettings.js';
+import Fetch                     from './control/Fetch.js';
 import registerHooks             from './control/registerHooks.js';
 import Socket                    from './control/Socket.js';
 import QuestAPI                  from './control/QuestAPI.js';
@@ -36,7 +37,28 @@ Hooks.once('setup', () =>
       questLog: new QuestLog(),
       questLogFloating: new QuestLogFloating(),
       questPreview: {},
-      questTracker: new QuestTracker()
+      questTracker: new QuestTracker(),
+      renderAll: function(force = false, options = {})
+      {
+         if (this.questLog.rendered)
+         {
+            this.questLog.render(force, options);
+         }
+
+         if (this.questLogFloating.rendered)
+         {
+            this.questLogFloating.render(force, options);
+         }
+
+         if (Utils.isQuestTrackerVisible())
+         {
+            this.questTracker.render(force, options);
+         }
+         else
+         {
+            this.questTracker.close();
+         }
+      }
    };
 
    Object.freeze(moduleData.public);
@@ -70,8 +92,7 @@ Hooks.once('ready', () =>
    QuestFolder.initializeJournals();
    registerHooks();
 
-   if (game.settings.get(constants.moduleName, 'enableQuestTracker') &&
-    (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers)))
+   if (Utils.isQuestTrackerVisible())
    {
       if (game.modules.get(constants.moduleName)?.active)
       {

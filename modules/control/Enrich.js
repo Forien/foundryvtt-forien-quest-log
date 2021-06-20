@@ -1,4 +1,5 @@
-import Fetch from './Fetch.js';
+import Fetch                     from './Fetch.js';
+import { constants, settings }   from '../model/constants.js';
 
 /**
  * Enrich populates content with a lot of additional data that doesn't necessarily have to be saved
@@ -170,12 +171,24 @@ export default class Enrich
 
             if (subData)
             {
+               // Mirror Task data for state / button state
+               let state = 'square';
+               switch (subData.status)
+               {
+                  case 'completed':
+                     state = 'check-square';
+                     break;
+                  case 'failed':
+                     state = 'minus-square';
+                     break;
+               }
 
                data.data_subquest.push({
                   id: questId,
                   giver: subData.giver,
                   name: subData.name,
                   status: subData.status,
+                  state,
                   isObservable: subData.isObservable
                });
             }
@@ -203,6 +216,21 @@ export default class Enrich
 
          data.totalTasks = data.tasks.filter((t) => t.hidden === false).length +
           data.data_subquest.filter((s) => s.isObservable && s.status !== 'hidden').length;
+      }
+
+      switch (game.settings.get(constants.moduleName, settings.showTasks))
+      {
+         case 'default':
+            data.taskCountLabel = `(${data.checkedTasks}/${data.totalTasks})`;
+            break;
+
+         case 'onlyCurrent':
+            data.taskCountLabel = `(${data.checkedTasks})`;
+            break;
+
+         default:
+            data.taskCountLabel = '';
+            break;
       }
 
       data.data_tasks = data.tasks.map((task) =>

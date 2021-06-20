@@ -20,7 +20,9 @@ const questTypes = {
 const settings = {
    defaultPermission: 'defaultPermission',
    enableQuestTracker: 'enableQuestTracker',
-   hideFQLFromPlayers: 'hideFQLFromPlayers'
+   hideFQLFromPlayers: 'hideFQLFromPlayers',
+   questTrackerTasks: 'questTrackerTasks',
+   showTasks: 'showTasks'
 };
 
 export { constants, questTypes, settings };

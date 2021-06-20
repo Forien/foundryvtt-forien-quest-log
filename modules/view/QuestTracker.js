@@ -1,7 +1,8 @@
 import RepositionableApplication from './RepositionableApplication.js';
+import Enrich                    from '../control/Enrich.js';
 import Fetch                     from '../control/Fetch.js';
 import QuestAPI                  from '../control/QuestAPI.js';
-import { constants }             from '../model/constants.js';
+import { constants, settings }   from '../model/constants.js';
 
 export default class QuestTracker extends RepositionableApplication
 {
@@ -56,10 +57,10 @@ export default class QuestTracker extends RepositionableApplication
    }
 
    /** @override */
-   getData(options = {})
+   async getData(options = {})
    {
       options = super.getData(options);
-      options.quests = this.prepareQuests();
+      options.quests = await this.prepareQuests();
       if (game.settings.get(constants.moduleName, 'questTrackerBackground'))
       {
          options.background = 'background';
@@ -74,40 +75,41 @@ export default class QuestTracker extends RepositionableApplication
     *
     * @returns {{name: *, id: *, source: Document.giver|null|*, tasks: *, subquests: *}[]} Template data
     */
-   prepareQuests()
+   async prepareQuests()
    {
-      const quests = Fetch.sorted();
+      const quests = await Enrich.sorted(Fetch.sorted());
 
-      return quests.active.map((q) =>
+      if (game.settings.get(constants.moduleName, settings.questTrackerTasks))
       {
-         // Map subquest status to task state.
-         const subquests = q.subquests.map((s) =>
+         return quests.active.map((q) =>
          {
-            const subquest = Fetch.quest(s);
-
-            if (!subquest) { return null; }
-
-            let state = 'square';
-            switch (subquest.status)
+            // Map subquest status to task state.
+            const subquests = q.data_subquest.map((subquest) =>
             {
-               case 'completed':
-                  state = 'check-square';
-                  break;
-               case 'failed':
-                  state = 'minus-square';
-                  break;
-            }
-            return { name: subquest.name, hidden: subquest.status === 'hidden', state };
-         });
+               return { name: subquest.name, hidden: subquest.status === 'hidden', state: subquest.state };
+            });
 
-         return {
-            id: q.id,
-            source: q.giver,
-            name: q.name,
-            subquests: game.user.isGM ? subquests : subquests.filter((s) => s !== null && !s.hidden),
-            tasks: game.user.isGM ? q.tasks.map((t) => t.toJSON()) :
-             q.tasks.filter((t) => !t.hidden).map((t) => t.toJSON())
-         };
-      });
+            return {
+               id: q.id,
+               source: q.giver,
+               name: `${q.name} ${q.taskCountLabel}`,
+               subquests: game.user.isGM ? subquests : subquests.filter((s) => !s.hidden),
+               tasks: game.user.isGM ? q.data_tasks : q.data_tasks.filter((t) => !t.hidden)
+            };
+         });
+      }
+      else
+      {
+         return quests.active.map((q) =>
+         {
+            return {
+               id: q.id,
+               source: q.giver,
+               name: `${q.name} ${q.taskCountLabel}`,
+               subquests: [],
+               tasks: []
+            };
+         });
+      }
    }
 }

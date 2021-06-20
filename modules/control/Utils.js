@@ -1,4 +1,5 @@
-import { constants } from '../model/constants.js';
+import Fetch                     from "./Fetch.js";
+import { constants, settings }   from '../model/constants.js';
 
 export default class Utils
 {
@@ -110,6 +111,20 @@ export default class Utils
       if (typeof type === 'string' && data.type !== type) { return void 0; }
 
       return typeof data.pack === 'string' ? `Compendium.${data.pack}.${data.id}` : `${data.type}.${data.id}`;
+   }
+
+   /**
+    * Convenience method to determine if the QuestTracker is visible to the current user. Always for the GM when
+    * QuestTracker is enabled, but only for users if `hideFromPlayers` is false. There must also be active quests for
+    * the tracker to be visible.
+    *
+    * @returns {boolean} Whether the QuestTracker is visible.
+    */
+   static isQuestTrackerVisible()
+   {
+      return game.settings.get(constants.moduleName, settings.enableQuestTracker) &&
+       (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers)) &&
+        Fetch.getCount({ type: 'active' }) > 0;
    }
 
    /**

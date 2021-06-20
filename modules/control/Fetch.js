@@ -36,6 +36,54 @@ export default class Fetch
    }
 
    /**
+    * Provides a quicker method to get the count of any particular quest status.
+    *
+    * @param {object}   options - Optional parameters.
+    *
+    * @param {string}   options.type - Request a particular quest status.
+    *
+    * @param {boolean}  [options.available] - true if Available tab is visible.
+    *
+    * @returns {number} Quest count for status type.
+    */
+   static getCount({ type = void 0, available })
+   {
+      const entries = this.allQuests();
+
+      let count = 0;
+
+      switch (type)
+      {
+         case 'available':
+            count = entries.filter((e) => e.status === 'available' && e.parent === null).length;
+            break;
+         case 'active':
+            count = entries.filter((e) => e.status === 'active').length;
+            break;
+         case 'completed':
+            count = entries.filter((e) => e.status === 'completed' && e.parent === null).length;
+            break;
+         case 'failed':
+            count = entries.filter((e) => e.status === 'failed' && e.parent === null).length;
+            break;
+         case 'hidden':
+            if (typeof available === 'boolean' && !available)
+            {
+               const availableQuests = entries.filter((e) => e.status === 'available' && e.parent === null);
+               const hidden = entries.filter((e) => e.status === 'hidden' && e.parent === null);
+               count = availableQuests.length + hidden.length;
+            }
+            else
+            {
+               count = entries.filter((e) => e.status === 'hidden' && e.parent === null).length;
+            }
+            break;
+      }
+
+      return count;
+   }
+
+   /**
     * Retrieves all Quests, grouped by folders.
     *
     * @param {object}   options - Optional parameters.
@@ -48,9 +96,11 @@ export default class Fetch
     *
     * @param {Function} [options.sortFunc] - Custom sort function.
     *
+    * @param {string} [options.type] - Request a particular quest status.
+    *
     * @returns {SortedQuests}
     */
-   static sorted({ target = void 0, sortFunc = s_SORT, ...options } = {})
+   static sorted({ target = void 0, sortFunc = s_SORT, type = void 0, ...options } = {})
    {
       /**
        * @type {Quest[]}
@@ -62,19 +112,53 @@ export default class Fetch
          entries = entries.sort(sortFunc(target, options));
       }
 
-      // Note the condition on 'e.parent === null' as this prevents sub quests from displaying in these categories
-      const quests = {
-         available: entries.filter((e) => e.status === 'available' && e.parent === null),
-         active: entries.filter((e) => e.status === 'active'),
-         completed: entries.filter((e) => e.status === 'completed' && e.parent === null),
-         failed: entries.filter((e) => e.status === 'failed' && e.parent === null),
-         hidden: entries.filter((e) => e.status === 'hidden' && e.parent === null)
-      };
+      const quests = {};
 
-      if (typeof options.available === 'boolean' && !options.available)
+      if (type)
       {
-         quests.hidden = [...quests.available, ...quests.hidden];
-         quests.hidden = quests.hidden.sort(sortFunc(target, options));
+         switch (type)
+         {
+            case 'available':
+               quests.available = entries.filter((e) => e.status === 'available' && e.parent === null);
+               break;
+            case 'active':
+               quests.active = entries.filter((e) => e.status === 'active');
+               break;
+            case 'completed':
+               quests.completed = entries.filter((e) => e.status === 'completed' && e.parent === null);
+               break;
+            case 'failed':
+               quests.failed = entries.filter((e) => e.status === 'failed' && e.parent === null);
+               break;
+            case 'hidden':
+               if (typeof options.available === 'boolean' && !options.available)
+               {
+                  const available = entries.filter((e) => e.status === 'available' && e.parent === null);
+                  quests.hidden = entries.filter((e) => e.status === 'hidden' && e.parent === null);
+                  quests.hidden = [...available, ...quests.hidden];
+                  quests.hidden = quests.hidden.sort(sortFunc(target, options));
+               }
+               else
+               {
+                  quests.hidden = entries.filter((e) => e.status === 'hidden' && e.parent === null);
+               }
+               break;
+         }
+      }
+      else
+      {
+         // Note the condition on 'e.parent === null' as this prevents sub quests from displaying in these categories
+         quests.available = entries.filter((e) => e.status === 'available' && e.parent === null);
+         quests.active = entries.filter((e) => e.status === 'active');
+         quests.completed = entries.filter((e) => e.status === 'completed' && e.parent === null);
+         quests.failed = entries.filter((e) => e.status === 'failed' && e.parent === null);
+         quests.hidden = entries.filter((e) => e.status === 'hidden' && e.parent === null);
+
+         if (typeof options.available === 'boolean' && !options.available)
+         {
+            quests.hidden = [...quests.available, ...quests.hidden];
+            quests.hidden = quests.hidden.sort(sortFunc(target, options));
+         }
       }
 
       return quests;

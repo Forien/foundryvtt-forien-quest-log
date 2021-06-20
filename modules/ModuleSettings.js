@@ -91,16 +91,11 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            const fqlPublicAPI = Utils.getFQLPublicAPI();
-
-            if (fqlPublicAPI.questLog.rendered)
-            {
-               fqlPublicAPI.questLog.render();
-            }
+            Utils.getFQLPublicAPI().renderAll();
          }
       });
 
-      game.settings.register(constants.moduleName, 'showTasks', {
+      game.settings.register(constants.moduleName, settings.showTasks, {
          name: 'ForienQuestLog.Settings.showTasks.Enable',
          hint: 'ForienQuestLog.Settings.showTasks.EnableHint',
          scope: 'world',
@@ -114,12 +109,7 @@ export default class ModuleSettings
          },
          onChange: () =>
          {
-            const fqlPublicAPI = Utils.getFQLPublicAPI();
-
-            if (fqlPublicAPI.questLog.rendered)
-            {
-               fqlPublicAPI.questLog.render();
-            }
+            Utils.getFQLPublicAPI().renderAll();
          }
       });
 
@@ -138,10 +128,7 @@ export default class ModuleSettings
          {
             const fqlPublicAPI = Utils.getFQLPublicAPI();
 
-            if (fqlPublicAPI.questLog.rendered)
-            {
-               fqlPublicAPI.questLog.render();
-            }
+            if (fqlPublicAPI.questLog.rendered) { fqlPublicAPI.questLog.render(); }
          }
       });
 
@@ -166,21 +153,16 @@ export default class ModuleSettings
          config: true,
          default: false,
          type: Boolean,
-         onChange: (value) =>
+         onChange: () =>
          {
-            if (game.modules.get(constants.moduleName)?.active)
+            if (Utils.isQuestTrackerVisible())
             {
-               if (game.settings.get(constants.moduleName, settings.enableQuestTracker) &&
-                (game.user.isGM || !value))
-               {
-                  Utils.getFQLPublicAPI().questTracker.render(true, { focus: true });
-               }
-               else
-               {
-                  Utils.getFQLPublicAPI()?.questTracker.close();
-               }
+               Utils.getFQLPublicAPI().questTracker.render(true, { focus: true });
             }
-
+            else
+            {
+               Utils.getFQLPublicAPI()?.questTracker.close();
+            }
 
             game.journal.render();
          }
@@ -209,10 +191,9 @@ export default class ModuleSettings
          config: true,
          default: false,
          type: Boolean,
-         onChange: (value) =>
+         onChange: () =>
          {
-            if (value && game.modules.get(constants.moduleName)?.active &&
-             (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers)))
+            if (Utils.isQuestTrackerVisible())
             {
                Utils.getFQLPublicAPI().questTracker.render(true, { focus: true });
             }
@@ -235,6 +216,22 @@ export default class ModuleSettings
             if (Utils.getFQLPublicAPI()?.questTracker.rendered)
             {
                Utils.getFQLPublicAPI().questTracker.element.toggleClass('background', value);
+            }
+         }
+      });
+
+      game.settings.register(constants.moduleName, 'questTrackerTasks', {
+         name: 'ForienQuestLog.WorkshopPUF.Settings.questTrackerTasks.name',
+         hint: 'ForienQuestLog.WorkshopPUF.Settings.questTrackerTasks.hint',
+         scope: 'client',
+         config: true,
+         default: true,
+         type: Boolean,
+         onChange: () =>
+         {
+            if (Utils.getFQLPublicAPI()?.questTracker.rendered)
+            {
+               Utils.getFQLPublicAPI().questTracker.render();
             }
          }
       });
