@@ -5,7 +5,7 @@ import Socket        from '../control/Socket.js';
 import Utils         from '../control/Utils.js';
 import Quest         from '../model/Quest.js';
 import QuestFolder   from '../model/QuestFolder.js';
-import { constants } from '../model/constants.js';
+import { constants, settings } from '../model/constants.js';
 
 export default class QuestForm extends FormApplication
 {
@@ -65,7 +65,12 @@ export default class QuestForm extends FormApplication
    async _updateObject(event, formData)
    {
       let giver;
-      let permission = CONST.ENTITY_PERMISSIONS.OBSERVER;
+
+      // Get the default permission setting and attempt to set it if found in ENTITY_PERMISSIONS.
+      const defaultPerm = game.settings.get(constants.moduleName, settings.defaultPermission);
+
+      let permission = typeof CONST.ENTITY_PERMISSIONS[defaultPerm] === 'number' ?
+       CONST.ENTITY_PERMISSIONS[defaultPerm] : CONST.ENTITY_PERMISSIONS.OBSERVER;
 
       try
       {

@@ -141,6 +141,17 @@
         "onlyCurrent": "Show Objectives: done",
         "no": "Hide \"Objectives\" column"
       },
+      "defaultPermissionLevel": {
+        "Enable": "Default quest permission level",
+        "EnableHint": "Sets the default permission level when new quests are created.",
+        "OBSERVER": "Observer",
+        "NONE": "None",
+        "OWNER": "Owner"
+      },
+      "hideFQLFromPlayers": {
+        "Enable": "Hide Quest Log from players",
+        "EnableHint": "When enabled this option hides the Quest Log from all players. Only GM level users will be able to access the Quest Log."
+      },
       "playersWelcomeScreen": {
         "Enable": "Display Welcome Screen to Players",
         "EnableHint": "Uncheck to prevent players from seeing Welcome Screen on log in after an update. They might still see it by clicking 'help' icon in Quest Log."

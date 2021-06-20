@@ -1,7 +1,7 @@
 import Enrich        from './Enrich.js';
 import Fetch         from './Fetch.js';
 import Utils         from './Utils.js';
-import { constants } from '../model/constants.js';
+import {constants, settings} from '../model/constants.js';
 
 /**
  * Function for registering API-related Hooks.
@@ -13,13 +13,19 @@ export default function registerHooks()
    // Open quest log
    Hooks.on('ForienQuestLog.Open.QuestLog', () =>
    {
-      fqlPublicAPI.questLog.render(true, { focus: true });
+      if (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers))
+      {
+         fqlPublicAPI.questLog.render(true, { focus: true });
+      }
    });
 
    // Open quest log floating window
    Hooks.on('ForienQuestLog.Open.QuestLogFloating', () =>
    {
-      fqlPublicAPI.questLogFloating.render(true, { focus: true });
+      if (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers))
+      {
+         fqlPublicAPI.questLogFloating.render(true, {focus: true});
+      }
    });
 
    // Create 'open quest' Macro when Quest is dropped onto Hotbar.
@@ -58,24 +64,27 @@ export default function registerHooks()
 
    Hooks.on('getSceneControlButtons', (controls) =>
    {
-      const notes = controls.find((c) => c.name === 'notes');
+      if (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers))
+      {
+         const notes = controls.find((c) => c.name === 'notes');
 
-      notes.tools.push({
-         name: 'forien-quest-log',
-         title: 'ForienQuestLog.QuestLogButton',
-         icon: 'fas fa-scroll',
-         visible: true,
-         onClick: () => fqlPublicAPI.questLog.render(true, { focus: true }),
-         button: true
-      });
+         notes.tools.push({
+            name: 'forien-quest-log',
+            title: 'ForienQuestLog.QuestLogButton',
+            icon: 'fas fa-scroll',
+            visible: true,
+            onClick: () => fqlPublicAPI.questLog.render(true, {focus: true}),
+            button: true
+         });
 
-      notes.tools.push({
-         name: 'forien-quest-log-floating-window',
-         title: 'ForienQuestLog.FloatingQuestWindow',
-         icon: 'fas fa-tasks',
-         visible: true,
-         onClick: () => fqlPublicAPI.questLogFloating.render(true, { focus: true }),
-         button: true
-      });
+         notes.tools.push({
+            name: 'forien-quest-log-floating-window',
+            title: 'ForienQuestLog.FloatingQuestWindow',
+            icon: 'fas fa-tasks',
+            visible: true,
+            onClick: () => fqlPublicAPI.questLogFloating.render(true, {focus: true}),
+            button: true
+         });
+      }
    });
 }

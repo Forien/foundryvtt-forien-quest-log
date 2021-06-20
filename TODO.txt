@@ -1,19 +1,8 @@
 --- commit
 
-Test if _fql_quests is hidden from JE popout
-
---- commit
-
 - when player owner
   - allow edit quest details
   - edit objectives (no delete / no visibility of hidden items)
-
---- commit
-
-Module Settings
-  - GM only tool option #22: Provide option to select default permission for new quest creation (NONE, OBSERVER, OWNER)
-    - Option to hide Quest Log button in journal folder view & don't add quest log nav menu buttons for non GM users.
-  - Make sure to use this configuration option in the DB migration!
 
 --- commit
 

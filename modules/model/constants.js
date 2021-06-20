@@ -17,4 +17,10 @@ const questTypes = {
    available: 'ForienQuestLog.QuestLog.Tabs.Available'
 };
 
-export { constants, questTypes };
+const settings = {
+   defaultPermission: 'defaultPermission',
+   enableQuestTracker: 'enableQuestTracker',
+   hideFQLFromPlayers: 'hideFQLFromPlayers'
+};
+
+export { constants, questTypes, settings };

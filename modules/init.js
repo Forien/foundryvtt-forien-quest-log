@@ -1,16 +1,17 @@
-import ModuleSettings      from './ModuleSettings.js';
-import registerHooks       from './control/registerHooks.js';
-import Socket              from './control/Socket.js';
-import QuestAPI            from './control/QuestAPI.js';
-import Utils               from './control/Utils.js';
-import Quest               from './model/Quest.js';
-import QuestFolder         from './model/QuestFolder.js';
-import QuestsCollection    from './model/QuestsCollection.js';
-import QuestLogFloating    from './view/QuestLogFloating.js';
-import QuestLog            from './view/QuestLog.js';
-import QuestPreview        from './view/QuestPreview.js';
-import QuestTracker        from './view/QuestTracker.js';
-import DBMigration         from '../database/DBMigration.js';
+import ModuleSettings            from './ModuleSettings.js';
+import registerHooks             from './control/registerHooks.js';
+import Socket                    from './control/Socket.js';
+import QuestAPI                  from './control/QuestAPI.js';
+import Utils                     from './control/Utils.js';
+import Quest                     from './model/Quest.js';
+import QuestFolder               from './model/QuestFolder.js';
+import QuestsCollection          from './model/QuestsCollection.js';
+import QuestLogFloating          from './view/QuestLogFloating.js';
+import QuestLog                  from './view/QuestLog.js';
+import QuestPreview              from './view/QuestPreview.js';
+import QuestTracker              from './view/QuestTracker.js';
+import DBMigration               from '../database/DBMigration.js';
+import { constants, settings }   from './model/constants.js';
 
 Hooks.once('init', () =>
 {
@@ -69,9 +70,10 @@ Hooks.once('ready', () =>
    QuestFolder.initializeJournals();
    registerHooks();
 
-   if (game.settings.get('forien-quest-log', 'enableQuestTracker'))
+   if (game.settings.get(constants.moduleName, 'enableQuestTracker') &&
+    (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers)))
    {
-      if (game.modules.get('forien-quest-log')?.active)
+      if (game.modules.get(constants.moduleName)?.active)
       {
          Utils.getFQLPublicAPI().questTracker.render(true);
       }
@@ -85,19 +87,22 @@ Hooks.once('ready', () =>
 
 Hooks.on('renderJournalDirectory', (app, html) =>
 {
-   const button = $(`<button class="quest-log-btn">${game.i18n.localize('ForienQuestLog.QuestLogButton')}</button>`);
-   let footer = html.find('.directory-footer');
-   if (footer.length === 0)
+   if (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers))
    {
-      footer = $(`<footer class="directory-footer"></footer>`);
-      html.append(footer);
-   }
-   footer.append(button);
+      const button = $(`<button class="quest-log-btn">${game.i18n.localize('ForienQuestLog.QuestLogButton')}</button>`);
+      let footer = html.find('.directory-footer');
+      if (footer.length === 0)
+      {
+         footer = $(`<footer class="directory-footer"></footer>`);
+         html.append(footer);
+      }
+      footer.append(button);
 
-   button.click(() =>
-   {
-      Utils.getFQLPublicAPI().questLog.render(true);
-   });
+      button.click(() =>
+      {
+         Utils.getFQLPublicAPI().questLog.render(true);
+      });
+   }
 
    if (!(game.user.isGM && game.settings.get('forien-quest-log', 'showFolder')))
    {

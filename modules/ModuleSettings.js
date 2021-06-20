@@ -1,5 +1,5 @@
-import Utils         from './control/Utils.js';
-import { constants } from './model/constants.js';
+import Utils                     from './control/Utils.js';
+import { constants, settings }   from './model/constants.js';
 
 const s_QUEST_TRACKER_DEFAULT = { top: 80 };
 
@@ -145,6 +145,47 @@ export default class ModuleSettings
          }
       });
 
+      game.settings.register(constants.moduleName, settings.defaultPermission, {
+         name: 'ForienQuestLog.Settings.defaultPermissionLevel.Enable',
+         hint: 'ForienQuestLog.Settings.defaultPermissionLevel.EnableHint',
+         scope: 'world',
+         config: true,
+         default: 'Observer',
+         type: String,
+         choices: {
+            OBSERVER: 'ForienQuestLog.Settings.defaultPermissionLevel.OBSERVER',
+            NONE: 'ForienQuestLog.Settings.defaultPermissionLevel.NONE',
+            OWNER: 'ForienQuestLog.Settings.defaultPermissionLevel.OWNER'
+         }
+      });
+
+      game.settings.register(constants.moduleName, settings.hideFQLFromPlayers, {
+         name: 'ForienQuestLog.Settings.hideFQLFromPlayers.Enable',
+         hint: 'ForienQuestLog.Settings.hideFQLFromPlayers.EnableHint',
+         scope: 'world',
+         config: true,
+         default: false,
+         type: Boolean,
+         onChange: (value) =>
+         {
+            if (game.modules.get(constants.moduleName)?.active)
+            {
+               if (game.settings.get(constants.moduleName, settings.enableQuestTracker) &&
+                (game.user.isGM || !value))
+               {
+                  Utils.getFQLPublicAPI().questTracker.render(true, { focus: true });
+               }
+               else
+               {
+                  Utils.getFQLPublicAPI()?.questTracker.close();
+               }
+            }
+
+
+            game.journal.render();
+         }
+      });
+
       game.settings.register(constants.moduleName, 'showFolder', {
          name: 'ForienQuestLog.Settings.showFolder.Enable',
          hint: 'ForienQuestLog.Settings.showFolder.EnableHint',
@@ -170,7 +211,8 @@ export default class ModuleSettings
          type: Boolean,
          onChange: (value) =>
          {
-            if (value && game.modules.get(constants.moduleName)?.active)
+            if (value && game.modules.get(constants.moduleName)?.active &&
+             (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers)))
             {
                Utils.getFQLPublicAPI().questTracker.render(true, { focus: true });
             }
