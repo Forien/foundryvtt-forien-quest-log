@@ -28,7 +28,7 @@ export default class Fetch
 
    static content(entry)
    {
-      const content = entry.getFlag(constants.moduleName, 'json');
+      const content = entry.getFlag(constants.moduleName, constants.flagDB);
 
       if (content) { content.id = entry.id; }
 

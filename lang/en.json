@@ -89,9 +89,11 @@
     },
 
     "DeleteDialog": {
-      "Title": "Delete {name}",
+      "Title": "Delete '{name}'",
       "Header": "Are you sure?",
-      "Body": "This quest and its data will be permanently deleted.",
+      "BodyQuest": "This quest and its data will be permanently deleted.",
+      "BodyReward": "This reward and its data will be permanently deleted.",
+      "BodyTask": "This task and its data will be permanently deleted.",
       "Delete": "Delete",
       "Cancel": "Cancel"
     },

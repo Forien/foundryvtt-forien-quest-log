@@ -79,7 +79,7 @@ export default class QuestLog extends Application
          {
             const quest = Fetch.quest(questId);
 
-            if (quest && await FQLDialog.confirmDelete(quest))
+            if (quest && await FQLDialog.confirmDeleteQuest(quest))
             {
                Socket.deleteQuest(await quest.delete());
             }

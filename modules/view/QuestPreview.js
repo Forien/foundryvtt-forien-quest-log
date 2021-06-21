@@ -5,7 +5,7 @@ import Fetch            from '../control/Fetch.js';
 import QuestAPI         from '../control/QuestAPI.js';
 import Socket           from '../control/Socket.js';
 import Utils            from '../control/Utils.js';
-import { questTypes }   from '../model/constants.js';
+import {constants, questTypes} from '../model/constants.js';
 
 export default class QuestPreview extends FormApplication
 {
@@ -173,34 +173,6 @@ export default class QuestPreview extends FormApplication
          (new ImagePopout(this.quest.splash, { shareable: true })).render(true);
       });
 
-      html.on('dragstart', '.quest-rewards .fa-sort', (event) =>
-      {
-         event.stopPropagation();
-         const li = event.target.closest('li') || null;
-         if (!li) { return; }
-
-         const dataTransfer = {
-            type: 'Reward',
-            mode: 'Sort',
-            index: $(li).data('index')
-         };
-         event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dataTransfer));
-      });
-
-      html.on('dragstart', '.quest-tasks .fa-sort', (event) =>
-      {
-         event.stopPropagation();
-         const li = event.target.closest('li') || null;
-         if (!li) { return; }
-
-         const dataTransfer = {
-            type: 'Task',
-            mode: 'Sort',
-            index: $(li).data('index')
-         };
-         event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dataTransfer));
-      });
-
       html.on('dragstart', '.item-reward', async (event) =>
       {
          const data = $(event.target).data('transfer');
@@ -225,6 +197,35 @@ export default class QuestPreview extends FormApplication
          }
       });
 
+      html.on('dragstart', '.quest-rewards .fa-sort', (event) =>
+      {
+         event.stopPropagation();
+         const li = event.target.closest('li') || null;
+         if (!li) { return; }
+
+         const dataTransfer = {
+            type: 'Reward',
+            mode: 'Sort',
+            uuid: $(li).data('uuid')
+         };
+         event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dataTransfer));
+      });
+
+      html.on('dragstart', '.quest-tasks .fa-sort', (event) =>
+      {
+         event.stopPropagation();
+         const li = event.target.closest('li') || null;
+         if (!li) { return; }
+
+         const dataTransfer = {
+            type: 'Task',
+            mode: 'Sort',
+            uuidv4: $(li).data('uuidv4')
+         };
+
+         event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dataTransfer));
+      });
+
       html.on('click', '.item-reward .editable-container', async (event) =>
       {
          event.stopPropagation();
@@ -246,70 +247,8 @@ export default class QuestPreview extends FormApplication
          await Utils.showSheetFromUUID(actorId, { editable: false });
       });
 
-      if (this.canEdit)
+      if (this.canEdit || this.playerEdit)
       {
-         html.on('click', '.actions i', async (event) =>
-         {
-            const target = $(event.target).data('target');
-            const questId = $(event.target).data('id');
-            const classList = $(event.target).attr('class');
-
-            if (classList.includes('move'))
-            {
-               const quest = Fetch.quest(questId);
-
-               if (quest && await quest.move(target))
-               {
-                  Socket.refreshQuestPreview({ questId: quest.parent ? [quest.parent, quest.id] : quest.id });
-
-                  const dirname = game.i18n.localize(questTypes[target]);
-                  ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
-                   { target: dirname }), {});
-               }
-            }
-            else if (classList.includes('delete'))
-            {
-               const quest = Fetch.quest(questId);
-
-               if (quest && await FQLDialog.confirmDelete(quest))
-               {
-                  Socket.deleteQuest(await quest.delete());
-               }
-            }
-         });
-
-         html.on('drop', '.rewards-box', async (event) =>
-         {
-            event.preventDefault();
-
-            let data;
-            try
-            {
-               data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
-            }
-            catch (e)
-            {
-               return;
-            }
-
-            if (data.mode === 'Sort' && data.type === 'Reward')
-            {
-               const dt = event.target.closest('li.reward') || null;
-               this.quest.sortRewards(data.index, dt?.dataset.index);
-               await this.quest.save();
-               Socket.refreshQuestPreview({ questId: this.quest.id });
-            }
-            else if (data.type === 'Item' && data._fqlDrop === void 0)
-            {
-               const uuid = Utils.getUUID(data);
-
-               const item = await Enrich.giverFromUUID(uuid);
-
-               this.quest.addReward({ type: 'Item', data: item, hidden: true });
-               await this.saveQuest();
-            }
-         });
-
          html.on('drop', '.tasks-box', async (event) =>
          {
             event.preventDefault();
@@ -318,134 +257,11 @@ export default class QuestPreview extends FormApplication
             if (data.mode === 'Sort' && data.type === 'Task')
             {
                const dt = event.target.closest('li.task') || null;
-               this.quest.sortTasks(data.index, dt?.dataset.index);
+               this.quest.sortTasks(data.uuidv4, dt?.dataset.uuidv4);
                await this.quest.save();
                Socket.refreshQuestPreview({ questId: this.quest.id });
             }
          });
-
-         html.on('drop', '.quest-giver-gc', async (event) =>
-         {
-            event.preventDefault();
-            const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
-
-            const uuid = Utils.getUUID(data, ['Actor', 'Item', 'JournalEntry']);
-
-            if (uuid !== void 0)
-            {
-               this.quest.giver = uuid;
-               await this.saveQuest();
-            }
-         });
-
-         html.on('click', '.editable', (event) =>
-         {
-            const target = $(event.target).data('target');
-
-            if (target === undefined) { return; }
-
-            let value = this.quest[target];
-            let index = undefined;
-            if (target === 'task.name')
-            {
-               index = $(event.target).data('index');
-               value = this.quest.tasks[index].name;
-            }
-            if (target === 'reward.name')
-            {
-               index = $(event.target).data('index');
-               value = this.quest.rewards[index].data.name;
-            }
-
-            value = value.replace(/'/g, '&quot;');
-            const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${index !== undefined ? `data-index='${index}'` : ``}/>`);
-            const parent = $(event.target).closest('.actions').prev('.editable-container');
-
-            parent.html('');
-            parent.append(input);
-            input.focus();
-
-            input.focusout(async (event) =>
-            {
-               const targetOut = $(event.target).data('target');
-               const valueOut = $(event.target).val();
-               let indexOut;
-
-               switch (targetOut)
-               {
-                  case 'name':
-                     this.quest.name = valueOut;
-                     this.options.title = game.i18n.format('ForienQuestLog.QuestPreview.Title', this.quest);
-                     break;
-
-                  case 'task.name':
-                     indexOut = $(event.target).data('index');
-                     this.quest.tasks[indexOut].name = valueOut;
-                     break;
-
-                  case 'reward.name':
-                     indexOut = $(event.target).data('index');
-                     this.quest.rewards[indexOut].data.name = valueOut;
-                     break;
-
-                  default:
-                     if (this.quest[targetOut] !== void 0) { this.quest[targetOut] = valueOut; }
-                     break;
-               }
-               await this.saveQuest();
-            });
-         });
-
-         html.on('click', '.del-btn', async (event) =>
-         {
-            const index = $(event.target).data('index');
-            const target = $(event.target).data('target');
-
-            if (target === 'tasks')
-            {
-               this.quest.removeTask(index);
-            }
-            else if (target === 'rewards')
-            {
-               this.quest.removeReward(index);
-            }
-
-            await this.saveQuest();
-         });
-
-         html.on('click', '.task .toggleState', async (event) =>
-         {
-            const index = $(event.target).data('task-index');
-            this.quest.tasks[index].toggle();
-            await this.saveQuest();
-         });
-
-         html.on('click', '.toggleImage', async () =>
-         {
-            this.quest.toggleImage();
-            await this.saveQuest();
-         });
-
-         html.on('click', '.deleteQuestGiver', async () =>
-         {
-            this.quest.giver = null;
-            await this.saveQuest();
-         });
-
-         html.on('click', '.changeGiverImgPos', async () =>
-         {
-            if (this.quest.giverImgPos === 'center')
-            {
-               this.quest.giverImgPos = 'top';
-            }
-            else
-            {
-               this.quest.giverImgPos = this.quest.giverImgPos === 'top' ? 'bottom' : 'center';
-            }
-
-            await this.saveQuest();
-         });
-
 
          html.on('click', '.add-new-task', (event) =>
          {
@@ -475,6 +291,250 @@ export default class QuestPreview extends FormApplication
                }
                await this.saveQuest();
             });
+         });
+
+         html.on('click', '.task .del-btn', async (event) =>
+         {
+            const target = $(event.target);
+            const uuidv4 = target.data('uuidv4');
+            const name = target.data('name');
+
+            // Await a modal dialog.
+            if (await FQLDialog.confirmDeleteTask(name))
+            {
+               // Refresh quest data to get latest / consistent data.
+               await this.quest.refresh();
+
+               this.quest.removeTask(uuidv4);
+
+               await this.saveQuest();
+            }
+         });
+
+         html.on('click', '.task .toggleState', async (event) =>
+         {
+            const index = $(event.target).data('task-index');
+            this.quest.tasks[index].toggle();
+            await this.saveQuest();
+         });
+
+         /**
+          * While this class selector provides a specific target there still is an early out to match against
+          * `task.name`.
+          */
+         html.on('click', '.task .editable', (event) =>
+         {
+            const target = $(event.target).data('target');
+
+            // Early out conditional.
+            if (target === void 0 || target !== 'task.name') { return; }
+
+            const index = $(event.target).data('index');
+            let value = this.quest.tasks[index].name;
+
+            value = value.replace(/'/g, '&quot;');
+            const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${index !== undefined ? `data-index='${index}'` : ``}/>`);
+            const parent = $(event.target).closest('.actions').prev('.editable-container');
+
+            parent.html('');
+            parent.append(input);
+            input.focus();
+
+            input.focusout(async (event) =>
+            {
+               const targetOut = $(event.target).data('target');
+               const valueOut = $(event.target).val();
+               let indexOut;
+
+               switch (targetOut)
+               {
+                  case 'task.name':
+                     indexOut = $(event.target).data('index');
+                     this.quest.tasks[indexOut].name = valueOut;
+                     await this.saveQuest();
+                     break;
+               }
+            });
+         });
+      }
+
+      if (this.canEdit)
+      {
+         html.on('click', '.actions i', async (event) =>
+         {
+            const target = $(event.target).data('target');
+            const questId = $(event.target).data('id');
+            const classList = $(event.target).attr('class');
+
+            if (classList.includes('move'))
+            {
+               const quest = Fetch.quest(questId);
+
+               if (quest && await quest.move(target))
+               {
+                  Socket.refreshQuestPreview({ questId: quest.parent ? [quest.parent, quest.id] : quest.id });
+
+                  const dirname = game.i18n.localize(questTypes[target]);
+                  ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
+                   { target: dirname }), {});
+               }
+            }
+            else if (classList.includes('delete'))
+            {
+               const quest = Fetch.quest(questId);
+
+               if (quest && await FQLDialog.confirmDeleteQuest(quest))
+               {
+                  Socket.deleteQuest(await quest.delete());
+               }
+            }
+         });
+
+         html.on('drop', '.rewards-box', async (event) =>
+         {
+            event.preventDefault();
+
+            let data;
+            try
+            {
+               data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+            }
+            catch (e)
+            {
+               return;
+            }
+
+            if (data.mode === 'Sort' && data.type === 'Reward')
+            {
+               const dt = event.target.closest('li.reward') || null;
+               this.quest.sortRewards(data.uuid, dt?.dataset.uuid);
+               await this.quest.save();
+               Socket.refreshQuestPreview({ questId: this.quest.id });
+            }
+            else if (data.type === 'Item' && data._fqlDrop === void 0)
+            {
+               const uuid = Utils.getUUID(data);
+
+               const item = await Enrich.giverFromUUID(uuid);
+
+               this.quest.addReward({ type: 'Item', data: item, hidden: true });
+               await this.saveQuest();
+            }
+         });
+
+         html.on('drop', '.quest-giver-gc', async (event) =>
+         {
+            event.preventDefault();
+            const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+
+            const uuid = Utils.getUUID(data, ['Actor', 'Item', 'JournalEntry']);
+
+            if (uuid !== void 0)
+            {
+               this.quest.giver = uuid;
+               await this.saveQuest();
+            }
+         });
+
+         /**
+          * There is no way to provide a more specific class selector as this callback edits the quest name and reward
+          * name which are located in separate sections of the template. A more specific class selector is provided
+          * above in the `canEdit / playedEdit` gated code that specifically targets the task edit button. This callback
+          * will be invoked twice when the task edit button is pressed, but has an early out in the first if conditional
+          * if the target is 'task.name'.
+          */
+         html.on('click', '.editable', (event) =>
+         {
+            const target = $(event.target).data('target');
+
+            // Early out for task `.editable`.
+            if (target === void 0 || target === 'task.name') { return; }
+
+            let value = this.quest[target];
+            let index = undefined;
+
+            if (target === 'reward.name')
+            {
+               index = $(event.target).data('index');
+               value = this.quest.rewards[index].data.name;
+            }
+
+            value = value.replace(/'/g, '&quot;');
+            const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${index !== undefined ? `data-index='${index}'` : ``}/>`);
+            const parent = $(event.target).closest('.actions').prev('.editable-container');
+
+            parent.html('');
+            parent.append(input);
+            input.focus();
+
+            input.focusout(async (event) =>
+            {
+               const targetOut = $(event.target).data('target');
+               const valueOut = $(event.target).val();
+               let indexOut;
+
+               switch (targetOut)
+               {
+                  case 'name':
+                     this.quest.name = valueOut;
+                     this.options.title = game.i18n.format('ForienQuestLog.QuestPreview.Title', this.quest);
+                     break;
+
+                  case 'reward.name':
+                     indexOut = $(event.target).data('index');
+                     this.quest.rewards[indexOut].data.name = valueOut;
+                     break;
+
+                  default:
+                     if (this.quest[targetOut] !== void 0) { this.quest[targetOut] = valueOut; }
+                     break;
+               }
+               await this.saveQuest();
+            });
+         });
+
+         html.on('click', '.rewards-box .del-btn', async (event) =>
+         {
+            const target = $(event.target);
+            const uuid = target.data('uuid');
+            const name = target.data('name');
+
+            // Await a modal dialog.
+            if (await FQLDialog.confirmDeleteReward(name))
+            {
+               // Refresh quest data to get latest / consistent data.
+               await this.quest.refresh();
+
+               this.quest.removeReward(uuid);
+
+               await this.saveQuest();
+            }
+         });
+
+         html.on('click', '.toggleImage', async () =>
+         {
+            this.quest.toggleImage();
+            await this.saveQuest();
+         });
+
+         html.on('click', '.deleteQuestGiver', async () =>
+         {
+            this.quest.giver = null;
+            await this.saveQuest();
+         });
+
+         html.on('click', '.changeGiverImgPos', async () =>
+         {
+            if (this.quest.giverImgPos === 'center')
+            {
+               this.quest.giverImgPos = 'top';
+            }
+            else
+            {
+               this.quest.giverImgPos = this.quest.giverImgPos === 'top' ? 'bottom' : 'center';
+            }
+
+            await this.saveQuest();
          });
 
          html.on('click', '.toggleHidden', async (event) =>
@@ -662,12 +722,13 @@ export default class QuestPreview extends FormApplication
       // WAS (06/11/21) this.canEdit = (content.playerEdit || game.user.isGM);
       // Due to the new document model in 0.8.x+ player editing is temporarily removed.
       this.canEdit = game.user.isGM;
-      this.playerEdit = content.playerEdit;
+      this.playerEdit = this.quest.isOwner;
 
       const data = {
          id: this.quest.id,
          isGM: game.user.isGM,
-         canEdit: this.canEdit
+         canEdit: this.canEdit,
+         playerEdit: this.playerEdit
       };
 
       return mergeObject(content, data);
@@ -699,7 +760,7 @@ export default class QuestPreview extends FormApplication
    {
       Utils.getFQLPublicAPI().questPreview[this.quest.id] = this;
 
-      if (force) { this.quest.refresh(); }
+      if (force) { await this.quest.refresh(); }
 
       return super.render(force, options);
    }

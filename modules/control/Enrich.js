@@ -139,12 +139,10 @@ export default class Enrich
       const canPlayerDrag = game.settings.get(constants.moduleName, 'allowPlayersDrag');
       const countHidden = game.settings.get(constants.moduleName, 'countHidden');
 
-      data.playerEdit = quest.isOwner;
       data.description = TextEditor.enrichHTML(data.description);
 
       data.data_giver = await Enrich.giverFromQuest(quest);
       data.data_giver.id = quest.giver;
-
 
       data.statusLabel = game.i18n.localize(`ForienQuestLog.QuestTypes.Labels.${data.status}`);
 
@@ -242,13 +240,15 @@ export default class Enrich
             break;
       }
 
-      data.data_tasks = data.tasks.map((task) =>
+      data.data_tasks = data.tasks.map((task, index) =>
       {
          // Note: We no longer are allowing user data to be enriched / currently escaping in Handlebars template.
          // XSS vulnerability w/ script data entered by user. This may change in the future as it might be possible to
          // provide a regex to verify and only upgrade content links and avoid scripts though that is a hard task.
          // task.name = TextEditor.enrichHTML(task.name);
 
+         // Set the index to explicitly use as player editing can not see hidden tasks and handlebars @index is wrong.
+         task.index = index;
          return task;
       });
 
@@ -262,7 +262,8 @@ export default class Enrich
             type,
             hidden: item.hidden,
             draggable: ((isGM || canPlayerDrag) && type !== 'abstract'),
-            transfer: type !== 'abstract' ? JSON.stringify({ uuid: item.data.uuid }) : void 0
+            transfer: type !== 'abstract' ? JSON.stringify({ uuid: item.data.uuid }) : void 0,
+            uuid: item.data.uuid
          };
       });
 

@@ -80,7 +80,7 @@
 
   <div class="quest-description">
     <h2>{{localize 'ForienQuestLog.QuestForm.QuestDescription'}}</h2>
-    {{#if canEdit}}
+    {{#if (or canEdit playerEdit)}}
     {{{editor target="description" content=description button=true editable=true owner=canEdit}}}
     {{else}}
     <div class="description">
@@ -94,7 +94,7 @@
     <div class="quest-tasks">
       <header>
         <h2>{{localize 'ForienQuestLog.QuestPreview.Objectives'}}</h2>
-        {{#if canEdit}}<button class="add-new-task"><i class="fas fa-plus"></i> {{localize 'ForienQuestLog.Buttons.AddNewTask'}}</button>{{/if}}
+        {{#if (or canEdit playerEdit)}}<button class="add-new-task"><i class="fas fa-plus"></i> {{localize 'ForienQuestLog.Buttons.AddNewTask'}}</button>{{/if}}
       </header>
       <div class="quest-box tasks-box">
         <ul>
@@ -112,9 +112,9 @@
           {{/if}}
           {{/each}}
           {{#each data_tasks}}
-          <li class="task {{#if hidden}}task-hidden{{/if}}" data-index="{{@index}}">
-            {{#if ../canEdit}}
-            <i class="toggleState fas fa-{{state}}" data-task-index="{{@index}}"></i>
+          <li class="task {{#if hidden}}task-hidden{{/if}}" data-index="{{index}}" data-uuidv4="{{uuidv4}}">
+            {{#if (or ../canEdit ../playerEdit)}}
+            <i class="toggleState fas fa-{{state}}" data-task-index="{{index}}"></i>
             {{else}}
             <div class="state-container">
               <span class="state-display">
@@ -126,16 +126,18 @@
             <div class="editable-container">
               <p class="task-name">{{name}}</p>
             </div>
-            {{#if ../canEdit}}
+            {{#if (or ../canEdit ../playerEdit)}}
             <div class="actions">
               <i class="fas fa-sort" draggable="true"></i>
-              <i class="editable fas fa-pen" data-target="task.name" data-index="{{@index}}"  title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
-              {{#if hidden}}
-              <i class="fas fa-eye toggleHidden" data-target="task" data-index="{{@index}}"title="{{localize 'ForienQuestLog.Tooltips.TaskHidden'}}"></i>
-              {{else}}
-              <i class="fas fa-eye-slash toggleHidden" data-target="task" data-index="{{@index}}" title="{{localize 'ForienQuestLog.Tooltips.TaskVisible'}}"></i>
+              <i class="editable fas fa-pen" data-target="task.name" data-index="{{index}}" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
+              {{#if ../canEdit}}
+                {{#if hidden}}
+                <i class="fas fa-eye toggleHidden" data-target="task" data-index="{{index}}" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.TaskHidden'}}"></i>
+                {{else}}
+                <i class="fas fa-eye-slash toggleHidden" data-target="task" data-index="{{index}}" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.TaskVisible'}}"></i>
+                {{/if}}
               {{/if}}
-              <i class="del-btn fas fa-trash" data-target="tasks" data-index="{{@index}}" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}"></i>
+              <i class="del-btn fas fa-trash" data-target="tasks" data-index="{{index}}" data-name="{{name}}" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}"></i>
             </div>
             {{/if}}
           </li>
@@ -152,25 +154,25 @@
       <div class="quest-box rewards-box">
         <ul>
         {{#each data_rewards}}
-        <li class="reward {{type}}-reward {{#if (and ../isGM draggable)}}draggable{{/if}} {{#if hidden}}reward-hidden{{/if}}" data-index="{{@index}}" data-transfer="{{transfer}}" {{#if (and ../canEdit draggable)}}draggable="true"{{/if}}>
+        <li class="reward {{type}}-reward {{#if (and ../isGM draggable)}}draggable{{/if}} {{#if hidden}}reward-hidden{{/if}}" data-index="{{@index}}" data-transfer="{{transfer}}" data-uuid="{{uuid}}" {{#if (and ../canEdit draggable)}}draggable="true"{{/if}}>
           <div class="reward-image-container">
-            <div class="reward-image" style="background-image: url({{img}})" data-index="{{@index}}"></div>
+            <div class="reward-image" style="background-image: url({{img}})" data-index="{{@index}}" data-uuid="{{uuid}}"></div>
           </div>
-          <div class="editable-container" data-transfer="{{transfer}}">
+          <div class="editable-container" data-transfer="{{transfer}}" data-uuid="{{uuid}}">
             <p class="reward-name">{{name}}</p>
           </div>
           {{#if ../canEdit}}
           <div class="actions">
             <i class="fas fa-sort" draggable="true"></i>
             {{#if (eq type "abstract")}}
-            <i class="editable fas fa-pen" data-target="reward.name" data-index="{{@index}}" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
+            <i class="editable fas fa-pen" data-target="reward.name" data-index="{{@index}}" data-uuid="{{uuid}}" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
             {{/if}}
             {{#if hidden}}
-            <i class="fas fa-eye toggleHidden" data-target="reward" data-index="{{@index}}"title="{{localize 'ForienQuestLog.Tooltips.RewardHidden'}}"></i>
+            <i class="fas fa-eye toggleHidden" data-target="reward" data-index="{{@index}}" data-uuid="{{uuid}}" title="{{localize 'ForienQuestLog.Tooltips.RewardHidden'}}"></i>
             {{else}}
-            <i class="fas fa-eye-slash toggleHidden" data-target="reward" data-index="{{@index}}" title="{{localize 'ForienQuestLog.Tooltips.RewardVisible'}}"></i>
+            <i class="fas fa-eye-slash toggleHidden" data-target="reward" data-index="{{@index}}" data-uuid="{{uuid}}" title="{{localize 'ForienQuestLog.Tooltips.RewardVisible'}}"></i>
             {{/if}}
-            <i class="del-btn fas fa-trash" data-target="rewards" data-index="{{@index}}" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}"></i>
+            <i class="del-btn fas fa-trash" data-target="rewards" data-index="{{@index}}" data-name="{{name}}" data-uuid="{{uuid}}" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}"></i>
           </div>
           {{/if}}
 

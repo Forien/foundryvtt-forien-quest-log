@@ -1,4 +1,5 @@
 import Fetch         from '../control/Fetch.js';
+import Utils         from '../control/Utils.js';
 import { constants } from './constants.js';
 
 // Stores any Foundry sheet class to be used to render quest. Primarily used in content linking.
@@ -252,26 +253,31 @@ export default class Quest
    /**
     * Refreshes data without need of destroying and reinstantiating Quest object
     */
-   refresh()
+   async refresh()
    {
-      const entry = game.journal.get(this._id);
-      const content = Fetch.content(entry);
+      const entry = this.entry ? this.entry : game.journal.get(this._id);
+
+      // Force a blank update to retrieve the latest data.
+      this.entry = await entry.update({}, { diff: false });
+
+      const content = Fetch.content(this.entry);
 
       this.initData(content);
    }
 
    /**
-    * Deletes Reward from Quest
+    * Deletes Reward from Quest.
     *
-    * @param {number} index
+    * @param {string} uuid - FVTT UUID
     */
-   removeReward(index)
+   removeReward(uuid)
    {
-      if (this.rewards[index] !== void 0) { this.rewards.splice(index, 1); }
+      const index = this.rewards.findIndex((t) => t.uuid === uuid);
+      if (index >= 0) { this.rewards.splice(index, 1); }
    }
 
    /**
-    * Deletes Task from Quest
+    * Deletes Task from Quest.
     *
     * @param {number} questId
     */
@@ -281,13 +287,16 @@ export default class Quest
    }
 
    /**
-    * Deletes Task from Quest
+    * Deletes Task from Quest by UUIDv4.
     *
-    * @param {number} index
+    * @param {string} uuidv4 - The UUIDv4 associated with a Task.
+    *
+    * @see {Utils.uuidv4}
     */
-   removeTask(index)
+   removeTask(uuidv4)
    {
-      if (this.tasks[index] !== void 0) { this.tasks.splice(index, 1); }
+      const index = this.tasks.findIndex((t) => t.uuidv4 === uuidv4);
+      if (index >= 0) { this.tasks.splice(index, 1); }
    }
 
    /**
@@ -298,11 +307,12 @@ export default class Quest
     */
    async save()
    {
-      const entry = game.journal.get(this._id);
+      const entry = this.entry ? this.entry : game.journal.get(this._id);
 
       // If the entry doesn't exist or the user can't modify the journal entry via ownership then early out.
       if (!entry || !entry.canUserModify(game.user, 'update')) { return; }
 
+      // Save Quest JSON, but also potentially update the backing JournalEntry folder name.
       const update = {
          name: typeof this._name === 'string' && this._name.length > 0 ? this._name :
           game.i18n.localize('ForienQuestLog.NewQuest'),
@@ -311,7 +321,7 @@ export default class Quest
          }
       };
 
-      await entry.update(update, { diff: false });
+      this.entry = await entry.update(update, { diff: false });
 
       return this._id;
    }
@@ -323,21 +333,31 @@ export default class Quest
     */
    static setSheet(NewSheetClass) { SheetClass = NewSheetClass; }
 
-   sortRewards(index, targetIdx)
+   sortRewards(sourceUuid, targetUuid)
    {
-      const entry = this.rewards.splice(index, 1)[0];
-      if (targetIdx) { this.rewards.splice(targetIdx, 0, entry); }
-      else { this.rewards.push(entry); }
+      const index = this.rewards.findIndex((t) => t.uuid === sourceUuid);
+      const targetIdx = this.rewards.findIndex((t) => t.uuid === targetUuid);
+
+      if (index >= 0 && targetIdx >= 0)
+      {
+         const entry = this.rewards.splice(index, 1)[0];
+         this.rewards.splice(targetIdx, 0, entry);
+      }
    }
 
-   sortTasks(index, targetIdx)
+   sortTasks(sourceUuidv4, targetUuidv4)
    {
       // If there are sub quests in the objectives above an undefined targetIdx can occur.
-      if (!targetIdx) { return; }
+      if (typeof targetUuidv4 !== 'number') { return; }
 
-      const entry = this.tasks.splice(index, 1)[0];
-      if (targetIdx) { this.tasks.splice(targetIdx, 0, entry); }
-      else { this.tasks.push(entry); }
+      const index = this.tasks.findIndex((t) => t.uuidv4 === sourceUuidv4);
+      const targetIdx = this.tasks.findIndex((t) => t.uuidv4 === targetUuidv4);
+
+      if (index >= 0 && targetIdx >= 0)
+      {
+         const entry = this.tasks.splice(index, 1)[0];
+         this.tasks.splice(targetIdx, 0, entry);
+      }
    }
 
    toJSON()
@@ -449,6 +469,10 @@ class Reward
       this.hidden = data.hidden || false;
    }
 
+   get name() { return this.data.name; }
+
+   get uuid() { return this.data.uuid; }
+
    toJSON()
    {
       return JSON.parse(JSON.stringify({
@@ -473,6 +497,7 @@ class Task
       this.completed = data.completed || false;
       this.failed = data.failed || false;
       this.hidden = data.hidden || false;
+      this.uuidv4 = data.uuidv4 || Utils.uuidv4();
    }
 
    get state()
@@ -495,7 +520,8 @@ class Task
          completed: this.completed,
          failed: this.failed,
          hidden: this.hidden,
-         state: this.state
+         state: this.state,
+         uuidv4: this.uuidv4
       }));
    }
 
