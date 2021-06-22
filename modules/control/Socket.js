@@ -104,6 +104,7 @@ export default class Socket
             {
                const quest = Fetch.quest(data.payload.questId);
                if (quest) { await quest.move('active'); }
+               this.refreshQuestLog();
             }
          }
 

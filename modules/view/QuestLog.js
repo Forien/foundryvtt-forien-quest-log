@@ -4,6 +4,7 @@ import Enrich           from '../control/Enrich.js';
 import Fetch            from '../control/Fetch.js';
 import QuestAPI         from '../control/QuestAPI.js';
 import Socket           from '../control/Socket.js';
+import Utils            from '../control/Utils.js';
 import { questTypes }   from '../model/constants.js';
 
 export default class QuestLog extends Application
@@ -59,7 +60,10 @@ export default class QuestLog extends Application
             Socket.acceptQuest(questId);
          }
 
-         if (!game.user.isGM) { return; }
+         if (!game.user.isGM)
+         {
+            return;
+         }
 
          const classList = $(event.target).attr('class');
          if (classList.includes('move'))
