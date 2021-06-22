@@ -91,9 +91,9 @@ export default class QuestForm extends FormApplication
       }
 
       const description = (formData.description && formData.description.length) ? formData.description :
-       void 0;
+       this.description;
 
-      const gmnotes = (formData.gmnotes && formData.gmnotes.length) ? formData.gmnotes : void 0;
+      const gmnotes = (formData.gmnotes && formData.gmnotes.length) ? formData.gmnotes : this.gmnotes;
 
       let data = {
          giver,
@@ -330,7 +330,10 @@ export default class QuestForm extends FormApplication
    {
       const editor = this.editors[name];
 
-      if (editor.mce) { this[name] = editor.mce.getContent(); }
+      if (editor.mce)
+      {
+         this[name] = editor.mce.getContent();
+      }
 
       return super.saveEditor(name, options);
    }
