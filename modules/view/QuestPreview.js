@@ -545,20 +545,7 @@ export default class QuestPreview extends FormApplication
          html.on('click', '.deleteQuestGiver', async () =>
          {
             this.quest.giver = null;
-            await this.saveQuest();
-         });
-
-         html.on('click', '.changeGiverImgPos', async () =>
-         {
-            if (this.quest.giverImgPos === 'center')
-            {
-               this.quest.giverImgPos = 'top';
-            }
-            else
-            {
-               this.quest.giverImgPos = this.quest.giverImgPos === 'top' ? 'bottom' : 'center';
-            }
-
+            this.quest.image = 'actor';
             await this.saveQuest();
          });
 

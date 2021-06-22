@@ -185,7 +185,6 @@ export default class Quest
       this.gmnotes = data.gmnotes || '';
       this.image = data.image || 'actor';
       this.giverName = data.giverName || 'actor';
-      this.giverImgPos = data.giverImgPos || 'center';
       this.splash = data.splash || '';
       this.splashPos = data.splashPos || 'center';
       this.location = data.location || null;
@@ -393,7 +392,6 @@ export default class Quest
          gmnotes: this.gmnotes,
          image: this.image,
          giverName: this.giverName,
-         giverImgPos: this.giverImgPos,
          splashPos: this.splashPos,
          splash: this.splash,
          location: this.location,

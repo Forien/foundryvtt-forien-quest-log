@@ -122,7 +122,6 @@ export default class Enrich
       data.gmnotes = quest.gmnotes || '';
       data.image = quest.image || 'actor';
       data.giverName = quest.giverName || 'actor';
-      data.giverImgPos = quest.giverImgPos || 'center';
       data.splash = quest.splash || '';
       data.splashPos = quest.splashPos || 'center';
       data.location = quest.location || null;

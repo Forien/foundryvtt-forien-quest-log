@@ -3,7 +3,7 @@
   <ul>
     {{#each quests}}
     <li class="drag-quest" data-quest-id="{{id}}" draggable="true">
-      {{#if data_giver.img}}<div class="img quest-giver-portrait portrait-small" style="background-image: url({{data_giver.img}});background-position: {{this.giverImgPos}};" title="{{data_giver.name}}"></div>{{/if}}
+      {{#if data_giver.img}}<div class="img quest-giver-portrait portrait-small" style="background-image: url({{data_giver.img}});" title="{{data_giver.name}}"></div>{{/if}}
       <div class="title" data-quest-id="{{id}}">
         <h2>{{name}}</h2>
         {{#if isSubquest}}

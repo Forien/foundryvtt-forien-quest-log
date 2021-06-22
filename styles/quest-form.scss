@@ -6,7 +6,6 @@
       flex-direction: column;
       background: rgba(0,0,0,.1);
       height: 100%;
-      // overflow-y: hidden;     
     }
     
     form header {
@@ -34,18 +33,66 @@
           border-radius: 5px;
         }
 
-        .hidden {
-          display: none;
+        .toggleImage {
+          position: absolute;
+          top: 72px;
+          left: 16px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: #efefef;
+          border-radius: 5px;
+          width: 22px;
+          height: 22px;
+          transition: color .3s ease;
+
+          &:hover {
+            color: $primary-accent-color;
+          }
+
+          i {
+            font-size: 16px;
+            border-radius: 50%;
+            line-height: 1;
+          }
         }
 
-        span {
+        .deleteQuestGiver {
+          position: absolute;
+          top: 72px;
+          left: 116px-22px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: #efefef;
+          border-radius: 5px;
+          width: 22px;
+          height: 22px;
+          transition: color .3s ease;
+
+          &:hover {
+            color: $primary-accent-color;
+          }
+
+          i {
+            font-size: 16px;
+            border-radius: 50%;
+            line-height: 1;
+          }
+        }
+
+        .drop-info {
           display: flex;
           justify-content: center;
           align-items: center;
           height: 100%;
           border: 2px dashed rgba(0,0,0,.5);
           border-radius: 5px;
-          padding: 8px; 
+          padding: 8px;
+        }
+
+        .hidden {
+          display: none;
         }
       }
 
@@ -57,8 +104,6 @@
       .quest-giver {
         margin-bottom: 8px;
       }
-
-
     }
 
     .quest-name {

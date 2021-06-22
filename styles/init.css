@@ -347,10 +347,49 @@
   background-position: center;
   border-radius: 5px;
 }
-#forien-quest-log-form form header .source-image .hidden {
-  display: none;
+#forien-quest-log-form form header .source-image .toggleImage {
+  position: absolute;
+  top: 72px;
+  left: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #efefef;
+  border-radius: 5px;
+  width: 22px;
+  height: 22px;
+  transition: color 0.3s ease;
 }
-#forien-quest-log-form form header .source-image span {
+#forien-quest-log-form form header .source-image .toggleImage:hover {
+  color: #ff6400;
+}
+#forien-quest-log-form form header .source-image .toggleImage i {
+  font-size: 16px;
+  border-radius: 50%;
+  line-height: 1;
+}
+#forien-quest-log-form form header .source-image .deleteQuestGiver {
+  position: absolute;
+  top: 72px;
+  left: 94px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #efefef;
+  border-radius: 5px;
+  width: 22px;
+  height: 22px;
+  transition: color 0.3s ease;
+}
+#forien-quest-log-form form header .source-image .deleteQuestGiver:hover {
+  color: #ff6400;
+}
+#forien-quest-log-form form header .source-image .deleteQuestGiver i {
+  font-size: 16px;
+  border-radius: 50%;
+  line-height: 1;
+}
+#forien-quest-log-form form header .source-image .drop-info {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -358,6 +397,9 @@
   border: 2px dashed rgba(0, 0, 0, 0.5);
   border-radius: 5px;
   padding: 8px;
+}
+#forien-quest-log-form form header .source-image .hidden {
+  display: none;
 }
 #forien-quest-log-form form header .source-info {
   flex: 1;
@@ -511,27 +553,6 @@
   color: #ff6400;
 }
 .window-app.forien-quest-preview .quest-body .details-header .quest-giver-gc .deleteQuestGiver i {
-  font-size: 16px;
-  border-radius: 50%;
-  line-height: 1;
-}
-.window-app.forien-quest-preview .quest-body .details-header .quest-giver-gc .changeGiverImgPos {
-  position: absolute;
-  top: 78px;
-  left: 78px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #efefef;
-  border-radius: 5px;
-  width: 22px;
-  height: 22px;
-  transition: color 0.3s ease;
-}
-.window-app.forien-quest-preview .quest-body .details-header .quest-giver-gc .changeGiverImgPos:hover {
-  color: #ff6400;
-}
-.window-app.forien-quest-preview .quest-body .details-header .quest-giver-gc .changeGiverImgPos i {
   font-size: 16px;
   border-radius: 50%;
   line-height: 1;

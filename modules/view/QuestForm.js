@@ -9,18 +9,19 @@ import { constants, settings } from '../model/constants.js';
 export default class QuestForm extends FormApplication
 {
    /**
-    * @param subquest
     * @param parentId
+    *
     * @param options
     */
    constructor({ parentId = void 0, ...options } = {})
    {
       super({}, options);
-
       this._submitted = false;
 
       this._parentId = parentId;
       this._subquest = parentId !== void 0;
+
+      this._image = 'actor';
    }
 
    /**
@@ -89,16 +90,17 @@ export default class QuestForm extends FormApplication
          name = game.i18n.localize('ForienQuestLog.NewQuest');
       }
 
-      const description = (formData.description !== null && formData.description.length) ? formData.description :
+      const description = (formData.description && formData.description.length) ? formData.description :
        void 0;
 
-      const gmnotes = (formData.gmnotes !== null && formData.gmnotes.length) ? formData.gmnotes : void 0;
+      const gmnotes = (formData.gmnotes && formData.gmnotes.length) ? formData.gmnotes : void 0;
 
       let data = {
          giver,
          name,
          description,
-         gmnotes
+         gmnotes,
+         image: this._image
       };
 
       // Used for a player created quest setting all users as owners and the quest as 'available'.
@@ -173,6 +175,9 @@ export default class QuestForm extends FormApplication
          const giverId = $(event.currentTarget).val();
          const giver = await Enrich.giverFromUUID(giverId);
 
+         // Set initial image swap for actor / token.
+         this._image = 'actor';
+
          if (giver)
          {
             if (giver?.img?.length)
@@ -187,9 +192,17 @@ export default class QuestForm extends FormApplication
                html.find('.giver-portrait').attr('style', '').addClass('hidden');
             }
             html.find('.drop-info').addClass('hidden');
+
+            if (giver.hasTokenImg) { html.find('.toggleImage').removeClass('hidden'); }
+            else { html.find('.toggleImage').addClass('hidden'); }
+
+            html.find('.deleteQuestGiver').removeClass('hidden');
          }
          else
          {
+            html.find('.toggleImage').addClass('hidden');
+            html.find('.deleteQuestGiver').addClass('hidden');
+
             html.find('.giver-portrait').addClass('hidden');
             html.find('.drop-info').removeClass('hidden');
          }
@@ -218,7 +231,7 @@ export default class QuestForm extends FormApplication
          html.on('click', '.del-btn', (event) => { $(event.target).parent().remove(); });
       });
 
-      html.on('click', '.source-image', () =>
+      html.on('click', '.drop-info', () =>
       {
          const currentPath = html.find('.quest-giver-name').val();
          new FilePicker({
@@ -231,8 +244,53 @@ export default class QuestForm extends FormApplication
                html.find('.quest-giver-name').slideDown();
                html.find('.giver-portrait').css('background-image', `url(${path})`).removeClass('hidden');
                html.find('.drop-info').addClass('hidden');
+
+               html.find('.deleteQuestGiver').removeClass('hidden');
             },
          }).browse(currentPath);
+      });
+
+      html.on('click', '.toggleImage', async(event) =>
+      {
+         event.stopPropagation();
+
+         const giverId = html.find('#giver').val();
+
+         this._image = this._image === 'actor' ? 'token' : 'actor';
+
+         const giver = await Enrich.giverFromUUID(giverId, this._image);
+
+         if (giver)
+         {
+            if (giver?.img?.length)
+            {
+               html.find('.giver-portrait').attr({
+                  style: `background-image:url(${giver.img})`,
+                  title: giver.name
+               }).removeClass('hidden');
+            }
+            else
+            {
+               html.find('.giver-portrait').attr('style', '').addClass('hidden');
+            }
+         }
+      });
+
+      html.on('click', '.deleteQuestGiver', (event) =>
+      {
+         event.stopPropagation();
+
+         this._image = 'actor';
+
+         html.find('#giver').val(void 0);
+         html.find('#sourceImage').val(void 0);
+         html.find('.quest-giver-name').val(void 0);
+         html.find('.quest-giver-name').slideUp();
+         html.find('.giver-portrait').css('background-image', `url('')`).addClass('hidden');
+         html.find('.drop-info').removeClass('hidden');
+
+         html.find('.toggleImage').addClass('hidden');
+         html.find('.deleteQuestGiver').addClass('hidden');
       });
    }
 

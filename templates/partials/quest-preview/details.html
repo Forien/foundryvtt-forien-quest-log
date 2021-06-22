@@ -4,13 +4,12 @@
     <span class="drop-info">{{localize 'ForienQuestLog.QuestPreview.DragDropActor'}}</span>
     {{/if}}
     {{#with data_giver}}
-    <div class="quest-giver-image open-actor-sheet " data-actor-id="{{id}}" style="background-image: url({{img}});background-position: {{../giverImgPos}};" title="{{name}}"></div>
+    <div class="quest-giver-image open-actor-sheet " data-actor-id="{{id}}" style="background-image: url({{img}});" title="{{name}}"></div>
     {{#if (and ../canEdit ../image img)}}
       {{#if hasTokenImg}}
       <span class="toggleImage" title="{{localize 'ForienQuestLog.Tooltips.ToggleImage'}}"><i class="fas fa-user-circle"></i></span>
       {{/if}}
     <span class="deleteQuestGiver" title="{{localize 'ForienQuestLog.Tooltips.DeleteQuestGiver'}}"><i class="fas fa-times"></i></span>
-    <span class="changeGiverImgPos" title="{{localize 'ForienQuestLog.Tooltips.ChangeGiverImgPos'}}"><i class="fas fa-arrows-alt"></i></span>
     {{/if}}
 
     {{/with}}
