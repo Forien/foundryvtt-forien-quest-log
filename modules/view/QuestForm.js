@@ -89,10 +89,10 @@ export default class QuestForm extends FormApplication
          name = game.i18n.localize('ForienQuestLog.NewQuest');
       }
 
-      const description = (formData.description !== void 0 && formData.description.length) ? formData.description :
-       this.description;
+      const description = (formData.description !== null && formData.description.length) ? formData.description :
+       void 0;
 
-      const gmnotes = (formData.gmnotes !== void 0 && formData.gmnotes.length) ? formData.gmnotes : this.gmnotes;
+      const gmnotes = (formData.gmnotes !== null && formData.gmnotes.length) ? formData.gmnotes : void 0;
 
       let data = {
          giver,
@@ -101,7 +101,7 @@ export default class QuestForm extends FormApplication
          gmnotes
       };
 
-      // TODO: CONSIDER THAT A USER SHOULD PROBABLY NOT BE CREATING QUESTS
+      // Used for a player created quest setting all users as owners and the quest as 'available'.
       if (!game.user.isGM)
       {
          data.status = 'available';
@@ -143,7 +143,7 @@ export default class QuestForm extends FormApplication
          }
       }
 
-      // players don't see Hidden tab, but assistant GM can, so emit anyway
+      // Players don't see Hidden tab, but assistant GM can, so emit anyway
       Socket.refreshQuestLog();
       this._submitted = true;
    }

@@ -32,7 +32,14 @@
     </div>
     <div class="quest-notes">
       <h2>{{localize 'ForienQuestLog.QuestForm.QuestGMNotes'}}</h2>
-      {{editor target="gmnotes" button=true editable=true}}
+<!--      {{#if isGM}}-->
+<!--        {{editor target="gmnotes" button=true editable=true}}-->
+<!--      {{/if}}-->
+      {{#if isGM}}
+        {{editor target="gmnotes" button=true editable=true}}
+      {{else}}
+        {{editor target="gmnotes" button=true editable=false}}
+      {{/if}}
     </div>
   </section>
   <footer class="footer">
