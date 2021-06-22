@@ -83,7 +83,8 @@
         "ConfigurePermissions": "Configure Permissions",
         "SplashArt": "Splash Art:",
         "QuestBranching": "Sub Quests:",
-        "AddSubquest": "Create new Sub Quest"
+        "AddSubquest": "Create new Sub Quest",
+        "SplashInfo": "Click to set image."
       },
 
       "Tabs": {
