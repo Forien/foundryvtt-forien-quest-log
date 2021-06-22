@@ -260,8 +260,9 @@ export default class Enrich
             type,
             hidden: item.hidden,
             draggable: ((isGM || canPlayerDrag) && type !== 'abstract'),
-            transfer: type !== 'abstract' ? JSON.stringify({ uuid: item.data.uuid }) : void 0,
-            uuid: item.data.uuid
+            transfer: type !== 'abstract' ? JSON.stringify(
+             { uuid: item.data.uuid, uuidv4: item.uuidv4, name: item.data.name }) : void 0,
+            uuidv4: item.uuidv4
          };
       });
 

@@ -157,25 +157,25 @@
       <div class="quest-box rewards-box">
         <ul>
         {{#each data_rewards}}
-        <li class="reward {{type}}-reward {{#if (and ../isGM draggable)}}draggable{{/if}} {{#if hidden}}reward-hidden{{/if}}" data-index="{{@index}}" data-transfer="{{transfer}}" data-uuid="{{uuid}}" {{#if (and ../canEdit draggable)}}draggable="true"{{/if}}>
+        <li class="reward {{type}}-reward {{#if (and draggable)}}draggable{{/if}} {{#if hidden}}reward-hidden{{/if}}" data-transfer="{{transfer}}" data-uuidv4="{{uuidv4}}" {{#if draggable}}draggable="true"{{/if}}>
           <div class="reward-image-container">
-            <div class="reward-image" style="background-image: url({{img}})" data-uuid="{{uuid}}"></div>
+            <div class="reward-image" style="background-image: url({{img}})" data-uuidv4="{{uuidv4}}"></div>
           </div>
-          <div class="editable-container" data-transfer="{{transfer}}" data-uuid="{{uuid}}">
+          <div class="editable-container" data-transfer="{{transfer}}" data-uuidv4="{{uuidv4}}">
             <p class="reward-name">{{name}}</p>
           </div>
           {{#if ../canEdit}}
           <div class="actions">
             <i class="fas fa-sort" draggable="true"></i>
             {{#if (eq type "abstract")}}
-            <i class="editable fas fa-pen" data-target="reward.name" data-uuid="{{uuid}}" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
+            <i class="editable fas fa-pen" data-target="reward.name" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
             {{/if}}
             {{#if hidden}}
-            <i class="fas fa-eye toggleHidden" data-target="reward" data-uuid="{{uuid}}" title="{{localize 'ForienQuestLog.Tooltips.RewardHidden'}}"></i>
+            <i class="fas fa-eye toggleHidden" data-target="reward" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.RewardHidden'}}"></i>
             {{else}}
-            <i class="fas fa-eye-slash toggleHidden" data-target="reward" data-uuid="{{uuid}}" title="{{localize 'ForienQuestLog.Tooltips.RewardVisible'}}"></i>
+            <i class="fas fa-eye-slash toggleHidden" data-target="reward" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.RewardVisible'}}"></i>
             {{/if}}
-            <i class="del-btn fas fa-trash" data-target="rewards" data-name="{{name}}" data-uuid="{{uuid}}" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}"></i>
+            <i class="del-btn fas fa-trash" data-target="rewards" data-name="{{name}}" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}"></i>
           </div>
           {{/if}}
 

@@ -177,13 +177,16 @@ export default class QuestPreview extends FormApplication
       {
          const data = $(event.target).data('transfer');
 
-         const document = await Utils.getDocumentFromUUID(data);
-         if (document !== null)
+         const document = await Utils.getDocumentFromUUID(data, { permissionCheck: false });
+         if (document)
          {
             const uuidData = Utils.getDataFromUUID(data);
 
             const dataTransfer = {
-               _fqlDrop: false,
+               _fqlQuestId: this.quest.id,
+               _fqlUuidv4: data.uuidv4,
+               _fqlItemName: data.name,
+               _fqlUserName: game.user.name,
                type: 'Item',
                data: document.data,
                uuid: data.uuid,
@@ -206,7 +209,7 @@ export default class QuestPreview extends FormApplication
          const dataTransfer = {
             type: 'Reward',
             mode: 'Sort',
-            uuid: $(li).data('uuid')
+            uuidv4: $(li).data('uuidv4')
          };
          event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dataTransfer));
       });
@@ -420,11 +423,11 @@ export default class QuestPreview extends FormApplication
             if (data.mode === 'Sort' && data.type === 'Reward')
             {
                const dt = event.target.closest('li.reward') || null;
-               this.quest.sortRewards(data.uuid, dt?.dataset.uuid);
+               this.quest.sortRewards(data.uuidv4, dt?.dataset.uuidv4);
                await this.quest.save();
                Socket.refreshQuestPreview({ questId: this.quest.id });
             }
-            else if (data.type === 'Item' && data._fqlDrop === void 0)
+            else if (data.type === 'Item' && data._fqlQuestId === void 0 && data.id)
             {
                const uuid = Utils.getUUID(data);
 
@@ -464,20 +467,20 @@ export default class QuestPreview extends FormApplication
             if (target === void 0 || target === 'task.name') { return; }
 
             let value = this.quest[target];
-            let uuid;
+            let uuidv4;
 
             if (target === 'reward.name')
             {
-               uuid = $(event.target).data('uuid');
+               uuidv4 = $(event.target).data('uuidv4');
 
-               const reward = this.quest.getReward(uuid);
+               const reward = this.quest.getReward(uuidv4);
                if (!reward) { return; }
 
                value = reward.name;
             }
 
             value = value.replace(/'/g, '&quot;');
-            const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${uuid !== undefined ? `data-uuid='${uuid}'` : ``}/>`);
+            const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${uuidv4 !== undefined ? `data-uuidv4='${uuidv4}'` : ``}/>`);
             const parent = $(event.target).closest('.actions').prev('.editable-container');
 
             parent.html('');
@@ -498,8 +501,8 @@ export default class QuestPreview extends FormApplication
 
                   case 'reward.name':
                   {
-                     uuid = $(event.target).data('uuid');
-                     const reward = this.quest.getReward(uuid);
+                     uuidv4 = $(event.target).data('uuidv4');
+                     const reward = this.quest.getReward(uuidv4);
                      if (!reward) { return; }
 
                      reward.data.name = valueOut;
@@ -517,11 +520,11 @@ export default class QuestPreview extends FormApplication
          html.on('click', '.rewards-box .del-btn', async (event) =>
          {
             const target = $(event.target);
-            const uuid = target.data('uuid');
+            const uuidv4 = target.data('uuidv4');
             const name = target.data('name');
 
             // Await a modal dialog.
-            const result = await FQLDialog.confirmDeleteReward({ name, result: uuid, questId: this.quest.id });
+            const result = await FQLDialog.confirmDeleteReward({ name, result: uuidv4, questId: this.quest.id });
             if (result)
             {
                // Refresh quest data to get latest / consistent data.
@@ -575,8 +578,8 @@ export default class QuestPreview extends FormApplication
             }
             else if (target === 'reward')
             {
-               const uuid = $(event.target).data('uuid');
-               const reward = this.quest.getReward(uuid);
+               const uuidv4 = $(event.target).data('uuidv4');
+               const reward = this.quest.getReward(uuidv4);
                if (reward)
                {
                   reward.toggleVisible();
@@ -613,8 +616,7 @@ export default class QuestPreview extends FormApplication
                   this.quest.addReward({
                      data: {
                         name: value,
-                        img: 'icons/svg/mystery-man.svg',
-                        uuid: Utils.uuidv4()
+                        img: 'icons/svg/mystery-man.svg'
                      },
                      hidden: true,
                      type: 'Abstract'
@@ -626,9 +628,9 @@ export default class QuestPreview extends FormApplication
 
          html.on('click', '.abstract-reward .reward-image', async (event) =>
          {
-            const uuid = $(event.target).data('uuid');
+            const uuidv4 = $(event.target).data('uuidv4');
 
-            let reward = this.quest.getReward(uuid);
+            let reward = this.quest.getReward(uuidv4);
             if (!reward) { return; }
 
             const currentPath = reward.data.img;
@@ -637,7 +639,7 @@ export default class QuestPreview extends FormApplication
                current: currentPath,
                callback: async (path) =>
                {
-                  reward = this.quest.getReward(uuid);
+                  reward = this.quest.getReward(uuidv4);
                   if (reward)
                   {
                      reward.data.img = path;

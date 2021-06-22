@@ -1,6 +1,7 @@
 import Enrich                                from './Enrich.js';
 import Fetch                                 from './Fetch.js';
 import Utils                                 from './Utils.js';
+import Socket                                from './Socket.js';
 import { constants, noteControls, settings } from '../model/constants.js';
 
 /**
@@ -26,6 +27,17 @@ export default function registerHooks()
       {
          fqlPublicAPI.questLogFloating.render(true, { focus: true });
       }
+   });
+
+   Hooks.on('dropActorSheetData', async (actor, sheet, data) =>
+   {
+      if (typeof data !== 'object' || typeof data._fqlQuestId !== 'string') { return; }
+
+      Socket.questRewardDrop({
+         actor: { id: actor.id, name: actor.data.name },
+         sheet: { id: sheet.id },
+         data
+      });
    });
 
    // Create 'open quest' Macro when Quest is dropped onto Hotbar.

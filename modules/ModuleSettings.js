@@ -37,12 +37,7 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            const fqlPublicAPI = Utils.getFQLPublicAPI();
-
-            if (fqlPublicAPI.questLog.rendered)
-            {
-               fqlPublicAPI.questLog.render();
-            }
+            Utils.getFQLPublicAPI().renderAll({ force: true, questPreview: true });
          }
       });
 
@@ -187,6 +182,15 @@ export default class ModuleSettings
 
             game.journal.render();
          }
+      });
+
+      game.settings.register(constants.moduleName, settings.notifyRewardDrop, {
+         name: 'ForienQuestLog.Settings.notifyRewardDrop.Enable',
+         hint: 'ForienQuestLog.Settings.notifyRewardDrop.EnableHint',
+         scope: 'world',
+         config: true,
+         default: false,
+         type: Boolean,
       });
 
       game.settings.register(constants.moduleName, 'showFolder', {

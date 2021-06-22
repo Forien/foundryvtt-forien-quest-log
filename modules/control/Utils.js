@@ -59,9 +59,11 @@ export default class Utils
     *
     * @param {string|object}  data - The UUID as a string or object with UUID key as a string.
     *
+    * @param {boolean}  [permissionCheck] - The UUID as a string or object with UUID key as a string.
+    *
     * @returns {Promise<void>}
     */
-   static async getDocumentFromUUID(data)
+   static async getDocumentFromUUID(data, { permissionCheck = true } = {})
    {
       const uuid = typeof data === 'string' ? data : data.uuid;
 
@@ -77,7 +79,9 @@ export default class Utils
             return null;
          }
 
-         if (!doc.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER))
+         const checkPerm = typeof permissionCheck === 'boolean' ? permissionCheck : true;
+
+         if (checkPerm && !doc.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER))
          {
             ui.notifications.warn('ForienQuestLog.NoPermission', { localize: true });
             return null;

@@ -24,6 +24,7 @@ const settings = {
    enableQuestTracker: 'enableQuestTracker',
    hideFQLFromPlayers: 'hideFQLFromPlayers',
    questTrackerTasks: 'questTrackerTasks',
+   notifyRewardDrop: 'notifyRewardDrop',
    showTasks: 'showTasks'
 };
 

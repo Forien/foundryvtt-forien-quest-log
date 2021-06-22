@@ -139,13 +139,13 @@ export default class Quest
    /**
     * Gets a Reward by Foundry VTT UUID or UUIDv4 for abstract Rewards.
     *
-    * @param {string}   uuid - The FVTT UUID to find.
+    * @param {string}   uuidv4 - The FVTT UUID to find.
     *
     * @returns {Reward} The task or null.
     */
-   getReward(uuid)
+   getReward(uuidv4)
    {
-      const index = this.rewards.findIndex((t) => t.uuid === uuid);
+      const index = this.rewards.findIndex((t) => t.uuidv4 === uuidv4);
       return index >= 0 ? this.rewards[index] : null;
    }
 
@@ -291,11 +291,11 @@ export default class Quest
    /**
     * Deletes Reward from Quest.
     *
-    * @param {string} uuid - FVTT UUID
+    * @param {string} uuidv4 - The UUIDv4 associated with a Reward.
     */
-   removeReward(uuid)
+   removeReward(uuidv4)
    {
-      const index = this.rewards.findIndex((t) => t.uuid === uuid);
+      const index = this.rewards.findIndex((t) => t.uuidv4 === uuidv4);
       if (index >= 0) { this.rewards.splice(index, 1); }
    }
 
@@ -356,10 +356,10 @@ export default class Quest
     */
    static setSheet(NewSheetClass) { SheetClass = NewSheetClass; }
 
-   sortRewards(sourceUuid, targetUuid)
+   sortRewards(sourceUuidv4, targetUuidv4)
    {
-      const index = this.rewards.findIndex((t) => t.uuid === sourceUuid);
-      const targetIdx = this.rewards.findIndex((t) => t.uuid === targetUuid);
+      const index = this.rewards.findIndex((t) => t.uuidv4 === sourceUuidv4);
+      const targetIdx = this.rewards.findIndex((t) => t.uuidv4 === targetUuidv4);
 
       if (index >= 0 && targetIdx >= 0)
       {
@@ -476,6 +476,7 @@ class Reward
       this.type = data.type || null;
       this.data = data.data || {};
       this.hidden = data.hidden || false;
+      this.uuidv4 = data.uuidv4 || Utils.uuidv4();
    }
 
    get name() { return this.data.name; }
@@ -487,7 +488,8 @@ class Reward
       return JSON.parse(JSON.stringify({
          type: this.type,
          data: this.data,
-         hidden: this.hidden
+         hidden: this.hidden,
+         uuidv4: this.uuidv4
       }));
    }
 

@@ -1,7 +1,8 @@
-import Fetch      from './Fetch.js';
-import QuestAPI   from './QuestAPI.js';
-import Utils      from './Utils.js';
-import FQLDialog  from '../view/FQLDialog.js';
+import Fetch                     from './Fetch.js';
+import QuestAPI                  from './QuestAPI.js';
+import Utils                     from './Utils.js';
+import FQLDialog                 from '../view/FQLDialog.js';
+import { constants, settings }   from '../model/constants.js';
 
 export default class Socket
 {
@@ -49,8 +50,37 @@ export default class Socket
 
          if (data.type === 'questLogRefresh')
          {
-            Utils.getFQLPublicAPI().renderAll({ force: true });
+            const options = typeof data.payload.options === 'object' ? data.payload.options : {};
+            Utils.getFQLPublicAPI().renderAll({ force: true, ...options });
             return;
+         }
+
+         if (data.type === 'questRewardDrop')
+         {
+            if (game.user.isGM)
+            {
+               const dropData = data.payload.data;
+               const notify = game.settings.get(constants.moduleName, settings.notifyRewardDrop);
+               if (notify)
+               {
+                  ui.notifications.info(game.i18n.format('ForienQuestLog.QuestPreview.RewardDrop', {
+                     userName: dropData._fqlUserName,
+                     itemName: dropData._fqlItemName,
+                     actorName: data.payload.actor.name
+                  }));
+               }
+
+               // The quest reward has already been removed by a GM user.
+               if (data.payload.handled) { return; }
+
+               const quest = QuestAPI.get(dropData._fqlQuestId);
+               if (quest)
+               {
+                  quest.removeReward(dropData._fqlUuidv4);
+                  await quest.save();
+                  this.refreshQuestPreview({ questId: dropData._fqlQuestId });
+               }
+            }
          }
 
          if (data.type === 'questPreviewRefresh')
@@ -120,12 +150,41 @@ export default class Socket
       });
    }
 
-   static refreshQuestLog()
+   static async questRewardDrop(data = {})
    {
-      Utils.getFQLPublicAPI().renderAll({ force: true });
+      let handled = false;
+
+      if (game.user.isGM)
+      {
+         const dropData = data.data;
+         const quest = QuestAPI.get(dropData._fqlQuestId);
+         if (quest)
+         {
+            quest.removeReward(dropData._fqlUuidv4);
+            await quest.save();
+            this.refreshQuestPreview({ questId: dropData._fqlQuestId });
+         }
+         handled = true;
+      }
 
       game.socket.emit('module.forien-quest-log', {
-         type: 'questLogRefresh'
+         type: 'questRewardDrop',
+         payload: {
+            ...data,
+            handled
+         }
+      });
+   }
+
+   static refreshQuestLog(options = {})
+   {
+      Utils.getFQLPublicAPI().renderAll({ force: true, ...options });
+
+      game.socket.emit('module.forien-quest-log', {
+         type: 'questLogRefresh',
+         payload: {
+            options
+         }
       });
    }
 

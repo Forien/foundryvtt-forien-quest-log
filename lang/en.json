@@ -72,6 +72,8 @@
       "DragDropActor": "Drag & Drop Actor, Item or Journal Entry to set quest source.",
       "DragDropRewards": "Drag & drop items here to add them as rewards.",
       "InvalidQuestId": "Cannot open Quest Preview due to invalid Quest ID.",
+      "RewardDrop": "FQL (quest reward): {userName} dropped '{itemName}' onto {actorName}",
+
       "HeaderButtons": {
         "Show": "Show to Players"
       },
@@ -134,6 +136,10 @@
         "EnableHint": "Decide how Quest Log's navigation should be displayed.",
         "bookmarks": "Bookmarks",
         "classic": "Classic tabs"
+      },
+      "notifyRewardDrop": {
+        "Enable": "Show Reward Drop Notifications",
+        "EnableHint": "Check to see UI notifications when quest rewards are dropped onto player sheets."
       },
       "showFolder": {
         "Enable": "Show Quest Folder",
