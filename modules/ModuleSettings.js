@@ -208,7 +208,7 @@ export default class ModuleSettings
       game.settings.register(constants.moduleName, 'enableQuestTracker', {
          name: 'ForienQuestLog.WorkshopPUF.Settings.enableQuestTracker.name',
          hint: 'ForienQuestLog.WorkshopPUF.Settings.enableQuestTracker.hint',
-         scope: 'world',
+         scope: 'client',
          config: true,
          default: false,
          type: Boolean,
