@@ -255,10 +255,7 @@ export default class Quest
     */
    async refresh()
    {
-      const entry = this.entry ? this.entry : game.journal.get(this._id);
-
-      // Force a blank update to retrieve the latest data.
-      this.entry = await entry.update({}, { diff: false });
+      this.entry = game.journal.get(this._id);
 
       const content = Fetch.content(this.entry);
 

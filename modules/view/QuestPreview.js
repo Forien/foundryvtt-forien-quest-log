@@ -299,13 +299,14 @@ export default class QuestPreview extends FormApplication
             const uuidv4 = target.data('uuidv4');
             const name = target.data('name');
 
-            // Await a modal dialog.
-            if (await FQLDialog.confirmDeleteTask(name))
+            const result = await FQLDialog.confirmDeleteTask({ name, result: uuidv4, questId: this.quest.id });
+
+            if (result)
             {
                // Refresh quest data to get latest / consistent data.
                await this.quest.refresh();
 
-               this.quest.removeTask(uuidv4);
+               this.quest.removeTask(result);
 
                await this.saveQuest();
             }
@@ -365,6 +366,7 @@ export default class QuestPreview extends FormApplication
             const target = $(event.target).data('target');
             const questId = $(event.target).data('id');
             const classList = $(event.target).attr('class');
+            const name = $(event.target).data('name');
 
             if (classList.includes('move'))
             {
@@ -381,11 +383,11 @@ export default class QuestPreview extends FormApplication
             }
             else if (classList.includes('delete'))
             {
-               const quest = Fetch.quest(questId);
-
-               if (quest && await FQLDialog.confirmDeleteQuest(quest))
+               const result = await FQLDialog.confirmDeleteQuest({ name, result: questId, questId: this.quest.id });
+               if (result)
                {
-                  Socket.deleteQuest(await quest.delete());
+                  const quest = Fetch.quest(result);
+                  if (quest) { Socket.deleteQuest(await quest.delete()); }
                }
             }
          });
@@ -500,12 +502,13 @@ export default class QuestPreview extends FormApplication
             const name = target.data('name');
 
             // Await a modal dialog.
-            if (await FQLDialog.confirmDeleteReward(name))
+            const result = await FQLDialog.confirmDeleteReward({ name, result: uuid, questId: this.quest.id });
+            if (result)
             {
                // Refresh quest data to get latest / consistent data.
                await this.quest.refresh();
 
-               this.quest.removeReward(uuid);
+               this.quest.removeReward(result);
 
                await this.saveQuest();
             }
@@ -690,9 +693,11 @@ export default class QuestPreview extends FormApplication
     * @returns {Promise<void>}
     * @inheritDoc
     */
-   async close(options)
+   async close({ noSave = false, ...options } = {})
    {
       delete Utils.getFQLPublicAPI().questPreview[this.quest.id];
+
+      FQLDialog.closeDialogs(this.quest.id);
 
       // If a permission control app / dialog is open close it.
       if (this._permControl)
@@ -701,7 +706,7 @@ export default class QuestPreview extends FormApplication
          this._permControl = void 0;
       }
 
-      if (this.quest.isOwner)
+      if (!noSave && this.quest.isOwner)
       {
          await this.saveQuest({ refresh: false });
       }
@@ -802,11 +807,11 @@ export default class QuestPreview extends FormApplication
    /**
     * Invoked by Socket to update this quest preview. If the current user no longer has permission then close the app.
     */
-   socketRefresh()
+   socketRefresh(options = {})
    {
       if (this.quest && this.quest.isObservable)
       {
-         this.render(true);
+         this.render(true, options);
       }
       else
       {

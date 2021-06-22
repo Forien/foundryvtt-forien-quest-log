@@ -52,6 +52,7 @@ export default class QuestLog extends Application
          const canPlayerAccept = game.settings.get('forien-quest-log', 'allowPlayersAccept');
          const target = $(event.target).data('target');
          const questId = $(event.target).data('quest-id');
+         const name = $(event.target).data('quest-name');
 
          if (target === 'active' && canPlayerAccept)
          {
@@ -77,11 +78,11 @@ export default class QuestLog extends Application
          }
          else if (classList.includes('delete'))
          {
-            const quest = Fetch.quest(questId);
-
-            if (quest && await FQLDialog.confirmDeleteQuest(quest))
+            const result = await FQLDialog.confirmDeleteQuest({ name, result: questId, questId });
+            if (result)
             {
-               Socket.deleteQuest(await quest.delete());
+               const quest = Fetch.quest(result);
+               if (quest) { Socket.deleteQuest(await quest.delete()); }
             }
          }
       });
@@ -114,17 +115,7 @@ export default class QuestLog extends Application
    {
       const available = game.settings.get('forien-quest-log', 'availableQuests');
 
-      let quests;
-
-      try
-      {
-         quests = await Enrich.sorted(Fetch.sorted({ available }));
-      }
-      catch (err)
-      {
-console.log(`!!!!! QuestLog - getData - quests getQuests failed`);
-console.error(err);
-      }
+      const quests = await Enrich.sorted(Fetch.sorted({ available }));
 
       return mergeObject(super.getData(), {
          options,

@@ -9,6 +9,7 @@
     "NoActiveQuests": "There are no Active quests",
     "NoDocument": "An entity could not be loaded for UUID: {uuid}",
     "NoPermission": "You do not have sufficient permissions to view this entity sheet.",
+    "Quest": "Quest",
 
     "QuestTypes": {
       "InProgress": "Active",
@@ -66,6 +67,8 @@
       "SubTitle": "Subquest of {0}",
       "Objectives": "Objectives:",
       "Rewards": "Rewards:",
+      "Objective": "Objective",
+      "Reward": "Reward",
       "DragDropActor": "Drag & Drop Actor, Item or Journal Entry to set quest source.",
       "DragDropRewards": "Drag & drop items here to add them as rewards.",
       "InvalidQuestId": "Cannot open Quest Preview due to invalid Quest ID.",
@@ -89,11 +92,11 @@
     },
 
     "DeleteDialog": {
-      "Title": "Delete '{name}'",
-      "Header": "Are you sure?",
+      "TitleDel": "Delete {title}",
+      "HeaderDel": "Are you sure you want to delete: <p>'{name}'</p>",
       "BodyQuest": "This quest and its data will be permanently deleted.",
       "BodyReward": "This reward and its data will be permanently deleted.",
-      "BodyTask": "This task and its data will be permanently deleted.",
+      "BodyObjective": "This objective and its data will be permanently deleted.",
       "Delete": "Delete",
       "Cancel": "Cancel"
     },

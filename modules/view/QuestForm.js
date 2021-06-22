@@ -1,4 +1,3 @@
-import FQLDialog     from './FQLDialog.js';
 import Enrich        from '../control/Enrich.js';
 import Fetch         from '../control/Fetch.js';
 import Socket        from '../control/Socket.js';
@@ -235,29 +234,6 @@ export default class QuestForm extends FormApplication
             },
          }).browse(currentPath);
       });
-   }
-
-   /**
-    * Provides a semi-modal dialog to inform the user that they will delete the quest data. However if the user
-    * confirms quitting or if they select the 'add new quest' button to add a quest then closing of QuestForm
-    * commences.
-    *
-    * @override
-    * @inheritDoc
-    */
-   async close(options)
-   {
-      if (this._submitted)
-      {
-         return super.close(options);
-      }
-
-      // TODO: Replace 'confirm' with a Foundry style modal dialog when one is created.
-      if (await FQLDialog.confirmClose())
-      {
-         this._submitted = true;
-         return super.close(options);
-      }
    }
 
    /**

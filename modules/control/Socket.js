@@ -1,6 +1,7 @@
 import Fetch      from './Fetch.js';
 import QuestAPI   from './QuestAPI.js';
 import Utils      from './Utils.js';
+import FQLDialog  from '../view/FQLDialog.js';
 
 export default class Socket
 {
@@ -55,6 +56,7 @@ export default class Socket
          if (data.type === 'questPreviewRefresh')
          {
             const questId = data.payload.questId;
+            const options = typeof data.payload.options === 'object' ? data.payload.options : {};
 
             if (Array.isArray(questId))
             {
@@ -63,7 +65,7 @@ export default class Socket
                   const questPreview = fqlPublicAPI.questPreview[id];
                   if (questPreview !== undefined)
                   {
-                     questPreview.socketRefresh();
+                     questPreview.socketRefresh(options);
                   }
                }
             }
@@ -72,7 +74,7 @@ export default class Socket
                const questPreview = fqlPublicAPI.questPreview[questId];
                if (questPreview !== undefined)
                {
-                  questPreview.socketRefresh();
+                  questPreview.socketRefresh(options);
                }
             }
             return;
@@ -107,9 +109,11 @@ export default class Socket
 
          if (data.type === 'closeQuest')
          {
+            FQLDialog.closeDialogs(data.payload.questId);
+
             if (fqlPublicAPI.questPreview[data.payload.questId] !== undefined)
             {
-               await fqlPublicAPI.questPreview[data.payload.questId].close();
+               fqlPublicAPI.questPreview[data.payload.questId].close({ noSave: true });
             }
          }
       });
@@ -161,7 +165,8 @@ export default class Socket
       game.socket.emit('module.forien-quest-log', {
          type: 'questPreviewRefresh',
          payload: {
-            questId
+            questId,
+            options
          }
       });
 
