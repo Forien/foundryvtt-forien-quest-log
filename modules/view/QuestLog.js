@@ -1,11 +1,10 @@
-import FQLDialog        from './FQLDialog.js';
-import QuestForm        from './QuestForm.js';
-import Enrich           from '../control/Enrich.js';
-import Fetch            from '../control/Fetch.js';
-import QuestAPI         from '../control/QuestAPI.js';
-import Socket           from '../control/Socket.js';
-import Utils            from '../control/Utils.js';
-import { questTypes }   from '../model/constants.js';
+import FQLDialog                             from './FQLDialog.js';
+import QuestForm                             from './QuestForm.js';
+import Enrich                                from '../control/Enrich.js';
+import Fetch                                 from '../control/Fetch.js';
+import QuestAPI                              from '../control/QuestAPI.js';
+import Socket                                from '../control/Socket.js';
+import { constants, questTypes, settings }   from '../model/constants.js';
 
 export default class QuestLog extends Application
 {
@@ -43,9 +42,23 @@ export default class QuestLog extends Application
    {
       super.activateListeners(html);
 
+      const dynamicBackground = game.settings.get(constants.moduleName, settings.dynamicBookmarkBackground);
+      if (dynamicBackground)
+      {
+         const backImage = $('.window-app .window-content').css("background-image");
+         $('#forien-quest-log .item').css("background-image", `url(${backImage.split(/"/)[1]})`);
+      }
+
       html.on('click', '.new-quest-btn', () =>
       {
-         new QuestForm().render(true);
+         if (this._questForm && this._questForm.rendered)
+         {
+            this._questForm.bringToTop();
+         }
+         else
+         {
+            this._questForm = new QuestForm().render(true);
+         }
       });
 
       html.on('click', '.actions i', async (event) =>

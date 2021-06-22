@@ -20,11 +20,7 @@ export default class ModuleSettings
          onChange: () =>
          {
             const fqlPublicAPI = Utils.getFQLPublicAPI();
-
-            if (fqlPublicAPI.questLog.rendered)
-            {
-               fqlPublicAPI.questLog.render();
-            }
+            if (fqlPublicAPI.questLog.rendered) { fqlPublicAPI.questLog.render(); }
          }
       });
 
@@ -51,11 +47,7 @@ export default class ModuleSettings
          onChange: () =>
          {
             const fqlPublicAPI = Utils.getFQLPublicAPI();
-
-            if (fqlPublicAPI.questLog.rendered)
-            {
-               fqlPublicAPI.questLog.render();
-            }
+            if (fqlPublicAPI.questLog.rendered) { fqlPublicAPI.questLog.render(); }
          }
       });
 
@@ -69,11 +61,7 @@ export default class ModuleSettings
          onChange: () =>
          {
             const fqlPublicAPI = Utils.getFQLPublicAPI();
-
-            if (fqlPublicAPI.questLog.rendered)
-            {
-               fqlPublicAPI.questLog.render();
-            }
+            if (fqlPublicAPI.questLog.rendered) { fqlPublicAPI.questLog.render(); }
          }
       });
 
@@ -84,27 +72,20 @@ export default class ModuleSettings
          config: true,
          default: true,
          type: Boolean,
-         onChange: () =>
-         {
-            Utils.getFQLPublicAPI().renderAll();
-         }
+         onChange: () => { Utils.getFQLPublicAPI().renderAll(); }
       });
 
-      game.settings.register(constants.moduleName, settings.showTasks, {
-         name: 'ForienQuestLog.Settings.showTasks.Enable',
-         hint: 'ForienQuestLog.Settings.showTasks.EnableHint',
+      game.settings.register(constants.moduleName, settings.dynamicBookmarkBackground, {
+         name: 'ForienQuestLog.Settings.dynamicBookmarkBackground.Enable',
+         hint: 'ForienQuestLog.Settings.dynamicBookmarkBackground.EnableHint',
          scope: 'world',
          config: true,
-         default: 'default',
-         type: String,
-         choices: {
-            default: 'ForienQuestLog.Settings.showTasks.default',
-            onlyCurrent: 'ForienQuestLog.Settings.showTasks.onlyCurrent',
-            no: 'ForienQuestLog.Settings.showTasks.no'
-         },
+         default: true,
+         type: Boolean,
          onChange: () =>
          {
-            Utils.getFQLPublicAPI().renderAll();
+            const fqlPublicAPI = Utils.getFQLPublicAPI();
+            if (fqlPublicAPI.questLog.rendered) { fqlPublicAPI.questLog.render(); }
          }
       });
 
@@ -122,9 +103,23 @@ export default class ModuleSettings
          onChange: () =>
          {
             const fqlPublicAPI = Utils.getFQLPublicAPI();
-
             if (fqlPublicAPI.questLog.rendered) { fqlPublicAPI.questLog.render(); }
          }
+      });
+
+      game.settings.register(constants.moduleName, settings.showTasks, {
+         name: 'ForienQuestLog.Settings.showTasks.Enable',
+         hint: 'ForienQuestLog.Settings.showTasks.EnableHint',
+         scope: 'world',
+         config: true,
+         default: 'default',
+         type: String,
+         choices: {
+            default: 'ForienQuestLog.Settings.showTasks.default',
+            onlyCurrent: 'ForienQuestLog.Settings.showTasks.onlyCurrent',
+            no: 'ForienQuestLog.Settings.showTasks.no'
+         },
+         onChange: () => { Utils.getFQLPublicAPI().renderAll(); }
       });
 
       game.settings.register(constants.moduleName, settings.defaultPermission, {
@@ -254,10 +249,8 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            if (Utils.getFQLPublicAPI()?.questTracker.rendered)
-            {
-               Utils.getFQLPublicAPI().questTracker.render();
-            }
+            const fqlPublicAPI = Utils.getFQLPublicAPI();
+            if (fqlPublicAPI.questTracker.rendered) { fqlPublicAPI.questTracker.render(); }
          }
       });
 

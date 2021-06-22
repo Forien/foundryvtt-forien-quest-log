@@ -712,7 +712,14 @@ export default class QuestPreview extends FormApplication
                this._permControl = void 0;
             }
 
-            new QuestForm({ parentId: this.quest.id }).render(true);
+            if (this._questForm && this._questForm.rendered)
+            {
+               this._questForm.bringToTop();
+            }
+            else
+            {
+               this._questForm = new QuestForm({ parentId: this.quest.id }).render(true);
+            }
          });
       }
    }

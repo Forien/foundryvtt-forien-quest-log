@@ -55,22 +55,15 @@
   }
 
   button {
-    background: $button-background;
     height: 30px;
-    border: 1px solid $button-border;
     border-radius: 5px;
-    margin: 0 0 0 8px;
+    margin-top: 2px;
+    margin-bottom: 2px;
     transition:
       border-color .3s ease,
       background .3s ease,
       box-shadow .3s ease;
     cursor: pointer;
-
-    &:hover {
-      box-shadow: 0 0 2px $primary-accent-color inset;
-      border-color: $primary-accent-color;
-      background: $button-hover;
-    }
 
     &:first-child {
     	margin-left: 0;

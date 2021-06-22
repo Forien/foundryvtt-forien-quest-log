@@ -132,6 +132,10 @@
         "Enable": "Count hidden Tasks",
         "EnableHint": "If checked, the number of completed/total tasks will include hidden tasks."
       },
+      "dynamicBookmarkBackground": {
+        "Enable": "Dynamic Bookmark Background",
+        "EnableHint": "If checked, the bookmark tab background is dynamically set to the window content background."
+      },
       "navStyle": {
         "Enable": "Navigation Style",
         "EnableHint": "Decide how Quest Log's navigation should be displayed.",

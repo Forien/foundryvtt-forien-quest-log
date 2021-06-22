@@ -21,6 +21,7 @@ const questTypes = {
 
 const settings = {
    defaultPermission: 'defaultPermission',
+   dynamicBookmarkBackground: 'dynamicBookmarkBackground',
    enableQuestTracker: 'enableQuestTracker',
    hideFQLFromPlayers: 'hideFQLFromPlayers',
    questTrackerTasks: 'questTrackerTasks',
