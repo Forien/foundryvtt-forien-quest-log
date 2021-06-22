@@ -585,6 +585,12 @@ export default class QuestPreview extends FormApplication
             }
          });
 
+         html.on('click', '.show-all-rewards', async () =>
+         {
+            for (const reward of this.quest.rewards) {  reward.hidden = false; }
+            await this.saveQuest();
+         });
+
          html.on('click', '.add-abstract', (event) =>
          {
             const li = $('<li class="reward"></li>');
