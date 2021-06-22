@@ -137,11 +137,37 @@ export default class Quest
    }
 
    /**
+    * Gets a Reward by Foundry VTT UUID or UUIDv4 for abstract Rewards.
+    *
+    * @param {string}   uuid - The FVTT UUID to find.
+    *
+    * @returns {Reward} The task or null.
+    */
+   getReward(uuid)
+   {
+      const index = this.rewards.findIndex((t) => t.uuid === uuid);
+      return index >= 0 ? this.rewards[index] : null;
+   }
+
+   /**
     * Returns any stored Foundry sheet class.
     *
     * @returns {*}
     */
    static getSheet() { return SheetClass; }
+
+   /**
+    * Gets a task by UUID v4.
+    *
+    * @param {string}   uuidv4 - The UUID v4 to find.
+    *
+    * @returns {Task} The task or null.
+    */
+   getTask(uuidv4)
+   {
+      const index = this.tasks.findIndex((t) => t.uuidv4 === uuidv4);
+      return index >= 0 ? this.tasks[index] : null;
+   }
 
    /**
     * Normally would be in constructor(), but is extracted for usage in different methods as well
@@ -389,26 +415,6 @@ export default class Quest
       this.image = this.image === 'actor' ? 'token' : 'actor';
    }
 
-   /**
-    * Toggles visibility of Reward
-    *
-    * @param {number}   index - Reward index
-    */
-   toggleReward(index)
-   {
-      this.rewards[index]?.toggleVisible();
-   }
-
-   /**
-    * Toggles visibility of Task
-    *
-    * @param {number}   index - Task index
-    */
-   toggleTask(index)
-   {
-      this.tasks[index]?.toggleVisible();
-   }
-
 // Document simulation -----------------------------------------------------------------------------------------------
 
    /**
@@ -457,6 +463,12 @@ export default class Quest
    }
 }
 
+/**
+ * Rewards can be either an item from a Foundry VTT compendium / world item or be an abstract reward. It should be
+ * noted that FVTT item data will have a Foundry VTT UUID, but abstract rewards entered by the user will have a UUIDv4
+ * generated for them. This UUID regardless of type is accessible in `this.uuid`.
+ *
+ */
 class Reward
 {
    constructor(data = {})

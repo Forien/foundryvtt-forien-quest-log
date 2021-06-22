@@ -240,15 +240,13 @@ export default class Enrich
             break;
       }
 
-      data.data_tasks = data.tasks.map((task, index) =>
+      data.data_tasks = data.tasks.map((task) =>
       {
          // Note: We no longer are allowing user data to be enriched / currently escaping in Handlebars template.
          // XSS vulnerability w/ script data entered by user. This may change in the future as it might be possible to
          // provide a regex to verify and only upgrade content links and avoid scripts though that is a hard task.
          // task.name = TextEditor.enrichHTML(task.name);
 
-         // Set the index to explicitly use as player editing can not see hidden tasks and handlebars @index is wrong.
-         task.index = index;
          return task;
       });
 

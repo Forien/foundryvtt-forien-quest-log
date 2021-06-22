@@ -270,11 +270,24 @@ export default class Utils
    }
 
    /**
-    * @returns {string}
+    * Generates a UUID v4 compliant ID. This is used by Quest to attach a UUID to any data that isn't backed by a
+    * FoundryVTT document. Right now that is particularly {@link Task}. All GUI interaction and storage in Quest data
+    * that isn't based on an FVTT document must use a UUIDv4 to interact with this data. Lookups in Quest data must be
+    * by UUIDv4 to find an index in Quest data arrays before modifying data. FQL is potentially a multi-user module
+    * where many users could potentially be modifying Quest data that isn't backed by an FVTT document, so the Foundry
+    * core DB won't be synching or resolving this data.
+    *
+    * This code is an evolution of the following Gist.
+    * https://gist.github.com/jed/982883
+    *
+    * There is a public domain / free copy license attached to it that is not a standard OSS license...
+    * https://gist.github.com/jed/982883#file-license-txt
+    *
+    * @returns {string} UUIDv4
     */
    static uuidv4()
    {
       return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
-       (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
+       (c ^ (window.crypto || window.msCrypto).getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
    }
 }

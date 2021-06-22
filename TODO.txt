@@ -1,10 +1,55 @@
-Look at QuestLogFloating to set hidden items grayed out for GM
-
 --- commit
 
 - when player owner
   - allow edit quest details
   - edit objectives (no delete / no visibility of hidden items)
+
+--- commit
+
+Cleanup QuestPreview
+  - Change this.canEdit to this.gmEdit
+  - organize listeners by subpage
+
+--- commit
+
+Look at quest deletion and making sure the quest still exists before deleting.
+  - store quest names in template
+  - fetch after modal dialog ok action
+
+--- commit
+
+- Look at player created quests
+  - Access to QuestForm
+    - No GM notes
+
+- Look at if they are set to available and player can accept
+
+--- commit
+
+Player dragging of reward to sheets.
+
+--- commit
+
+UI / UX
+
+- Splash Art
+  x light gray background
+  x dashed border
+  - default message to "Click to set image".
+  - swap out border background when image set.
+
+- QuestForm buttons for quest giver
+  - figure out the Sass / CSS
+  - hook up JS interaction
+
+- QuestTracker user / client setting to show / hide tracker
+
+--- commit
+
+Look at UI / UX issues on other game systems.
+  - DnD 3e
+    - Make all buttons act like Foundry buttons
+  - background of tabs on Twodsix
 
 --- commit
 
@@ -25,26 +70,6 @@ Quest Preview
 
 Quest sorting
   - Hidden Quests #30: Hide parent and subquests if hidden from user
-
---- commit
-
-UI / UX
-
-- Splash Art
-  x light gray background
-  x dashed border
-  - default message to "Click to set image".
-  - swap out border background when image set.
-
-- QuestTracker
-  - Issue #26: Hide tasks module setting option
-  - When there are no active quests don't render the quest tracker
-
-- QuestForm buttons for quest giver
-  - figure out the Sass / CSS
-  - hook up JS interaction
-
-- Evaluate showing just a completed view with failed / not failed state
 
 ------------------------------
 Notes:
@@ -76,6 +101,12 @@ Api.hooks.createOpenQuestMacro
 Lang file additions:
 ForienQuestLog.NoDocument
 ForienQuestLog.NoPermission
+
+ForienQuestLog.DeleteDialog.TitleDel
+ForienQuestLog.DeleteDialog.HeaderDel
+ForienQuestLog.DeleteDialog.BodyQuest
+ForienQuestLog.DeleteDialog.BodyReward
+ForienQuestLog.DeleteDialog.BodyTask
 
 ForienQuestLog.Migration.CouldNotMigrate
 ForienQuestLog.Migration.Start

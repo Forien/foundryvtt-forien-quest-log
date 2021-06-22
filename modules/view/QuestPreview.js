@@ -5,7 +5,7 @@ import Fetch            from '../control/Fetch.js';
 import QuestAPI         from '../control/QuestAPI.js';
 import Socket           from '../control/Socket.js';
 import Utils            from '../control/Utils.js';
-import {constants, questTypes} from '../model/constants.js';
+import { questTypes }   from '../model/constants.js';
 
 export default class QuestPreview extends FormApplication
 {
@@ -314,9 +314,14 @@ export default class QuestPreview extends FormApplication
 
          html.on('click', '.task .toggleState', async (event) =>
          {
-            const index = $(event.target).data('task-index');
-            this.quest.tasks[index].toggle();
-            await this.saveQuest();
+            const uuidv4 = $(event.target).data('uuidv4');
+
+            const task = this.quest.getTask(uuidv4);
+            if (task)
+            {
+               task.toggle();
+               await this.saveQuest();
+            }
          });
 
          /**
@@ -326,15 +331,16 @@ export default class QuestPreview extends FormApplication
          html.on('click', '.task .editable', (event) =>
          {
             const target = $(event.target).data('target');
+            let uuidv4 = $(event.target).data('uuidv4');
+            let task = this.quest.getTask(uuidv4);
 
             // Early out conditional.
-            if (target === void 0 || target !== 'task.name') { return; }
+            if (target === void 0 || target !== 'task.name' || !task) { return; }
 
-            const index = $(event.target).data('index');
-            let value = this.quest.tasks[index].name;
+            let value = task.name;
 
             value = value.replace(/'/g, '&quot;');
-            const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${index !== undefined ? `data-index='${index}'` : ``}/>`);
+            const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${uuidv4 !== undefined ? `data-uuidv4='${uuidv4}'` : ``}/>`);
             const parent = $(event.target).closest('.actions').prev('.editable-container');
 
             parent.html('');
@@ -345,15 +351,20 @@ export default class QuestPreview extends FormApplication
             {
                const targetOut = $(event.target).data('target');
                const valueOut = $(event.target).val();
-               let indexOut;
 
                switch (targetOut)
                {
                   case 'task.name':
-                     indexOut = $(event.target).data('index');
-                     this.quest.tasks[indexOut].name = valueOut;
-                     await this.saveQuest();
+                  {
+                     uuidv4 = $(event.target).data('uuidv4');
+                     task = this.quest.getTask(uuidv4);
+                     if (task)
+                     {
+                        task.name = valueOut;
+                        await this.saveQuest();
+                     }
                      break;
+                  }
                }
             });
          });
@@ -453,16 +464,20 @@ export default class QuestPreview extends FormApplication
             if (target === void 0 || target === 'task.name') { return; }
 
             let value = this.quest[target];
-            let index = undefined;
+            let uuid;
 
             if (target === 'reward.name')
             {
-               index = $(event.target).data('index');
-               value = this.quest.rewards[index].data.name;
+               uuid = $(event.target).data('uuid');
+
+               const reward = this.quest.getReward(uuid);
+               if (!reward) { return; }
+
+               value = reward.name;
             }
 
             value = value.replace(/'/g, '&quot;');
-            const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${index !== undefined ? `data-index='${index}'` : ``}/>`);
+            const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${uuid !== undefined ? `data-uuid='${uuid}'` : ``}/>`);
             const parent = $(event.target).closest('.actions').prev('.editable-container');
 
             parent.html('');
@@ -473,7 +488,6 @@ export default class QuestPreview extends FormApplication
             {
                const targetOut = $(event.target).data('target');
                const valueOut = $(event.target).val();
-               let indexOut;
 
                switch (targetOut)
                {
@@ -483,9 +497,14 @@ export default class QuestPreview extends FormApplication
                      break;
 
                   case 'reward.name':
-                     indexOut = $(event.target).data('index');
-                     this.quest.rewards[indexOut].data.name = valueOut;
+                  {
+                     uuid = $(event.target).data('uuid');
+                     const reward = this.quest.getReward(uuid);
+                     if (!reward) { return; }
+
+                     reward.data.name = valueOut;
                      break;
+                  }
 
                   default:
                      if (this.quest[targetOut] !== void 0) { this.quest[targetOut] = valueOut; }
@@ -543,17 +562,26 @@ export default class QuestPreview extends FormApplication
          html.on('click', '.toggleHidden', async (event) =>
          {
             const target = $(event.target).data('target');
-            const index = $(event.target).data('index');
 
             if (target === 'task')
             {
-               this.quest.toggleTask(index);
-               await this.saveQuest();
+               const uuidv4 = $(event.target).data('uuidv4');
+               const task = this.quest.getTask(uuidv4);
+               if (task)
+               {
+                  task.toggleVisible();
+                  await this.saveQuest();
+               }
             }
             else if (target === 'reward')
             {
-               this.quest.toggleReward(index);
-               await this.saveQuest();
+               const uuid = $(event.target).data('uuid');
+               const reward = this.quest.getReward(uuid);
+               if (reward)
+               {
+                  reward.toggleVisible();
+                  await this.saveQuest();
+               }
             }
          });
 
@@ -580,6 +608,7 @@ export default class QuestPreview extends FormApplication
                      data: {
                         name: value,
                         img: 'icons/svg/mystery-man.svg',
+                        uuid: Utils.uuidv4()
                      },
                      hidden: true,
                      type: 'Abstract'
@@ -591,15 +620,23 @@ export default class QuestPreview extends FormApplication
 
          html.on('click', '.abstract-reward .reward-image', async (event) =>
          {
-            const index = $(event.target).data('index');
-            const currentPath = this.quest.rewards[index].data.img;
+            const uuid = $(event.target).data('uuid');
+
+            let reward = this.quest.getReward(uuid);
+            if (!reward) { return; }
+
+            const currentPath = reward.data.img;
             await new FilePicker({
                type: 'image',
                current: currentPath,
                callback: async (path) =>
                {
-                  this.quest.rewards[index].data.img = path;
-                  await this.saveQuest();
+                  reward = this.quest.getReward(uuid);
+                  if (reward)
+                  {
+                     reward.data.img = path;
+                     await this.saveQuest();
+                  }
                },
             }).browse(currentPath);
          });
