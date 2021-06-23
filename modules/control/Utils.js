@@ -141,7 +141,7 @@ export default class Utils
     *
     * @returns {Promise<void>}
     */
-   static async showSheetFromUUID(data, options = {})
+   static async showSheetFromUUID(data, { permissionCheck = true, ...options } = {})
    {
       const uuid = typeof data === 'string' ? data : data.uuid;
 
@@ -155,7 +155,7 @@ export default class Utils
             return null;
          }
 
-         if (!document.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER))
+         if (permissionCheck && !document.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER))
          {
             ui.notifications.warn('ForienQuestLog.NoPermission', { localize: true });
             return null;

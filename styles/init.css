@@ -32,7 +32,6 @@
 #forien-quest-log-form h2,
 .window-app.forien-quest-preview h2 {
   font-size: 18px;
-  line-height: 1;
   font-weight: 700;
   padding: 0 0 2px 0;
   margin: 0 0 4px 0;
@@ -180,6 +179,7 @@
 .window-app.forien-quest-preview section {
   flex-direction: row;
   display: block;
+  justify-content: flex-start;
 }
 
 #forien-quest-log {
@@ -675,8 +675,8 @@
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right button {
   flex: 0 0 1px;
   white-space: nowrap;
-  height: 18px;
-  font-size: 12px;
+  height: 20px;
+  font-size: 15px;
   line-height: 1;
 }
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right button i {
@@ -770,6 +770,18 @@
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .actions .fa-pen,
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .actions .fa-pen {
   font-size: 14px;
+}
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .is-player,
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .is-player {
+  flex: 0 0 40px;
+}
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .is-player i,
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .is-player i {
+  cursor: default;
+}
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .is-player i:hover,
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .is-player i:hover {
+  color: black;
 }
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .editable-container,
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .editable-container {

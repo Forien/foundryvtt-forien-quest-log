@@ -233,8 +233,14 @@ export default class QuestPreview extends FormApplication
       {
          event.stopPropagation();
          const data = $(event.currentTarget).data('transfer');
+         const uuidv4 = $(event.currentTarget).data('uuidv4');
 
-         await Utils.showSheetFromUUID(data, { editable: false });
+         const reward = this.quest.getReward(uuidv4);
+
+         if (reward && (game.user.isGM || !reward.locked))
+         {
+            await Utils.showSheetFromUUID(data, { permissionCheck: reward.locked, editable: false });
+         }
       });
 
       html.on('click', '.quest-name', (event) =>
@@ -597,10 +603,32 @@ export default class QuestPreview extends FormApplication
             }
          });
 
+         html.on('click', '.toggleLocked', async (event) =>
+         {
+            const target = $(event.target).data('target');
+
+            if (target === 'reward')
+            {
+               const uuidv4 = $(event.target).data('uuidv4');
+               const reward = this.quest.getReward(uuidv4);
+               if (reward)
+               {
+                  reward.toggleLocked();
+                  await this.saveQuest();
+               }
+            }
+         });
+
          html.on('click', '.show-all-rewards', async () =>
          {
             for (const reward of this.quest.rewards) {  reward.hidden = false; }
-            await this.saveQuest();
+            if (this.quest.rewards.length) { await this.saveQuest(); }
+         });
+
+         html.on('click', '.unlock-all-rewards', async () =>
+         {
+            for (const reward of this.quest.rewards) {  reward.locked = false; }
+            if (this.quest.rewards.length) { await this.saveQuest(); }
          });
 
          html.on('click', '.add-abstract', (event) =>
@@ -793,6 +821,7 @@ export default class QuestPreview extends FormApplication
       const data = {
          id: this.quest.id,
          isGM: game.user.isGM,
+         isPlayer: !game.user.isGM,
          canEdit: this.canEdit,
          playerEdit: this.playerEdit
       };

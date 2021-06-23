@@ -258,7 +258,8 @@ export default class Enrich
             img: item.data.img,
             type,
             hidden: item.hidden,
-            draggable: ((isGM || canPlayerDrag) && type !== 'abstract'),
+            locked: item.locked,
+            draggable: (isGM || canPlayerDrag) && (isGM || !item.locked) && type !== 'abstract',
             transfer: type !== 'abstract' ? JSON.stringify(
              { uuid: item.data.uuid, uuidv4: item.uuidv4, name: item.data.name }) : void 0,
             uuidv4: item.uuidv4

@@ -370,8 +370,8 @@ export default class Quest
 
    sortTasks(sourceUuidv4, targetUuidv4)
    {
-      // If there are sub quests in the objectives above an undefined targetIdx can occur.
-      if (typeof targetUuidv4 !== 'number') { return; }
+      // If there are sub quests in the objectives above tasks then an undefined targetUuidv4 can occur.
+      if (!targetUuidv4) { return; }
 
       const index = this.tasks.findIndex((t) => t.uuidv4 === sourceUuidv4);
       const targetIdx = this.tasks.findIndex((t) => t.uuidv4 === targetUuidv4);
@@ -474,7 +474,8 @@ class Reward
    {
       this.type = data.type || null;
       this.data = data.data || {};
-      this.hidden = data.hidden || false;
+      this.hidden = typeof data.hidden === 'boolean' ? data.hidden : false;
+      this.locked = typeof data.locked === 'boolean' ? data.locked : true;
       this.uuidv4 = data.uuidv4 || Utils.uuidv4();
    }
 
@@ -488,8 +489,15 @@ class Reward
          type: this.type,
          data: this.data,
          hidden: this.hidden,
+         locked: this.locked,
          uuidv4: this.uuidv4
       }));
+   }
+
+   toggleLocked()
+   {
+      this.locked = !this.locked;
+      return this.locked;
    }
 
    toggleVisible()

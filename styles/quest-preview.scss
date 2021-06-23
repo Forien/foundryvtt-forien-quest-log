@@ -217,8 +217,8 @@
       .quest-col-right button {
         flex: 0 0 1px;
         white-space: nowrap;
-        height: 18px;
-        font-size: 12px;
+        height: 20px;
+        font-size: 15px;
         line-height: 1;
 
         i {
@@ -317,6 +317,18 @@
 
             .fa-pen {
               font-size: 14px;
+            }
+          }
+
+          .is-player {
+            flex: 0 0 40px;
+
+            i {
+              cursor: default;
+
+              &:hover {
+                color: black;
+              }
             }
           }
 
