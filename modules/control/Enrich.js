@@ -11,7 +11,7 @@ export default class Enrich
 {
    static async giverFromQuest(quest)
    {
-      let data = {};
+      let data = null;
 
       if (quest.giver === 'abstract')
       {
@@ -31,7 +31,7 @@ export default class Enrich
 
    static async giverFromUUID(uuid, imageType = 'actor')
    {
-      let data = {};
+      let data = null;
 
       if (typeof uuid === 'string')
       {
@@ -141,7 +141,7 @@ export default class Enrich
       data.description = TextEditor.enrichHTML(data.description);
 
       data.data_giver = await Enrich.giverFromQuest(quest);
-      data.data_giver.id = quest.giver;
+      if (data.data_giver) { data.data_giver.uuid = quest.giver; }
 
       data.statusLabel = game.i18n.localize(`ForienQuestLog.QuestTypes.Labels.${data.status}`);
 

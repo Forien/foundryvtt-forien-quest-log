@@ -427,14 +427,36 @@ export default class QuestPreview extends FormApplication
                await this.quest.save();
                Socket.refreshQuestPreview({ questId: this.quest.id });
             }
-            else if (data.type === 'Item' && data._fqlQuestId === void 0 && data.id)
+
+            if (data.type === 'Item' && data._fqlQuestId === void 0)
             {
-               const uuid = Utils.getUUID(data);
+               if (typeof data.id === 'string')
+               {
+                  const uuid = Utils.getUUID(data);
 
-               const item = await Enrich.giverFromUUID(uuid);
+                  const item = await Enrich.giverFromUUID(uuid);
+                  if (item)
+                  {
+                     this.quest.addReward({ type: 'Item', data: item, hidden: true });
+                     await this.saveQuest();
+                  }
+                  else
+                  {
+                     ui.notifications.warn(game.i18n.format('ForienQuestLog.QuestPreview.Notifications.BadUUID',
+                      { uuid }));
+                  }
 
-               this.quest.addReward({ type: 'Item', data: item, hidden: true });
-               await this.saveQuest();
+               }
+               else
+               {
+                  // Document has data, but lacks a UUID, so it is a data copy. Inform user that rewards may only be
+                  // items that are backed by a document with a UUID.
+                  if (typeof data.data === 'object')
+                  {
+                     ui.notifications.warn(game.i18n.localize(
+                      'ForienQuestLog.QuestPreview.Notifications.WrongItemType'));
+                  }
+               }
             }
          });
 

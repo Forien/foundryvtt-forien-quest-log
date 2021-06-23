@@ -91,6 +91,11 @@
         "Details": "Details",
         "QuestManagement": "Manage Quest",
         "GMNotes": "GM Notes"
+      },
+
+      "Notifications": {
+        "BadUUID": "Could not retrieve the item for UUID: {uuid}",
+        "WrongItemType": "Forien's Quest Log only accepts world and compendium items as rewards."
       }
     },
 

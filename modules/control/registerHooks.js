@@ -61,7 +61,7 @@ export default function registerHooks()
             command
          };
 
-         macroData.img = quest.splash.length ? quest.splash : (await Enrich.giverFromQuest(quest)).img;
+         macroData.img = quest.splash.length ? quest.splash : (await Enrich.giverFromQuest(quest))?.img;
 
          let macro = game.macros.contents.find((m) => (m.data.command === command));
          if (!macro)
