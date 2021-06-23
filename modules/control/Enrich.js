@@ -253,13 +253,16 @@ export default class Enrich
       {
          const type = item.type.toLowerCase();
 
+         const draggable = (isGM || canPlayerDrag) && (isGM || !item.locked) && type !== 'abstract';
+
          return {
             name: item.data.name,
             img: item.data.img,
             type,
             hidden: item.hidden,
             locked: item.locked,
-            draggable: (isGM || canPlayerDrag) && (isGM || !item.locked) && type !== 'abstract',
+            isPlayerLink: !isGM && !canPlayerDrag && !item.locked && type !== 'abstract',
+            draggable,
             transfer: type !== 'abstract' ? JSON.stringify(
              { uuid: item.data.uuid, uuidv4: item.uuidv4, name: item.data.name }) : void 0,
             uuidv4: item.uuidv4

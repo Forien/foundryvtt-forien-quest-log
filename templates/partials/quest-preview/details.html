@@ -157,7 +157,7 @@
       <div class="quest-box rewards-box">
         <ul>
         {{#each data_rewards}}
-        <li class="reward {{type}}-reward {{#if (and draggable)}}draggable{{/if}} {{#if hidden}}reward-hidden{{/if}}" data-transfer="{{transfer}}" data-uuidv4="{{uuidv4}}" {{#if draggable}}draggable="true"{{/if}}>
+        <li class="reward {{type}}-reward {{#if (and draggable)}}draggable{{/if}} {{#if isPlayerLink}}is-link{{/if}} {{#if hidden}}reward-hidden{{/if}}" data-transfer="{{transfer}}" data-uuidv4="{{uuidv4}}" {{#if draggable}}draggable="true"{{/if}}>
           <div class="reward-image-container">
             <div class="reward-image" style="background-image: url({{img}})" data-uuidv4="{{uuidv4}}"></div>
           </div>

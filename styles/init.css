@@ -771,6 +771,10 @@
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .actions .fa-pen {
   font-size: 14px;
 }
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .is-link,
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .is-link {
+  cursor: pointer;
+}
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .is-player,
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .is-player {
   flex: 0 0 40px;
