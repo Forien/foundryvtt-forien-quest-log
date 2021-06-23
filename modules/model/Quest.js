@@ -197,10 +197,11 @@ export default class Quest
 
       if (typeof data.date === 'object')
       {
-         this.date = data.date;
-         if (typeof data.date.create === 'number') { data.date.create = new Date(data.date.create); }
-         if (typeof data.date.start === 'number') { data.date.start = new Date(data.date.start); }
-         if (typeof data.date.end === 'number') { data.date.end = new Date(data.date.end); }
+         this.date = {
+            create: typeof data.date.create === 'number' ? data.date.create : null,
+            start: typeof data.date.start === 'number' ? data.date.start : null,
+            end: typeof data.date.end === 'number' ? data.date.end : null
+         };
       }
       else
       {
@@ -249,7 +250,7 @@ export default class Quest
       switch (this.status)
       {
          case 'active':
-            this.date.active = Date.now();
+            this.date.start = Date.now();
             this.date.end = null;
             break;
 
@@ -261,7 +262,7 @@ export default class Quest
          case 'hidden':
          case 'available':
          default:
-            this.date.active = null;
+            this.date.start = null;
             this.date.end = null;
             break;
       }
