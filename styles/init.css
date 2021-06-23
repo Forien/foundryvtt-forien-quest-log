@@ -175,6 +175,12 @@
 .window-app.forien-quest-preview .actions i:first-child {
   margin: 0;
 }
+#forien-quest-log section,
+#forien-quest-log-form section,
+.window-app.forien-quest-preview section {
+  flex-direction: row;
+  display: block;
+}
 
 #forien-quest-log {
   min-width: 500px;

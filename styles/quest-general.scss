@@ -156,4 +156,11 @@
       }
     }
 
+  // Provides specific overrides to make sure the layout is consistent across game systems.
+  // In particular this is needed for Blades In the Dark `v3.3.0`.
+  section {
+    flex-direction: row;
+    display: block;
+    justify-content: flex-start;
+  }
 }
