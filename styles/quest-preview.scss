@@ -62,48 +62,14 @@
           position: absolute;
           top: 0;
           left: 0;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background: #efefef;
-          border-radius: 5px;
-          width: 22px;
-          height: 22px;
-          transition: color .3s ease;
-
-          &:hover {
-            color: $primary-accent-color;
-          }
-
-          i {
-            font-size: 16px;
-            border-radius: 50%;
-            line-height: 1;
-          }
+          @include button;
         }
 
         .deleteQuestGiver {
           position: absolute;
           top: 0;
-          left: 100px-22px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background: #efefef;
-          border-radius: 5px;
-          width: 22px;
-          height: 22px;
-          transition: color .3s ease;
-
-          &:hover {
-            color: $primary-accent-color;
-          }
-
-          i {
-            font-size: 16px;
-            border-radius: 50%;
-            line-height: 1;
-          }
+          left: 100-22px;
+          @include button;
         }
       }
 
@@ -576,50 +542,15 @@
           position: absolute;
           top: 26px;
           left: 281px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background: #efefef;
-          border-radius: 5px;
-          width: 22px;
-          height: 22px;
-          transition: color .3s ease;
-
-          &:hover {
-            color: $primary-accent-color;
-          }
-
-          i {
-            font-size: 16px;
-            border-radius: 50%;
-            line-height: 1;
-          }
+          @include button;
         }
 
         .change-splash-pos {
           position: absolute;
           top: 204px;
           left: 281px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background: #efefef;
-          border-radius: 5px;
-          width: 22px;
-          height: 22px;
-          transition: color .3s ease;
-
-          &:hover {
-            color: $primary-accent-color;
-          }
-
-          i {
-            font-size: 16px;
-            border-radius: 50%;
-            line-height: 1;
-          }
+          @include button;
         }
-
       }
 
       .subquests {

@@ -17,7 +17,9 @@
 
       .source-image {
         flex: 0 0 100px;
+        width: 100px;
         height: 100px;
+        position: relative;
         background-color: rgba(0, 0, 0, .1);
         font-size: 12px;
         line-height: 1.2;
@@ -35,50 +37,16 @@
 
         .toggleImage {
           position: absolute;
-          top: 72px;
-          left: 16px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background: #efefef;
-          border-radius: 5px;
-          width: 22px;
-          height: 22px;
-          transition: color .3s ease;
-
-          &:hover {
-            color: $primary-accent-color;
-          }
-
-          i {
-            font-size: 16px;
-            border-radius: 50%;
-            line-height: 1;
-          }
+          left: 0;
+          top: 0;
+          @include button;
         }
 
         .deleteQuestGiver {
           position: absolute;
-          top: 72px;
-          left: 116px-22px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background: #efefef;
-          border-radius: 5px;
-          width: 22px;
-          height: 22px;
-          transition: color .3s ease;
-
-          &:hover {
-            color: $primary-accent-color;
-          }
-
-          i {
-            font-size: 16px;
-            border-radius: 50%;
-            line-height: 1;
-          }
+          left: 100-22px;
+          top: 0;
+          @include button;
         }
 
         .drop-info {

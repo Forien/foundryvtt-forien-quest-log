@@ -42,11 +42,20 @@ export default class QuestLog extends Application
    {
       super.activateListeners(html);
 
+      // Here we use a bit of jQuery to retrieve the background image of the window content to match the game system
+      // background image for the bookmark tabs. This is only done if the module setting is checked which it is by
+      // default and the background image actually exists. The fallback is the default parchment image set in the
+      // FQL styles.
       const dynamicBackground = game.settings.get(constants.moduleName, settings.dynamicBookmarkBackground);
       if (dynamicBackground)
       {
          const backImage = $('.window-app .window-content').css("background-image");
-         $('#forien-quest-log .item').css("background-image", `url(${backImage.split(/"/)[1]})`);
+         const actualBackImage = backImage.split(/"/)[1];
+
+         if (backImage !== 'none' && actualBackImage !== void 0)
+         {
+            $('#forien-quest-log .item').css("background-image", `url(${backImage.split(/"/)[1]})`);
+         }
       }
 
       html.on('click', '.new-quest-btn', () =>

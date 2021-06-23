@@ -65,6 +65,7 @@
   height: 30px;
   border-radius: 5px;
   margin-top: 2px;
+  margin-right: 4px;
   margin-bottom: 2px;
   transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
@@ -322,7 +323,9 @@
 }
 #forien-quest-log-form form header .source-image {
   flex: 0 0 100px;
+  width: 100px;
   height: 100px;
+  position: relative;
   background-color: rgba(0, 0, 0, 0.1);
   font-size: 12px;
   line-height: 1.2;
@@ -339,8 +342,8 @@
 }
 #forien-quest-log-form form header .source-image .toggleImage {
   position: absolute;
-  top: 72px;
-  left: 16px;
+  left: 0;
+  top: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -360,8 +363,8 @@
 }
 #forien-quest-log-form form header .source-image .deleteQuestGiver {
   position: absolute;
-  top: 72px;
-  left: 94px;
+  left: 78px;
+  top: 0;
   display: flex;
   justify-content: center;
   align-items: center;
