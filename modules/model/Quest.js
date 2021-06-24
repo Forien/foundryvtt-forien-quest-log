@@ -29,6 +29,38 @@ export default class Quest
       this._id = id;
    }
 
+   /**
+    * True when no players can see or are assigned to the quest.
+    *
+    * @returns {boolean} Quest is hidden.
+    */
+   get isHidden()
+   {
+      let isHidden = true;
+
+      if (this.entry && typeof this.entry.data.permission === 'object')
+      {
+         if (this.entry.data.permission.default >= CONST.ENTITY_PERMISSIONS.OBSERVER) { return false; }
+
+         for (const [actorId, permission] of Object.entries(this.entry.data.permission))
+         {
+            if (actorId === 'default') { continue; }
+
+            const actor = game.users.get(actorId);
+
+            if (actor.isGM) { continue; }
+
+            if (permission >= CONST.ENTITY_PERMISSIONS.OBSERVER)
+            {
+               isHidden = false;
+               break;
+            }
+         }
+      }
+
+      return isHidden;
+   }
+
    get isObservable()
    {
       return game.user.isGM ||

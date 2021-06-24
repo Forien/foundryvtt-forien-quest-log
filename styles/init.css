@@ -123,6 +123,11 @@
 .window-app.forien-quest-preview i.is-personal {
   padding-left: 6px;
 }
+#forien-quest-log i.is-hidden,
+#forien-quest-log-form i.is-hidden,
+.window-app.forien-quest-preview i.is-hidden {
+  padding-left: 6px;
+}
 #forien-quest-log .editor,
 #forien-quest-log-form .editor,
 .window-app.forien-quest-preview .editor {
@@ -1094,6 +1099,10 @@
   text-align: center;
 }
 #forien-quest-log-floating-window i.is-personal {
+  flex: 0 20px;
+  line-height: 24px;
+}
+#forien-quest-log-floating-window i.is-hidden {
   flex: 0 20px;
   line-height: 24px;
 }

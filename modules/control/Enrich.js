@@ -114,7 +114,7 @@ export default class Enrich
    {
       const data = JSON.parse(JSON.stringify(quest.toJSON()));
       data.id = quest.id;
-
+      data.isHidden = quest.isHidden;
       const personalActors = quest.getPersonalActors();
 
       const isGM = game.user.isGM;

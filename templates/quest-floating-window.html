@@ -9,7 +9,10 @@
                     <i class="fas fa-bookmark"></i>
                     {{name}} {{taskCountLabel}}
                 </h3>
-                {{#if (and ../isGM isPersonal)}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
+                {{#if ../isGM}}
+                    {{#if isHidden}}<i class="is-hidden fas fa-eye" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
+                    {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
+                {{/if}}
                 <a class="quest-open create-entity" data-quest-id="{{id}}"><i class="fas fa-pen-nib fa-fw"></i></a>
             </header>
 
