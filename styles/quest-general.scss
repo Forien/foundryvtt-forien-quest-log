@@ -139,6 +139,10 @@
       justify-content: center;
       align-items: center;
 
+      &.is-player {
+        flex: 0 0 30px;
+      }
+
       i {
         font-size: 16px;
         margin-left: 4px;

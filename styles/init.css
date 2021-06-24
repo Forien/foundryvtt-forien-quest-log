@@ -154,6 +154,11 @@
   justify-content: center;
   align-items: center;
 }
+#forien-quest-log .actions.is-player,
+#forien-quest-log-form .actions.is-player,
+.window-app.forien-quest-preview .actions.is-player {
+  flex: 0 0 30px;
+}
 #forien-quest-log .actions i,
 #forien-quest-log-form .actions i,
 .window-app.forien-quest-preview .actions i {
@@ -311,7 +316,8 @@
   font-weight: 400;
 }
 #forien-quest-log .quest-log .table ul .tasks {
-  flex: 0 0 60px;
+  font-size: 18px;
+  flex: 0 0 50px;
   border-left: 1px solid rgba(0, 0, 0, 0.15);
   height: 100%;
   display: flex;

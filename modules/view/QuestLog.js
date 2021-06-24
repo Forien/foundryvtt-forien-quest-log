@@ -146,6 +146,7 @@ export default class QuestLog extends Application
       return mergeObject(super.getData(), {
          options,
          isGM: game.user.isGM,
+         isPlayer: !game.user.isGM,
          availableTab: available,
          canAccept: game.settings.get('forien-quest-log', 'allowPlayersAccept'),
          canCreate: game.settings.get('forien-quest-log', 'allowPlayersCreate'),
