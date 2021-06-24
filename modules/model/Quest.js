@@ -172,7 +172,7 @@ export default class Quest
       let parentId = null;
 
       // Stores the quest IDs which have been saved and need GUI / display aspects updated.
-      const savedIDs = [];
+      const savedIds = [];
 
       // Remove this quest from any parent
       if (parentQuest)
@@ -190,7 +190,7 @@ export default class Quest
             childQuest.parent = parentId;
 
             await childQuest.save();
-            savedIDs.push(childQuest._id);
+            savedIds.push(childQuest._id);
 
             // Update parent with new subquests.
             if (parentQuest)
@@ -203,7 +203,7 @@ export default class Quest
       if (parentQuest)
       {
          await parentQuest.save();
-         savedIDs.push(parentQuest._id);
+         savedIds.push(parentQuest._id);
       }
 
       if (this.entry)
@@ -213,8 +213,8 @@ export default class Quest
 
       // Return the delete and saved IDs.
       return {
-         deleteID: this._id,
-         savedIDs
+         deleteId: this._id,
+         savedIds
       };
    }
 

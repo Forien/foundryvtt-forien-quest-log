@@ -311,7 +311,6 @@ export default class QuestPreview extends FormApplication
             const name = target.data('name');
 
             const result = await FQLDialog.confirmDeleteTask({ name, result: uuidv4, questId: this.quest.id });
-
             if (result)
             {
                // Refresh quest data to get latest / consistent data.
@@ -409,7 +408,7 @@ export default class QuestPreview extends FormApplication
                if (result)
                {
                   const quest = Fetch.quest(result);
-                  if (quest) { Socket.deleteQuest(await quest.delete()); }
+                  if (quest) { await Socket.deletedQuest(await quest.delete()); }
                }
             }
          });

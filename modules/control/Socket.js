@@ -16,7 +16,7 @@ const s_EVENT_NAME = 'module.forien-quest-log';
  */
 const s_MESSAGE_TYPES = {
    acceptQuest: 'acceptQuest',
-   closeQuest: 'closeQuest',
+   deletedQuest: 'deletedQuest',
    questLogRefresh: 'questLogRefresh',
    questPreviewRefresh: 'questPreviewRefresh',
    questRewardDrop: 'questRewardDrop',
@@ -36,29 +36,28 @@ export default class Socket
       });
    }
 
-   static async closeQuest(questId)
-   {
-      const publicAPI = Utils.getFQLPublicAPI();
-
-      if (publicAPI.questPreview[questId] !== void 0)
-      {
-         await publicAPI.questPreview[questId].close();
-      }
-
-      game.socket.emit(s_EVENT_NAME, {
-         type: s_MESSAGE_TYPES.closeQuest,
-         payload: {
-            questId
-         }
-      });
-   }
-
-   static async deleteQuest(deleteData)
+   static async deletedQuest(deleteData)
    {
       if (typeof deleteData === 'object')
       {
-         await Socket.closeQuest(deleteData.deleteID);
-         Socket.refreshQuestPreview({ questId: deleteData.savedIDs });
+         const publicAPI = Utils.getFQLPublicAPI();
+
+         const questId = deleteData.deleteId;
+
+         if (publicAPI.questPreview[questId] !== void 0)
+         {
+            // Must always use `noSave` as the quest has already been deleted; no auto-save of QuestPreview is allowed.
+            await publicAPI.questPreview[questId].close({ noSave: true });
+         }
+
+         game.socket.emit(s_EVENT_NAME, {
+            type: s_MESSAGE_TYPES.deletedQuest,
+            payload: {
+               questId
+            }
+         });
+
+         Socket.refreshQuestPreview({ questId: deleteData.savedIds });
       }
    }
 
@@ -73,7 +72,7 @@ export default class Socket
             switch (data.type)
             {
                case s_MESSAGE_TYPES.acceptQuest: await handleAcceptQuest(data); break;
-               case s_MESSAGE_TYPES.closeQuest: await handleCloseQuest(data); break;
+               case s_MESSAGE_TYPES.deletedQuest: await handleDeletedQuest(data); break;
                case s_MESSAGE_TYPES.questLogRefresh: handleQuestLogRefresh(data); break;
                case s_MESSAGE_TYPES.questPreviewRefresh: handleQuestPreviewRefresh(data); break;
                case s_MESSAGE_TYPES.questRewardDrop: await handleQuestRewardDrop(data); break;
@@ -206,13 +205,14 @@ async function handleAcceptQuest(data)
    }
 }
 
-async function handleCloseQuest(data)
+async function handleDeletedQuest(data)
 {
    FQLDialog.closeDialogs(data.payload.questId);
 
    const fqlPublicAPI = Utils.getFQLPublicAPI();
    if (fqlPublicAPI.questPreview[data.payload.questId] !== void 0)
    {
+      // Must always use `noSave` as the quest has already been deleted; no auto-save of QuestPreview is allowed.
       await fqlPublicAPI.questPreview[data.payload.questId].close({ noSave: true });
    }
 }
