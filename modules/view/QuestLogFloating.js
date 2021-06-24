@@ -1,7 +1,7 @@
 import Enrich           from '../control/Enrich.js';
 import Fetch            from '../control/Fetch.js';
 import QuestAPI         from '../control/QuestAPI.js';
-import { questTypes }   from '../model/constants.js';
+import { constants, questTypes } from '../model/constants.js';
 
 export default class QuestLogFloating extends Application
 {
@@ -81,8 +81,8 @@ export default class QuestLogFloating extends Application
       return mergeObject(super.getData(), {
          options,
          isGM: game.user.isGM,
-         showTasks: game.settings.get('forien-quest-log', 'showTasks'),
-         style: game.settings.get('forien-quest-log', 'navStyle'),
+         showTasks: game.settings.get(constants.moduleName, 'showTasks'),
+         style: game.settings.get(constants.moduleName, 'navStyle'),
          questTypes,
          quests: await Enrich.sorted(Fetch.sorted())
       });

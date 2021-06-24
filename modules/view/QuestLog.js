@@ -21,8 +21,8 @@ export default class QuestLog extends Application
    static get defaultOptions()
    {
       return mergeObject(super.defaultOptions, {
-         id: 'forien-quest-log',
-         classes: ['forien-quest-log'],
+         id: constants.moduleName,
+         classes: [constants.moduleName],
          template: 'modules/forien-quest-log/templates/quest-log.html',
          width: 700,
          height: 480,
@@ -72,7 +72,7 @@ export default class QuestLog extends Application
 
       html.on('click', '.actions i', async (event) =>
       {
-         const canPlayerAccept = game.settings.get('forien-quest-log', 'allowPlayersAccept');
+         const canPlayerAccept = game.settings.get(constants.moduleName, 'allowPlayersAccept');
          const target = $(event.target).data('target');
          const questId = $(event.target).data('quest-id');
          const name = $(event.target).data('quest-name');
@@ -139,7 +139,7 @@ export default class QuestLog extends Application
     */
    async getData(options = {})
    {
-      const available = game.settings.get('forien-quest-log', 'availableQuests');
+      const available = game.settings.get(constants.moduleName, 'availableQuests');
 
       const quests = await Enrich.sorted(Fetch.sorted({ available }));
 
@@ -148,10 +148,10 @@ export default class QuestLog extends Application
          isGM: game.user.isGM,
          isPlayer: !game.user.isGM,
          availableTab: available,
-         canAccept: game.settings.get('forien-quest-log', 'allowPlayersAccept'),
-         canCreate: game.settings.get('forien-quest-log', 'allowPlayersCreate'),
-         showTasks: game.settings.get('forien-quest-log', 'showTasks'),
-         style: game.settings.get('forien-quest-log', 'navStyle'),
+         canAccept: game.settings.get(constants.moduleName, 'allowPlayersAccept'),
+         canCreate: game.settings.get(constants.moduleName, 'allowPlayersCreate'),
+         showTasks: game.settings.get(constants.moduleName, 'showTasks'),
+         style: game.settings.get(constants.moduleName, 'navStyle'),
          questTypes,
          quests
       });
