@@ -92,6 +92,7 @@ export default class Utils
       catch (err)
       {
          ui.notifications.error(game.i18n.format('ForienQuestLog.NoDocument', { uuid }));
+         console.error(err);
       }
 
       return document;
@@ -169,6 +170,7 @@ export default class Utils
       catch (err)
       {
          ui.notifications.error(game.i18n.format('ForienQuestLog.NoDocument', { uuid }));
+         console.error(err);
          return null;
       }
    }

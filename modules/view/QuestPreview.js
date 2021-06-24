@@ -253,9 +253,9 @@ export default class QuestPreview extends FormApplication
 
       html.on('click', '.open-actor-sheet', async (event) =>
       {
-         const actorId = $(event.target).data('actor-id');
+         const uuid = $(event.target).data('actor-uuid');
 
-         await Utils.showSheetFromUUID(actorId, { editable: false });
+         await Utils.showSheetFromUUID(uuid, { editable: false });
       });
 
       if (this.canEdit || this.playerEdit)
