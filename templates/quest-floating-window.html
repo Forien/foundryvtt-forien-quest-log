@@ -6,8 +6,11 @@
         <li class="directory-item folder flexcol collapsed" data-quest-id="{{id}}" style="display: flex;">
             <header class="folder-header flexrow">
                 <h3 class="{{#if tasks}}folder-toggle{{/if}}" data-quest-id="{{id}}">
-                    <i class="fas fa-bookmark"></i>{{name}} {{taskCountLabel}}</h3>
-                    <a class="quest-open create-entity" data-quest-id="{{id}}"><i class="fas fa-pen-nib fa-fw"></i></a>
+                    <i class="fas fa-bookmark"></i>
+                    {{name}} {{taskCountLabel}}
+                </h3>
+                {{#if (and ../isGM isPersonal)}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
+                <a class="quest-open create-entity" data-quest-id="{{id}}"><i class="fas fa-pen-nib fa-fw"></i></a>
             </header>
 
             <ol class="subdirectory">

@@ -112,31 +112,17 @@ export default class Enrich
     */
    static async quest(quest)
    {
-      const data = {};
-
+      const data = JSON.parse(JSON.stringify(quest.toJSON()));
       data.id = quest.id;
-      data.giver = quest.giver || null;
-      data.name = quest.name || game.i18n.localize('ForienQuestLog.NewQuest');
-      data.status = quest.status || 'hidden';
-      data.description = quest.description || '';
-      data.gmnotes = quest.gmnotes || '';
-      data.image = quest.image || 'actor';
-      data.giverName = quest.giverName || 'actor';
-      data.splash = quest.splash || '';
-      data.splashPos = quest.splashPos || 'center';
-      data.location = quest.location || null;
-      data.priority = quest.priority || 0;
-      data.type = quest.type || null;
-      data.parent = quest.parent || null;
-      data.subquests = quest.subquests || [];
-      data.tasks = Array.isArray(quest.tasks) ? quest.tasks.map((task) => task.toJSON()) : [];
-      data.rewards = Array.isArray(quest.rewards) ? quest.rewards.map((reward) => reward.toJSON()) : [];
 
-      data.date = typeof quest.date === 'object' ? quest.date : { create: null, start: null, end: null };
+      const personalActors = quest.getPersonalActors();
 
       const isGM = game.user.isGM;
       const canPlayerDrag = game.settings.get(constants.moduleName, 'allowPlayersDrag');
       const countHidden = game.settings.get(constants.moduleName, 'countHidden');
+
+      data.isPersonal = personalActors.length > 0;
+      data.personalActors = personalActors.map((a) => a.name).sort((a, b) => a.localeCompare(b)).join('&#013;');
 
       data.description = TextEditor.enrichHTML(data.description);
 

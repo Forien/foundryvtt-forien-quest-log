@@ -4,6 +4,7 @@
         <a class="item" data-tab="details">{{localize 'ForienQuestLog.QuestPreview.Tabs.Details'}}</a>
         <a class="item" data-tab="gmnotes">{{localize 'ForienQuestLog.QuestPreview.Tabs.GMNotes'}}</a>
         <a class="item" data-tab="management">{{localize 'ForienQuestLog.QuestPreview.Tabs.QuestManagement'}}</a>
+        {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
     </nav>
 
     <section class="quest-body">

@@ -118,6 +118,11 @@
 .window-app.forien-quest-preview .hidden {
   display: none;
 }
+#forien-quest-log i.is-personal,
+#forien-quest-log-form i.is-personal,
+.window-app.forien-quest-preview i.is-personal {
+  padding-left: 6px;
+}
 #forien-quest-log .editor,
 #forien-quest-log-form .editor,
 .window-app.forien-quest-preview .editor {
@@ -1087,6 +1092,10 @@
   flex: 0 24px;
   line-height: 34px;
   text-align: center;
+}
+#forien-quest-log-floating-window i.is-personal {
+  flex: 0 20px;
+  line-height: 24px;
 }
 #forien-quest-log-floating-window li.folder.collapsed > .folder-header h3 > i:before {
   content: "";

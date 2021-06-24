@@ -107,6 +107,12 @@
     display: none;
   }
 
+  i {
+    &.is-personal {
+      padding-left: 6px;
+    }
+  }
+
   .editor {
     height: 100%;
     padding: 8px;

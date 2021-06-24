@@ -93,6 +93,9 @@ export default class QuestTracker extends RepositionableApplication
                id: q.id,
                source: q.giver,
                name: `${q.name} ${q.taskCountLabel}`,
+               isGM: game.user.isGM,
+               isPersonal: q.isPersonal,
+               personalActors: q.personalActors,
                subquests: game.user.isGM ? subquests : subquests.filter((s) => !s.hidden),
                tasks: game.user.isGM ? q.data_tasks : q.data_tasks.filter((t) => !t.hidden)
             };
@@ -106,6 +109,9 @@ export default class QuestTracker extends RepositionableApplication
                id: q.id,
                source: q.giver,
                name: `${q.name} ${q.taskCountLabel}`,
+               isGM: game.user.isGM,
+               isPersonal: q.isPersonal,
+               personalActors: q.personalActors,
                subquests: [],
                tasks: []
             };

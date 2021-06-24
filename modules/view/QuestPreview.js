@@ -705,7 +705,8 @@ export default class QuestPreview extends FormApplication
                      if (app.appId === this._permControl.appId)
                      {
                         this._permControl = void 0;
-                        this.refresh();
+                        Socket.refreshQuestLog();
+                        Socket.refreshQuestPreview({ questId: this.quest.id });
                      }
                   });
                }
@@ -819,7 +820,6 @@ export default class QuestPreview extends FormApplication
       this.playerEdit = this.quest.isOwner;
 
       const data = {
-         id: this.quest.id,
          isGM: game.user.isGM,
          isPlayer: !game.user.isGM,
          canEdit: this.canEdit,

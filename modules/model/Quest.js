@@ -41,6 +41,56 @@ export default class Quest
        (this.entry && this.entry.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OWNER));
    }
 
+   get isPersonal()
+   {
+      let isPersonal = false;
+
+      if (this.entry && typeof this.entry.data.permission === 'object' &&
+       this.entry.data.permission.default < CONST.ENTITY_PERMISSIONS.OBSERVER)
+      {
+         for (const [actorId, permission] of Object.entries(this.entry.data.permission))
+         {
+            if (actorId === 'default') { continue; }
+
+            const actor = game.users.get(actorId);
+
+            if (actor.isGM) { continue; }
+
+            if (permission < CONST.ENTITY_PERMISSIONS.OBSERVER) { continue; }
+
+            isPersonal = true;
+            break;
+         }
+      }
+
+      return isPersonal;
+   }
+
+   getPersonalActors()
+   {
+      if (!this.isPersonal) { return []; }
+
+      const actors = [];
+
+      if (this.entry && typeof this.entry.data.permission === 'object')
+      {
+         for (const [actorId, permission] of Object.entries(this.entry.data.permission))
+         {
+            if (actorId === 'default') { continue; }
+
+            const actor = game.users.get(actorId);
+
+            if (actor.isGM) { continue; }
+
+            if (permission < CONST.ENTITY_PERMISSIONS.OBSERVER) { continue; }
+
+            actors.push(actor);
+         }
+      }
+
+      return actors;
+   }
+
    get name()
    {
       return this._name;

@@ -7,6 +7,13 @@
         }
     }
 
+    i {
+        &.is-personal {
+            flex: 0 20px;
+            line-height: 24px;
+        }
+    }
+
     li.folder.collapsed > .folder-header h3 > i:before {
         content: "\f02e";
     }
