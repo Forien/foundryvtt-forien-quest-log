@@ -17,6 +17,19 @@
  */
 
 /**
+ * @typedef {object} FQLDropData An object attached to drop data transfer which describes the FQL reward item and who
+ *                               is dropping it into an actor sheet.
+ *
+ * @property {string} questId - The Quest ID
+ *
+ * @property {string} uuidv4 - The associated UUIDv4 of a quest reward.
+ *
+ * @property {string} itemName - The reward item name.
+ *
+ * @property {string} userName - The user name who is dropping the item.
+ */
+
+/**
  * @typedef {object} SortedQuests
  *
  * @property {object[]} active - Active quests

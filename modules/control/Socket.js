@@ -59,13 +59,17 @@ export default class Socket
          {
             if (game.user.isGM)
             {
-               const dropData = data.payload.data;
+               /**
+                * @type {FQLDropData}
+                */
+               const fqlData = data.payload.data._fqlData;
+
                const notify = game.settings.get(constants.moduleName, settings.notifyRewardDrop);
                if (notify)
                {
                   ui.notifications.info(game.i18n.format('ForienQuestLog.QuestPreview.RewardDrop', {
-                     userName: dropData._fqlUserName,
-                     itemName: dropData._fqlItemName,
+                     userName: fqlData.userName,
+                     itemName: fqlData.itemName,
                      actorName: data.payload.actor.name
                   }));
                }
@@ -73,12 +77,12 @@ export default class Socket
                // The quest reward has already been removed by a GM user.
                if (data.payload.handled) { return; }
 
-               const quest = QuestAPI.get(dropData._fqlQuestId);
+               const quest = QuestAPI.get(fqlData.questId);
                if (quest)
                {
-                  quest.removeReward(dropData._fqlUuidv4);
+                  quest.removeReward(fqlData.uuidv4);
                   await quest.save();
-                  this.refreshQuestPreview({ questId: dropData._fqlQuestId });
+                  this.refreshQuestPreview({ questId: fqlData.questId });
                }
             }
          }
@@ -156,13 +160,17 @@ export default class Socket
 
       if (game.user.isGM)
       {
-         const dropData = data.data;
-         const quest = QuestAPI.get(dropData._fqlQuestId);
+         /**
+          * @type {FQLDropData}
+          */
+         const fqlData = data.data;
+
+         const quest = QuestAPI.get(fqlData.questId);
          if (quest)
          {
-            quest.removeReward(dropData._fqlUuidv4);
+            quest.removeReward(fqlData.uuidv4);
             await quest.save();
-            this.refreshQuestPreview({ questId: dropData._fqlQuestId });
+            this.refreshQuestPreview({ questId: fqlData.questId });
          }
          handled = true;
       }

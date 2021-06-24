@@ -183,10 +183,12 @@ export default class QuestPreview extends FormApplication
             const uuidData = Utils.getDataFromUUID(data);
 
             const dataTransfer = {
-               _fqlQuestId: this.quest.id,
-               _fqlUuidv4: data.uuidv4,
-               _fqlItemName: data.name,
-               _fqlUserName: game.user.name,
+               _fqlData: {
+                  questId: this.quest.id,
+                  uuidv4: data.uuidv4,
+                  itemName: data.name,
+                  userName: game.user.name,
+               },
                type: 'Item',
                data: document.data,
                uuid: data.uuid,
@@ -434,7 +436,7 @@ export default class QuestPreview extends FormApplication
                Socket.refreshQuestPreview({ questId: this.quest.id });
             }
 
-            if (data.type === 'Item' && data._fqlQuestId === void 0)
+            if (data.type === 'Item' && data._fqlData === void 0)
             {
                if (typeof data.id === 'string')
                {

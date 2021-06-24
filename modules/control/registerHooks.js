@@ -31,7 +31,7 @@ export default function registerHooks()
 
    Hooks.on('dropActorSheetData', async (actor, sheet, data) =>
    {
-      if (typeof data !== 'object' || typeof data._fqlQuestId !== 'string') { return; }
+      if (typeof data !== 'object' || typeof data._fqlData !== 'object') { return; }
 
       Socket.questRewardDrop({
          actor: { id: actor.id, name: actor.data.name },
