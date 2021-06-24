@@ -1,6 +1,7 @@
-import Fetch   from './Fetch.js';
-import Socket  from './Socket.js';
-import Utils   from './Utils.js';
+import Fetch                     from './Fetch.js';
+import Socket                    from './Socket.js';
+import Utils                     from './Utils.js';
+import { constants, settings }   from '../model/constants.js';
 
 /**
  * Quest public Api available under `Quests.`
@@ -35,6 +36,8 @@ export default class QuestAPI
     */
    static open({ questId, notify = true })
    {
+      if (!game.user.isGM && game.settings.get(constants.moduleName, settings.hideFQLFromPlayers)) { return; }
+
       try
       {
          const questPreview = Utils.getFQLPublicAPI().questPreview[questId];
@@ -62,7 +65,14 @@ export default class QuestAPI
             return;
          }
 
-         quest.sheet.render(true, { focus: true });
+         if (quest.isObservable)
+         {
+            quest.sheet.render(true, { focus: true });
+         }
+         else
+         {
+console.log(`!!!!!! QuestAPI - open - Quest is not observable - quest.name: ${quest.name}`);
+         }
       }
       catch (error)
       {

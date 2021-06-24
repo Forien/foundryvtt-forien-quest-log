@@ -237,7 +237,15 @@ function handleQuestPreviewRefresh(data)
          const questPreview = fqlPublicAPI.questPreview[id];
          if (questPreview !== void 0)
          {
-            questPreview.socketRefresh(options);
+            const quest = QuestAPI.get(id);
+            if (!quest)
+            {
+               questPreview.close();
+               continue;
+            }
+
+            if (quest.isObservable) { questPreview.render(true, options); }
+            else { questPreview.close(); }
          }
       }
    }
@@ -246,7 +254,15 @@ function handleQuestPreviewRefresh(data)
       const questPreview = fqlPublicAPI.questPreview[questId];
       if (questPreview !== void 0)
       {
-         questPreview.socketRefresh(options);
+         const quest = QuestAPI.get(questId);
+         if (!quest)
+         {
+            questPreview.close();
+            return;
+         }
+
+         if (quest.isObservable) { questPreview.render(true, options); }
+         else { questPreview.close(); }
       }
    }
 }
@@ -272,6 +288,9 @@ async function handleQuestRewardDrop(data)
 
       // The quest reward has already been removed by a GM user.
       if (data.payload.handled) { return; }
+
+      // Set handled to true so no more GM level users act upon this event.
+      data.payload.handled = true;
 
       const quest = QuestAPI.get(fqlData.questId);
       if (quest)

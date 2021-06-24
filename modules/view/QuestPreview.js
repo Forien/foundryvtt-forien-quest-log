@@ -895,19 +895,4 @@ export default class QuestPreview extends FormApplication
 
       return refresh ? this.refresh() : void 0;
    }
-
-   /**
-    * Invoked by Socket to update this quest preview. If the current user no longer has permission then close the app.
-    */
-   socketRefresh(options = {})
-   {
-      if (this.quest && this.quest.isObservable)
-      {
-         this.render(true, options);
-      }
-      else
-      {
-         this.close();
-      }
-   }
 }
