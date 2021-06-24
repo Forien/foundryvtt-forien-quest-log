@@ -4,182 +4,86 @@ import Utils                     from './Utils.js';
 import FQLDialog                 from '../view/FQLDialog.js';
 import { constants, settings }   from '../model/constants.js';
 
+/**
+ * Defines the event name to send all messages to over  `game.socket`.
+ *
+ * @type {string}
+ */
+const s_EVENT_NAME = 'module.forien-quest-log';
+
+/**
+ * Defines the different message types that FQL sends over `game.socket`.
+ */
+const s_MESSAGE_TYPES = {
+   acceptQuest: 'acceptQuest',
+   closeQuest: 'closeQuest',
+   questLogRefresh: 'questLogRefresh',
+   questPreviewRefresh: 'questPreviewRefresh',
+   questRewardDrop: 'questRewardDrop',
+   showQuestPreview: 'showQuestPreview',
+   userCantOpenQuest: 'userCantOpenQuest'
+};
+
 export default class Socket
 {
    static acceptQuest(questId)
    {
-      game.socket.emit('module.forien-quest-log', {
-         type: 'acceptQuest',
+      game.socket.emit(s_EVENT_NAME, {
+         type: s_MESSAGE_TYPES.acceptQuest,
          payload: {
             questId
          }
       });
    }
 
-   static closeQuest(questId)
+   static async closeQuest(questId)
    {
       const publicAPI = Utils.getFQLPublicAPI();
 
       if (publicAPI.questPreview[questId] !== void 0)
       {
-         publicAPI.questPreview[questId].close();
+         await publicAPI.questPreview[questId].close();
       }
 
-      game.socket.emit('module.forien-quest-log', {
-         type: 'closeQuest',
+      game.socket.emit(s_EVENT_NAME, {
+         type: s_MESSAGE_TYPES.closeQuest,
          payload: {
             questId
          }
       });
    }
 
-   static deleteQuest(deleteData)
+   static async deleteQuest(deleteData)
    {
       if (typeof deleteData === 'object')
       {
-         this.closeQuest(deleteData.deleteID);
-         this.refreshQuestPreview({ questId: deleteData.savedIDs });
+         await Socket.closeQuest(deleteData.deleteID);
+         Socket.refreshQuestPreview({ questId: deleteData.savedIDs });
       }
    }
 
    static listen()
    {
-      game.socket.on('module.forien-quest-log', async (data) =>
+      game.socket.on(s_EVENT_NAME, async (data) =>
       {
-         const fqlPublicAPI = Utils.getFQLPublicAPI();
+         if (typeof data !== 'object') { return; }
 
-         if (data.type === 'questLogRefresh')
+         try
          {
-            const options = typeof data.payload.options === 'object' ? data.payload.options : {};
-            Utils.getFQLPublicAPI().renderAll({ force: true, ...options });
-            return;
-         }
-
-         if (data.type === 'questRewardDrop')
-         {
-            if (game.user.isGM)
+            switch (data.type)
             {
-               /**
-                * @type {FQLDropData}
-                */
-               const fqlData = data.payload.data._fqlData;
-
-               const notify = game.settings.get(constants.moduleName, settings.notifyRewardDrop);
-               if (notify)
-               {
-                  ui.notifications.info(game.i18n.format('ForienQuestLog.QuestPreview.RewardDrop', {
-                     userName: fqlData.userName,
-                     itemName: fqlData.itemName,
-                     actorName: data.payload.actor.name
-                  }));
-               }
-
-               // The quest reward has already been removed by a GM user.
-               if (data.payload.handled) { return; }
-
-               const quest = QuestAPI.get(fqlData.questId);
-               if (quest)
-               {
-                  quest.removeReward(fqlData.uuidv4);
-                  await quest.save();
-                  this.refreshQuestPreview({ questId: fqlData.questId });
-               }
+               case s_MESSAGE_TYPES.acceptQuest: await handleAcceptQuest(data); break;
+               case s_MESSAGE_TYPES.closeQuest: await handleCloseQuest(data); break;
+               case s_MESSAGE_TYPES.questLogRefresh: handleQuestLogRefresh(data); break;
+               case s_MESSAGE_TYPES.questPreviewRefresh: handleQuestPreviewRefresh(data); break;
+               case s_MESSAGE_TYPES.questRewardDrop: await handleQuestRewardDrop(data); break;
+               case s_MESSAGE_TYPES.showQuestPreview: handleShowQuestPreview(data); break;
+               case s_MESSAGE_TYPES.userCantOpenQuest: handleUserCantOpenQuest(data); break;
             }
          }
-
-         if (data.type === 'questPreviewRefresh')
+         catch (err)
          {
-            const questId = data.payload.questId;
-            const options = typeof data.payload.options === 'object' ? data.payload.options : {};
-
-            if (Array.isArray(questId))
-            {
-               for (const id of questId)
-               {
-                  const questPreview = fqlPublicAPI.questPreview[id];
-                  if (questPreview !== void 0)
-                  {
-                     questPreview.socketRefresh(options);
-                  }
-               }
-            }
-            else
-            {
-               const questPreview = fqlPublicAPI.questPreview[questId];
-               if (questPreview !== void 0)
-               {
-                  questPreview.socketRefresh(options);
-               }
-            }
-            return;
-         }
-
-         if (data.type === 'showQuestPreview')
-         {
-            QuestAPI.open({ questId: data.payload.questId, notify: false });
-
-            return;
-         }
-
-         if (data.type === 'userCantOpenQuest')
-         {
-            if (game.user.isGM)
-            {
-               ui.notifications.warn(game.i18n.format('ForienQuestLog.Notifications.UserCantOpen',
-                { user: data.payload.user }), {});
-            }
-
-            return;
-         }
-
-         if (data.type === 'acceptQuest')
-         {
-            if (game.user.isGM)
-            {
-               const quest = Fetch.quest(data.payload.questId);
-               if (quest) { await quest.move('active'); }
-               this.refreshQuestLog();
-            }
-         }
-
-         if (data.type === 'closeQuest')
-         {
-            FQLDialog.closeDialogs(data.payload.questId);
-
-            if (fqlPublicAPI.questPreview[data.payload.questId] !== void 0)
-            {
-               fqlPublicAPI.questPreview[data.payload.questId].close({ noSave: true });
-            }
-         }
-      });
-   }
-
-   static async questRewardDrop(data = {})
-   {
-      let handled = false;
-
-      if (game.user.isGM)
-      {
-         /**
-          * @type {FQLDropData}
-          */
-         const fqlData = data.data;
-
-         const quest = QuestAPI.get(fqlData.questId);
-         if (quest)
-         {
-            quest.removeReward(fqlData.uuidv4);
-            await quest.save();
-            this.refreshQuestPreview({ questId: fqlData.questId });
-         }
-         handled = true;
-      }
-
-      game.socket.emit('module.forien-quest-log', {
-         type: 'questRewardDrop',
-         payload: {
-            ...data,
-            handled
+            console.error(err);
          }
       });
    }
@@ -188,8 +92,8 @@ export default class Socket
    {
       Utils.getFQLPublicAPI().renderAll({ force: true, ...options });
 
-      game.socket.emit('module.forien-quest-log', {
-         type: 'questLogRefresh',
+      game.socket.emit(s_EVENT_NAME, {
+         type: s_MESSAGE_TYPES.questLogRefresh,
          payload: {
             options
          }
@@ -229,9 +133,8 @@ export default class Socket
          }
       }
 
-
-      game.socket.emit('module.forien-quest-log', {
-         type: 'questPreviewRefresh',
+      game.socket.emit(s_EVENT_NAME, {
+         type: s_MESSAGE_TYPES.questPreviewRefresh,
          payload: {
             questId,
             options
@@ -239,13 +142,43 @@ export default class Socket
       });
 
       // Also update the quest log and other GUIs
-      if (updateLog) { this.refreshQuestLog(); }
+      if (updateLog) { Socket.refreshQuestLog(); }
+   }
+
+   static async questRewardDrop(data = {})
+   {
+      let handled = false;
+
+      if (game.user.isGM)
+      {
+         /**
+          * @type {FQLDropData}
+          */
+         const fqlData = data.data._fqlData;
+
+         const quest = QuestAPI.get(fqlData.questId);
+         if (quest)
+         {
+            quest.removeReward(fqlData.uuidv4);
+            await quest.save();
+            Socket.refreshQuestPreview({ questId: fqlData.questId });
+         }
+         handled = true;
+      }
+
+      game.socket.emit(s_EVENT_NAME, {
+         type: s_MESSAGE_TYPES.questRewardDrop,
+         payload: {
+            ...data,
+            handled
+         }
+      });
    }
 
    static showQuestPreview(questId)
    {
-      game.socket.emit('module.forien-quest-log', {
-         type: 'showQuestPreview',
+      game.socket.emit(s_EVENT_NAME, {
+         type: s_MESSAGE_TYPES.showQuestPreview,
          payload: {
             questId
          }
@@ -254,11 +187,112 @@ export default class Socket
 
    static userCantOpenQuest()
    {
-      game.socket.emit('module.forien-quest-log', {
-         type: 'userCantOpenQuest',
+      game.socket.emit(s_EVENT_NAME, {
+         type: s_MESSAGE_TYPES.userCantOpenQuest,
          payload: {
             user: game.user.name
          }
       });
+   }
+}
+
+async function handleAcceptQuest(data)
+{
+   if (game.user.isGM)
+   {
+      const quest = Fetch.quest(data.payload.questId);
+      if (quest) { await quest.move('active'); }
+      Socket.refreshQuestLog();
+   }
+}
+
+async function handleCloseQuest(data)
+{
+   FQLDialog.closeDialogs(data.payload.questId);
+
+   const fqlPublicAPI = Utils.getFQLPublicAPI();
+   if (fqlPublicAPI.questPreview[data.payload.questId] !== void 0)
+   {
+      await fqlPublicAPI.questPreview[data.payload.questId].close({ noSave: true });
+   }
+}
+
+function handleQuestLogRefresh(data)
+{
+   const options = typeof data.payload.options === 'object' ? data.payload.options : {};
+   Utils.getFQLPublicAPI().renderAll({ force: true, ...options });
+}
+
+function handleQuestPreviewRefresh(data)
+{
+   const questId = data.payload.questId;
+   const options = typeof data.payload.options === 'object' ? data.payload.options : {};
+
+   const fqlPublicAPI = Utils.getFQLPublicAPI();
+
+   if (Array.isArray(questId))
+   {
+      for (const id of questId)
+      {
+         const questPreview = fqlPublicAPI.questPreview[id];
+         if (questPreview !== void 0)
+         {
+            questPreview.socketRefresh(options);
+         }
+      }
+   }
+   else
+   {
+      const questPreview = fqlPublicAPI.questPreview[questId];
+      if (questPreview !== void 0)
+      {
+         questPreview.socketRefresh(options);
+      }
+   }
+}
+
+async function handleQuestRewardDrop(data)
+{
+   if (game.user.isGM)
+   {
+      /**
+       * @type {FQLDropData}
+       */
+      const fqlData = data.payload.data._fqlData;
+
+      const notify = game.settings.get(constants.moduleName, settings.notifyRewardDrop);
+      if (notify)
+      {
+         ui.notifications.info(game.i18n.format('ForienQuestLog.QuestPreview.RewardDrop', {
+            userName: fqlData.userName,
+            itemName: fqlData.itemName,
+            actorName: data.payload.actor.name
+         }));
+      }
+
+      // The quest reward has already been removed by a GM user.
+      if (data.payload.handled) { return; }
+
+      const quest = QuestAPI.get(fqlData.questId);
+      if (quest)
+      {
+         quest.removeReward(fqlData.uuidv4);
+         await quest.save();
+         Socket.refreshQuestPreview({ questId: fqlData.questId });
+      }
+   }
+}
+
+function handleShowQuestPreview(data)
+{
+   QuestAPI.open({ questId: data.payload.questId, notify: false });
+}
+
+function handleUserCantOpenQuest(data)
+{
+   if (game.user.isGM)
+   {
+      ui.notifications.warn(game.i18n.format('ForienQuestLog.Notifications.UserCantOpen',
+       { user: data.payload.user }), {});
    }
 }

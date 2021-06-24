@@ -33,7 +33,7 @@ export default function registerHooks()
    {
       if (typeof data !== 'object' || typeof data._fqlData !== 'object') { return; }
 
-      Socket.questRewardDrop({
+      await Socket.questRewardDrop({
          actor: { id: actor.id, name: actor.data.name },
          sheet: { id: sheet.id },
          data
