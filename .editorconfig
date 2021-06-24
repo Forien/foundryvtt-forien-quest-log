@@ -15,6 +15,9 @@ ij_visual_guides = none
 ij_wrap_on_typing = false
 
 [*.css]
+indent_size = 2
+tab_width = 2
+ij_continuation_indent_size = 2
 ij_css_align_closing_brace_with_properties = false
 ij_css_blank_lines_around_nested_selector = 1
 ij_css_blank_lines_between_blocks = 1
@@ -35,6 +38,8 @@ ij_css_value_alignment = do_not_align
 
 [*.sass]
 indent_size = 2
+tab_width = 2
+ij_continuation_indent_size = 2
 ij_sass_align_closing_brace_with_properties = false
 ij_sass_blank_lines_around_nested_selector = 1
 ij_sass_blank_lines_between_blocks = 1
@@ -55,6 +60,8 @@ ij_sass_value_alignment = 0
 
 [*.scss]
 indent_size = 2
+tab_width = 2
+ij_continuation_indent_size = 2
 ij_scss_align_closing_brace_with_properties = false
 ij_scss_blank_lines_around_nested_selector = 1
 ij_scss_blank_lines_between_blocks = 1
@@ -250,6 +257,8 @@ ij_javascript_wrap_comments = false
 
 [{*.graphqlconfig,*.har,*.jsb2,*.jsb3,*.json,.babelrc,.eslintrc,.prettierrc,.stylelintrc,bowerrc,jest.config}]
 indent_size = 2
+tab_width = 2
+ij_continuation_indent_size = 2
 ij_json_keep_blank_lines_in_code = 0
 ij_json_keep_indents_on_empty_lines = false
 ij_json_keep_line_breaks = true
@@ -262,6 +271,9 @@ ij_json_spaces_within_brackets = false
 ij_json_wrap_long_lines = false
 
 [{*.htm,*.html,*.ng,*.sht,*.shtm,*.shtml}]
+indent_size = 2
+tab_width = 2
+ij_continuation_indent_size = 2
 ij_html_add_new_line_before_tags = body,div,p,form,h1,h2,h3
 ij_html_align_attributes = true
 ij_html_align_text = false
