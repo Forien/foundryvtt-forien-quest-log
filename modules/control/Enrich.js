@@ -127,7 +127,6 @@ export default class Enrich
       data.description = TextEditor.enrichHTML(data.description);
 
       data.data_giver = await Enrich.giverFromQuest(quest);
-      if (data.data_giver) { data.data_giver.uuid = quest.giver; }
 
       data.statusLabel = game.i18n.localize(`ForienQuestLog.QuestTypes.Labels.${data.status}`);
 

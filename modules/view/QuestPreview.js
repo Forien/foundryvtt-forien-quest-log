@@ -255,7 +255,10 @@ export default class QuestPreview extends FormApplication
       {
          const uuid = $(event.target).data('actor-uuid');
 
-         await Utils.showSheetFromUUID(uuid, { editable: false });
+         if (typeof uuid === 'string' && uuid.length)
+         {
+            await Utils.showSheetFromUUID(uuid, { editable: false });
+         }
       });
 
       if (this.canEdit || this.playerEdit)
