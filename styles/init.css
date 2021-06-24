@@ -985,7 +985,7 @@
 }
 .window-app.forien-quest-preview .quest-body .management .quest-splash .delete-splash {
   position: absolute;
-  top: 26px;
+  top: 30px;
   left: 281px;
   display: flex;
   justify-content: center;
@@ -1006,7 +1006,7 @@
 }
 .window-app.forien-quest-preview .quest-body .management .quest-splash .change-splash-pos {
   position: absolute;
-  top: 204px;
+  top: 208px;
   left: 281px;
   display: flex;
   justify-content: center;

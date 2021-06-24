@@ -723,7 +723,7 @@ export default class QuestPreview extends FormApplication
             }
          });
 
-         html.on('click', '.splash-image', async () =>
+         html.on('click', '.quest-splash .drop-info', async () =>
          {
             const currentPath = this.quest.splash;
             await new FilePicker({
