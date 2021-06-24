@@ -11,6 +11,10 @@
     {
       "name": "Evan Clarke (errational)",
       "url": "https://www.patreon.com/deathsave"
+    },
+    {
+      "name": "Michael Leahy (TyphonJS)",
+      "url": "https://www.typhonjs.io"
     }
   ],
   "url": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log",
@@ -20,7 +24,7 @@
   "flags": {},
   "version": "0.7.0",
   "minimumCoreVersion": "0.8.7",
-  "compatibleCoreVersion": "0.8.7",
+  "compatibleCoreVersion": "0.8.8",
   "esmodules": [
     "./modules/init.js"
   ],
