@@ -27,8 +27,7 @@
 
     "Buttons": {
       "AddNewQuest": "Add new Quest",
-      "AddNewTask": "Add new Objective",
-      "AddNewFolder": "Add new Folder"
+      "AddNewTask": "Add Objective"
     },
 
     "QuestForm": {
