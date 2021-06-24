@@ -4,7 +4,7 @@
     <div class="quest" data-id="{{this.id}}">
         <h3 class="title">
             {{#if isGM}}
-               {{#if isHidden}}<i class="is-hidden fas fa-eye" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
+               {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
                {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>&nbsp;{{/if}}
             {{/if}}
             {{this.name}}

@@ -5,7 +5,7 @@
     <li class="drag-quest" data-quest-id="{{id}}" draggable="true">
       {{#if data_giver.img}}<div class="img quest-giver-portrait portrait-small" style="background-image: url({{data_giver.img}});" title="{{data_giver.name}}"></div>{{/if}}
       {{#if ../isGM}}
-        {{#if isHidden}}<i class="is-hidden fas fa-eye" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
+        {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
         {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
       {{/if}}
       <div class="title" data-quest-id="{{id}}">
