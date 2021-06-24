@@ -331,7 +331,7 @@
 }
 
 #forien-quest-log-form form {
-  padding: 1rem;
+  padding: 8px 16px 16px 16px;
   display: flex;
   flex-direction: column;
   background: rgba(0, 0, 0, 0.1);
@@ -489,13 +489,13 @@
   display: flex;
   flex-direction: column;
   background: rgba(0, 0, 0, 0.1);
-  padding: 0 0 24px 0;
+  padding: 0;
 }
 .window-app.forien-quest-preview .quest-body {
   height: 100%;
   flex: 1;
   overflow-y: auto;
-  padding: 16px 16px 0 16px;
+  padding: 16px;
 }
 .window-app.forien-quest-preview .quest-body .details-header {
   display: flex;
