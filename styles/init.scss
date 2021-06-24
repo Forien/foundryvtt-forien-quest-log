@@ -12,6 +12,7 @@ $primary-accent-color: #ff6400;
   width: 22px;
   height: 22px;
   transition: color .3s ease;
+  cursor: pointer;
 
   &:hover {
     color: $primary-accent-color;
