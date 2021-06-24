@@ -13,7 +13,6 @@
       <span class="drop-info">{{localize 'ForienQuestLog.QuestPreview.Management.SplashInfo'}}</span>
       {{/if}}
     </div>
-<!--    {{#if (eq splash '')}}splash-border{{/if}}-->
   {{#if splash.length}}
     <span class="delete-splash" title="{{localize 'ForienQuestLog.Tooltips.DeleteSplash'}}"><i class="fas fa-times"></i></span>
     <span class="change-splash-pos" title="{{localize 'ForienQuestLog.Tooltips.ChangeSplashPos'}}"><i class="fas fa-arrows-alt"></i></span>
@@ -27,7 +26,6 @@
     <li class="subquest-item">
       <h2 class="quest-name" data-id="{{this.id}}">{{this.name}}</h2>
       <div class="actions">
-        
         {{#if (eq this.status 'active')}}
         <i class="move fas fa-check-circle" title="{{localize 'ForienQuestLog.Tooltips.SetCompleted'}}" data-target="completed" data-id="{{this.id}}"></i>
         <i class="move fas fa-times-circle" title="{{localize 'ForienQuestLog.Tooltips.SetFailed'}}" data-target="failed" data-id="{{this.id}}"></i>

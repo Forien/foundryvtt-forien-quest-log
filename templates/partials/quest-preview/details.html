@@ -99,15 +99,31 @@
         <ul>
           {{#each data_subquest}}
           {{#if this.name}}
-          <li class="task {{#if (eq status 'hidden')}}task-hidden{{/if}}">
-            <div class="state-container">
-              <span class="state-display">
-                <i class="fas fa-check state {{#unless (eq status 'completed')}}hidden{{/unless}}"></i>
-                <i class="fas fa-times state {{#unless (eq status 'failed')}}hidden{{/unless}}"></i>
-              </span>
-            </div>
-            <p class="quest-name" data-id="{{id}}">{{name}} <i class="fas fa-link"></i></p>
-          </li>
+            {{#if (or ../isGM (and ../isPlayer (ne status 'hidden')))}}
+              <li class="task {{#if (eq status 'hidden')}}task-hidden{{/if}}">
+                <div class="state-container">
+                  <span class="state-display">
+                    <i class="fas fa-check state {{#unless (eq status 'completed')}}hidden{{/unless}}"></i>
+                    <i class="fas fa-times state {{#unless (eq status 'failed')}}hidden{{/unless}}"></i>
+                  </span>
+                </div>
+                <p class="quest-name" data-id="{{id}}">{{name}} <i class="fas fa-link"></i></p>
+                {{#if ../isGM}}
+                <div class="actions">
+                  {{#if (eq this.status 'active')}}
+                  <i class="move fas fa-check-circle" title="{{localize 'ForienQuestLog.Tooltips.SetCompleted'}}" data-target="completed" data-id="{{this.id}}"></i>
+                  <i class="move fas fa-times-circle" title="{{localize 'ForienQuestLog.Tooltips.SetFailed'}}" data-target="failed" data-id="{{this.id}}"></i>
+                  {{/if}}
+                  {{#if (eq this.status 'hidden')}}
+                  <i class="move fas fa-play" title="{{localize 'ForienQuestLog.Tooltips.SetActive'}}" data-target="active" data-id="{{this.id}}"></i>
+                  {{else}}
+                  <i class="move fas fa-stop-circle" title="{{localize 'ForienQuestLog.Tooltips.Hide'}}" data-target="hidden" data-id="{{this.id}}"></i>
+                  {{/if}}
+                  <i class="delete fas fa-trash" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}" data-id="{{this.id}}" data-name="{{this.name}}"></i>
+                </div>
+                {{/if}}
+              </li>
+            {{/if}}
           {{/if}}
           {{/each}}
           {{#each data_tasks}}

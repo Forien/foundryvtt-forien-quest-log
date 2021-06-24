@@ -404,7 +404,7 @@
             transition: color .3s ease;
             margin: 0;
             padding: 4px 8px;
-            display: inline-block;
+            flex: 1;
 
             &:hover {
               color: $primary-accent-color;

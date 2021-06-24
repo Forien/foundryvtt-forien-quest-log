@@ -863,7 +863,7 @@
   transition: color 0.3s ease;
   margin: 0;
   padding: 4px 8px;
-  display: inline-block;
+  flex: 1;
 }
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .quest-name:hover {
   color: #ff6400;
