@@ -1,7 +1,7 @@
-import Enrich           from '../control/Enrich.js';
-import Fetch            from '../control/Fetch.js';
-import QuestAPI         from '../control/QuestAPI.js';
-import { constants, questTypes } from '../model/constants.js';
+import Enrich                                from '../control/Enrich.js';
+import Fetch                                 from '../control/Fetch.js';
+import QuestAPI                              from '../control/QuestAPI.js';
+import { constants, questTypes, settings }   from '../model/constants.js';
 
 export default class QuestLogFloating extends Application
 {
@@ -82,7 +82,7 @@ export default class QuestLogFloating extends Application
          options,
          isGM: game.user.isGM,
          showTasks: game.settings.get(constants.moduleName, 'showTasks'),
-         style: game.settings.get(constants.moduleName, 'navStyle'),
+         style: game.settings.get(constants.moduleName, settings.navStyle),
          questTypes,
          quests: await Enrich.sorted(Fetch.sorted())
       });

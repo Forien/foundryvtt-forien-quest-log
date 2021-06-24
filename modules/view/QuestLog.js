@@ -72,7 +72,7 @@ export default class QuestLog extends Application
 
       html.on('click', '.actions i', async (event) =>
       {
-         const canPlayerAccept = game.settings.get(constants.moduleName, 'allowPlayersAccept');
+         const canPlayerAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
          const target = $(event.target).data('target');
          const questId = $(event.target).data('quest-id');
          const name = $(event.target).data('quest-name');
@@ -139,7 +139,7 @@ export default class QuestLog extends Application
     */
    async getData(options = {})
    {
-      const available = game.settings.get(constants.moduleName, 'availableQuests');
+      const available = game.settings.get(constants.moduleName, settings.availableQuests);
 
       const quests = await Enrich.sorted(Fetch.sorted({ available }));
 
@@ -148,10 +148,10 @@ export default class QuestLog extends Application
          isGM: game.user.isGM,
          isPlayer: !game.user.isGM,
          availableTab: available,
-         canAccept: game.settings.get(constants.moduleName, 'allowPlayersAccept'),
-         canCreate: game.settings.get(constants.moduleName, 'allowPlayersCreate'),
+         canAccept: game.settings.get(constants.moduleName, settings.allowPlayersAccept),
+         canCreate: game.settings.get(constants.moduleName, settings.allowPlayersCreate),
          showTasks: game.settings.get(constants.moduleName, 'showTasks'),
-         style: game.settings.get(constants.moduleName, 'navStyle'),
+         style: game.settings.get(constants.moduleName, settings.navStyle),
          questTypes,
          quests
       });

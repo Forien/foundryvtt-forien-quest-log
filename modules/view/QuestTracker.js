@@ -8,7 +8,7 @@ export default class QuestTracker extends RepositionableApplication
 {
    constructor(options = {})
    {
-      super(Object.assign({}, options, { positionSetting: 'quest-tracker-position' }));
+      super(Object.assign({}, options, { positionSetting: settings.questTrackerPosition }));
    }
 
    /** @override */
@@ -61,7 +61,7 @@ export default class QuestTracker extends RepositionableApplication
    {
       options = super.getData(options);
       options.quests = await this.prepareQuests();
-      if (game.settings.get(constants.moduleName, 'questTrackerBackground'))
+      if (game.settings.get(constants.moduleName, settings.questTrackerBackground))
       {
          options.background = 'background';
       }

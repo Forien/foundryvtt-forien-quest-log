@@ -118,8 +118,8 @@ export default class Enrich
       const personalActors = quest.getPersonalActors();
 
       const isGM = game.user.isGM;
-      const canPlayerDrag = game.settings.get(constants.moduleName, 'allowPlayersDrag');
-      const countHidden = game.settings.get(constants.moduleName, 'countHidden');
+      const canPlayerDrag = game.settings.get(constants.moduleName, settings.allowPlayersDrag);
+      const countHidden = game.settings.get(constants.moduleName, settings.countHidden);
 
       data.isPersonal = personalActors.length > 0;
       data.personalActors = personalActors.map((a) => a.name).sort((a, b) => a.localeCompare(b)).join('&#013;');

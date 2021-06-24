@@ -3,6 +3,11 @@ import { constants, noteControls, settings } from './model/constants.js';
 
 const s_QUEST_TRACKER_DEFAULT = { top: 80 };
 
+const scope = {
+   client: 'client',
+   world: 'world'
+};
+
 export default class ModuleSettings
 {
    /**
@@ -10,10 +15,10 @@ export default class ModuleSettings
     */
    static register()
    {
-      game.settings.register(constants.moduleName, 'availableQuests', {
+      game.settings.register(constants.moduleName, settings.availableQuests, {
          name: 'ForienQuestLog.Settings.availableQuests.Enable',
          hint: 'ForienQuestLog.Settings.availableQuests.EnableHint',
-         scope: 'world',
+         scope: scope.world,
          config: true,
          default: false,
          type: Boolean,
@@ -24,10 +29,10 @@ export default class ModuleSettings
          }
       });
 
-      game.settings.register(constants.moduleName, 'allowPlayersDrag', {
+      game.settings.register(constants.moduleName, settings.allowPlayersDrag, {
          name: 'ForienQuestLog.Settings.allowPlayersDrag.Enable',
          hint: 'ForienQuestLog.Settings.allowPlayersDrag.EnableHint',
-         scope: 'world',
+         scope: scope.world,
          config: true,
          default: false,
          type: Boolean,
@@ -37,10 +42,10 @@ export default class ModuleSettings
          }
       });
 
-      game.settings.register(constants.moduleName, 'allowPlayersCreate', {
+      game.settings.register(constants.moduleName, settings.allowPlayersCreate, {
          name: 'ForienQuestLog.Settings.allowPlayersCreate.Enable',
          hint: 'ForienQuestLog.Settings.allowPlayersCreate.EnableHint',
-         scope: 'world',
+         scope: scope.world,
          config: true,
          default: false,
          type: Boolean,
@@ -51,10 +56,10 @@ export default class ModuleSettings
          }
       });
 
-      game.settings.register(constants.moduleName, 'allowPlayersAccept', {
+      game.settings.register(constants.moduleName, settings.allowPlayersAccept, {
          name: 'ForienQuestLog.Settings.allowPlayersAccept.Enable',
          hint: 'ForienQuestLog.Settings.allowPlayersAccept.EnableHint',
-         scope: 'world',
+         scope: scope.world,
          config: true,
          default: false,
          type: Boolean,
@@ -65,10 +70,10 @@ export default class ModuleSettings
          }
       });
 
-      game.settings.register(constants.moduleName, 'countHidden', {
+      game.settings.register(constants.moduleName, settings.countHidden, {
          name: 'ForienQuestLog.Settings.countHidden.Enable',
          hint: 'ForienQuestLog.Settings.countHidden.EnableHint',
-         scope: 'world',
+         scope: scope.world,
          config: true,
          default: true,
          type: Boolean,
@@ -78,7 +83,7 @@ export default class ModuleSettings
       game.settings.register(constants.moduleName, settings.dynamicBookmarkBackground, {
          name: 'ForienQuestLog.Settings.dynamicBookmarkBackground.Enable',
          hint: 'ForienQuestLog.Settings.dynamicBookmarkBackground.EnableHint',
-         scope: 'world',
+         scope: scope.world,
          config: true,
          default: true,
          type: Boolean,
@@ -89,10 +94,10 @@ export default class ModuleSettings
          }
       });
 
-      game.settings.register(constants.moduleName, 'navStyle', {
+      game.settings.register(constants.moduleName, settings.navStyle, {
          name: 'ForienQuestLog.Settings.navStyle.Enable',
          hint: 'ForienQuestLog.Settings.navStyle.EnableHint',
-         scope: 'client',
+         scope: scope.client,
          config: true,
          default: 'bookmarks',
          type: String,
@@ -110,7 +115,7 @@ export default class ModuleSettings
       game.settings.register(constants.moduleName, settings.showTasks, {
          name: 'ForienQuestLog.Settings.showTasks.Enable',
          hint: 'ForienQuestLog.Settings.showTasks.EnableHint',
-         scope: 'world',
+         scope: scope.world,
          config: true,
          default: 'default',
          type: String,
@@ -125,7 +130,7 @@ export default class ModuleSettings
       game.settings.register(constants.moduleName, settings.defaultPermission, {
          name: 'ForienQuestLog.Settings.defaultPermissionLevel.Enable',
          hint: 'ForienQuestLog.Settings.defaultPermissionLevel.EnableHint',
-         scope: 'world',
+         scope: scope.world,
          config: true,
          default: 'Observer',
          type: String,
@@ -139,7 +144,7 @@ export default class ModuleSettings
       game.settings.register(constants.moduleName, settings.hideFQLFromPlayers, {
          name: 'ForienQuestLog.Settings.hideFQLFromPlayers.Enable',
          hint: 'ForienQuestLog.Settings.hideFQLFromPlayers.EnableHint',
-         scope: 'world',
+         scope: scope.world,
          config: true,
          default: false,
          type: Boolean,
@@ -182,32 +187,32 @@ export default class ModuleSettings
       game.settings.register(constants.moduleName, settings.notifyRewardDrop, {
          name: 'ForienQuestLog.Settings.notifyRewardDrop.Enable',
          hint: 'ForienQuestLog.Settings.notifyRewardDrop.EnableHint',
-         scope: 'world',
+         scope: scope.world,
          config: true,
          default: false,
          type: Boolean,
       });
 
-      game.settings.register(constants.moduleName, 'showFolder', {
+      game.settings.register(constants.moduleName, settings.showFolder, {
          name: 'ForienQuestLog.Settings.showFolder.Enable',
          hint: 'ForienQuestLog.Settings.showFolder.EnableHint',
-         scope: 'world',
+         scope: scope.world,
          config: true,
          default: false,
          type: Boolean,
          onChange: () => game.journal.render()
       });
 
-      game.settings.register(constants.moduleName, 'quest-tracker-position', {
-         scope: 'client',
+      game.settings.register(constants.moduleName, settings.questTrackerPosition, {
+         scope: scope.client,
          config: false,
          default: s_QUEST_TRACKER_DEFAULT,
       });
 
-      game.settings.register(constants.moduleName, 'enableQuestTracker', {
+      game.settings.register(constants.moduleName, settings.enableQuestTracker, {
          name: 'ForienQuestLog.WorkshopPUF.Settings.enableQuestTracker.name',
          hint: 'ForienQuestLog.WorkshopPUF.Settings.enableQuestTracker.hint',
-         scope: 'client',
+         scope: scope.client,
          config: true,
          default: false,
          type: Boolean,
@@ -224,10 +229,10 @@ export default class ModuleSettings
          }
       });
 
-      game.settings.register(constants.moduleName, 'questTrackerBackground', {
+      game.settings.register(constants.moduleName, settings.questTrackerBackground, {
          name: 'ForienQuestLog.WorkshopPUF.Settings.questTrackerBackground.name',
          hint: 'ForienQuestLog.WorkshopPUF.Settings.questTrackerBackground.hint',
-         scope: 'client',
+         scope: scope.client,
          config: true,
          default: true,
          type: Boolean,
@@ -240,10 +245,10 @@ export default class ModuleSettings
          }
       });
 
-      game.settings.register(constants.moduleName, 'questTrackerTasks', {
+      game.settings.register(constants.moduleName, settings.questTrackerTasks, {
          name: 'ForienQuestLog.WorkshopPUF.Settings.questTrackerTasks.name',
          hint: 'ForienQuestLog.WorkshopPUF.Settings.questTrackerTasks.hint',
-         scope: 'client',
+         scope: scope.client,
          config: true,
          default: true,
          type: Boolean,
@@ -254,10 +259,10 @@ export default class ModuleSettings
          }
       });
 
-      game.settings.register(constants.moduleName, 'resetQuestTracker', {
+      game.settings.register(constants.moduleName, settings.resetQuestTracker, {
          name: 'ForienQuestLog.WorkshopPUF.Settings.resetQuestTracker.name',
          hint: 'ForienQuestLog.WorkshopPUF.Settings.resetQuestTracker.hint',
-         scope: 'client',
+         scope: scope.client,
          config: true,
          default: false,
          type: Boolean,
@@ -265,8 +270,8 @@ export default class ModuleSettings
          {
             if (value)
             {
-               game.settings.set(constants.moduleName, 'quest-tracker-position', s_QUEST_TRACKER_DEFAULT);
-               game.settings.set(constants.moduleName, 'resetQuestTracker', false);
+               game.settings.set(constants.moduleName, settings.questTrackerPosition, s_QUEST_TRACKER_DEFAULT);
+               game.settings.set(constants.moduleName, settings.resetQuestTracker, false);
                if (Utils.getFQLPublicAPI()?.questTracker.rendered)
                {
                   Utils.getFQLPublicAPI().questTracker.render();

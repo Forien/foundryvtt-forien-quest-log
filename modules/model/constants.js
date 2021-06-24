@@ -19,13 +19,26 @@ const questTypes = {
    available: 'ForienQuestLog.QuestLog.Tabs.Available'
 };
 
+/**
+ * Defines all the module settings for world and client.
+ */
 const settings = {
+   allowPlayersAccept: 'allowPlayersAccept',
+   allowPlayersCreate: 'allowPlayersCreate',
+   allowPlayersDrag: 'allowPlayersDrag',
+   availableQuests: 'availableQuests',
+   countHidden: 'countHidden',
    defaultPermission: 'defaultPermission',
    dynamicBookmarkBackground: 'dynamicBookmarkBackground',
    enableQuestTracker: 'enableQuestTracker',
    hideFQLFromPlayers: 'hideFQLFromPlayers',
-   questTrackerTasks: 'questTrackerTasks',
+   navStyle: 'navStyle',
    notifyRewardDrop: 'notifyRewardDrop',
+   questTrackerBackground: 'questTrackerBackground',
+   questTrackerTasks: 'questTrackerTasks',
+   questTrackerPosition: 'questTrackerPosition',
+   resetQuestTracker: 'resetQuestTracker',
+   showFolder: 'showFolder',
    showTasks: 'showTasks'
 };
 
