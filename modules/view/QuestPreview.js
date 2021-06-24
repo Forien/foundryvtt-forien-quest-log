@@ -296,7 +296,7 @@ export default class QuestPreview extends FormApplication
             input.focusout(async (event) =>
             {
                const value = $(event.target).val();
-               if (value !== undefined && value.length)
+               if (value !== void 0 && value.length)
                {
                   this.quest.addTask({ name: value, hidden: game.user.isGM });
                }
@@ -351,7 +351,7 @@ export default class QuestPreview extends FormApplication
             let value = task.name;
 
             value = value.replace(/'/g, '&quot;');
-            const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${uuidv4 !== undefined ? `data-uuidv4='${uuidv4}'` : ``}/>`);
+            const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${uuidv4 !== void 0 ? `data-uuidv4='${uuidv4}'` : ``}/>`);
             const parent = $(event.target).closest('.actions').prev('.editable-container');
 
             parent.html('');
@@ -510,7 +510,7 @@ export default class QuestPreview extends FormApplication
             }
 
             value = value.replace(/'/g, '&quot;');
-            const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${uuidv4 !== undefined ? `data-uuidv4='${uuidv4}'` : ``}/>`);
+            const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${uuidv4 !== void 0 ? `data-uuidv4='${uuidv4}'` : ``}/>`);
             const parent = $(event.target).closest('.actions').prev('.editable-container');
 
             parent.html('');
@@ -650,7 +650,7 @@ export default class QuestPreview extends FormApplication
             input.focusout(async (event) =>
             {
                const value = $(event.target).val();
-               if (value !== undefined && value.length)
+               if (value !== void 0 && value.length)
                {
                   this.quest.addReward({
                      data: {

@@ -20,7 +20,7 @@ export default class Socket
    {
       const publicAPI = Utils.getFQLPublicAPI();
 
-      if (publicAPI.questPreview[questId] !== undefined)
+      if (publicAPI.questPreview[questId] !== void 0)
       {
          publicAPI.questPreview[questId].close();
       }
@@ -97,7 +97,7 @@ export default class Socket
                for (const id of questId)
                {
                   const questPreview = fqlPublicAPI.questPreview[id];
-                  if (questPreview !== undefined)
+                  if (questPreview !== void 0)
                   {
                      questPreview.socketRefresh(options);
                   }
@@ -106,7 +106,7 @@ export default class Socket
             else
             {
                const questPreview = fqlPublicAPI.questPreview[questId];
-               if (questPreview !== undefined)
+               if (questPreview !== void 0)
                {
                   questPreview.socketRefresh(options);
                }
@@ -146,7 +146,7 @@ export default class Socket
          {
             FQLDialog.closeDialogs(data.payload.questId);
 
-            if (fqlPublicAPI.questPreview[data.payload.questId] !== undefined)
+            if (fqlPublicAPI.questPreview[data.payload.questId] !== void 0)
             {
                fqlPublicAPI.questPreview[data.payload.questId].close({ noSave: true });
             }
@@ -215,7 +215,7 @@ export default class Socket
       {
          for (const id of questId)
          {
-            if (fqlPublicAPI.questPreview[id] !== undefined)
+            if (fqlPublicAPI.questPreview[id] !== void 0)
             {
                fqlPublicAPI.questPreview[id].render(true, options);
             }
@@ -223,7 +223,7 @@ export default class Socket
       }
       else
       {
-         if (fqlPublicAPI.questPreview[questId] !== undefined)
+         if (fqlPublicAPI.questPreview[questId] !== void 0)
          {
             fqlPublicAPI.questPreview[questId].render(true, options);
          }

@@ -8,7 +8,7 @@ export default class QuestsCollection
 {
    static get entities()
    {
-      if (this._entities === undefined)
+      if (this._entities === void 0)
       {
          const entities = Fetch.allQuests();
          this._entities = entities.map((e) =>
