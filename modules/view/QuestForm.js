@@ -1,10 +1,10 @@
-import Enrich        from '../control/Enrich.js';
-import Fetch         from '../control/Fetch.js';
-import Socket        from '../control/Socket.js';
-import Utils         from '../control/Utils.js';
-import Quest         from '../model/Quest.js';
-import QuestFolder   from '../model/QuestFolder.js';
-import { constants, settings } from '../model/constants.js';
+import Enrich                    from '../control/Enrich.js';
+import Fetch                     from '../control/Fetch.js';
+import Socket                    from '../control/Socket.js';
+import Utils                     from '../control/Utils.js';
+import Quest                     from '../model/Quest.js';
+import QuestFolder               from '../model/QuestFolder.js';
+import { constants, settings }   from '../model/constants.js';
 
 export default class QuestForm extends FormApplication
 {
