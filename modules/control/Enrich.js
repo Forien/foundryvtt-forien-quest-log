@@ -158,13 +158,13 @@ export default class Enrich
       {
          for (const questId of data.subquests)
          {
-            const subData = Fetch.quest(questId);
+            const subquest = Fetch.quest(questId);
 
-            if (subData)
+            if (subquest && subquest.isObservable)
             {
                // Mirror Task data for state / button state
                let state = 'square';
-               switch (subData.status)
+               switch (subquest.status)
                {
                   case 'completed':
                      state = 'check-square';
@@ -174,13 +174,17 @@ export default class Enrich
                      break;
                }
 
+               const subPersonalActors = subquest.getPersonalActors();
+
                data.data_subquest.push({
                   id: questId,
-                  giver: subData.giver,
-                  name: subData.name,
-                  status: subData.status,
+                  giver: subquest.giver,
+                  name: subquest.name,
+                  status: subquest.status,
                   state,
-                  isObservable: subData.isObservable
+                  isHidden: subquest.isHidden,
+                  isPersonal: subPersonalActors.length > 0,
+                  personalActors: subPersonalActors.map((a) => a.name).sort((a, b) => a.localeCompare(b)).join('&#013;')
                });
             }
          }

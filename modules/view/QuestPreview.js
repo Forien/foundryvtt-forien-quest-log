@@ -726,8 +726,10 @@ export default class QuestPreview extends FormApplication
                      if (app.appId === this._permControl.appId)
                      {
                         this._permControl = void 0;
+                        const questId = this.quest.parent ? [this.quest.parent, this.quest.id] : this.quest.id;
+
                         Socket.refreshQuestLog();
-                        Socket.refreshQuestPreview({ questId: this.quest.id });
+                        Socket.refreshQuestPreview({ questId });
                      }
                   });
                }

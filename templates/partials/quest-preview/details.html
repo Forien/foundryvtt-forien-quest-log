@@ -107,6 +107,10 @@
                     <i class="fas fa-times state {{#unless (eq status 'failed')}}hidden{{/unless}}"></i>
                   </span>
                 </div>
+                {{#if ../isGM}}
+                   {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
+                   {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
+                {{/if}}
                 <p class="quest-name" data-id="{{id}}">{{name}} <i class="fas fa-link"></i></p>
                 {{#if ../isGM}}
                 <div class="actions">
