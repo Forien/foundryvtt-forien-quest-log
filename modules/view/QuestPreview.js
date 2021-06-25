@@ -475,12 +475,29 @@ export default class QuestPreview extends FormApplication
             event.preventDefault();
             const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
 
-            const uuid = Utils.getUUID(data, ['Actor', 'Item', 'JournalEntry']);
-
-            if (uuid !== void 0)
+            if (typeof data.id === 'string')
             {
-               this.quest.giver = uuid;
-               await this.saveQuest();
+               const uuid = Utils.getUUID(data, ['Actor', 'Item', 'JournalEntry']);
+
+               const giver = await Enrich.giverFromUUID(uuid);
+               if (giver)
+               {
+                  this.quest.giver = uuid;
+                  await this.saveQuest();
+               }
+               else
+               {
+                  ui.notifications.warn(game.i18n.format('ForienQuestLog.QuestPreview.Notifications.BadUUID', { uuid }));
+               }
+            }
+            else
+            {
+               // Document has data, but lacks a UUID, so it is a data copy. Inform user that quest giver may only be
+               // from world and compendium sources with a UUID.
+               if (typeof data.data === 'object')
+               {
+                  ui.notifications.warn(game.i18n.localize('ForienQuestLog.QuestPreview.Notifications.WrongDocType'));
+               }
             }
          });
 

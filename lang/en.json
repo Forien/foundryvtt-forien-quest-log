@@ -93,8 +93,9 @@
       },
 
       "Notifications": {
-        "BadUUID": "Could not retrieve the item for UUID: {uuid}",
-        "WrongItemType": "Forien's Quest Log only accepts world and compendium items as rewards."
+        "BadUUID": "Could not retrieve the document for UUID: {uuid}",
+        "WrongItemType": "Forien's Quest Log only accepts world and compendium items as rewards.",
+        "WrongDocType": "Forien's Quest Log only accepts world / compendium actors, items, and journal entries as quest givers."
       }
     },
 
