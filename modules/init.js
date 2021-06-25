@@ -84,15 +84,10 @@ Hooks.once('ready', async () =>
 {
    // Only attempt to run DB migration for GM.
    if (game.user.isGM) { await DBMigration.migrate(); }
-});
 
-Hooks.once('ready', () =>
-{
-   // TODO verify that these values exist or a substitute.
    CONST.ENTITY_TYPES?.push('Quest');
    CONST.ENTITY_LINK_TYPES?.push('Quest');
 
-   // TODO switch to documentClass / sheetClass
    CONFIG['Quest'] = {
       entityClass: Quest,
       documentClass: Quest,

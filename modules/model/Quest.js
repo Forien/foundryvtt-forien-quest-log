@@ -323,7 +323,6 @@ export default class Quest
     */
    async move(target)
    {
-      // TODO: REMOVE WHEN ALL QUESTS HAVE JOURNAL ENTRIES GUARANTEED
       if (!this.entry) { return; }
 
       this.status = target;
