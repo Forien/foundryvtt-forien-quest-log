@@ -726,7 +726,12 @@ export default class QuestPreview extends FormApplication
                      if (app.appId === this._permControl.appId)
                      {
                         this._permControl = void 0;
-                        const questId = this.quest.parent ? [this.quest.parent, this.quest.id] : this.quest.id;
+
+                        // When the permissions change refresh the parent if any, this QuestPreview, and
+                        // any subquests.
+                        const questId = this.quest.parent ?
+                         [this.quest.parent, this.quest.id, ...this.quest.subquests] :
+                          [this.quest.id, ...this.quest.subquests];
 
                         Socket.refreshQuestLog();
                         Socket.refreshQuestPreview({ questId });

@@ -132,24 +132,21 @@ export default class Enrich
 
       data.isSubquest = false;
 
+      data.data_parent = {};
+
       if (data.parent !== null)
       {
-         data.isSubquest = true;
-
-         const parentData = Fetch.quest(data.parent);
-         if (parentData)
+         const parentQuest = Fetch.quest(data.parent);
+         data.isSubquest = parentQuest.isObservable;
+         if (parentQuest)
          {
             data.data_parent = {
                id: data.parent,
-               giver: parentData.giver,
-               name: parentData.name,
-               status: parentData.status
+               giver: parentQuest.giver,
+               name: parentQuest.name,
+               status: parentQuest.status
             };
          }
-      }
-      else
-      {
-         data.data_parent = {};
       }
 
       data.data_subquest = [];
