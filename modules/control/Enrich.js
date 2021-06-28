@@ -137,7 +137,7 @@ export default class Enrich
       if (data.parent !== null)
       {
          const parentQuest = Fetch.quest(data.parent);
-         data.isSubquest = parentQuest.isObservable;
+         data.isSubquest = parentQuest.isObservable && parentQuest.status !== 'hidden';
          if (parentQuest)
          {
             data.data_parent = {
