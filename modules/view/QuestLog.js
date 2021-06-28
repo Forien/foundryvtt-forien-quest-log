@@ -72,20 +72,9 @@ export default class QuestLog extends Application
 
       html.on('click', '.actions i', async (event) =>
       {
-         const canPlayerAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
          const target = $(event.target).data('target');
          const questId = $(event.target).data('quest-id');
          const name = $(event.target).data('quest-name');
-
-         if (target === 'active' && canPlayerAccept)
-         {
-            Socket.acceptQuest(questId);
-         }
-
-         if (!game.user.isGM)
-         {
-            return;
-         }
 
          const classList = $(event.target).attr('class');
          if (classList.includes('move'))
@@ -93,13 +82,7 @@ export default class QuestLog extends Application
             const quest = Fetch.quest(questId);
             if (quest)
             {
-               await quest.move(target);
-
-               Socket.refreshQuestPreview({ questId: quest.parent ? [quest.parent, quest.id] : quest.id });
-
-               const dirname = game.i18n.localize(questTypes[target]);
-               ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
-                { target: dirname }), {});
+               await Socket.moveQuest({ quest, target });
             }
          }
          else if (classList.includes('delete'))

@@ -395,15 +395,7 @@ export default class QuestPreview extends FormApplication
             if (classList.includes('move'))
             {
                const quest = Fetch.quest(questId);
-
-               if (quest && await quest.move(target))
-               {
-                  Socket.refreshQuestPreview({ questId: quest.parent ? [quest.parent, quest.id] : quest.id });
-
-                  const dirname = game.i18n.localize(questTypes[target]);
-                  ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
-                   { target: dirname }), {});
-               }
+               if (quest) { await Socket.moveQuest({ quest, target }); }
             }
             else if (classList.includes('delete'))
             {

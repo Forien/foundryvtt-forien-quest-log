@@ -1,8 +1,8 @@
-import Fetch                     from './Fetch.js';
-import QuestAPI                  from './QuestAPI.js';
-import Utils                     from './Utils.js';
-import FQLDialog                 from '../view/FQLDialog.js';
-import { constants, settings }   from '../model/constants.js';
+import Fetch                                 from './Fetch.js';
+import QuestAPI                              from './QuestAPI.js';
+import Utils                                 from './Utils.js';
+import FQLDialog                             from '../view/FQLDialog.js';
+import { constants, questTypes, settings }   from '../model/constants.js';
 
 /**
  * Defines the event name to send all messages to over  `game.socket`.
@@ -15,8 +15,8 @@ const s_EVENT_NAME = 'module.forien-quest-log';
  * Defines the different message types that FQL sends over `game.socket`.
  */
 const s_MESSAGE_TYPES = {
-   acceptQuest: 'acceptQuest',
    deletedQuest: 'deletedQuest',
+   moveQuest: 'moveQuest',
    questLogRefresh: 'questLogRefresh',
    questPreviewRefresh: 'questPreviewRefresh',
    questRewardDrop: 'questRewardDrop',
@@ -26,12 +26,40 @@ const s_MESSAGE_TYPES = {
 
 export default class Socket
 {
-   static acceptQuest(questId)
+   static async moveQuest({ quest, target })
    {
+      let handled = false;
+
+      if (game.user.isGM)
+      {
+         await quest.move(target);
+         handled = true;
+
+         Socket.refreshQuestPreview({
+            questId: quest.parent ? [quest.parent, quest.id, ...quest.subquests] : [quest.id, ...quest.subquests]
+         });
+
+         Socket.refreshQuestLog();
+
+         const dirname = game.i18n.localize(questTypes[target]);
+         ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
+          { target: dirname }), {});
+      }
+      else
+      {
+         const canPlayerAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
+         if (target !== 'active' && !canPlayerAccept)
+         {
+            return;
+         }
+      }
+
       game.socket.emit(s_EVENT_NAME, {
-         type: s_MESSAGE_TYPES.acceptQuest,
+         type: s_MESSAGE_TYPES.moveQuest,
          payload: {
-            questId
+            questId: quest.id,
+            handled,
+            target
          }
       });
    }
@@ -71,8 +99,8 @@ export default class Socket
          {
             switch (data.type)
             {
-               case s_MESSAGE_TYPES.acceptQuest: await handleAcceptQuest(data); break;
                case s_MESSAGE_TYPES.deletedQuest: await handleDeletedQuest(data); break;
+               case s_MESSAGE_TYPES.moveQuest: await handleMoveQuest(data); break;
                case s_MESSAGE_TYPES.questLogRefresh: handleQuestLogRefresh(data); break;
                case s_MESSAGE_TYPES.questPreviewRefresh: handleQuestPreviewRefresh(data); break;
                case s_MESSAGE_TYPES.questRewardDrop: await handleQuestRewardDrop(data); break;
@@ -195,15 +223,41 @@ export default class Socket
    }
 }
 
-async function handleAcceptQuest(data)
+async function handleMoveQuest(data)
 {
-   if (game.user.isGM)
+   const target = data.payload.target;
+
+   if (game.user.isGM && !data.payload.handled)
    {
       const quest = Fetch.quest(data.payload.questId);
-      if (quest) { await quest.move('active'); }
+      if (quest) { await quest.move(target); }
+
+      // Set handled to true so no other GM level users act upon the move.
+      data.payload.handled = true;
+
+      Socket.refreshQuestPreview({
+         questId: quest.parent ? [quest.parent, quest.id, ...quest.subquests] : [quest.id, ...quest.subquests]
+      });
+
       Socket.refreshQuestLog();
+
+      const dirname = game.i18n.localize(questTypes[target]);
+      ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
+       { target: dirname }), {});
+   }
+
+   // For non-GM users close QuestPreview when made hidden / inactive.
+   if (!game.user.isGM && target === 'hidden')
+   {
+      const fqlPublicAPI = Utils.getFQLPublicAPI();
+      if (fqlPublicAPI.questPreview[data.payload.questId] !== void 0)
+      {
+         // Use `noSave` just for sanity in this case as this is a remote close.
+         await fqlPublicAPI.questPreview[data.payload.questId].close({ noSave: true });
+      }
    }
 }
+
 
 async function handleDeletedQuest(data)
 {
