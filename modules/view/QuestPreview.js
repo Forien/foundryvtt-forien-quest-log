@@ -738,7 +738,7 @@ export default class QuestPreview extends FormApplication
             }
          });
 
-         html.on('click', '.quest-splash #splash-as-icon', async (event) =>
+         html.on('click', `.quest-splash #splash-as-icon-${this.quest.id}`, async (event) =>
          {
             this.quest.splashAsIcon = $(event.target).is(':checked');
             await this.saveQuest();

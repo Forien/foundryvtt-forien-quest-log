@@ -10,8 +10,8 @@
     <h2>
       {{localize 'ForienQuestLog.QuestPreview.Management.SplashArt'}}
       <span class="state-container">
-        <input type="checkbox" id="splash-as-icon" name="splash-as-icon" {{#if splashAsIcon}}checked{{/if}}>
-        <label for="splash-as-icon">{{localize 'ForienQuestLog.QuestPreview.Management.SplashQuestIcon'}}</label>
+        <input type="checkbox" id="splash-as-icon-{{this.id}}" name="splash-as-icon" {{#if splashAsIcon}}checked{{/if}}>
+        <label for="splash-as-icon-{{this.id}}">{{localize 'ForienQuestLog.QuestPreview.Management.SplashQuestIcon'}}</label>
       </span>
     </h2>
     <div class="splash-image" style="background-image: url({{splash}});background-position: {{splashPos}};" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}">
