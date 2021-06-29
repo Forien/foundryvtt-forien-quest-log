@@ -84,7 +84,7 @@ export default class QuestLogFloating extends Application
          showTasks: game.settings.get(constants.moduleName, 'showTasks'),
          style: game.settings.get(constants.moduleName, settings.navStyle),
          questTypes,
-         quests: await Enrich.sorted(Fetch.sorted())
+         quests: await Enrich.sorted(Fetch.sorted({ type: 'active' }))
       });
    }
 }

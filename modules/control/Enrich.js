@@ -118,6 +118,8 @@ export default class Enrich
       const personalActors = quest.getPersonalActors();
 
       const isGM = game.user.isGM;
+      const isPlayer = !game.user.isGM;
+
       const canPlayerDrag = game.settings.get(constants.moduleName, settings.allowPlayersDrag);
       const countHidden = game.settings.get(constants.moduleName, settings.countHidden);
 
@@ -159,6 +161,9 @@ export default class Enrich
 
             if (subquest && subquest.isObservable)
             {
+               // Do not show hidden hidden / inactive subquests to players.
+               if (isPlayer && subquest.status === 'hidden') { continue; }
+
                // Mirror Task data for state / button state
                let state = 'square';
                switch (subquest.status)

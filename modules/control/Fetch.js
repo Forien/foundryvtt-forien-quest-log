@@ -88,7 +88,7 @@ export default class Fetch
     *
     * @param {object}   options - Optional parameters.
     *
-    * @param {string}   options.target - sort by target index.
+    * @param {string}   [options.target] - sort by target index.
     *
     * @param {string}   [options.direction] - sort direction.
     *
@@ -96,7 +96,7 @@ export default class Fetch
     *
     * @param {Function} [options.sortFunc] - Custom sort function.
     *
-    * @param {string} [options.type] - Request a particular quest status.
+    * @param {string}   [options.type] - Request a particular quest status.
     *
     * @returns {SortedQuests}
     */
