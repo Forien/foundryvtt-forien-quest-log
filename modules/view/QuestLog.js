@@ -87,7 +87,7 @@ export default class QuestLog extends Application
          }
          else if (classList.includes('delete'))
          {
-            const result = await FQLDialog.confirmDeleteQuest({ name, result: questId, questId: void 0 });
+            const result = await FQLDialog.confirmDeleteQuest({ name, result: questId, questId, isQuestLog: true });
             if (result)
             {
                const quest = Fetch.quest(result);
@@ -111,6 +111,18 @@ export default class QuestLog extends Application
          event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dataTransfer));
 
       });
+   }
+
+   /**
+    * Handle closing any confirm delete quest dialog attached to QuestLog.
+    *
+    * @override
+    * @inheritDoc
+    */
+   async close(options)
+   {
+      FQLDialog.closeDialogs({ isQuestLog: true });
+      return super.close(options);
    }
 
    /**

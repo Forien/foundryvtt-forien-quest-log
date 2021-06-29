@@ -17,9 +17,9 @@ let s_DELETE_DIALOG = void 0;
  */
 export default class FQLDialog
 {
-   static closeDialogs(questId)
+   static closeDialogs({ questId, isQuestLog = false } = {})
    {
-      if (s_DELETE_DIALOG && s_DELETE_DIALOG.fqlQuestId === questId)
+      if (s_DELETE_DIALOG && (s_DELETE_DIALOG.fqlQuestId === questId || s_DELETE_DIALOG.fqlIsQuestLog === isQuestLog))
       {
          s_DELETE_DIALOG.close();
          s_DELETE_DIALOG = void 0;
@@ -39,7 +39,7 @@ export default class FQLDialog
     *
     * @returns {Promise<string|void>} Result of the delete confirmation dialog.
     */
-   static async confirmDeleteQuest({ name, result, questId })
+   static async confirmDeleteQuest({ name, result, questId, isQuestLog = false })
    {
       if (s_DELETE_DIALOG && s_DELETE_DIALOG.rendered)
       {
@@ -47,6 +47,7 @@ export default class FQLDialog
             name,
             result,
             questId,
+            isQuestLog,
             title: game.i18n.localize('ForienQuestLog.Quest'),
             body: 'ForienQuestLog.DeleteDialog.BodyQuest'
          });
@@ -61,6 +62,7 @@ export default class FQLDialog
             name,
             result,
             questId,
+            isQuestLog,
             title: game.i18n.localize('ForienQuestLog.Quest'),
             body: 'ForienQuestLog.DeleteDialog.BodyQuest'
          });
@@ -82,7 +84,7 @@ export default class FQLDialog
     *
     * @returns {Promise<string|void>} Result of the delete confirmation dialog.
     */
-   static async confirmDeleteReward({ name, result, questId })
+   static async confirmDeleteReward({ name, result, questId, isQuestLog = false })
    {
       if (s_DELETE_DIALOG && s_DELETE_DIALOG.rendered)
       {
@@ -90,6 +92,7 @@ export default class FQLDialog
             name,
             result,
             questId,
+            isQuestLog,
             title: game.i18n.localize('ForienQuestLog.QuestPreview.Reward'),
             body: 'ForienQuestLog.DeleteDialog.BodyReward'
          });
@@ -104,6 +107,7 @@ export default class FQLDialog
             name,
             result,
             questId,
+            isQuestLog,
             title: game.i18n.localize('ForienQuestLog.QuestPreview.Reward'),
             body: 'ForienQuestLog.DeleteDialog.BodyReward'
          });
@@ -125,7 +129,7 @@ export default class FQLDialog
     *
     * @returns {Promise<string|void>} Result of the delete confirmation dialog.
     */
-   static async confirmDeleteTask({ name, result, questId })
+   static async confirmDeleteTask({ name, result, questId, isQuestLog = false })
    {
       if (s_DELETE_DIALOG && s_DELETE_DIALOG.rendered)
       {
@@ -133,6 +137,7 @@ export default class FQLDialog
             name,
             result,
             questId,
+            isQuestLog,
             title: game.i18n.localize('ForienQuestLog.QuestPreview.Objective'),
             body: 'ForienQuestLog.DeleteDialog.BodyObjective'
          });
@@ -147,6 +152,7 @@ export default class FQLDialog
             name,
             result,
             questId,
+            isQuestLog,
             title: game.i18n.localize('ForienQuestLog.QuestPreview.Objective'),
             body: 'ForienQuestLog.DeleteDialog.BodyObjective'
          });
@@ -191,6 +197,8 @@ class FQLDialogImpl extends Dialog
       this._fqlOptions.resolve(void 0);
       return super.close();
    }
+
+   get fqlIsQuestLog() { return this._fqlOptions.isQuestLog; }
 
    get fqlQuestId() { return this._fqlOptions.questId; }
 

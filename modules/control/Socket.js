@@ -26,6 +26,57 @@ const s_MESSAGE_TYPES = {
 
 export default class Socket
 {
+   static async deletedQuest(deleteData)
+   {
+      if (typeof deleteData === 'object')
+      {
+         const publicAPI = Utils.getFQLPublicAPI();
+
+         const questId = deleteData.deleteId;
+
+         if (publicAPI.questPreview[questId] !== void 0)
+         {
+            // Must always use `noSave` as the quest has already been deleted; no auto-save of QuestPreview is allowed.
+            await publicAPI.questPreview[questId].close({ noSave: true });
+         }
+
+         game.socket.emit(s_EVENT_NAME, {
+            type: s_MESSAGE_TYPES.deletedQuest,
+            payload: {
+               questId,
+            }
+         });
+
+         Socket.refreshQuestPreview({ questId: deleteData.savedIds });
+      }
+   }
+
+   static listen()
+   {
+      game.socket.on(s_EVENT_NAME, async (data) =>
+      {
+         if (typeof data !== 'object') { return; }
+
+         try
+         {
+            switch (data.type)
+            {
+               case s_MESSAGE_TYPES.deletedQuest: await handleDeletedQuest(data); break;
+               case s_MESSAGE_TYPES.moveQuest: await handleMoveQuest(data); break;
+               case s_MESSAGE_TYPES.questLogRefresh: handleQuestLogRefresh(data); break;
+               case s_MESSAGE_TYPES.questPreviewRefresh: handleQuestPreviewRefresh(data); break;
+               case s_MESSAGE_TYPES.questRewardDrop: await handleQuestRewardDrop(data); break;
+               case s_MESSAGE_TYPES.showQuestPreview: handleShowQuestPreview(data); break;
+               case s_MESSAGE_TYPES.userCantOpenQuest: handleUserCantOpenQuest(data); break;
+            }
+         }
+         catch (err)
+         {
+            console.error(err);
+         }
+      });
+   }
+
    static async moveQuest({ quest, target })
    {
       let handled = false;
@@ -60,57 +111,6 @@ export default class Socket
             questId: quest.id,
             handled,
             target
-         }
-      });
-   }
-
-   static async deletedQuest(deleteData)
-   {
-      if (typeof deleteData === 'object')
-      {
-         const publicAPI = Utils.getFQLPublicAPI();
-
-         const questId = deleteData.deleteId;
-
-         if (publicAPI.questPreview[questId] !== void 0)
-         {
-            // Must always use `noSave` as the quest has already been deleted; no auto-save of QuestPreview is allowed.
-            await publicAPI.questPreview[questId].close({ noSave: true });
-         }
-
-         game.socket.emit(s_EVENT_NAME, {
-            type: s_MESSAGE_TYPES.deletedQuest,
-            payload: {
-               questId
-            }
-         });
-
-         Socket.refreshQuestPreview({ questId: deleteData.savedIds });
-      }
-   }
-
-   static listen()
-   {
-      game.socket.on(s_EVENT_NAME, async (data) =>
-      {
-         if (typeof data !== 'object') { return; }
-
-         try
-         {
-            switch (data.type)
-            {
-               case s_MESSAGE_TYPES.deletedQuest: await handleDeletedQuest(data); break;
-               case s_MESSAGE_TYPES.moveQuest: await handleMoveQuest(data); break;
-               case s_MESSAGE_TYPES.questLogRefresh: handleQuestLogRefresh(data); break;
-               case s_MESSAGE_TYPES.questPreviewRefresh: handleQuestPreviewRefresh(data); break;
-               case s_MESSAGE_TYPES.questRewardDrop: await handleQuestRewardDrop(data); break;
-               case s_MESSAGE_TYPES.showQuestPreview: handleShowQuestPreview(data); break;
-               case s_MESSAGE_TYPES.userCantOpenQuest: handleUserCantOpenQuest(data); break;
-            }
-         }
-         catch (err)
-         {
-            console.error(err);
          }
       });
    }
@@ -223,6 +223,18 @@ export default class Socket
    }
 }
 
+async function handleDeletedQuest(data)
+{
+   FQLDialog.closeDialogs({ questId: data.payload.questId });
+
+   const fqlPublicAPI = Utils.getFQLPublicAPI();
+   if (fqlPublicAPI.questPreview[data.payload.questId] !== void 0)
+   {
+      // Must always use `noSave` as the quest has already been deleted; no auto-save of QuestPreview is allowed.
+      await fqlPublicAPI.questPreview[data.payload.questId].close({ noSave: true });
+   }
+}
+
 async function handleMoveQuest(data)
 {
    const target = data.payload.target;
@@ -255,19 +267,6 @@ async function handleMoveQuest(data)
          // Use `noSave` just for sanity in this case as this is a remote close.
          await fqlPublicAPI.questPreview[data.payload.questId].close({ noSave: true });
       }
-   }
-}
-
-
-async function handleDeletedQuest(data)
-{
-   FQLDialog.closeDialogs(data.payload.questId);
-
-   const fqlPublicAPI = Utils.getFQLPublicAPI();
-   if (fqlPublicAPI.questPreview[data.payload.questId] !== void 0)
-   {
-      // Must always use `noSave` as the quest has already been deleted; no auto-save of QuestPreview is allowed.
-      await fqlPublicAPI.questPreview[data.payload.questId].close({ noSave: true });
    }
 }
 

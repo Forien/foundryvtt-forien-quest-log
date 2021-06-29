@@ -5,7 +5,6 @@ import Fetch            from '../control/Fetch.js';
 import QuestAPI         from '../control/QuestAPI.js';
 import Socket           from '../control/Socket.js';
 import Utils            from '../control/Utils.js';
-import { questTypes }   from '../model/constants.js';
 
 export default class QuestPreview extends FormApplication
 {
@@ -807,7 +806,7 @@ export default class QuestPreview extends FormApplication
    {
       delete Utils.getFQLPublicAPI().questPreview[this.quest.id];
 
-      FQLDialog.closeDialogs(this.quest.id);
+      FQLDialog.closeDialogs({ questId: this.quest.id });
 
       // If a permission control app / dialog is open close it.
       if (this._permControl)
