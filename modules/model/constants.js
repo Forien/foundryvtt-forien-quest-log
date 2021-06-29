@@ -8,11 +8,24 @@ const constants = {
 };
 
 /**
- * Stores localization strings for quest types (statuses)
+ * Stores strings for quest types (statuses)
  *
  * @returns {{hidden: string, available: string, active: string, completed: string, failed: string}}
  */
 const questTypes = {
+   active: 'active',
+   completed: 'completed',
+   failed: 'failed',
+   hidden: 'hidden',
+   available: 'available'
+};
+
+/**
+ * Stores localization strings for quest types (statuses)
+ *
+ * @returns {{hidden: string, available: string, active: string, completed: string, failed: string}}
+ */
+const questTypesI18n = {
    active: 'ForienQuestLog.QuestTypes.InProgress',
    completed: 'ForienQuestLog.QuestTypes.Completed',
    failed: 'ForienQuestLog.QuestTypes.Failed',
@@ -66,4 +79,4 @@ const noteControls = [
    }
 ];
 
-export { constants, noteControls, questTypes, settings };
+export { constants, noteControls, questTypes, questTypesI18n, settings };

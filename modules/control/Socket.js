@@ -1,8 +1,9 @@
-import Fetch                                 from './Fetch.js';
-import QuestAPI                              from './QuestAPI.js';
-import Utils                                 from './Utils.js';
-import FQLDialog                             from '../view/FQLDialog.js';
-import { constants, questTypes, settings }   from '../model/constants.js';
+import Fetch      from './Fetch.js';
+import QuestAPI   from './QuestAPI.js';
+import Utils      from './Utils.js';
+import FQLDialog  from '../view/FQLDialog.js';
+
+import { constants, questTypes, questTypesI18n, settings }  from '../model/constants.js';
 
 /**
  * Defines the event name to send all messages to over  `game.socket`.
@@ -92,14 +93,13 @@ export default class Socket
 
          Socket.refreshQuestLog();
 
-         const dirname = game.i18n.localize(questTypes[target]);
-         ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
-          { target: dirname }), {});
+         const dirname = game.i18n.localize(questTypesI18n[target]);
+         ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved', { target: dirname }), {});
       }
       else
       {
          const canPlayerAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
-         if (target !== 'active' && !canPlayerAccept)
+         if (target !== questTypes.active && !canPlayerAccept)
          {
             return;
          }
@@ -253,13 +253,13 @@ async function handleMoveQuest(data)
 
       Socket.refreshQuestLog();
 
-      const dirname = game.i18n.localize(questTypes[target]);
+      const dirname = game.i18n.localize(questTypesI18n[target]);
       ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
        { target: dirname }), {});
    }
 
    // For non-GM users close QuestPreview when made hidden / inactive.
-   if (!game.user.isGM && target === 'hidden')
+   if (!game.user.isGM && target === questTypes.hidden)
    {
       const fqlPublicAPI = Utils.getFQLPublicAPI();
       if (fqlPublicAPI.questPreview[data.payload.questId] !== void 0)

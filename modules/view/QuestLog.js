@@ -1,10 +1,11 @@
-import FQLDialog                             from './FQLDialog.js';
-import QuestForm                             from './QuestForm.js';
-import Enrich                                from '../control/Enrich.js';
-import Fetch                                 from '../control/Fetch.js';
-import QuestAPI                              from '../control/QuestAPI.js';
-import Socket                                from '../control/Socket.js';
-import { constants, questTypes, settings }   from '../model/constants.js';
+import FQLDialog  from './FQLDialog.js';
+import QuestForm  from './QuestForm.js';
+import Enrich     from '../control/Enrich.js';
+import Fetch      from '../control/Fetch.js';
+import QuestAPI   from '../control/QuestAPI.js';
+import Socket     from '../control/Socket.js';
+
+import { constants, questTypesI18n, settings }  from '../model/constants.js';
 
 export default class QuestLog extends Application
 {
@@ -147,7 +148,7 @@ export default class QuestLog extends Application
          canCreate: game.settings.get(constants.moduleName, settings.allowPlayersCreate),
          showTasks: game.settings.get(constants.moduleName, settings.showTasks),
          style: game.settings.get(constants.moduleName, settings.navStyle),
-         questTypes,
+         questTypesI18n,
          quests
       });
    }

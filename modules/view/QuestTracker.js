@@ -3,7 +3,8 @@ import Enrich                    from '../control/Enrich.js';
 import Fetch                     from '../control/Fetch.js';
 import QuestAPI                  from '../control/QuestAPI.js';
 import Utils                     from '../control/Utils.js';
-import { constants, settings }   from '../model/constants.js';
+
+import { constants, questTypes, settings }   from '../model/constants.js';
 
 export default class QuestTracker extends RepositionableApplication
 {
@@ -69,7 +70,7 @@ export default class QuestTracker extends RepositionableApplication
     */
    async prepareQuests()
    {
-      const quests = await Enrich.sorted(Fetch.sorted({ type: 'active' }));
+      const quests = await Enrich.sorted(Fetch.sorted({ type: questTypes.active }));
 
       return quests.active.map((q) =>
       {
@@ -83,7 +84,7 @@ export default class QuestTracker extends RepositionableApplication
                isHidden: subquest.isHidden,
                isPersonal: subquest.isPersonal,
                personalActors: subquest.personalActors,
-               isInactive: subquest.status === 'hidden',
+               isInactive: subquest.status === questTypes.hidden,
                state: subquest.state
             };
          });

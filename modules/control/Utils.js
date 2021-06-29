@@ -1,5 +1,6 @@
-import Fetch                     from "./Fetch.js";
-import { constants, settings }   from '../model/constants.js';
+import Fetch   from "./Fetch.js";
+
+import { constants, questTypes, settings }   from '../model/constants.js';
 
 export default class Utils
 {
@@ -129,7 +130,7 @@ export default class Utils
    {
       return game.settings.get(constants.moduleName, settings.enableQuestTracker) &&
        (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers)) &&
-        Fetch.getCount({ type: 'active' }) > 0;
+        Fetch.getCount({ type: questTypes.active }) > 0;
    }
 
    /**

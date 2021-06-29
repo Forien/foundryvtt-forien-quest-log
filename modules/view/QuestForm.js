@@ -1,10 +1,11 @@
-import Enrich                    from '../control/Enrich.js';
-import Fetch                     from '../control/Fetch.js';
-import Socket                    from '../control/Socket.js';
-import Utils                     from '../control/Utils.js';
-import Quest                     from '../model/Quest.js';
-import QuestFolder               from '../model/QuestFolder.js';
-import { constants, settings }   from '../model/constants.js';
+import Enrich        from '../control/Enrich.js';
+import Fetch         from '../control/Fetch.js';
+import Socket        from '../control/Socket.js';
+import Utils         from '../control/Utils.js';
+import Quest         from '../model/Quest.js';
+import QuestFolder   from '../model/QuestFolder.js';
+
+import { constants, questTypes, settings }   from '../model/constants.js';
 
 export default class QuestForm extends FormApplication
 {
@@ -106,7 +107,7 @@ export default class QuestForm extends FormApplication
       // Used for a player created quest setting all users as owners and the quest as 'available'.
       if (!game.user.isGM)
       {
-         data.status = 'available';
+         data.status = questTypes.available;
          permission = CONST.ENTITY_PERMISSIONS.OWNER;
       }
 

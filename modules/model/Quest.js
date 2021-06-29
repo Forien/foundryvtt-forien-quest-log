@@ -1,6 +1,6 @@
-import Fetch         from '../control/Fetch.js';
-import Utils         from '../control/Utils.js';
-import { constants } from './constants.js';
+import Fetch                     from '../control/Fetch.js';
+import Utils                     from '../control/Utils.js';
+import { constants, questTypes } from './constants.js';
 
 // Stores any Foundry sheet class to be used to render quest. Primarily used in content linking.
 let SheetClass;
@@ -63,7 +63,7 @@ export default class Quest
 
    get isObservable()
    {
-      return game.user.isGM || (this.entry && this.status !== 'hidden' &&
+      return game.user.isGM || (this.entry && this.status !== questTypes.hidden &&
        this.entry.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER));
    }
 
@@ -262,7 +262,7 @@ export default class Quest
    {
       this.giver = data.giver || null;
       this.name = data.name || game.i18n.localize('ForienQuestLog.NewQuest');
-      this.status = data.status || 'hidden';
+      this.status = data.status || questTypes.hidden;
       this.description = data.description || '';
       this.gmnotes = data.gmnotes || '';
       this.image = data.image || 'actor';
@@ -294,19 +294,19 @@ export default class Quest
 
          switch (this.status)
          {
-            case 'active':
+            case questTypes.active:
                this.date.start = Date.now();
                this.date.end = null;
                break;
 
-            case 'completed':
-            case 'failed':
+            case questTypes.completed:
+            case questTypes.failed:
                this.date.start = Date.now();
                this.date.end = Date.now();
                break;
 
-            case 'hidden':
-            case 'available':
+            case questTypes.hidden:
+            case questTypes.available:
             default:
                this.date.start = null;
                this.date.end = null;
@@ -331,18 +331,18 @@ export default class Quest
       // Update the tracked date data based on status.
       switch (this.status)
       {
-         case 'active':
+         case questTypes.active:
             this.date.start = Date.now();
             this.date.end = null;
             break;
 
-         case 'completed':
-         case 'failed':
+         case questTypes.completed:
+         case questTypes.failed:
             this.date.end = Date.now();
             break;
 
-         case 'hidden':
-         case 'available':
+         case questTypes.hidden:
+         case questTypes.available:
          default:
             this.date.start = null;
             this.date.end = null;

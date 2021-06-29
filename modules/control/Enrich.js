@@ -1,5 +1,6 @@
-import Fetch                     from './Fetch.js';
-import { constants, settings }   from '../model/constants.js';
+import Fetch   from './Fetch.js';
+
+import { constants, questTypes, settings }   from '../model/constants.js';
 
 /**
  * Enrich populates content with a lot of additional data that doesn't necessarily have to be saved
@@ -173,16 +174,16 @@ export default class Enrich
             if (subquest && subquest.isObservable)
             {
                // Do not show hidden hidden / inactive subquests to players.
-               if (isPlayer && subquest.status === 'hidden') { continue; }
+               if (isPlayer && subquest.status === questTypes.hidden) { continue; }
 
                // Mirror Task data for state / button state
                let state = 'square';
                switch (subquest.status)
                {
-                  case 'completed':
+                  case questTypes.completed:
                      state = 'check-square';
                      break;
-                  case 'failed':
+                  case questTypes.failed:
                      state = 'minus-square';
                      break;
                }
@@ -207,7 +208,7 @@ export default class Enrich
       {
          data.checkedTasks = data.tasks.filter((t) => t.completed).length;
 
-         const finishedSubquests = data.data_subquest.filter((s) => s.status === 'completed').length;
+         const finishedSubquests = data.data_subquest.filter((s) => s.status === questTypes.completed).length;
 
          data.checkedTasks += finishedSubquests;
 
@@ -218,7 +219,7 @@ export default class Enrich
          data.checkedTasks = data.tasks.filter((t) => t.hidden === false && t.completed).length;
 
          const finishedSubquests = data.data_subquest.filter(
-          (s) => s.isObservable && s.status === 'completed').length;
+          (s) => s.isObservable && s.status === questTypes.completed).length;
 
          data.checkedTasks += finishedSubquests;
 

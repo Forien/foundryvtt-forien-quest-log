@@ -1,8 +1,9 @@
-import Enrich                                from '../control/Enrich.js';
-import Fetch                                 from '../control/Fetch.js';
-import QuestAPI                              from '../control/QuestAPI.js';
-import Utils                                 from '../control/Utils.js';
-import { constants, questTypes, settings }   from '../model/constants.js';
+import Enrich     from '../control/Enrich.js';
+import Fetch      from '../control/Fetch.js';
+import QuestAPI   from '../control/QuestAPI.js';
+import Utils      from '../control/Utils.js';
+
+import { constants, questTypes, questTypesI18n, settings }  from '../model/constants.js';
 
 export default class QuestLogFloating extends Application
 {
@@ -65,7 +66,7 @@ export default class QuestLogFloating extends Application
 
       // Open and close folders on rerender. Data is store in localstorage so
       // display is consistent after each render.
-      for (const quest of Fetch.sorted({ type: 'active' }).active)
+      for (const quest of Fetch.sorted({ type: questTypes.active }).active)
       {
          const collapsed = sessionStorage.getItem(`${constants.folderState}${quest.id}`);
 
@@ -92,8 +93,8 @@ export default class QuestLogFloating extends Application
          isGM: game.user.isGM,
          showTasks: game.settings.get(constants.moduleName, settings.showTasks),
          style: game.settings.get(constants.moduleName, settings.navStyle),
-         questTypes,
-         quests: await Enrich.sorted(Fetch.sorted({ type: 'active' }))
+         questTypesI18n,
+         quests: await Enrich.sorted(Fetch.sorted({ type: questTypes.active }))
       });
    }
 }
