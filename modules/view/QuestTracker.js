@@ -74,30 +74,10 @@ export default class QuestTracker extends RepositionableApplication
 
       return quests.active.map((q) =>
       {
-         // Map subquest status to task state.
-         const mappedSubquests = q.data_subquest.map((subquest) =>
-         {
-            return {
-               id: subquest.id,
-               name: subquest.name,
-               isHidden: subquest.isHidden,
-               isPersonal: subquest.isPersonal,
-               personalActors: subquest.personalActors,
-               isInactive: subquest.status === questTypes.hidden,
-               state: subquest.state
-            };
-         });
+         const collapsed = sessionStorage.getItem(`${constants.folderState}${q.id}`) === 'false';
 
-         const collapsed = sessionStorage.getItem(`${constants.folderState}${q.id}`);
-
-         let tasks = [];
-         let subquests = [];
-
-         if (collapsed === 'false')
-         {
-            tasks = game.user.isGM ? q.data_tasks : q.data_tasks.filter((t) => !t.hidden);
-            subquests = game.user.isGM ? mappedSubquests : mappedSubquests.filter((s) => !s.hidden);
-         }
+         const tasks = collapsed ? q.data_tasks : [];
+         const subquests = collapsed ? q.data_subquest : [];
 
          return {
             id: q.id,

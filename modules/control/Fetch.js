@@ -119,28 +119,28 @@ export default class Fetch
          switch (type)
          {
             case questTypes.available:
-               quests.available = entries.filter((e) => e.status === questTypes.available && e.parent === null);
+               quests.available = entries.filter((e) => e.status === questTypes.available);
                break;
             case questTypes.active:
                quests.active = entries.filter((e) => e.status === questTypes.active);
                break;
             case questTypes.completed:
-               quests.completed = entries.filter((e) => e.status === questTypes.completed && e.parent === null);
+               quests.completed = entries.filter((e) => e.status === questTypes.completed);
                break;
             case questTypes.failed:
-               quests.failed = entries.filter((e) => e.status === questTypes.failed && e.parent === null);
+               quests.failed = entries.filter((e) => e.status === questTypes.failed);
                break;
             case questTypes.hidden:
                if (typeof options.available === 'boolean' && !options.available)
                {
-                  const available = entries.filter((e) => e.status === questTypes.available && e.parent === null);
-                  quests.hidden = entries.filter((e) => e.status === questTypes.hidden && e.parent === null);
+                  const available = entries.filter((e) => e.status === questTypes.available);
+                  quests.hidden = entries.filter((e) => e.status === questTypes.hidden);
                   quests.hidden = [...available, ...quests.hidden];
                   quests.hidden = quests.hidden.sort(sortFunc(target, options));
                }
                else
                {
-                  quests.hidden = entries.filter((e) => e.status === questTypes.hidden && e.parent === null);
+                  quests.hidden = entries.filter((e) => e.status === questTypes.hidden);
                }
                break;
          }
@@ -148,11 +148,11 @@ export default class Fetch
       else
       {
          // Note the condition on 'e.parent === null' as this prevents sub quests from displaying in these categories
-         quests.available = entries.filter((e) => e.status === questTypes.available && e.parent === null);
+         quests.available = entries.filter((e) => e.status === questTypes.available);
          quests.active = entries.filter((e) => e.status === questTypes.active);
-         quests.completed = entries.filter((e) => e.status === questTypes.completed && e.parent === null);
-         quests.failed = entries.filter((e) => e.status === questTypes.failed && e.parent === null);
-         quests.hidden = entries.filter((e) => e.status === questTypes.hidden && e.parent === null);
+         quests.completed = entries.filter((e) => e.status === questTypes.completed);
+         quests.failed = entries.filter((e) => e.status === questTypes.failed);
+         quests.hidden = entries.filter((e) => e.status === questTypes.hidden);
 
          if (typeof options.available === 'boolean' && !options.available)
          {

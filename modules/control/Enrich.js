@@ -197,6 +197,7 @@ export default class Enrich
                   status: subquest.status,
                   state,
                   isHidden: subquest.isHidden,
+                  isInactive: subquest.status === questTypes.hidden,
                   isPersonal: subPersonalActors.length > 0,
                   personalActors: subPersonalActors.map((a) => a.name).sort((a, b) => a.localeCompare(b)).join('&#013;')
                });

@@ -90,6 +90,10 @@
           pointer-events: auto;
         }
 
+        span {
+          pointer-events: auto;
+        }
+
         &::before {
           content: "\f0c8";
           margin-right: 4px;

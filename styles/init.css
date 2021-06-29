@@ -1219,6 +1219,9 @@
 #quest-tracker .quest .tasks .task i {
   pointer-events: auto;
 }
+#quest-tracker .quest .tasks .task span {
+  pointer-events: auto;
+}
 #quest-tracker .quest .tasks .task::before {
   content: "";
   margin-right: 4px;
