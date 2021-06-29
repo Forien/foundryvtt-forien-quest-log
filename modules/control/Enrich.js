@@ -1,6 +1,6 @@
 import Fetch   from './Fetch.js';
 
-import { constants, questTypes, settings }   from '../model/constants.js';
+import {constants, questTypes, questTypesI18n, settings} from '../model/constants.js';
 
 /**
  * Enrich populates content with a lot of additional data that doesn't necessarily have to be saved
@@ -188,6 +188,9 @@ export default class Enrich
                      break;
                }
 
+               const statusTooltip = game.i18n.format('ForienQuestLog.Tooltips.Status',
+                { statusI18n: game.i18n.localize(questTypesI18n[subquest.status]) });
+
                const subPersonalActors = subquest.getPersonalActors();
 
                data.data_subquest.push({
@@ -195,6 +198,7 @@ export default class Enrich
                   giver: subquest.giver,
                   name: subquest.name,
                   status: subquest.status,
+                  statusTooltip,
                   state,
                   isHidden: subquest.isHidden,
                   isInactive: subquest.status === questTypes.hidden,

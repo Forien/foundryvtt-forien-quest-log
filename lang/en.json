@@ -204,13 +204,14 @@
       "RewardVisible": "Reward is visible. Click to hide.",
       "RewardLocked": "Reward is locked. Click to unlock.",
       "RewardUnlocked": "Reward is unlocked. Click to lock.",
+      "Status": "Status: {statusI18n}",
       "TaskHidden": "Objective is hidden. Click to show.",
       "TaskVisible": "Objective is visible. Click to hide.",
       "ToggleImage": "Toggle Token/Actor image",
       "DeleteQuestGiver": "Delete quest giver",
       "DeleteSplash": "Delete splash art",
-      "ChangeGiverImgPos": "Change Quest Giver image alignement",
-      "ChangeSplashPos": "Change Splash alignement"
+      "ChangeGiverImgPos": "Change Quest Giver image alignment",
+      "ChangeSplashPos": "Change Splash alignment"
     },
 
     "Migration": {
