@@ -90,7 +90,7 @@ export default class QuestLogFloating extends Application
       return mergeObject(super.getData(), {
          options,
          isGM: game.user.isGM,
-         showTasks: game.settings.get(constants.moduleName, 'showTasks'),
+         showTasks: game.settings.get(constants.moduleName, settings.showTasks),
          style: game.settings.get(constants.moduleName, settings.navStyle),
          questTypes,
          quests: await Enrich.sorted(Fetch.sorted({ type: 'active' }))

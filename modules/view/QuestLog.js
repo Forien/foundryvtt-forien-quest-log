@@ -145,7 +145,7 @@ export default class QuestLog extends Application
          availableTab: available,
          canAccept: game.settings.get(constants.moduleName, settings.allowPlayersAccept),
          canCreate: game.settings.get(constants.moduleName, settings.allowPlayersCreate),
-         showTasks: game.settings.get(constants.moduleName, 'showTasks'),
+         showTasks: game.settings.get(constants.moduleName, settings.showTasks),
          style: game.settings.get(constants.moduleName, settings.navStyle),
          questTypes,
          quests
