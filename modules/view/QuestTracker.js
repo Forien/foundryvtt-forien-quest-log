@@ -80,7 +80,6 @@ export default class QuestTracker extends RepositionableApplication
             return {
                id: subquest.id,
                name: subquest.name,
-               // isGM: game.user.isGM,
                isHidden: subquest.isHidden,
                isPersonal: subquest.isPersonal,
                personalActors: subquest.personalActors,

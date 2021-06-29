@@ -79,7 +79,6 @@
     }
 
     .tasks {
-      list-style: none;
       margin: 3px 0 0 0;
 
       #hidden {
@@ -87,15 +86,15 @@
       }
 
       .task {
-        position: relative;
+        i {
+          pointer-events: auto;
+        }
 
         &::before {
           content: "\f0c8";
-          position: absolute;
           margin-right: 4px;
           font-weight: 400;
           font-family: "Font Awesome 5 Free";
-          left: -15px;
         }
 
         &.minus-square {

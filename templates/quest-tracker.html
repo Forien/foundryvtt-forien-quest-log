@@ -13,21 +13,22 @@
         <span class="quest-tracker-span"></span>
         <a class="quest-tracker-link" data-quest-id="{{id}}"><i class="fas fa-pen-nib fa-fw"></i></a>
       </h3>
-      <ul class="tasks">
+
+      <div class="tasks">
       {{#each subquests}}
-        <li class="task {{state}}" {{#if isInactive}}id="hidden"{{/if}}>
+        <div class="task {{state}}" {{#if (or isHidden isInactive)}}id="hidden"{{/if}}>
           {{#if ../isGM}}
             {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
             {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
           {{/if}}
           {{name}}
           <a class="quest-tracker-link" data-quest-id="{{id}}"><i class="fas fa-link"></i></a>
-        </li>
+        </div>
       {{/each}}
       {{#each tasks}}
-        <li class="task {{state}}" {{#if isInactive}}id="hidden"{{/if}}>{{name}}</li>
+        <div class="task {{state}}" {{#if isInactive}}id="hidden"{{/if}}>{{name}}</div>
       {{/each}}
-      </ul>
+      </div>
     </div>
     {{/each}}
 </div>
