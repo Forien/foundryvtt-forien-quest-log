@@ -63,8 +63,8 @@ export default class Quest
 
    get isObservable()
    {
-      return game.user.isGM ||
-       (this.entry && this.entry.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER));
+      return game.user.isGM || (this.entry && this.status !== 'hidden' &&
+       this.entry.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER));
    }
 
    get isOwner()

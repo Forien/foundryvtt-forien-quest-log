@@ -150,7 +150,7 @@ export default class Enrich
       if (data.parent !== null)
       {
          const parentQuest = Fetch.quest(data.parent);
-         data.isSubquest = parentQuest.isObservable && parentQuest.status !== 'hidden';
+         data.isSubquest = parentQuest.isObservable;
          if (parentQuest)
          {
             data.data_parent = {
@@ -223,7 +223,7 @@ export default class Enrich
          data.checkedTasks += finishedSubquests;
 
          data.totalTasks = data.tasks.filter((t) => t.hidden === false).length +
-          data.data_subquest.filter((s) => s.isObservable && s.status !== 'hidden').length;
+          data.data_subquest.filter((s) => s.isObservable).length;
       }
 
       switch (game.settings.get(constants.moduleName, settings.showTasks))

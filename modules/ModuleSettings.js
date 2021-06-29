@@ -245,20 +245,6 @@ export default class ModuleSettings
          }
       });
 
-      game.settings.register(constants.moduleName, settings.questTrackerTasks, {
-         name: 'ForienQuestLog.WorkshopPUF.Settings.questTrackerTasks.name',
-         hint: 'ForienQuestLog.WorkshopPUF.Settings.questTrackerTasks.hint',
-         scope: scope.client,
-         config: true,
-         default: true,
-         type: Boolean,
-         onChange: () =>
-         {
-            const fqlPublicAPI = Utils.getFQLPublicAPI();
-            if (fqlPublicAPI.questTracker.rendered) { fqlPublicAPI.questTracker.render(); }
-         }
-      });
-
       game.settings.register(constants.moduleName, settings.resetQuestTracker, {
          name: 'ForienQuestLog.WorkshopPUF.Settings.resetQuestTracker.name',
          hint: 'ForienQuestLog.WorkshopPUF.Settings.resetQuestTracker.hint',

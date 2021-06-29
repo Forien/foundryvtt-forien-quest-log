@@ -1148,6 +1148,7 @@
   padding: 5px;
   color: #ddd;
   text-shadow: 1px 1px 1px #000;
+  pointer-events: none;
 }
 #quest-tracker.background {
   background: rgba(51,51,51,0.6);
@@ -1167,27 +1168,59 @@
   left: 4px;
   color: rgba(255,255,255,0.53333);
   text-shadow: none;
+  pointer-events: auto;
 }
 #quest-tracker .entity-link {
   background: rgba(204,204,204,0.4);
 }
-#quest-tracker .title {
-  margin-bottom: 0;
-  cursor: pointer;
+#quest-tracker .quest:not(:last-child) {
+  margin-bottom: 16px;
+}
+#quest-tracker .quest {
+  display: flex;
+  flex-direction: column;
+}
+#quest-tracker .quest .title {
+  display: inline-flex;
+  flex-direction: row;
+  margin: 0;
   font-family: Oswald, Montserrat, Signika, sans-serif;
   font-size: 20px;
+  height: auto;
 }
-#quest-tracker .tasks {
+#quest-tracker .quest .quest-tracker-header {
+  flex: 0 0 auto;
+  cursor: pointer;
+  pointer-events: auto;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  max-width: 92%;
+  height: auto;
+}
+#quest-tracker .quest .quest-tracker-span {
+  flex: 1;
+}
+#quest-tracker .quest .quest-tracker-link {
+  pointer-events: auto;
+  flex: 0 0 20px;
+  margin-top: auto;
+}
+#quest-tracker .quest .quest-tracker-link i {
+  width: 20px;
+  height: 20px;
+}
+#quest-tracker .quest .tasks {
   list-style: none;
-  margin-bottom: 6px;
+  margin: 3px 0 0 0;
 }
-#quest-tracker .tasks #hidden {
+#quest-tracker .quest .tasks #hidden {
   color: rgba(255,255,255,0.53333);
 }
-#quest-tracker .tasks .task {
+#quest-tracker .quest .tasks .task {
   position: relative;
 }
-#quest-tracker .tasks .task::before {
+#quest-tracker .quest .tasks .task::before {
   content: "";
   position: absolute;
   margin-right: 4px;
@@ -1195,18 +1228,18 @@
   font-family: "Font Awesome 5 Free";
   left: -15px;
 }
-#quest-tracker .tasks .task.minus-square {
+#quest-tracker .quest .tasks .task.minus-square {
   text-decoration: line-through;
 }
-#quest-tracker .tasks .task.minus-square::before {
+#quest-tracker .quest .tasks .task.minus-square::before {
   content: "";
   font-weight: 900;
   padding-left: 1px;
 }
-#quest-tracker .tasks .task.check-square {
+#quest-tracker .quest .tasks .task.check-square {
   text-decoration: line-through;
 }
-#quest-tracker .tasks .task.check-square::before {
+#quest-tracker .quest .tasks .task.check-square::before {
   content: "";
   font-weight: 900;
 }

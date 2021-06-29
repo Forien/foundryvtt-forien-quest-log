@@ -3,7 +3,8 @@ import Utils from '../control/Utils.js';
 const constants = {
    moduleName: 'forien-quest-log',
    moduleLabel: `Forien's Quest Log`,
-   flagDB: 'json'
+   flagDB: 'json',
+   folderState: 'forien.questlog.folderstate-'
 };
 
 /**
@@ -35,7 +36,6 @@ const settings = {
    navStyle: 'navStyle',
    notifyRewardDrop: 'notifyRewardDrop',
    questTrackerBackground: 'questTrackerBackground',
-   questTrackerTasks: 'questTrackerTasks',
    questTrackerPosition: 'questTrackerPosition',
    resetQuestTracker: 'resetQuestTracker',
    showFolder: 'showFolder',

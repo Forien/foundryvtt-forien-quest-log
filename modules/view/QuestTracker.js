@@ -2,6 +2,7 @@ import RepositionableApplication from './RepositionableApplication.js';
 import Enrich                    from '../control/Enrich.js';
 import Fetch                     from '../control/Fetch.js';
 import QuestAPI                  from '../control/QuestAPI.js';
+import Utils                     from '../control/Utils.js';
 import { constants, settings }   from '../model/constants.js';
 
 export default class QuestTracker extends RepositionableApplication
@@ -21,39 +22,30 @@ export default class QuestTracker extends RepositionableApplication
       });
    }
 
-   _handleClick(event)
-   {
-      if ($(event.target).hasClass('entity-link'))
-      {
-         return;
-      }
-      event.preventDefault();
-      event.stopPropagation();
-
-      if (event.originalEvent.detail < 2)
-      {
-         switch (event.originalEvent.button)
-         {
-            case 0:
-            default:
-               QuestTracker._onClick(event);
-         }
-      }
-   }
-
-   static _onClick(event)
-   {
-      const questId = event.currentTarget.dataset.id;
-      QuestAPI.open({ questId });
-   }
-
    /** @override */
    activateListeners(html)
    {
       super.activateListeners(html);
 
-      html.on('click', '.quest', this._handleClick);
-      html.on('contextmenu', '.quest', this._handleClick);
+      html.on('click', '.quest-tracker-header', (event) =>
+      {
+         const questId = event.currentTarget.dataset.questId;
+
+         const folderState = sessionStorage.getItem(`${constants.folderState}${questId}`);
+         const collapsed = folderState !== 'false';
+         sessionStorage.setItem(`${constants.folderState}${questId}`, !collapsed);
+
+         this.render();
+
+         const fqlPublicAPI = Utils.getFQLPublicAPI();
+         if (fqlPublicAPI.questLogFloating.rendered) { fqlPublicAPI.questLogFloating.render(); }
+      });
+
+      html.on('click', '.quest-tracker-link', (event) =>
+      {
+         const questId = event.currentTarget.dataset.questId;
+         QuestAPI.open({ questId });
+      });
    }
 
    /** @override */
@@ -77,47 +69,47 @@ export default class QuestTracker extends RepositionableApplication
     */
    async prepareQuests()
    {
-      const quests = await Enrich.sorted(Fetch.sorted());
+      const quests = await Enrich.sorted(Fetch.sorted({ type: 'active' }));
 
-      if (game.settings.get(constants.moduleName, settings.questTrackerTasks))
+      return quests.active.map((q) =>
       {
-         return quests.active.map((q) =>
-         {
-            // Map subquest status to task state.
-            const subquests = q.data_subquest.map((subquest) =>
-            {
-               return { name: subquest.name, hidden: subquest.status === 'hidden', state: subquest.state };
-            });
-
-            return {
-               id: q.id,
-               source: q.giver,
-               name: `${q.name} ${q.taskCountLabel}`,
-               isGM: game.user.isGM,
-               isHidden: q.isHidden,
-               isPersonal: q.isPersonal,
-               personalActors: q.personalActors,
-               subquests: game.user.isGM ? subquests : subquests.filter((s) => !s.hidden),
-               tasks: game.user.isGM ? q.data_tasks : q.data_tasks.filter((t) => !t.hidden)
-            };
-         });
-      }
-      else
-      {
-         return quests.active.map((q) =>
+         // Map subquest status to task state.
+         const mappedSubquests = q.data_subquest.map((subquest) =>
          {
             return {
-               id: q.id,
-               source: q.giver,
-               name: `${q.name} ${q.taskCountLabel}`,
-               isGM: game.user.isGM,
-               isHidden: q.isHidden,
-               isPersonal: q.isPersonal,
-               personalActors: q.personalActors,
-               subquests: [],
-               tasks: []
+               id: subquest.id,
+               name: subquest.name,
+               // isGM: game.user.isGM,
+               isHidden: subquest.isHidden,
+               isPersonal: subquest.isPersonal,
+               personalActors: subquest.personalActors,
+               isInactive: subquest.status === 'hidden',
+               state: subquest.state
             };
          });
-      }
+
+         const collapsed = sessionStorage.getItem(`${constants.folderState}${q.id}`);
+
+         let tasks = [];
+         let subquests = [];
+
+         if (collapsed === 'false')
+         {
+            tasks = game.user.isGM ? q.data_tasks : q.data_tasks.filter((t) => !t.hidden);
+            subquests = game.user.isGM ? mappedSubquests : mappedSubquests.filter((s) => !s.hidden);
+         }
+
+         return {
+            id: q.id,
+            source: q.giver,
+            name: `${q.name} ${q.taskCountLabel}`,
+            isGM: game.user.isGM,
+            isHidden: q.isHidden,
+            isPersonal: q.isPersonal,
+            personalActors: q.personalActors,
+            subquests,
+            tasks
+         };
+      });
    }
 }
