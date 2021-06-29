@@ -499,22 +499,6 @@
           flex: 0 0 1px;
         }
 
-        .input-group {
-          display: flex;
-          align-items: center;
-          background: rgba(255, 255, 255, .4);
-          border-radius: 5px;
-          padding: 2px;
-          margin-bottom: 2px;
-        }
-
-        input[type="checkbox"] {
-          flex: 0 0 20px;
-          width: 20px;
-          height: 20px;
-          margin: 0;
-        }
-
         label {
           margin: 0 0 0 4px;
           width: calc(100% - 20px);
@@ -536,6 +520,31 @@
 
           &:hover {
             background-color: rgba(0, 0, 0, .075);
+          }
+        }
+
+        .state-container {
+          margin-left: 12px;
+          position: relative;
+
+          input[type="checkbox"] {
+            vertical-align: center;
+            display: inline;
+            position: absolute;
+            top: 1px;
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            cursor: pointer;
+          }
+
+          label {
+            position: absolute;
+            left: 22px;
+            width: 150px;
+            display: inline;
+            //font-size: smaller;
+            font-weight: lighter;
           }
         }
 

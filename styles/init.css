@@ -289,7 +289,8 @@
   flex: 0 0 40px;
   width: 40px;
   height: 40px;
-  border-radius: 5px 0 0 5px;
+  margin-right: 4px;
+  border-radius: 5px;
   background-size: cover;
 }
 #forien-quest-log .quest-log .table ul .title {
@@ -941,20 +942,6 @@
 .window-app.forien-quest-preview .quest-body .management .quest-settings .setting-groups {
   flex: 0 0 1px;
 }
-.window-app.forien-quest-preview .quest-body .management .quest-settings .input-group {
-  display: flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 5px;
-  padding: 2px;
-  margin-bottom: 2px;
-}
-.window-app.forien-quest-preview .quest-body .management .quest-settings input[type=checkbox] {
-  flex: 0 0 20px;
-  width: 20px;
-  height: 20px;
-  margin: 0;
-}
 .window-app.forien-quest-preview .quest-body .management .quest-settings label {
   margin: 0 0 0 4px;
   width: calc(100% - 20px);
@@ -974,6 +961,27 @@
 }
 .window-app.forien-quest-preview .quest-body .management .quest-splash .splash-image:hover {
   background-color: rgba(0, 0, 0, 0.075);
+}
+.window-app.forien-quest-preview .quest-body .management .quest-splash .state-container {
+  margin-left: 12px;
+  position: relative;
+}
+.window-app.forien-quest-preview .quest-body .management .quest-splash .state-container input[type=checkbox] {
+  vertical-align: center;
+  display: inline;
+  position: absolute;
+  top: 1px;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  cursor: pointer;
+}
+.window-app.forien-quest-preview .quest-body .management .quest-splash .state-container label {
+  position: absolute;
+  left: 22px;
+  width: 150px;
+  display: inline;
+  font-weight: lighter;
 }
 .window-app.forien-quest-preview .quest-body .management .quest-splash .drop-info {
   display: flex;

@@ -269,6 +269,7 @@ export default class Quest
       this.giverName = data.giverName || 'actor';
       this.splash = data.splash || '';
       this.splashPos = data.splashPos || 'center';
+      this.splashAsIcon = typeof data.splashAsIcon === 'boolean' ? data.splashAsIcon : false;
       this.location = data.location || null;
       this.priority = data.priority || 0;
       this.type = data.type || null;
@@ -474,8 +475,9 @@ export default class Quest
          gmnotes: this.gmnotes,
          image: this.image,
          giverName: this.giverName,
-         splashPos: this.splashPos,
          splash: this.splash,
+         splashPos: this.splashPos,
+         splashAsIcon: this.splashAsIcon,
          location: this.location,
          priority: this.priority,
          type: this.type,

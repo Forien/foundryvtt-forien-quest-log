@@ -83,7 +83,8 @@
         "SplashArt": "Splash Art:",
         "QuestBranching": "Sub Quests:",
         "AddSubquest": "Create new Sub Quest",
-        "SplashInfo": "Click to set image."
+        "SplashInfo": "Click to set image.",
+        "SplashQuestIcon": "Set as quest icon"
       },
 
       "Tabs": {

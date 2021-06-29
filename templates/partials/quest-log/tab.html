@@ -3,11 +3,16 @@
   <ul>
     {{#each quests}}
     <li class="drag-quest" data-quest-id="{{id}}" draggable="true">
+      {{#if (eq questIconType 'quest-giver')}}
+        <div class="img" style="background-image: url({{data_giver.img}});" title="{{data_giver.name}}"></div>
+      {{/if}}
+      {{#if (eq questIconType 'splash-image')}}
+        <div class="img" style="background-image: url({{splash}});background-position: {{splashPos}};" title="View Quest Image"></div>
+      {{/if}}
       {{#if ../isGM}}
         {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
         {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
       {{/if}}
-      {{#if data_giver.img}}<div class="img quest-giver-portrait portrait-small" style="background-image: url({{data_giver.img}});" title="{{data_giver.name}}"></div>{{/if}}
       <div class="title" data-quest-id="{{id}}">
         <h2>{{name}}</h2>
         {{#if isSubquest}}

@@ -130,6 +130,17 @@ export default class Enrich
 
       data.data_giver = await Enrich.giverFromQuest(quest);
 
+      data.questIconType = void 0;
+
+      if (data.splashAsIcon && data.splash.length)
+      {
+         data.questIconType = 'splash-image';
+      }
+      else if (data.data_giver && data.data_giver.img)
+      {
+         data.questIconType = 'quest-giver';
+      }
+
       data.statusLabel = game.i18n.localize(`ForienQuestLog.QuestTypes.Labels.${data.status}`);
 
       data.isSubquest = false;

@@ -738,6 +738,12 @@ export default class QuestPreview extends FormApplication
             }
          });
 
+         html.on('click', '.quest-splash #splash-as-icon', async (event) =>
+         {
+            this.quest.splashAsIcon = $(event.target).is(':checked');
+            await this.saveQuest();
+         });
+
          html.on('click', '.quest-splash .drop-info', async () =>
          {
             const currentPath = this.quest.splash;
