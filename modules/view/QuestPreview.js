@@ -389,7 +389,7 @@ export default class QuestPreview extends FormApplication
          html.on('click', '.actions i', async (event) =>
          {
             const target = $(event.target).data('target');
-            const questId = $(event.target).data('id');
+            const questId = $(event.target).data('questId');
             const classList = $(event.target).attr('class');
             const name = $(event.target).data('name');
 

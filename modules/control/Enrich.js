@@ -117,28 +117,28 @@ export default class Enrich
 
          if (isGM && questTypes.active === quest.status)
          {
-            result += `<i class="move fas fa-check-circle" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetCompleted')}" data-target="completed" data-id="${quest.id}"></i>\n`;
-            result += `<i class="move fas fa-times-circle" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetFailed')}" data-target="failed" data-id="${quest.id}"></i>\n`;
+            result += `<i class="move fas fa-check-circle" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetCompleted')}" data-target="completed" data-quest-id="${quest.id}"></i>\n`;
+            result += `<i class="move fas fa-times-circle" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetFailed')}" data-target="failed" data-quest-id="${quest.id}"></i>\n`;
          }
 
          if ((isGM && questTypes.hidden === quest.status) || questTypes.available === quest.status)
          {
-            result += `<i class="move fas fa-play" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetActive')}" data-target="active" data-id="${quest.id}"></i>\n`;
+            result += `<i class="move fas fa-play" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetActive')}" data-target="active" data-quest-id="${quest.id}"></i>\n`;
          }
 
          if (isGM && questTypes.hidden !== quest.status)
          {
-            result += `<i class="move fas fa-stop-circle" title="${game.i18n.localize('ForienQuestLog.Tooltips.Hide')}" data-target="hidden" data-id="${quest.id}"></i>\n`;
+            result += `<i class="move fas fa-stop-circle" title="${game.i18n.localize('ForienQuestLog.Tooltips.Hide')}" data-target="hidden" data-quest-id="${quest.id}"></i>\n`;
          }
 
          if (availableTab && ((isGM && questTypes.hidden === quest.status) || questTypes.active === quest.status))
          {
-            result += `<i class="move fas fa-clipboard" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetAvailable')}" data-target="available" data-id="${quest.id}"></i>\n`;
+            result += `<i class="move fas fa-clipboard" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetAvailable')}" data-target="available" data-quest-id="${quest.id}"></i>\n`;
          }
 
          if (isGM)
          {
-            result += `<i class="delete fas fa-trash" title="${game.i18n.localize('ForienQuestLog.Tooltips.Delete')}" data-id="${quest.id}" data-name="${quest.name}"></i>\n`;
+            result += `<i class="delete fas fa-trash" title="${game.i18n.localize('ForienQuestLog.Tooltips.Delete')}" data-quest-id="${quest.id}" data-name="${quest.name}"></i>\n`;
          }
 
          result += `</div>\n`;
