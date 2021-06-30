@@ -160,6 +160,8 @@ export default class Enrich
       const data = JSON.parse(JSON.stringify(quest.toJSON()));
       data.id = quest.id;
       data.isHidden = quest.isHidden;
+      data.isInactive = questTypes.hidden === data.status;
+
       const personalActors = quest.getPersonalActors();
 
       const isGM = game.user.isGM;
@@ -170,6 +172,7 @@ export default class Enrich
 
       data.isPersonal = personalActors.length > 0;
       data.personalActors = personalActors.map((a) => a.name).sort((a, b) => a.localeCompare(b)).join('&#013;');
+
 
       data.description = TextEditor.enrichHTML(data.description);
 

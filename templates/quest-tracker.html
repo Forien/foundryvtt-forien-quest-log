@@ -2,7 +2,7 @@
     <div class="move-handle"><i class="fas fa-arrows-alt"></i></div>
     {{#each quests}}
     <div class="quest">
-      <h3 class="title">
+      <h3 class="title" {{#if (or isHidden isInactive)}}id="hidden"{{/if}}>
         <a class="quest-tracker-header" data-quest-id="{{id}}">
         {{#if isGM}}
            {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}

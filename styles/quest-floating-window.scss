@@ -4,6 +4,10 @@
     padding: 0;
   }
 
+  #hidden {
+    color: #ffffff88;
+  }
+
   .window-content {
     padding: 0 2px 0 0;
   }
@@ -41,9 +45,5 @@
     text-align: center;
     margin-top: 50%;
     display: block;
-  }
-
-  .task-hidden {
-    color: #ffffff88;
   }
 }

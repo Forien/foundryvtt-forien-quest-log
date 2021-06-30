@@ -24,6 +24,10 @@
     font-family: "Font Awesome 5 Free";
   }
 
+  #hidden {
+    color: #ffffff88;
+  }
+
   .move-handle {
     position: absolute;
     top: -18px;
@@ -80,10 +84,6 @@
 
     .tasks {
       margin: 3px 0 0 0;
-
-      #hidden {
-        color: #ffffff88;
-      }
 
       .task {
         i {
