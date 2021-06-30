@@ -52,22 +52,8 @@
       </div>
       {{/if}}
 
-      {{#if canEdit}}
-      <div class="actions">
-        {{#if (or (eq status 'hidden') (eq status 'available'))}}
-        <i class="move fas fa-play" title="{{localize 'ForienQuestLog.Tooltips.SetActive'}}" data-target="active" data-id="{{id}}"></i>
-        {{/if}}
-        {{#if (eq status 'hidden')}}
-        <i class="move fas fa-clipboard" title="{{localize 'ForienQuestLog.Tooltips.SetAvailable'}}" data-target="available" data-id="{{id}}"></i>
-        {{/if}}
-        {{#if (eq status 'active')}}
-        <i class="move fas fa-check-circle" title="{{localize 'ForienQuestLog.Tooltips.SetCompleted'}}" data-target="completed" data-id="{{id}}"></i>
-        <i class="move fas fa-times-circle" title="{{localize 'ForienQuestLog.Tooltips.SetFailed'}}" data-target="failed" data-id="{{id}}"></i>
-        {{/if}}
-        {{#unless (eq status 'hidden')}}
-        <i class="move fas fa-stop-circle" title="{{localize 'ForienQuestLog.Tooltips.Hide'}}" data-target="hidden" data-id="{{id}}"></i>
-        {{/unless}}
-      </div>
+      {{#if statusActions.length}}
+        {{{statusActions}}}
       {{/if}}
     </section>
 
@@ -99,35 +85,22 @@
         <ul>
           {{#each data_subquest}}
           {{#if name}}
-            {{#if (or ../isGM (and ../isPlayer (ne status 'hidden')))}}
-              <li class="task {{#if (eq status 'hidden')}}task-hidden{{/if}}">
-                <div class="state-container">
-                  <span class="state-display">
-                    <i class="fas fa-check state {{#unless (eq status 'completed')}}hidden{{/unless}}"></i>
-                    <i class="fas fa-times state {{#unless (eq status 'failed')}}hidden{{/unless}}"></i>
-                  </span>
-                </div>
-                {{#if ../isGM}}
-                   {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
-                   {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
-                {{/if}}
-                <p class="quest-name" data-id="{{id}}">{{name}} <i class="fas fa-link"></i></p>
-                {{#if ../isGM}}
-                <div class="actions">
-                  {{#if (eq status 'active')}}
-                  <i class="move fas fa-check-circle" title="{{localize 'ForienQuestLog.Tooltips.SetCompleted'}}" data-target="completed" data-id="{{id}}"></i>
-                  <i class="move fas fa-times-circle" title="{{localize 'ForienQuestLog.Tooltips.SetFailed'}}" data-target="failed" data-id="{{id}}"></i>
-                  {{/if}}
-                  {{#if (eq status 'hidden')}}
-                  <i class="move fas fa-play" title="{{localize 'ForienQuestLog.Tooltips.SetActive'}}" data-target="active" data-id="{{id}}"></i>
-                  {{else}}
-                  <i class="move fas fa-stop-circle" title="{{localize 'ForienQuestLog.Tooltips.Hide'}}" data-target="hidden" data-id="{{id}}"></i>
-                  {{/if}}
-                  <i class="delete fas fa-trash" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}" data-id="{{id}}" data-name="{{name}}"></i>
-                </div>
-                {{/if}}
-              </li>
-            {{/if}}
+            <li class="task {{#if (or isHidden (eq status 'hidden'))}}task-hidden{{/if}}">
+              <div class="state-container">
+                <span class="state-display">
+                  <i class="fas fa-check state {{#unless (eq status 'completed')}}hidden{{/unless}}"></i>
+                  <i class="fas fa-times state {{#unless (eq status 'failed')}}hidden{{/unless}}"></i>
+                </span>
+              </div>
+              {{#if ../isGM}}
+                 {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
+                 {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
+              {{/if}}
+              <p class="quest-name" title="{{statusTooltip}}" data-id="{{id}}">{{name}} <i class="fas fa-link"></i></p>
+              {{#if statusActions.length}}
+                {{{statusActions}}}
+              {{/if}}
+            </li>
           {{/if}}
           {{/each}}
           {{#each data_tasks}}

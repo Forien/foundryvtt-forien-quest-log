@@ -1,6 +1,6 @@
 import Fetch   from './Fetch.js';
 
-import {constants, questTypes, questTypesI18n, settings} from '../model/constants.js';
+import { constants, questTypes, questTypesI18n, settings } from '../model/constants.js';
 
 /**
  * Enrich populates content with a lot of additional data that doesn't necessarily have to be saved
@@ -103,6 +103,50 @@ export default class Enrich
       return data;
    }
 
+   static statusActions(quest)
+   {
+      let result = '';
+
+      const isGM = game.user.isGM;
+      const availableTab = game.settings.get(constants.moduleName, settings.availableQuests);
+      const canAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
+
+      if (isGM || canAccept)
+      {
+         result += `<div class="actions">`;
+
+         if (isGM && questTypes.active === quest.status)
+         {
+            result += `<i class="move fas fa-check-circle" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetCompleted')}" data-target="completed" data-id="${quest.id}"></i>\n`;
+            result += `<i class="move fas fa-times-circle" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetFailed')}" data-target="failed" data-id="${quest.id}"></i>\n`;
+         }
+
+         if ((isGM && questTypes.hidden === quest.status) || questTypes.available === quest.status)
+         {
+            result += `<i class="move fas fa-play" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetActive')}" data-target="active" data-id="${quest.id}"></i>\n`;
+         }
+
+         if (isGM && questTypes.hidden !== quest.status)
+         {
+            result += `<i class="move fas fa-stop-circle" title="${game.i18n.localize('ForienQuestLog.Tooltips.Hide')}" data-target="hidden" data-id="${quest.id}"></i>\n`;
+         }
+
+         if (availableTab && ((isGM && questTypes.hidden === quest.status) || questTypes.active === quest.status))
+         {
+            result += `<i class="move fas fa-clipboard" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetAvailable')}" data-target="available" data-id="${quest.id}"></i>\n`;
+         }
+
+         if (isGM)
+         {
+            result += `<i class="delete fas fa-trash" title="${game.i18n.localize('ForienQuestLog.Tooltips.Delete')}" data-id="${quest.id}" data-name="${quest.name}"></i>\n`;
+         }
+
+         result += `</div>\n`;
+      }
+
+      return result;
+   }
+
    /**
     * This method also performs content manipulation, for example enriching HTML or calculating amount
     * of done/total tasks etc.
@@ -143,6 +187,8 @@ export default class Enrich
       }
 
       data.statusLabel = game.i18n.localize(`ForienQuestLog.QuestTypes.Labels.${data.status}`);
+
+      data.statusActions = Enrich.statusActions(quest);
 
       data.isSubquest = false;
 
@@ -200,6 +246,7 @@ export default class Enrich
                   status: subquest.status,
                   statusTooltip,
                   state,
+                  statusActions: Enrich.statusActions(subquest),
                   isHidden: subquest.isHidden,
                   isInactive: subquest.status === questTypes.hidden,
                   isPersonal: subPersonalActors.length > 0,

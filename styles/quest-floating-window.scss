@@ -1,37 +1,49 @@
 #forien-quest-log-floating-window {
-    .journal {
-        i {
-            flex: 0 24px;
-            line-height: 34px;
-            text-align: center;
-        }
-    }
+  ol.questlog-floating {
+    margin: 0;
+    padding: 0;
+  }
 
-    i {
-        &.is-personal {
-            flex: 0 20px;
-            line-height: 24px;
-        }
-    }
+  .window-content {
+    padding: 0 2px 0 0;
+  }
 
-    i {
-        &.is-hidden {
-            flex: 0 20px;
-            line-height: 24px;
-        }
-    }
+  .flexrow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
 
-    li.folder.collapsed > .folder-header h3 > i:before {
-        content: "\f02e";
-    }
+  li.journal {
+    padding: 4px 6px 0 0;
+    line-height: 18px;
 
-    .no-content {
-        text-align: center;
-        margin-top: 50%;
-        display: block;
+    i, a {
+      flex: 0 0 18px;
+      line-height: 18px;
+      text-align: center;
     }
+  }
 
-    .task-hidden {
-        color: #ffffff88;
+  i {
+    &.is-personal, &.is-hidden {
+        flex: 0 0 20px;
+        line-height: 24px;
     }
+  }
+
+  li.folder.collapsed > .folder-header h3 > i:before {
+    content: "\f02e";
+  }
+
+  .no-content {
+    text-align: center;
+    margin-top: 50%;
+    display: block;
+  }
+
+  .task-hidden {
+    color: #ffffff88;
+  }
 }

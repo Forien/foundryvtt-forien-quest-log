@@ -65,8 +65,7 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            const fqlPublicAPI = Utils.getFQLPublicAPI();
-            if (fqlPublicAPI.questLog.rendered) { fqlPublicAPI.questLog.render(); }
+            Utils.getFQLPublicAPI().renderAll({ questPreview: true });
          }
       });
 

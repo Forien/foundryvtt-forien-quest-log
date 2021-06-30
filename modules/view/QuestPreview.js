@@ -1,10 +1,12 @@
-import FQLDialog        from './FQLDialog.js';
-import QuestForm        from './QuestForm.js';
-import Enrich           from '../control/Enrich.js';
-import Fetch            from '../control/Fetch.js';
-import QuestAPI         from '../control/QuestAPI.js';
-import Socket           from '../control/Socket.js';
-import Utils            from '../control/Utils.js';
+import FQLDialog  from './FQLDialog.js';
+import QuestForm  from './QuestForm.js';
+import Enrich     from '../control/Enrich.js';
+import Fetch      from '../control/Fetch.js';
+import QuestAPI   from '../control/QuestAPI.js';
+import Socket     from '../control/Socket.js';
+import Utils      from '../control/Utils.js';
+
+import { constants, settings }  from '../model/constants.js';
 
 export default class QuestPreview extends FormApplication
 {
@@ -382,7 +384,7 @@ export default class QuestPreview extends FormApplication
          });
       }
 
-      if (this.canEdit)
+      if (game.user.isGM || this.canAccept)
       {
          html.on('click', '.actions i', async (event) =>
          {
@@ -406,7 +408,10 @@ export default class QuestPreview extends FormApplication
                }
             }
          });
+      }
 
+      if (this.canEdit)
+      {
          html.on('drop', '.rewards-box', async (event) =>
          {
             event.preventDefault();
@@ -446,7 +451,6 @@ export default class QuestPreview extends FormApplication
                      ui.notifications.warn(game.i18n.format('ForienQuestLog.QuestPreview.Notifications.BadUUID',
                       { uuid }));
                   }
-
                }
                else
                {
@@ -665,7 +669,7 @@ export default class QuestPreview extends FormApplication
                   this.quest.addReward({
                      data: {
                         name: value,
-                        img: 'icons/svg/mystery-man.svg'
+                        img: 'icons/svg/item-bag.svg'
                      },
                      hidden: true,
                      type: 'Abstract'
@@ -843,10 +847,13 @@ export default class QuestPreview extends FormApplication
       // Due to the new document model in 0.8.x+ player editing is temporarily removed.
       this.canEdit = game.user.isGM;
       this.playerEdit = this.quest.isOwner;
+      this.canAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
 
       const data = {
          isGM: game.user.isGM,
          isPlayer: !game.user.isGM,
+         availableTab: game.settings.get(constants.moduleName, settings.availableQuests),
+         canAccept: this.canAccept,
          canEdit: this.canEdit,
          playerEdit: this.playerEdit
       };

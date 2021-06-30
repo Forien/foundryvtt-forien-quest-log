@@ -22,15 +22,10 @@
       {{#unless (eq ../showTasks 'no')}}
         <div class="tasks" title="{{localize 'ForienQuestLog.QuestLog.Table.Tasks'}}">{{checkedTasks}}{{#unless (eq ../showTasks 'onlyCurrent')}}/{{totalTasks}}{{/unless}}</div>
       {{/unless}}
-      {{#if (or ../isGM (and ../canAccept (eq ../tab 'available')))}}
+      {{#if (or ../isGM (and ../canAccept (or (eq ../tab 'available') (eq ../tab 'active'))))}}
       <div class="actions {{#if ../isPlayer}}is-player{{/if}}">
         {{#if (or (eq ../tab 'hidden') (eq ../tab 'available'))}}
           <i class="move fas fa-play" title="{{localize 'ForienQuestLog.Tooltips.SetActive'}}" data-target="active" data-quest-id="{{id}}"></i>
-        {{/if}}
-        {{#if ../isGM}}
-          {{#if (and (eq ../tab 'hidden') ../availableTab)}}
-            <i class="move fas fa-clipboard" title="{{localize 'ForienQuestLog.Tooltips.SetAvailable'}}" data-target="available" data-quest-id="{{id}}"></i>
-          {{/if}}
         {{/if}}
         {{#if ../isGM}}
           {{#if (eq ../tab 'active')}}
@@ -40,6 +35,11 @@
           {{#unless (eq ../tab 'hidden')}}
             <i class="move fas fa-stop-circle" title="{{localize 'ForienQuestLog.Tooltips.Hide'}}" data-target="hidden" data-quest-id="{{id}}"></i>
           {{/unless}}
+        {{/if}}
+        {{#if (and (or (eq ../tab 'hidden') (eq ../tab 'active')) ../availableTab)}}
+          <i class="move fas fa-clipboard" title="{{localize 'ForienQuestLog.Tooltips.SetAvailable'}}" data-target="available" data-quest-id="{{id}}"></i>
+        {{/if}}
+        {{#if ../isGM}}
           <i class="delete fas fa-trash" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}" data-quest-id="{{id}}" data-quest-name="{{name}}"></i>
         {{/if}}
       </div>
