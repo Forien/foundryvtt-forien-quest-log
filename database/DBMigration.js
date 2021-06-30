@@ -1,8 +1,8 @@
 import Socket        from '../modules/control/Socket.js';
+import QuestFolder   from '../modules/model/QuestFolder.js';
+import { constants } from '../modules/model/constants.js';
 
 import dbSchema_1    from './dbSchema_1.js';
-
-import { constants } from '../modules/model/constants.js';
 
 const migrateImpl = {
    0: () => {},   // Schema level 0 is a noop / assume all data is stored in JE content.
@@ -30,6 +30,15 @@ export default class DBMigration
 
          // The DB schema matches the current version
          if (schemaVersion === this.version) { return; }
+
+         const folder = await QuestFolder.initializeJournals();
+
+         // Early out if there are no journal entries / quests in the `_fql-quests` folder.
+         if (folder?.content?.length === 0)
+         {
+            await game.settings.set(constants.moduleName, DBMigration.setting, DBMigration.version);
+            return;
+         }
 
          ui.notifications.info(game.i18n.localize('ForienQuestLog.Migration.Start'));
 
