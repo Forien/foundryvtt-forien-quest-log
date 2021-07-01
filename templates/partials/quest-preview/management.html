@@ -34,7 +34,7 @@
         {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
         {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
       {{/if}}
-      <h2 class="quest-name" data-id="{{id}}">{{name}}</h2>
+      <h2 class="quest-name" data-quest-id="{{id}}">{{name}}</h2>
       {{#if statusActions.length}}
         {{{statusActions}}}
       {{/if}}

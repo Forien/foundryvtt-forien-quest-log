@@ -22,7 +22,7 @@
         </h1>
       </div>
       {{#if canEdit}}
-      <div class="actions-single">
+      <div class="actions-single quest-name">
         <i class="fas fa-pen editable" data-target="name" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
       </div>
       {{/if}}
@@ -40,7 +40,7 @@
             Quest is {{statusLabel}}
           </p>
           {{#if isSubquest}}
-            <p class="quest-name" data-id="{{data_parent.id}}">{{format 'ForienQuestLog.QuestPreview.SubTitle' data_parent.name}} <i class="fas fa-link"></i></p>
+            <p class="quest-name-link" data-quest-id="{{data_parent.id}}">{{format 'ForienQuestLog.QuestPreview.SubTitle' data_parent.name}} <i class="fas fa-link"></i></p>
           {{/if}}
         </div>
       </div>
@@ -95,7 +95,7 @@
                  {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
                  {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
               {{/if}}
-              <p class="quest-name" title="{{statusTooltip}}" data-id="{{id}}">{{name}} <i class="fas fa-link"></i></p>
+              <p class="quest-name-link" title="{{statusTooltip}}" data-quest-id="{{id}}">{{name}} <i class="fas fa-link"></i></p>
               {{#if (or ../canEdit statusActions.length)}}
                 {{{statusActions}}}
               {{/if}}
@@ -118,7 +118,7 @@
               <p class="task-name">{{name}}</p>
             </div>
             {{#if (or ../canEdit ../playerEdit)}}
-            <div class="actions {{#unless ../canEdit}}is-player{{/unless}}">
+            <div class="actions tasks {{#unless ../canEdit}}is-player{{/unless}}">
               <i class="fas fa-sort" draggable="true"></i>
               <i class="editable fas fa-pen" data-target="task.name" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
               {{#if ../canEdit}}
@@ -128,7 +128,7 @@
                   <i class="fas fa-eye toggleHidden" data-target="task" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.TaskVisible'}}"></i>
                 {{/if}}
               {{/if}}
-              <i class="delete fas fa-trash" data-target="tasks" data-name="{{name}}" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}"></i>
+              <i class="delete fas fa-trash" data-target="tasks" data-task-name="{{name}}" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}"></i>
               <span class="justify-center"></span>
             </div>
             {{/if}}
@@ -157,7 +157,7 @@
           <div class="editable-container" data-transfer="{{transfer}}" data-uuidv4="{{uuidv4}}">
             <p class="reward-name">{{name}}</p>
           </div>
-          <div class="actions {{#unless ../canEdit}}is-player{{/unless}}">
+          <div class="actions rewards {{#unless ../canEdit}}is-player{{/unless}}">
             {{#if ../canEdit}}
               <i class="sort fas fa-sort" draggable="true"></i>
               {{#if (eq type "abstract")}}
@@ -175,7 +175,7 @@
               <i class="fas fa-unlock-alt toggleLocked" data-target="reward" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.RewardUnlocked'}}"></i>
             {{/if}}
             {{#if ../canEdit}}
-              <i class="delete fas fa-trash" data-target="rewards" data-name="{{name}}" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}"></i>
+              <i class="delete fas fa-trash" data-target="rewards" data-reward-name="{{name}}" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}"></i>
               <span class="justify-center"></span>
             {{/if}}
           </div>
