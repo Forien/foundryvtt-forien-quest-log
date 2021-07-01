@@ -1,6 +1,6 @@
 import Fetch   from "./Fetch.js";
 
-import { constants, questTypes, settings }   from '../model/constants.js';
+import { constants, settings }   from '../model/constants.js';
 
 export default class Utils
 {
@@ -177,7 +177,14 @@ export default class Utils
 
          if (document?.sheet)
          {
-            document.sheet.render(true, options);
+            if (document.sheet.rendered)
+            {
+               document.sheet.bringToTop();
+            }
+            else
+            {
+               document.sheet.render(true, options);
+            }
          }
       }
       catch (err)
