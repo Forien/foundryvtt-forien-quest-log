@@ -26,7 +26,7 @@
         </div>
       {{/each}}
       {{#each tasks}}
-        <div class="task {{state}}" {{#if isInactive}}id="hidden"{{/if}}>{{name}}</div>
+        <div class="task {{state}}" {{#if hidden}}id="hidden"{{/if}}>{{name}}</div>
       {{/each}}
       </div>
     </div>

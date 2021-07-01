@@ -96,7 +96,7 @@
                  {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
               {{/if}}
               <p class="quest-name" title="{{statusTooltip}}" data-id="{{id}}">{{name}} <i class="fas fa-link"></i></p>
-              {{#if statusActions.length}}
+              {{#if (or ../canEdit statusActions.length)}}
                 {{{statusActions}}}
               {{/if}}
             </li>

@@ -85,6 +85,7 @@ export default class QuestTracker extends RepositionableApplication
             name: `${q.name} ${q.taskCountLabel}`,
             isGM: game.user.isGM,
             isHidden: q.isHidden,
+            isInactive: q.isInactive,
             isPersonal: q.isPersonal,
             personalActors: q.personalActors,
             subquests,
