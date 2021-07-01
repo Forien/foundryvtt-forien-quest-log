@@ -50,8 +50,7 @@
         <span><i class="fas fa-eye"></i></span>
       </div>
       {{/if}}
-
-      {{#if statusActions.length}}
+      {{#if (and canEdit statusActions.length)}}
         {{{statusActions}}}
       {{/if}}
     </section>

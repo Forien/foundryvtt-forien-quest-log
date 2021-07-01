@@ -285,12 +285,12 @@ export default class Enrich
          data.checkedTasks = data.tasks.filter((t) => !t.hidden && t.completed).length;
 
          const finishedSubquests = data.data_subquest.filter(
-          (s) => !s.isObservable && questTypes.completed === s.status).length;
+          (s) => !s.isObservable && !s.isInactive && questTypes.completed === s.status).length;
 
          data.checkedTasks += finishedSubquests;
 
          data.totalTasks = data.tasks.filter((t) => !t.hidden).length +
-          data.data_subquest.filter((s) => !s.isObservable).length;
+          data.data_subquest.filter((s) => !s.isObservable && !s.isInactive).length;
       }
 
       switch (game.settings.get(constants.moduleName, settings.showTasks))
