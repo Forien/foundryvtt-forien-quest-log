@@ -1,4 +1,4 @@
-import Fetch   from '../control/Fetch.js';
+import QuestDB from '../control/QuestDB.js';
 import Utils   from '../control/Utils.js';
 
 import { constants, settings, questTypes } from './constants.js';
@@ -191,7 +191,7 @@ export default class Quest
 
    async delete()
    {
-      const parentQuest = Fetch.quest(this.parent);
+      const parentQuest = QuestDB.getQuest(this.parent);
       let parentId = null;
 
       // Stores the quest IDs which have been saved and need GUI / display aspects updated.
@@ -207,7 +207,7 @@ export default class Quest
       // Update children to point to any new parent.
       for (const childId of this.subquests)
       {
-         const childQuest = Fetch.quest(childId);
+         const childQuest = QuestDB.getQuest(childId);
          if (childQuest)
          {
             childQuest.parent = parentId;
@@ -278,8 +278,6 @@ export default class Quest
     * Normally would be in constructor(), but is extracted for usage in different methods as well
     *
     * @param data
-    *
-    * @see refresh()
     */
    initData(data)
    {
@@ -383,18 +381,6 @@ export default class Quest
       });
 
       return this._id;
-   }
-
-   /**
-    * Refreshes data without need of destroying and reinstantiating Quest object
-    */
-   async refresh()
-   {
-      this.entry = game.journal.get(this._id);
-
-      const content = Fetch.content(this.entry);
-
-      this.initData(content);
    }
 
    /**

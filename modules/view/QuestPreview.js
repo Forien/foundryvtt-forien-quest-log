@@ -319,9 +319,6 @@ export default class QuestPreview extends FormApplication
             const result = await FQLDialog.confirmDeleteTask({ name, result: uuidv4, questId: this.quest.id });
             if (result)
             {
-               // Refresh quest data to get latest / consistent data.
-               await this.quest.refresh();
-
                this.quest.removeTask(result);
 
                await this.saveQuest();
@@ -600,9 +597,6 @@ export default class QuestPreview extends FormApplication
             const result = await FQLDialog.confirmDeleteReward({ name, result: uuidv4, questId: this.quest.id });
             if (result)
             {
-               // Refresh quest data to get latest / consistent data.
-               await this.quest.refresh();
-
                this.quest.removeReward(result);
 
                await this.saveQuest();
@@ -933,8 +927,6 @@ export default class QuestPreview extends FormApplication
    async render(force = false, options = { focus: true })
    {
       Utils.getFQLPublicAPI().questPreview[this.quest.id] = this;
-
-      if (force) { await this.quest.refresh(); }
 
       return super.render(force, options);
    }

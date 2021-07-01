@@ -1,4 +1,4 @@
-import Fetch   from "./Fetch.js";
+import QuestDB from './QuestDB.js';
 
 import { constants, settings }   from '../model/constants.js';
 
@@ -142,7 +142,7 @@ export default class Utils
    {
       return game.settings.get(constants.moduleName, settings.enableQuestTracker) &&
        (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers)) &&
-        Fetch.getActiveCount() > 0;
+        QuestDB.getActiveCount() > 0;
    }
 
    /**

@@ -1,4 +1,4 @@
-import Fetch   from './Fetch.js';
+import QuestDB from './QuestDB.js';
 import Utils   from './Utils.js';
 
 import { constants, questTypes, questTypesI18n, settings } from '../model/constants.js';
@@ -207,7 +207,7 @@ export default class Enrich
 
       if (data.parent !== null)
       {
-         const parentQuest = Fetch.quest(data.parent);
+         const parentQuest = QuestDB.getQuest(data.parent);
          if (parentQuest)
          {
             data.isSubquest = parentQuest.isObservable;
@@ -227,7 +227,7 @@ export default class Enrich
       {
          for (const questId of data.subquests)
          {
-            const subquest = Fetch.quest(questId);
+            const subquest = QuestDB.getQuest(questId);
 
             // isObservable filters out non-owned hidden quests for trustedPlayerEdit.
             if (subquest && subquest.isObservable)

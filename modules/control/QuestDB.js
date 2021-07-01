@@ -107,6 +107,16 @@ export default class QuestDB
       s_DELETE_QUEST(entry.id);
    }
 
+   /**
+    * Provides a quicker method to get the count of active quests.
+    *
+    * @returns {number} Quest count for active quests.
+    */
+   static getActiveCount()
+   {
+      return s_QUESTS.get(questTypes.active).length;
+   }
+
    static getAllEnrich()
    {
       return s_QUESTS.flatten().map((entry) => entry.enrich);

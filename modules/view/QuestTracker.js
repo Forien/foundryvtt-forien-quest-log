@@ -62,10 +62,9 @@ export default class QuestTracker extends RepositionableApplication
    }
 
    /**
-    * Prepares the quest data. Take note that Fetch.quest() for subquests can return null if the journal entry is
-    * not available, so you must handle that case.
+    * Prepares the quest data.
     *
-    * @returns {{name: *, id: *, source: Document.giver|null|*, tasks: *, subquests: *}[]} Template data
+    * @returns {Promise<{isGM: *, isInactive: boolean|*, personalActors: *, name: string, id: *, source: Document.giver|null|*, isPersonal: boolean|*, tasks: *|*[], isHidden: boolean|*, subquests: []|*[]}[]>}
     */
    async prepareQuests()
    {
