@@ -136,11 +136,14 @@ Hooks.on('renderJournalDirectory', (app, html) =>
 
    if (!(game.user.isGM && game.settings.get(constants.moduleName, settings.showFolder)))
    {
-      const folderId = QuestFolder.get();
-      if (folderId)
+      const folder = QuestFolder.get();
+      if (folder !== void 0)
       {
-         const folder = html.find(`.folder[data-folder-id="${folderId}"]`);
-         if (folder) { folder.remove(); }
+         const element = html.find(`.folder[data-folder-id="${folder.id}"]`);
+         if (element !== void 0)
+         {
+            element.remove();
+         }
       }
    }
 });
