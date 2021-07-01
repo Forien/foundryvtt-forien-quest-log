@@ -706,14 +706,14 @@
 .window-app.forien-quest-preview .quest-body .details-header .quest-setup .quest-status p:last-child::after {
   content: none;
 }
-.window-app.forien-quest-preview .quest-body .details-header .quest-setup .quest-status .quest-name {
+.window-app.forien-quest-preview .quest-body .details-header .quest-setup .quest-status .quest-name-link {
   transition: color 0.3s ease;
   cursor: pointer;
 }
-.window-app.forien-quest-preview .quest-body .details-header .quest-setup .quest-status .quest-name i {
+.window-app.forien-quest-preview .quest-body .details-header .quest-setup .quest-status .quest-name-link i {
   font-size: 12px;
 }
-.window-app.forien-quest-preview .quest-body .details-header .quest-setup .quest-status .quest-name:hover {
+.window-app.forien-quest-preview .quest-body .details-header .quest-setup .quest-status .quest-name-link:hover {
   color: #ff6400;
 }
 .window-app.forien-quest-preview .quest-body .quest-info {
@@ -856,17 +856,17 @@
   font-size: 11px;
   line-height: 16px;
 }
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .quest-name {
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .quest-name-link {
   cursor: pointer;
   transition: color 0.3s ease;
   margin: 0;
   padding: 4px 8px;
   flex: 1;
 }
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .quest-name:hover {
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .quest-name-link:hover {
   color: #ff6400;
 }
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .quest-name i {
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .quest-name-link i {
   font-size: 12px;
 }
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .task-hidden {
@@ -1091,7 +1091,6 @@
 .window-app.forien-quest-preview .quest-body .tox .tox-toolbar__overflow,
 .window-app.forien-quest-preview .quest-body .tox .tox-toolbar__primary {
   background: transparent;
-  background-color: transparent;
 }
 .window-app.forien-quest-preview .quest-body .tox.tox-tinymce .tox-tbtn {
   padding: 0;
