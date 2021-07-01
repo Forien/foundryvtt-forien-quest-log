@@ -7,10 +7,16 @@
   </section>
 
   <section class="quest-splash">
-    <h2>{{localize 'ForienQuestLog.QuestPreview.Management.SplashArt'}}</h2>
+    <h2>
+      {{localize 'ForienQuestLog.QuestPreview.Management.SplashArt'}}
+      <span class="state-container">
+        <input type="checkbox" id="splash-as-icon-{{id}}" name="splash-as-icon" {{#if splashAsIcon}}checked{{/if}}>
+        <label for="splash-as-icon-{{id}}">{{localize 'ForienQuestLog.QuestPreview.Management.SplashQuestIcon'}}</label>
+      </span>
+    </h2>
     <div class="splash-image" style="background-image: url({{splash}});background-position: {{splashPos}};" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}">
       {{#if (eq splash '')}}
-      <span class="drop-info">{{localize 'ForienQuestLog.QuestPreview.Management.SplashInfo'}}</span>
+        <span class="drop-info">{{localize 'ForienQuestLog.QuestPreview.Management.SplashInfo'}}</span>
       {{/if}}
     </div>
   {{#if splash.length}}
@@ -23,20 +29,15 @@
   <h2>{{localize 'ForienQuestLog.QuestPreview.Management.QuestBranching'}}</h2>
   <ul class="subquests-box">
     {{#each data_subquest}}
-    <li class="subquest-item">
-      <h2 class="quest-name" data-id="{{this.id}}">{{this.name}}</h2>
-      <div class="actions">
-        {{#if (eq this.status 'active')}}
-        <i class="move fas fa-check-circle" title="{{localize 'ForienQuestLog.Tooltips.SetCompleted'}}" data-target="completed" data-id="{{this.id}}"></i>
-        <i class="move fas fa-times-circle" title="{{localize 'ForienQuestLog.Tooltips.SetFailed'}}" data-target="failed" data-id="{{this.id}}"></i>
-        {{/if}}
-        {{#if (eq this.status 'hidden')}}
-        <i class="move fas fa-play" title="{{localize 'ForienQuestLog.Tooltips.SetActive'}}" data-target="active" data-id="{{this.id}}"></i>
-        {{else}}
-        <i class="move fas fa-stop-circle" title="{{localize 'ForienQuestLog.Tooltips.Hide'}}" data-target="hidden" data-id="{{this.id}}"></i>
-        {{/if}}
-        <i class="delete fas fa-trash" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}" data-id="{{this.id}}" data-name="{{this.name}}"></i>
-      </div>
+    <li class="subquest-item" title="{{statusTooltip}}">
+      {{#if ../canEdit}}
+        {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
+        {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
+      {{/if}}
+      <h2 class="quest-name-link" data-quest-id="{{id}}">{{name}}</h2>
+      {{#if statusActions.length}}
+        {{{statusActions}}}
+      {{/if}}
     </li>
     {{/each}}
   </ul>

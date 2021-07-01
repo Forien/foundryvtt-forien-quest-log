@@ -3,7 +3,21 @@ import Utils from '../control/Utils.js';
 const constants = {
    moduleName: 'forien-quest-log',
    moduleLabel: `Forien's Quest Log`,
-   flagDB: 'json'
+   flagDB: 'json',
+   folderState: 'forien.questlog.folderstate-'
+};
+
+/**
+ * Stores strings for quest types (statuses)
+ *
+ * @returns {{hidden: string, available: string, active: string, completed: string, failed: string}}
+ */
+const questTypes = {
+   active: 'active',
+   completed: 'completed',
+   failed: 'failed',
+   hidden: 'hidden',
+   available: 'available'
 };
 
 /**
@@ -11,7 +25,7 @@ const constants = {
  *
  * @returns {{hidden: string, available: string, active: string, completed: string, failed: string}}
  */
-const questTypes = {
+const questTypesI18n = {
    active: 'ForienQuestLog.QuestTypes.InProgress',
    completed: 'ForienQuestLog.QuestTypes.Completed',
    failed: 'ForienQuestLog.QuestTypes.Failed',
@@ -35,11 +49,11 @@ const settings = {
    navStyle: 'navStyle',
    notifyRewardDrop: 'notifyRewardDrop',
    questTrackerBackground: 'questTrackerBackground',
-   questTrackerTasks: 'questTrackerTasks',
    questTrackerPosition: 'questTrackerPosition',
    resetQuestTracker: 'resetQuestTracker',
    showFolder: 'showFolder',
-   showTasks: 'showTasks'
+   showTasks: 'showTasks',
+   trustedPlayerEdit: 'trustedPlayerEdit'
 };
 
 /**
@@ -66,4 +80,4 @@ const noteControls = [
    }
 ];
 
-export { constants, noteControls, questTypes, settings };
+export { constants, noteControls, questTypes, questTypesI18n, settings };

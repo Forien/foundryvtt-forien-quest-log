@@ -7,6 +7,7 @@
   padding: 5px;
   color: #ddd;
   text-shadow: 1px 1px 1px #000;
+  pointer-events: none;
 
   &.background {
     background: #33333399;
@@ -23,61 +24,100 @@
     font-family: "Font Awesome 5 Free";
   }
 
+  #hidden {
+    color: #ffffff88;
+  }
+
   .move-handle {
     position: absolute;
     top: -18px;
     left: 4px;
     color: #ffffff88;
     text-shadow: none;
+    pointer-events: auto;
   }
 
   .entity-link {
     background: #cccccc66;
   }
 
-  .title {
-    margin-bottom: 0;
-    cursor: pointer;
-    font-family: Oswald, Montserrat, Signika, sans-serif;
-    font-size: 20px;
+  .quest:not(:last-child) {
+    margin-bottom: 16px;
   }
 
-  .tasks {
-    list-style: none;
-    margin-bottom: 6px;
+  .quest {
+    display: flex;
+    flex-direction: column;
 
-    #hidden {
-      color: #ffffff88;
+    .title {
+      display: inline-flex;
+      flex-direction: row;
+      margin: 0;
+      font-family: Oswald, Montserrat, Signika, sans-serif;
+      font-size: 20px;
+      height:auto;
     }
 
-    .task {
-      position: relative;
+    .quest-tracker-header {
+      flex: 0 0 auto;
+      cursor: pointer;
+      pointer-events: auto;
+      width: fit-content;
+      max-width: 92%;
+      height:auto;
+    }
 
-      &::before {
-        content: "\f0c8";
-        position: absolute;
-        margin-right: 4px;
-        font-weight: 400;
-        font-family: "Font Awesome 5 Free";
-        left: -15px;
+    .quest-tracker-span {
+      flex: 1;
+    }
+
+    .quest-tracker-link {
+      pointer-events: auto;
+      flex: 0 0 20px;
+      margin-top: auto;
+
+      i {
+        width: 20px;
+        height: 20px;
       }
+    }
 
-      &.minus-square {
-        text-decoration: line-through;
+    .tasks {
+      margin: 3px 0 0 0;
 
-        &::before {
-          content: "\f00d";
-          font-weight: 900;
-          padding-left: 1px;
+      .task {
+        i {
+          pointer-events: auto;
         }
-      }
 
-      &.check-square {
-        text-decoration: line-through;
+        span {
+          pointer-events: auto;
+        }
 
         &::before {
-          content: "\f00c";
-          font-weight: 900;
+          content: "\f0c8";
+          margin-right: 4px;
+          font-weight: 400;
+          font-family: "Font Awesome 5 Free";
+        }
+
+        &.minus-square {
+          text-decoration: line-through;
+
+          &::before {
+            content: "\f00d";
+            font-weight: 900;
+            padding-left: 1px;
+          }
+        }
+
+        &.check-square {
+          text-decoration: line-through;
+
+          &::before {
+            content: "\f00c";
+            font-weight: 900;
+          }
         }
       }
     }

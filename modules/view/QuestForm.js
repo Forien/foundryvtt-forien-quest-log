@@ -1,10 +1,11 @@
-import Enrich                    from '../control/Enrich.js';
-import Fetch                     from '../control/Fetch.js';
-import Socket                    from '../control/Socket.js';
-import Utils                     from '../control/Utils.js';
-import Quest                     from '../model/Quest.js';
-import QuestFolder               from '../model/QuestFolder.js';
-import { constants, settings }   from '../model/constants.js';
+import Enrich        from '../control/Enrich.js';
+import Fetch         from '../control/Fetch.js';
+import Socket        from '../control/Socket.js';
+import Utils         from '../control/Utils.js';
+import Quest         from '../model/Quest.js';
+import QuestFolder   from '../model/QuestFolder.js';
+
+import { constants, questTypes, settings }   from '../model/constants.js';
 
 export default class QuestForm extends FormApplication
 {
@@ -69,8 +70,12 @@ export default class QuestForm extends FormApplication
       // Get the default permission setting and attempt to set it if found in ENTITY_PERMISSIONS.
       const defaultPerm = game.settings.get(constants.moduleName, settings.defaultPermission);
 
-      let permission = typeof CONST.ENTITY_PERMISSIONS[defaultPerm] === 'number' ?
-       CONST.ENTITY_PERMISSIONS[defaultPerm] : CONST.ENTITY_PERMISSIONS.OBSERVER;
+      const permission = {
+         default: typeof CONST.ENTITY_PERMISSIONS[defaultPerm] === 'number' ? CONST.ENTITY_PERMISSIONS[defaultPerm] :
+          CONST.ENTITY_PERMISSIONS.OBSERVER
+      };
+
+      const trustedPlayerEdit = Utils.isTrustedPlayer();
 
       try
       {
@@ -103,11 +108,12 @@ export default class QuestForm extends FormApplication
          image: this._image
       };
 
-      // Used for a player created quest setting all users as owners and the quest as 'available'.
+      // Used for a player created quest setting and the quest as 'available' for normal players or 'hidden' for
+      // trusted players.
       if (!game.user.isGM)
       {
-         data.status = 'available';
-         permission = CONST.ENTITY_PERMISSIONS.OWNER;
+         data.status = trustedPlayerEdit ? questTypes.hidden : questTypes.available;
+         permission[game.user.id] = CONST.ENTITY_PERMISSIONS.OWNER;
       }
 
       if (formData.giver === 'abstract')
@@ -125,7 +131,7 @@ export default class QuestForm extends FormApplication
       const entry = await JournalEntry.create({
          name,
          folder: QuestFolder.get().id,
-         permission: { default: permission },
+         permission,
          flags: {
             [constants.moduleName]: {
                json: data.toJSON()
@@ -331,6 +337,7 @@ export default class QuestForm extends FormApplication
 
       return {
          isGM: game.user.isGM,
+         canEdit: game.user.isGM || Utils.isTrustedPlayer(),
          subquest: this._subquest,
          options: mergeObject(this.options, options)
       };

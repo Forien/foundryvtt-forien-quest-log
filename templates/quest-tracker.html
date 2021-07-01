@@ -1,22 +1,34 @@
 <div id="quest-tracker" class="{{background}}" style="top: {{pos.top}}px; {{#if pos.left}}left: {{pos.left}}px{{/if}}">
     <div class="move-handle"><i class="fas fa-arrows-alt"></i></div>
     {{#each quests}}
-    <div class="quest" data-id="{{this.id}}">
-        <h3 class="title">
-            {{#if isGM}}
-               {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
-               {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>&nbsp;{{/if}}
-            {{/if}}
-            {{this.name}}
-        </h3>
-        <ul class="tasks">
-        {{#each this.subquests}}
-        <li class="task {{this.state}}" {{#if this.hidden}}id="hidden"{{/if}}>{{this.name}}</li>
-        {{/each}}
-        {{#each this.tasks}}
-        <li class="task {{this.state}}" {{#if this.hidden}}id="hidden"{{/if}}>{{this.name}}</li>
-        {{/each}}
-        </ul>
+    <div class="quest">
+      <h3 class="title" {{#if (or isHidden isInactive)}}id="hidden"{{/if}}>
+        <a class="quest-tracker-header" data-quest-id="{{id}}">
+        {{#if isGM}}
+           {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
+           {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
+        {{/if}}
+        {{name}}
+        </a>
+        <span class="quest-tracker-span"></span>
+        <a class="quest-tracker-link" data-quest-id="{{id}}"><i class="fas fa-pen-nib fa-fw"></i></a>
+      </h3>
+
+      <div class="tasks">
+      {{#each subquests}}
+        <div class="task {{state}}" {{#if (or isHidden isInactive)}}id="hidden"{{/if}}>
+          {{#if ../isGM}}
+            {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
+            {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
+          {{/if}}
+          <span title="{{statusTooltip}}">{{name}}</span>
+          <a class="quest-tracker-link" data-quest-id="{{id}}"><i class="fas fa-link"></i></a>
+        </div>
+      {{/each}}
+      {{#each tasks}}
+        <div class="task {{state}}" {{#if hidden}}id="hidden"{{/if}}>{{name}}</div>
+      {{/each}}
+      </div>
     </div>
     {{/each}}
 </div>

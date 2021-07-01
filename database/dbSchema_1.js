@@ -167,9 +167,9 @@ async function migrateData(entry)
 
    try
    {
-      if (!questTypes[content.status]) { content.status = 'inactive'; }
+      if (!questTypes[content.status]) { content.status = questTypes.hidden; }
    }
-   catch (err) { content.status = 'inactive'; }
+   catch (err) { content.status = questTypes.hidden; }
 
    return content;
 }

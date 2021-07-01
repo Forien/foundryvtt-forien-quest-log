@@ -1,24 +1,31 @@
 <form class="quest-preview">
+  <nav class="quest-tabs tabs {{#unless canEdit}}hidden{{/unless}}" data-group="primary">
+    <a class="item" data-tab="details">{{localize 'ForienQuestLog.QuestPreview.Tabs.Details'}}</a>
+    {{#if isGM}}
+      <a class="item" data-tab="gmnotes">{{localize 'ForienQuestLog.QuestPreview.Tabs.GMNotes'}}</a>
+    {{/if}}
+    <a class="item" data-tab="management">{{localize 'ForienQuestLog.QuestPreview.Tabs.QuestManagement'}}</a>
+    {{#if isHidden}}
+      <i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>
+    {{/if}}
+    {{#if isPersonal}}
+      <i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>
+    {{/if}}
+  </nav>
 
-    <nav class="quest-tabs tabs {{#unless isGM}}hidden{{/unless}}" data-group="primary">
-        <a class="item" data-tab="details">{{localize 'ForienQuestLog.QuestPreview.Tabs.Details'}}</a>
-        <a class="item" data-tab="gmnotes">{{localize 'ForienQuestLog.QuestPreview.Tabs.GMNotes'}}</a>
-        <a class="item" data-tab="management">{{localize 'ForienQuestLog.QuestPreview.Tabs.QuestManagement'}}</a>
-        {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
-        {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
-    </nav>
-
-    <section class="quest-body">
-        <div class="tab details" data-group="primary" data-tab="details">
-            {{> "modules/forien-quest-log/templates/partials/quest-preview/details.html"}}
-        </div>
-        {{#if isGM}}
-        <div class="tab gmnotes" data-group="primary" data-tab="gmnotes">
-            {{> "modules/forien-quest-log/templates/partials/quest-preview/gmnotes.html"}}
-        </div>
-        <div class="tab management" data-group="primary" data-tab="management">
-            {{> "modules/forien-quest-log/templates/partials/quest-preview/management.html"}}
-        </div>
-        {{/if}}
-    </section>
+  <section class="quest-body">
+    <div class="tab details" data-group="primary" data-tab="details">
+      {{> "modules/forien-quest-log/templates/partials/quest-preview/details.html"}}
+    </div>
+    {{#if isGM}}
+      <div class="tab gmnotes" data-group="primary" data-tab="gmnotes">
+        {{> "modules/forien-quest-log/templates/partials/quest-preview/gmnotes.html"}}
+      </div>
+    {{/if}}
+    {{#if canEdit}}
+      <div class="tab management" data-group="primary" data-tab="management">
+        {{> "modules/forien-quest-log/templates/partials/quest-preview/management.html"}}
+      </div>
+    {{/if}}
+  </section>
 </form>

@@ -24,8 +24,7 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            const fqlPublicAPI = Utils.getFQLPublicAPI();
-            if (fqlPublicAPI.questLog.rendered) { fqlPublicAPI.questLog.render(); }
+            Utils.getFQLPublicAPI().renderAll({ force: true, questPreview: true });
          }
       });
 
@@ -65,8 +64,20 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            const fqlPublicAPI = Utils.getFQLPublicAPI();
-            if (fqlPublicAPI.questLog.rendered) { fqlPublicAPI.questLog.render(); }
+            Utils.getFQLPublicAPI().renderAll({ questPreview: true });
+         }
+      });
+
+      game.settings.register(constants.moduleName, settings.trustedPlayerEdit, {
+         name: 'ForienQuestLog.Settings.trustedPlayerEdit.Enable',
+         hint: 'ForienQuestLog.Settings.trustedPlayerEdit.EnableHint',
+         scope: scope.world,
+         config: true,
+         default: false,
+         type: Boolean,
+         onChange: () =>
+         {
+            Utils.getFQLPublicAPI().renderAll({ questPreview: true });
          }
       });
 
@@ -242,20 +253,6 @@ export default class ModuleSettings
             {
                Utils.getFQLPublicAPI().questTracker.element.toggleClass('background', value);
             }
-         }
-      });
-
-      game.settings.register(constants.moduleName, settings.questTrackerTasks, {
-         name: 'ForienQuestLog.WorkshopPUF.Settings.questTrackerTasks.name',
-         hint: 'ForienQuestLog.WorkshopPUF.Settings.questTrackerTasks.hint',
-         scope: scope.client,
-         config: true,
-         default: true,
-         type: Boolean,
-         onChange: () =>
-         {
-            const fqlPublicAPI = Utils.getFQLPublicAPI();
-            if (fqlPublicAPI.questTracker.rendered) { fqlPublicAPI.questTracker.render(); }
          }
       });
 

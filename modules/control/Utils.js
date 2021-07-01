@@ -1,4 +1,5 @@
-import Fetch                     from "./Fetch.js";
+import Fetch   from "./Fetch.js";
+
 import { constants, settings }   from '../model/constants.js';
 
 export default class Utils
@@ -119,6 +120,18 @@ export default class Utils
    }
 
    /**
+    * Returns whether the player is a trusted player and `trustedPlayerEdit` is enabled.
+    *
+    * @param {User} user - User to check for trusted status and `trustedPlayerEdit`.
+    *
+    * @returns {boolean} Is trusted player edit.
+    */
+   static isTrustedPlayer(user = game.user)
+   {
+      return user.isTrusted && game.settings.get(constants.moduleName, settings.trustedPlayerEdit);
+   }
+
+   /**
     * Convenience method to determine if the QuestTracker is visible to the current user. Always for the GM when
     * QuestTracker is enabled, but only for users if `hideFromPlayers` is false. There must also be active quests for
     * the tracker to be visible.
@@ -129,7 +142,7 @@ export default class Utils
    {
       return game.settings.get(constants.moduleName, settings.enableQuestTracker) &&
        (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers)) &&
-        Fetch.getCount({ type: 'active' }) > 0;
+        Fetch.getActiveCount() > 0;
    }
 
    /**
@@ -164,7 +177,14 @@ export default class Utils
 
          if (document?.sheet)
          {
-            document.sheet.render(true, options);
+            if (document.sheet.rendered)
+            {
+               document.sheet.bringToTop();
+            }
+            else
+            {
+               document.sheet.render(true, options);
+            }
          }
       }
       catch (err)

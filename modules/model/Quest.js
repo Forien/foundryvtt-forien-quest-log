@@ -1,6 +1,7 @@
-import Fetch         from '../control/Fetch.js';
-import Utils         from '../control/Utils.js';
-import { constants } from './constants.js';
+import Fetch   from '../control/Fetch.js';
+import Utils   from '../control/Utils.js';
+
+import { constants, settings, questTypes } from './constants.js';
 
 // Stores any Foundry sheet class to be used to render quest. Primarily used in content linking.
 let SheetClass;
@@ -61,10 +62,32 @@ export default class Quest
       return isHidden;
    }
 
+   /**
+    * Quests are inactive depending on the available tab / available quests setting. When the available tab is showing
+    * quests are only inactive if the quest status is 'hidden' otherwise they are inactive when the status is 'hidden'
+    * or 'available'.
+    *
+    * @returns {boolean} The quest inactive state.
+    */
+   get isInactive()
+   {
+      const availableTab = game.settings.get(constants.moduleName, settings.availableQuests);
+
+      return availableTab ? questTypes.hidden === this.status :
+       questTypes.hidden === this.status || questTypes.available === this.status;
+   }
+
    get isObservable()
    {
-      return game.user.isGM ||
-       (this.entry && this.entry.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER));
+      if (game.user.isGM) { return true; }
+
+      const isInactive = this.isInactive;
+
+      // Special handling for trusted player edit who can only see owned quests in the hidden / inactive category.
+      if (Utils.isTrustedPlayer() && isInactive) { return this.isOwner; }
+
+      // Otherwise no one can see hidden / inactive quests; perform user permission check for observer.
+      return !isInactive && this.entry.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER);
    }
 
    get isOwner()
@@ -262,13 +285,14 @@ export default class Quest
    {
       this.giver = data.giver || null;
       this.name = data.name || game.i18n.localize('ForienQuestLog.NewQuest');
-      this.status = data.status || 'hidden';
+      this.status = data.status || questTypes.hidden;
       this.description = data.description || '';
       this.gmnotes = data.gmnotes || '';
       this.image = data.image || 'actor';
       this.giverName = data.giverName || 'actor';
       this.splash = data.splash || '';
       this.splashPos = data.splashPos || 'center';
+      this.splashAsIcon = typeof data.splashAsIcon === 'boolean' ? data.splashAsIcon : false;
       this.location = data.location || null;
       this.priority = data.priority || 0;
       this.type = data.type || null;
@@ -293,19 +317,19 @@ export default class Quest
 
          switch (this.status)
          {
-            case 'active':
+            case questTypes.active:
                this.date.start = Date.now();
                this.date.end = null;
                break;
 
-            case 'completed':
-            case 'failed':
+            case questTypes.completed:
+            case questTypes.failed:
                this.date.start = Date.now();
                this.date.end = Date.now();
                break;
 
-            case 'hidden':
-            case 'available':
+            case questTypes.hidden:
+            case questTypes.available:
             default:
                this.date.start = null;
                this.date.end = null;
@@ -330,18 +354,18 @@ export default class Quest
       // Update the tracked date data based on status.
       switch (this.status)
       {
-         case 'active':
+         case questTypes.active:
             this.date.start = Date.now();
             this.date.end = null;
             break;
 
-         case 'completed':
-         case 'failed':
+         case questTypes.completed:
+         case questTypes.failed:
             this.date.end = Date.now();
             break;
 
-         case 'hidden':
-         case 'available':
+         case questTypes.hidden:
+         case questTypes.available:
          default:
             this.date.start = null;
             this.date.end = null;
@@ -474,8 +498,9 @@ export default class Quest
          gmnotes: this.gmnotes,
          image: this.image,
          giverName: this.giverName,
-         splashPos: this.splashPos,
          splash: this.splash,
+         splashPos: this.splashPos,
+         splashAsIcon: this.splashAsIcon,
          location: this.location,
          priority: this.priority,
          type: this.type,

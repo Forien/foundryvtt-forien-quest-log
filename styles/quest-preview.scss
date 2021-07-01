@@ -120,25 +120,6 @@
           }
         }
 
-        .actions {
-          flex: 0 0 1px;
-          padding: 0 8px;
-
-          i {
-            font-size: 18px;
-            transition: color .3s ease;
-            cursor: pointer;
-
-            &:hover {
-              color: $primary-accent-color;
-            }
-          }
-        }
-
-        .quest-title .actions {
-          border: none;
-        }
-
         section {
           flex: 1;
           display: flex;
@@ -187,7 +168,7 @@
             content: none;
           }
 
-          .quest-name {
+          .quest-name-link {
             transition: color .3s ease;
             cursor: pointer;
 
@@ -292,47 +273,8 @@
             }
           }
 
-          .actions {
-            flex: 0 0 100px;
-            height: 100%;
-            cursor: default;
-
-            i {
-              min-width: 16px;
-              text-align: center;
-            }
-
-            .fa-sort {
-              cursor: move;
-            }
-
-            .del-btn {
-              color: rgba(255, 0, 0, .4);
-
-              &:hover {
-                color: $primary-accent-color;
-              }
-            }
-
-            .fa-pen {
-              font-size: 14px;
-            }
-          }
-
           .is-link {
             cursor: pointer;
-          }
-
-          .is-player {
-            flex: 0 0 40px;
-
-            i {
-              cursor: default;
-
-              &:hover {
-                color: black;
-              }
-            }
           }
 
           .editable-container {
@@ -396,7 +338,7 @@
             }
           }
 
-          .quest-name {
+          .quest-name-link {
             cursor: pointer;
             transition: color .3s ease;
             margin: 0;
@@ -499,22 +441,6 @@
           flex: 0 0 1px;
         }
 
-        .input-group {
-          display: flex;
-          align-items: center;
-          background: rgba(255, 255, 255, .4);
-          border-radius: 5px;
-          padding: 2px;
-          margin-bottom: 2px;
-        }
-
-        input[type="checkbox"] {
-          flex: 0 0 20px;
-          width: 20px;
-          height: 20px;
-          margin: 0;
-        }
-
         label {
           margin: 0 0 0 4px;
           width: calc(100% - 20px);
@@ -536,6 +462,31 @@
 
           &:hover {
             background-color: rgba(0, 0, 0, .075);
+          }
+        }
+
+        .state-container {
+          margin-left: 12px;
+          position: relative;
+
+          input[type="checkbox"] {
+            vertical-align: center;
+            display: inline;
+            position: absolute;
+            top: 1px;
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            cursor: pointer;
+          }
+
+          label {
+            position: absolute;
+            left: 22px;
+            width: 150px;
+            display: inline;
+            //font-size: smaller;
+            font-weight: lighter;
           }
         }
 
@@ -605,16 +556,11 @@
           h2 {
             flex: 1;
             border: none;
-            margin: 0 8px;
+            margin: 0 4px;
             font-size: 14px;
             line-height: 30px;
             cursor: pointer;
             transition: color .3s ease;
-          }
-
-          .actions {
-            flex: 0 0 100px;
-            height: 100%;
           }
         }
 
@@ -623,7 +569,6 @@
           margin: 8px 8px 0 8px;
         }
       }
-
     }
 
     .editor {
@@ -644,7 +589,6 @@
     .tox .tox-toolbar__overflow,
     .tox .tox-toolbar__primary {
       background: transparent;
-      background-color: transparent;
     }
 
     .tox.tox-tinymce .tox-tbtn {
@@ -656,6 +600,5 @@
     .tox.tox-tinymce .tox-tbtn[title="Formats"] {
       width: 90px;
     }
-
   }
 }

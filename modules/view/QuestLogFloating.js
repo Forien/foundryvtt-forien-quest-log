@@ -1,7 +1,9 @@
-import Enrich                                from '../control/Enrich.js';
-import Fetch                                 from '../control/Fetch.js';
-import QuestAPI                              from '../control/QuestAPI.js';
-import { constants, questTypes, settings }   from '../model/constants.js';
+import Enrich     from '../control/Enrich.js';
+import Fetch      from '../control/Fetch.js';
+import QuestAPI   from '../control/QuestAPI.js';
+import Utils      from '../control/Utils.js';
+
+import { constants, questTypes, questTypesI18n, settings }  from '../model/constants.js';
 
 export default class QuestLogFloating extends Application
 {
@@ -41,14 +43,22 @@ export default class QuestLogFloating extends Application
       html.on('click', '.folder-toggle', (event) =>
       {
          const questId = $(event.target).closest('.folder-toggle').data('quest-id');
-         $(`.directory-item[data-quest-id='${questId}']`).toggleClass('collapsed');
-         $(`.folder-toggle[data-quest-id='${questId}'] i`).toggleClass('fas');
-         $(`.folder-toggle[data-quest-id='${questId}'] i`).toggleClass('far');
-         localStorage.setItem(`forien.questlog.folderstate-${questId}`,
-          $(`.directory-item[data-quest-id='${questId}']`).hasClass('collapsed'));
+         const dirItem = $(`.directory-item[data-quest-id='${questId}']`);
+         const dirItemIcon = $(`.folder-toggle[data-quest-id='${questId}'] i`);
+
+         dirItem.toggleClass('collapsed');
+         dirItemIcon.toggleClass('fas');
+         dirItemIcon.toggleClass('far');
+
+         const collapsed = dirItem.hasClass('collapsed');
+
+         sessionStorage.setItem(`${constants.folderState}${questId}`, collapsed);
+
+         const fqlPublicAPI = Utils.getFQLPublicAPI();
+         if (fqlPublicAPI.questTracker.rendered) { fqlPublicAPI.questTracker.render(); }
       });
 
-      html.on('click', '.quest-open', (event) =>
+      html.on('click', '.questlog-floating .quest-open', (event) =>
       {
          const questId = $(event.target).closest('.quest-open').data('quest-id');
          QuestAPI.open({ questId });
@@ -56,16 +66,16 @@ export default class QuestLogFloating extends Application
 
       // Open and close folders on rerender. Data is store in localstorage so
       // display is consistent after each render.
-      for (const quest of Fetch.sorted().active)
+      for (const quest of Fetch.sorted({ type: questTypes.active }).active)
       {
-         $(`.directory-item[data-quest-id='${quest.id}']`).toggleClass('collapsed',
-          localStorage.getItem(`forien.questlog.folderstate-${quest.id}`) === 'true');
+         const collapsed = sessionStorage.getItem(`${constants.folderState}${quest.id}`);
 
-         $(`.folder-toggle[data-quest-id='${quest.id}'] i`).toggleClass('fas',
-          localStorage.getItem(`forien.questlog.folderstate-${quest.id}`) === 'true');
+         const dirItem = $(`.directory-item[data-quest-id='${quest.id}']`);
+         const dirItemIcon = $(`.folder-toggle[data-quest-id='${quest.id}'] i`);
 
-         $(`.folder-toggle[data-quest-id='${quest.id}'] i`).toggleClass('far',
-          localStorage.getItem(`forien.questlog.folderstate-${quest.id}`) !== 'true');
+         dirItem.toggleClass('collapsed', collapsed !== 'false');
+         dirItemIcon.toggleClass('fas', collapsed !== 'false');
+         dirItemIcon.toggleClass('far', collapsed === 'false');
       }
    }
 
@@ -81,10 +91,10 @@ export default class QuestLogFloating extends Application
       return mergeObject(super.getData(), {
          options,
          isGM: game.user.isGM,
-         showTasks: game.settings.get(constants.moduleName, 'showTasks'),
+         showTasks: game.settings.get(constants.moduleName, settings.showTasks),
          style: game.settings.get(constants.moduleName, settings.navStyle),
-         questTypes,
-         quests: await Enrich.sorted(Fetch.sorted())
+         questTypesI18n,
+         quests: await Enrich.sorted(Fetch.sorted({ type: questTypes.active }))
       });
    }
 }

@@ -83,7 +83,8 @@
         "SplashArt": "Splash Art:",
         "QuestBranching": "Sub Quests:",
         "AddSubquest": "Create new Sub Quest",
-        "SplashInfo": "Click to set image."
+        "SplashInfo": "Click to set image.",
+        "SplashQuestIcon": "Set as quest icon"
       },
 
       "Tabs": {
@@ -126,11 +127,11 @@
 
     "Settings": {
       "allowPlayersDrag": {
-        "Enable": "Allow Players to drag Rewards to their Inventory",
-        "EnableHint": "Check to allow Players to drag Rewards from a Quest Details window to their owned Actors."
+        "Enable": "Allow Player Reward Dragging",
+        "EnableHint": "Check to allow Players to drag Rewards from the Quest Details window to their owned Actors."
       },
       "availableQuests": {
-        "Enable": "Show Available Tab",
+        "Enable": "Show Available Quests Tab",
         "EnableHint": "Check to show the \"Available\" tab in the Quest Log Menu where players can see all non-inactive Quests before they are accepted."
       },
       "countHidden": {
@@ -173,17 +174,17 @@
         "Enable": "Hide Quest Log from players",
         "EnableHint": "When enabled this option hides the Quest Log from all players. Only GM level users will be able to access the Quest Log."
       },
-      "playersWelcomeScreen": {
-        "Enable": "Display Welcome Screen to Players",
-        "EnableHint": "Uncheck to prevent players from seeing Welcome Screen on log in after an update. They might still see it by clicking 'help' icon in Quest Log."
-      },
       "allowPlayersAccept": {
         "Enable": "Players can accept Quests",
         "EnableHint": "Check to allow players to accept Quests from Available tab."
       },
       "allowPlayersCreate": {
-        "Enable": "Players can create",
+        "Enable": "Players can create Quests",
         "EnableHint": "Check to allow players to create Quests. Player created Quests will appear in Available tab with Player Edit permissions. REQUIRES 'create journal' core permission."
+      },
+      "trustedPlayerEdit": {
+        "Enable": "Allow Trusted Player Quest Editing",
+        "EnableHint": "Check to allow trusted players to have expanded quest editing and status control capabilities over quests they have ownership."
       }
     },
 
@@ -203,13 +204,14 @@
       "RewardVisible": "Reward is visible. Click to hide.",
       "RewardLocked": "Reward is locked. Click to unlock.",
       "RewardUnlocked": "Reward is unlocked. Click to lock.",
+      "Status": "Status: {statusI18n}",
       "TaskHidden": "Objective is hidden. Click to show.",
       "TaskVisible": "Objective is visible. Click to hide.",
       "ToggleImage": "Toggle Token/Actor image",
       "DeleteQuestGiver": "Delete quest giver",
       "DeleteSplash": "Delete splash art",
-      "ChangeGiverImgPos": "Change Quest Giver image alignement",
-      "ChangeSplashPos": "Change Splash alignement"
+      "ChangeGiverImgPos": "Change Quest Giver image alignment",
+      "ChangeSplashPos": "Change Splash alignment"
     },
 
     "Migration": {
@@ -253,10 +255,6 @@
         "questTrackerBackground": {
           "name": "Quest Tracker Background",
           "hint": "Check this to enable background for Quest Tracker, which might help with visibility on certain maps."
-        },
-        "questTrackerTasks": {
-          "name": "Show Quest Tracker Tasks",
-          "hint": "Check this to enable the display of tasks in the Quest Tracker."
         },
         "resetQuestTracker": {
           "name": "Reset Quest Tracker Position",

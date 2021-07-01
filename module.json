@@ -25,8 +25,9 @@
     "allowBugReporter": true
   },
   "version": "0.7.3",
-  "minimumCoreVersion": "0.8.7",
+  "minimumCoreVersion": "0.8.6",
   "compatibleCoreVersion": "0.8.8",
+  "scripts": [],
   "esmodules": [
     "./modules/init.js"
   ],
@@ -95,7 +96,7 @@
   "dependencies": [],
   "socket": true,
   "manifest": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/latest/download/module.json",
-  "download": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/download/0.7.2/module.zip",
+  "download": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/download/0.7.3/module.zip",
   "protected": false,
   "coreTranslation": false
 }
