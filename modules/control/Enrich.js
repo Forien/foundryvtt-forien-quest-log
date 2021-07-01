@@ -115,7 +115,7 @@ export default class Enrich
 
       let addedAction = false;
 
-      result += `<div class="actions${!isTrustedPlayer && !canEdit ? ' is-player' : ''}">`;
+      result += `<div class="actions quest-status${!isTrustedPlayer && !canEdit ? ' is-player' : ''}">`;
 
       if (canEdit || canAccept)
       {
@@ -146,7 +146,7 @@ export default class Enrich
 
          if (canEdit)
          {
-            result += `<i class="delete fas fa-trash" title="${game.i18n.localize('ForienQuestLog.Tooltips.Delete')}" data-quest-id="${quest.id}" data-name="${quest.name}"></i>\n`;
+            result += `<i class="delete fas fa-trash" title="${game.i18n.localize('ForienQuestLog.Tooltips.Delete')}" data-quest-id="${quest.id}" data-quest-name="${quest.name}"></i>\n`;
             addedAction = true;
          }
 

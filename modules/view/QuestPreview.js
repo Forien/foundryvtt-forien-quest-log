@@ -247,9 +247,10 @@ export default class QuestPreview extends FormApplication
          }
       });
 
-      html.on('click', '.quest-name', (event) =>
+      // This CSS selector responds to any subquest attached to the details section or subquests listed in objectives.
+      html.on('click', '.quest-name-link', (event) =>
       {
-         const questId = $(event.currentTarget).data('id');
+         const questId = $(event.currentTarget).data('quest-id');
          QuestAPI.open({ questId });
       });
 
@@ -309,11 +310,11 @@ export default class QuestPreview extends FormApplication
             });
          });
 
-         html.on('click', '.task .del-btn', async (event) =>
+         html.on('click', '.actions.tasks .delete', async (event) =>
          {
             const target = $(event.target);
             const uuidv4 = target.data('uuidv4');
-            const name = target.data('name');
+            const name = target.data('task-name');
 
             const result = await FQLDialog.confirmDeleteTask({ name, result: uuidv4, questId: this.quest.id });
             if (result)
@@ -327,7 +328,7 @@ export default class QuestPreview extends FormApplication
             }
          });
 
-         html.on('click', '.task .toggleState', async (event) =>
+         html.on('click', 'li.task .toggleState', async (event) =>
          {
             const uuidv4 = $(event.target).data('uuidv4');
 
@@ -343,7 +344,7 @@ export default class QuestPreview extends FormApplication
           * While this class selector provides a specific target there still is an early out to match against
           * `task.name`.
           */
-         html.on('click', '.task .editable', (event) =>
+         html.on('click', '.actions.tasks .editable', (event) =>
          {
             const target = $(event.target).data('target');
             let uuidv4 = $(event.target).data('uuidv4');
@@ -387,12 +388,12 @@ export default class QuestPreview extends FormApplication
 
       if (this.canEdit || this.canAccept)
       {
-         html.on('click', '.actions i', async (event) =>
+         html.on('click', '.actions.quest-status i', async (event) =>
          {
             const target = $(event.target).data('target');
-            const questId = $(event.target).data('questId');
+            const questId = $(event.target).data('quest-id');
             const classList = $(event.target).attr('class');
-            const name = $(event.target).data('name');
+            const name = $(event.target).data('quest-name');
 
             if (classList.includes('move'))
             {
@@ -504,12 +505,9 @@ export default class QuestPreview extends FormApplication
           * will be invoked twice when the task edit button is pressed, but has an early out in the first if conditional
           * if the target is 'task.name'.
           */
-         html.on('click', '.editable', (event) =>
+         html.on('click', '.actions.rewards .editable', (event) =>
          {
             const target = $(event.target).data('target');
-
-            // Early out for task `.editable`.
-            if (target === void 0 || target === 'task.name') { return; }
 
             let value = this.quest[target];
             let uuidv4;
@@ -539,11 +537,6 @@ export default class QuestPreview extends FormApplication
 
                switch (targetOut)
                {
-                  case 'name':
-                     this.quest.name = valueOut;
-                     this.options.title = game.i18n.format('ForienQuestLog.QuestPreview.Title', this.quest);
-                     break;
-
                   case 'reward.name':
                   {
                      uuidv4 = $(event.target).data('uuidv4');
@@ -553,20 +546,54 @@ export default class QuestPreview extends FormApplication
                      reward.data.name = valueOut;
                      break;
                   }
+               }
+               await this.saveQuest();
+            });
+         });
 
-                  default:
-                     if (this.quest[targetOut] !== void 0) { this.quest[targetOut] = valueOut; }
+         /**
+          * There is no way to provide a more specific class selector as this callback edits the quest name and reward
+          * name which are located in separate sections of the template. A more specific class selector is provided
+          * above in the `canEdit / playedEdit` gated code that specifically targets the task edit button. This callback
+          * will be invoked twice when the task edit button is pressed, but has an early out in the first if conditional
+          * if the target is 'task.name'.
+          */
+         html.on('click', '.actions-single.quest-name .editable', (event) =>
+         {
+            const target = $(event.target).data('target');
+
+            let value = this.quest[target];
+            let uuidv4;
+
+            value = value.replace(/'/g, '&quot;');
+            const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${uuidv4 !== void 0 ? `data-uuidv4='${uuidv4}'` : ``}/>`);
+            const parent = $(event.target).closest('.actions-single').prev('.editable-container');
+
+            parent.html('');
+            parent.append(input);
+            input.focus();
+
+            input.focusout(async (event) =>
+            {
+               const targetOut = $(event.target).data('target');
+               const valueOut = $(event.target).val();
+
+               switch (targetOut)
+               {
+                  case 'name':
+                     this.quest.name = valueOut;
+                     this.options.title = game.i18n.format('ForienQuestLog.QuestPreview.Title', this.quest);
                      break;
                }
                await this.saveQuest();
             });
          });
 
-         html.on('click', '.rewards-box .del-btn', async (event) =>
+         html.on('click', '.actions.rewards .delete', async (event) =>
          {
             const target = $(event.target);
             const uuidv4 = target.data('uuidv4');
-            const name = target.data('name');
+            const name = target.data('reward-name');
 
             // Await a modal dialog.
             const result = await FQLDialog.confirmDeleteReward({ name, result: uuidv4, questId: this.quest.id });

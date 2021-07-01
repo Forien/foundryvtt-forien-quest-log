@@ -72,7 +72,7 @@ export default class QuestLog extends Application
          }
       });
 
-      html.on('click', '.actions i', async (event) =>
+      html.on('click', '.actions.quest-status i', async (event) =>
       {
          const target = $(event.target).data('target');
          const questId = $(event.target).data('quest-id');
