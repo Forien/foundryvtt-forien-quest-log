@@ -82,7 +82,7 @@ export default class Socket
    {
       let handled = false;
 
-      if (game.user.isGM)
+      if (game.user.isGM || (Utils.isTrustedPlayer() && quest.isOwner))
       {
          await quest.move(target);
          handled = true;

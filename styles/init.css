@@ -157,7 +157,14 @@
 #forien-quest-log .actions.is-player,
 #forien-quest-log-form .actions.is-player,
 .window-app.forien-quest-preview .actions.is-player {
-  flex: 0 0 30px;
+  flex: 0 0 60px;
+}
+#forien-quest-log .actions span.justify-center,
+#forien-quest-log-form .actions span.justify-center,
+.window-app.forien-quest-preview .actions span.justify-center {
+  flex: 1;
+  margin: 1px 1px 1px auto;
+  visibility: hidden;
 }
 #forien-quest-log .actions i,
 #forien-quest-log-form .actions i,
@@ -168,9 +175,30 @@
   color: rgba(0, 0, 0, 0.75);
   transition: color 0.3s ease;
 }
-#forien-quest-log .actions i.delete,
-#forien-quest-log-form .actions i.delete,
-.window-app.forien-quest-preview .actions i.delete {
+#forien-quest-log .actions i.fa-sort,
+#forien-quest-log-form .actions i.fa-sort,
+.window-app.forien-quest-preview .actions i.fa-sort {
+  flex: 0 0 18px;
+  padding-left: 4px;
+  margin-right: auto;
+  cursor: move;
+  width: 14px;
+  border-right: 1px solid rgba(0, 0, 0, 0.15);
+}
+#forien-quest-log .actions i.fa-eye,
+#forien-quest-log-form .actions i.fa-eye,
+.window-app.forien-quest-preview .actions i.fa-eye {
+  flex: 0 0 20px;
+  padding-left: 1px;
+}
+#forien-quest-log .actions i.fa-eye-slash,
+#forien-quest-log-form .actions i.fa-eye-slash,
+.window-app.forien-quest-preview .actions i.fa-eye-slash {
+  flex: 0 0 20px;
+}
+#forien-quest-log .actions i.fa-trash,
+#forien-quest-log-form .actions i.fa-trash,
+.window-app.forien-quest-preview .actions i.fa-trash {
   color: rgba(255, 0, 0, 0.4);
 }
 #forien-quest-log .actions i.fa-play,
@@ -188,6 +216,24 @@
 #forien-quest-log-form .actions i:first-child,
 .window-app.forien-quest-preview .actions i:first-child {
   margin: 0;
+}
+#forien-quest-log .actions-single,
+#forien-quest-log-form .actions-single,
+.window-app.forien-quest-preview .actions-single {
+  flex: 0 0 1px;
+  padding: 0 8px;
+}
+#forien-quest-log .actions-single i,
+#forien-quest-log-form .actions-single i,
+.window-app.forien-quest-preview .actions-single i {
+  font-size: 18px;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+#forien-quest-log .actions-single i:hover,
+#forien-quest-log-form .actions-single i:hover,
+.window-app.forien-quest-preview .actions-single i:hover {
+  color: #ff6400;
 }
 #forien-quest-log section,
 #forien-quest-log-form section,
@@ -620,21 +666,6 @@
 .window-app.forien-quest-preview .quest-body .details-header .quest-setup .splash-image-link span:hover {
   opacity: 0;
 }
-.window-app.forien-quest-preview .quest-body .details-header .quest-setup .actions {
-  flex: 0 0 1px;
-  padding: 0 8px;
-}
-.window-app.forien-quest-preview .quest-body .details-header .quest-setup .actions i {
-  font-size: 18px;
-  transition: color 0.3s ease;
-  cursor: pointer;
-}
-.window-app.forien-quest-preview .quest-body .details-header .quest-setup .actions i:hover {
-  color: #ff6400;
-}
-.window-app.forien-quest-preview .quest-body .details-header .quest-setup .quest-title .actions {
-  border: none;
-}
 .window-app.forien-quest-preview .quest-body .details-header .quest-setup section {
   flex: 1;
   display: flex;
@@ -766,48 +797,9 @@
   margin: 0 4px 2px 0;
   align-items: center;
 }
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .actions,
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .actions {
-  flex: 0 0 100px;
-  height: 100%;
-  cursor: default;
-}
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .actions i,
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .actions i {
-  min-width: 16px;
-  text-align: center;
-}
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .actions .fa-sort,
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .actions .fa-sort {
-  cursor: move;
-}
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .actions .del-btn,
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .actions .del-btn {
-  color: rgba(255, 0, 0, 0.4);
-}
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .actions .del-btn:hover,
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .actions .del-btn:hover {
-  color: #ff6400;
-}
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .actions .fa-pen,
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .actions .fa-pen {
-  font-size: 14px;
-}
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .is-link,
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .is-link {
   cursor: pointer;
-}
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .is-player,
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .is-player {
-  flex: 0 0 40px;
-}
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .is-player i,
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .is-player i {
-  cursor: default;
-}
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .is-player i:hover,
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .is-player i:hover {
-  color: black;
 }
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .editable-container,
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .editable-container {
@@ -1079,10 +1071,6 @@
   line-height: 30px;
   cursor: pointer;
   transition: color 0.3s ease;
-}
-.window-app.forien-quest-preview .quest-body .management .subquests .subquests-box .actions {
-  flex: 0 0 100px;
-  height: 100%;
 }
 .window-app.forien-quest-preview .quest-body .management .subquests footer {
   flex: 0 0 1px;

@@ -4,6 +4,7 @@ import Enrich     from '../control/Enrich.js';
 import Fetch      from '../control/Fetch.js';
 import QuestAPI   from '../control/QuestAPI.js';
 import Socket     from '../control/Socket.js';
+import Utils      from '../control/Utils.js';
 
 import { constants, questTypesI18n, settings }  from '../model/constants.js';
 
@@ -143,6 +144,7 @@ export default class QuestLog extends Application
          options,
          isGM: game.user.isGM,
          isPlayer: !game.user.isGM,
+         isTrustedPlayer: Utils.isTrustedPlayer(),
          availableTab: available,
          canAccept: game.settings.get(constants.moduleName, settings.allowPlayersAccept),
          canCreate: game.settings.get(constants.moduleName, settings.allowPlayersCreate),

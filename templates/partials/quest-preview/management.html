@@ -30,7 +30,7 @@
   <ul class="subquests-box">
     {{#each data_subquest}}
     <li class="subquest-item" title="{{statusTooltip}}">
-      {{#if ../isGM}}
+      {{#if ../canEdit}}
         {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
         {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
       {{/if}}

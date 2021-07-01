@@ -1,10 +1,11 @@
-import FQLDialog  from './FQLDialog.js';
-import QuestForm  from './QuestForm.js';
-import Enrich     from '../control/Enrich.js';
-import Fetch      from '../control/Fetch.js';
-import QuestAPI   from '../control/QuestAPI.js';
-import Socket     from '../control/Socket.js';
-import Utils      from '../control/Utils.js';
+import FQLDialog              from './FQLDialog.js';
+import FQLPermissionControl   from './FQLPermissionControl.js';
+import QuestForm              from './QuestForm.js';
+import Enrich                 from '../control/Enrich.js';
+import Fetch                  from '../control/Fetch.js';
+import QuestAPI               from '../control/QuestAPI.js';
+import Socket                 from '../control/Socket.js';
+import Utils                  from '../control/Utils.js';
 
 import { constants, settings }  from '../model/constants.js';
 
@@ -240,9 +241,9 @@ export default class QuestPreview extends FormApplication
 
          const reward = this.quest.getReward(uuidv4);
 
-         if (reward && (game.user.isGM || !reward.locked))
+         if (reward && (this.canEdit || !reward.locked))
          {
-            await Utils.showSheetFromUUID(data, { permissionCheck: reward.locked, editable: false });
+            await Utils.showSheetFromUUID(data, { permissionCheck: false, editable: false });
          }
       });
 
@@ -302,7 +303,7 @@ export default class QuestPreview extends FormApplication
                const value = $(event.target).val();
                if (value !== void 0 && value.length)
                {
-                  this.quest.addTask({ name: value, hidden: game.user.isGM });
+                  this.quest.addTask({ name: value, hidden: this.canEdit });
                }
                await this.saveQuest();
             });
@@ -384,7 +385,7 @@ export default class QuestPreview extends FormApplication
          });
       }
 
-      if (game.user.isGM || this.canAccept)
+      if (this.canEdit || this.canAccept)
       {
          html.on('click', '.actions i', async (event) =>
          {
@@ -593,32 +594,6 @@ export default class QuestPreview extends FormApplication
             await this.saveQuest();
          });
 
-         html.on('click', '.toggleHidden', async (event) =>
-         {
-            const target = $(event.target).data('target');
-
-            if (target === 'task')
-            {
-               const uuidv4 = $(event.target).data('uuidv4');
-               const task = this.quest.getTask(uuidv4);
-               if (task)
-               {
-                  task.toggleVisible();
-                  await this.saveQuest();
-               }
-            }
-            else if (target === 'reward')
-            {
-               const uuidv4 = $(event.target).data('uuidv4');
-               const reward = this.quest.getReward(uuidv4);
-               if (reward)
-               {
-                  reward.toggleVisible();
-                  await this.saveQuest();
-               }
-            }
-         });
-
          html.on('click', '.toggleLocked', async (event) =>
          {
             const target = $(event.target).data('target');
@@ -633,12 +608,6 @@ export default class QuestPreview extends FormApplication
                   await this.saveQuest();
                }
             }
-         });
-
-         html.on('click', '.show-all-rewards', async () =>
-         {
-            for (const reward of this.quest.rewards) {  reward.hidden = false; }
-            if (this.quest.rewards.length) { await this.saveQuest(); }
          });
 
          html.on('click', '.unlock-all-rewards', async () =>
@@ -701,22 +670,53 @@ export default class QuestPreview extends FormApplication
                },
             }).browse(currentPath);
          });
-      }
 
-      if (game.user.isGM)
-      {
+         html.on('click', '.toggleHidden', async (event) =>
+         {
+            const target = $(event.target).data('target');
+
+            if (target === 'task')
+            {
+               const uuidv4 = $(event.target).data('uuidv4');
+               const task = this.quest.getTask(uuidv4);
+               if (task)
+               {
+                  task.toggleVisible();
+                  await this.saveQuest();
+               }
+            }
+            else if (target === 'reward')
+            {
+               const uuidv4 = $(event.target).data('uuidv4');
+               const reward = this.quest.getReward(uuidv4);
+               if (reward)
+               {
+                  reward.toggleVisible();
+                  await this.saveQuest();
+               }
+            }
+         });
+
+         html.on('click', '.show-all-rewards', async () =>
+         {
+            for (const reward of this.quest.rewards) {  reward.hidden = false; }
+            if (this.quest.rewards.length) { await this.saveQuest(); }
+         });
+
+         // Management view callbacks -------------------------------------------------------------------------------
+
          html.on('click', '.configure-perm-btn', () =>
          {
             if (this.quest.entry)
             {
                if (!this._permControl)
                {
-                  this._permControl = new PermissionControl(this.quest.entry, {
+                  this._permControl = new FQLPermissionControl(this.quest.entry, {
                      top: Math.min(this.position.top, window.innerHeight - 350),
                      left: this.position.left + 125
                   });
 
-                  Hooks.once('closePermissionControl', (app) =>
+                  Hooks.once('closePermissionControl', async (app) =>
                   {
                      if (app.appId === this._permControl.appId)
                      {
@@ -727,6 +727,11 @@ export default class QuestPreview extends FormApplication
                         const questId = this.quest.parent ?
                          [this.quest.parent, this.quest.id, ...this.quest.subquests] :
                           [this.quest.id, ...this.quest.subquests];
+
+                        // We must check if the user intentionally or accidentally revoked their own permissions to
+                        // at least observe this quest. If so then simply close the QuestPreview and send out a refresh
+                        // notice to all clients to render again.
+                        if (!this.quest.isObservable) { await this.close(); }
 
                         Socket.refreshQuestLog();
                         Socket.refreshQuestPreview({ questId });
@@ -781,7 +786,6 @@ export default class QuestPreview extends FormApplication
 
             await this.saveQuest();
          });
-
 
          html.on('click', '.add-subquest-btn', () =>
          {
@@ -843,11 +847,19 @@ export default class QuestPreview extends FormApplication
    {
       const content = await Enrich.quest(this.quest);
 
-      // WAS (06/11/21) this.canEdit = (content.playerEdit || game.user.isGM);
-      // Due to the new document model in 0.8.x+ player editing is temporarily removed.
-      this.canEdit = game.user.isGM;
+      const isTrustedPlayer = Utils.isTrustedPlayer();
+      this.canEdit = game.user.isGM || (this.quest.isOwner && isTrustedPlayer);
       this.playerEdit = this.quest.isOwner;
       this.canAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
+
+      // By default all normal players and trusted players without ownership of a quest are always on the the default
+      // tab 'details'. In the case of a trusted player who has permissions revoked to access the quest and is on the
+      // 'management' the details tab needs to be activated. This is possible in 'getData' as it is fairly early in the
+      // render process. At this time the internal state of the application is '1' for 'RENDERING'.
+      if (!this.canEdit && this._tabs[0] && this._tabs[0].active !== 'details')
+      {
+         this._tabs[0].activate('details');
+      }
 
       const data = {
          isGM: game.user.isGM,

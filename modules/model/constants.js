@@ -52,7 +52,8 @@ const settings = {
    questTrackerPosition: 'questTrackerPosition',
    resetQuestTracker: 'resetQuestTracker',
    showFolder: 'showFolder',
-   showTasks: 'showTasks'
+   showTasks: 'showTasks',
+   trustedPlayerEdit: 'trustedPlayerEdit'
 };
 
 /**

@@ -1,4 +1,5 @@
 import Fetch   from './Fetch.js';
+import Utils   from './Utils.js';
 
 import { constants, questTypes, questTypesI18n, settings } from '../model/constants.js';
 
@@ -107,44 +108,52 @@ export default class Enrich
    {
       let result = '';
 
-      const isGM = game.user.isGM;
+      const isTrustedPlayer = Utils.isTrustedPlayer();
       const availableTab = game.settings.get(constants.moduleName, settings.availableQuests);
       const canAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
+      const canEdit = game.user.isGM || (isTrustedPlayer && quest.isOwner);
 
-      if (isGM || canAccept)
+      let addedAction = false;
+
+      result += `<div class="actions${!isTrustedPlayer && !canEdit ? ' is-player' : ''}">`;
+
+      if (canEdit || canAccept)
       {
-         result += `<div class="actions">`;
-
-         if (isGM && questTypes.active === quest.status)
+         if (canEdit && questTypes.active === quest.status)
          {
             result += `<i class="move fas fa-check-circle" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetCompleted')}" data-target="completed" data-quest-id="${quest.id}"></i>\n`;
             result += `<i class="move fas fa-times-circle" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetFailed')}" data-target="failed" data-quest-id="${quest.id}"></i>\n`;
+            addedAction = true;
          }
 
-         if ((isGM && questTypes.hidden === quest.status) || questTypes.available === quest.status)
+         if ((canEdit && questTypes.hidden === quest.status) || questTypes.available === quest.status)
          {
             result += `<i class="move fas fa-play" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetActive')}" data-target="active" data-quest-id="${quest.id}"></i>\n`;
+            addedAction = true;
          }
 
-         if (isGM && questTypes.hidden !== quest.status)
+         if (canEdit && questTypes.hidden !== quest.status)
          {
             result += `<i class="move fas fa-stop-circle" title="${game.i18n.localize('ForienQuestLog.Tooltips.Hide')}" data-target="hidden" data-quest-id="${quest.id}"></i>\n`;
+            addedAction = true;
          }
 
-         if (availableTab && ((isGM && questTypes.hidden === quest.status) || questTypes.active === quest.status))
+         if (availableTab && ((canEdit && questTypes.hidden === quest.status) || questTypes.active === quest.status))
          {
             result += `<i class="move fas fa-clipboard" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetAvailable')}" data-target="available" data-quest-id="${quest.id}"></i>\n`;
+            addedAction = true;
          }
 
-         if (isGM)
+         if (canEdit)
          {
             result += `<i class="delete fas fa-trash" title="${game.i18n.localize('ForienQuestLog.Tooltips.Delete')}" data-quest-id="${quest.id}" data-name="${quest.name}"></i>\n`;
+            addedAction = true;
          }
 
          result += `</div>\n`;
       }
 
-      return result;
+      return isTrustedPlayer || addedAction ? result : '';
    }
 
    /**
@@ -164,15 +173,14 @@ export default class Enrich
 
       const personalActors = quest.getPersonalActors();
 
-      const isGM = game.user.isGM;
-      const isPlayer = !game.user.isGM;
+      const isTrustedPlayer = Utils.isTrustedPlayer();
+      const canEdit =  game.user.isGM || (quest.isOwner && isTrustedPlayer);
 
       const canPlayerDrag = game.settings.get(constants.moduleName, settings.allowPlayersDrag);
       const countHidden = game.settings.get(constants.moduleName, settings.countHidden);
 
       data.isPersonal = personalActors.length > 0;
       data.personalActors = personalActors.map((a) => a.name).sort((a, b) => a.localeCompare(b)).join('&#013;');
-
 
       data.description = TextEditor.enrichHTML(data.description);
 
@@ -220,11 +228,9 @@ export default class Enrich
          {
             const subquest = Fetch.quest(questId);
 
+            // isObservable filters out non-owned hidden quests for trustedPlayerEdit.
             if (subquest && subquest.isObservable)
             {
-               // Do not show hidden hidden / inactive subquests to players.
-               if (isPlayer && subquest.status === questTypes.hidden) { continue; }
-
                // Mirror Task data for state / button state
                let state = 'square';
                switch (subquest.status)
@@ -237,10 +243,15 @@ export default class Enrich
                      break;
                }
 
-               const statusTooltip = game.i18n.format('ForienQuestLog.Tooltips.Status',
-                { statusI18n: game.i18n.localize(questTypesI18n[subquest.status]) });
-
                const subPersonalActors = subquest.getPersonalActors();
+
+               const isInactive = subquest.isInactive;
+
+               const statusTooltipData = isInactive ?
+                { statusI18n: game.i18n.localize(questTypesI18n[questTypes.hidden]) } :
+                 { statusI18n: game.i18n.localize(questTypesI18n[subquest.status]) };
+
+               const statusTooltip = game.i18n.format('ForienQuestLog.Tooltips.Status', statusTooltipData);
 
                data.data_subquest.push({
                   id: questId,
@@ -251,7 +262,7 @@ export default class Enrich
                   state,
                   statusActions: Enrich.statusActions(subquest),
                   isHidden: subquest.isHidden,
-                  isInactive: subquest.status === questTypes.hidden,
+                  isInactive,
                   isPersonal: subPersonalActors.length > 0,
                   personalActors: subPersonalActors.map((a) => a.name).sort((a, b) => a.localeCompare(b)).join('&#013;')
                });
@@ -311,7 +322,7 @@ export default class Enrich
       {
          const type = item.type.toLowerCase();
 
-         const draggable = (isGM || canPlayerDrag) && (isGM || !item.locked) && type !== 'abstract';
+         const draggable = (canEdit || canPlayerDrag) && (canEdit || !item.locked) && type !== 'abstract';
 
          return {
             name: item.data.name,
@@ -319,7 +330,7 @@ export default class Enrich
             type,
             hidden: item.hidden,
             locked: item.locked,
-            isPlayerLink: !isGM && !canPlayerDrag && !item.locked && type !== 'abstract',
+            isPlayerLink: !canEdit && !canPlayerDrag && !item.locked && type !== 'abstract',
             draggable,
             transfer: type !== 'abstract' ? JSON.stringify(
              { uuid: item.data.uuid, uuidv4: item.uuidv4, name: item.data.name }) : void 0,
@@ -327,7 +338,7 @@ export default class Enrich
          };
       });
 
-      if (!isGM)
+      if (!canEdit)
       {
          data.data_tasks = data.data_tasks.filter((t) => t.hidden === false);
          data.data_rewards = data.data_rewards.filter((r) => r.hidden === false);

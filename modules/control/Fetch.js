@@ -1,3 +1,4 @@
+import Utils                     from './Utils.js';
 import Quest                     from '../model/Quest.js';
 import QuestFolder               from '../model/QuestFolder.js';
 import { constants, questTypes } from '../model/constants.js';
@@ -36,51 +37,14 @@ export default class Fetch
    }
 
    /**
-    * Provides a quicker method to get the count of any particular quest status.
+    * Provides a quicker method to get the count of active quests.
     *
-    * @param {object}   options - Optional parameters.
-    *
-    * @param {string}   options.type - Request a particular quest status.
-    *
-    * @param {boolean}  [options.available] - true if Available tab is visible.
-    *
-    * @returns {number} Quest count for status type.
+    * @returns {number} Quest count for active quests.
     */
-   static getCount({ type = void 0, available })
+   static getActiveCount()
    {
       const entries = this.allQuests();
-
-      let count = 0;
-
-      switch (type)
-      {
-         case questTypes.available:
-            count = entries.filter((e) => e.status === questTypes.available && e.parent === null).length;
-            break;
-         case questTypes.active:
-            count = entries.filter((e) => e.status === questTypes.active).length;
-            break;
-         case questTypes.completed:
-            count = entries.filter((e) => e.status === questTypes.completed && e.parent === null).length;
-            break;
-         case questTypes.failed:
-            count = entries.filter((e) => e.status === questTypes.failed && e.parent === null).length;
-            break;
-         case questTypes.hidden:
-            if (typeof available === 'boolean' && !available)
-            {
-               const availableQuests = entries.filter((e) => e.status === questTypes.available && e.parent === null);
-               const hidden = entries.filter((e) => e.status === questTypes.hidden && e.parent === null);
-               count = availableQuests.length + hidden.length;
-            }
-            else
-            {
-               count = entries.filter((e) => e.status === questTypes.hidden && e.parent === null).length;
-            }
-            break;
-      }
-
-      return count;
+      return entries.filter((e) => e.status === questTypes.active).length;
    }
 
    /**
@@ -142,6 +106,11 @@ export default class Fetch
                {
                   quests.hidden = entries.filter((e) => e.status === questTypes.hidden);
                }
+
+               // Gross special handling.. All this code, Fetch, is going away soon w/ the in memory DB!
+               // Trusted players who can edit can only see owned quests in hidden category.
+               if (Utils.isTrustedPlayer()) { quests.hidden = quests.hidden.filter((e) => e.isOwner); }
+
                break;
          }
       }
@@ -159,6 +128,10 @@ export default class Fetch
             quests.hidden = [...quests.available, ...quests.hidden];
             quests.hidden = quests.hidden.sort(sortFunc(target, options));
          }
+
+         // Gross special handling.. All this code, Fetch, is going away soon w/ the in memory DB!
+         // Trusted players who can edit can only see owned quests in hidden category.
+         if (Utils.isTrustedPlayer()) { quests.hidden = quests.hidden.filter((e) => e.isOwner); }
       }
 
       return quests;

@@ -69,6 +69,19 @@ export default class ModuleSettings
          }
       });
 
+      game.settings.register(constants.moduleName, settings.trustedPlayerEdit, {
+         name: 'ForienQuestLog.Settings.trustedPlayerEdit.Enable',
+         hint: 'ForienQuestLog.Settings.trustedPlayerEdit.EnableHint',
+         scope: scope.world,
+         config: true,
+         default: false,
+         type: Boolean,
+         onChange: () =>
+         {
+            Utils.getFQLPublicAPI().renderAll({ questPreview: true });
+         }
+      });
+
       game.settings.register(constants.moduleName, settings.countHidden, {
          name: 'ForienQuestLog.Settings.countHidden.Enable',
          hint: 'ForienQuestLog.Settings.countHidden.EnableHint',

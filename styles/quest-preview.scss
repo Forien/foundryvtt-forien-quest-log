@@ -120,25 +120,6 @@
           }
         }
 
-        .actions {
-          flex: 0 0 1px;
-          padding: 0 8px;
-
-          i {
-            font-size: 18px;
-            transition: color .3s ease;
-            cursor: pointer;
-
-            &:hover {
-              color: $primary-accent-color;
-            }
-          }
-        }
-
-        .quest-title .actions {
-          border: none;
-        }
-
         section {
           flex: 1;
           display: flex;
@@ -292,47 +273,8 @@
             }
           }
 
-          .actions {
-            flex: 0 0 100px;
-            height: 100%;
-            cursor: default;
-
-            i {
-              min-width: 16px;
-              text-align: center;
-            }
-
-            .fa-sort {
-              cursor: move;
-            }
-
-            .del-btn {
-              color: rgba(255, 0, 0, .4);
-
-              &:hover {
-                color: $primary-accent-color;
-              }
-            }
-
-            .fa-pen {
-              font-size: 14px;
-            }
-          }
-
           .is-link {
             cursor: pointer;
-          }
-
-          .is-player {
-            flex: 0 0 40px;
-
-            i {
-              cursor: default;
-
-              &:hover {
-                color: black;
-              }
-            }
           }
 
           .editable-container {
@@ -620,11 +562,6 @@
             cursor: pointer;
             transition: color .3s ease;
           }
-
-          .actions {
-            flex: 0 0 100px;
-            height: 100%;
-          }
         }
 
         footer {
@@ -632,7 +569,6 @@
           margin: 8px 8px 0 8px;
         }
       }
-
     }
 
     .editor {
@@ -653,7 +589,6 @@
     .tox .tox-toolbar__overflow,
     .tox .tox-toolbar__primary {
       background: transparent;
-      background-color: transparent;
     }
 
     .tox.tox-tinymce .tox-tbtn {
@@ -665,6 +600,5 @@
     .tox.tox-tinymce .tox-tbtn[title="Formats"] {
       width: 90px;
     }
-
   }
 }
