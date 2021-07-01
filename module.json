@@ -21,7 +21,9 @@
   "readme": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/blob/master/README.md",
   "bugs": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/issues",
   "changelog": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/latest/",
-  "flags": {},
+  "flags": {
+    "allowBugReporter": true
+  },
   "version": "0.7.3",
   "minimumCoreVersion": "0.8.7",
   "compatibleCoreVersion": "0.8.8",
