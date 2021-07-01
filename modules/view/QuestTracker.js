@@ -1,7 +1,6 @@
 import RepositionableApplication from './RepositionableApplication.js';
-import Enrich                    from '../control/Enrich.js';
-import Fetch                     from '../control/Fetch.js';
 import QuestAPI                  from '../control/QuestAPI.js';
+import QuestDB                   from '../control/QuestDB.js';
 import Utils                     from '../control/Utils.js';
 
 import { constants, questTypes, settings }   from '../model/constants.js';
@@ -70,10 +69,9 @@ export default class QuestTracker extends RepositionableApplication
     */
    async prepareQuests()
    {
-      const quests = await Enrich.sorted(Fetch.sorted({ type: questTypes.active }));
-
-      return quests.active.map((q) =>
+      return QuestDB.sorted({ status: questTypes.active }).map((entry) =>
       {
+         const q = entry.enrich;
          const collapsed = sessionStorage.getItem(`${constants.folderState}${q.id}`) === 'false';
 
          const tasks = collapsed ? q.data_tasks : [];

@@ -2,6 +2,7 @@ import ModuleSettings            from './ModuleSettings.js';
 import registerHooks             from './control/registerHooks.js';
 import Socket                    from './control/Socket.js';
 import QuestAPI                  from './control/QuestAPI.js';
+import QuestDB                   from './control/QuestDB.js';
 import Utils                     from './control/Utils.js';
 import Quest                     from './model/Quest.js';
 import QuestFolder               from './model/QuestFolder.js';
@@ -98,7 +99,9 @@ Hooks.once('ready', async () =>
 
    game.collections.set('Quest', QuestsCollection);
 
-   QuestFolder.initializeJournals();
+   await QuestDB.init();
+
+   await QuestFolder.initializeJournals();
    registerHooks();
 
    if (Utils.isQuestTrackerVisible())

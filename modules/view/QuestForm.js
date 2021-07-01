@@ -1,6 +1,6 @@
 import Enrich        from '../control/Enrich.js';
-import Fetch         from '../control/Fetch.js';
 import Socket        from '../control/Socket.js';
+import QuestDB       from '../control/QuestDB.js';
 import Utils         from '../control/Utils.js';
 import Quest         from '../model/Quest.js';
 import QuestFolder   from '../model/QuestFolder.js';
@@ -77,11 +77,15 @@ export default class QuestForm extends FormApplication
 
       const trustedPlayerEdit = Utils.isTrustedPlayer();
 
+      let giverData = {};
+
       try
       {
          // This is a sanity filter to make sure giver is an actual UUID that resolves. If not set it to null.
          const entity = await fromUuid(formData.giver);
          giver = entity.uuid;
+
+         giverData = await Enrich.giverFromUUID(giver, this._image);
       }
       catch (e)
       {
@@ -101,8 +105,9 @@ export default class QuestForm extends FormApplication
       const gmnotes = (formData.gmnotes && formData.gmnotes.length) ? formData.gmnotes : this.gmnotes;
 
       let data = {
-         giver,
          name,
+         giver,
+         giverData,
          description,
          gmnotes,
          image: this._image
@@ -141,7 +146,7 @@ export default class QuestForm extends FormApplication
 
       if (this._subquest)
       {
-         const parentQuest = Fetch.quest(this._parentId);
+         const parentQuest = QuestDB.getQuest(this._parentId);
 
          if (parentQuest)
          {
@@ -327,7 +332,7 @@ export default class QuestForm extends FormApplication
    {
       if (this._subquest)
       {
-         const parentQuest = Fetch.quest(this._parentId);
+         const parentQuest = QuestDB.getQuest(this._parentId);
          if (parentQuest)
          {
             this.options.title += ` – ${game.i18n.format('ForienQuestLog.QuestForm.SubquestOf',

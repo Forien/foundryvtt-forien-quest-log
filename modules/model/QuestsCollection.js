@@ -1,4 +1,4 @@
-import Fetch from '../control/Fetch.js';
+import QuestDB from '../control/QuestDB.js';
 
 /**
  * Class that acts "kind of" like Entity, to help Manage everything Quest Related
@@ -6,24 +6,9 @@ import Fetch from '../control/Fetch.js';
  */
 export default class QuestsCollection
 {
-   static get entities()
+   static get contents()
    {
-      if (this._entities === void 0)
-      {
-         const entities = Fetch.allQuests();
-         this._entities = entities.map((e) =>
-         {
-            const data = e;
-
-            return {
-               id: e.id,
-               name: e.name,
-               data
-            };
-         });
-      }
-
-      return this._entities;
+      return QuestDB.getAllQuests();
    }
 
    static get instance()
@@ -33,11 +18,11 @@ export default class QuestsCollection
 
    static get(questId)
    {
-      return Fetch.quest(questId);
+      return QuestDB.getQuest(questId);
    }
 
    static getName(name)
    {
-      return this.entities.find((e) => e.name === name);
+      return QuestDB.getAllEntries().find((entry) => entry.quest.name === name);
    }
 }

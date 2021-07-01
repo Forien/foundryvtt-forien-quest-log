@@ -2,8 +2,8 @@ import FQLDialog              from './FQLDialog.js';
 import FQLPermissionControl   from './FQLPermissionControl.js';
 import QuestForm              from './QuestForm.js';
 import Enrich                 from '../control/Enrich.js';
-import Fetch                  from '../control/Fetch.js';
 import QuestAPI               from '../control/QuestAPI.js';
+import QuestDB                from '../control/QuestDB.js';
 import Socket                 from '../control/Socket.js';
 import Utils                  from '../control/Utils.js';
 
@@ -397,7 +397,7 @@ export default class QuestPreview extends FormApplication
 
             if (classList.includes('move'))
             {
-               const quest = Fetch.quest(questId);
+               const quest = QuestDB.getQuest(questId);
                if (quest) { await Socket.moveQuest({ quest, target }); }
             }
             else if (classList.includes('delete'))
@@ -405,7 +405,7 @@ export default class QuestPreview extends FormApplication
                const result = await FQLDialog.confirmDeleteQuest({ name, result: questId, questId: this.quest.id });
                if (result)
                {
-                  const quest = Fetch.quest(result);
+                  const quest = QuestDB.getQuest(result);
                   if (quest) { await Socket.deletedQuest(await quest.delete()); }
                }
             }
@@ -476,10 +476,11 @@ export default class QuestPreview extends FormApplication
             {
                const uuid = Utils.getUUID(data, ['Actor', 'Item', 'JournalEntry']);
 
-               const giver = await Enrich.giverFromUUID(uuid);
-               if (giver)
+               const giverData = await Enrich.giverFromUUID(uuid);
+               if (giverData)
                {
                   this.quest.giver = uuid;
+                  this.quest.giverData = giverData;
                   await this.saveQuest();
                }
                else
@@ -611,7 +612,13 @@ export default class QuestPreview extends FormApplication
          html.on('click', '.toggleImage', async () =>
          {
             this.quest.toggleImage();
-            await this.saveQuest();
+
+            const giverData = await Enrich.giverFromQuest(this.quest);
+            if (giverData)
+            {
+               this.quest.giverData = giverData;
+               await this.saveQuest();
+            }
          });
 
          html.on('click', '.deleteQuestGiver', async () =>
@@ -872,7 +879,8 @@ export default class QuestPreview extends FormApplication
     */
    async getData(options = {}) // eslint-disable-line no-unused-vars
    {
-      const content = await Enrich.quest(this.quest);
+      // const content = await Enrich.quest(this.quest);
+      const content = QuestDB.getEnrich(this.quest.id);
 
       const isTrustedPlayer = Utils.isTrustedPlayer();
       this.canEdit = game.user.isGM || (this.quest.isOwner && isTrustedPlayer);

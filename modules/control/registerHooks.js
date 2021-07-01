@@ -1,7 +1,8 @@
-import Enrich                                from './Enrich.js';
-import Fetch                                 from './Fetch.js';
-import Utils                                 from './Utils.js';
-import Socket                                from './Socket.js';
+import Enrich  from './Enrich.js';
+import QuestDB from "./QuestDB.js";
+import Utils   from './Utils.js';
+import Socket  from './Socket.js';
+
 import { constants, noteControls, settings } from '../model/constants.js';
 
 /**
@@ -47,7 +48,7 @@ export default function registerHooks()
       {
          const questId = data.id;
 
-         const quest = Fetch.quest(questId);
+         const quest = QuestDB.getQuest(questId);
          if (!quest)
          {
             throw new Error(game.i18n.localize('ForienQuestLog.Api.hooks.createOpenQuestMacro.error.noQuest'));

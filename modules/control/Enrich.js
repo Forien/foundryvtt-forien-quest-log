@@ -164,7 +164,7 @@ export default class Enrich
     *
     * @returns {Promise<object>} A single quest view or SortedQuests upgraded
     */
-   static async quest(quest)
+   static quest(quest)
    {
       const data = JSON.parse(JSON.stringify(quest.toJSON()));
       data.id = quest.id;
@@ -184,7 +184,7 @@ export default class Enrich
 
       data.description = TextEditor.enrichHTML(data.description);
 
-      data.data_giver = await Enrich.giverFromQuest(quest);
+      data.data_giver = typeof data.giverData === 'object' ? data.giverData : {};
 
       data.questIconType = void 0;
 
@@ -208,9 +208,10 @@ export default class Enrich
       if (data.parent !== null)
       {
          const parentQuest = Fetch.quest(data.parent);
-         data.isSubquest = parentQuest.isObservable;
          if (parentQuest)
          {
+            data.isSubquest = parentQuest.isObservable;
+
             data.data_parent = {
                id: data.parent,
                giver: parentQuest.giver,

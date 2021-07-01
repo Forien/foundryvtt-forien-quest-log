@@ -1,5 +1,5 @@
-import Fetch      from './Fetch.js';
 import QuestAPI   from './QuestAPI.js';
+import QuestDB    from './QuestDB.js';
 import Utils      from './Utils.js';
 import FQLDialog  from '../view/FQLDialog.js';
 
@@ -183,7 +183,7 @@ export default class Socket
           */
          const fqlData = data.data._fqlData;
 
-         const quest = QuestAPI.get(fqlData.questId);
+         const quest = QuestDB.getQuest(fqlData.questId);
          if (quest)
          {
             quest.removeReward(fqlData.uuidv4);
@@ -241,8 +241,11 @@ async function handleMoveQuest(data)
 
    if (game.user.isGM && !data.payload.handled)
    {
-      const quest = Fetch.quest(data.payload.questId);
-      if (quest) { await quest.move(target); }
+      const quest = QuestDB.getQuest(data.payload.questId);
+      if (quest)
+      {
+         await quest.move(target);
+      }
 
       // Set handled to true so no other GM level users act upon the move.
       data.payload.handled = true;
@@ -290,7 +293,7 @@ function handleQuestPreviewRefresh(data)
          const questPreview = fqlPublicAPI.questPreview[id];
          if (questPreview !== void 0)
          {
-            const quest = QuestAPI.get(id);
+            const quest = QuestDB.getQuest(id);
             if (!quest)
             {
                questPreview.close();
@@ -307,7 +310,7 @@ function handleQuestPreviewRefresh(data)
       const questPreview = fqlPublicAPI.questPreview[questId];
       if (questPreview !== void 0)
       {
-         const quest = QuestAPI.get(questId);
+         const quest = QuestDB.getQuest(questId);
          if (!quest)
          {
             questPreview.close();
@@ -345,7 +348,7 @@ async function handleQuestRewardDrop(data)
       // Set handled to true so no more GM level users act upon this event.
       data.payload.handled = true;
 
-      const quest = QuestAPI.get(fqlData.questId);
+      const quest = QuestDB.getQuest(fqlData.questId);
       if (quest)
       {
          quest.removeReward(fqlData.uuidv4);

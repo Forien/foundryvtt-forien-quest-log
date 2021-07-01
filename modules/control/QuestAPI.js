@@ -1,6 +1,7 @@
-import Fetch                     from './Fetch.js';
 import Socket                    from './Socket.js';
+import QuestDB                   from './QuestDB.js';
 import Utils                     from './Utils.js';
+
 import { constants, settings }   from '../model/constants.js';
 
 /**
@@ -13,16 +14,28 @@ export default class QuestAPI
     *
     * @param questId
     *
-    * @returns {Quest}
+    * @returns {QuestEntry} The QuestEntry
     */
    static get(questId)
    {
-      return Fetch.quest(questId);
+      return QuestDB.getQuest(questId);
    }
 
-   static getQuests()
+   static getAllEntries()
    {
-      return Fetch.sorted();
+      return QuestDB.getAllEntries();
+   }
+
+   /**
+    * @param {object}   options - Optional parameters.
+    *
+    * @param {string}   [options.status] - Quest status to return sorted.
+    *
+    * @returns {null|SortedQuests|QuestEntry[]} The complete sorted quests or just a particular quest status.
+    */
+   static sorted(options)
+   {
+      return QuestDB.sorted(options);
    }
 
    /**
@@ -50,7 +63,7 @@ export default class QuestAPI
             return;
          }
 
-         const quest = Fetch.quest(questId);
+         const quest = QuestDB.getQuest(questId);
 
          if (quest === null)
          {

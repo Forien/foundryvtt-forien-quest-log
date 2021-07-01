@@ -32,13 +32,13 @@
 /**
  * @typedef {object} SortedQuests
  *
- * @property {object[]} active - Active quests
+ * @property {QuestEntry[]} active - Active quest entries
  *
- * @property {object[]} available - Available quests
+ * @property {QuestEntry[]} available - Available quests entries
  *
- * @property {object[]} completed - Completed quests
+ * @property {QuestEntry[]} completed - Completed quests entries
  *
- * @property {object[]} failed - Failed quests
+ * @property {QuestEntry[]} failed - Failed quests entries
  *
- * @property {object[]} hidden - Hidden quests
+ * @property {QuestEntry[]} hidden - Hidden quests entries
  */

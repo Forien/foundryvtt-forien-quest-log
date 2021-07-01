@@ -283,9 +283,10 @@ export default class Quest
     */
    initData(data)
    {
-      this.giver = data.giver || null;
       this.name = data.name || game.i18n.localize('ForienQuestLog.NewQuest');
       this.status = data.status || questTypes.hidden;
+      this.giver = data.giver || null;
+      this.giverData = data.giverData || {};
       this.description = data.description || '';
       this.gmnotes = data.gmnotes || '';
       this.image = data.image || 'actor';
@@ -300,6 +301,9 @@ export default class Quest
       this.subquests = data.subquests || [];
       this.tasks = Array.isArray(data.tasks) ? data.tasks.map((task) => new Task(task)) : [];
       this.rewards = Array.isArray(data.rewards) ? data.rewards.map((reward) => new Reward(reward)) : [];
+
+      // Sanity check. If status is incorrect set it to hidden.
+      if (!questTypes[this.status]) { this.status = questTypes.hidden; }
 
       if (typeof data.date === 'object')
       {
@@ -491,9 +495,10 @@ export default class Quest
    toJSON()
    {
       return {
-         giver: this.giver,
          name: this._name,
          status: this.status,
+         giver: this.giver,
+         giverData: this.giverData,
          description: this.description,
          gmnotes: this.gmnotes,
          image: this.image,
