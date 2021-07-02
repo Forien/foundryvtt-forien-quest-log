@@ -130,10 +130,6 @@
         "Enable": "Allow Player Reward Dragging",
         "EnableHint": "Check to allow Players to drag Rewards from the Quest Details window to their owned Actors."
       },
-      "availableQuests": {
-        "Enable": "Show Available Quests Tab",
-        "EnableHint": "Check to show the \"Available\" tab in the Quest Log Menu where players can see all non-inactive Quests before they are accepted."
-      },
       "countHidden": {
         "Enable": "Count hidden Tasks",
         "EnableHint": "If checked, the number of completed/total tasks will include hidden tasks."

@@ -1,8 +1,6 @@
 <div class="quest-log {{style}}">
   <nav class="log-tabs tabs {{style}}" data-group="primary">
-    {{#if availableTab}}
-      <a class="item" data-tab="available">{{localize 'ForienQuestLog.QuestLog.Tabs.Available'}}</a>
-    {{/if}}
+    <a class="item" data-tab="available">{{localize 'ForienQuestLog.QuestLog.Tabs.Available'}}</a>
     <a class="item" data-tab="progress">{{localize 'ForienQuestLog.QuestLog.Tabs.InProgress'}}</a>
     <a class="item" data-tab="completed">{{localize 'ForienQuestLog.QuestLog.Tabs.Completed'}}</a>
     <a class="item" data-tab="failed">{{localize 'ForienQuestLog.QuestLog.Tabs.Failed'}}</a>
@@ -11,11 +9,9 @@
     {{/if}}
   </nav>
   <section class="log-body {{style}}">
-    {{#if availableTab}}
-      <div class="tab available" data-group="primary" data-tab="available">
-        {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="available" quests=quests.available}}
-      </div>
-    {{/if}}
+    <div class="tab available" data-group="primary" data-tab="available">
+      {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="available" quests=quests.available}}
+    </div>
     <div class="tab in-progress" data-group="primary" data-tab="progress">
       {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="active" quests=quests.active}}
     </div>
