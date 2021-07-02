@@ -109,7 +109,6 @@ export default class Enrich
       let result = '';
 
       const isTrustedPlayer = Utils.isTrustedPlayer();
-      const availableTab = game.settings.get(constants.moduleName, settings.availableQuests);
       const canAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
       const canEdit = game.user.isGM || (isTrustedPlayer && quest.isOwner);
 
@@ -138,7 +137,7 @@ export default class Enrich
             addedAction = true;
          }
 
-         if (availableTab && ((canEdit && questTypes.hidden === quest.status) || questTypes.active === quest.status))
+         if ((canEdit && questTypes.hidden === quest.status) || questTypes.active === quest.status)
          {
             result += `<i class="move fas fa-clipboard" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetAvailable')}" data-target="available" data-quest-id="${quest.id}"></i>\n`;
             addedAction = true;

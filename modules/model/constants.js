@@ -40,7 +40,6 @@ const settings = {
    allowPlayersAccept: 'allowPlayersAccept',
    allowPlayersCreate: 'allowPlayersCreate',
    allowPlayersDrag: 'allowPlayersDrag',
-   availableQuests: 'availableQuests',
    countHidden: 'countHidden',
    defaultPermission: 'defaultPermission',
    dynamicBookmarkBackground: 'dynamicBookmarkBackground',

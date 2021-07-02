@@ -893,7 +893,6 @@ export default class QuestPreview extends FormApplication
       const data = {
          isGM: game.user.isGM,
          isPlayer: !game.user.isGM,
-         availableTab: game.settings.get(constants.moduleName, settings.availableQuests),
          canAccept: this.canAccept,
          canEdit: this.canEdit,
          playerEdit: this.playerEdit

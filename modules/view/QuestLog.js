@@ -135,8 +135,6 @@ export default class QuestLog extends Application
     */
    async getData(options = {})
    {
-      const available = game.settings.get(constants.moduleName, settings.availableQuests);
-
       const quests = QuestDB.sorted();
 
       return mergeObject(super.getData(), {
@@ -144,7 +142,6 @@ export default class QuestLog extends Application
          isGM: game.user.isGM,
          isPlayer: !game.user.isGM,
          isTrustedPlayer: Utils.isTrustedPlayer(),
-         availableTab: available,
          canAccept: game.settings.get(constants.moduleName, settings.allowPlayersAccept),
          canCreate: game.settings.get(constants.moduleName, settings.allowPlayersCreate),
          showTasks: game.settings.get(constants.moduleName, settings.showTasks),

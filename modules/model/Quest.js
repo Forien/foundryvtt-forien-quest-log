@@ -71,10 +71,7 @@ export default class Quest
     */
    get isInactive()
    {
-      const availableTab = game.settings.get(constants.moduleName, settings.availableQuests);
-
-      return availableTab ? questTypes.hidden === this.status :
-       questTypes.hidden === this.status || questTypes.available === this.status;
+      return questTypes.hidden === this.status;
    }
 
    get isObservable()
