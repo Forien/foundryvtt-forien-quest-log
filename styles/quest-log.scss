@@ -7,7 +7,7 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    padding: 0 0 24px 0;
+    padding: 0 0 16px 0;
   }
 
   .quest-log.bookmarks nav {
@@ -65,6 +65,12 @@
     flex: 1;
     overflow-y: hidden;
     padding: 0 16px;
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
   }
 
   .quest-log .tab {

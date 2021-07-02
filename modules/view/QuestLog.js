@@ -1,18 +1,18 @@
 import FQLDialog  from './FQLDialog.js';
-import QuestForm  from './QuestForm.js';
-import Enrich     from '../control/Enrich.js';
-import Fetch      from '../control/Fetch.js';
 import QuestAPI   from '../control/QuestAPI.js';
+import QuestDB    from '../control/QuestDB.js';
 import Socket     from '../control/Socket.js';
 import Utils      from '../control/Utils.js';
 
-import { constants, questTypesI18n, settings }  from '../model/constants.js';
+import { constants, questTypesI18n, settings } from '../model/constants.js';
 
 export default class QuestLog extends Application
 {
    constructor(options = {})
    {
       super(options);
+
+      this._addQuestPreviewId = void 0;
    }
 
    /**
@@ -60,16 +60,39 @@ export default class QuestLog extends Application
          }
       }
 
-      html.on('click', '.new-quest-btn', () =>
+      html.on('click', '.new-quest-btn', async () =>
       {
-         if (this._questForm && this._questForm.rendered)
+         if (this._addQuestPreviewId !== void 0)
          {
-            this._questForm.bringToTop();
+            const qPreview = Utils.getFQLPublicAPI().questPreview[this._addQuestPreviewId];
+            if (qPreview && qPreview.rendered) { qPreview.bringToTop(); }
+            return;
          }
-         else
+
+         const quest = await Utils.createQuest({ notify: true });
+         if (quest.isObservable)
          {
-            this._questForm = new QuestForm().render(true);
+            this._addQuestPreviewId = quest.id;
+
+            const questSheet = quest.sheet;
+            questSheet.render(true, { focus: true });
+            Hooks.once('closeQuestPreview', (questPreview) =>
+            {
+               if (this._addQuestPreviewId === questPreview.quest.id)
+               {
+                  this._addQuestPreviewId = void 0;
+               }
+            });
          }
+
+         // if (this._questForm && this._questForm.rendered)
+         // {
+         //    this._questForm.bringToTop();
+         // }
+         // else
+         // {
+         //    this._questForm = new QuestForm().render(true);
+         // }
       });
 
       html.on('click', '.actions.quest-status i', async (event) =>
@@ -81,7 +104,7 @@ export default class QuestLog extends Application
          const classList = $(event.target).attr('class');
          if (classList.includes('move'))
          {
-            const quest = Fetch.quest(questId);
+            const quest = QuestDB.getQuest(questId);
             if (quest)
             {
                await Socket.moveQuest({ quest, target });
@@ -92,7 +115,7 @@ export default class QuestLog extends Application
             const result = await FQLDialog.confirmDeleteQuest({ name, result: questId, questId, isQuestLog: true });
             if (result)
             {
-               const quest = Fetch.quest(result);
+               const quest = QuestDB.getQuest(result);
                if (quest) { await Socket.deletedQuest(await quest.delete()); }
             }
          }
@@ -136,16 +159,13 @@ export default class QuestLog extends Application
     */
    async getData(options = {})
    {
-      const available = game.settings.get(constants.moduleName, settings.availableQuests);
-
-      const quests = await Enrich.sorted(Fetch.sorted({ available }));
+      const quests = QuestDB.sorted();
 
       return mergeObject(super.getData(), {
          options,
          isGM: game.user.isGM,
          isPlayer: !game.user.isGM,
          isTrustedPlayer: Utils.isTrustedPlayer(),
-         availableTab: available,
          canAccept: game.settings.get(constants.moduleName, settings.allowPlayersAccept),
          canCreate: game.settings.get(constants.moduleName, settings.allowPlayersCreate),
          showTasks: game.settings.get(constants.moduleName, settings.showTasks),

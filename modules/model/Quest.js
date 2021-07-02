@@ -1,4 +1,4 @@
-import Fetch   from '../control/Fetch.js';
+import QuestDB from '../control/QuestDB.js';
 import Utils   from '../control/Utils.js';
 
 import { constants, settings, questTypes } from './constants.js';
@@ -71,10 +71,7 @@ export default class Quest
     */
    get isInactive()
    {
-      const availableTab = game.settings.get(constants.moduleName, settings.availableQuests);
-
-      return availableTab ? questTypes.hidden === this.status :
-       questTypes.hidden === this.status || questTypes.available === this.status;
+      return questTypes.hidden === this.status;
    }
 
    get isObservable()
@@ -191,7 +188,7 @@ export default class Quest
 
    async delete()
    {
-      const parentQuest = Fetch.quest(this.parent);
+      const parentQuest = QuestDB.getQuest(this.parent);
       let parentId = null;
 
       // Stores the quest IDs which have been saved and need GUI / display aspects updated.
@@ -207,7 +204,7 @@ export default class Quest
       // Update children to point to any new parent.
       for (const childId of this.subquests)
       {
-         const childQuest = Fetch.quest(childId);
+         const childQuest = QuestDB.getQuest(childId);
          if (childQuest)
          {
             childQuest.parent = parentId;
@@ -278,14 +275,13 @@ export default class Quest
     * Normally would be in constructor(), but is extracted for usage in different methods as well
     *
     * @param data
-    *
-    * @see refresh()
     */
    initData(data)
    {
-      this.giver = data.giver || null;
       this.name = data.name || game.i18n.localize('ForienQuestLog.NewQuest');
       this.status = data.status || questTypes.hidden;
+      this.giver = data.giver || null;
+      this.giverData = data.giverData || {};
       this.description = data.description || '';
       this.gmnotes = data.gmnotes || '';
       this.image = data.image || 'actor';
@@ -300,6 +296,9 @@ export default class Quest
       this.subquests = data.subquests || [];
       this.tasks = Array.isArray(data.tasks) ? data.tasks.map((task) => new Task(task)) : [];
       this.rewards = Array.isArray(data.rewards) ? data.rewards.map((reward) => new Reward(reward)) : [];
+
+      // Sanity check. If status is incorrect set it to hidden.
+      if (!questTypes[this.status]) { this.status = questTypes.hidden; }
 
       if (typeof data.date === 'object')
       {
@@ -379,18 +378,6 @@ export default class Quest
       });
 
       return this._id;
-   }
-
-   /**
-    * Refreshes data without need of destroying and reinstantiating Quest object
-    */
-   async refresh()
-   {
-      this.entry = game.journal.get(this._id);
-
-      const content = Fetch.content(this.entry);
-
-      this.initData(content);
    }
 
    /**
@@ -491,9 +478,10 @@ export default class Quest
    toJSON()
    {
       return {
-         giver: this.giver,
          name: this._name,
          status: this.status,
+         giver: this.giver,
+         giverData: this.giverData,
          description: this.description,
          gmnotes: this.gmnotes,
          image: this.image,

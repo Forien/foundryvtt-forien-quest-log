@@ -1,6 +1,7 @@
-import Fetch                     from './Fetch.js';
 import Socket                    from './Socket.js';
+import QuestDB                   from './QuestDB.js';
 import Utils                     from './Utils.js';
+
 import { constants, settings }   from '../model/constants.js';
 
 /**
@@ -9,20 +10,51 @@ import { constants, settings }   from '../model/constants.js';
 export default class QuestAPI
 {
    /**
+    * Creates a new quest and waits for the journal entry to update and QuestDB to pick up the new Quest which
+    * is returned.
+    *
+    * @param {object}   options - Optional parameters.
+    *
+    * @param {object}   data - Quest data to assign to new quest.
+    *
+    * @param {string}   parentId - Any associated parent ID; if set then this is a subquest.
+    *
+    * @param {boolean}  notify - Post a UI message.
+    *
+    * @returns {Promise<Quest>} The newly created quest.
+    */
+   static async createQuest(options)
+   {
+      return Utils.createQuest(options);
+   }
+
+   /**
     * Retrieves Quest instance for given quest ID
     *
     * @param questId
     *
-    * @returns {Quest}
+    * @returns {QuestEntry} The QuestEntry
     */
-   static get(questId)
+   static getQuest(questId)
    {
-      return Fetch.quest(questId);
+      return QuestDB.getQuest(questId);
    }
 
-   static getQuests()
+   static getAllEntries()
    {
-      return Fetch.sorted();
+      return QuestDB.getAllEntries();
+   }
+
+   /**
+    * @param {object}   options - Optional parameters.
+    *
+    * @param {string}   [options.status] - Quest status to return sorted.
+    *
+    * @returns {null|SortedQuests|QuestEntry[]} The complete sorted quests or just a particular quest status.
+    */
+   static sorted(options)
+   {
+      return QuestDB.sorted(options);
    }
 
    /**
@@ -50,7 +82,7 @@ export default class QuestAPI
             return;
          }
 
-         const quest = Fetch.quest(questId);
+         const quest = QuestDB.getQuest(questId);
 
          if (quest === null)
          {
@@ -68,10 +100,6 @@ export default class QuestAPI
          if (quest.isObservable)
          {
             quest.sheet.render(true, { focus: true });
-         }
-         else
-         {
-console.log(`!!!!!! QuestAPI - open - Quest is not observable - quest.name: ${quest.name}`);
          }
       }
       catch (error)

@@ -1,6 +1,7 @@
 <section class="sidebar-tab sidebar-directory flexcol" id="journal" data-tab="journal">
   <ol class="directory-list questlog-floating">
-    {{#each quests.active}}
+    {{#each quests}}
+    {{#with enrich}}
     <li class="directory-item folder flexcol collapsed" data-quest-id="{{id}}">
       <header class="folder-header flexrow" {{#if (or isInactive isHidden)}}id="hidden"{{/if}}>
         <h3 class="{{#if tasks}}folder-toggle{{/if}}" data-quest-id="{{id}}">
@@ -56,6 +57,7 @@
     </li>
     {{else}}
       <span class="no-content">{{localize 'ForienQuestLog.NoActiveQuests'}}</span>
+    {{/with}}
     {{/each}}
   </ol>
 </section>

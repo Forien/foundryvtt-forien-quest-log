@@ -26,7 +26,7 @@
     },
 
     "Buttons": {
-      "AddNewQuest": "Add new Quest",
+      "AddNewQuest": "Add Quest",
       "AddNewTask": "Add Objective"
     },
 
@@ -82,7 +82,7 @@
         "ConfigurePermissions": "Configure Permissions",
         "SplashArt": "Splash Art:",
         "QuestBranching": "Sub Quests:",
-        "AddSubquest": "Create new Sub Quest",
+        "AddSubquest": "Create Sub Quest",
         "SplashInfo": "Click to set image.",
         "SplashQuestIcon": "Set as quest icon"
       },
@@ -122,17 +122,14 @@
       "CannotOpen": "Cannot open Quest Details. You may lack permissions, Quest might not exist anymore, or provided ID was invalid.",
       "UserCantOpen": "User {user} doesn't have permission to open this quest.",
       "LinkCopied": "Entity Link for this quest has been copied to clipboard.",
-      "QuestMoved": "Moved quest to new folder and gave it new status: {target}."
+      "QuestMoved": "Moved quest to new folder and gave it new status: {target}.",
+      "QuestAdded": "Added '{name}' as a new quest with status: {status}."
     },
 
     "Settings": {
       "allowPlayersDrag": {
         "Enable": "Allow Player Reward Dragging",
         "EnableHint": "Check to allow Players to drag Rewards from the Quest Details window to their owned Actors."
-      },
-      "availableQuests": {
-        "Enable": "Show Available Quests Tab",
-        "EnableHint": "Check to show the \"Available\" tab in the Quest Log Menu where players can see all non-inactive Quests before they are accepted."
       },
       "countHidden": {
         "Enable": "Count hidden Tasks",

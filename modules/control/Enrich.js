@@ -1,4 +1,4 @@
-import Fetch   from './Fetch.js';
+import QuestDB from './QuestDB.js';
 import Utils   from './Utils.js';
 
 import { constants, questTypes, questTypesI18n, settings } from '../model/constants.js';
@@ -109,7 +109,6 @@ export default class Enrich
       let result = '';
 
       const isTrustedPlayer = Utils.isTrustedPlayer();
-      const availableTab = game.settings.get(constants.moduleName, settings.availableQuests);
       const canAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
       const canEdit = game.user.isGM || (isTrustedPlayer && quest.isOwner);
 
@@ -138,7 +137,7 @@ export default class Enrich
             addedAction = true;
          }
 
-         if (availableTab && ((canEdit && questTypes.hidden === quest.status) || questTypes.active === quest.status))
+         if ((canEdit && questTypes.hidden === quest.status) || questTypes.active === quest.status)
          {
             result += `<i class="move fas fa-clipboard" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetAvailable')}" data-target="available" data-quest-id="${quest.id}"></i>\n`;
             addedAction = true;
@@ -164,7 +163,7 @@ export default class Enrich
     *
     * @returns {Promise<object>} A single quest view or SortedQuests upgraded
     */
-   static async quest(quest)
+   static quest(quest)
    {
       const data = JSON.parse(JSON.stringify(quest.toJSON()));
       data.id = quest.id;
@@ -184,7 +183,7 @@ export default class Enrich
 
       data.description = TextEditor.enrichHTML(data.description);
 
-      data.data_giver = await Enrich.giverFromQuest(quest);
+      data.data_giver = typeof data.giverData === 'object' ? data.giverData : {};
 
       data.questIconType = void 0;
 
@@ -207,10 +206,11 @@ export default class Enrich
 
       if (data.parent !== null)
       {
-         const parentQuest = Fetch.quest(data.parent);
-         data.isSubquest = parentQuest.isObservable;
+         const parentQuest = QuestDB.getQuest(data.parent);
          if (parentQuest)
          {
+            data.isSubquest = parentQuest.isObservable;
+
             data.data_parent = {
                id: data.parent,
                giver: parentQuest.giver,
@@ -226,7 +226,7 @@ export default class Enrich
       {
          for (const questId of data.subquests)
          {
-            const subquest = Fetch.quest(questId);
+            const subquest = QuestDB.getQuest(questId);
 
             // isObservable filters out non-owned hidden quests for trustedPlayerEdit.
             if (subquest && subquest.isObservable)

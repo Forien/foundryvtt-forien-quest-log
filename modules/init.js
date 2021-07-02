@@ -2,6 +2,7 @@ import ModuleSettings            from './ModuleSettings.js';
 import registerHooks             from './control/registerHooks.js';
 import Socket                    from './control/Socket.js';
 import QuestAPI                  from './control/QuestAPI.js';
+import QuestDB                   from './control/QuestDB.js';
 import Utils                     from './control/Utils.js';
 import Quest                     from './model/Quest.js';
 import QuestFolder               from './model/QuestFolder.js';
@@ -11,8 +12,10 @@ import QuestLog                  from './view/QuestLog.js';
 import QuestPreview              from './view/QuestPreview.js';
 import QuestTracker              from './view/QuestTracker.js';
 import DBMigration               from '../database/DBMigration.js';
-import { constants, settings }   from './model/constants.js';
+import Eventbus                  from '../external/Eventbus.js';
 
+import { constants, settings }   from './model/constants.js';
+CONFIG.debug.hooks = true;
 Hooks.once('init', () =>
 {
    // Set the sheet to render quests.
@@ -33,6 +36,7 @@ Hooks.once('setup', () =>
     */
    moduleData.public = {
       QuestAPI,
+      eventbus: new Eventbus(),
       questLog: new QuestLog(),
       questLogFloating: new QuestLogFloating(),
       questPreview: {},
@@ -75,6 +79,8 @@ Hooks.once('setup', () =>
       }
    };
 
+
+
    Object.freeze(moduleData.public);
 
    Hooks.callAll('ForienQuestLog.afterSetup');
@@ -98,7 +104,9 @@ Hooks.once('ready', async () =>
 
    game.collections.set('Quest', QuestsCollection);
 
-   QuestFolder.initializeJournals();
+   await QuestDB.init();
+
+   await QuestFolder.initializeJournals();
    registerHooks();
 
    if (Utils.isQuestTrackerVisible())
@@ -136,11 +144,14 @@ Hooks.on('renderJournalDirectory', (app, html) =>
 
    if (!(game.user.isGM && game.settings.get(constants.moduleName, settings.showFolder)))
    {
-      const folderId = QuestFolder.get();
-      if (folderId)
+      const folder = QuestFolder.get();
+      if (folder !== void 0)
       {
-         const folder = html.find(`.folder[data-folder-id="${folderId}"]`);
-         if (folder) { folder.remove(); }
+         const element = html.find(`.folder[data-folder-id="${folder.id}"]`);
+         if (element !== void 0)
+         {
+            element.remove();
+         }
       }
    }
 });

@@ -24,6 +24,16 @@
   //
   // Note: if you are using Typescript you must use `@typescript-eslint/no-shadow`
   "rules": {
-    "no-shadow": ["error", { "builtinGlobals": true, "hoist": "all", "allow": ["document", "event", "name", "parent"] }]
+    "no-shadow": ["error", {
+      "builtinGlobals": true,
+      "hoist": "all",
+      "allow": [
+        "document",
+        "event",
+        "name",
+        "parent",
+        "status"
+      ]
+    }]
   }
 }

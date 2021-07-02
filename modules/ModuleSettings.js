@@ -15,19 +15,6 @@ export default class ModuleSettings
     */
    static register()
    {
-      game.settings.register(constants.moduleName, settings.availableQuests, {
-         name: 'ForienQuestLog.Settings.availableQuests.Enable',
-         hint: 'ForienQuestLog.Settings.availableQuests.EnableHint',
-         scope: scope.world,
-         config: true,
-         default: false,
-         type: Boolean,
-         onChange: () =>
-         {
-            Utils.getFQLPublicAPI().renderAll({ force: true, questPreview: true });
-         }
-      });
-
       game.settings.register(constants.moduleName, settings.allowPlayersDrag, {
          name: 'ForienQuestLog.Settings.allowPlayersDrag.Enable',
          hint: 'ForienQuestLog.Settings.allowPlayersDrag.EnableHint',

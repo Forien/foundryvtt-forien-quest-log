@@ -3,6 +3,8 @@
  *
  * @property {QuestAPI} QuestAPI - QuestAPI class - Exposes static methods to interact with the quest system.
  *
+ * @property {Eventbus} eventbus - An Eventbus that is accessible for registering for events from QuestDB.
+ *
  * @property {QuestLog} questLog - The main quest log app instance.
  *
  * @property {QuestLogFloating} questLogFloating - The floating quest log window instance.
@@ -32,13 +34,13 @@
 /**
  * @typedef {object} SortedQuests
  *
- * @property {object[]} active - Active quests
+ * @property {QuestEntry[]} active - Active quest entries
  *
- * @property {object[]} available - Available quests
+ * @property {QuestEntry[]} available - Available quests entries
  *
- * @property {object[]} completed - Completed quests
+ * @property {QuestEntry[]} completed - Completed quests entries
  *
- * @property {object[]} failed - Failed quests
+ * @property {QuestEntry[]} failed - Failed quests entries
  *
- * @property {object[]} hidden - Hidden quests
+ * @property {QuestEntry[]} hidden - Hidden quests entries
  */
