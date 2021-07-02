@@ -3,6 +3,8 @@
  *
  * @property {QuestAPI} QuestAPI - QuestAPI class - Exposes static methods to interact with the quest system.
  *
+ * @property {Eventbus} eventbus - An Eventbus that is accessible for registering for events from QuestDB.
+ *
  * @property {QuestLog} questLog - The main quest log app instance.
  *
  * @property {QuestLogFloating} questLogFloating - The floating quest log window instance.

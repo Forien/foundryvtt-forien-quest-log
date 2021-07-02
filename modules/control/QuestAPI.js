@@ -16,7 +16,7 @@ export default class QuestAPI
     *
     * @returns {QuestEntry} The QuestEntry
     */
-   static get(questId)
+   static getQuest(questId)
    {
       return QuestDB.getQuest(questId);
    }
@@ -81,10 +81,6 @@ export default class QuestAPI
          if (quest.isObservable)
          {
             quest.sheet.render(true, { focus: true });
-         }
-         else
-         {
-console.log(`!!!!!! QuestAPI - open - Quest is not observable - quest.name: ${quest.name}`);
          }
       }
       catch (error)

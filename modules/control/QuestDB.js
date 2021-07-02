@@ -1,4 +1,5 @@
 import Enrich        from './Enrich.js';
+import Utils         from './Utils.js';
 import QuestFolder   from '../model/QuestFolder.js';
 import Quest         from '../model/Quest.js';
 import FastMap       from '../../external/FastMap.js';
@@ -16,14 +17,15 @@ const s_QUESTS = new FastMap([
 const s_QUEST_INDEX = new FastMap();
 
 const s_SORT_ALPHA = (a, b) => a.enrich.name.localeCompare(b.enrich.name);
-const s_SORT_DATE_CREATE = (a, b) => a.quest.date.create - b.quest.date.create;
-const s_SORT_DATE_START = (a, b) => a.quest.date.start - b.quest.date.start;
+const s_SORT_DATE_CREATE = (a, b) => a.quest.date.create - b.quest.date.create;  // eslint-disable-line no-unused-vars
+const s_SORT_DATE_START = (a, b) => a.quest.date.start - b.quest.date.start;     // eslint-disable-line no-unused-vars
 const s_SORT_DATE_END = (a, b) => b.quest.date.end - a.quest.date.end;
 
 const s_DELETE_QUEST = (questId) =>
 {
    const currentStatus = s_QUEST_INDEX.get(questId);
-   if (currentStatus && questTypes[currentStatus]) { s_QUESTS.get(currentStatus).delete(questId); }
+   if (questTypes[currentStatus]) { return s_QUESTS.get(currentStatus).delete(questId); }
+   return false;
 };
 
 /**
@@ -43,7 +45,7 @@ const s_GET_QUEST = (questId) =>
 const s_SET_QUEST = (entry) =>
 {
    const currentStatus = s_QUEST_INDEX.get(entry.id);
-   if (currentStatus && currentStatus !== entry.status && questTypes[currentStatus])
+   if (questTypes[currentStatus] && currentStatus !== entry.status)
    {
       s_QUESTS.get(currentStatus).delete(entry.id);
    }
@@ -56,6 +58,13 @@ const s_SET_QUEST = (entry) =>
    s_QUEST_INDEX.set(entry.id, entry.status);
    s_QUESTS.get(entry.status).set(entry.id, entry);
 };
+
+const s_EVENT_CREATE = 'fql:questdb:quest:create';
+const s_EVENT_CREATE_ID = 'fql:questdb:quest:create:';
+const s_EVENT_DELETE = 'fql:questdb:quest:delete';
+const s_EVENT_DELETE_ID = 'fql:questdb:quest:delete:';
+const s_EVENT_UPDATE = 'fql:questdb:quest:update';
+const s_EVENT_UPDATE_ID = 'fql:questdb:quest:update:';
 
 export default class QuestDB
 {
@@ -77,10 +86,7 @@ export default class QuestDB
          }
       }
 
-      for (const questEntry of s_QUESTS.flatten())
-      {
-         questEntry.enrich = Enrich.quest(questEntry.quest);
-      }
+      for (const questEntry of s_QUESTS.flatten()) { questEntry.hydrate(); }
 
       Hooks.on('createJournalEntry', this.createJournalEntry);
       Hooks.on('deleteJournalEntry', this.deleteJournalEntry);
@@ -94,17 +100,23 @@ export default class QuestDB
       if (content)
       {
          content.id = entry.id;
+         const questEntry = new QuestEntry(new Quest(content, entry));
+         s_SET_QUEST(questEntry.hydrate());
 
-         const quest = new Quest(content, entry);
-         const enrich = Enrich.quest(quest);
-
-         s_SET_QUEST(new QuestEntry(quest, enrich));
+         const eventbus = Utils.getFQLPublicAPI().eventbus;
+         eventbus.triggerDefer(`${s_EVENT_CREATE}`, questEntry);
+         eventbus.triggerDefer(`${s_EVENT_CREATE_ID}${entry.id}`, questEntry);
       }
    }
 
    static deleteJournalEntry(entry)
    {
-      s_DELETE_QUEST(entry.id);
+      if (s_DELETE_QUEST(entry.id))
+      {
+         const eventbus = Utils.getFQLPublicAPI().eventbus;
+         eventbus.triggerDefer(`${s_EVENT_DELETE}`, entry.id);
+         eventbus.triggerDefer(`${s_EVENT_DELETE_ID}${entry.id}`, entry.id);
+      }
    }
 
    /**
@@ -166,7 +178,9 @@ export default class QuestDB
             case questTypes.available: return s_QUESTS.get(questTypes.available).sorted(s_SORT_ALPHA);
             case questTypes.completed: return s_QUESTS.get(questTypes.completed).sorted(s_SORT_DATE_END);
             case questTypes.failed: return s_QUESTS.get(questTypes.failed).sorted(s_SORT_DATE_END);
-            case questTypes.hidden: return s_QUESTS.get(questTypes.hidden).sorted(s_SORT_ALPHA);
+            case questTypes.hidden:
+               return Utils.isTrustedPlayer() ? s_QUESTS.get(questTypes.hidden).filter((e) => e.isOwner).sorted(
+                s_SORT_ALPHA) : s_QUESTS.get(questTypes.hidden).sorted(s_SORT_ALPHA);
             default:
                console.error(`Forien Quest Log - QuestDB - sorted - unknown status: ${status}`);
                return null;
@@ -178,7 +192,8 @@ export default class QuestDB
          available: s_QUESTS.get(questTypes.available).sorted(s_SORT_ALPHA),
          completed: s_QUESTS.get(questTypes.completed).sorted(s_SORT_DATE_END),
          failed: s_QUESTS.get(questTypes.failed).sorted(s_SORT_DATE_END),
-         hidden: s_QUESTS.get(questTypes.hidden).sorted(s_SORT_ALPHA)
+         hidden: Utils.isTrustedPlayer() ? s_QUESTS.get(questTypes.hidden).filter((e) => e.isOwner).sorted(
+          s_SORT_ALPHA) : s_QUESTS.get(questTypes.hidden).sorted(s_SORT_ALPHA)
       };
    }
 
@@ -188,7 +203,7 @@ export default class QuestDB
 
       if (content)
       {
-         const questEntry = s_GET_QUEST(entry.id);
+         let questEntry = s_GET_QUEST(entry.id);
 
          if (questEntry)
          {
@@ -197,12 +212,13 @@ export default class QuestDB
          else
          {
             content.id = entry.id;
-
-            const quest = new Quest(content, entry);
-            const enrich = Enrich.quest(quest);
-
-            s_SET_QUEST(new QuestEntry(quest, enrich));
+            questEntry = new QuestEntry(new Quest(content, entry));
+            s_SET_QUEST(questEntry.hydrate());
          }
+
+         const eventbus = Utils.getFQLPublicAPI().eventbus;
+         eventbus.triggerDefer(`${s_EVENT_UPDATE}`, questEntry);
+         eventbus.triggerDefer(`${s_EVENT_UPDATE_ID}${entry.id}`, questEntry);
       }
    }
 }
@@ -212,9 +228,9 @@ class QuestEntry
    /**
     * @param {Quest}    quest - The Quest object
     *
-    * @param {object}   enrich - The enriched Quest data.
+    * @param {object}   [enrich] - The enriched Quest data. If not set be sure to hydrate.
     */
-   constructor(quest, enrich)
+   constructor(quest, enrich = void 0)
    {
       this.id = quest.id;
       this.status = quest.status;
@@ -226,7 +242,16 @@ class QuestEntry
    {
       this.id = this.quest.id;
       this.status = this.quest.status;
+
+      this.isHidden = this.quest.isHidden;
+      this.isInactive = this.quest.isInactive;
+      this.isObservable = this.quest.isObservable;
+      this.isOwner = this.quest.isOwner;
+      this.isPersonal = this.quest.isPersonal;
+
       this.enrich = Enrich.quest(this.quest);
+
+      return this;
    }
 
    /**

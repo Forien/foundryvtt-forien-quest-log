@@ -12,6 +12,8 @@ import QuestLog                  from './view/QuestLog.js';
 import QuestPreview              from './view/QuestPreview.js';
 import QuestTracker              from './view/QuestTracker.js';
 import DBMigration               from '../database/DBMigration.js';
+import Eventbus                  from '../external/Eventbus.js';
+
 import { constants, settings }   from './model/constants.js';
 
 Hooks.once('init', () =>
@@ -34,6 +36,7 @@ Hooks.once('setup', () =>
     */
    moduleData.public = {
       QuestAPI,
+      eventbus: new Eventbus(),
       questLog: new QuestLog(),
       questLogFloating: new QuestLogFloating(),
       questPreview: {},
