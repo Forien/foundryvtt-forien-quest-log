@@ -5,7 +5,7 @@ import Utils         from '../control/Utils.js';
 import Quest         from '../model/Quest.js';
 import QuestFolder   from '../model/QuestFolder.js';
 
-import { constants, questTypes, settings }   from '../model/constants.js';
+import { constants, questTypes, questTypesI18n, settings }   from '../model/constants.js';
 
 export default class QuestForm extends FormApplication
 {
@@ -155,6 +155,11 @@ export default class QuestForm extends FormApplication
             Socket.refreshQuestPreview({ questId: parentQuest.id });
          }
       }
+
+      ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestAdded', {
+         name,
+         status: game.i18n.localize(questTypesI18n[data.status])
+      }));
 
       // Players don't see Hidden tab, but assistant GM can, so emit anyway
       Socket.refreshQuestLog();

@@ -79,6 +79,8 @@ Hooks.once('setup', () =>
       }
    };
 
+
+
    Object.freeze(moduleData.public);
 
    Hooks.callAll('ForienQuestLog.afterSetup');

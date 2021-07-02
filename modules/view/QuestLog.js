@@ -5,7 +5,7 @@ import QuestDB    from '../control/QuestDB.js';
 import Socket     from '../control/Socket.js';
 import Utils      from '../control/Utils.js';
 
-import {constants, questTypesI18n, settings} from '../model/constants.js';
+import { constants, questTypesI18n, settings } from '../model/constants.js';
 
 export default class QuestLog extends Application
 {
