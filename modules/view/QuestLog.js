@@ -69,7 +69,7 @@ export default class QuestLog extends Application
             return;
          }
 
-         const quest = await Utils.createQuest();
+         const quest = await Utils.createQuest({ notify: true });
          if (quest.isObservable)
          {
             this._addQuestPreviewId = quest.id;

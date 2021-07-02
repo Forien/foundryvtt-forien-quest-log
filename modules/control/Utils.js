@@ -68,18 +68,20 @@ export default class Utils
          Socket.refreshQuestPreview({ questId: parentQuest.id });
       }
 
+      const quest = QuestDB.getQuest(entry.id);
+
       if (notify)
       {
          ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestAdded', {
-            name,
-            status: game.i18n.localize(questTypesI18n[data.status])
+            name: quest.name,
+            status: game.i18n.localize(questTypesI18n[quest.status])
          }));
       }
 
       // Players don't see Hidden tab, but assistant GM can, so emit anyway
       Socket.refreshQuestLog();
 
-      return QuestDB.getQuest(entry.id);
+      return quest;
    }
 
    /**
