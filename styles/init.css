@@ -252,7 +252,7 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  padding: 0 0 24px 0;
+  padding: 0 0 16px 0;
 }
 #forien-quest-log .quest-log.bookmarks nav {
   position: absolute;
@@ -299,6 +299,11 @@
   flex: 1;
   overflow-y: hidden;
   padding: 0 16px;
+}
+#forien-quest-log .quest-log .log-body header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
 }
 #forien-quest-log .quest-log .tab {
   flex-direction: column;

@@ -1,5 +1,4 @@
 import FQLDialog  from './FQLDialog.js';
-import QuestForm  from './QuestForm.js';
 import QuestAPI   from '../control/QuestAPI.js';
 import QuestDB    from '../control/QuestDB.js';
 import Socket     from '../control/Socket.js';
@@ -12,6 +11,8 @@ export default class QuestLog extends Application
    constructor(options = {})
    {
       super(options);
+
+      this._addQuestPreviewId = void 0;
    }
 
    /**
@@ -59,16 +60,39 @@ export default class QuestLog extends Application
          }
       }
 
-      html.on('click', '.new-quest-btn', () =>
+      html.on('click', '.new-quest-btn', async () =>
       {
-         if (this._questForm && this._questForm.rendered)
+         if (this._addQuestPreviewId !== void 0)
          {
-            this._questForm.bringToTop();
+            const qPreview = Utils.getFQLPublicAPI().questPreview[this._addQuestPreviewId];
+            if (qPreview && qPreview.rendered) { qPreview.bringToTop(); }
+            return;
          }
-         else
+
+         const quest = await Utils.createQuest();
+         if (quest.isObservable)
          {
-            this._questForm = new QuestForm().render(true);
+            this._addQuestPreviewId = quest.id;
+
+            const questSheet = quest.sheet;
+            questSheet.render(true, { focus: true });
+            Hooks.once('closeQuestPreview', (questPreview) =>
+            {
+               if (this._addQuestPreviewId === questPreview.quest.id)
+               {
+                  this._addQuestPreviewId = void 0;
+               }
+            });
          }
+
+         // if (this._questForm && this._questForm.rendered)
+         // {
+         //    this._questForm.bringToTop();
+         // }
+         // else
+         // {
+         //    this._questForm = new QuestForm().render(true);
+         // }
       });
 
       html.on('click', '.actions.quest-status i', async (event) =>

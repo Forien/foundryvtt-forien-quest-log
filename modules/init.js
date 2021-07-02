@@ -15,7 +15,7 @@ import DBMigration               from '../database/DBMigration.js';
 import Eventbus                  from '../external/Eventbus.js';
 
 import { constants, settings }   from './model/constants.js';
-
+CONFIG.debug.hooks = true;
 Hooks.once('init', () =>
 {
    // Set the sheet to render quests.

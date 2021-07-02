@@ -815,7 +815,7 @@ export default class QuestPreview extends FormApplication
             await this.saveQuest();
          });
 
-         html.on('click', '.add-subquest-btn', () =>
+         html.on('click', '.add-subquest-btn', async () =>
          {
             // If a permission control app / dialog is open close it.
             if (this._permControl)
@@ -824,14 +824,17 @@ export default class QuestPreview extends FormApplication
                this._permControl = void 0;
             }
 
-            if (this._questForm && this._questForm.rendered)
-            {
-               this._questForm.bringToTop();
-            }
-            else
-            {
-               this._questForm = new QuestForm({ parentId: this.quest.id }).render(true);
-            }
+            const quest = await Utils.createQuest({ parentId: this.quest.id });
+            if (quest.isObservable) { quest.sheet.render(true, { focus: true }); }
+
+            // if (this._questForm && this._questForm.rendered)
+            // {
+            //    this._questForm.bringToTop();
+            // }
+            // else
+            // {
+            //    this._questForm = new QuestForm({ parentId: this.quest.id }).render(true);
+            // }
          });
       }
    }

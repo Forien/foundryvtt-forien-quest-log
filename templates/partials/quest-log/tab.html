@@ -1,4 +1,10 @@
-<h1>{{format 'ForienQuestLog.Quests' (localize (lookup questTypesI18n tab))}}</h1>
+<header>
+  <h1 style="flex: 1;">{{format 'ForienQuestLog.Quests' (localize (lookup questTypesI18n tab))}}</h1>
+  {{#if (or isGM canCreate)}}
+    <button style="position: absolute; top: 38px; right: 12px; width: 105px" class="new-quest-btn"><i class="fas fa-plus"></i> {{localize 'ForienQuestLog.Buttons.AddNewQuest'}}</button>
+  {{/if}}
+  <!-- TODO FIX THE ABOVE STYLE /W FLEXBOX -->
+</header>
 <div class="table">
   <ul>
     {{#each quests}}

@@ -10,6 +10,25 @@ import { constants, settings }   from '../model/constants.js';
 export default class QuestAPI
 {
    /**
+    * Creates a new quest and waits for the journal entry to update and QuestDB to pick up the new Quest which
+    * is returned.
+    *
+    * @param {object}   options - Optional parameters.
+    *
+    * @param {object}   data - Quest data to assign to new quest.
+    *
+    * @param {string}   parentId - Any associated parent ID; if set then this is a subquest.
+    *
+    * @param {boolean}  notify - Post a UI message.
+    *
+    * @returns {Promise<Quest>} The newly created quest.
+    */
+   static async createQuest(options)
+   {
+      return Utils.createQuest(options);
+   }
+
+   /**
     * Retrieves Quest instance for given quest ID
     *
     * @param questId

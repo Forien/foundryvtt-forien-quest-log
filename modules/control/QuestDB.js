@@ -106,6 +106,7 @@ export default class QuestDB
          const eventbus = Utils.getFQLPublicAPI().eventbus;
          eventbus.triggerDefer(`${s_EVENT_CREATE}`, questEntry);
          eventbus.triggerDefer(`${s_EVENT_CREATE_ID}${entry.id}`, questEntry);
+console.log(`!!!!!!!!!!!!!!!!!!! QuestDB - createJournalEntry - entry.id: ${entry.id}`);
       }
    }
 
