@@ -2,13 +2,17 @@ import DBMigration   from './DBMigration.js';
 import Enrich        from '../modules/control/Enrich.js';
 import QuestFolder   from '../modules/model/QuestFolder.js';
 import Quest         from '../modules/model/Quest.js';
-import { constants } from '../modules/model/constants.js';
+
+import { constants, questTypes } from '../modules/model/constants.js';
 
 /**
  * Performs DB migration from schema 1 to 2.
  *
  * New data field:
  * {string} giverImage - Stores the quest giver image.
+ *
+ * Convert data:
+ * {string} status - convert 'hidden' to 'inactive' for code clarity.
  *
  * The purpose of this update is to store the quest giver data in the new `giverData` field.
  * Presently the quest giver if non abstract and a Foundry UUID is looked up in the enrich process via `fromUUID` to
@@ -38,8 +42,13 @@ export default async function()
          {
             const quest = new Quest(content, entry);
 
+            // Load quest giver assets and store as 'giverData'.
             const data = await Enrich.giverFromQuest(quest);
             if (typeof data.img === 'string' && data.img.length) { quest.giverData = data; }
+
+            // Change any status of 'hidden' to 'inactive'.
+            if (quest.status === 'hidden') { quest.status = questTypes.inactive; }
+
             await quest.save();
          }
          else

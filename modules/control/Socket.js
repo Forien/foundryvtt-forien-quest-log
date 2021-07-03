@@ -262,7 +262,7 @@ async function handleMoveQuest(data)
    }
 
    // For non-GM users close QuestPreview when made hidden / inactive.
-   if (!game.user.isGM && target === questTypes.hidden)
+   if (!game.user.isGM && target === questTypes.inactive)
    {
       const fqlPublicAPI = Utils.getFQLPublicAPI();
       if (fqlPublicAPI.questPreview[data.payload.questId] !== void 0)

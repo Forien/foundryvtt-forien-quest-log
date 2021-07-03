@@ -117,7 +117,7 @@ export default class QuestForm extends FormApplication
       // trusted players.
       if (!game.user.isGM)
       {
-         data.status = trustedPlayerEdit ? questTypes.hidden : questTypes.available;
+         data.status = trustedPlayerEdit ? questTypes.inactive : questTypes.available;
          permission[game.user.id] = CONST.ENTITY_PERMISSIONS.OWNER;
       }
 

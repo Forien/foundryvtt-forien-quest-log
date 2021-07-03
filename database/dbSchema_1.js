@@ -165,11 +165,12 @@ async function migrateData(entry)
       content.subquests = subquests;
    }
 
+   // Note: in DB schema v2 update status hidden is renamed to 'inactive'; use bare strings here instead of questTypes.
    try
    {
-      if (!questTypes[content.status]) { content.status = questTypes.hidden; }
+      if (!questTypes[content.status]) { content.status = 'hidden'; }
    }
-   catch (err) { content.status = questTypes.hidden; }
+   catch (err) { content.status = 'hidden'; }
 
    return content;
 }

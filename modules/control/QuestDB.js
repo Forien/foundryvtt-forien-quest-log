@@ -11,7 +11,7 @@ const s_QUESTS = new FastMap([
    [questTypes.available, new FastMap()],
    [questTypes.completed, new FastMap()],
    [questTypes.failed, new FastMap()],
-   [questTypes.hidden, new FastMap()]
+   [questTypes.inactive, new FastMap()]
 ]);
 
 const s_QUEST_INDEX = new FastMap();
@@ -57,10 +57,18 @@ const s_SET_QUEST = (entry) =>
    if (!questTypes[entry.status])
    {
       console.error(`ForienQuestLog - QuestDB - set quest error - unknown status: ${entry.status}`);
+      // return;
    }
 
-   s_QUEST_INDEX.set(entry.id, entry.status);
-   s_QUESTS.get(entry.status).set(entry.id, entry);
+   try
+   {
+      s_QUEST_INDEX.set(entry.id, entry.status);
+      s_QUESTS.get(entry.status).set(entry.id, entry);
+   }
+   catch (err)
+   {
+      console.error(`!!!! entry.status: ${entry.status}`);
+   }
 };
 
 export default class QuestDB
@@ -185,9 +193,9 @@ export default class QuestDB
             case questTypes.available: return s_QUESTS.get(questTypes.available).sorted(sortAvailable);
             case questTypes.completed: return s_QUESTS.get(questTypes.completed).sorted(sortCompleted);
             case questTypes.failed: return s_QUESTS.get(questTypes.failed).sorted(sortFailed);
-            case questTypes.hidden:
-               return Utils.isTrustedPlayer() ? s_QUESTS.get(questTypes.hidden).filter((e) => e.isOwner).sorted(
-                sortHidden) : s_QUESTS.get(questTypes.hidden).sorted(sortHidden);
+            case questTypes.inactive:
+               return Utils.isTrustedPlayer() ? s_QUESTS.get(questTypes.inactive).filter((e) => e.isOwner).sorted(
+                sortHidden) : s_QUESTS.get(questTypes.inactive).sorted(sortHidden);
             default:
                console.error(`Forien Quest Log - QuestDB - sorted - unknown status: ${status}`);
                return null;
@@ -199,8 +207,8 @@ export default class QuestDB
          available: s_QUESTS.get(questTypes.available).sorted(sortAvailable),
          completed: s_QUESTS.get(questTypes.completed).sorted(sortCompleted),
          failed: s_QUESTS.get(questTypes.failed).sorted(sortFailed),
-         hidden: Utils.isTrustedPlayer() ? s_QUESTS.get(questTypes.hidden).filter((e) => e.isOwner).sorted(
-          sortHidden) : s_QUESTS.get(questTypes.hidden).sorted(sortHidden)
+         inactive: Utils.isTrustedPlayer() ? s_QUESTS.get(questTypes.inactive).filter((e) => e.isOwner).sorted(
+          sortHidden) : s_QUESTS.get(questTypes.inactive).sorted(sortHidden)
       };
    }
 

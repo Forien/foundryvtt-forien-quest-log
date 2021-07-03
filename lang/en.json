@@ -12,16 +12,17 @@
     "Quest": "Quest",
 
     "QuestTypes": {
-      "InProgress": "Active",
+      "Active": "In Progress",
+      "Available": "Available",
       "Completed": "Completed",
       "Failed": "Failed",
-      "Hidden": "Inactive",
+      "InActive": "Inactive",
       "Labels": {
-        "available": "available",
         "active": "in progress",
+        "available": "available",
         "completed": "completed",
         "failed": "failed",
-        "hidden": "inactive"
+        "inactive": "inactive"
       }
     },
 
@@ -57,7 +58,7 @@
         "InProgress": "In progress",
         "Completed": "Completed",
         "Failed": "Failed",
-        "Hidden": "Inactive"
+        "InActive": "Inactive"
       }
     },
 
@@ -122,7 +123,7 @@
       "CannotOpen": "Cannot open Quest Details. You may lack permissions, Quest might not exist anymore, or provided ID was invalid.",
       "UserCantOpen": "User {user} doesn't have permission to open this quest.",
       "LinkCopied": "Entity Link for this quest has been copied to clipboard.",
-      "QuestMoved": "Moved quest to new folder and gave it new status: {target}.",
+      "QuestMoved": "Moved quest and set new status to: {target}.",
       "QuestAdded": "Added '{name}' as a new quest with status: {status}."
     },
 

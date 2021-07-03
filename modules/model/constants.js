@@ -14,10 +14,10 @@ const constants = {
  */
 const questTypes = {
    active: 'active',
+   available: 'available',
    completed: 'completed',
    failed: 'failed',
-   hidden: 'hidden',
-   available: 'available'
+   inactive: 'inactive'
 };
 
 /**
@@ -26,11 +26,11 @@ const questTypes = {
  * @returns {{hidden: string, available: string, active: string, completed: string, failed: string}}
  */
 const questTypesI18n = {
-   active: 'ForienQuestLog.QuestTypes.InProgress',
+   active: 'ForienQuestLog.QuestTypes.Active',
+   available: 'ForienQuestLog.QuestTypes.Available',
    completed: 'ForienQuestLog.QuestTypes.Completed',
    failed: 'ForienQuestLog.QuestTypes.Failed',
-   hidden: 'ForienQuestLog.QuestTypes.Hidden',
-   available: 'ForienQuestLog.QuestLog.Tabs.Available'
+   inactive: 'ForienQuestLog.QuestTypes.InActive'
 };
 
 /**

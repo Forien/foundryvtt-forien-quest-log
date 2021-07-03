@@ -125,19 +125,19 @@ export default class Enrich
             addedAction = true;
          }
 
-         if ((canEdit && questTypes.hidden === quest.status) || questTypes.available === quest.status)
+         if ((canEdit && questTypes.inactive === quest.status) || questTypes.available === quest.status)
          {
             result += `<i class="move fas fa-play" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetActive')}" data-target="active" data-quest-id="${quest.id}"></i>\n`;
             addedAction = true;
          }
 
-         if (canEdit && questTypes.hidden !== quest.status)
+         if (canEdit && questTypes.inactive !== quest.status)
          {
-            result += `<i class="move fas fa-stop-circle" title="${game.i18n.localize('ForienQuestLog.Tooltips.Hide')}" data-target="hidden" data-quest-id="${quest.id}"></i>\n`;
+            result += `<i class="move fas fa-stop-circle" title="${game.i18n.localize('ForienQuestLog.Tooltips.Hide')}" data-target="inactive" data-quest-id="${quest.id}"></i>\n`;
             addedAction = true;
          }
 
-         if ((canEdit && questTypes.hidden === quest.status) || questTypes.active === quest.status)
+         if ((canEdit && questTypes.inactive === quest.status) || questTypes.active === quest.status)
          {
             result += `<i class="move fas fa-clipboard" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetAvailable')}" data-target="available" data-quest-id="${quest.id}"></i>\n`;
             addedAction = true;
@@ -168,7 +168,7 @@ export default class Enrich
       const data = JSON.parse(JSON.stringify(quest.toJSON()));
       data.id = quest.id;
       data.isHidden = quest.isHidden;
-      data.isInactive = questTypes.hidden === data.status;
+      data.isInactive = questTypes.inactive === data.status;
 
       const personalActors = quest.getPersonalActors();
 
@@ -248,7 +248,7 @@ export default class Enrich
                const isInactive = subquest.isInactive;
 
                const statusTooltipData = isInactive ?
-                { statusI18n: game.i18n.localize(questTypesI18n[questTypes.hidden]) } :
+                { statusI18n: game.i18n.localize(questTypesI18n[questTypes.inactive]) } :
                  { statusI18n: game.i18n.localize(questTypesI18n[subquest.status]) };
 
                const statusTooltip = game.i18n.format('ForienQuestLog.Tooltips.Status', statusTooltipData);
