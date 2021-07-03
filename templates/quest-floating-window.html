@@ -8,7 +8,7 @@
           <i class="fas fa-bookmark"></i>
           {{name}} {{taskCountLabel}}
         </h3>
-        {{#if ../isGM}}
+        {{#if canEdit}}
           {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
           {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
         {{/if}}
@@ -31,7 +31,7 @@
             <h4 class="entity-name" title="{{statusTooltip}}">
               {{name}}
             </h4>
-            {{#if ../../isGM}}
+            {{#if canEdit}}
               {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
               {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
             {{/if}}

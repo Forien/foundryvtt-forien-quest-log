@@ -178,6 +178,8 @@ export default class Enrich
       const canPlayerDrag = game.settings.get(constants.moduleName, settings.allowPlayersDrag);
       const countHidden = game.settings.get(constants.moduleName, settings.countHidden);
 
+      data.canEdit = canEdit;
+
       data.isPersonal = personalActors.length > 0;
       data.personalActors = personalActors.map((a) => a.name).sort((a, b) => a.localeCompare(b)).join('&#013;');
 
@@ -261,6 +263,7 @@ export default class Enrich
                   statusTooltip,
                   state,
                   statusActions: Enrich.statusActions(subquest),
+                  canEdit: game.user.isGM || (subquest.isOwner && isTrustedPlayer),
                   isHidden: subquest.isHidden,
                   isInactive,
                   isPersonal: subPersonalActors.length > 0,

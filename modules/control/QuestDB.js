@@ -123,6 +123,25 @@ export default class QuestDB
       }
    }
 
+   // static enrich(questId)
+   // {
+   //    const questEntry =
+   //
+   //    for (const questEntry of s_QUESTS.flatten())
+   //    {
+   //       questEntry.enrich = Enrich.quest(questEntry.quest);
+   //    }
+   // }
+
+   static enrichAll()
+   {
+      for (const questEntry of s_QUESTS.flatten())
+      {
+         questEntry.enrich = Enrich.quest(questEntry.quest);
+      }
+   }
+
+
    /**
     * Provides a quicker method to get the count of active quests.
     *
@@ -232,11 +251,6 @@ export default class QuestDB
          }
 
          Hooks.callAll('updateQuestEntry', questEntry, flags, options, id);
-
-         // setTimeout(() =>
-         // {
-         //    Hooks.call('updateQuestEntry', questEntry, flags, options, id);
-         // }, 0);
       }
    }
 }
@@ -285,16 +299,17 @@ class QuestEntry
       const status = this.status;
       this.hydrate();
 
+      // Must hydrate any parent quest on change to make sure any data is captured like permission changes for
+      // subquests.
+      if (typeof this.quest.parent === 'string')
+      {
+         const parentEntry = s_GET_QUEST(this.quest.parent);
+         if (parentEntry) { parentEntry.hydrate(); }
+      }
+
       if (status !== this.quest.status)
       {
          s_SET_QUEST(this);
-
-         // Must hydrate any parent quest on status change
-         if (this.quest.parent)
-         {
-            const parentEntry = s_GET_QUEST(this.quest.parent);
-            if (parentEntry) { parentEntry.hydrate(); }
-         }
       }
    }
 }

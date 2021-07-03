@@ -1,4 +1,6 @@
-import Utils                                 from './control/Utils.js';
+import QuestDB from "./control/QuestDB.js";
+import Utils   from './control/Utils.js';
+
 import { constants, noteControls, settings } from './model/constants.js';
 
 const s_QUEST_TRACKER_DEFAULT = { top: 80 };
@@ -24,6 +26,9 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
+            // Must enrich all quests again in QuestDB.
+            QuestDB.enrichAll();
+
             Utils.getFQLPublicAPI().renderAll({ force: true, questPreview: true });
          }
       });
@@ -51,6 +56,9 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
+            // Must enrich all quests again in QuestDB.
+            QuestDB.enrichAll();
+
             Utils.getFQLPublicAPI().renderAll({ questPreview: true });
          }
       });
@@ -64,6 +72,9 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
+            // Must enrich all quests again in QuestDB.
+            QuestDB.enrichAll();
+
             Utils.getFQLPublicAPI().renderAll({ questPreview: true });
          }
       });
@@ -75,7 +86,13 @@ export default class ModuleSettings
          config: true,
          default: true,
          type: Boolean,
-         onChange: () => { Utils.getFQLPublicAPI().renderAll(); }
+         onChange: () =>
+         {
+            // Must enrich all quests again in QuestDB.
+            QuestDB.enrichAll();
+
+            Utils.getFQLPublicAPI().renderAll();
+         }
       });
 
       game.settings.register(constants.moduleName, settings.dynamicBookmarkBackground, {
@@ -105,6 +122,9 @@ export default class ModuleSettings
          },
          onChange: () =>
          {
+            // Must enrich all quests again in QuestDB.
+            QuestDB.enrichAll();
+
             const fqlPublicAPI = Utils.getFQLPublicAPI();
             if (fqlPublicAPI.questLog.rendered) { fqlPublicAPI.questLog.render(); }
          }
@@ -122,7 +142,13 @@ export default class ModuleSettings
             onlyCurrent: 'ForienQuestLog.Settings.showTasks.onlyCurrent',
             no: 'ForienQuestLog.Settings.showTasks.no'
          },
-         onChange: () => { Utils.getFQLPublicAPI().renderAll(); }
+         onChange: () =>
+         {
+            // Must enrich all quests again in QuestDB.
+            QuestDB.enrichAll();
+
+            Utils.getFQLPublicAPI().renderAll({ force: true });
+         }
       });
 
       game.settings.register(constants.moduleName, settings.defaultPermission, {

@@ -879,8 +879,7 @@ export default class QuestPreview extends FormApplication
       // const content = await Enrich.quest(this.quest);
       const content = QuestDB.getEnrich(this.quest.id);
 
-      const isTrustedPlayer = Utils.isTrustedPlayer();
-      this.canEdit = game.user.isGM || (this.quest.isOwner && isTrustedPlayer);
+      this.canEdit = game.user.isGM || (this.quest.isOwner && Utils.isTrustedPlayer());
       this.playerEdit = this.quest.isOwner;
       this.canAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
 
