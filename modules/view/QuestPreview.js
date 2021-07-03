@@ -762,7 +762,7 @@ export default class QuestPreview extends FormApplication
                         // notice to all clients to render again.
                         if (!this.quest.isObservable) { await this.close(); }
 
-                        Socket.refreshQuestLog();
+                        Socket.refreshAll();
                         Socket.refreshQuestPreview({ questId });
                      }
                   });

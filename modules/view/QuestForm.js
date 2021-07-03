@@ -162,7 +162,7 @@ export default class QuestForm extends FormApplication
       }));
 
       // Players don't see Hidden tab, but assistant GM can, so emit anyway
-      Socket.refreshQuestLog();
+      Socket.refreshAll();
       this._submitted = true;
    }
 

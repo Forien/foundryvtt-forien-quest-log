@@ -19,9 +19,9 @@ const s_EVENT_NAME = 'module.forien-quest-log';
 const s_MESSAGE_TYPES = {
    deletedQuest: 'deletedQuest',
    moveQuest: 'moveQuest',
-   questLogRefresh: 'questLogRefresh',
-   questPreviewRefresh: 'questPreviewRefresh',
    questRewardDrop: 'questRewardDrop',
+   refreshAll: 'refreshAll',
+   refreshQuestPreview: 'refreshQuestPreview',
    showQuestPreview: 'showQuestPreview',
    userCantOpenQuest: 'userCantOpenQuest'
 };
@@ -63,9 +63,9 @@ export default class Socket
             {
                case s_MESSAGE_TYPES.deletedQuest: await handleDeletedQuest(data); break;
                case s_MESSAGE_TYPES.moveQuest: await handleMoveQuest(data); break;
-               case s_MESSAGE_TYPES.questLogRefresh: handleQuestLogRefresh(data); break;
-               case s_MESSAGE_TYPES.questPreviewRefresh: handleQuestPreviewRefresh(data); break;
                case s_MESSAGE_TYPES.questRewardDrop: await handleQuestRewardDrop(data); break;
+               case s_MESSAGE_TYPES.refreshAll: handleRefreshAll(data); break;
+               case s_MESSAGE_TYPES.refreshQuestPreview: handleRefreshQuestPreview(data); break;
                case s_MESSAGE_TYPES.showQuestPreview: handleShowQuestPreview(data); break;
                case s_MESSAGE_TYPES.userCantOpenQuest: handleUserCantOpenQuest(data); break;
             }
@@ -90,7 +90,7 @@ export default class Socket
             questId: quest.parent ? [quest.parent, quest.id, ...quest.subquests] : [quest.id, ...quest.subquests]
          });
 
-         Socket.refreshQuestLog();
+         Socket.refreshAll();
 
          const dirname = game.i18n.localize(questTypesI18n[target]);
          ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved', { target: dirname }), {});
@@ -114,12 +114,42 @@ export default class Socket
       });
    }
 
-   static refreshQuestLog(options = {})
+   static async questRewardDrop(data = {})
+   {
+      let handled = false;
+
+      if (game.user.isGM)
+      {
+         /**
+          * @type {FQLDropData}
+          */
+         const fqlData = data.data._fqlData;
+
+         const quest = QuestDB.getQuest(fqlData.questId);
+         if (quest)
+         {
+            quest.removeReward(fqlData.uuidv4);
+            await quest.save();
+            Socket.refreshQuestPreview({ questId: fqlData.questId });
+         }
+         handled = true;
+      }
+
+      game.socket.emit(s_EVENT_NAME, {
+         type: s_MESSAGE_TYPES.questRewardDrop,
+         payload: {
+            ...data,
+            handled
+         }
+      });
+   }
+
+   static refreshAll(options = {})
    {
       ViewManager.renderAll({ force: true, ...options });
 
       game.socket.emit(s_EVENT_NAME, {
-         type: s_MESSAGE_TYPES.questLogRefresh,
+         type: s_MESSAGE_TYPES.refreshAll,
          payload: {
             options
          }
@@ -158,7 +188,7 @@ export default class Socket
       }
 
       game.socket.emit(s_EVENT_NAME, {
-         type: s_MESSAGE_TYPES.questPreviewRefresh,
+         type: s_MESSAGE_TYPES.refreshQuestPreview,
          payload: {
             questId,
             options
@@ -166,37 +196,7 @@ export default class Socket
       });
 
       // Also update the quest log and other GUIs
-      if (updateLog) { Socket.refreshQuestLog(); }
-   }
-
-   static async questRewardDrop(data = {})
-   {
-      let handled = false;
-
-      if (game.user.isGM)
-      {
-         /**
-          * @type {FQLDropData}
-          */
-         const fqlData = data.data._fqlData;
-
-         const quest = QuestDB.getQuest(fqlData.questId);
-         if (quest)
-         {
-            quest.removeReward(fqlData.uuidv4);
-            await quest.save();
-            Socket.refreshQuestPreview({ questId: fqlData.questId });
-         }
-         handled = true;
-      }
-
-      game.socket.emit(s_EVENT_NAME, {
-         type: s_MESSAGE_TYPES.questRewardDrop,
-         payload: {
-            ...data,
-            handled
-         }
-      });
+      if (updateLog) { Socket.refreshAll(); }
    }
 
    static showQuestPreview(questId)
@@ -250,7 +250,7 @@ async function handleMoveQuest(data)
          questId: quest.parent ? [quest.parent, quest.id, ...quest.subquests] : [quest.id, ...quest.subquests]
       });
 
-      Socket.refreshQuestLog();
+      Socket.refreshAll();
 
       const dirname = game.i18n.localize(questTypesI18n[target]);
       ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
@@ -268,13 +268,48 @@ async function handleMoveQuest(data)
    }
 }
 
-function handleQuestLogRefresh(data)
+async function handleQuestRewardDrop(data)
+{
+   if (game.user.isGM)
+   {
+      /**
+       * @type {FQLDropData}
+       */
+      const fqlData = data.payload.data._fqlData;
+
+      const notify = game.settings.get(constants.moduleName, settings.notifyRewardDrop);
+      if (notify)
+      {
+         ui.notifications.info(game.i18n.format('ForienQuestLog.QuestPreview.RewardDrop', {
+            userName: fqlData.userName,
+            itemName: fqlData.itemName,
+            actorName: data.payload.actor.name
+         }));
+      }
+
+      // The quest reward has already been removed by a GM user.
+      if (data.payload.handled) { return; }
+
+      // Set handled to true so no more GM level users act upon this event.
+      data.payload.handled = true;
+
+      const quest = QuestDB.getQuest(fqlData.questId);
+      if (quest)
+      {
+         quest.removeReward(fqlData.uuidv4);
+         await quest.save();
+         Socket.refreshQuestPreview({ questId: fqlData.questId });
+      }
+   }
+}
+
+function handleRefreshAll(data)
 {
    const options = typeof data.payload.options === 'object' ? data.payload.options : {};
    ViewManager.renderAll({ force: true, ...options });
 }
 
-function handleQuestPreviewRefresh(data)
+function handleRefreshQuestPreview(data)
 {
    const questId = data.payload.questId;
    const options = typeof data.payload.options === 'object' ? data.payload.options : {};
@@ -312,41 +347,6 @@ function handleQuestPreviewRefresh(data)
 
          if (quest.isObservable) { questPreview.render(true, options); }
          else { questPreview.close(); }
-      }
-   }
-}
-
-async function handleQuestRewardDrop(data)
-{
-   if (game.user.isGM)
-   {
-      /**
-       * @type {FQLDropData}
-       */
-      const fqlData = data.payload.data._fqlData;
-
-      const notify = game.settings.get(constants.moduleName, settings.notifyRewardDrop);
-      if (notify)
-      {
-         ui.notifications.info(game.i18n.format('ForienQuestLog.QuestPreview.RewardDrop', {
-            userName: fqlData.userName,
-            itemName: fqlData.itemName,
-            actorName: data.payload.actor.name
-         }));
-      }
-
-      // The quest reward has already been removed by a GM user.
-      if (data.payload.handled) { return; }
-
-      // Set handled to true so no more GM level users act upon this event.
-      data.payload.handled = true;
-
-      const quest = QuestDB.getQuest(fqlData.questId);
-      if (quest)
-      {
-         quest.removeReward(fqlData.uuidv4);
-         await quest.save();
-         Socket.refreshQuestPreview({ questId: fqlData.questId });
       }
    }
 }

@@ -79,7 +79,7 @@ export default class Utils
       }
 
       // Players don't see Hidden tab, but assistant GM can, so emit anyway
-      Socket.refreshQuestLog();
+      Socket.refreshAll();
 
       return quest;
    }
