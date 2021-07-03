@@ -288,12 +288,18 @@ class QuestEntry
       const status = this.status;
       this.hydrate();
 
-      // Must hydrate any parent quest on change to make sure any data is captured like permission changes for
-      // subquests.
+      // Must hydrate any parent on a change.
       if (typeof this.quest.parent === 'string')
       {
          const parentEntry = s_GET_QUEST(this.quest.parent);
          if (parentEntry) { parentEntry.hydrate(); }
+      }
+
+      // Must hydrate any subquests on a change.
+      for (const subquest of this.quest.subquests)
+      {
+         const subquestEntry = s_GET_QUEST(subquest);
+         if (subquestEntry) { subquestEntry.hydrate(); }
       }
 
       if (status !== this.quest.status)
