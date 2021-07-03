@@ -2,16 +2,17 @@
   <div class="quest-giver-gc">
     {{#if (eq giver null)}}
     <span class="drop-info">{{localize 'ForienQuestLog.QuestPreview.DragDropActor'}}</span>
-    {{/if}}
-    {{#with data_giver}}
-      <div class="quest-giver-image" data-actor-uuid="{{uuid}}" style="background-image: url({{img}});" title="{{name}}"></div>
-      {{#if (and ../canEdit ../image img)}}
-        {{#if hasTokenImg}}
-          <span class="toggleImage" title="{{localize 'ForienQuestLog.Tooltips.ToggleImage'}}"><i class="fas fa-user-circle"></i></span>
+    {{else}}
+      {{#with data_giver}}
+        <div class="quest-giver-image" data-actor-uuid="{{uuid}}" style="background-image: url({{img}});" title="{{name}}"></div>
+        {{#if (and (or ../canEdit ../playerEdit) ../image img)}}
+          {{#if hasTokenImg}}
+            <span class="toggleImage" title="{{localize 'ForienQuestLog.Tooltips.ToggleImage'}}"><i class="fas fa-user-circle"></i></span>
+          {{/if}}
+        <span class="deleteQuestGiver" title="{{localize 'ForienQuestLog.Tooltips.DeleteQuestGiver'}}"><i class="fas fa-times"></i></span>
         {{/if}}
-      <span class="deleteQuestGiver" title="{{localize 'ForienQuestLog.Tooltips.DeleteQuestGiver'}}"><i class="fas fa-times"></i></span>
-      {{/if}}
-    {{/with}}
+      {{/with}}
+    {{/if}}
   </div>
 
   <div class="quest-setup">
@@ -21,7 +22,7 @@
           {{name}}
         </h1>
       </div>
-      {{#if canEdit}}
+      {{#if (or canEdit playerEdit)}}
       <div class="actions-single quest-name">
         <i class="fas fa-pen editable" data-target="name" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
       </div>
@@ -32,8 +33,15 @@
 
         <div class="quest-giver-name">
           {{#with data_giver}}
-            <h2 class="open-actor-sheet" data-actor-uuid="{{uuid}}" title="Quest Source">{{name}}</h2>
+            <div class="editable-container">
+              <h2 class="open-actor-sheet" data-actor-uuid="{{uuid}}" title="Quest Source">{{name}}</h2>
+            </div>
           {{/with}}
+          {{#if (and canEdit (eq giver 'abstract'))}}
+          <div class="actions-single">
+            <i class="fas fa-pen editable" data-target="giverName" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
+          </div>
+          {{/if}}
         </div>
         <div class="quest-status {{status}}">
           <p>
@@ -119,6 +127,7 @@
             {{#if (or ../canEdit ../playerEdit)}}
             <div class="actions tasks {{#unless ../canEdit}}is-player{{/unless}}">
               <i class="fas fa-sort" draggable="true"></i>
+              <span class="spacer"></span>
               <i class="editable fas fa-pen" data-target="task.name" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
               {{#if ../canEdit}}
                 {{#if hidden}}
@@ -159,6 +168,7 @@
           <div class="actions rewards {{#unless ../canEdit}}is-player{{/unless}}">
             {{#if ../canEdit}}
               <i class="sort fas fa-sort" draggable="true"></i>
+              <span class="spacer"></span>
               {{#if (eq type "abstract")}}
                 <i class="editable fas fa-pen" data-target="reward.name" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
               {{/if}}

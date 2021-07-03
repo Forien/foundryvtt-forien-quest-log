@@ -12,8 +12,6 @@ export default class QuestLog extends Application
    constructor(options = {})
    {
       super(options);
-
-      this._addQuestPreviewId = void 0;
    }
 
    /**
@@ -35,6 +33,9 @@ export default class QuestLog extends Application
          tabs: [{ navSelector: '.log-tabs', contentSelector: '.log-body', initial: 'progress' }]
       });
    }
+
+   async _onSubmit() {}
+   async _updateObject(event, formData) {}
 
    /**
     * Defines all event listeners like click, drag, drop etc.
@@ -63,25 +64,27 @@ export default class QuestLog extends Application
 
       html.on('click', '.new-quest-btn', async () =>
       {
-         if (this._addQuestPreviewId !== void 0)
+         if (ViewManager.addQuestPreviewId !== void 0)
          {
-            const qPreview = ViewManager.questPreview[this._addQuestPreviewId];
+            ui.notifications.warn(game.i18n.localize('ForienQuestLog.Notifications.FinishQuestAdded'));
+
+            const qPreview = ViewManager.questPreview[ViewManager.addQuestPreviewId];
             if (qPreview && qPreview.rendered) { qPreview.bringToTop(); }
             return;
          }
 
-         const quest = await Utils.createQuest({ notify: true });
+         const quest = await Utils.createQuest({ notify: true, swapTab: true });
          if (quest.isObservable)
          {
-            this._addQuestPreviewId = quest.id;
+            ViewManager.addQuestPreviewId = quest.id;
 
             const questSheet = quest.sheet;
             questSheet.render(true, { focus: true });
             Hooks.once('closeQuestPreview', (questPreview) =>
             {
-               if (this._addQuestPreviewId === questPreview.quest.id)
+               if (ViewManager.addQuestPreviewId === questPreview.quest.id)
                {
-                  this._addQuestPreviewId = void 0;
+                  ViewManager.addQuestPreviewId = void 0;
                }
             });
          }

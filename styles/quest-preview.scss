@@ -45,6 +45,7 @@
           display: flex;
           justify-content: center;
           align-items: center;
+          cursor: pointer;
           height: 100%;
           border: 2px dashed rgba(0,0,0,.5);
           border-radius: 5px;
@@ -136,6 +137,22 @@
           padding: 8px 16px;
         }
 
+        .quest-giver-name {
+          display: inline-flex;
+          justify-content: left;
+          flex-direction: row;
+        }
+
+        .quest-giver-name .editable-container {
+          flex: 0 0 auto;
+
+          input {
+            margin-bottom: 2px;
+            padding: 0;
+            height: 22px;
+          }
+        }
+
         .quest-giver-name h2 {
           display: inline-block;
           margin: 0;
@@ -146,6 +163,10 @@
           &:hover {
             color: $primary-accent-color;
           }
+        }
+
+        .quest-giver-name .action-single {
+          flex: 0 0 1px;
         }
 
         .quest-status {
@@ -279,10 +300,12 @@
 
           .editable-container {
             flex: 1;
-            padding: 4px 8px;
+            padding: 4px 4px;
 
             p {
               margin: 0;
+              max-width: 290px;
+              word-wrap: break-word;
             }
 
             input {
@@ -342,8 +365,10 @@
             cursor: pointer;
             transition: color .3s ease;
             margin: 0;
-            padding: 4px 8px;
+            padding: 4px 4px;
             flex: 1;
+            max-width: 310px;
+            word-wrap: break-word;
 
             &:hover {
               color: $primary-accent-color;
@@ -526,8 +551,24 @@
         margin-top: 16px;
         overflow: hidden;
 
+        header {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 0;
+          padding-top: 0;
+          margin-bottom: 4px;
+          border-bottom: 2px solid #782e22;
+        }
+
         h2 {
-          flex: 0 0 1px;
+          align-self: flex-end;
+          border: none;
+          margin: 0;
+          padding-bottom: 0;
+        }
+
+        button {
+          flex: 0 0 140px;
         }
 
         .subquests-box {
@@ -557,16 +598,12 @@
             flex: 1;
             border: none;
             margin: 0 4px;
+            align-self: center;
             font-size: 14px;
             line-height: 30px;
             cursor: pointer;
             transition: color .3s ease;
           }
-        }
-
-        footer {
-          flex: 0 0 1px;
-          margin: 8px 8px 0 8px;
         }
       }
     }

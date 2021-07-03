@@ -281,7 +281,7 @@ export default class Quest
       this.name = data.name || game.i18n.localize('ForienQuestLog.NewQuest');
       this.status = data.status || questTypes.inactive;
       this.giver = data.giver || null;
-      this.giverData = data.giverData || {};
+      this.giverData = data.giverData || null;
       this.description = data.description || '';
       this.gmnotes = data.gmnotes || '';
       this.image = data.image || 'actor';
@@ -412,6 +412,14 @@ export default class Quest
    {
       const index = this.tasks.findIndex((t) => t.uuidv4 === uuidv4);
       if (index >= 0) { this.tasks.splice(index, 1); }
+   }
+
+   resetGiver()
+   {
+      this.giver = null;
+      this.image = 'actor';
+      this.giverData = null;
+      this.giverName = 'actor';
    }
 
    /**

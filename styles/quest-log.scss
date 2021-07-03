@@ -69,13 +69,27 @@
     header {
       display: flex;
       justify-content: space-between;
+      margin-top: 0;
+      padding-top: 0;
       margin-bottom: 4px;
+      border-bottom: 2px solid #782e22;
+
+      h1 {
+        align-self: flex-end;
+        border: none;
+        margin: 0;
+        padding-bottom: 4px;
+      }
+
+      button {
+        flex: 0 0 120px;
+      }
     }
   }
 
   .quest-log .tab {
     flex-direction: column;
-    padding: 16px 0 0 0;
+    padding: 4px 0 0 0;
 
     &.active {
       display: flex;

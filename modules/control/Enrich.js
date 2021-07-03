@@ -185,7 +185,7 @@ export default class Enrich
 
       data.description = TextEditor.enrichHTML(data.description);
 
-      data.data_giver = typeof data.giverData === 'object' ? data.giverData : {};
+      data.data_giver = typeof data.giverData === 'object' ? data.giverData : null;
 
       data.questIconType = void 0;
 
