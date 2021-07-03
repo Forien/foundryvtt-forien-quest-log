@@ -1,7 +1,8 @@
-import QuestAPI   from './QuestAPI.js';
-import QuestDB    from './QuestDB.js';
-import Utils      from './Utils.js';
-import FQLDialog  from '../view/FQLDialog.js';
+import QuestAPI      from './QuestAPI.js';
+import QuestDB       from './QuestDB.js';
+import Utils         from './Utils.js';
+import ViewManager   from './ViewManager.js';
+import FQLDialog     from '../view/FQLDialog.js';
 
 import { constants, questTypes, questTypesI18n, settings }  from '../model/constants.js';
 
@@ -31,14 +32,12 @@ export default class Socket
    {
       if (typeof deleteData === 'object')
       {
-         const publicAPI = Utils.getFQLPublicAPI();
-
          const questId = deleteData.deleteId;
 
-         if (publicAPI.questPreview[questId] !== void 0)
+         if (ViewManager.questPreview[questId] !== void 0)
          {
             // Must always use `noSave` as the quest has already been deleted; no auto-save of QuestPreview is allowed.
-            await publicAPI.questPreview[questId].close({ noSave: true });
+            await ViewManager.questPreview[questId].close({ noSave: true });
          }
 
          game.socket.emit(s_EVENT_NAME, {
@@ -117,7 +116,7 @@ export default class Socket
 
    static refreshQuestLog(options = {})
    {
-      Utils.getFQLPublicAPI().renderAll({ force: true, ...options });
+      ViewManager.renderAll({ force: true, ...options });
 
       game.socket.emit(s_EVENT_NAME, {
          type: s_MESSAGE_TYPES.questLogRefresh,
@@ -140,23 +139,21 @@ export default class Socket
     */
    static refreshQuestPreview({ questId, updateLog = true, ...options })
    {
-      const fqlPublicAPI = Utils.getFQLPublicAPI();
-
       if (Array.isArray(questId))
       {
          for (const id of questId)
          {
-            if (fqlPublicAPI.questPreview[id] !== void 0)
+            if (ViewManager.questPreview[id] !== void 0)
             {
-               fqlPublicAPI.questPreview[id].render(true, options);
+               ViewManager.questPreview[id].render(true, options);
             }
          }
       }
       else
       {
-         if (fqlPublicAPI.questPreview[questId] !== void 0)
+         if (ViewManager.questPreview[questId] !== void 0)
          {
-            fqlPublicAPI.questPreview[questId].render(true, options);
+            ViewManager.questPreview[questId].render(true, options);
          }
       }
 
@@ -227,11 +224,10 @@ async function handleDeletedQuest(data)
 {
    FQLDialog.closeDialogs({ questId: data.payload.questId });
 
-   const fqlPublicAPI = Utils.getFQLPublicAPI();
-   if (fqlPublicAPI.questPreview[data.payload.questId] !== void 0)
+   if (ViewManager.questPreview[data.payload.questId] !== void 0)
    {
       // Must always use `noSave` as the quest has already been deleted; no auto-save of QuestPreview is allowed.
-      await fqlPublicAPI.questPreview[data.payload.questId].close({ noSave: true });
+      await ViewManager.questPreview[data.payload.questId].close({ noSave: true });
    }
 }
 
@@ -264,11 +260,10 @@ async function handleMoveQuest(data)
    // For non-GM users close QuestPreview when made hidden / inactive.
    if (!game.user.isGM && target === questTypes.inactive)
    {
-      const fqlPublicAPI = Utils.getFQLPublicAPI();
-      if (fqlPublicAPI.questPreview[data.payload.questId] !== void 0)
+      if (ViewManager.questPreview[data.payload.questId] !== void 0)
       {
          // Use `noSave` just for sanity in this case as this is a remote close.
-         await fqlPublicAPI.questPreview[data.payload.questId].close({ noSave: true });
+         await ViewManager.questPreview[data.payload.questId].close({ noSave: true });
       }
    }
 }
@@ -276,7 +271,7 @@ async function handleMoveQuest(data)
 function handleQuestLogRefresh(data)
 {
    const options = typeof data.payload.options === 'object' ? data.payload.options : {};
-   Utils.getFQLPublicAPI().renderAll({ force: true, ...options });
+   ViewManager.renderAll({ force: true, ...options });
 }
 
 function handleQuestPreviewRefresh(data)
@@ -284,13 +279,11 @@ function handleQuestPreviewRefresh(data)
    const questId = data.payload.questId;
    const options = typeof data.payload.options === 'object' ? data.payload.options : {};
 
-   const fqlPublicAPI = Utils.getFQLPublicAPI();
-
    if (Array.isArray(questId))
    {
       for (const id of questId)
       {
-         const questPreview = fqlPublicAPI.questPreview[id];
+         const questPreview = ViewManager.questPreview[id];
          if (questPreview !== void 0)
          {
             const quest = QuestDB.getQuest(id);
@@ -307,7 +300,7 @@ function handleQuestPreviewRefresh(data)
    }
    else
    {
-      const questPreview = fqlPublicAPI.questPreview[questId];
+      const questPreview = ViewManager.questPreview[questId];
       if (questPreview !== void 0)
       {
          const quest = QuestDB.getQuest(questId);

@@ -1,13 +1,14 @@
-import Socket                    from './Socket.js';
-import QuestDB                   from './QuestDB.js';
-import Utils                     from './Utils.js';
+import Socket        from './Socket.js';
+import QuestDB       from './QuestDB.js';
+import Utils         from './Utils.js';
+import ViewManager   from './ViewManager.js';
 
 import { constants, settings }   from '../model/constants.js';
 
 /**
  * Quest public Api available under `Quests.`
  */
-export default class QuestAPI
+class QuestAPI
 {
    /**
     * Creates a new quest and waits for the journal entry to update and QuestDB to pick up the new Quest which
@@ -49,7 +50,7 @@ export default class QuestAPI
     * @param {object}   options - Optional parameters.
     *
     * @param {string}   [options.status] - Quest status to return sorted.
-    *
+     *
     * @returns {null|SortedQuests|QuestEntry[]} The complete sorted quests or just a particular quest status.
     */
    static sorted(options)
@@ -72,7 +73,7 @@ export default class QuestAPI
 
       try
       {
-         const questPreview = Utils.getFQLPublicAPI().questPreview[questId];
+         const questPreview = ViewManager.questPreview[questId];
 
          // Optimization to render an existing open QuestPreview with the given quest ID instead of opening a new
          // app / view.
@@ -115,3 +116,7 @@ export default class QuestAPI
       }
    }
 }
+
+Object.freeze(QuestAPI);
+
+export default QuestAPI;

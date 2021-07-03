@@ -1,7 +1,7 @@
-import Enrich  from './Enrich.js';
-import QuestDB from "./QuestDB.js";
-import Utils   from './Utils.js';
-import Socket  from './Socket.js';
+import Enrich        from './Enrich.js';
+import QuestDB       from './QuestDB.js';
+import Socket        from './Socket.js';
+import ViewManager   from './ViewManager.js';
 
 import { constants, noteControls, settings } from '../model/constants.js';
 
@@ -10,14 +10,12 @@ import { constants, noteControls, settings } from '../model/constants.js';
  */
 export default function registerHooks()
 {
-   const fqlPublicAPI = Utils.getFQLPublicAPI();
-
    // Open quest log
    Hooks.on('ForienQuestLog.Open.QuestLog', () =>
    {
       if (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers))
       {
-         fqlPublicAPI.questLog.render(true, { focus: true });
+         ViewManager.questLog.render(true, { focus: true });
       }
    });
 
@@ -26,7 +24,7 @@ export default function registerHooks()
    {
       if (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers))
       {
-         fqlPublicAPI.questLogFloating.render(true, { focus: true });
+         ViewManager.questLogFloating.render(true, { focus: true });
       }
    });
 

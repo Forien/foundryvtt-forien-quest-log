@@ -1,7 +1,7 @@
 import RepositionableApplication from './RepositionableApplication.js';
 import QuestAPI                  from '../control/QuestAPI.js';
 import QuestDB                   from '../control/QuestDB.js';
-import Utils                     from '../control/Utils.js';
+import ViewManager               from '../control/ViewManager.js';
 
 import { constants, questTypes, settings }   from '../model/constants.js';
 
@@ -37,8 +37,7 @@ export default class QuestTracker extends RepositionableApplication
 
          this.render();
 
-         const fqlPublicAPI = Utils.getFQLPublicAPI();
-         if (fqlPublicAPI.questLogFloating.rendered) { fqlPublicAPI.questLogFloating.render(); }
+         if (ViewManager.questLogFloating.rendered) { ViewManager.questLogFloating.render(); }
       });
 
       html.on('click', '.quest-tracker-link', (event) =>

@@ -1,17 +1,15 @@
-import ModuleSettings            from './ModuleSettings.js';
-import registerHooks             from './control/registerHooks.js';
-import Socket                    from './control/Socket.js';
-import QuestAPI                  from './control/QuestAPI.js';
-import QuestDB                   from './control/QuestDB.js';
-import Utils                     from './control/Utils.js';
-import Quest                     from './model/Quest.js';
-import QuestFolder               from './model/QuestFolder.js';
-import QuestsCollection          from './model/QuestsCollection.js';
-import QuestLogFloating          from './view/QuestLogFloating.js';
-import QuestLog                  from './view/QuestLog.js';
-import QuestPreview              from './view/QuestPreview.js';
-import QuestTracker              from './view/QuestTracker.js';
-import DBMigration               from '../database/DBMigration.js';
+import ModuleSettings   from './ModuleSettings.js';
+import registerHooks    from './control/registerHooks.js';
+import Socket           from './control/Socket.js';
+import QuestAPI         from './control/QuestAPI.js';
+import QuestDB          from './control/QuestDB.js';
+import Utils            from './control/Utils.js';
+import ViewManager      from './control/ViewManager.js';
+import Quest            from './model/Quest.js';
+import QuestFolder      from './model/QuestFolder.js';
+import QuestsCollection from './model/QuestsCollection.js';
+import QuestPreview     from './view/QuestPreview.js';
+import DBMigration      from '../database/DBMigration.js';
 
 import { constants, settings }   from './model/constants.js';
 
@@ -34,47 +32,7 @@ Hooks.once('setup', () =>
     * @type {FQLPublicAPI}
     */
    moduleData.public = {
-      QuestAPI,
-      questLog: new QuestLog(),
-      questLogFloating: new QuestLogFloating(),
-      questPreview: {},
-      questTracker: new QuestTracker(),
-      closeAll: function({ questPreview = false, ...options } = {})
-      {
-         if (this.questLog.rendered) { this.questLog.close(options); }
-         if (this.questLogFloating.rendered) { this.questLogFloating.close(options); }
-         if (this.questTracker.rendered) { this.questTracker.close(options); }
-
-         if (questPreview)
-         {
-            for (const qp of Object.values(this.questPreview))
-            {
-               qp.close(options);
-            }
-         }
-      },
-      renderAll: function({ force = false, questPreview = false, ...options } = {})
-      {
-         if (this.questLog.rendered) { this.questLog.render(force, options); }
-         if (this.questLogFloating.rendered) { this.questLogFloating.render(force, options); }
-
-         if (Utils.isQuestTrackerVisible())
-         {
-            this.questTracker.render(force, options);
-         }
-         else
-         {
-            this.questTracker.close();
-         }
-
-         if (questPreview)
-         {
-            for (const qp of Object.values(this.questPreview))
-            {
-               if (qp.rendered) { qp.render(force, options); }
-            }
-         }
-      }
+      QuestAPI
    };
 
    Object.freeze(moduleData.public);
@@ -101,17 +59,10 @@ Hooks.once('ready', async () =>
    game.collections.set('Quest', QuestsCollection);
 
    await QuestDB.init();
-
    await QuestFolder.initializeJournals();
    registerHooks();
 
-   if (Utils.isQuestTrackerVisible())
-   {
-      if (game.modules.get(constants.moduleName)?.active)
-      {
-         Utils.getFQLPublicAPI().questTracker.render(true);
-      }
-   }
+   ViewManager.init();
 
    // Allow and process incoming socket data
    Socket.listen();
@@ -134,7 +85,7 @@ Hooks.on('renderJournalDirectory', (app, html) =>
 
       button.click(() =>
       {
-         Utils.getFQLPublicAPI().questLog.render(true);
+         ViewManager.questLog.render(true);
       });
    }
 

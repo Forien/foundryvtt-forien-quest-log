@@ -1,5 +1,5 @@
-import QuestDB from "./control/QuestDB.js";
-import Utils   from './control/Utils.js';
+import QuestDB       from './control/QuestDB.js';
+import ViewManager   from './control/ViewManager.js';
 
 import { constants, noteControls, settings } from './model/constants.js';
 
@@ -29,7 +29,7 @@ export default class ModuleSettings
             // Must enrich all quests again in QuestDB.
             QuestDB.enrichAll();
 
-            Utils.getFQLPublicAPI().renderAll({ force: true, questPreview: true });
+            ViewManager.renderAll({ force: true, questPreview: true });
          }
       });
 
@@ -42,8 +42,7 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            const fqlPublicAPI = Utils.getFQLPublicAPI();
-            if (fqlPublicAPI.questLog.rendered) { fqlPublicAPI.questLog.render(); }
+            if (ViewManager.questLog.rendered) { ViewManager.questLog.render(); }
          }
       });
 
@@ -59,7 +58,7 @@ export default class ModuleSettings
             // Must enrich all quests again in QuestDB.
             QuestDB.enrichAll();
 
-            Utils.getFQLPublicAPI().renderAll({ questPreview: true });
+            ViewManager.renderAll({ questPreview: true });
          }
       });
 
@@ -75,7 +74,7 @@ export default class ModuleSettings
             // Must enrich all quests again in QuestDB.
             QuestDB.enrichAll();
 
-            Utils.getFQLPublicAPI().renderAll({ questPreview: true });
+            ViewManager.renderAll({ questPreview: true });
          }
       });
 
@@ -91,7 +90,7 @@ export default class ModuleSettings
             // Must enrich all quests again in QuestDB.
             QuestDB.enrichAll();
 
-            Utils.getFQLPublicAPI().renderAll();
+            ViewManager.renderAll();
          }
       });
 
@@ -104,8 +103,7 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            const fqlPublicAPI = Utils.getFQLPublicAPI();
-            if (fqlPublicAPI.questLog.rendered) { fqlPublicAPI.questLog.render(); }
+            if (ViewManager.questLog.rendered) { ViewManager.questLog.render(); }
          }
       });
 
@@ -125,8 +123,7 @@ export default class ModuleSettings
             // Must enrich all quests again in QuestDB.
             QuestDB.enrichAll();
 
-            const fqlPublicAPI = Utils.getFQLPublicAPI();
-            if (fqlPublicAPI.questLog.rendered) { fqlPublicAPI.questLog.render(); }
+            if (ViewManager.questLog.rendered) { ViewManager.questLog.render(); }
          }
       });
 
@@ -147,7 +144,7 @@ export default class ModuleSettings
             // Must enrich all quests again in QuestDB.
             QuestDB.enrichAll();
 
-            Utils.getFQLPublicAPI().renderAll({ force: true });
+            ViewManager.renderAll({ force: true });
          }
       });
 
@@ -174,15 +171,13 @@ export default class ModuleSettings
          type: Boolean,
          onChange: (value) =>
          {
-            const fqlPublicAPI = Utils.getFQLPublicAPI();
-
-            if (Utils.isQuestTrackerVisible())
+            if (ViewManager.isQuestTrackerVisible())
             {
-               fqlPublicAPI.questTracker.render(true, { focus: true });
+               ViewManager.questTracker.render(true, { focus: true });
             }
             else
             {
-               fqlPublicAPI.questTracker.close();
+               ViewManager.questTracker.close();
             }
 
             if (!game.user.isGM)
@@ -190,7 +185,7 @@ export default class ModuleSettings
                // Hide all FQL windows from non GM user and remove the ui.controls for FQL.
                if (value)
                {
-                  fqlPublicAPI.closeAll({ questPreview: true });
+                  ViewManager.closeAll({ questPreview: true });
 
                   const notes = ui.controls.controls.find((c) => c.name === 'notes');
                   if (notes) { notes.tools = notes.tools.filter((c) => !c.name.startsWith(constants.moduleName)); }
@@ -242,13 +237,13 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            if (Utils.isQuestTrackerVisible())
+            if (ViewManager.isQuestTrackerVisible())
             {
-               Utils.getFQLPublicAPI().questTracker.render(true, { focus: true });
+               ViewManager.questTracker.render(true, { focus: true });
             }
             else
             {
-               Utils.getFQLPublicAPI()?.questTracker.close();
+               ViewManager.questTracker.close();
             }
          }
       });
@@ -262,9 +257,9 @@ export default class ModuleSettings
          type: Boolean,
          onChange: (value) =>
          {
-            if (Utils.getFQLPublicAPI()?.questTracker.rendered)
+            if (ViewManager.questTracker.rendered)
             {
-               Utils.getFQLPublicAPI().questTracker.element.toggleClass('background', value);
+               ViewManager.questTracker.element.toggleClass('background', value);
             }
          }
       });
@@ -282,9 +277,9 @@ export default class ModuleSettings
             {
                game.settings.set(constants.moduleName, settings.questTrackerPosition, s_QUEST_TRACKER_DEFAULT);
                game.settings.set(constants.moduleName, settings.resetQuestTracker, false);
-               if (Utils.getFQLPublicAPI()?.questTracker.rendered)
+               if (ViewManager.questTracker.rendered)
                {
-                  Utils.getFQLPublicAPI().questTracker.render();
+                  ViewManager.questTracker.render();
                }
             }
          }

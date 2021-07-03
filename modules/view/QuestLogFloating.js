@@ -1,6 +1,6 @@
-import QuestAPI   from '../control/QuestAPI.js';
-import QuestDB    from '../control/QuestDB.js';
-import Utils      from '../control/Utils.js';
+import QuestAPI      from '../control/QuestAPI.js';
+import QuestDB       from '../control/QuestDB.js';
+import ViewManager   from '../control/ViewManager.js';
 
 import { constants, questTypes, questTypesI18n, settings }  from '../model/constants.js';
 
@@ -53,8 +53,7 @@ export default class QuestLogFloating extends Application
 
          sessionStorage.setItem(`${constants.folderState}${questId}`, collapsed);
 
-         const fqlPublicAPI = Utils.getFQLPublicAPI();
-         if (fqlPublicAPI.questTracker.rendered) { fqlPublicAPI.questTracker.render(); }
+         if (ViewManager.questTracker.rendered) { ViewManager.questTracker.render(); }
       });
 
       html.on('click', '.questlog-floating .quest-open', (event) =>

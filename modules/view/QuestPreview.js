@@ -6,6 +6,7 @@ import QuestAPI               from '../control/QuestAPI.js';
 import QuestDB                from '../control/QuestDB.js';
 import Socket                 from '../control/Socket.js';
 import Utils                  from '../control/Utils.js';
+import ViewManager            from '../control/ViewManager.js';
 
 import { constants, settings }  from '../model/constants.js';
 
@@ -849,7 +850,7 @@ export default class QuestPreview extends FormApplication
     */
    async close({ noSave = false, ...options } = {})
    {
-      delete Utils.getFQLPublicAPI().questPreview[this.quest.id];
+      delete ViewManager.questPreview[this.quest.id];
 
       FQLDialog.closeDialogs({ questId: this.quest.id });
 
@@ -927,7 +928,7 @@ export default class QuestPreview extends FormApplication
     */
    async render(force = false, options = { focus: true })
    {
-      Utils.getFQLPublicAPI().questPreview[this.quest.id] = this;
+      ViewManager.questPreview[this.quest.id] = this;
 
       return super.render(force, options);
    }

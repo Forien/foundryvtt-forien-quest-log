@@ -1,4 +1,4 @@
-import Utils from '../control/Utils.js';
+import ViewManager from '../control/ViewManager.js';
 
 const constants = {
    moduleName: 'forien-quest-log',
@@ -66,7 +66,7 @@ const noteControls = [
       title: 'ForienQuestLog.QuestLogButton',
       icon: 'fas fa-scroll',
       visible: true,
-      onClick: () => Utils.getFQLPublicAPI().questLog.render(true, { focus: true }),
+      onClick: () => ViewManager.questLog.render(true, { focus: true }),
       button: true
    },
    {
@@ -74,7 +74,7 @@ const noteControls = [
       title: 'ForienQuestLog.FloatingQuestWindow',
       icon: 'fas fa-tasks',
       visible: true,
-      onClick: () => Utils.getFQLPublicAPI().questLogFloating.render(true, { focus: true }),
+      onClick: () => ViewManager.questLogFloating.render(true, { focus: true }),
       button: true
    }
 ];

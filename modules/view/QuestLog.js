@@ -1,8 +1,9 @@
-import FQLDialog  from './FQLDialog.js';
-import QuestAPI   from '../control/QuestAPI.js';
-import QuestDB    from '../control/QuestDB.js';
-import Socket     from '../control/Socket.js';
-import Utils      from '../control/Utils.js';
+import FQLDialog     from './FQLDialog.js';
+import QuestAPI      from '../control/QuestAPI.js';
+import QuestDB       from '../control/QuestDB.js';
+import Socket        from '../control/Socket.js';
+import Utils         from '../control/Utils.js';
+import ViewManager   from '../control/ViewManager.js';
 
 import { constants, questTypesI18n, settings } from '../model/constants.js';
 
@@ -64,7 +65,7 @@ export default class QuestLog extends Application
       {
          if (this._addQuestPreviewId !== void 0)
          {
-            const qPreview = Utils.getFQLPublicAPI().questPreview[this._addQuestPreviewId];
+            const qPreview = ViewManager.questPreview[this._addQuestPreviewId];
             if (qPreview && qPreview.rendered) { qPreview.bringToTop(); }
             return;
          }

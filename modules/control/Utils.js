@@ -97,18 +97,6 @@ export default class Utils
    }
 
    /**
-    * A convenience method to return the module data object for FQL.
-    *
-    * This is a scoped location where we can store any FQL data.
-    *
-    * @returns {FQLPublicAPI} The FQL module data object.
-    */
-   static getFQLPublicAPI()
-   {
-      return this.getModuleData().public;
-   }
-
-   /**
     * Parses a UUID and returns the component data parts.
     *
     * @param {string|object}  data - The UUID as a string or object with UUID key as a string.
