@@ -6,7 +6,7 @@ import ViewManager   from './ViewManager.js';
 import { constants, settings }   from '../model/constants.js';
 
 /**
- * Quest public Api available under `Quests.`
+ * Quest public API
  */
 class QuestAPI
 {
@@ -26,7 +26,10 @@ class QuestAPI
     */
    static async createQuest(options)
    {
-      return Utils.createQuest(options);
+      if (game.user.isGM) { return Utils.createQuest(options); }
+
+      return game.settings.get(constants.moduleName, settings.allowPlayersCreate) &&
+       !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers) ? Utils.createQuest(options) : null;
    }
 
    /**
@@ -38,12 +41,16 @@ class QuestAPI
     */
    static getQuest(questId)
    {
-      return QuestDB.getQuest(questId);
+      if (game.user.isGM) { return QuestDB.getQuest(questId); }
+
+      const quest = QuestDB.getQuest(questId);
+
+      return quest.isObservable && !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers) ? quest : null;
    }
 
    static getAllEntries()
    {
-      return QuestDB.getAllEntries();
+      return game.user.isGM ? QuestDB.getAllEntries() : null;
    }
 
    /**
@@ -55,7 +62,7 @@ class QuestAPI
     */
    static sorted(options)
    {
-      return QuestDB.sorted(options);
+      return game.user.isGM ? QuestDB.sorted(options) : null;
    }
 
    /**
