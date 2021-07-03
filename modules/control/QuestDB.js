@@ -123,16 +123,6 @@ export default class QuestDB
       }
    }
 
-   // static enrich(questId)
-   // {
-   //    const questEntry =
-   //
-   //    for (const questEntry of s_QUESTS.flatten())
-   //    {
-   //       questEntry.enrich = Enrich.quest(questEntry.quest);
-   //    }
-   // }
-
    static enrichAll()
    {
       for (const questEntry of s_QUESTS.flatten())
@@ -140,7 +130,6 @@ export default class QuestDB
          questEntry.enrich = Enrich.quest(questEntry.quest);
       }
    }
-
 
    /**
     * Provides a quicker method to get the count of active quests.
