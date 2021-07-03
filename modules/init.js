@@ -14,7 +14,7 @@ import QuestTracker              from './view/QuestTracker.js';
 import DBMigration               from '../database/DBMigration.js';
 
 import { constants, settings }   from './model/constants.js';
-CONFIG.debug.hooks = true;
+
 Hooks.once('init', () =>
 {
    // Set the sheet to render quests.

@@ -16,10 +16,14 @@ const s_QUESTS = new FastMap([
 
 const s_QUEST_INDEX = new FastMap();
 
-const s_SORT_ALPHA = (a, b) => a.enrich.name.localeCompare(b.enrich.name);
-const s_SORT_DATE_CREATE = (a, b) => a.quest.date.create - b.quest.date.create;  // eslint-disable-line no-unused-vars
-const s_SORT_DATE_START = (a, b) => a.quest.date.start - b.quest.date.start;     // eslint-disable-line no-unused-vars
-const s_SORT_DATE_END = (a, b) => b.quest.date.end - a.quest.date.end;
+const s_SORT_FUNCTIONS = {
+   ALPHA: (a, b) => a.enrich.name.localeCompare(b.enrich.name),
+   DATE_CREATE: (a, b) => a.quest.date.create - b.quest.date.create,
+   DATE_START: (a, b) => a.quest.date.start - b.quest.date.start,
+   DATE_END: (a, b) => b.quest.date.end - a.quest.date.end
+};
+
+Object.freeze(s_SORT_FUNCTIONS);
 
 const s_DELETE_QUEST = (questId) =>
 {
@@ -85,6 +89,8 @@ export default class QuestDB
       Hooks.on('deleteJournalEntry', this.deleteJournalEntry);
       Hooks.on('updateJournalEntry', this.updateJournalEntry);
    }
+
+   static get Sort() { return s_SORT_FUNCTIONS; }
 
    static createJournalEntry(entry, options, id)
    {
@@ -156,21 +162,32 @@ export default class QuestDB
     *
     * @param {string}   [options.status] - Quest status to return sorted.
     *
+    * @param {Function} [options.sortActive] - The sort function for active quests.
+    *
+    * @param {Function} [options.sortAvailable] - The sort function for available quests.
+    *
+    * @param {Function} [options.sortCompleted] - The sort function for completed quests.
+    *
+    * @param {Function} [options.sortFailed] - The sort function for failed quests.
+    *
+    * @param {Function} [options.sortHidden] - The sort function for hidden quests.
+    *
     * @returns {null|SortedQuests|QuestEntry[]} The complete sorted quests or just a particular quest status.
     */
-   static sorted({ status = void 0 } = {})
+   static sorted({ status = void 0, sortActive = QuestDB.Sort.ALPHA, sortAvailable = QuestDB.Sort.ALPHA,
+    sortCompleted = QuestDB.Sort.DATE_END, sortFailed = QuestDB.Sort.DATE_END, sortHidden = QuestDB.Sort.ALPHA } = {})
    {
       if (typeof status === 'string')
       {
          switch (status)
          {
-            case questTypes.active: return s_QUESTS.get(questTypes.active).sorted(s_SORT_ALPHA);
-            case questTypes.available: return s_QUESTS.get(questTypes.available).sorted(s_SORT_ALPHA);
-            case questTypes.completed: return s_QUESTS.get(questTypes.completed).sorted(s_SORT_DATE_END);
-            case questTypes.failed: return s_QUESTS.get(questTypes.failed).sorted(s_SORT_DATE_END);
+            case questTypes.active: return s_QUESTS.get(questTypes.active).sorted(sortActive);
+            case questTypes.available: return s_QUESTS.get(questTypes.available).sorted(sortAvailable);
+            case questTypes.completed: return s_QUESTS.get(questTypes.completed).sorted(sortCompleted);
+            case questTypes.failed: return s_QUESTS.get(questTypes.failed).sorted(sortFailed);
             case questTypes.hidden:
                return Utils.isTrustedPlayer() ? s_QUESTS.get(questTypes.hidden).filter((e) => e.isOwner).sorted(
-                s_SORT_ALPHA) : s_QUESTS.get(questTypes.hidden).sorted(s_SORT_ALPHA);
+                sortHidden) : s_QUESTS.get(questTypes.hidden).sorted(sortHidden);
             default:
                console.error(`Forien Quest Log - QuestDB - sorted - unknown status: ${status}`);
                return null;
@@ -178,12 +195,12 @@ export default class QuestDB
       }
 
       return {
-         active: s_QUESTS.get(questTypes.active).sorted(s_SORT_ALPHA),
-         available: s_QUESTS.get(questTypes.available).sorted(s_SORT_ALPHA),
-         completed: s_QUESTS.get(questTypes.completed).sorted(s_SORT_DATE_END),
-         failed: s_QUESTS.get(questTypes.failed).sorted(s_SORT_DATE_END),
+         active: s_QUESTS.get(questTypes.active).sorted(sortActive),
+         available: s_QUESTS.get(questTypes.available).sorted(sortAvailable),
+         completed: s_QUESTS.get(questTypes.completed).sorted(sortCompleted),
+         failed: s_QUESTS.get(questTypes.failed).sorted(sortFailed),
          hidden: Utils.isTrustedPlayer() ? s_QUESTS.get(questTypes.hidden).filter((e) => e.isOwner).sorted(
-          s_SORT_ALPHA) : s_QUESTS.get(questTypes.hidden).sorted(s_SORT_ALPHA)
+          sortHidden) : s_QUESTS.get(questTypes.hidden).sorted(sortHidden)
       };
    }
 
