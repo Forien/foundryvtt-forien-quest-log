@@ -34,9 +34,6 @@ export default class QuestLog extends Application
       });
    }
 
-   async _onSubmit() {}
-   async _updateObject(event, formData) {}
-
    /**
     * Defines all event listeners like click, drag, drop etc.
     *
@@ -88,15 +85,6 @@ export default class QuestLog extends Application
                }
             });
          }
-
-         // if (this._questForm && this._questForm.rendered)
-         // {
-         //    this._questForm.bringToTop();
-         // }
-         // else
-         // {
-         //    this._questForm = new QuestForm().render(true);
-         // }
       });
 
       html.on('click', '.actions.quest-status i', async (event) =>

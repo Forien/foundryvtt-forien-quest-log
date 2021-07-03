@@ -1,6 +1,5 @@
 import FQLDialog              from './FQLDialog.js';
 import FQLPermissionControl   from './FQLPermissionControl.js';
-import QuestForm              from './QuestForm.js';
 import Enrich                 from '../control/Enrich.js';
 import QuestAPI               from '../control/QuestAPI.js';
 import QuestDB                from '../control/QuestDB.js';
@@ -885,18 +884,6 @@ export default class QuestPreview extends FormApplication
                   }
                });
             }
-
-            // const quest = await Utils.createQuest({ parentId: this.quest.id });
-            // if (quest.isObservable) { quest.sheet.render(true, { focus: true }); }
-
-            // if (this._questForm && this._questForm.rendered)
-            // {
-            //    this._questForm.bringToTop();
-            // }
-            // else
-            // {
-            //    this._questForm = new QuestForm({ parentId: this.quest.id }).render(true);
-            // }
          });
       }
    }

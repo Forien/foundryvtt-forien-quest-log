@@ -31,19 +31,6 @@
       "AddNewTask": "Add Objective"
     },
 
-    "QuestForm": {
-      "Title": "Add new Quest",
-      "QuestGiver": "Quest Source",
-      "QuestGiverPlaceholder": "Entity / Actor UUID:",
-      "QuestGiverNamePlaceholder": "Please provide a name for custom Quest Source:",
-      "QuestName": "Quest Name:",
-      "DragDropActor": "Drag & Drop Actor, Item or Journal Entry or left click to set a custom source.",
-      "QuestDescription": "Quest Description:",
-      "QuestGMNotes": "GM Notes:",
-      "Submit": "Add to Quest Log",
-      "SubquestOf": "Subquest of {name}"
-    },
-
     "QuestLog": {
       "Title": "Quest Log",
       "SubTitle": "Subquest of {0}",
