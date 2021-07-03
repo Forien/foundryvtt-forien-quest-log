@@ -59,13 +59,6 @@ const s_SET_QUEST = (entry) =>
    s_QUESTS.get(entry.status).set(entry.id, entry);
 };
 
-const s_EVENT_CREATE = 'fql:questdb:quest:create';
-const s_EVENT_CREATE_ID = 'fql:questdb:quest:create:';
-const s_EVENT_DELETE = 'fql:questdb:quest:delete';
-const s_EVENT_DELETE_ID = 'fql:questdb:quest:delete:';
-const s_EVENT_UPDATE = 'fql:questdb:quest:update';
-const s_EVENT_UPDATE_ID = 'fql:questdb:quest:update:';
-
 export default class QuestDB
 {
    static async init()
@@ -93,7 +86,7 @@ export default class QuestDB
       Hooks.on('updateJournalEntry', this.updateJournalEntry);
    }
 
-   static createJournalEntry(entry)
+   static createJournalEntry(entry, options, id)
    {
       const content = entry.getFlag(constants.moduleName, constants.flagDB);
 
@@ -103,20 +96,16 @@ export default class QuestDB
          const questEntry = new QuestEntry(new Quest(content, entry));
          s_SET_QUEST(questEntry.hydrate());
 
-         const eventbus = Utils.getFQLPublicAPI().eventbus;
-         eventbus.triggerDefer(`${s_EVENT_CREATE}`, questEntry);
-         eventbus.triggerDefer(`${s_EVENT_CREATE_ID}${entry.id}`, questEntry);
-console.log(`!!!!!!!!!!!!!!!!!!! QuestDB - createJournalEntry - entry.id: ${entry.id}`);
+         Hooks.callAll('createQuestEntry', questEntry, options, id);
       }
    }
 
-   static deleteJournalEntry(entry)
+   static deleteJournalEntry(entry, options, id)
    {
-      if (s_DELETE_QUEST(entry.id))
+      const questEntry = s_GET_QUEST(entry.id);
+      if (questEntry && s_DELETE_QUEST(entry.id))
       {
-         const eventbus = Utils.getFQLPublicAPI().eventbus;
-         eventbus.triggerDefer(`${s_EVENT_DELETE}`, entry.id);
-         eventbus.triggerDefer(`${s_EVENT_DELETE_ID}${entry.id}`, entry.id);
+         Hooks.callAll('deleteQuestEntry', questEntry, options, id);
       }
    }
 
@@ -198,7 +187,7 @@ console.log(`!!!!!!!!!!!!!!!!!!! QuestDB - createJournalEntry - entry.id: ${entr
       };
    }
 
-   static updateJournalEntry(entry)
+   static updateJournalEntry(entry, flags, options, id)
    {
       const content = entry.getFlag(constants.moduleName, constants.flagDB);
 
@@ -217,9 +206,12 @@ console.log(`!!!!!!!!!!!!!!!!!!! QuestDB - createJournalEntry - entry.id: ${entr
             s_SET_QUEST(questEntry.hydrate());
          }
 
-         const eventbus = Utils.getFQLPublicAPI().eventbus;
-         eventbus.triggerDefer(`${s_EVENT_UPDATE}`, questEntry);
-         eventbus.triggerDefer(`${s_EVENT_UPDATE_ID}${entry.id}`, questEntry);
+         Hooks.callAll('updateQuestEntry', questEntry, flags, options, id);
+
+         // setTimeout(() =>
+         // {
+         //    Hooks.call('updateQuestEntry', questEntry, flags, options, id);
+         // }, 0);
       }
    }
 }
