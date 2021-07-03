@@ -2,16 +2,25 @@ import Enrich        from './Enrich.js';
 import Utils         from './Utils.js';
 import QuestFolder   from '../model/QuestFolder.js';
 import Quest         from '../model/Quest.js';
+import collect       from '../../external/collect.js';
 
 import { constants, questTypes } from '../model/constants.js';
 
-const s_QUESTS = new Map([
-   [questTypes.active, new Map()],
-   [questTypes.available, new Map()],
-   [questTypes.completed, new Map()],
-   [questTypes.failed, new Map()],
-   [questTypes.inactive, new Map()]
-]);
+const s_QUESTS = {
+   active: new Map(),
+   available: new Map(),
+   completed: new Map(),
+   failed: new Map(),
+   inactive: new Map()
+};
+
+const s_QUESTS_COLLECT = {
+   active: [],
+   available: [],
+   completed: [],
+   failed: [],
+   inactive: []
+};
 
 const s_QUEST_INDEX = new Map();
 
@@ -24,11 +33,23 @@ const s_SORT_FUNCTIONS = {
 
 Object.freeze(s_SORT_FUNCTIONS);
 
-const s_DELETE_QUEST = (questId) =>
+const s_DELETE_QUEST = (questId, generate = true) =>
 {
    const currentStatus = s_QUEST_INDEX.get(questId);
-   if (questTypes[currentStatus]) { return s_QUESTS.get(currentStatus).delete(questId); }
-   return false;
+
+   let result = false;
+
+   if (s_QUESTS[currentStatus])
+   {
+      result = s_QUESTS[currentStatus].delete(questId);
+   }
+
+   if (result && generate)
+   {
+      s_QUESTS_COLLECT[currentStatus] = collect(Array.from(s_QUESTS[currentStatus].values()));
+   }
+
+   return result;
 };
 
 /**
@@ -39,33 +60,43 @@ const s_DELETE_QUEST = (questId) =>
 const s_GET_QUEST = (questId) =>
 {
    const currentStatus = s_QUEST_INDEX.get(questId);
-   return currentStatus && questTypes[currentStatus] ? s_QUESTS.get(currentStatus).get(questId) : null;
+   return currentStatus && s_QUESTS[currentStatus] ? s_QUESTS[currentStatus].get(questId) : null;
 };
 
 /**
  * @param {QuestEntry}  entry - QuestEntry to set.
+ *
+ * @param {boolean}     [generate=true] - Regenerate s_QUEST_COLLECT
  */
-const s_SET_QUEST = (entry) =>
+const s_SET_QUEST = (entry, generate = true) =>
 {
    const currentStatus = s_QUEST_INDEX.get(entry.id);
-   if (questTypes[currentStatus] && currentStatus !== entry.status)
+   if (s_QUESTS[currentStatus] && currentStatus !== entry.status)
    {
-      s_QUESTS.get(currentStatus).delete(entry.id);
+      if (s_QUESTS[currentStatus].delete(entry.id) && generate)
+      {
+         s_QUESTS_COLLECT[currentStatus] = collect(Array.from(s_QUESTS[currentStatus].values()));
+      }
    }
 
-   if (!questTypes[entry.status])
+   if (!s_QUESTS[entry.status])
    {
       console.error(`ForienQuestLog - QuestDB - set quest error - unknown status: ${entry.status}`);
       return;
    }
 
    s_QUEST_INDEX.set(entry.id, entry.status);
-   s_QUESTS.get(entry.status).set(entry.id, entry);
+   s_QUESTS[entry.status].set(entry.id, entry);
+
+   if (generate)
+   {
+      s_QUESTS_COLLECT[entry.status] = collect(Array.from(s_QUESTS[entry.status].values()));
+   }
 };
 
 function *s_MAP_ITER()
 {
-   for (const map of s_QUESTS.values())
+   for (const map of Object.values(s_QUESTS))
    {
       for (const value of map.values())
       {
@@ -77,11 +108,11 @@ function *s_MAP_ITER()
 const s_MAP_FLATTEN = () =>
 {
    return [
-    ...s_QUESTS.get(questTypes.active).values(),
-    ...s_QUESTS.get(questTypes.available).values(),
-    ...s_QUESTS.get(questTypes.completed).values(),
-    ...s_QUESTS.get(questTypes.failed).values(),
-    ...s_QUESTS.get(questTypes.inactive).values()
+    ...s_QUESTS[questTypes.active].values(),
+    ...s_QUESTS[questTypes.available].values(),
+    ...s_QUESTS[questTypes.completed].values(),
+    ...s_QUESTS[questTypes.failed].values(),
+    ...s_QUESTS[questTypes.inactive].values()
    ];
 };
 
@@ -101,11 +132,16 @@ export default class QuestDB
             const quest = new Quest(content, entry);
 
             // Must set a QuestEntry w/ an undefined enrich as all quest data must be loaded before enrichment.
-            s_SET_QUEST(new QuestEntry(quest, void 0));
+            s_SET_QUEST(new QuestEntry(quest, void 0), false);
          }
       }
 
       for (const questEntry of s_MAP_ITER()) { questEntry.hydrate(); }
+
+      for (const key of Object.keys(s_QUESTS))
+      {
+         s_QUESTS_COLLECT[key] = collect(Array.from(s_QUESTS[key].values()));
+      }
 
       Hooks.on('createJournalEntry', this.createJournalEntry);
       Hooks.on('deleteJournalEntry', this.deleteJournalEntry);
@@ -152,7 +188,7 @@ export default class QuestDB
     */
    static getActiveCount()
    {
-      return s_QUESTS.get(questTypes.active).size;
+      return s_QUESTS[questTypes.active].size;
    }
 
    static getAllEnrich()
@@ -178,7 +214,12 @@ export default class QuestDB
 
    static getName(name)
    {
-      return s_MAP_FLATTEN().find((entry) => entry.quest.name === name);
+      for (const entry of s_MAP_ITER())
+      {
+         if (entry.quest.name === name) { return entry.quest; }
+      }
+
+      return void 0;
    }
 
    static getQuest(questId)
@@ -211,14 +252,13 @@ export default class QuestDB
       {
          switch (status)
          {
-            case questTypes.active: return Array.from(s_QUESTS.get(questTypes.active).values()).sort(sortActive);
-            case questTypes.available: return Array.from(s_QUESTS.get(questTypes.available).values()).sort(sortAvailable);
-            case questTypes.completed: return Array.from(s_QUESTS.get(questTypes.completed).values()).sort(sortCompleted);
-            case questTypes.failed: return Array.from(s_QUESTS.get(questTypes.failed).values()).sort(sortFailed);
+            case questTypes.active: return s_QUESTS_COLLECT[questTypes.active].sort(sortActive);
+            case questTypes.available: return s_QUESTS_COLLECT[questTypes.available].sort(sortAvailable);
+            case questTypes.completed: return s_QUESTS_COLLECT[questTypes.completed].sort(sortCompleted);
+            case questTypes.failed: return s_QUESTS_COLLECT[questTypes.failed].sort(sortFailed);
             case questTypes.inactive:
-               return Utils.isTrustedPlayer() ? Array.from(s_QUESTS.get(questTypes.inactive).values()).filter(
-                (e) => e.isOwner).sort(sortHidden) : Array.from(s_QUESTS.get(questTypes.inactive).values()).sort(
-                 sortHidden);
+               return Utils.isTrustedPlayer() ? s_QUESTS_COLLECT[questTypes.inactive].filter(
+                (e) => e.isOwner).sort(sortHidden) : s_QUESTS_COLLECT[questTypes.inactive].sort(sortHidden);
             default:
                console.error(`Forien Quest Log - QuestDB - sorted - unknown status: ${status}`);
                return null;
@@ -226,12 +266,12 @@ export default class QuestDB
       }
 
       return {
-         active: Array.from(s_QUESTS.get(questTypes.active).values()).sort(sortActive),
-         available: Array.from(s_QUESTS.get(questTypes.available).values()).sort(sortAvailable),
-         completed: Array.from(s_QUESTS.get(questTypes.completed).values()).sort(sortCompleted),
-         failed: Array.from(s_QUESTS.get(questTypes.failed).values()).sort(sortFailed),
-         inactive: Utils.isTrustedPlayer() ? Array.from(s_QUESTS.get(questTypes.inactive).values()).filter(
-          (e) => e.isOwner).sort(sortHidden) : Array.from(s_QUESTS.get(questTypes.inactive).values()).sort(sortHidden)
+         active: s_QUESTS_COLLECT[questTypes.active].sort(sortActive),
+         available: s_QUESTS_COLLECT[questTypes.available].sort(sortAvailable),
+         completed: s_QUESTS_COLLECT[questTypes.completed].sort(sortCompleted),
+         failed: s_QUESTS_COLLECT[questTypes.failed].sort(sortFailed),
+         inactive: Utils.isTrustedPlayer() ? s_QUESTS_COLLECT[questTypes.inactive].filter((e) => e.isOwner).sort(
+          sortHidden) : s_QUESTS_COLLECT[questTypes.inactive].sort(sortHidden)
       };
    }
 
