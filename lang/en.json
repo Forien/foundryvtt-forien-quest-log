@@ -52,6 +52,8 @@
     "QuestPreview": {
       "Title": "Quest Details - {name}",
       "SubTitle": "Subquest of {0}",
+      "Description": "Description:",
+      "GMNotes": "GM Notes:",
       "Objectives": "Objectives:",
       "Rewards": "Rewards:",
       "Objective": "Objective",
