@@ -224,6 +224,12 @@
 .window-app.forien-quest-preview .actions i:hover {
   color: #ff6400;
 }
+#forien-quest-log .actions i:hover.is-player,
+#forien-quest-log-form .actions i:hover.is-player,
+.window-app.forien-quest-preview .actions i:hover.is-player {
+  color: black;
+  cursor: default;
+}
 #forien-quest-log .actions i:first-child,
 #forien-quest-log-form .actions i:first-child,
 .window-app.forien-quest-preview .actions i:first-child {
@@ -858,6 +864,18 @@
   max-width: 290px;
   word-wrap: break-word;
 }
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .editable-container p.can-edit,
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .editable-container p.can-edit {
+  max-width: 290px;
+}
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .editable-container p.player-edit,
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .editable-container p.player-edit {
+  max-width: 330px;
+}
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .editable-container p.player,
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .editable-container p.player {
+  max-width: 400px;
+}
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .editable-container input,
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .editable-container input {
   padding: 0 4px;
@@ -910,8 +928,16 @@
   margin: 0;
   padding: 4px 4px;
   flex: 1;
-  max-width: 310px;
   word-wrap: break-word;
+}
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .quest-name-link.can-edit {
+  max-width: 310px;
+}
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .quest-name-link.player-edit {
+  max-width: 350px;
+}
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .quest-name-link.player {
+  max-width: 410px;
 }
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .quest-name-link:hover {
   color: #ff6400;
@@ -1241,6 +1267,8 @@
   margin-bottom: 16px;
 }
 #quest-tracker .quest {
+  overflow-x: hidden;
+  overflow-y: hidden;
   display: flex;
   flex-direction: column;
 }
@@ -1261,7 +1289,6 @@
   width: fit-content;
   max-width: 92%;
   height: auto;
-  word-wrap: break-word;
 }
 #quest-tracker .quest .quest-tracker-span {
   flex: 1;
