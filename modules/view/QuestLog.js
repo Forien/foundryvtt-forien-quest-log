@@ -63,7 +63,7 @@ export default class QuestLog extends Application
       {
          if (ViewManager.addQuestPreviewId !== void 0)
          {
-            ui.notifications.warn(game.i18n.localize('ForienQuestLog.Notifications.FinishQuestAdded'));
+            ViewManager.notifications.warn(game.i18n.localize('ForienQuestLog.Notifications.FinishQuestAdded'));
 
             const qPreview = ViewManager.questPreview[ViewManager.addQuestPreviewId];
             if (qPreview && qPreview.rendered) { qPreview.bringToTop(); }

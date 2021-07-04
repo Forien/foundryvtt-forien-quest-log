@@ -12,6 +12,31 @@ let s_QUESTTRACKER;
 
 let s_ADD_QUEST_PREVIEW_ID;
 
+let s_LAST_NOTIFY_MS = Date.now();
+
+const s_NOTIFICATIONS = {
+   warn: (message, delay = 4000) =>
+   {
+      if (Date.now() - s_LAST_NOTIFY_MS > delay)
+      {
+         ui.notifications.warn(message);
+         s_LAST_NOTIFY_MS = Date.now();
+      }
+   },
+   info: (message, delay = 4000) =>
+   {
+      if (Date.now() - s_LAST_NOTIFY_MS > delay)
+      {
+         ui.notifications.info(message);
+         s_LAST_NOTIFY_MS = Date.now();
+      }
+   },
+   error: (message) =>
+   {
+      ui.notifications.error(message);
+   }
+};
+
 export default class ViewManager
 {
    static init()
@@ -28,6 +53,7 @@ export default class ViewManager
 
    static get addQuestPreviewId() { return s_ADD_QUEST_PREVIEW_ID; }
    static set addQuestPreviewId(questId) { s_ADD_QUEST_PREVIEW_ID = questId; }
+   static get notifications() { return s_NOTIFICATIONS; }
    static get questLog() { return s_QUESTLOG; }
    static get questLogFloating() { return s_QUESTLOG_FLOATING; }
    static get questPreview() { return s_QUESTPREVIEW; }

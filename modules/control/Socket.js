@@ -93,7 +93,7 @@ export default class Socket
          Socket.refreshAll();
 
          const dirname = game.i18n.localize(questTypesI18n[target]);
-         ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
+         ViewManager.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
           { name: quest.name, target: dirname }));
       }
       else
@@ -254,7 +254,7 @@ async function handleMoveQuest(data)
       Socket.refreshAll();
 
       const dirname = game.i18n.localize(questTypesI18n[target]);
-      ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
+      ViewManager.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
        { name: quest.name, target: dirname }));
    }
 
@@ -281,7 +281,7 @@ async function handleQuestRewardDrop(data)
       const notify = game.settings.get(constants.moduleName, settings.notifyRewardDrop);
       if (notify)
       {
-         ui.notifications.info(game.i18n.format('ForienQuestLog.QuestPreview.RewardDrop', {
+         ViewManager.notifications.info(game.i18n.format('ForienQuestLog.QuestPreview.RewardDrop', {
             userName: fqlData.userName,
             itemName: fqlData.itemName,
             actorName: data.payload.actor.name
