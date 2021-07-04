@@ -61,29 +61,10 @@ export default class QuestLog extends Application
 
       html.on('click', '.new-quest-btn', async () =>
       {
-         if (ViewManager.addQuestPreviewId !== void 0)
+         if (ViewManager.verifyQuestCanAdd())
          {
-            ViewManager.notifications.warn(game.i18n.localize('ForienQuestLog.Notifications.FinishQuestAdded'));
-
-            const qPreview = ViewManager.questPreview[ViewManager.addQuestPreviewId];
-            if (qPreview && qPreview.rendered) { qPreview.bringToTop(); }
-            return;
-         }
-
-         const quest = await Utils.createQuest({ notify: true, swapTab: true });
-         if (quest.isObservable)
-         {
-            ViewManager.addQuestPreviewId = quest.id;
-
-            const questSheet = quest.sheet;
-            questSheet.render(true, { focus: true });
-            Hooks.once('closeQuestPreview', (questPreview) =>
-            {
-               if (ViewManager.addQuestPreviewId === questPreview.quest.id)
-               {
-                  ViewManager.addQuestPreviewId = void 0;
-               }
-            });
+            const quest = await QuestDB.createQuest();
+            ViewManager.questAdded({ quest });
          }
       });
 

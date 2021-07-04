@@ -860,29 +860,10 @@ export default class QuestPreview extends FormApplication
                this._permControl = void 0;
             }
 
-            if (ViewManager.addQuestPreviewId !== void 0)
+            if (ViewManager.verifyQuestCanAdd())
             {
-               ViewManager.notifications.warn(game.i18n.localize('ForienQuestLog.Notifications.FinishQuestAdded'));
-
-               const qPreview = ViewManager.questPreview[ViewManager.addQuestPreviewId];
-               if (qPreview && qPreview.rendered) { qPreview.bringToTop(); }
-               return;
-            }
-
-            const quest = await Utils.createQuest({ parentId: this.quest.id, notify: true, swapTab: true });
-            if (quest.isObservable)
-            {
-               ViewManager.addQuestPreviewId = quest.id;
-
-               const questSheet = quest.sheet;
-               questSheet.render(true, { focus: true });
-               Hooks.once('closeQuestPreview', (questPreview) =>
-               {
-                  if (ViewManager.addQuestPreviewId === questPreview.quest.id)
-                  {
-                     ViewManager.addQuestPreviewId = void 0;
-                  }
-               });
+               const quest = await QuestDB.createQuest({ parentId: this.quest.id });
+               ViewManager.questAdded({ quest });
             }
          });
       }

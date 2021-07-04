@@ -1,6 +1,5 @@
 import Socket        from './Socket.js';
 import QuestDB       from './QuestDB.js';
-import Utils         from './Utils.js';
 import ViewManager   from './ViewManager.js';
 
 import { constants, settings }   from '../model/constants.js';
@@ -26,10 +25,10 @@ class QuestAPI
     */
    static async createQuest(options)
    {
-      if (game.user.isGM) { return Utils.createQuest(options); }
+      if (game.user.isGM) { return QuestDB.createQuest(options); }
 
       return game.settings.get(constants.moduleName, settings.allowPlayersCreate) &&
-       !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers) ? Utils.createQuest(options) : null;
+       !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers) ? QuestDB.createQuest(options) : null;
    }
 
    /**
