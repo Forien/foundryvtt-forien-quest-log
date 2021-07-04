@@ -1,10 +1,11 @@
 import Enrich        from './Enrich.js';
+import Socket        from './Socket.js';
 import Utils         from './Utils.js';
 import QuestFolder   from '../model/QuestFolder.js';
 import Quest         from '../model/Quest.js';
 import collect       from '../../external/collect.js';
 
-import { constants, questTypes } from '../model/constants.js';
+import { constants, questTypes, settings } from '../model/constants.js';
 
 const s_QUESTS = {
    active: new Map(),
@@ -162,6 +163,73 @@ export default class QuestDB
 
          Hooks.callAll('createQuestEntry', questEntry, options, id);
       }
+   }
+
+   /**
+    * Creates a new quest and waits for the journal entry to update and QuestDB to pick up the new Quest which
+    * is returned.
+    *
+    * @param {object}   options - Optional parameters.
+    *
+    * @param {object}   data - Quest data to assign to new quest.
+    *
+    * @param {string}   parentId - Any associated parent ID; if set then this is a subquest.
+    *
+    * @returns {Promise<Quest>} The newly created quest.
+    */
+   static async createQuest({ data = {}, parentId = void 0 } = {})
+   {
+      // Get the default permission setting and attempt to set it if found in ENTITY_PERMISSIONS.
+      const defaultPerm = game.settings.get(constants.moduleName, settings.defaultPermission);
+
+      const permission = {
+         default: typeof CONST.ENTITY_PERMISSIONS[defaultPerm] === 'number' ? CONST.ENTITY_PERMISSIONS[defaultPerm] :
+          CONST.ENTITY_PERMISSIONS.OBSERVER
+      };
+
+      const trustedPlayerEdit = Utils.isTrustedPlayer();
+
+      // Used for a player created quest setting and the quest as 'available' for normal players or 'hidden' for
+      // trusted players.
+      if (!game.user.isGM)
+      {
+         data.status = trustedPlayerEdit ? questTypes.inactive : questTypes.available;
+         permission[game.user.id] = CONST.ENTITY_PERMISSIONS.OWNER;
+      }
+
+      const parentQuest = QuestDB.getQuest(parentId);
+      if (parentQuest)
+      {
+         data.parent = parentId;
+      }
+
+      // Creating a new quest will add any missing data / schema.
+      const tempQuest = new Quest(data);
+
+      const entry = await JournalEntry.create({
+         name: tempQuest.name,
+         folder: QuestFolder.get().id,
+         permission,
+         flags: {
+            [constants.moduleName]: {
+               json: tempQuest.toJSON()
+            }
+         }
+      });
+
+      if (parentQuest)
+      {
+         parentQuest.addSubquest(entry.id);
+         await parentQuest.save();
+         Socket.refreshQuestPreview({ questId: parentQuest.id });
+      }
+
+      const quest = QuestDB.getQuest(entry.id);
+
+      // Players don't see Hidden tab, but assistant GM can, so emit anyway
+      Socket.refreshAll();
+
+      return quest;
    }
 
    static deleteJournalEntry(entry, options, id)

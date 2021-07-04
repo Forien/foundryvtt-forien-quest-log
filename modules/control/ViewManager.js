@@ -3,7 +3,7 @@ import QuestLog         from '../view/QuestLog.js';
 import QuestLogFloating from '../view/QuestLogFloating.js';
 import QuestTracker     from '../view/QuestTracker.js';
 
-import { constants, settings } from '../model/constants.js';
+import { constants, questTypesI18n, settings } from '../model/constants.js';
 
 let s_QUESTLOG;
 let s_QUESTLOG_FLOATING;
@@ -49,6 +49,14 @@ export default class ViewManager
       {
          ViewManager.questTracker.render(true);
       }
+
+      Hooks.on('closeQuestPreview', (questPreview) =>
+      {
+         if (ViewManager.addQuestPreviewId === questPreview.quest.id)
+         {
+            ViewManager.addQuestPreviewId = void 0;
+         }
+      });
    }
 
    static get addQuestPreviewId() { return s_ADD_QUEST_PREVIEW_ID; }
@@ -109,5 +117,52 @@ export default class ViewManager
             if (qp.rendered) { qp.render(force, options); }
          }
       }
+   }
+
+   static questAdded({ quest, notify = true, swapTab = true } = {})
+   {
+      if (notify)
+      {
+         ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestAdded', {
+            name: quest.name,
+            status: game.i18n.localize(questTypesI18n[quest.status])
+         }));
+      }
+
+      if (swapTab)
+      {
+         const questLog = ViewManager.questLog;
+         if (questLog._tabs[0] && quest.status !== questLog?._tabs[0]?.active && null !== questLog?._tabs[0]?._nav)
+         {
+            questLog._tabs[0].activate(quest.status);
+         }
+      }
+
+      if (quest.isObservable)
+      {
+         ViewManager.addQuestPreviewId = quest.id;
+
+         const questSheet = quest.sheet;
+         questSheet.render(true, { focus: true });
+      }
+   }
+
+   static verifyQuestCanAdd()
+   {
+      if (ViewManager.addQuestPreviewId !== void 0)
+      {
+         const qPreview = ViewManager.questPreview[ViewManager.addQuestPreviewId];
+         if (qPreview && qPreview.rendered)
+         {
+            qPreview.bringToTop();
+            ViewManager.notifications.warn(game.i18n.localize('ForienQuestLog.Notifications.FinishQuestAdded'));
+            return false;
+         }
+         else
+         {
+            ViewManager.addQuestPreviewId = void 0;
+         }
+      }
+      return true;
    }
 }
