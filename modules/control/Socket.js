@@ -93,7 +93,8 @@ export default class Socket
          Socket.refreshAll();
 
          const dirname = game.i18n.localize(questTypesI18n[target]);
-         ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved', { target: dirname }), {});
+         ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
+          { name: quest.name, target: dirname }));
       }
       else
       {
@@ -254,7 +255,7 @@ async function handleMoveQuest(data)
 
       const dirname = game.i18n.localize(questTypesI18n[target]);
       ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
-       { target: dirname }), {});
+       { name: quest.name, target: dirname }));
    }
 
    // For non-GM users close QuestPreview when made hidden / inactive.
