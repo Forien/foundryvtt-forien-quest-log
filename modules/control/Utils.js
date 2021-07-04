@@ -1,5 +1,6 @@
 import QuestDB       from './QuestDB.js';
 import Socket        from './Socket.js';
+import ViewManager   from './ViewManager.js';
 import Quest         from '../model/Quest.js';
 import QuestFolder   from '../model/QuestFolder.js';
 
@@ -21,7 +22,7 @@ export default class Utils
     *
     * @returns {Promise<Quest>} The newly created quest.
     */
-   static async createQuest({ data = {}, parentId = void 0, notify = false } = {})
+   static async createQuest({ data = {}, parentId = void 0, notify = false, swapTab = false } = {})
    {
       // Get the default permission setting and attempt to set it if found in ENTITY_PERMISSIONS.
       const defaultPerm = game.settings.get(constants.moduleName, settings.defaultPermission);
@@ -37,7 +38,7 @@ export default class Utils
       // trusted players.
       if (!game.user.isGM)
       {
-         data.status = trustedPlayerEdit ? questTypes.hidden : questTypes.available;
+         data.status = trustedPlayerEdit ? questTypes.inactive : questTypes.available;
          permission[game.user.id] = CONST.ENTITY_PERMISSIONS.OWNER;
       }
 
@@ -78,8 +79,17 @@ export default class Utils
          }));
       }
 
+      if (swapTab)
+      {
+         const questLog = ViewManager.questLog;
+         if (questLog.rendered && questLog._tabs[0] && questLog._tabs[0].active !== quest.status)
+         {
+            questLog._tabs[0].activate(quest.status);
+         }
+      }
+
       // Players don't see Hidden tab, but assistant GM can, so emit anyway
-      Socket.refreshQuestLog();
+      Socket.refreshAll();
 
       return quest;
    }
@@ -94,18 +104,6 @@ export default class Utils
    static getModuleData()
    {
       return game.modules.get(constants.moduleName);
-   }
-
-   /**
-    * A convenience method to return the module data object for FQL.
-    *
-    * This is a scoped location where we can store any FQL data.
-    *
-    * @returns {FQLPublicAPI} The FQL module data object.
-    */
-   static getFQLPublicAPI()
-   {
-      return this.getModuleData().public;
    }
 
    /**

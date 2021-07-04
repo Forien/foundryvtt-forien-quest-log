@@ -1,7 +1,7 @@
 import QuestDB from '../control/QuestDB.js';
 import Utils   from '../control/Utils.js';
 
-import { constants, settings, questTypes } from './constants.js';
+import { constants, questTypes } from './constants.js';
 
 // Stores any Foundry sheet class to be used to render quest. Primarily used in content linking.
 let SheetClass;
@@ -71,7 +71,7 @@ export default class Quest
     */
    get isInactive()
    {
-      return questTypes.hidden === this.status;
+      return questTypes.inactive === this.status;
    }
 
    get isObservable()
@@ -279,9 +279,9 @@ export default class Quest
    initData(data)
    {
       this.name = data.name || game.i18n.localize('ForienQuestLog.NewQuest');
-      this.status = data.status || questTypes.hidden;
+      this.status = data.status || questTypes.inactive;
       this.giver = data.giver || null;
-      this.giverData = data.giverData || {};
+      this.giverData = data.giverData || null;
       this.description = data.description || '';
       this.gmnotes = data.gmnotes || '';
       this.image = data.image || 'actor';
@@ -298,7 +298,7 @@ export default class Quest
       this.rewards = Array.isArray(data.rewards) ? data.rewards.map((reward) => new Reward(reward)) : [];
 
       // Sanity check. If status is incorrect set it to hidden.
-      if (!questTypes[this.status]) { this.status = questTypes.hidden; }
+      if (!questTypes[this.status]) { this.status = questTypes.inactive; }
 
       if (typeof data.date === 'object')
       {
@@ -327,7 +327,7 @@ export default class Quest
                this.date.end = Date.now();
                break;
 
-            case questTypes.hidden:
+            case questTypes.inactive:
             case questTypes.available:
             default:
                this.date.start = null;
@@ -363,7 +363,7 @@ export default class Quest
             this.date.end = Date.now();
             break;
 
-         case questTypes.hidden:
+         case questTypes.inactive:
          case questTypes.available:
          default:
             this.date.start = null;
@@ -412,6 +412,14 @@ export default class Quest
    {
       const index = this.tasks.findIndex((t) => t.uuidv4 === uuidv4);
       if (index >= 0) { this.tasks.splice(index, 1); }
+   }
+
+   resetGiver()
+   {
+      this.giver = null;
+      this.image = 'actor';
+      this.giverData = null;
+      this.giverName = 'actor';
    }
 
    /**

@@ -1,4 +1,4 @@
-import Utils from '../control/Utils.js';
+import ViewManager from '../control/ViewManager.js';
 
 const constants = {
    moduleName: 'forien-quest-log',
@@ -14,10 +14,10 @@ const constants = {
  */
 const questTypes = {
    active: 'active',
+   available: 'available',
    completed: 'completed',
    failed: 'failed',
-   hidden: 'hidden',
-   available: 'available'
+   inactive: 'inactive'
 };
 
 /**
@@ -26,11 +26,11 @@ const questTypes = {
  * @returns {{hidden: string, available: string, active: string, completed: string, failed: string}}
  */
 const questTypesI18n = {
-   active: 'ForienQuestLog.QuestTypes.InProgress',
+   active: 'ForienQuestLog.QuestTypes.Active',
+   available: 'ForienQuestLog.QuestTypes.Available',
    completed: 'ForienQuestLog.QuestTypes.Completed',
    failed: 'ForienQuestLog.QuestTypes.Failed',
-   hidden: 'ForienQuestLog.QuestTypes.Hidden',
-   available: 'ForienQuestLog.QuestLog.Tabs.Available'
+   inactive: 'ForienQuestLog.QuestTypes.InActive'
 };
 
 /**
@@ -66,7 +66,7 @@ const noteControls = [
       title: 'ForienQuestLog.QuestLogButton',
       icon: 'fas fa-scroll',
       visible: true,
-      onClick: () => Utils.getFQLPublicAPI().questLog.render(true, { focus: true }),
+      onClick: () => ViewManager.questLog.render(true, { focus: true }),
       button: true
    },
    {
@@ -74,7 +74,7 @@ const noteControls = [
       title: 'ForienQuestLog.FloatingQuestWindow',
       icon: 'fas fa-tasks',
       visible: true,
-      onClick: () => Utils.getFQLPublicAPI().questLogFloating.render(true, { focus: true }),
+      onClick: () => ViewManager.questLogFloating.render(true, { focus: true }),
       button: true
    }
 ];

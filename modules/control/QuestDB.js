@@ -2,30 +2,54 @@ import Enrich        from './Enrich.js';
 import Utils         from './Utils.js';
 import QuestFolder   from '../model/QuestFolder.js';
 import Quest         from '../model/Quest.js';
-import FastMap       from '../../external/FastMap.js';
+import collect       from '../../external/collect.js';
 
 import { constants, questTypes } from '../model/constants.js';
 
-const s_QUESTS = new FastMap([
-   [questTypes.active, new FastMap()],
-   [questTypes.available, new FastMap()],
-   [questTypes.completed, new FastMap()],
-   [questTypes.failed, new FastMap()],
-   [questTypes.hidden, new FastMap()]
-]);
+const s_QUESTS = {
+   active: new Map(),
+   available: new Map(),
+   completed: new Map(),
+   failed: new Map(),
+   inactive: new Map()
+};
 
-const s_QUEST_INDEX = new FastMap();
+const s_QUESTS_COLLECT = {
+   active: [],
+   available: [],
+   completed: [],
+   failed: [],
+   inactive: []
+};
 
-const s_SORT_ALPHA = (a, b) => a.enrich.name.localeCompare(b.enrich.name);
-const s_SORT_DATE_CREATE = (a, b) => a.quest.date.create - b.quest.date.create;  // eslint-disable-line no-unused-vars
-const s_SORT_DATE_START = (a, b) => a.quest.date.start - b.quest.date.start;     // eslint-disable-line no-unused-vars
-const s_SORT_DATE_END = (a, b) => b.quest.date.end - a.quest.date.end;
+const s_QUEST_INDEX = new Map();
 
-const s_DELETE_QUEST = (questId) =>
+const s_SORT_FUNCTIONS = {
+   ALPHA: (a, b) => a.enrich.name.localeCompare(b.enrich.name),
+   DATE_CREATE: (a, b) => a.quest.date.create - b.quest.date.create,
+   DATE_START: (a, b) => a.quest.date.start - b.quest.date.start,
+   DATE_END: (a, b) => b.quest.date.end - a.quest.date.end
+};
+
+Object.freeze(s_SORT_FUNCTIONS);
+
+const s_DELETE_QUEST = (questId, generate = true) =>
 {
    const currentStatus = s_QUEST_INDEX.get(questId);
-   if (questTypes[currentStatus]) { return s_QUESTS.get(currentStatus).delete(questId); }
-   return false;
+
+   let result = false;
+
+   if (s_QUESTS[currentStatus])
+   {
+      result = s_QUESTS[currentStatus].delete(questId);
+   }
+
+   if (result && generate)
+   {
+      s_QUESTS_COLLECT[currentStatus] = collect(Array.from(s_QUESTS[currentStatus].values()));
+   }
+
+   return result;
 };
 
 /**
@@ -36,35 +60,61 @@ const s_DELETE_QUEST = (questId) =>
 const s_GET_QUEST = (questId) =>
 {
    const currentStatus = s_QUEST_INDEX.get(questId);
-   return currentStatus && questTypes[currentStatus] ? s_QUESTS.get(currentStatus).get(questId) : null;
+   return currentStatus && s_QUESTS[currentStatus] ? s_QUESTS[currentStatus].get(questId) : null;
 };
 
 /**
  * @param {QuestEntry}  entry - QuestEntry to set.
+ *
+ * @param {boolean}     [generate=true] - Regenerate s_QUEST_COLLECT
  */
-const s_SET_QUEST = (entry) =>
+const s_SET_QUEST = (entry, generate = true) =>
 {
    const currentStatus = s_QUEST_INDEX.get(entry.id);
-   if (questTypes[currentStatus] && currentStatus !== entry.status)
+   if (s_QUESTS[currentStatus] && currentStatus !== entry.status)
    {
-      s_QUESTS.get(currentStatus).delete(entry.id);
+      if (s_QUESTS[currentStatus].delete(entry.id) && generate)
+      {
+         s_QUESTS_COLLECT[currentStatus] = collect(Array.from(s_QUESTS[currentStatus].values()));
+      }
    }
 
-   if (!questTypes[entry.status])
+   if (!s_QUESTS[entry.status])
    {
       console.error(`ForienQuestLog - QuestDB - set quest error - unknown status: ${entry.status}`);
+      return;
    }
 
    s_QUEST_INDEX.set(entry.id, entry.status);
-   s_QUESTS.get(entry.status).set(entry.id, entry);
+   s_QUESTS[entry.status].set(entry.id, entry);
+
+   if (generate)
+   {
+      s_QUESTS_COLLECT[entry.status] = collect(Array.from(s_QUESTS[entry.status].values()));
+   }
 };
 
-const s_EVENT_CREATE = 'fql:questdb:quest:create';
-const s_EVENT_CREATE_ID = 'fql:questdb:quest:create:';
-const s_EVENT_DELETE = 'fql:questdb:quest:delete';
-const s_EVENT_DELETE_ID = 'fql:questdb:quest:delete:';
-const s_EVENT_UPDATE = 'fql:questdb:quest:update';
-const s_EVENT_UPDATE_ID = 'fql:questdb:quest:update:';
+function *s_MAP_ITER()
+{
+   for (const map of Object.values(s_QUESTS))
+   {
+      for (const value of map.values())
+      {
+         yield value;
+      }
+   }
+}
+
+const s_MAP_FLATTEN = () =>
+{
+   return [
+    ...s_QUESTS[questTypes.active].values(),
+    ...s_QUESTS[questTypes.available].values(),
+    ...s_QUESTS[questTypes.completed].values(),
+    ...s_QUESTS[questTypes.failed].values(),
+    ...s_QUESTS[questTypes.inactive].values()
+   ];
+};
 
 export default class QuestDB
 {
@@ -82,18 +132,25 @@ export default class QuestDB
             const quest = new Quest(content, entry);
 
             // Must set a QuestEntry w/ an undefined enrich as all quest data must be loaded before enrichment.
-            s_SET_QUEST(new QuestEntry(quest, void 0));
+            s_SET_QUEST(new QuestEntry(quest, void 0), false);
          }
       }
 
-      for (const questEntry of s_QUESTS.flatten()) { questEntry.hydrate(); }
+      for (const questEntry of s_MAP_ITER()) { questEntry.hydrate(); }
+
+      for (const key of Object.keys(s_QUESTS))
+      {
+         s_QUESTS_COLLECT[key] = collect(Array.from(s_QUESTS[key].values()));
+      }
 
       Hooks.on('createJournalEntry', this.createJournalEntry);
       Hooks.on('deleteJournalEntry', this.deleteJournalEntry);
       Hooks.on('updateJournalEntry', this.updateJournalEntry);
    }
 
-   static createJournalEntry(entry)
+   static get Sort() { return s_SORT_FUNCTIONS; }
+
+   static createJournalEntry(entry, options, id)
    {
       const content = entry.getFlag(constants.moduleName, constants.flagDB);
 
@@ -103,20 +160,24 @@ export default class QuestDB
          const questEntry = new QuestEntry(new Quest(content, entry));
          s_SET_QUEST(questEntry.hydrate());
 
-         const eventbus = Utils.getFQLPublicAPI().eventbus;
-         eventbus.triggerDefer(`${s_EVENT_CREATE}`, questEntry);
-         eventbus.triggerDefer(`${s_EVENT_CREATE_ID}${entry.id}`, questEntry);
-console.log(`!!!!!!!!!!!!!!!!!!! QuestDB - createJournalEntry - entry.id: ${entry.id}`);
+         Hooks.callAll('createQuestEntry', questEntry, options, id);
       }
    }
 
-   static deleteJournalEntry(entry)
+   static deleteJournalEntry(entry, options, id)
    {
-      if (s_DELETE_QUEST(entry.id))
+      const questEntry = s_GET_QUEST(entry.id);
+      if (questEntry && s_DELETE_QUEST(entry.id))
       {
-         const eventbus = Utils.getFQLPublicAPI().eventbus;
-         eventbus.triggerDefer(`${s_EVENT_DELETE}`, entry.id);
-         eventbus.triggerDefer(`${s_EVENT_DELETE_ID}${entry.id}`, entry.id);
+         Hooks.callAll('deleteQuestEntry', questEntry, options, id);
+      }
+   }
+
+   static enrichAll()
+   {
+      for (const questEntry of s_MAP_ITER())
+      {
+         questEntry.enrich = Enrich.quest(questEntry.quest);
       }
    }
 
@@ -127,22 +188,22 @@ console.log(`!!!!!!!!!!!!!!!!!!! QuestDB - createJournalEntry - entry.id: ${entr
     */
    static getActiveCount()
    {
-      return s_QUESTS.get(questTypes.active).length;
+      return s_QUESTS[questTypes.active].size;
    }
 
    static getAllEnrich()
    {
-      return s_QUESTS.flatten().map((entry) => entry.enrich);
+      return s_MAP_FLATTEN().map((entry) => entry.enrich);
    }
 
    static getAllEntries()
    {
-      return s_QUESTS.flatten();
+      return s_MAP_FLATTEN();
    }
 
    static getAllQuests()
    {
-      return s_QUESTS.flatten().map((entry) => entry.quest);
+      return s_MAP_FLATTEN().map((entry) => entry.quest);
    }
 
    static getEnrich(questId)
@@ -153,7 +214,12 @@ console.log(`!!!!!!!!!!!!!!!!!!! QuestDB - createJournalEntry - entry.id: ${entr
 
    static getName(name)
    {
-      return s_QUESTS.flatten().find((entry) => entry.quest.name === name);
+      for (const entry of s_MAP_ITER())
+      {
+         if (entry.quest.name === name) { return entry.quest; }
+      }
+
+      return void 0;
    }
 
    static getQuest(questId)
@@ -167,21 +233,32 @@ console.log(`!!!!!!!!!!!!!!!!!!! QuestDB - createJournalEntry - entry.id: ${entr
     *
     * @param {string}   [options.status] - Quest status to return sorted.
     *
+    * @param {Function} [options.sortActive] - The sort function for active quests.
+    *
+    * @param {Function} [options.sortAvailable] - The sort function for available quests.
+    *
+    * @param {Function} [options.sortCompleted] - The sort function for completed quests.
+    *
+    * @param {Function} [options.sortFailed] - The sort function for failed quests.
+    *
+    * @param {Function} [options.sortHidden] - The sort function for hidden quests.
+    *
     * @returns {null|SortedQuests|QuestEntry[]} The complete sorted quests or just a particular quest status.
     */
-   static sorted({ status = void 0 } = {})
+   static sorted({ status = void 0, sortActive = QuestDB.Sort.ALPHA, sortAvailable = QuestDB.Sort.ALPHA,
+    sortCompleted = QuestDB.Sort.DATE_END, sortFailed = QuestDB.Sort.DATE_END, sortHidden = QuestDB.Sort.ALPHA } = {})
    {
       if (typeof status === 'string')
       {
          switch (status)
          {
-            case questTypes.active: return s_QUESTS.get(questTypes.active).sorted(s_SORT_ALPHA);
-            case questTypes.available: return s_QUESTS.get(questTypes.available).sorted(s_SORT_ALPHA);
-            case questTypes.completed: return s_QUESTS.get(questTypes.completed).sorted(s_SORT_DATE_END);
-            case questTypes.failed: return s_QUESTS.get(questTypes.failed).sorted(s_SORT_DATE_END);
-            case questTypes.hidden:
-               return Utils.isTrustedPlayer() ? s_QUESTS.get(questTypes.hidden).filter((e) => e.isOwner).sorted(
-                s_SORT_ALPHA) : s_QUESTS.get(questTypes.hidden).sorted(s_SORT_ALPHA);
+            case questTypes.active: return s_QUESTS_COLLECT[questTypes.active].sort(sortActive);
+            case questTypes.available: return s_QUESTS_COLLECT[questTypes.available].sort(sortAvailable);
+            case questTypes.completed: return s_QUESTS_COLLECT[questTypes.completed].sort(sortCompleted);
+            case questTypes.failed: return s_QUESTS_COLLECT[questTypes.failed].sort(sortFailed);
+            case questTypes.inactive:
+               return Utils.isTrustedPlayer() ? s_QUESTS_COLLECT[questTypes.inactive].filter(
+                (e) => e.isOwner).sort(sortHidden) : s_QUESTS_COLLECT[questTypes.inactive].sort(sortHidden);
             default:
                console.error(`Forien Quest Log - QuestDB - sorted - unknown status: ${status}`);
                return null;
@@ -189,16 +266,16 @@ console.log(`!!!!!!!!!!!!!!!!!!! QuestDB - createJournalEntry - entry.id: ${entr
       }
 
       return {
-         active: s_QUESTS.get(questTypes.active).sorted(s_SORT_ALPHA),
-         available: s_QUESTS.get(questTypes.available).sorted(s_SORT_ALPHA),
-         completed: s_QUESTS.get(questTypes.completed).sorted(s_SORT_DATE_END),
-         failed: s_QUESTS.get(questTypes.failed).sorted(s_SORT_DATE_END),
-         hidden: Utils.isTrustedPlayer() ? s_QUESTS.get(questTypes.hidden).filter((e) => e.isOwner).sorted(
-          s_SORT_ALPHA) : s_QUESTS.get(questTypes.hidden).sorted(s_SORT_ALPHA)
+         active: s_QUESTS_COLLECT[questTypes.active].sort(sortActive),
+         available: s_QUESTS_COLLECT[questTypes.available].sort(sortAvailable),
+         completed: s_QUESTS_COLLECT[questTypes.completed].sort(sortCompleted),
+         failed: s_QUESTS_COLLECT[questTypes.failed].sort(sortFailed),
+         inactive: Utils.isTrustedPlayer() ? s_QUESTS_COLLECT[questTypes.inactive].filter((e) => e.isOwner).sort(
+          sortHidden) : s_QUESTS_COLLECT[questTypes.inactive].sort(sortHidden)
       };
    }
 
-   static updateJournalEntry(entry)
+   static updateJournalEntry(entry, flags, options, id)
    {
       const content = entry.getFlag(constants.moduleName, constants.flagDB);
 
@@ -217,9 +294,7 @@ console.log(`!!!!!!!!!!!!!!!!!!! QuestDB - createJournalEntry - entry.id: ${entr
             s_SET_QUEST(questEntry.hydrate());
          }
 
-         const eventbus = Utils.getFQLPublicAPI().eventbus;
-         eventbus.triggerDefer(`${s_EVENT_UPDATE}`, questEntry);
-         eventbus.triggerDefer(`${s_EVENT_UPDATE_ID}${entry.id}`, questEntry);
+         Hooks.callAll('updateQuestEntry', questEntry, flags, options, id);
       }
    }
 }
@@ -268,16 +343,23 @@ class QuestEntry
       const status = this.status;
       this.hydrate();
 
+      // Must hydrate any parent on a change.
+      if (typeof this.quest.parent === 'string')
+      {
+         const parentEntry = s_GET_QUEST(this.quest.parent);
+         if (parentEntry) { parentEntry.hydrate(); }
+      }
+
+      // Must hydrate any subquests on a change.
+      for (const subquest of this.quest.subquests)
+      {
+         const subquestEntry = s_GET_QUEST(subquest);
+         if (subquestEntry) { subquestEntry.hydrate(); }
+      }
+
       if (status !== this.quest.status)
       {
          s_SET_QUEST(this);
-
-         // Must hydrate any parent quest on status change
-         if (this.quest.parent)
-         {
-            const parentEntry = s_GET_QUEST(this.quest.parent);
-            if (parentEntry) { parentEntry.hydrate(); }
-         }
       }
    }
 }

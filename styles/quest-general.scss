@@ -2,8 +2,14 @@
 #forien-quest-log-form,
 .window-app.forien-quest-preview {
 
+  // Some systems such as Blades In the Dark require this parameter.
+  .window-header {
+    margin: 0;
+  }
+
 	.window-content {
     padding: 0;
+    margin: 0;
     height: 100%;
     overflow-x: unset;
     overflow-y: unset;
@@ -109,11 +115,11 @@
 
   i {
     &.is-personal {
-      padding: 0 4px;
+      padding-left: 4px;
     }
 
     &.is-hidden {
-      padding: 0 4px;
+      padding-left: 4px;
     }
   }
 
@@ -152,9 +158,16 @@
       visibility: hidden;
     }
 
+    span.spacer {
+      flex: 0 0 4px;
+    }
+
     i {
+      flex: 0 0 18px;
       font-size: 16px;
-      margin-left: 4px;
+      padding: 0;
+      text-align: center;
+      border: none;
       cursor: pointer;
       color: rgba(0,0,0,.75);
       transition: color .3s ease;
@@ -163,8 +176,6 @@
       // In this case add span.justify-center to the right hand of the action div to center the content.
       &.fa-sort {
         flex: 0 0 18px;
-        padding-left: 4px;
-        margin-right: auto;
         cursor: move;
         width: 14px;
         border-right: 1px solid rgba(0, 0, 0, 0.15);
@@ -191,6 +202,11 @@
 
       &:hover {
         color: $primary-accent-color;
+      }
+
+      &:hover.is-player {
+        color: black;
+        cursor: default;
       }
 
       &:first-child {

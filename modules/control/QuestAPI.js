@@ -1,13 +1,14 @@
-import Socket                    from './Socket.js';
-import QuestDB                   from './QuestDB.js';
-import Utils                     from './Utils.js';
+import Socket        from './Socket.js';
+import QuestDB       from './QuestDB.js';
+import Utils         from './Utils.js';
+import ViewManager   from './ViewManager.js';
 
 import { constants, settings }   from '../model/constants.js';
 
 /**
- * Quest public Api available under `Quests.`
+ * Quest public API
  */
-export default class QuestAPI
+class QuestAPI
 {
    /**
     * Creates a new quest and waits for the journal entry to update and QuestDB to pick up the new Quest which
@@ -25,7 +26,10 @@ export default class QuestAPI
     */
    static async createQuest(options)
    {
-      return Utils.createQuest(options);
+      if (game.user.isGM) { return Utils.createQuest(options); }
+
+      return game.settings.get(constants.moduleName, settings.allowPlayersCreate) &&
+       !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers) ? Utils.createQuest(options) : null;
    }
 
    /**
@@ -37,24 +41,28 @@ export default class QuestAPI
     */
    static getQuest(questId)
    {
-      return QuestDB.getQuest(questId);
+      if (game.user.isGM) { return QuestDB.getQuest(questId); }
+
+      const quest = QuestDB.getQuest(questId);
+
+      return quest.isObservable && !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers) ? quest : null;
    }
 
    static getAllEntries()
    {
-      return QuestDB.getAllEntries();
+      return game.user.isGM ? QuestDB.getAllEntries() : null;
    }
 
    /**
     * @param {object}   options - Optional parameters.
     *
     * @param {string}   [options.status] - Quest status to return sorted.
-    *
+     *
     * @returns {null|SortedQuests|QuestEntry[]} The complete sorted quests or just a particular quest status.
     */
    static sorted(options)
    {
-      return QuestDB.sorted(options);
+      return game.user.isGM ? QuestDB.sorted(options) : null;
    }
 
    /**
@@ -72,7 +80,7 @@ export default class QuestAPI
 
       try
       {
-         const questPreview = Utils.getFQLPublicAPI().questPreview[questId];
+         const questPreview = ViewManager.questPreview[questId];
 
          // Optimization to render an existing open QuestPreview with the given quest ID instead of opening a new
          // app / view.
@@ -115,3 +123,7 @@ export default class QuestAPI
       }
    }
 }
+
+Object.freeze(QuestAPI);
+
+export default QuestAPI;

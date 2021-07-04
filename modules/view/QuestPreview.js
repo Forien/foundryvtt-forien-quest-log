@@ -1,11 +1,11 @@
 import FQLDialog              from './FQLDialog.js';
 import FQLPermissionControl   from './FQLPermissionControl.js';
-import QuestForm              from './QuestForm.js';
 import Enrich                 from '../control/Enrich.js';
 import QuestAPI               from '../control/QuestAPI.js';
 import QuestDB                from '../control/QuestDB.js';
 import Socket                 from '../control/Socket.js';
 import Utils                  from '../control/Utils.js';
+import ViewManager            from '../control/ViewManager.js';
 
 import { constants, settings }  from '../model/constants.js';
 
@@ -175,7 +175,7 @@ export default class QuestPreview extends FormApplication
          (new ImagePopout(this.quest.splash, { shareable: true })).render(true);
       });
 
-      html.on('dragstart', '.item-reward', async (event) =>
+      html.on('dragstart', '.item-reward .editable-container', async (event) =>
       {
          const data = $(event.target).data('transfer');
 
@@ -278,6 +278,86 @@ export default class QuestPreview extends FormApplication
                await this.quest.save();
                Socket.refreshQuestPreview({ questId: this.quest.id });
             }
+         });
+
+         html.on('drop', '.quest-giver-gc', async (event) =>
+         {
+            event.preventDefault();
+            const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+
+            if (typeof data.id === 'string')
+            {
+               const uuid = Utils.getUUID(data, ['Actor', 'Item', 'JournalEntry']);
+
+               const giverData = await Enrich.giverFromUUID(uuid);
+               if (giverData)
+               {
+                  this.quest.giver = uuid;
+                  this.quest.giverData = giverData;
+                  await this.saveQuest();
+               }
+               else
+               {
+                  ui.notifications.warn(game.i18n.format('ForienQuestLog.QuestPreview.Notifications.BadUUID', { uuid }));
+               }
+            }
+            else
+            {
+               // Document has data, but lacks a UUID, so it is a data copy. Inform user that quest giver may only be
+               // from world and compendium sources with a UUID.
+               if (typeof data.data === 'object')
+               {
+                  ui.notifications.warn(game.i18n.localize('ForienQuestLog.QuestPreview.Notifications.WrongDocType'));
+               }
+            }
+         });
+
+         html.on('click', '.toggleImage', async () =>
+         {
+            this.quest.toggleImage();
+
+            const giverData = await Enrich.giverFromQuest(this.quest);
+            if (giverData)
+            {
+               this.quest.giverData = giverData;
+               await this.saveQuest();
+            }
+         });
+
+         html.on('click', '.deleteQuestGiver', async () =>
+         {
+            this.quest.resetGiver();
+            await this.saveQuest();
+         });
+
+         html.on('click', '.actions-single.quest-name .editable', (event) =>
+         {
+            const target = $(event.target).data('target');
+
+            let value = this.quest[target];
+
+            value = value.replace(/'/g, '&quot;');
+            const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' maxlength="48"}/>`);
+            const parent = $(event.target).closest('.actions-single').prev('.editable-container');
+
+            parent.html('');
+            parent.append(input);
+            input.focus();
+
+            input.focusout(async (event) =>
+            {
+               const targetOut = $(event.target).data('target');
+               const valueOut = $(event.target).val();
+
+               switch (targetOut)
+               {
+                  case 'name':
+                     this.quest.name = valueOut;
+                     this.options.title = game.i18n.format('ForienQuestLog.QuestPreview.Title', this.quest);
+                     break;
+               }
+               await this.saveQuest();
+            });
          });
 
          html.on('click', '.add-new-task', (event) =>
@@ -464,45 +544,58 @@ export default class QuestPreview extends FormApplication
             }
          });
 
-         html.on('drop', '.quest-giver-gc', async (event) =>
+         html.on('click', '.quest-giver-gc .drop-info', () =>
          {
-            event.preventDefault();
-            const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+            const currentPath = this.quest.giver === 'abstract' ? this.quest.image : void 0;
 
-            if (typeof data.id === 'string')
-            {
-               const uuid = Utils.getUUID(data, ['Actor', 'Item', 'JournalEntry']);
-
-               const giverData = await Enrich.giverFromUUID(uuid);
-               if (giverData)
+            new FilePicker({
+               type: 'image',
+               current: currentPath,
+               callback: async (path) =>
                {
-                  this.quest.giver = uuid;
-                  this.quest.giverData = giverData;
+                  this.quest.giver = 'abstract';
+                  this.quest.image = path;
+                  this.quest.giverName = game.i18n.localize('ForienQuestLog.QuestPreview.CustomSource');
+                  this.quest.giverData = await Enrich.giverFromQuest(this.quest);
+                  delete this.quest.giverData.uuid;
+
                   await this.saveQuest();
-               }
-               else
-               {
-                  ui.notifications.warn(game.i18n.format('ForienQuestLog.QuestPreview.Notifications.BadUUID', { uuid }));
-               }
-            }
-            else
-            {
-               // Document has data, but lacks a UUID, so it is a data copy. Inform user that quest giver may only be
-               // from world and compendium sources with a UUID.
-               if (typeof data.data === 'object')
-               {
-                  ui.notifications.warn(game.i18n.localize('ForienQuestLog.QuestPreview.Notifications.WrongDocType'));
-               }
-            }
+               },
+            }).browse(currentPath);
          });
 
-         /**
-          * There is no way to provide a more specific class selector as this callback edits the quest name and reward
-          * name which are located in separate sections of the template. A more specific class selector is provided
-          * above in the `canEdit / playedEdit` gated code that specifically targets the task edit button. This callback
-          * will be invoked twice when the task edit button is pressed, but has an early out in the first if conditional
-          * if the target is 'task.name'.
-          */
+         html.on('click', '.quest-giver-name .actions-single .editable', (event) =>
+         {
+            const target = $(event.target).data('target');
+
+            let value = this.quest[target];
+
+            value = value.replace(/'/g, '&quot;');
+            const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' maxlength="24"/>`);
+            const parent = $(event.target).closest('.actions-single').prev('.editable-container');
+
+            parent.css('flex', '0 0 230px');
+            parent.html('');
+            parent.append(input);
+            input.focus();
+
+            input.focusout(async (event) =>
+            {
+               const targetOut = $(event.target).data('target');
+               const valueOut = $(event.target).val();
+
+               switch (targetOut)
+               {
+                  case 'giverName':
+                     this.quest.giverName = valueOut;
+                     if (typeof this.quest.giverData === 'object') { this.quest.giverData.name = valueOut; }
+                     this.options.title = game.i18n.format('ForienQuestLog.QuestPreview.Title', this.quest);
+                     break;
+               }
+               await this.saveQuest();
+            });
+         });
+
          html.on('click', '.actions.rewards .editable', (event) =>
          {
             const target = $(event.target).data('target');
@@ -521,7 +614,7 @@ export default class QuestPreview extends FormApplication
             }
 
             value = value.replace(/'/g, '&quot;');
-            const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${uuidv4 !== void 0 ? `data-uuidv4='${uuidv4}'` : ``}/>`);
+            const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${uuidv4 !== void 0 ? `data-uuidv4='${uuidv4}'` : ``} maxlength="30"/>`);
             const parent = $(event.target).closest('.actions').prev('.editable-container');
 
             parent.html('');
@@ -549,44 +642,6 @@ export default class QuestPreview extends FormApplication
             });
          });
 
-         /**
-          * There is no way to provide a more specific class selector as this callback edits the quest name and reward
-          * name which are located in separate sections of the template. A more specific class selector is provided
-          * above in the `canEdit / playedEdit` gated code that specifically targets the task edit button. This callback
-          * will be invoked twice when the task edit button is pressed, but has an early out in the first if conditional
-          * if the target is 'task.name'.
-          */
-         html.on('click', '.actions-single.quest-name .editable', (event) =>
-         {
-            const target = $(event.target).data('target');
-
-            let value = this.quest[target];
-            let uuidv4;
-
-            value = value.replace(/'/g, '&quot;');
-            const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${uuidv4 !== void 0 ? `data-uuidv4='${uuidv4}'` : ``}/>`);
-            const parent = $(event.target).closest('.actions-single').prev('.editable-container');
-
-            parent.html('');
-            parent.append(input);
-            input.focus();
-
-            input.focusout(async (event) =>
-            {
-               const targetOut = $(event.target).data('target');
-               const valueOut = $(event.target).val();
-
-               switch (targetOut)
-               {
-                  case 'name':
-                     this.quest.name = valueOut;
-                     this.options.title = game.i18n.format('ForienQuestLog.QuestPreview.Title', this.quest);
-                     break;
-               }
-               await this.saveQuest();
-            });
-         });
-
          html.on('click', '.actions.rewards .delete', async (event) =>
          {
             const target = $(event.target);
@@ -601,25 +656,6 @@ export default class QuestPreview extends FormApplication
 
                await this.saveQuest();
             }
-         });
-
-         html.on('click', '.toggleImage', async () =>
-         {
-            this.quest.toggleImage();
-
-            const giverData = await Enrich.giverFromQuest(this.quest);
-            if (giverData)
-            {
-               this.quest.giverData = giverData;
-               await this.saveQuest();
-            }
-         });
-
-         html.on('click', '.deleteQuestGiver', async () =>
-         {
-            this.quest.giver = null;
-            this.quest.image = 'actor';
-            await this.saveQuest();
          });
 
          html.on('click', '.toggleLocked', async (event) =>
@@ -649,7 +685,7 @@ export default class QuestPreview extends FormApplication
             const li = $('<li class="reward"></li>');
 
             const input = $(`<input type="text" class="editable-input" value="" placeholder="${game.i18n.localize(
-             "ForienQuestLog.SampleReward")}" />`);
+             "ForienQuestLog.SampleReward")}" maxlength="30"/>`);
 
             const box = $(event.target).closest('.quest-rewards').find('.rewards-box ul');
 
@@ -761,7 +797,7 @@ export default class QuestPreview extends FormApplication
                         // notice to all clients to render again.
                         if (!this.quest.isObservable) { await this.close(); }
 
-                        Socket.refreshQuestLog();
+                        Socket.refreshAll();
                         Socket.refreshQuestPreview({ questId });
                      }
                   });
@@ -824,17 +860,30 @@ export default class QuestPreview extends FormApplication
                this._permControl = void 0;
             }
 
-            const quest = await Utils.createQuest({ parentId: this.quest.id });
-            if (quest.isObservable) { quest.sheet.render(true, { focus: true }); }
+            if (ViewManager.addQuestPreviewId !== void 0)
+            {
+               ViewManager.notifications.warn(game.i18n.localize('ForienQuestLog.Notifications.FinishQuestAdded'));
 
-            // if (this._questForm && this._questForm.rendered)
-            // {
-            //    this._questForm.bringToTop();
-            // }
-            // else
-            // {
-            //    this._questForm = new QuestForm({ parentId: this.quest.id }).render(true);
-            // }
+               const qPreview = ViewManager.questPreview[ViewManager.addQuestPreviewId];
+               if (qPreview && qPreview.rendered) { qPreview.bringToTop(); }
+               return;
+            }
+
+            const quest = await Utils.createQuest({ parentId: this.quest.id, notify: true, swapTab: true });
+            if (quest.isObservable)
+            {
+               ViewManager.addQuestPreviewId = quest.id;
+
+               const questSheet = quest.sheet;
+               questSheet.render(true, { focus: true });
+               Hooks.once('closeQuestPreview', (questPreview) =>
+               {
+                  if (ViewManager.addQuestPreviewId === questPreview.quest.id)
+                  {
+                     ViewManager.addQuestPreviewId = void 0;
+                  }
+               });
+            }
          });
       }
    }
@@ -849,7 +898,7 @@ export default class QuestPreview extends FormApplication
     */
    async close({ noSave = false, ...options } = {})
    {
-      delete Utils.getFQLPublicAPI().questPreview[this.quest.id];
+      delete ViewManager.questPreview[this.quest.id];
 
       FQLDialog.closeDialogs({ questId: this.quest.id });
 
@@ -879,8 +928,7 @@ export default class QuestPreview extends FormApplication
       // const content = await Enrich.quest(this.quest);
       const content = QuestDB.getEnrich(this.quest.id);
 
-      const isTrustedPlayer = Utils.isTrustedPlayer();
-      this.canEdit = game.user.isGM || (this.quest.isOwner && isTrustedPlayer);
+      this.canEdit = game.user.isGM || (this.quest.isOwner && Utils.isTrustedPlayer());
       this.playerEdit = this.quest.isOwner;
       this.canAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
 
@@ -928,7 +976,7 @@ export default class QuestPreview extends FormApplication
     */
    async render(force = false, options = { focus: true })
    {
-      Utils.getFQLPublicAPI().questPreview[this.quest.id] = this;
+      ViewManager.questPreview[this.quest.id] = this;
 
       return super.render(force, options);
    }

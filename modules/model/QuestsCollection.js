@@ -23,6 +23,6 @@ export default class QuestsCollection
 
    static getName(name)
    {
-      return QuestDB.getAllEntries().find((entry) => entry.quest.name === name);
+      return QuestDB.getName(name);
    }
 }

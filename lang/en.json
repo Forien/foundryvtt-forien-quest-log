@@ -12,35 +12,23 @@
     "Quest": "Quest",
 
     "QuestTypes": {
-      "InProgress": "Active",
+      "Active": "In Progress",
+      "Available": "Available",
       "Completed": "Completed",
       "Failed": "Failed",
-      "Hidden": "Inactive",
+      "InActive": "Inactive",
       "Labels": {
-        "available": "available",
         "active": "in progress",
+        "available": "available",
         "completed": "completed",
         "failed": "failed",
-        "hidden": "inactive"
+        "inactive": "inactive"
       }
     },
 
     "Buttons": {
       "AddNewQuest": "Add Quest",
       "AddNewTask": "Add Objective"
-    },
-
-    "QuestForm": {
-      "Title": "Add new Quest",
-      "QuestGiver": "Quest Source",
-      "QuestGiverPlaceholder": "Entity / Actor UUID:",
-      "QuestGiverNamePlaceholder": "Please provide a name for custom Quest Source:",
-      "QuestName": "Quest Name:",
-      "DragDropActor": "Drag & Drop Actor, Item or Journal Entry or left click to set a custom source.",
-      "QuestDescription": "Quest Description:",
-      "QuestGMNotes": "GM Notes:",
-      "Submit": "Add to Quest Log",
-      "SubquestOf": "Subquest of {name}"
     },
 
     "QuestLog": {
@@ -57,7 +45,7 @@
         "InProgress": "In progress",
         "Completed": "Completed",
         "Failed": "Failed",
-        "Hidden": "Inactive"
+        "InActive": "Inactive"
       }
     },
 
@@ -68,7 +56,8 @@
       "Rewards": "Rewards:",
       "Objective": "Objective",
       "Reward": "Reward",
-      "DragDropActor": "Drag & Drop Actor, Item or Journal Entry to set quest source.",
+      "CustomSource": "Custom Source",
+      "DragDropActor": "Drag & Drop Actor, Item or Journal Entry or left click to set a custom source.",
       "DragDropRewards": "Drag & drop items here to add them as rewards.",
       "InvalidQuestId": "Cannot open Quest Preview due to invalid Quest ID.",
       "RewardDrop": "FQL (quest reward): {userName} dropped '{itemName}' onto {actorName}",
@@ -81,8 +70,8 @@
         "QuestSettings": "Quest Settings:",
         "ConfigurePermissions": "Configure Permissions",
         "SplashArt": "Splash Art:",
-        "QuestBranching": "Sub Quests:",
-        "AddSubquest": "Create Sub Quest",
+        "QuestBranching": "Subquests:",
+        "AddSubquest": "Add Subquest",
         "SplashInfo": "Click to set image.",
         "SplashQuestIcon": "Set as quest icon"
       },
@@ -122,7 +111,8 @@
       "CannotOpen": "Cannot open Quest Details. You may lack permissions, Quest might not exist anymore, or provided ID was invalid.",
       "UserCantOpen": "User {user} doesn't have permission to open this quest.",
       "LinkCopied": "Entity Link for this quest has been copied to clipboard.",
-      "QuestMoved": "Moved quest to new folder and gave it new status: {target}.",
+      "FinishQuestAdded": "Please finish editing and close current new quest before adding another.",
+      "QuestMoved": "Moved '{name}' and set new status to: {target}.",
       "QuestAdded": "Added '{name}' as a new quest with status: {status}."
     },
 
@@ -200,7 +190,9 @@
       "RewardHidden": "Reward is hidden. Click to show.",
       "RewardVisible": "Reward is visible. Click to hide.",
       "RewardLocked": "Reward is locked. Click to unlock.",
+      "RewardLockedPlayer": "Reward is locked.",
       "RewardUnlocked": "Reward is unlocked. Click to lock.",
+      "RewardUnlockedPlayer": "Reward is unlocked.",
       "Status": "Status: {statusI18n}",
       "TaskHidden": "Objective is hidden. Click to show.",
       "TaskVisible": "Objective is visible. Click to hide.",

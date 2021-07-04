@@ -1,4 +1,6 @@
-import Utils                                 from './control/Utils.js';
+import QuestDB       from './control/QuestDB.js';
+import ViewManager   from './control/ViewManager.js';
+
 import { constants, noteControls, settings } from './model/constants.js';
 
 const s_QUEST_TRACKER_DEFAULT = { top: 80 };
@@ -24,7 +26,10 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            Utils.getFQLPublicAPI().renderAll({ force: true, questPreview: true });
+            // Must enrich all quests again in QuestDB.
+            QuestDB.enrichAll();
+
+            ViewManager.renderAll({ force: true, questPreview: true });
          }
       });
 
@@ -37,8 +42,7 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            const fqlPublicAPI = Utils.getFQLPublicAPI();
-            if (fqlPublicAPI.questLog.rendered) { fqlPublicAPI.questLog.render(); }
+            if (ViewManager.questLog.rendered) { ViewManager.questLog.render(); }
          }
       });
 
@@ -51,7 +55,10 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            Utils.getFQLPublicAPI().renderAll({ questPreview: true });
+            // Must enrich all quests again in QuestDB.
+            QuestDB.enrichAll();
+
+            ViewManager.renderAll({ questPreview: true });
          }
       });
 
@@ -64,7 +71,10 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            Utils.getFQLPublicAPI().renderAll({ questPreview: true });
+            // Must enrich all quests again in QuestDB.
+            QuestDB.enrichAll();
+
+            ViewManager.renderAll({ questPreview: true });
          }
       });
 
@@ -75,7 +85,13 @@ export default class ModuleSettings
          config: true,
          default: true,
          type: Boolean,
-         onChange: () => { Utils.getFQLPublicAPI().renderAll(); }
+         onChange: () =>
+         {
+            // Must enrich all quests again in QuestDB.
+            QuestDB.enrichAll();
+
+            ViewManager.renderAll();
+         }
       });
 
       game.settings.register(constants.moduleName, settings.dynamicBookmarkBackground, {
@@ -87,8 +103,7 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            const fqlPublicAPI = Utils.getFQLPublicAPI();
-            if (fqlPublicAPI.questLog.rendered) { fqlPublicAPI.questLog.render(); }
+            if (ViewManager.questLog.rendered) { ViewManager.questLog.render(); }
          }
       });
 
@@ -105,8 +120,10 @@ export default class ModuleSettings
          },
          onChange: () =>
          {
-            const fqlPublicAPI = Utils.getFQLPublicAPI();
-            if (fqlPublicAPI.questLog.rendered) { fqlPublicAPI.questLog.render(); }
+            // Must enrich all quests again in QuestDB.
+            QuestDB.enrichAll();
+
+            if (ViewManager.questLog.rendered) { ViewManager.questLog.render(); }
          }
       });
 
@@ -122,7 +139,13 @@ export default class ModuleSettings
             onlyCurrent: 'ForienQuestLog.Settings.showTasks.onlyCurrent',
             no: 'ForienQuestLog.Settings.showTasks.no'
          },
-         onChange: () => { Utils.getFQLPublicAPI().renderAll(); }
+         onChange: () =>
+         {
+            // Must enrich all quests again in QuestDB.
+            QuestDB.enrichAll();
+
+            ViewManager.renderAll({ force: true });
+         }
       });
 
       game.settings.register(constants.moduleName, settings.defaultPermission, {
@@ -148,15 +171,13 @@ export default class ModuleSettings
          type: Boolean,
          onChange: (value) =>
          {
-            const fqlPublicAPI = Utils.getFQLPublicAPI();
-
-            if (Utils.isQuestTrackerVisible())
+            if (ViewManager.isQuestTrackerVisible())
             {
-               fqlPublicAPI.questTracker.render(true, { focus: true });
+               ViewManager.questTracker.render(true, { focus: true });
             }
             else
             {
-               fqlPublicAPI.questTracker.close();
+               ViewManager.questTracker.close();
             }
 
             if (!game.user.isGM)
@@ -164,7 +185,7 @@ export default class ModuleSettings
                // Hide all FQL windows from non GM user and remove the ui.controls for FQL.
                if (value)
                {
-                  fqlPublicAPI.closeAll({ questPreview: true });
+                  ViewManager.closeAll({ questPreview: true });
 
                   const notes = ui.controls.controls.find((c) => c.name === 'notes');
                   if (notes) { notes.tools = notes.tools.filter((c) => !c.name.startsWith(constants.moduleName)); }
@@ -216,13 +237,13 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            if (Utils.isQuestTrackerVisible())
+            if (ViewManager.isQuestTrackerVisible())
             {
-               Utils.getFQLPublicAPI().questTracker.render(true, { focus: true });
+               ViewManager.questTracker.render(true, { focus: true });
             }
             else
             {
-               Utils.getFQLPublicAPI()?.questTracker.close();
+               ViewManager.questTracker.close();
             }
          }
       });
@@ -236,9 +257,9 @@ export default class ModuleSettings
          type: Boolean,
          onChange: (value) =>
          {
-            if (Utils.getFQLPublicAPI()?.questTracker.rendered)
+            if (ViewManager.questTracker.rendered)
             {
-               Utils.getFQLPublicAPI().questTracker.element.toggleClass('background', value);
+               ViewManager.questTracker.element.toggleClass('background', value);
             }
          }
       });
@@ -256,9 +277,9 @@ export default class ModuleSettings
             {
                game.settings.set(constants.moduleName, settings.questTrackerPosition, s_QUEST_TRACKER_DEFAULT);
                game.settings.set(constants.moduleName, settings.resetQuestTracker, false);
-               if (Utils.getFQLPublicAPI()?.questTracker.rendered)
+               if (ViewManager.questTracker.rendered)
                {
-                  Utils.getFQLPublicAPI().questTracker.render();
+                  ViewManager.questTracker.render();
                }
             }
          }

@@ -125,19 +125,19 @@ export default class Enrich
             addedAction = true;
          }
 
-         if ((canEdit && questTypes.hidden === quest.status) || questTypes.available === quest.status)
+         if ((canEdit && questTypes.inactive === quest.status) || questTypes.available === quest.status)
          {
             result += `<i class="move fas fa-play" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetActive')}" data-target="active" data-quest-id="${quest.id}"></i>\n`;
             addedAction = true;
          }
 
-         if (canEdit && questTypes.hidden !== quest.status)
+         if (canEdit && questTypes.inactive !== quest.status)
          {
-            result += `<i class="move fas fa-stop-circle" title="${game.i18n.localize('ForienQuestLog.Tooltips.Hide')}" data-target="hidden" data-quest-id="${quest.id}"></i>\n`;
+            result += `<i class="move fas fa-stop-circle" title="${game.i18n.localize('ForienQuestLog.Tooltips.Hide')}" data-target="inactive" data-quest-id="${quest.id}"></i>\n`;
             addedAction = true;
          }
 
-         if ((canEdit && questTypes.hidden === quest.status) || questTypes.active === quest.status)
+         if ((canEdit && questTypes.inactive === quest.status) || questTypes.active === quest.status)
          {
             result += `<i class="move fas fa-clipboard" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetAvailable')}" data-target="available" data-quest-id="${quest.id}"></i>\n`;
             addedAction = true;
@@ -168,22 +168,29 @@ export default class Enrich
       const data = JSON.parse(JSON.stringify(quest.toJSON()));
       data.id = quest.id;
       data.isHidden = quest.isHidden;
-      data.isInactive = questTypes.hidden === data.status;
+      data.isInactive = questTypes.inactive === data.status;
 
       const personalActors = quest.getPersonalActors();
 
       const isTrustedPlayer = Utils.isTrustedPlayer();
       const canEdit =  game.user.isGM || (quest.isOwner && isTrustedPlayer);
 
+      const canPlayerAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
       const canPlayerDrag = game.settings.get(constants.moduleName, settings.allowPlayersDrag);
       const countHidden = game.settings.get(constants.moduleName, settings.countHidden);
+
+      data.canEdit = canEdit;
+
+      data.wrapNameLengthCSS = 'player';
+      if (canPlayerAccept || quest.isOwner) { data.wrapNameLengthCSS = 'player-edit'; }
+      if (canEdit) { data.wrapNameLengthCSS = 'can-edit'; }
 
       data.isPersonal = personalActors.length > 0;
       data.personalActors = personalActors.map((a) => a.name).sort((a, b) => a.localeCompare(b)).join('&#013;');
 
       data.description = TextEditor.enrichHTML(data.description);
 
-      data.data_giver = typeof data.giverData === 'object' ? data.giverData : {};
+      data.data_giver = typeof data.giverData === 'object' ? data.giverData : null;
 
       data.questIconType = void 0;
 
@@ -248,10 +255,12 @@ export default class Enrich
                const isInactive = subquest.isInactive;
 
                const statusTooltipData = isInactive ?
-                { statusI18n: game.i18n.localize(questTypesI18n[questTypes.hidden]) } :
+                { statusI18n: game.i18n.localize(questTypesI18n[questTypes.inactive]) } :
                  { statusI18n: game.i18n.localize(questTypesI18n[subquest.status]) };
 
                const statusTooltip = game.i18n.format('ForienQuestLog.Tooltips.Status', statusTooltipData);
+
+               const canEditSubquest = game.user.isGM || (subquest.isOwner && isTrustedPlayer);
 
                data.data_subquest.push({
                   id: questId,
@@ -261,6 +270,7 @@ export default class Enrich
                   statusTooltip,
                   state,
                   statusActions: Enrich.statusActions(subquest),
+                  canEdit: canEditSubquest,
                   isHidden: subquest.isHidden,
                   isInactive,
                   isPersonal: subPersonalActors.length > 0,
@@ -324,12 +334,20 @@ export default class Enrich
 
          const draggable = (canEdit || canPlayerDrag) && (canEdit || !item.locked) && type !== 'abstract';
 
+         const lockedTooltip = canEdit ? game.i18n.localize('ForienQuestLog.Tooltips.RewardLocked') :
+          game.i18n.localize('ForienQuestLog.Tooltips.RewardLockedPlayer');
+
+         const unlockedTooltip = canEdit ? game.i18n.localize('ForienQuestLog.Tooltips.RewardUnlocked') :
+          game.i18n.localize('ForienQuestLog.Tooltips.RewardUnlockedPlayer');
+
          return {
             name: item.data.name,
             img: item.data.img,
             type,
             hidden: item.hidden,
             locked: item.locked,
+            lockedTooltip,
+            unlockedTooltip,
             isPlayerLink: !canEdit && !canPlayerDrag && !item.locked && type !== 'abstract',
             draggable,
             transfer: type !== 'abstract' ? JSON.stringify(

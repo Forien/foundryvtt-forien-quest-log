@@ -1,8 +1,9 @@
-import FQLDialog  from './FQLDialog.js';
-import QuestAPI   from '../control/QuestAPI.js';
-import QuestDB    from '../control/QuestDB.js';
-import Socket     from '../control/Socket.js';
-import Utils      from '../control/Utils.js';
+import FQLDialog     from './FQLDialog.js';
+import QuestAPI      from '../control/QuestAPI.js';
+import QuestDB       from '../control/QuestDB.js';
+import Socket        from '../control/Socket.js';
+import Utils         from '../control/Utils.js';
+import ViewManager   from '../control/ViewManager.js';
 
 import { constants, questTypesI18n, settings } from '../model/constants.js';
 
@@ -11,8 +12,6 @@ export default class QuestLog extends Application
    constructor(options = {})
    {
       super(options);
-
-      this._addQuestPreviewId = void 0;
    }
 
    /**
@@ -62,37 +61,30 @@ export default class QuestLog extends Application
 
       html.on('click', '.new-quest-btn', async () =>
       {
-         if (this._addQuestPreviewId !== void 0)
+         if (ViewManager.addQuestPreviewId !== void 0)
          {
-            const qPreview = Utils.getFQLPublicAPI().questPreview[this._addQuestPreviewId];
+            ViewManager.notifications.warn(game.i18n.localize('ForienQuestLog.Notifications.FinishQuestAdded'));
+
+            const qPreview = ViewManager.questPreview[ViewManager.addQuestPreviewId];
             if (qPreview && qPreview.rendered) { qPreview.bringToTop(); }
             return;
          }
 
-         const quest = await Utils.createQuest({ notify: true });
+         const quest = await Utils.createQuest({ notify: true, swapTab: true });
          if (quest.isObservable)
          {
-            this._addQuestPreviewId = quest.id;
+            ViewManager.addQuestPreviewId = quest.id;
 
             const questSheet = quest.sheet;
             questSheet.render(true, { focus: true });
             Hooks.once('closeQuestPreview', (questPreview) =>
             {
-               if (this._addQuestPreviewId === questPreview.quest.id)
+               if (ViewManager.addQuestPreviewId === questPreview.quest.id)
                {
-                  this._addQuestPreviewId = void 0;
+                  ViewManager.addQuestPreviewId = void 0;
                }
             });
          }
-
-         // if (this._questForm && this._questForm.rendered)
-         // {
-         //    this._questForm.bringToTop();
-         // }
-         // else
-         // {
-         //    this._questForm = new QuestForm().render(true);
-         // }
       });
 
       html.on('click', '.actions.quest-status i', async (event) =>

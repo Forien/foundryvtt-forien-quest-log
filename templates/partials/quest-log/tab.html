@@ -1,9 +1,8 @@
 <header>
   <h1 style="flex: 1;">{{format 'ForienQuestLog.Quests' (localize (lookup questTypesI18n tab))}}</h1>
   {{#if (or isGM canCreate)}}
-    <button style="position: absolute; top: 38px; right: 12px; width: 105px" class="new-quest-btn"><i class="fas fa-plus"></i> {{localize 'ForienQuestLog.Buttons.AddNewQuest'}}</button>
+    <button class="new-quest-btn"><i class="fas fa-plus"></i> {{localize 'ForienQuestLog.Buttons.AddNewQuest'}}</button>
   {{/if}}
-  <!-- TODO FIX THE ABOVE STYLE /W FLEXBOX -->
 </header>
 <div class="table">
   <ul>
@@ -16,7 +15,7 @@
       {{#if (eq questIconType 'splash-image')}}
         <div class="img" style="background-image: url({{splash}});background-position: {{splashPos}};" title="View Quest Image"></div>
       {{/if}}
-      {{#if ../canEdit}}
+      {{#if canEdit}}
         {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
         {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
       {{/if}}
@@ -26,8 +25,8 @@
           <p class="subquest">{{format 'ForienQuestLog.QuestPreview.SubTitle' data_parent.name}}</p>
         {{/if}}
       </div>
-      {{#unless (eq ../showTasks 'no')}}
-        <div class="tasks" title="{{localize 'ForienQuestLog.QuestLog.Table.Tasks'}}">{{checkedTasks}}{{#unless (eq ../showTasks 'onlyCurrent')}}/{{totalTasks}}{{/unless}}</div>
+      {{#unless (eq ../../showTasks 'no')}}
+        <div class="tasks" title="{{localize 'ForienQuestLog.QuestLog.Table.Tasks'}}">{{checkedTasks}}{{#unless (eq ../../showTasks 'onlyCurrent')}}/{{totalTasks}}{{/unless}}</div>
       {{/unless}}
       {{#if statusActions.length}}
         {{{statusActions}}}
