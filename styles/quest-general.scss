@@ -204,6 +204,11 @@
         color: $primary-accent-color;
       }
 
+      &:hover.is-player {
+        color: black;
+        cursor: default;
+      }
+
       &:first-child {
         margin: 0;
       }

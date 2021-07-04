@@ -46,6 +46,9 @@
   }
 
   .quest {
+    overflow-x: hidden;
+    overflow-y: hidden;
+
     display: flex;
     flex-direction: column;
 
@@ -65,7 +68,6 @@
       width: fit-content;
       max-width: 92%;
       height:auto;
-      word-wrap: break-word;
     }
 
     .quest-tracker-span {

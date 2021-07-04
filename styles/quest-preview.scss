@@ -306,6 +306,18 @@
               margin: 0;
               max-width: 290px;
               word-wrap: break-word;
+
+              &.can-edit {
+                max-width: 290px;
+              }
+
+              &.player-edit {
+                max-width: 330px;
+              }
+
+              &.player {
+                max-width: 400px;
+              }
             }
 
             input {
@@ -367,8 +379,19 @@
             margin: 0;
             padding: 4px 4px;
             flex: 1;
-            max-width: 310px;
             word-wrap: break-word;
+
+            &.can-edit {
+              max-width: 310px;
+            }
+
+            &.player-edit {
+              max-width: 350px;
+            }
+
+            &.player {
+              max-width: 410px;
+            }
 
             &:hover {
               color: $primary-accent-color;
@@ -445,11 +468,9 @@
           }
         }
       }
-
     }
 
     .management {
-
       .row {
         display: flex;
         flex: 0 0 1px;
@@ -510,7 +531,6 @@
             left: 22px;
             width: 150px;
             display: inline;
-            //font-size: smaller;
             font-weight: lighter;
           }
         }

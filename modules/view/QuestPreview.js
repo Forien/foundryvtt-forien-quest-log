@@ -175,7 +175,7 @@ export default class QuestPreview extends FormApplication
          (new ImagePopout(this.quest.splash, { shareable: true })).render(true);
       });
 
-      html.on('dragstart', '.item-reward', async (event) =>
+      html.on('dragstart', '.item-reward .editable-container', async (event) =>
       {
          const data = $(event.target).data('transfer');
 
