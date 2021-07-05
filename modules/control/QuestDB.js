@@ -27,7 +27,7 @@ const s_QUEST_INDEX = new Map();
 
 const Filter = {
    IS_VISIBLE: (entry) => !entry.isHidden && !entry.isInactive,
-   IS_VISIBLE_INACTIVE: (entry) => entry.isTrustedPlayer ? entry.isOwner : !entry.isHidden && !entry.isInactive
+   IS_VISIBLE_INACTIVE: (entry) => entry.isTrustedPlayerEdit ? entry.isOwner : !entry.isHidden && !entry.isInactive
 };
 
 const Sort = {
@@ -195,13 +195,11 @@ export default class QuestDB
           CONST.ENTITY_PERMISSIONS.OBSERVER
       };
 
-      const trustedPlayerEdit = Utils.isTrustedPlayer();
-
       // Used for a player created quest setting and the quest as 'available' for normal players or 'hidden' for
       // trusted players.
       if (!game.user.isGM)
       {
-         data.status = trustedPlayerEdit ? questTypes.inactive : questTypes.available;
+         data.status = Utils.isTrustedPlayerEdit() ? questTypes.inactive : questTypes.available;
          permission[game.user.id] = CONST.ENTITY_PERMISSIONS.OWNER;
       }
 
@@ -403,7 +401,7 @@ class QuestEntry
       this.isOwner = this.quest.isOwner;
       this.isPersonal = this.quest.isPersonal;
 
-      this.isTrustedPlayer = Utils.isTrustedPlayer();
+      this.isTrustedPlayerEdit = Utils.isTrustedPlayerEdit();
 
       this.enrich = Enrich.quest(this.quest);
 

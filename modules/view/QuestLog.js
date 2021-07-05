@@ -138,7 +138,7 @@ export default class QuestLog extends Application
          options,
          isGM: game.user.isGM,
          isPlayer: !game.user.isGM,
-         isTrustedPlayer: Utils.isTrustedPlayer(),
+         isTrustedPlayerEdit: Utils.isTrustedPlayerEdit(),
          canAccept: game.settings.get(constants.moduleName, settings.allowPlayersAccept),
          canCreate: game.settings.get(constants.moduleName, settings.allowPlayersCreate),
          showTasks: game.settings.get(constants.moduleName, settings.showTasks),

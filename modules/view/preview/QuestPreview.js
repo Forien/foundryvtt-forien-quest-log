@@ -1,5 +1,4 @@
 import FQLDialog              from '../FQLDialog.js';
-import FQLPermissionControl   from '../FQLPermissionControl.js';
 import Enrich                 from '../../control/Enrich.js';
 import QuestAPI               from '../../control/QuestAPI.js';
 import QuestDB                from '../../control/QuestDB.js';
@@ -826,7 +825,7 @@ export default class QuestPreview extends FormApplication
       // const content = await Enrich.quest(this.quest);
       const content = QuestDB.getEnrich(this.quest.id);
 
-      this.canEdit = game.user.isGM || (this.quest.isOwner && Utils.isTrustedPlayer());
+      this.canEdit = game.user.isGM || (this.quest.isOwner && Utils.isTrustedPlayerEdit());
       this.playerEdit = this.quest.isOwner;
       this.canAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
 

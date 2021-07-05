@@ -81,7 +81,7 @@ export default class Quest
       const isInactive = this.isInactive;
 
       // Special handling for trusted player edit who can only see owned quests in the hidden / inactive category.
-      if (Utils.isTrustedPlayer() && isInactive) { return this.isOwner; }
+      if (Utils.isTrustedPlayerEdit() && isInactive) { return this.isOwner; }
 
       // Otherwise no one can see hidden / inactive quests; perform user permission check for observer.
       return !isInactive && this.entry.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER);
