@@ -7,6 +7,8 @@ Open Source projects function most efficiently when everyone plays nicely with e
 
 * If applicable, **use the appropriate issue templates** to automatically apply the relevant tag to the created issue. This allows issues to be quickly differentiated as bug reports, enchancement suggestions, or whatever else without a maintainer manually adding the tag to the issue. The bug report template will specify which information to add that will aid in reproducing the bug.
 
+* Inconsequential fixes regarding typos, whitespace, etc may not warrant an issue and can skip straight to the Pull Request.
+
 ### **Do you want to fix a currently existing issue?**
 
 * Before working on an issue, please **honor issue assignments** and ask to be assigned to the issue on that issue's page. This allows everyone else to see that someone is working on the issue, preventing any duplicate pull requests down the line. If someone is already assigned to the issue, feel free to reach out to the assignee and inquire on the progress of that fix.
@@ -15,7 +17,7 @@ Open Source projects function most efficiently when everyone plays nicely with e
 
 * When you feel your fork adequately fixes an issue, **submit a pull request for review**! [Please indicate which issue is to be closed if the PR is merged](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue) as well as giving a detailed overview of your changes. 
 
-* Please **limit the content of your pull requests to the implementation of the issue fix**. If your pull request does anything additional, you must first open an issue that your PR may close (see the below section).
+* Please **limit the content of your pull requests to its linked issues**. If your pull request does anything additional, you must first open an issue that your PR may close (see the below section).
 
 ### **Do you intend to add a new feature or change an existing one?**
 
