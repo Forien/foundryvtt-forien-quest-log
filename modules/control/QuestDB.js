@@ -25,14 +25,20 @@ const s_QUESTS_COLLECT = {
 
 const s_QUEST_INDEX = new Map();
 
-const s_SORT_FUNCTIONS = {
+const Filter = {
+   IS_VISIBLE: (entry) => !entry.isHidden && !entry.isInactive,
+   IS_VISIBLE_INACTIVE: (entry) => entry.isTrustedPlayer ? entry.isOwner : !entry.isHidden && !entry.isInactive
+};
+
+const Sort = {
    ALPHA: (a, b) => a.enrich.name.localeCompare(b.enrich.name),
    DATE_CREATE: (a, b) => a.quest.date.create - b.quest.date.create,
    DATE_START: (a, b) => a.quest.date.start - b.quest.date.start,
    DATE_END: (a, b) => b.quest.date.end - a.quest.date.end
 };
 
-Object.freeze(s_SORT_FUNCTIONS);
+Object.freeze(Filter);
+Object.freeze(Sort);
 
 const s_DELETE_QUEST = (questId, generate = true) =>
 {
@@ -149,7 +155,9 @@ export default class QuestDB
       Hooks.on('updateJournalEntry', this.updateJournalEntry);
    }
 
-   static get Sort() { return s_SORT_FUNCTIONS; }
+   static get Filter() { return Filter; }
+
+   static get Sort() { return Sort; }
 
    static createJournalEntry(entry, options, id)
    {
@@ -309,24 +317,27 @@ export default class QuestDB
     *
     * @param {Function} [options.sortFailed] - The sort function for failed quests.
     *
-    * @param {Function} [options.sortHidden] - The sort function for hidden quests.
+    * @param {Function} [options.sortInactive] - The sort function for inactive quests.
     *
     * @returns {null|SortedQuests|QuestEntry[]} The complete sorted quests or just a particular quest status.
     */
-   static sorted({ status = void 0, sortActive = QuestDB.Sort.ALPHA, sortAvailable = QuestDB.Sort.ALPHA,
-    sortCompleted = QuestDB.Sort.DATE_END, sortFailed = QuestDB.Sort.DATE_END, sortHidden = QuestDB.Sort.ALPHA } = {})
+   static sorted({ status = void 0, sortActive = Sort.ALPHA, sortAvailable = Sort.ALPHA,
+    sortCompleted = Sort.DATE_END, sortFailed = Sort.DATE_END, sortInactive = Sort.ALPHA } = {})
    {
       if (typeof status === 'string')
       {
          switch (status)
          {
-            case questTypes.active: return s_QUESTS_COLLECT[questTypes.active].sort(sortActive);
-            case questTypes.available: return s_QUESTS_COLLECT[questTypes.available].sort(sortAvailable);
-            case questTypes.completed: return s_QUESTS_COLLECT[questTypes.completed].sort(sortCompleted);
-            case questTypes.failed: return s_QUESTS_COLLECT[questTypes.failed].sort(sortFailed);
+            case questTypes.active:
+               return s_QUESTS_COLLECT[questTypes.active].filter(Filter.IS_VISIBLE).sort(sortActive);
+            case questTypes.available:
+               return s_QUESTS_COLLECT[questTypes.available].filter(Filter.IS_VISIBLE).sort(sortAvailable);
+            case questTypes.completed:
+               return s_QUESTS_COLLECT[questTypes.completed].filter(Filter.IS_VISIBLE).sort(sortCompleted);
+            case questTypes.failed:
+               return s_QUESTS_COLLECT[questTypes.failed].filter(Filter.IS_VISIBLE).sort(sortFailed);
             case questTypes.inactive:
-               return Utils.isTrustedPlayer() ? s_QUESTS_COLLECT[questTypes.inactive].filter(
-                (e) => e.isOwner).sort(sortHidden) : s_QUESTS_COLLECT[questTypes.inactive].sort(sortHidden);
+               return s_QUESTS_COLLECT[questTypes.inactive].filter(Filter.IS_VISIBLE_INACTIVE).sort(sortInactive);
             default:
                console.error(`Forien Quest Log - QuestDB - sorted - unknown status: ${status}`);
                return null;
@@ -334,12 +345,11 @@ export default class QuestDB
       }
 
       return {
-         active: s_QUESTS_COLLECT[questTypes.active].sort(sortActive),
-         available: s_QUESTS_COLLECT[questTypes.available].sort(sortAvailable),
-         completed: s_QUESTS_COLLECT[questTypes.completed].sort(sortCompleted),
-         failed: s_QUESTS_COLLECT[questTypes.failed].sort(sortFailed),
-         inactive: Utils.isTrustedPlayer() ? s_QUESTS_COLLECT[questTypes.inactive].filter((e) => e.isOwner).sort(
-          sortHidden) : s_QUESTS_COLLECT[questTypes.inactive].sort(sortHidden)
+         active: s_QUESTS_COLLECT[questTypes.active].filter(Filter.IS_VISIBLE).sort(sortActive),
+         available: s_QUESTS_COLLECT[questTypes.available].filter(Filter.IS_VISIBLE).sort(sortAvailable),
+         completed: s_QUESTS_COLLECT[questTypes.completed].filter(Filter.IS_VISIBLE).sort(sortCompleted),
+         failed: s_QUESTS_COLLECT[questTypes.failed].filter(Filter.IS_VISIBLE).sort(sortFailed),
+         inactive: s_QUESTS_COLLECT[questTypes.inactive].filter(Filter.IS_VISIBLE_INACTIVE).sort(sortInactive)
       };
    }
 
@@ -392,6 +402,8 @@ class QuestEntry
       this.isObservable = this.quest.isObservable;
       this.isOwner = this.quest.isOwner;
       this.isPersonal = this.quest.isPersonal;
+
+      this.isTrustedPlayer = Utils.isTrustedPlayer();
 
       this.enrich = Enrich.quest(this.quest);
 
