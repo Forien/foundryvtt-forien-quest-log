@@ -3,6 +3,13 @@ import Socket     from '../../control/Socket.js';
 import Utils      from '../../control/Utils.js';
 import FQLDialog  from '../FQLDialog.js';
 
+/**
+ * Defines the default icon used for abstract rewards.
+ *
+ * @type {string}
+ */
+const s_DEFAULT_REWARD_ICON = 'icons/svg/item-bag.svg';
+
 export default class HandlerDetails
 {
    /**
@@ -246,7 +253,7 @@ export default class HandlerDetails
             quest.addReward({
                data: {
                   name: value,
-                  img: 'icons/svg/item-bag.svg'
+                  img: s_DEFAULT_REWARD_ICON
                },
                hidden: true,
                type: 'Abstract'
@@ -534,15 +541,15 @@ export default class HandlerDetails
       {
          questPreview._splashImagePopup = new ImagePopout(quest.splash, { shareable: true });
          questPreview._splashImagePopup.render(true);
-      }
 
-      Hooks.once('closeImagePopout', async (app) =>
-      {
-         if (app.appId === questPreview._splashImagePopup.appId)
+         Hooks.once('closeImagePopout', async (app) =>
          {
-            questPreview._splashImagePopup = void 0;
-         }
-      });
+            if (app.appId === questPreview?._splashImagePopup?.appId)
+            {
+               questPreview._splashImagePopup = void 0;
+            }
+         });
+      }
    }
 
    /**
