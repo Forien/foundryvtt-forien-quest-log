@@ -5,7 +5,7 @@ Open Source projects function most efficiently when everyone plays nicely with e
 
 * **Ensure your contribution is novel** by searching the [Issues](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/issues) page. Be sure to look through both open and closed issues, especially for enhancement suggestions as rejected suggestions will be closed.
 
-* If applicable, **use the appropriate issue templates** to automatically apply the relevant tag to the created issue. This allows issues to be quickly differentiated as bug reports, enchancement suggestions, or whatever else without a maintainer manually adding the tag to the issue. The bug report template will specify which information to add that will aid in reproducing the bug.
+* If applicable, **use the appropriate issue templates** to automatically apply the relevant tag to the created issue. This allows issues to be quickly differentiated as bug reports, enhancement suggestions, or whatever else without a maintainer manually adding the tag to the issue. The bug report template will specify which information to add that will aid in reproducing the bug.
 
 * Inconsequential fixes regarding typos, whitespace, etc may not warrant an issue and can skip straight to the Pull Request.
 
@@ -37,7 +37,7 @@ Open Source projects function most efficiently when everyone plays nicely with e
 
 * For now, **wait until [Issue #55](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/issues/55) is closed**. When this repo has a wiki page, documentation will go there.
 
-* Please **follow the above guidelines** regarding opening issues and submitting pull requests. Some documentation issues may be more broad and be ongoing, in which case you may want to contribute to assignee's forks first. Any smaller changes should still open a detailed issue and submit a detailed pull request that [closes that issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue).
+* Please **follow the above guidelines** regarding opening issues and submitting pull requests. Some documentation issues may be broader and ongoing, in which case you may want to contribute to assignee's forks first. Any smaller changes should still open a detailed issue and submit a detailed pull request that [closes that issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue).
 
 ### **Do you have questions about the source code?**
 
