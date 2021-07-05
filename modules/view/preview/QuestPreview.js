@@ -1,13 +1,15 @@
-import FQLDialog              from './FQLDialog.js';
-import FQLPermissionControl   from './FQLPermissionControl.js';
-import Enrich                 from '../control/Enrich.js';
-import QuestAPI               from '../control/QuestAPI.js';
-import QuestDB                from '../control/QuestDB.js';
-import Socket                 from '../control/Socket.js';
-import Utils                  from '../control/Utils.js';
-import ViewManager            from '../control/ViewManager.js';
+import FQLDialog              from '../FQLDialog.js';
+import FQLPermissionControl   from '../FQLPermissionControl.js';
+import Enrich                 from '../../control/Enrich.js';
+import QuestAPI               from '../../control/QuestAPI.js';
+import QuestDB                from '../../control/QuestDB.js';
+import Socket                 from '../../control/Socket.js';
+import Utils                  from '../../control/Utils.js';
+import ViewManager            from '../../control/ViewManager.js';
 
-import { constants, settings }  from '../model/constants.js';
+import HandlerManage          from './HandlerManage.js';
+
+import { constants, settings }  from '../../model/constants.js';
 
 export default class QuestPreview extends FormApplication
 {
@@ -769,103 +771,18 @@ export default class QuestPreview extends FormApplication
 
          // Management view callbacks -------------------------------------------------------------------------------
 
-         html.on('click', '.configure-perm-btn', () =>
-         {
-            if (this.quest.entry)
-            {
-               if (!this._permControl)
-               {
-                  this._permControl = new FQLPermissionControl(this.quest.entry, {
-                     top: Math.min(this.position.top, window.innerHeight - 350),
-                     left: this.position.left + 125
-                  });
+         html.on('click', '.add-subquest-btn', async () => await HandlerManage.addSubquest(this.quest, this));
 
-                  Hooks.once('closePermissionControl', async (app) =>
-                  {
-                     if (app.appId === this._permControl.appId)
-                     {
-                        this._permControl = void 0;
+         html.on('click', '.configure-perm-btn', () => HandlerManage.configurePermissions(this.quest, this));
 
-                        // When the permissions change refresh the parent if any, this QuestPreview, and
-                        // any subquests.
-                        const questId = this.quest.parent ?
-                         [this.quest.parent, this.quest.id, ...this.quest.subquests] :
-                          [this.quest.id, ...this.quest.subquests];
-
-                        // We must check if the user intentionally or accidentally revoked their own permissions to
-                        // at least observe this quest. If so then simply close the QuestPreview and send out a refresh
-                        // notice to all clients to render again.
-                        if (!this.quest.isObservable) { await this.close(); }
-
-                        Socket.refreshAll();
-                        Socket.refreshQuestPreview({ questId });
-                     }
-                  });
-               }
-
-               this._permControl.render(true, {
-                  top: Math.min(this.position.top, window.innerHeight - 350),
-                  left: this.position.left + 125,
-                  focus: true
-               });
-            }
-         });
+         html.on('click', '.delete-splash', async () => await HandlerManage.deleteSplashImage(this.quest, this));
 
          html.on('click', `.quest-splash #splash-as-icon-${this.quest.id}`, async (event) =>
-         {
-            this.quest.splashAsIcon = $(event.target).is(':checked');
-            await this.saveQuest();
-         });
+          await HandlerManage.setSplashAsIcon(event, this.quest, this));
 
-         html.on('click', '.quest-splash .drop-info', async () =>
-         {
-            const currentPath = this.quest.splash;
-            await new FilePicker({
-               type: 'image',
-               current: currentPath,
-               callback: async (path) =>
-               {
-                  this.quest.splash = path;
-                  await this.saveQuest();
-               },
-            }).browse(currentPath);
-         });
+         html.on('click', '.quest-splash .drop-info', async () => await HandlerManage.setSplashImage(this.quest, this));
 
-         html.on('click', '.delete-splash', async () =>
-         {
-            this.quest.splash = '';
-            await this.saveQuest();
-         });
-
-         html.on('click', '.change-splash-pos', async () =>
-         {
-            if (this.quest.splashPos === 'center')
-            {
-               this.quest.splashPos = 'top';
-            }
-            else
-            {
-               this.quest.splashPos = this.quest.splashPos === 'top' ? 'bottom' : 'center';
-            }
-
-            await this.saveQuest();
-         });
-
-         html.on('click', '.add-subquest-btn', async () =>
-         {
-            // If a permission control app / dialog is open close it.
-            if (this._permControl)
-            {
-               this._permControl.close();
-               this._permControl = void 0;
-            }
-
-            if (ViewManager.verifyQuestCanAdd())
-            {
-               const quest = await QuestDB.createQuest({ parentId: this.quest.id });
-               ViewManager.questAdded({ quest });
-            }
-         });
+         html.on('click', '.change-splash-pos', async () => await HandlerManage.setSplashPos(this.quest, this));
       }
    }
 
