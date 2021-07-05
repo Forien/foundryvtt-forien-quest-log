@@ -983,6 +983,9 @@
   overflow: hidden;
   background-color: #222;
 }
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .reward-image-container.can-edit {
+  cursor: pointer;
+}
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .reward-image {
   width: 25px;
   height: 25px;

@@ -450,6 +450,10 @@
             border-radius: 5px 0 0 5px;
             overflow: hidden;
             background-color: #222;
+
+            &.can-edit {
+              cursor: pointer;
+            }
           }
 
           .reward-image {
