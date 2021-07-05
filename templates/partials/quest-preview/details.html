@@ -167,7 +167,7 @@
         <ul>
         {{#each data_rewards}}
         <li class="reward {{type}}-reward {{#if hidden}}reward-hidden{{/if}}" data-uuidv4="{{uuidv4}}">
-          <div class="reward-image-container">
+          <div class="reward-image-container {{#if (and (eq type 'abstract') ../canEdit)}}can-edit{{/if}}">
             <div class="reward-image" style="background-image: url({{img}})" data-uuidv4="{{uuidv4}}"></div>
           </div>
           <div class="editable-container {{#if draggable}}draggable{{/if}} {{#if isPlayerLink}}is-link{{/if}}" data-transfer="{{transfer}}" data-uuidv4="{{uuidv4}}" {{#if draggable}}draggable="true"{{/if}}>
@@ -177,7 +177,7 @@
             {{#if ../canEdit}}
               <i class="sort fas fa-sort" draggable="true"></i>
               <span class="spacer"></span>
-              {{#if (eq type "abstract")}}
+              {{#if (eq type 'abstract')}}
                 <i class="editable fas fa-pen" data-target="reward.name" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
               {{/if}}
               {{#if hidden}}
