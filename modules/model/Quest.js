@@ -7,31 +7,59 @@ import { constants, questTypes } from './constants.js';
 let SheetClass;
 
 /**
- * Class that acts "kind of" like Entity, to help Manage everything Quest Related
- * in a more structured way, than to call JournalEntry every time.
+ * Stores and makes accessible the minimum amount of data that defines a quest. A Quest is loaded from the backing
+ * JournalEntry and has the JournalEntry stored for the ability to perform permissions checks. Please see QuestDB
+ * as when a Quest is loaded it is stored in a QuestEntry which also contains the enriched quest data for display
+ * in Handlebars templates along with caching of several of the methods available in Quest for fast sorting.
+ *
+ * @see QuestDB
+ * @see QuestEntry
  */
 export default class Quest
 {
+   /**
+    * @param {QuestData}      data - The serialized quest data to set.
+    *
+    * @param {JournalEntry}   entry - The associated Foundry JournalEntry.
+    */
    constructor(data = {}, entry = null)
    {
-      this._id = data.id || null;  // Foundry in the TextEditor system to create content links looks for `_id` & name.
+      /**
+       * @type {string|null}
+       * @private
+       */
+      this._id = entry !== null ? entry.id : null;  // Foundry in the TextEditor system to create content links looks for `_id` & name.
+
       this.initData(data);
+
+      /**
+       * @type {JournalEntry}
+       */
       this.entry = entry;
-      this.data = data;
    }
 
+   /**
+    * Gets the Foundry ID associated with this Quest.
+    *
+    * @returns {string} The ID of the quest.
+    */
    get id()
    {
       return this._id;
    }
 
+   /**
+    * Sets the Foundry ID of the quest.
+    *
+    * @param {string}   id - A Foundry ID.
+    */
    set id(id)
    {
       this._id = id;
    }
 
    /**
-    * True when no players can see or are assigned to the quest.
+    * True when no players have OBSERVER or OWNER permissions for this quest.
     *
     * @returns {boolean} Quest is hidden.
     */
@@ -74,6 +102,12 @@ export default class Quest
       return questTypes.inactive === this.status;
    }
 
+   /**
+    * Returns true if this quest is observable for the given player. For trusted player edit when the status is
+    * `inactive` the test is ownership instead of simply OBSERVER or higher.
+    *
+    * @returns {boolean} Is the quest observable.
+    */
    get isObservable()
    {
       if (game.user.isGM) { return true; }
@@ -88,7 +122,9 @@ export default class Quest
    }
 
    /**
-    * @returns {boolean} Whether the current user has owner permissions.
+    * Gets whether the current user has owner permissions.
+    *
+    * @returns {boolean} Is owner.
     */
    get isOwner()
    {
@@ -96,6 +132,12 @@ export default class Quest
        (this.entry && this.entry.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OWNER));
    }
 
+   /**
+    * Gets whether this quest is a personal quest. A personal quest has one or more players with OBSERVER or OWNER
+    * permissions.
+    *
+    * @returns {boolean} Is this quest personal.
+    */
    get isPersonal()
    {
       let isPersonal = false;
@@ -121,6 +163,11 @@ export default class Quest
       return isPersonal;
    }
 
+   /**
+    * Returns a list of Actor data for whom this quest is personal.
+    *
+    * @returns {object[]} A list of actors who are assigned to this quest.
+    */
    getPersonalActors()
    {
       if (!this.isPersonal) { return []; }
@@ -146,21 +193,35 @@ export default class Quest
       return actors;
    }
 
+   /**
+    * Gets the name of the quest.
+    *
+    * @returns {string} Quest name.
+    */
    get name()
    {
       return this._name;
    }
 
+   /**
+    * Sets the name of the quest.
+    *
+    * @param {string}   value - The new name.
+    */
    set name(value)
    {
+      /**
+       * @type {string}
+       * @private
+       */
       this._name =
        typeof value === 'string' && value.length > 0 ? value : game.i18n.localize('ForienQuestLog.NewQuest');
    }
 
    /**
-    * Creates new and adds Reward to reward array of quest.
+    * Creates a new Reward and pushes to the reward array.
     *
-    * @param data
+    * @param {object}   data - The reward data.
     */
    addReward(data = {})
    {
@@ -169,19 +230,22 @@ export default class Quest
    }
 
    /**
-    * Creates new and adds Quest to task array of quest.
+    * Pushes a subquest ID to the subquest array.
     *
-    * @param questId
+    * @param {string}   questId - A Foundry ID
     */
    addSubquest(questId)
    {
-      this.subquests.push(questId);
+      if (!this.subquests.includes(questId))
+      {
+         this.subquests.push(questId);
+      }
    }
 
    /**
-    * Creates new and adds Task to task array of quest.
+    * Creates a new Task and pushes to the task array.
     *
-    * @param data
+    * @param {object}   data - Task data.
     */
    addTask(data = {})
    {
@@ -189,6 +253,11 @@ export default class Quest
       if (task.name.length) { this.tasks.push(task); }
    }
 
+   /**
+    * Deletes this quest and updates any parent and child subquests.
+    *
+    * @returns {Promise<DeleteData>} The IDs for quests that were updated.
+    */
    async delete()
    {
       const parentQuest = QuestDB.getQuest(this.parent);
@@ -257,7 +326,7 @@ export default class Quest
    /**
     * Returns any stored Foundry sheet class.
     *
-    * @returns {*}
+    * @returns {*} The associated sheet class.
     */
    static getSheet() { return SheetClass; }
 
@@ -277,34 +346,107 @@ export default class Quest
    /**
     * Normally would be in constructor(), but is extracted for usage in different methods as well
     *
-    * @param data
+    * @param {QuestData}   data - The serialized Quest data to initialize.
     */
    initData(data)
    {
       this.name = data.name || game.i18n.localize('ForienQuestLog.NewQuest');
+
+      /**
+       * @type {string}
+       */
       this.status = data.status || questTypes.inactive;
+
+      /**
+       * @type {string|null}
+       */
       this.giver = data.giver || null;
+
+      /**
+       * @type {Object|null}
+       */
       this.giverData = data.giverData || null;
+
+      /**
+       * @type {string}
+       */
       this.description = data.description || '';
+
+      /**
+       * @type {string}
+       */
       this.gmnotes = data.gmnotes || '';
+
+      /**
+       * @type {string}
+       */
       this.image = data.image || 'actor';
+
+      /**
+       * @type {string}
+       */
       this.giverName = data.giverName || 'actor';
+
+      /**
+       * @type {string}
+       */
       this.splash = data.splash || '';
+
+      /**
+       * @type {string}
+       */
       this.splashPos = data.splashPos || 'center';
+
+      /**
+       * @type {boolean}
+       */
       this.splashAsIcon = typeof data.splashAsIcon === 'boolean' ? data.splashAsIcon : false;
+
+      /**
+       * @type {string|null}
+       */
       this.location = data.location || null;
+
+      /**
+       * @type {number}
+       */
       this.priority = data.priority || 0;
+
+      /**
+       * @type {string|null}
+       */
       this.type = data.type || null;
+
+      /**
+       * @type {string|null}
+       */
       this.parent = data.parent || null;
+
+      /**
+       * @type {string[]}
+       */
       this.subquests = data.subquests || [];
+
+      /**
+       * @type {Task[]}
+       */
       this.tasks = Array.isArray(data.tasks) ? data.tasks.map((task) => new Task(task)) : [];
+
+      /**
+       * @type {Reward[]}
+       */
       this.rewards = Array.isArray(data.rewards) ? data.rewards.map((reward) => new Reward(reward)) : [];
 
-      // Sanity check. If status is incorrect set it to hidden.
+      // Sanity check. If status is incorrect set it to inactive.
       if (!questTypes[this.status]) { this.status = questTypes.inactive; }
 
       if (typeof data.date === 'object')
       {
+         /**
+          * Provides timestamps for quest create, start, end.
+          *
+          * @type {{start: (number|null), create: (number|null), end: (number|null)}}
+          */
          this.date = {
             create: typeof data.date.create === 'number' ? data.date.create : null,
             start: typeof data.date.start === 'number' ? data.date.start : null,
@@ -341,15 +483,15 @@ export default class Quest
    }
 
    /**
-    * Moves Quest (and Journal Entry) to different Folder.
+    * Sets new status for the quest. Also updates any timestamp / date data depending on status set.
     *
-    * @param target
+    * @param {string}   target - The target status to set.
     *
     * @returns {Promise<void>}
     */
    async move(target)
    {
-      if (!this.entry) { return; }
+      if (!this.entry || !questTypes[target]) { return; }
 
       this.status = target;
 
@@ -395,9 +537,9 @@ export default class Quest
    }
 
    /**
-    * Deletes Task from Quest.
+    * Removes subquest from Quest.
     *
-    * @param {number} questId
+    * @param {string} questId - The subquest ID to remove.
     */
    removeSubquest(questId)
    {
@@ -405,7 +547,7 @@ export default class Quest
    }
 
    /**
-    * Deletes Task from Quest by UUIDv4.
+    * Removes the task from this quest by UUIDv4.
     *
     * @param {string} uuidv4 - The UUIDv4 associated with a Task.
     *
@@ -417,6 +559,9 @@ export default class Quest
       if (index >= 0) { this.tasks.splice(index, 1); }
    }
 
+   /**
+    * Resets the quest giver.
+    */
    resetGiver()
    {
       this.giver = null;
@@ -455,10 +600,17 @@ export default class Quest
    /**
     * Sets any stored Foundry sheet class.
     *
-    * @returns {*}
+    * @param {object}   NewSheetClass - The sheet class.
     */
    static setSheet(NewSheetClass) { SheetClass = NewSheetClass; }
 
+   /**
+    * Locates and swaps the rewards indicated by the source and target UUIDv4s provided.
+    *
+    * @param {string}   sourceUuidv4 - The source UUIDv4
+    *
+    * @param {string}   targetUuidv4 - The target UUIDv4
+    */
    sortRewards(sourceUuidv4, targetUuidv4)
    {
       const index = this.rewards.findIndex((t) => t.uuidv4 === sourceUuidv4);
@@ -471,6 +623,13 @@ export default class Quest
       }
    }
 
+   /**
+    * Locates and swaps the tasks indicated by the source and target UUIDv4s provided.
+    *
+    * @param {string}   sourceUuidv4 - The source UUIDv4
+    *
+    * @param {string}   targetUuidv4 - The target UUIDv4
+    */
    sortTasks(sourceUuidv4, targetUuidv4)
    {
       // If there are sub quests in the objectives above tasks then an undefined targetUuidv4 can occur.
@@ -486,6 +645,9 @@ export default class Quest
       }
    }
 
+   /**
+    * @returns {QuestData} The serialized JSON for this Quest.
+    */
    toJSON()
    {
       return {
@@ -524,13 +686,18 @@ export default class Quest
    /**
     * The canonical name of this Document type, for example "Actor".
     *
-    * @type {string}
+    * @returns {string} The document name.
     */
    static get documentName()
    {
       return 'Quest';
    }
 
+   /**
+    * The canonical name of this Document type, for example "Actor".
+    *
+    * @returns {string} The document name.
+    */
    get documentName()
    {
       return 'Quest';
@@ -575,19 +742,56 @@ export default class Quest
  */
 class Reward
 {
+   /**
+    * @param {object}   data - Serialized reward data.
+    */
    constructor(data = {})
    {
+      /**
+       * @type {string|null}
+       */
       this.type = data.type || null;
+
+      /**
+       * @type {object}
+       */
       this.data = data.data || {};
+
+      /**
+       * @type {boolean}
+       */
       this.hidden = typeof data.hidden === 'boolean' ? data.hidden : false;
+
+      /**
+       * @type {boolean}
+       */
       this.locked = typeof data.locked === 'boolean' ? data.locked : true;
+
+      /**
+       * @type {string}
+       */
       this.uuidv4 = data.uuidv4 || Utils.uuidv4();
    }
 
+   /**
+    * Returns the name of the reward.
+    *
+    * @returns {string} Reward name.
+    */
    get name() { return this.data.name; }
 
+   /**
+    * Returns the Foundry UUID associated with this reward. Abstract rewards do not have a Foundry UUID.
+    *
+    * @returns {string|void} The Foundry UUID.
+    */
    get uuid() { return this.data.uuid; }
 
+   /**
+    * Serializes this reward.
+    *
+    * @returns {object} A JSON object.
+    */
    toJSON()
    {
       return JSON.parse(JSON.stringify({
@@ -599,12 +803,22 @@ class Reward
       }));
    }
 
+   /**
+    * Toggles the locked status.
+    *
+    * @returns {boolean} Current locked status.
+    */
    toggleLocked()
    {
       this.locked = !this.locked;
       return this.locked;
    }
 
+   /**
+    * Toggles the hidden status.
+    *
+    * @returns {boolean} Current hidden status.
+    */
    toggleVisible()
    {
       this.hidden = !this.hidden;
@@ -612,17 +826,47 @@ class Reward
    }
 }
 
+/**
+ * Encapsulates an objective / task.
+ */
 class Task
 {
+   /**
+    * @param {object}   data - The task data.
+    */
    constructor(data = {})
    {
+      /**
+       * @type {string|null}
+       */
       this.name = data.name || null;
+
+      /**
+       * @type {boolean}
+       */
       this.completed = data.completed || false;
+
+      /**
+       * @type {boolean}
+       */
       this.failed = data.failed || false;
+
+      /**
+       * @type {boolean}
+       */
       this.hidden = data.hidden || false;
+
+      /**
+       * @type {string}
+       */
       this.uuidv4 = data.uuidv4 || Utils.uuidv4();
    }
 
+   /**
+    * Gets the current CSS class based on state.
+    *
+    * @returns {string} CSS class
+    */
    get state()
    {
       if (this.completed)
@@ -636,6 +880,11 @@ class Task
       return 'square';
    }
 
+   /**
+    * Serializes the task.
+    *
+    * @returns {object} JSON object.
+    */
    toJSON()
    {
       return JSON.parse(JSON.stringify({
@@ -648,6 +897,9 @@ class Task
       }));
    }
 
+   /**
+    * Toggles the task state between completed, failed, incomplete.
+    */
    toggle()
    {
       if (this.completed === false && this.failed === false)
@@ -665,6 +917,11 @@ class Task
       }
    }
 
+   /**
+    * Toggles the hidden state.
+    *
+    * @returns {boolean} Current hidden state.
+    */
    toggleVisible()
    {
       this.hidden = !this.hidden;
@@ -672,3 +929,53 @@ class Task
       return this.hidden;
    }
 }
+
+/**
+ * @typedef {object} DeleteData The data object returned from `delete` indicating which quests were updated.
+ *
+ * @property {string}   deleteId - This quest ID which was deleted.
+ *
+ * @property {string[]} savedIds - The quest IDs of any parent / subquests that were updated.
+ */
+
+/**
+ * @typedef {object} QuestData
+ *
+ * @property {string}      name -
+ *
+ * @property {string}      status -
+ *
+ * @property {string|null} giver -
+ *
+ * @property {object}      giverData -
+ *
+ * @property {string}      description -
+ *
+ * @property {string}      gmnotes -
+ *
+ * @property {string}      image -
+ *
+ * @property {string}      giverName -
+ *
+ * @property {string}      splash -
+ *
+ * @property {string}      splashPos -
+ *
+ * @property {boolean}     splashAsIcon -
+ *
+ * @property {string|null} location -
+ *
+ * @property {number}      priority -
+ *
+ * @property {string|null} type -
+ *
+ * @property {string|null} parent -
+ *
+ * @property {string[]}    subquests -
+ *
+ * @property {Task[]}      tasks -
+ *
+ * @property {Reward[]}    rewards -
+ *
+ * @property {{create: number|null, start: number|null, end: number|null}}    date -
+ */
