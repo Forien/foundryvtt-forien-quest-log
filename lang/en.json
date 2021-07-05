@@ -60,6 +60,7 @@
       "Reward": "Reward",
       "CustomSource": "Custom Source",
       "DragDropActor": "Drag & Drop Actor, Item or Journal Entry or left click to set a custom source.",
+      "DragDropActorPlayer": "Drag & Drop Actor, Item or Journal Entry.",
       "DragDropRewards": "Drag & drop items here to add them as rewards.",
       "InvalidQuestId": "Cannot open Quest Preview due to invalid Quest ID.",
       "RewardDrop": "FQL (quest reward): {userName} dropped '{itemName}' onto {actorName}",

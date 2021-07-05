@@ -359,7 +359,6 @@
   background: rgba(255, 255, 255, 0.3);
   border: 1px solid transparent;
   border-radius: 5px;
-  height: 42px;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 #forien-quest-log .quest-log .table ul li:hover {

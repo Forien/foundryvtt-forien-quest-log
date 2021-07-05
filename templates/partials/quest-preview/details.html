@@ -1,7 +1,15 @@
 <header class="details-header">
   <div class="quest-giver-gc">
     {{#if (eq giver null)}}
-    <span class="drop-info">{{localize 'ForienQuestLog.QuestPreview.DragDropActor'}}</span>
+      {{#if (or canEdit playerEdit)}}
+        <span class="drop-info">
+          {{#if canEdit}}
+            {{localize 'ForienQuestLog.QuestPreview.DragDropActor'}}
+          {{else}}
+            {{localize 'ForienQuestLog.QuestPreview.DragDropActorPlayer'}}
+          {{/if}}
+        </span>
+      {{/if}}
     {{else}}
       {{#with data_giver}}
         <div class="quest-giver-image" data-actor-uuid="{{uuid}}" style="background-image: url({{img}});" title="{{name}}"></div>
