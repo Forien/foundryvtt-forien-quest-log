@@ -27,24 +27,8 @@ export default class QuestTracker extends RepositionableApplication
    {
       super.activateListeners(html);
 
-      html.on('click', '.quest-tracker-header', (event) =>
-      {
-         const questId = event.currentTarget.dataset.questId;
-
-         const folderState = sessionStorage.getItem(`${constants.folderState}${questId}`);
-         const collapsed = folderState !== 'false';
-         sessionStorage.setItem(`${constants.folderState}${questId}`, !collapsed);
-
-         this.render();
-
-         if (ViewManager.questLogFloating.rendered) { ViewManager.questLogFloating.render(); }
-      });
-
-      html.on('click', '.quest-tracker-link', (event) =>
-      {
-         const questId = event.currentTarget.dataset.questId;
-         QuestAPI.open({ questId });
-      });
+      html.on('click', '.quest-tracker-header', this._handleQuestClick.bind(this));
+      html.on('click', '.quest-tracker-link', this._handleQuestOpen);
    }
 
    /** @override */
@@ -58,6 +42,31 @@ export default class QuestTracker extends RepositionableApplication
       }
 
       return options;
+   }
+
+   /**
+    * @param {Event} event - HTML5 / jQuery event.
+    */
+   _handleQuestClick(event)
+   {
+      const questId = event.currentTarget.dataset.questId;
+
+      const folderState = sessionStorage.getItem(`${constants.folderState}${questId}`);
+      const collapsed = folderState !== 'false';
+      sessionStorage.setItem(`${constants.folderState}${questId}`, (!collapsed).toString());
+
+      this.render();
+
+      if (ViewManager.questLogFloating.rendered) { ViewManager.questLogFloating.render(); }
+   }
+
+   /**
+    * @param {Event} event - HTML5 / jQuery event.
+    */
+   _handleQuestOpen(event)
+   {
+      const questId = event.currentTarget.dataset.questId;
+      QuestAPI.open({ questId });
    }
 
    /**

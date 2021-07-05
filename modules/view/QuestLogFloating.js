@@ -39,28 +39,8 @@ export default class QuestLogFloating extends Application
    {
       super.activateListeners(html);
 
-      html.on('click', '.folder-toggle', (event) =>
-      {
-         const questId = $(event.target).closest('.folder-toggle').data('quest-id');
-         const dirItem = $(`.directory-item[data-quest-id='${questId}']`);
-         const dirItemIcon = $(`.folder-toggle[data-quest-id='${questId}'] i`);
-
-         dirItem.toggleClass('collapsed');
-         dirItemIcon.toggleClass('fas');
-         dirItemIcon.toggleClass('far');
-
-         const collapsed = dirItem.hasClass('collapsed');
-
-         sessionStorage.setItem(`${constants.folderState}${questId}`, collapsed);
-
-         if (ViewManager.questTracker.rendered) { ViewManager.questTracker.render(); }
-      });
-
-      html.on('click', '.questlog-floating .quest-open', (event) =>
-      {
-         const questId = $(event.target).closest('.quest-open').data('quest-id');
-         QuestAPI.open({ questId });
-      });
+      html.on('click', '.folder-toggle', this._handleFolderToggle);
+      html.on('click', '.questlog-floating .quest-open', this._handleQuestOpen);
 
       // Open and close folders on rerender. Data is store in localstorage so display is consistent after each render.
       for (const quest of QuestDB.sorted({ status: questTypes.active }))
@@ -93,5 +73,34 @@ export default class QuestLogFloating extends Application
          questTypesI18n,
          quests: QuestDB.sorted({ status: questTypes.active })
       });
+   }
+
+   /**
+    * @param {Event} event - HTML5 / jQuery event.
+    */
+   _handleFolderToggle(event)
+   {
+      const questId = $(event.target).closest('.folder-toggle').data('quest-id');
+      const dirItem = $(`.directory-item[data-quest-id='${questId}']`);
+      const dirItemIcon = $(`.folder-toggle[data-quest-id='${questId}'] i`);
+
+      dirItem.toggleClass('collapsed');
+      dirItemIcon.toggleClass('fas');
+      dirItemIcon.toggleClass('far');
+
+      const collapsed = dirItem.hasClass('collapsed');
+
+      sessionStorage.setItem(`${constants.folderState}${questId}`, collapsed);
+
+      if (ViewManager.questTracker.rendered) { ViewManager.questTracker.render(); }
+   }
+
+   /**
+    * @param {Event} event - HTML5 / jQuery event.
+    */
+   _handleQuestOpen(event)
+   {
+      const questId = $(event.target).closest('.quest-open').data('quest-id');
+      QuestAPI.open({ questId });
    }
 }

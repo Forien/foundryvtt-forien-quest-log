@@ -11,20 +11,6 @@ export default class HandlerAny
    /**
     * @param {Event}          event - HTML5 / jQuery event.
     *
-    * @returns {Promise<void>} A promise
-    */
-   static async questStatusSet(event)
-   {
-      const target = $(event.target).data('target');
-      const questId = $(event.target).data('quest-id');
-
-      const quest = QuestDB.getQuest(questId);
-      if (quest) { await Socket.moveQuest({ quest, target }); }
-   }
-
-   /**
-    * @param {Event}          event - HTML5 / jQuery event.
-    *
     * @param {Quest}          quest - The current quest being manipulated.
     *
     * @returns {Promise<void>} A promise
@@ -49,5 +35,19 @@ export default class HandlerAny
    {
       const questId = $(event.currentTarget).data('quest-id');
       QuestAPI.open({ questId });
+   }
+
+   /**
+    * @param {Event}          event - HTML5 / jQuery event.
+    *
+    * @returns {Promise<void>} A promise
+    */
+   static async questStatusSet(event)
+   {
+      const target = $(event.target).data('target');
+      const questId = $(event.target).data('quest-id');
+
+      const quest = QuestDB.getQuest(questId);
+      if (quest) { await Socket.moveQuest({ quest, target }); }
    }
 }
