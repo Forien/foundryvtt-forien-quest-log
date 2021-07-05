@@ -16,10 +16,10 @@ const terserConfig = {
 // The deploy path for the server bundle which includes the common code.
 const s_DEPLOY_PATH = './external';
 
-const s_DEPLOY_MINIFY = true;
+const s_DEPLOY_MINIFY = false;
 
 // Produce sourcemaps or not
-const s_SOURCEMAP = true;
+const s_SOURCEMAP = false;
 
 // Defines potential output plugins to use conditionally if the .env file indicates the bundles should be
 // minified / mangled.
