@@ -284,6 +284,12 @@ export default class QuestPreview extends FormApplication
     *
     * Save the quest on close with no refresh of data.
     *
+    * @param {object} options - Optional params
+    *
+    * @param {boolean} [options.noSave] -
+    *
+    * @param {object} [options.options] -
+    *
     * @returns {Promise<void>}
     * @inheritDoc
     */

@@ -72,7 +72,7 @@ export default class QuestTracker extends RepositionableApplication
    /**
     * Prepares the quest data.
     *
-    * @returns {Promise<{isGM: *, isInactive: boolean|*, personalActors: *, name: string, id: *, source: Document.giver|null|*, isPersonal: boolean|*, tasks: *|*[], isHidden: boolean|*, subquests: []|*[]}[]>}
+    * @returns {object[]} Sorted active quests.
     */
    async prepareQuests()
    {

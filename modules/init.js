@@ -115,3 +115,9 @@ Hooks.on('renderJournalSheet', (app, html) =>
 
    if (option) { option.remove(); }
 });
+
+/**
+ * @typedef {object} FQLPublicAPI - Exposes a few FQL classes and instances publicly.
+ *
+ * @property {QuestAPI} QuestAPI - QuestAPI class - Exposes static methods to interact with the quest system.
+ */

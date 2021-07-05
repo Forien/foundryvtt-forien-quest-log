@@ -87,6 +87,9 @@ export default class Quest
       return !isInactive && this.entry.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER);
    }
 
+   /**
+    * @returns {boolean} Whether the current user has owner permissions.
+    */
    get isOwner()
    {
       return game.user.isGM ||

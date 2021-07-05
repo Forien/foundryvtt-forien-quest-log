@@ -295,6 +295,9 @@ export default class HandlerDetails
       {
          const uuidData = Utils.getDataFromUUID(data);
 
+         /**
+          * @type {RewardDropData}
+          */
          const dataTransfer = {
             _fqlData: {
                questId: quest.id,
@@ -776,3 +779,30 @@ export default class HandlerDetails
       });
    }
 }
+
+/**
+ * @typedef {object} FQLDropData An object attached to drop data transfer which describes the FQL reward item and who
+ *                               is dropping it into an actor sheet.
+ *
+ * @property {string} questId - The Quest ID
+ *
+ * @property {string} uuidv4 - The associated UUIDv4 of a quest reward.
+ *
+ * @property {string} itemName - The reward item name.
+ *
+ * @property {string} userName - The user name who is dropping the item.
+ */
+
+/**
+ * @typedef {object} RewardDropData
+ *
+ * @property {FQLDropData} _fqlData - FQL drop data used to remove the reward from a quest.
+ *
+ * @property {string}      type - Type of document.
+ *
+ * @property {object}      data - Document data.
+ *
+ * @property {string}      uuid - The UUID of the document.
+ *
+ * @property {id}          id - The ID of the document.
+ */

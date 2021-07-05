@@ -161,7 +161,7 @@ export default class Enrich
     *
     * @param {Quest}  quest - Quest data to construct view data.
     *
-    * @returns {Promise<object>} A single quest view or SortedQuests upgraded
+    * @returns {object} A single quest view or SortedQuests upgraded
     */
    static quest(quest)
    {

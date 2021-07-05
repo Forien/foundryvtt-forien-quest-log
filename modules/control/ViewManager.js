@@ -50,6 +50,13 @@ export default class ViewManager
 
    static get questTracker() { return Apps.questTracker; }
 
+   /**
+    * @param {object}   options - Optional parameters
+    *
+    * @param {boolean}  [options.questPreview] -
+    *
+    * @param {object}   [options.options] -
+    */
    static closeAll({ questPreview = false, ...options } = {})
    {
       if (ViewManager.questLog.rendered) { ViewManager.questLog.close(options); }
@@ -79,6 +86,15 @@ export default class ViewManager
         QuestDB.getActiveCount() > 0;
    }
 
+   /**
+    * @param {object}   options - Optional parameters
+    *
+    * @param {boolean}  [options.force] -
+    *
+    * @param {boolean}  [options.questPreview] -
+    *
+    * @param {object}   [options.options] -
+    */
    static renderAll({ force = false, questPreview = false, ...options } = {})
    {
       if (ViewManager.questLog.rendered) { ViewManager.questLog.render(force, options); }
