@@ -12,6 +12,9 @@
     "collect.js": "^4.28.6"
   },
   "devDependencies": {
+    "@itsjamie/esdoc-core": "^0.3",
+    "@itsjamie/esdoc-cli": "^0.3",
+    "@itsjamie/esdoc-standard-plugin": "^0.3",
     "@rollup/plugin-commonjs": "^19",
     "@rollup/plugin-node-resolve": "^13",
     "@rollup/plugin-virtual": "^2",
@@ -29,6 +32,7 @@
   "scripts": {
     "build-css": "npm run sass && npm run postcss",
     "eslint": "eslint .",
+    "esdoc": "esdoc",
     "sass": "sass ./styles/init.scss ./styles/init.css",
     "postcss": "postcss ./styles/init.css -p sass -u autoprefixer postcss-preset-env -m -o ./styles/init.css",
     "rollup-collect.js": "rollup --config"
