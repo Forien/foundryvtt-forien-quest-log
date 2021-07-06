@@ -54,9 +54,20 @@ const Sort = {
 Object.freeze(Filter);
 Object.freeze(Sort);
 
-const s_DELETE_QUEST = (questId, generate = true) =>
+/**
+ * Deletes a QuestEntry by quest ID. Removes the quest index and then removes the QuestEntry from the map of maps
+ * If this results in a deletion and generate is true then rebuild the QuestEntry Collection.
+ *
+ * @param {string}   questId - The Quest ID to delete.
+ *
+ * @param {boolean}  [generate=true] - Generate the associated QuestEntry Collection.
+ *
+ * @returns {boolean} Whether a QuestEntry was deleted.
+ */
+const s_DELETE_QUEST_ENTRY = (questId, generate = true) =>
 {
    const currentStatus = s_QUEST_INDEX.get(questId);
+   s_QUEST_INDEX.delete(questId);
 
    let result = false;
 
@@ -157,7 +168,6 @@ export default class QuestDB
 
          if (content)
          {
-            content.id = entry.id;
             const quest = new Quest(content, entry);
 
             // Must set a QuestEntry w/ an undefined enrich as all quest data must be loaded before enrichment.
@@ -190,7 +200,6 @@ export default class QuestDB
 
       if (content)
       {
-         content.id = entry.id;
          const questEntry = new QuestEntry(new Quest(content, entry));
          s_SET_QUEST_ENTRY(questEntry.hydrate());
 
@@ -266,7 +275,7 @@ export default class QuestDB
    static deleteJournalEntry(entry, options, id)
    {
       const questEntry = s_GET_QUEST_ENTRY(entry.id);
-      if (questEntry && s_DELETE_QUEST(entry.id))
+      if (questEntry && s_DELETE_QUEST_ENTRY(entry.id))
       {
          Hooks.callAll('deleteQuestEntry', questEntry, options, id);
       }
@@ -396,7 +405,6 @@ export default class QuestDB
          }
          else
          {
-            content.id = entry.id;
             questEntry = new QuestEntry(new Quest(content, entry));
             s_SET_QUEST_ENTRY(questEntry.hydrate());
          }
@@ -491,7 +499,6 @@ export class QuestEntry
    update(entry, content)
    {
       this.quest.entry = entry;
-      content.id = entry.id;
       this.quest.initData(content);
       const status = this.status;
       this.hydrate();
