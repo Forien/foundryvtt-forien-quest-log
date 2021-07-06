@@ -8,7 +8,7 @@ import ViewManager      from './control/ViewManager.js';
 import Quest            from './model/Quest.js';
 import QuestFolder      from './model/QuestFolder.js';
 import QuestsCollection from './model/QuestsCollection.js';
-import QuestPreview     from './view/QuestPreview.js';
+import QuestPreview     from './view/preview/QuestPreview.js';
 import DBMigration      from '../database/DBMigration.js';
 
 import { constants, settings }   from './model/constants.js';
@@ -115,3 +115,9 @@ Hooks.on('renderJournalSheet', (app, html) =>
 
    if (option) { option.remove(); }
 });
+
+/**
+ * @typedef {object} FQLPublicAPI - Exposes a few FQL classes and instances publicly.
+ *
+ * @property {QuestAPI} QuestAPI - QuestAPI class - Exposes static methods to interact with the quest system.
+ */

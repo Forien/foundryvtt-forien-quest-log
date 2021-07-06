@@ -1,0 +1,815 @@
+import Enrich     from '../../control/Enrich.js';
+import Socket     from '../../control/Socket.js';
+import Utils      from '../../control/Utils.js';
+import FQLDialog  from '../FQLDialog.js';
+
+/**
+ * Defines the default icon used for abstract rewards.
+ *
+ * @type {string}
+ */
+const s_DEFAULT_REWARD_ICON = 'icons/svg/item-bag.svg';
+
+export default class HandlerDetails
+{
+   /**
+    * @param {Event}          event - HTML5 / jQuery event.
+    *
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    */
+   static questGiverCustomEditName(event, quest, questPreview)
+   {
+      const target = $(event.target).data('target');
+
+      let value = quest[target];
+
+      value = value.replace(/'/g, '&quot;');
+
+      const input = $(`<input type="text" class="editable-input" value="${value}" data-target="${
+       target}" maxlength="24"/>`);
+
+      const parent = $(event.target).closest('.actions-single').prev('.editable-container');
+
+      parent.css('flex', '0 0 230px');
+      parent.html('');
+      parent.append(input);
+      input.focus();
+
+      input.focusout(async (event) =>
+      {
+         const targetOut = $(event.target).data('target');
+         const valueOut = $(event.target).val();
+
+         switch (targetOut)
+         {
+            case 'giverName':
+               quest.giverName = valueOut;
+               if (typeof quest.giverData === 'object') { quest.giverData.name = valueOut; }
+               questPreview.options.title = game.i18n.format('ForienQuestLog.QuestPreview.Title', quest);
+               break;
+         }
+         await questPreview.saveQuest();
+      });
+   }
+
+   /**
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    */
+   static questGiverCustomSelectImage(quest, questPreview)
+   {
+      const currentPath = quest.giver === 'abstract' ? quest.image : void 0;
+
+      new FilePicker({
+         type: 'image',
+         current: currentPath,
+         callback: async (path) =>
+         {
+            quest.giver = 'abstract';
+            quest.image = path;
+            quest.giverName = game.i18n.localize('ForienQuestLog.QuestPreview.CustomSource');
+            quest.giverData = await Enrich.giverFromQuest(quest);
+            delete quest.giverData.uuid;
+
+            await questPreview.saveQuest();
+         },
+      }).browse(currentPath);
+   }
+
+   /**
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    *
+    * @returns {Promise<void>} A promise.
+    */
+   static async questGiverDelete(quest, questPreview)
+   {
+      quest.resetGiver();
+      return questPreview.saveQuest();
+   }
+
+   /**
+    * @param {Event}          event - HTML5 / jQuery event.
+    *
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    *
+    * @returns {Promise<void>} A promise.
+    */
+   static async questGiverDropDocument(event, quest, questPreview)
+   {
+      event.preventDefault();
+
+      const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+
+      if (typeof data.id === 'string')
+      {
+         const uuid = Utils.getUUID(data, ['Actor', 'Item', 'JournalEntry']);
+
+         const giverData = await Enrich.giverFromUUID(uuid);
+         if (giverData)
+         {
+            quest.giver = uuid;
+            quest.giverData = giverData;
+            await questPreview.saveQuest();
+         }
+         else
+         {
+            ui.notifications.warn(game.i18n.format('ForienQuestLog.QuestPreview.Notifications.BadUUID', { uuid }));
+         }
+      }
+      else
+      {
+         // Document has data, but lacks a UUID, so it is a data copy. Inform user that quest giver may only be
+         // from world and compendium sources with a UUID.
+         if (typeof data.data === 'object')
+         {
+            ui.notifications.warn(game.i18n.localize('ForienQuestLog.QuestPreview.Notifications.WrongDocType'));
+         }
+      }
+   }
+
+   /**
+    * @param {Event} event - HTML5 / jQuery event.
+    *
+    * @returns {Promise<void>} A promise.
+    */
+   static async questGiverShowActorSheet(event)
+   {
+      const uuid = $(event.target).data('actor-uuid');
+
+      if (typeof uuid === 'string' && uuid.length)
+      {
+         await Utils.showSheetFromUUID(uuid, { editable: false });
+      }
+   }
+
+   /**
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    *
+    * @returns {Promise<void>} A promise.
+    */
+   static async questGiverToggleImage(quest, questPreview)
+   {
+      quest.toggleImage();
+
+      const giverData = await Enrich.giverFromQuest(quest);
+      if (giverData)
+      {
+         quest.giverData = giverData;
+         await questPreview.saveQuest();
+      }
+   }
+
+   /**
+    * @param {Event}          event - HTML5 / jQuery event.
+    *
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    */
+   static rewardAbstractEditName(event, quest, questPreview)
+   {
+      const target = $(event.target).data('target');
+
+      let value = quest[target];
+      let uuidv4;
+
+      if (target === 'reward.name')
+      {
+         uuidv4 = $(event.target).data('uuidv4');
+
+         const reward = quest.getReward(uuidv4);
+         if (!reward) { return; }
+
+         value = reward.name;
+      }
+
+      value = value.replace(/'/g, '&quot;');
+
+      const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${
+       uuidv4 !== void 0 ? `data-uuidv4='${uuidv4}'` : ``} maxlength="30"/>`);
+
+      const parent = $(event.target).closest('.actions').prev('.editable-container');
+
+      parent.html('');
+      parent.append(input);
+      input.focus();
+
+      input.focusout(async (event) =>
+      {
+         const targetOut = $(event.target).data('target');
+         const valueOut = $(event.target).val();
+
+         switch (targetOut)
+         {
+            case 'reward.name':
+            {
+               uuidv4 = $(event.target).data('uuidv4');
+               const reward = quest.getReward(uuidv4);
+               if (!reward) { return; }
+
+               reward.data.name = valueOut;
+               break;
+            }
+         }
+         await questPreview.saveQuest();
+      });
+   }
+
+   /**
+    * @param {Event}          event - HTML5 / jQuery event.
+    *
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    */
+   static rewardAddAbstract(event, quest, questPreview)
+   {
+      const li = $('<li class="reward"></li>');
+
+      const input = $(`<input type="text" class="editable-input" value="" placeholder="${game.i18n.localize(
+       'ForienQuestLog.SampleReward')}" maxlength="30"/>`);
+
+      const box = $(event.target).closest('.quest-rewards').find('.rewards-box ul');
+
+      li.append(input);
+      box.append(li);
+
+      input.focus();
+
+      input.focusout(async (event) =>
+      {
+         const value = $(event.target).val();
+         if (value !== void 0 && value.length)
+         {
+            quest.addReward({
+               data: {
+                  name: value,
+                  img: s_DEFAULT_REWARD_ICON
+               },
+               hidden: true,
+               type: 'Abstract'
+            });
+         }
+         await questPreview.saveQuest();
+      });
+   }
+
+   /**
+    * @param {Event}          event - HTML5 / jQuery event.
+    *
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    *
+    * @returns {Promise<void>} A promise.
+    */
+   static async rewardDelete(event, quest, questPreview)
+   {
+      const target = $(event.target);
+      const uuidv4 = target.data('uuidv4');
+      const name = target.data('reward-name');
+
+      // Await a semi-modal dialog.
+      const result = await FQLDialog.confirmDeleteReward({ name, result: uuidv4, questId: quest.id });
+      if (result)
+      {
+         quest.removeReward(result);
+
+         await questPreview.saveQuest();
+      }
+   }
+
+   /**
+    * @param {Event} event - HTML5 / jQuery event.
+    *
+    * @param {Quest}          quest - The current quest being manipulated.
+    */
+   static async rewardDragStartItem(event, quest)
+   {
+      const data = $(event.target).data('transfer');
+
+      const document = await Utils.getDocumentFromUUID(data, { permissionCheck: false });
+      if (document)
+      {
+         const uuidData = Utils.getDataFromUUID(data);
+
+         /**
+          * @type {RewardDropData}
+          */
+         const dataTransfer = {
+            _fqlData: {
+               questId: quest.id,
+               uuidv4: data.uuidv4,
+               itemName: data.name,
+               userName: game.user.name,
+            },
+            type: 'Item',
+            data: document.data,
+            uuid: data.uuid,
+            id: document.id
+         };
+
+         // Add compendium pack info if applicable
+         if (uuidData && uuidData.pack) { dataTransfer.pack = uuidData.pack; }
+
+         event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dataTransfer));
+      }
+   }
+
+   /**
+    * @param {Event} event - HTML5 / jQuery event.
+    */
+   static rewardDragStartSort(event)
+   {
+      event.stopPropagation();
+
+      const li = event.target.closest('li') || null;
+      if (!li) { return; }
+
+      const dataTransfer = {
+         type: 'Reward',
+         mode: 'Sort',
+         uuidv4: $(li).data('uuidv4')
+      };
+      event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dataTransfer));
+   }
+
+   /**
+    * Handles an external item reward drop. Also handles the sort reward item drop.
+    *
+    * @param {Event}          event - HTML5 / jQuery event.
+    *
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    *
+    * @returns {Promise<void>} A promise.
+    */
+   static async rewardDropItem(event, quest, questPreview)
+   {
+      event.preventDefault();
+
+      let data;
+      try
+      {
+         data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+      }
+      catch (e)
+      {
+         return;
+      }
+
+      if (data.mode === 'Sort' && data.type === 'Reward')
+      {
+         const dt = event.target.closest('li.reward') || null;
+         quest.sortRewards(data.uuidv4, dt?.dataset.uuidv4);
+         await quest.save();
+         Socket.refreshQuestPreview({ questId: quest.id });
+      }
+
+      if (data.type === 'Item' && data._fqlData === void 0)
+      {
+         if (typeof data.id === 'string')
+         {
+            const uuid = Utils.getUUID(data);
+
+            const item = await Enrich.giverFromUUID(uuid);
+            if (item)
+            {
+               quest.addReward({ type: 'Item', data: item, hidden: true });
+               await questPreview.saveQuest();
+            }
+            else
+            {
+               ui.notifications.warn(game.i18n.format('ForienQuestLog.QuestPreview.Notifications.BadUUID', { uuid }));
+            }
+         }
+         else
+         {
+            // Document has data, but lacks a UUID, so it is a data copy. Inform user that rewards may only be
+            // items that are backed by a document with a UUID.
+            if (typeof data.data === 'object')
+            {
+               ui.notifications.warn(game.i18n.localize('ForienQuestLog.QuestPreview.Notifications.WrongItemType'));
+            }
+         }
+      }
+   }
+
+   /**
+    * @param {Event}          event - HTML5 / jQuery event.
+    *
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    *
+    * @returns {Promise<void>} The promise from `saveQuest`.
+    */
+   static async rewardSelectAbstractImage(event, quest, questPreview)
+   {
+      const uuidv4 = $(event.target).data('uuidv4');
+
+      let reward = quest.getReward(uuidv4);
+      if (!reward) { return; }
+
+      const currentPath = reward.data.img;
+      await new FilePicker({
+         type: 'image',
+         current: currentPath,
+         callback: async (path) =>
+         {
+            reward = quest.getReward(uuidv4);
+            if (reward)
+            {
+               reward.data.img = path;
+               await questPreview.saveQuest();
+            }
+         },
+      }).browse(currentPath);
+   }
+
+   /**
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    *
+    * @returns {Promise<void>} The promise from `saveQuest`.
+    */
+   static async rewardsShowAll(quest, questPreview)
+   {
+      for (const reward of quest.rewards) {  reward.hidden = false; }
+      if (quest.rewards.length) { await questPreview.saveQuest(); }
+   }
+
+   /**
+    * @param {Event}          event - HTML5 / jQuery event.
+    *
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    *
+    * @returns {Promise<void>} The promise from `saveQuest`.
+    */
+   static async rewardShowItemSheet(event, quest, questPreview)
+   {
+      event.stopPropagation();
+      const data = $(event.currentTarget).data('transfer');
+      const uuidv4 = $(event.currentTarget).data('uuidv4');
+
+      const reward = quest.getReward(uuidv4);
+
+      if (reward && (questPreview.canEdit || !reward.locked))
+      {
+         await Utils.showSheetFromUUID(data, { permissionCheck: false, editable: false });
+      }
+   }
+
+   /**
+    * @param {Event}          event - HTML5 / jQuery event.
+    *
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    *
+    * @returns {Promise<void>} The promise from `saveQuest`.
+    */
+   static async rewardToggleHidden(event, quest, questPreview)
+   {
+      const uuidv4 = $(event.target).data('uuidv4');
+      const reward = quest.getReward(uuidv4);
+      if (reward)
+      {
+         reward.toggleVisible();
+         await questPreview.saveQuest();
+      }
+   }
+
+   /**
+    * @param {Event}          event - HTML5 / jQuery event.
+    *
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    *
+    * @returns {Promise<void>} The promise from `saveQuest`.
+    */
+   static async rewardToggleLocked(event, quest, questPreview)
+   {
+      const uuidv4 = $(event.target).data('uuidv4');
+      const reward = quest.getReward(uuidv4);
+      if (reward)
+      {
+         reward.toggleLocked();
+         await questPreview.saveQuest();
+      }
+   }
+
+   /**
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    *
+    * @returns {Promise<void>} The promise from `saveQuest`.
+    */
+   static async rewardsUnlockAll(quest, questPreview)
+   {
+      for (const reward of quest.rewards) {  reward.locked = false; }
+      if (quest.rewards.length) { await questPreview.saveQuest(); }
+   }
+
+   /**
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    */
+   static async splashImagePopupShow(quest, questPreview)
+   {
+      if (questPreview._splashImagePopup !== void 0 && questPreview._splashImagePopup.rendered)
+      {
+         questPreview._splashImagePopup.bringToTop();
+      }
+      else
+      {
+         questPreview._splashImagePopup = new ImagePopout(quest.splash, { shareable: true });
+         questPreview._splashImagePopup.render(true);
+
+         Hooks.once('closeImagePopout', async (app) =>
+         {
+            if (app.appId === questPreview?._splashImagePopup?.appId)
+            {
+               questPreview._splashImagePopup = void 0;
+            }
+         });
+      }
+   }
+
+   /**
+    * @param {Event}          event - HTML5 / jQuery event.
+    *
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    */
+   static taskAdd(event, quest, questPreview)
+   {
+      event.preventDefault();
+
+      const li = $('<li class="task"></li>');
+
+      const placeholder = $('<span><i class="fas fa-check hidden"></i></span>');
+
+      const input = $(`<input type="text" class="editable-input" value="" placeholder="${game.i18n.localize(
+       'ForienQuestLog.SampleTask')}" />`);
+
+      const box = $(event.target).closest('.quest-tasks').find('.tasks-box ul');
+
+      li.append(placeholder);
+      li.append(input);
+      box.append(li);
+
+      input.focus();
+
+      input.focusout(async (event) =>
+      {
+         const value = $(event.target).val();
+         if (value !== void 0 && value.length)
+         {
+            quest.addTask({ name: value, hidden: questPreview.canEdit });
+         }
+         await questPreview.saveQuest();
+      });
+   }
+
+   /**
+    * @param {Event}          event - HTML5 / jQuery event.
+    *
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    *
+    * @returns {Promise<void>} A promise
+    */
+   static async taskDelete(event, quest, questPreview)
+   {
+      const target = $(event.target);
+      const uuidv4 = target.data('uuidv4');
+      const name = target.data('task-name');
+
+      const result = await FQLDialog.confirmDeleteTask({ name, result: uuidv4, questId: quest.id });
+      if (result)
+      {
+         quest.removeTask(result);
+
+         await questPreview.saveQuest();
+      }
+   }
+
+   /**
+    * @param {Event} event - HTML5 / jQuery event.
+    */
+   static taskDragStartSort(event)
+   {
+      event.stopPropagation();
+
+      const li = event.target.closest('li') || null;
+      if (!li) { return; }
+
+      const dataTransfer = {
+         type: 'Task',
+         mode: 'Sort',
+         uuidv4: $(li).data('uuidv4')
+      };
+
+      event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dataTransfer));
+   }
+
+   /**
+    * @param {Event}          event - HTML5 / jQuery event.
+    *
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @returns {Promise<void>} A promise
+    */
+   static async taskDropItem(event, quest)
+   {
+      event.preventDefault();
+
+      const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+
+      if (data.mode === 'Sort' && data.type === 'Task')
+      {
+         const dt = event.target.closest('li.task') || null;
+         quest.sortTasks(data.uuidv4, dt?.dataset.uuidv4);
+         await quest.save();
+         Socket.refreshQuestPreview({ questId: quest.id });
+      }
+   }
+
+   /**
+    * @param {Event}          event - HTML5 / jQuery event.
+    *
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    *
+    * @returns {Promise<void>} A promise
+    */
+   static async taskToggleHidden(event, quest, questPreview)
+   {
+      const uuidv4 = $(event.target).data('uuidv4');
+      const task = quest.getTask(uuidv4);
+      if (task)
+      {
+         task.toggleVisible();
+         await questPreview.saveQuest();
+      }
+   }
+
+   /**
+    * @param {Event}          event - HTML5 / jQuery event.
+    *
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    *
+    * @returns {Promise<void>} A promise
+    */
+   static async taskToggleState(event, quest, questPreview)
+   {
+      const uuidv4 = $(event.target).data('uuidv4');
+
+      const task = quest.getTask(uuidv4);
+      if (task)
+      {
+         task.toggle();
+         await questPreview.saveQuest();
+      }
+   }
+
+   /**
+    * @param {Event}          event - HTML5 / jQuery event.
+    *
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    */
+   static taskEditName(event, quest, questPreview)
+   {
+      const target = $(event.target).data('target');
+      let uuidv4 = $(event.target).data('uuidv4');
+      let task = quest.getTask(uuidv4);
+
+      // Early out conditional if the target isn't `task.name` or the task doesn't exist.
+      if (target === void 0 || target !== 'task.name' || !task) { return; }
+
+      let value = task.name;
+
+      value = value.replace(/'/g, '&quot;');
+
+      const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${
+       uuidv4 !== void 0 ? `data-uuidv4='${uuidv4}'` : ``}/>`);
+
+      const parent = $(event.target).closest('.actions').prev('.editable-container');
+
+      parent.html('');
+      parent.append(input);
+      input.focus();
+
+      input.focusout(async (event) =>
+      {
+         const targetOut = $(event.target).data('target');
+         const valueOut = $(event.target).val();
+
+         switch (targetOut)
+         {
+            case 'task.name':
+            {
+               uuidv4 = $(event.target).data('uuidv4');
+               task = quest.getTask(uuidv4);
+               if (task)
+               {
+                  task.name = valueOut;
+                  await questPreview.saveQuest();
+               }
+               break;
+            }
+         }
+      });
+   }
+
+   /**
+    * @param {Event}          event - HTML5 / jQuery event.
+    *
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    */
+   static questEditName(event, quest, questPreview)
+   {
+      const target = $(event.target).data('target');
+
+      let value = quest[target];
+
+      value = value.replace(/'/g, '&quot;');
+
+      const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${
+       target}' maxlength="48"/>`);
+
+      const parent = $(event.target).closest('.actions-single').prev('.editable-container');
+
+      parent.html('');
+      parent.append(input);
+      input.focus();
+
+      input.focusout(async (event) =>
+      {
+         const targetOut = $(event.target).data('target');
+         const valueOut = $(event.target).val();
+
+         switch (targetOut)
+         {
+            case 'name':
+               quest.name = valueOut;
+               questPreview.options.title = game.i18n.format('ForienQuestLog.QuestPreview.Title', quest);
+               break;
+         }
+         await questPreview.saveQuest();
+      });
+   }
+}
+
+/**
+ * @typedef {object} FQLDropData An object attached to drop data transfer which describes the FQL reward item and who
+ *                               is dropping it into an actor sheet.
+ *
+ * @property {string} questId - The Quest ID
+ *
+ * @property {string} uuidv4 - The associated UUIDv4 of a quest reward.
+ *
+ * @property {string} itemName - The reward item name.
+ *
+ * @property {string} userName - The user name who is dropping the item.
+ */
+
+/**
+ * @typedef {object} RewardDropData
+ *
+ * @property {FQLDropData} _fqlData - FQL drop data used to remove the reward from a quest.
+ *
+ * @property {string}      type - Type of document.
+ *
+ * @property {object}      data - Document data.
+ *
+ * @property {string}      uuid - The UUID of the document.
+ *
+ * @property {id}          id - The ID of the document.
+ */

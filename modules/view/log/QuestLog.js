@@ -1,11 +1,10 @@
-import FQLDialog     from './FQLDialog.js';
-import QuestAPI      from '../control/QuestAPI.js';
-import QuestDB       from '../control/QuestDB.js';
-import Socket        from '../control/Socket.js';
-import Utils         from '../control/Utils.js';
-import ViewManager   from '../control/ViewManager.js';
+import QuestDB       from '../../control/QuestDB.js';
+import Utils         from '../../control/Utils.js';
+import FQLDialog     from '../FQLDialog.js';
 
-import { constants, questTypesI18n, settings } from '../model/constants.js';
+import HandlerLog    from './HandlerLog.js';
+
+import { constants, questTypesI18n, settings } from '../../model/constants.js';
 
 export default class QuestLog extends Application
 {
@@ -59,56 +58,15 @@ export default class QuestLog extends Application
          }
       }
 
-      html.on('click', '.new-quest-btn', async () =>
-      {
-         if (ViewManager.verifyQuestCanAdd())
-         {
-            const quest = await QuestDB.createQuest();
-            ViewManager.questAdded({ quest });
-         }
-      });
+      html.on('click', '.new-quest-btn', HandlerLog.questAdd);
 
-      html.on('click', '.actions.quest-status i', async (event) =>
-      {
-         const target = $(event.target).data('target');
-         const questId = $(event.target).data('quest-id');
-         const name = $(event.target).data('quest-name');
+      html.on('click', '.actions.quest-status i.delete', HandlerLog.questDelete);
 
-         const classList = $(event.target).attr('class');
-         if (classList.includes('move'))
-         {
-            const quest = QuestDB.getQuest(questId);
-            if (quest)
-            {
-               await Socket.moveQuest({ quest, target });
-            }
-         }
-         else if (classList.includes('delete'))
-         {
-            const result = await FQLDialog.confirmDeleteQuest({ name, result: questId, questId, isQuestLog: true });
-            if (result)
-            {
-               const quest = QuestDB.getQuest(result);
-               if (quest) { await Socket.deletedQuest(await quest.delete()); }
-            }
-         }
-      });
+      html.on('dragstart', '.drag-quest', HandlerLog.questDragStart);
 
-      html.on('click', '.title', (event) =>
-      {
-         const questId = $(event.target).closest('.title').data('quest-id');
-         QuestAPI.open({ questId });
-      });
+      html.on('click', '.title', HandlerLog.questOpen);
 
-      html.on('dragstart', '.drag-quest', (event) =>
-      {
-         const dataTransfer = {
-            type: 'Quest',
-            id: $(event.target).data('quest-id')
-         };
-         event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dataTransfer));
-
-      });
+      html.on('click', '.actions.quest-status i.move', HandlerLog.questStatusSet);
    }
 
    /**
@@ -138,7 +96,7 @@ export default class QuestLog extends Application
          options,
          isGM: game.user.isGM,
          isPlayer: !game.user.isGM,
-         isTrustedPlayer: Utils.isTrustedPlayer(),
+         isTrustedPlayerEdit: Utils.isTrustedPlayerEdit(),
          canAccept: game.settings.get(constants.moduleName, settings.allowPlayersAccept),
          canCreate: game.settings.get(constants.moduleName, settings.allowPlayersCreate),
          showTasks: game.settings.get(constants.moduleName, settings.showTasks),

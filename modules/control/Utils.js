@@ -112,7 +112,7 @@ export default class Utils
     *
     * @returns {boolean} Is trusted player edit.
     */
-   static isTrustedPlayer(user = game.user)
+   static isTrustedPlayerEdit(user = game.user)
    {
       return user.isTrusted && game.settings.get(constants.moduleName, settings.trustedPlayerEdit);
    }

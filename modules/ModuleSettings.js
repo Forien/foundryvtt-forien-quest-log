@@ -10,10 +10,15 @@ const scope = {
    world: 'world'
 };
 
+/**
+ * Provides registration for all module settings.
+ */
 export default class ModuleSettings
 {
    /**
-    * Registers various configuration settings for Module
+    * Registers all module settings.
+    *
+    * @see {link:settings}
     */
    static register()
    {

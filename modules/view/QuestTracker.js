@@ -27,24 +27,8 @@ export default class QuestTracker extends RepositionableApplication
    {
       super.activateListeners(html);
 
-      html.on('click', '.quest-tracker-header', (event) =>
-      {
-         const questId = event.currentTarget.dataset.questId;
-
-         const folderState = sessionStorage.getItem(`${constants.folderState}${questId}`);
-         const collapsed = folderState !== 'false';
-         sessionStorage.setItem(`${constants.folderState}${questId}`, !collapsed);
-
-         this.render();
-
-         if (ViewManager.questLogFloating.rendered) { ViewManager.questLogFloating.render(); }
-      });
-
-      html.on('click', '.quest-tracker-link', (event) =>
-      {
-         const questId = event.currentTarget.dataset.questId;
-         QuestAPI.open({ questId });
-      });
+      html.on('click', '.quest-tracker-header', this._handleQuestClick.bind(this));
+      html.on('click', '.quest-tracker-link', this._handleQuestOpen);
    }
 
    /** @override */
@@ -61,9 +45,34 @@ export default class QuestTracker extends RepositionableApplication
    }
 
    /**
+    * @param {Event} event - HTML5 / jQuery event.
+    */
+   _handleQuestClick(event)
+   {
+      const questId = event.currentTarget.dataset.questId;
+
+      const folderState = sessionStorage.getItem(`${constants.folderState}${questId}`);
+      const collapsed = folderState !== 'false';
+      sessionStorage.setItem(`${constants.folderState}${questId}`, (!collapsed).toString());
+
+      this.render();
+
+      if (ViewManager.questLogFloating.rendered) { ViewManager.questLogFloating.render(); }
+   }
+
+   /**
+    * @param {Event} event - HTML5 / jQuery event.
+    */
+   _handleQuestOpen(event)
+   {
+      const questId = event.currentTarget.dataset.questId;
+      QuestAPI.open({ questId });
+   }
+
+   /**
     * Prepares the quest data.
     *
-    * @returns {Promise<{isGM: *, isInactive: boolean|*, personalActors: *, name: string, id: *, source: Document.giver|null|*, isPersonal: boolean|*, tasks: *|*[], isHidden: boolean|*, subquests: []|*[]}[]>}
+    * @returns {object[]} Sorted active quests.
     */
    async prepareQuests()
    {

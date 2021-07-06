@@ -1,4 +1,3 @@
-import Enrich        from './Enrich.js';
 import QuestDB       from './QuestDB.js';
 import Socket        from './Socket.js';
 import ViewManager   from './ViewManager.js';

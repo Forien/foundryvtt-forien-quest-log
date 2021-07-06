@@ -2,6 +2,13 @@ import { constants } from '../model/constants.js';
 
 export default class RepositionableApplication extends Application
 {
+   /**
+    * @param {object}   options - Optional parameters
+    *
+    * @param {boolean}  [options.positionSetting] -
+    *
+    * @param {object}   [options.options] -
+    */
    constructor({ positionSetting = void 0, ...options } = {})
    {
       super(options);

@@ -108,13 +108,13 @@ export default class Enrich
    {
       let result = '';
 
-      const isTrustedPlayer = Utils.isTrustedPlayer();
+      const isTrustedPlayerEdit = Utils.isTrustedPlayerEdit();
       const canAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
-      const canEdit = game.user.isGM || (isTrustedPlayer && quest.isOwner);
+      const canEdit = game.user.isGM || (isTrustedPlayerEdit && quest.isOwner);
 
       let addedAction = false;
 
-      result += `<div class="actions quest-status${!isTrustedPlayer && !canEdit ? ' is-player' : ''}">`;
+      result += `<div class="actions quest-status${!isTrustedPlayerEdit && !canEdit ? ' is-player' : ''}">`;
 
       if (canEdit || canAccept)
       {
@@ -152,7 +152,7 @@ export default class Enrich
          result += `</div>\n`;
       }
 
-      return isTrustedPlayer || addedAction ? result : '';
+      return isTrustedPlayerEdit || addedAction ? result : '';
    }
 
    /**
@@ -161,7 +161,7 @@ export default class Enrich
     *
     * @param {Quest}  quest - Quest data to construct view data.
     *
-    * @returns {Promise<object>} A single quest view or SortedQuests upgraded
+    * @returns {object} A single quest view or SortedQuests upgraded
     */
    static quest(quest)
    {
@@ -172,8 +172,8 @@ export default class Enrich
 
       const personalActors = quest.getPersonalActors();
 
-      const isTrustedPlayer = Utils.isTrustedPlayer();
-      const canEdit =  game.user.isGM || (quest.isOwner && isTrustedPlayer);
+      const isTrustedPlayerEdit = Utils.isTrustedPlayerEdit();
+      const canEdit =  game.user.isGM || (quest.isOwner && isTrustedPlayerEdit);
 
       const canPlayerAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
       const canPlayerDrag = game.settings.get(constants.moduleName, settings.allowPlayersDrag);
@@ -260,7 +260,7 @@ export default class Enrich
 
                const statusTooltip = game.i18n.format('ForienQuestLog.Tooltips.Status', statusTooltipData);
 
-               const canEditSubquest = game.user.isGM || (subquest.isOwner && isTrustedPlayer);
+               const canEditSubquest = game.user.isGM || (subquest.isOwner && isTrustedPlayerEdit);
 
                data.data_subquest.push({
                   id: questId,

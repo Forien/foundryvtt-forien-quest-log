@@ -1,49 +1,26 @@
 import QuestDB          from './QuestDB.js';
-import QuestLog         from '../view/QuestLog.js';
+import QuestLog         from '../view/log/QuestLog.js';
 import QuestLogFloating from '../view/QuestLogFloating.js';
 import QuestTracker     from '../view/QuestTracker.js';
 
 import { constants, questTypesI18n, settings } from '../model/constants.js';
 
-let s_QUESTLOG;
-let s_QUESTLOG_FLOATING;
-const s_QUESTPREVIEW = {};
-let s_QUESTTRACKER;
+const Apps = {
+   questLog: void 0,
+   questLogFloating: void 0,
+   questTracker: void 0,
+   questPreview: {}
+};
 
 let s_ADD_QUEST_PREVIEW_ID;
-
-let s_LAST_NOTIFY_MS = Date.now();
-
-const s_NOTIFICATIONS = {
-   warn: (message, delay = 4000) =>
-   {
-      if (Date.now() - s_LAST_NOTIFY_MS > delay)
-      {
-         ui.notifications.warn(message);
-         s_LAST_NOTIFY_MS = Date.now();
-      }
-   },
-   info: (message, delay = 4000) =>
-   {
-      if (Date.now() - s_LAST_NOTIFY_MS > delay)
-      {
-         ui.notifications.info(message);
-         s_LAST_NOTIFY_MS = Date.now();
-      }
-   },
-   error: (message) =>
-   {
-      ui.notifications.error(message);
-   }
-};
 
 export default class ViewManager
 {
    static init()
    {
-      s_QUESTLOG = new QuestLog();
-      s_QUESTLOG_FLOATING = new QuestLogFloating();
-      s_QUESTTRACKER = new QuestTracker();
+      Apps.questLog = new QuestLog();
+      Apps.questLogFloating = new QuestLogFloating();
+      Apps.questTracker = new QuestTracker();
 
       if (ViewManager.isQuestTrackerVisible() && game.modules.get(constants.moduleName)?.active)
       {
@@ -60,13 +37,26 @@ export default class ViewManager
    }
 
    static get addQuestPreviewId() { return s_ADD_QUEST_PREVIEW_ID; }
-   static set addQuestPreviewId(questId) { s_ADD_QUEST_PREVIEW_ID = questId; }
-   static get notifications() { return s_NOTIFICATIONS; }
-   static get questLog() { return s_QUESTLOG; }
-   static get questLogFloating() { return s_QUESTLOG_FLOATING; }
-   static get questPreview() { return s_QUESTPREVIEW; }
-   static get questTracker() { return s_QUESTTRACKER; }
 
+   static set addQuestPreviewId(questId) { s_ADD_QUEST_PREVIEW_ID = questId; }
+
+   static get notifications() { return s_NOTIFICATIONS; }
+
+   static get questLog() { return Apps.questLog; }
+
+   static get questLogFloating() { return Apps.questLogFloating; }
+
+   static get questPreview() { return Apps.questPreview; }
+
+   static get questTracker() { return Apps.questTracker; }
+
+   /**
+    * @param {object}   options - Optional parameters
+    *
+    * @param {boolean}  [options.questPreview] -
+    *
+    * @param {object}   [options.options] -
+    */
    static closeAll({ questPreview = false, ...options } = {})
    {
       if (ViewManager.questLog.rendered) { ViewManager.questLog.close(options); }
@@ -96,6 +86,15 @@ export default class ViewManager
         QuestDB.getActiveCount() > 0;
    }
 
+   /**
+    * @param {object}   options - Optional parameters
+    *
+    * @param {boolean}  [options.force] -
+    *
+    * @param {boolean}  [options.questPreview] -
+    *
+    * @param {object}   [options.options] -
+    */
    static renderAll({ force = false, questPreview = false, ...options } = {})
    {
       if (ViewManager.questLog.rendered) { ViewManager.questLog.render(force, options); }
@@ -166,3 +165,69 @@ export default class ViewManager
       return true;
    }
 }
+
+
+/**
+ * Provides a helper class to gate UI notifications that may come in from various players in a rapid fashion
+ * through Socket. By default a 4 second delay is applied between each notification, but the last notification
+ * received will always be displayed.
+ */
+class UINotifications
+{
+   constructor()
+   {
+      this._lastNotifyWarn = Date.now();
+      this._lastNotifyInfo = Date.now();
+   }
+
+   warn(message, delay = 4000)
+   {
+      if (Date.now() - this._lastNotifyWarn > delay)
+      {
+         ui.notifications.warn(message);
+         this._lastNotifyWarn = Date.now();
+      }
+      else
+      {
+         if (this._timeoutWarn)
+         {
+            clearTimeout(this._timeoutWarn);
+            this._timeoutWarn = void 0;
+         }
+
+         this._timeoutWarn = setTimeout(() =>
+         {
+            ui.notifications.warn(message);
+         }, delay);
+      }
+   }
+
+   info(message, delay = 4000)
+   {
+      if (Date.now() - this._lastNotifyInfo > delay)
+      {
+         ui.notifications.info(message);
+         this._lastNotifyInfo = Date.now();
+      }
+      else
+      {
+         if (this._timeoutInfo)
+         {
+            clearTimeout(this._timeoutInfo);
+            this._timeoutInfo = void 0;
+         }
+
+         this._timeoutInfo = setTimeout(() =>
+         {
+            ui.notifications.info(message);
+         }, delay);
+      }
+   }
+
+   error(message)
+   {
+      ui.notifications.error(message);
+   }
+}
+
+const s_NOTIFICATIONS = new UINotifications();

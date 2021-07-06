@@ -7,6 +7,9 @@ import collect       from '../../external/collect.js';
 
 import { constants, questTypes, settings } from '../model/constants.js';
 
+/**
+ * @type {Object.<string, Map<string, QuestEntry>>}
+ */
 const s_QUESTS = {
    active: new Map(),
    available: new Map(),
@@ -15,6 +18,9 @@ const s_QUESTS = {
    inactive: new Map()
 };
 
+/**
+ * @type {Object.<string, Collection<QuestEntry>>}
+ */
 const s_QUESTS_COLLECT = {
    active: [],
    available: [],
@@ -23,20 +29,45 @@ const s_QUESTS_COLLECT = {
    inactive: []
 };
 
+/**
+ * @type {Map<string, string>}
+ */
 const s_QUEST_INDEX = new Map();
 
-const s_SORT_FUNCTIONS = {
+/**
+ * @type {FilterFunctions}
+ */
+const Filter = {
+   IS_OBSERVABLE: (entry) => entry.isObservable,
+};
+
+/**
+ * @type {{ALPHA: (function(*, *): number), DATE_START: (function(*, *)), DATE_CREATE: (function(*, *)), DATE_END: (function(*, *))}}
+ */
+const Sort = {
    ALPHA: (a, b) => a.enrich.name.localeCompare(b.enrich.name),
    DATE_CREATE: (a, b) => a.quest.date.create - b.quest.date.create,
    DATE_START: (a, b) => a.quest.date.start - b.quest.date.start,
    DATE_END: (a, b) => b.quest.date.end - a.quest.date.end
 };
 
-Object.freeze(s_SORT_FUNCTIONS);
+Object.freeze(Filter);
+Object.freeze(Sort);
 
-const s_DELETE_QUEST = (questId, generate = true) =>
+/**
+ * Deletes a QuestEntry by quest ID. Removes the quest index and then removes the QuestEntry from the map of maps
+ * If this results in a deletion and generate is true then rebuild the QuestEntry Collection.
+ *
+ * @param {string}   questId - The Quest ID to delete.
+ *
+ * @param {boolean}  [generate=true] - Generate the associated QuestEntry Collection.
+ *
+ * @returns {boolean} Whether a QuestEntry was deleted.
+ */
+const s_DELETE_QUEST_ENTRY = (questId, generate = true) =>
 {
    const currentStatus = s_QUEST_INDEX.get(questId);
+   s_QUEST_INDEX.delete(questId);
 
    let result = false;
 
@@ -58,7 +89,7 @@ const s_DELETE_QUEST = (questId, generate = true) =>
  *
  * @returns {QuestEntry} The stored QuestEntry.
  */
-const s_GET_QUEST = (questId) =>
+const s_GET_QUEST_ENTRY = (questId) =>
 {
    const currentStatus = s_QUEST_INDEX.get(questId);
    return currentStatus && s_QUESTS[currentStatus] ? s_QUESTS[currentStatus].get(questId) : null;
@@ -69,7 +100,7 @@ const s_GET_QUEST = (questId) =>
  *
  * @param {boolean}     [generate=true] - Regenerate s_QUEST_COLLECT
  */
-const s_SET_QUEST = (entry, generate = true) =>
+const s_SET_QUEST_ENTRY = (entry, generate = true) =>
 {
    const currentStatus = s_QUEST_INDEX.get(entry.id);
    if (s_QUESTS[currentStatus] && currentStatus !== entry.status)
@@ -95,17 +126,25 @@ const s_SET_QUEST = (entry, generate = true) =>
    }
 };
 
+/**
+ * Provides an iterator across the QuestEntry map of maps.
+ *
+ * @yields {QuestEntry} The QuestEntry iterator.
+ */
 function *s_MAP_ITER()
 {
-   for (const map of Object.values(s_QUESTS))
-   {
-      for (const value of map.values())
-      {
-         yield value;
-      }
-   }
+   for (const value of s_QUESTS[questTypes.active].values()) { yield value; }
+   for (const value of s_QUESTS[questTypes.available].values()) { yield value; }
+   for (const value of s_QUESTS[questTypes.completed].values()) { yield value; }
+   for (const value of s_QUESTS[questTypes.failed].values()) { yield value; }
+   for (const value of s_QUESTS[questTypes.inactive].values()) { yield value; }
 }
 
+/**
+ * Flattens the QuestEntry map of maps into and array of all entries.
+ *
+ * @returns {QuestEntry[]} An array of all QuestEntry values stored.
+ */
 const s_MAP_FLATTEN = () =>
 {
    return [
@@ -129,11 +168,10 @@ export default class QuestDB
 
          if (content)
          {
-            content.id = entry.id;
             const quest = new Quest(content, entry);
 
             // Must set a QuestEntry w/ an undefined enrich as all quest data must be loaded before enrichment.
-            s_SET_QUEST(new QuestEntry(quest, void 0), false);
+            s_SET_QUEST_ENTRY(new QuestEntry(quest, void 0), false);
          }
       }
 
@@ -149,7 +187,12 @@ export default class QuestDB
       Hooks.on('updateJournalEntry', this.updateJournalEntry);
    }
 
-   static get Sort() { return s_SORT_FUNCTIONS; }
+   /**
+    * @returns {FilterFunctions}
+    */
+   static get Filter() { return Filter; }
+
+   static get Sort() { return Sort; }
 
    static createJournalEntry(entry, options, id)
    {
@@ -157,9 +200,8 @@ export default class QuestDB
 
       if (content)
       {
-         content.id = entry.id;
          const questEntry = new QuestEntry(new Quest(content, entry));
-         s_SET_QUEST(questEntry.hydrate());
+         s_SET_QUEST_ENTRY(questEntry.hydrate());
 
          Hooks.callAll('createQuestEntry', questEntry, options, id);
       }
@@ -171,9 +213,9 @@ export default class QuestDB
     *
     * @param {object}   options - Optional parameters.
     *
-    * @param {object}   data - Quest data to assign to new quest.
+    * @param {object}   [options.data] - Quest data to assign to new quest.
     *
-    * @param {string}   parentId - Any associated parent ID; if set then this is a subquest.
+    * @param {string}   [options.parentId] - Any associated parent ID; if set then this is a subquest.
     *
     * @returns {Promise<Quest>} The newly created quest.
     */
@@ -187,13 +229,11 @@ export default class QuestDB
           CONST.ENTITY_PERMISSIONS.OBSERVER
       };
 
-      const trustedPlayerEdit = Utils.isTrustedPlayer();
-
       // Used for a player created quest setting and the quest as 'available' for normal players or 'hidden' for
       // trusted players.
       if (!game.user.isGM)
       {
-         data.status = trustedPlayerEdit ? questTypes.inactive : questTypes.available;
+         data.status = Utils.isTrustedPlayerEdit() ? questTypes.inactive : questTypes.available;
          permission[game.user.id] = CONST.ENTITY_PERMISSIONS.OWNER;
       }
 
@@ -234,8 +274,8 @@ export default class QuestDB
 
    static deleteJournalEntry(entry, options, id)
    {
-      const questEntry = s_GET_QUEST(entry.id);
-      if (questEntry && s_DELETE_QUEST(entry.id))
+      const questEntry = s_GET_QUEST_ENTRY(entry.id);
+      if (questEntry && s_DELETE_QUEST_ENTRY(entry.id))
       {
          Hooks.callAll('deleteQuestEntry', questEntry, options, id);
       }
@@ -276,8 +316,13 @@ export default class QuestDB
 
    static getEnrich(questId)
    {
-      const entry = s_GET_QUEST(questId);
+      const entry = s_GET_QUEST_ENTRY(questId);
       return entry ? entry.enrich : null;
+   }
+
+   static getEntry(questId)
+   {
+      return s_GET_QUEST_ENTRY(questId);
    }
 
    static getName(name)
@@ -292,7 +337,7 @@ export default class QuestDB
 
    static getQuest(questId)
    {
-      const entry = s_GET_QUEST(questId);
+      const entry = s_GET_QUEST_ENTRY(questId);
       return entry ? entry.quest : null;
    }
 
@@ -309,24 +354,28 @@ export default class QuestDB
     *
     * @param {Function} [options.sortFailed] - The sort function for failed quests.
     *
-    * @param {Function} [options.sortHidden] - The sort function for hidden quests.
+    * @param {Function} [options.sortInactive] - The sort function for inactive quests.
     *
-    * @returns {null|SortedQuests|QuestEntry[]} The complete sorted quests or just a particular quest status.
+    * @returns {SortedQuests|collect<QuestEntry>|null} An object of all QuestEntries sorted by status or individual
+    *                                                  status or null.
     */
-   static sorted({ status = void 0, sortActive = QuestDB.Sort.ALPHA, sortAvailable = QuestDB.Sort.ALPHA,
-    sortCompleted = QuestDB.Sort.DATE_END, sortFailed = QuestDB.Sort.DATE_END, sortHidden = QuestDB.Sort.ALPHA } = {})
+   static sorted({ status = void 0, sortActive = Sort.ALPHA, sortAvailable = Sort.ALPHA,
+    sortCompleted = Sort.DATE_END, sortFailed = Sort.DATE_END, sortInactive = Sort.ALPHA } = {})
    {
       if (typeof status === 'string')
       {
          switch (status)
          {
-            case questTypes.active: return s_QUESTS_COLLECT[questTypes.active].sort(sortActive);
-            case questTypes.available: return s_QUESTS_COLLECT[questTypes.available].sort(sortAvailable);
-            case questTypes.completed: return s_QUESTS_COLLECT[questTypes.completed].sort(sortCompleted);
-            case questTypes.failed: return s_QUESTS_COLLECT[questTypes.failed].sort(sortFailed);
+            case questTypes.active:
+               return s_QUESTS_COLLECT[questTypes.active].filter(Filter.IS_OBSERVABLE).sort(sortActive);
+            case questTypes.available:
+               return s_QUESTS_COLLECT[questTypes.available].filter(Filter.IS_OBSERVABLE).sort(sortAvailable);
+            case questTypes.completed:
+               return s_QUESTS_COLLECT[questTypes.completed].filter(Filter.IS_OBSERVABLE).sort(sortCompleted);
+            case questTypes.failed:
+               return s_QUESTS_COLLECT[questTypes.failed].filter(Filter.IS_OBSERVABLE).sort(sortFailed);
             case questTypes.inactive:
-               return Utils.isTrustedPlayer() ? s_QUESTS_COLLECT[questTypes.inactive].filter(
-                (e) => e.isOwner).sort(sortHidden) : s_QUESTS_COLLECT[questTypes.inactive].sort(sortHidden);
+               return s_QUESTS_COLLECT[questTypes.inactive].filter(Filter.IS_OBSERVABLE).sort(sortInactive);
             default:
                console.error(`Forien Quest Log - QuestDB - sorted - unknown status: ${status}`);
                return null;
@@ -334,12 +383,11 @@ export default class QuestDB
       }
 
       return {
-         active: s_QUESTS_COLLECT[questTypes.active].sort(sortActive),
-         available: s_QUESTS_COLLECT[questTypes.available].sort(sortAvailable),
-         completed: s_QUESTS_COLLECT[questTypes.completed].sort(sortCompleted),
-         failed: s_QUESTS_COLLECT[questTypes.failed].sort(sortFailed),
-         inactive: Utils.isTrustedPlayer() ? s_QUESTS_COLLECT[questTypes.inactive].filter((e) => e.isOwner).sort(
-          sortHidden) : s_QUESTS_COLLECT[questTypes.inactive].sort(sortHidden)
+         active: s_QUESTS_COLLECT[questTypes.active].filter(Filter.IS_OBSERVABLE).sort(sortActive),
+         available: s_QUESTS_COLLECT[questTypes.available].filter(Filter.IS_OBSERVABLE).sort(sortAvailable),
+         completed: s_QUESTS_COLLECT[questTypes.completed].filter(Filter.IS_OBSERVABLE).sort(sortCompleted),
+         failed: s_QUESTS_COLLECT[questTypes.failed].filter(Filter.IS_OBSERVABLE).sort(sortFailed),
+         inactive: s_QUESTS_COLLECT[questTypes.inactive].filter(Filter.IS_OBSERVABLE).sort(sortInactive)
       };
    }
 
@@ -349,7 +397,7 @@ export default class QuestDB
 
       if (content)
       {
-         let questEntry = s_GET_QUEST(entry.id);
+         let questEntry = s_GET_QUEST_ENTRY(entry.id);
 
          if (questEntry)
          {
@@ -357,9 +405,8 @@ export default class QuestDB
          }
          else
          {
-            content.id = entry.id;
             questEntry = new QuestEntry(new Quest(content, entry));
-            s_SET_QUEST(questEntry.hydrate());
+            s_SET_QUEST_ENTRY(questEntry.hydrate());
          }
 
          Hooks.callAll('updateQuestEntry', questEntry, flags, options, id);
@@ -367,7 +414,11 @@ export default class QuestDB
    }
 }
 
-class QuestEntry
+/**
+ * Provides the internal object stored in the QuestDB that contains the Quest and enriched data along with
+ * several public member variables that are cached from the Quest on any update allowing quick sorting.
+ */
+export class QuestEntry
 {
    /**
     * @param {Quest}    quest - The Quest object
@@ -376,23 +427,65 @@ class QuestEntry
     */
    constructor(quest, enrich = void 0)
    {
+      /**
+       * @type {string}
+       */
       this.id = quest.id;
+
+      /**
+       * @type {string}
+       */
       this.status = quest.status;
+
+      /**
+       * @type {Quest}
+       */
       this.quest = quest;
+
+      /**
+       * @type {Object}
+       */
       this.enrich = enrich;
    }
 
+   /**
+    * Hydrates this QuestEntry caching the enriched data and several getter values from Quest.
+    *
+    * @returns {QuestEntry} This QuestEntry.
+    */
    hydrate()
    {
       this.id = this.quest.id;
       this.status = this.quest.status;
 
+      /**
+       * @type {boolean}
+       */
       this.isHidden = this.quest.isHidden;
+
+      /**
+       * @type {boolean}
+       */
       this.isInactive = this.quest.isInactive;
+
+      /**
+       * @type {boolean}
+       */
       this.isObservable = this.quest.isObservable;
+
+      /**
+       * @type {boolean}
+       */
       this.isOwner = this.quest.isOwner;
+
+      /**
+       * @type {boolean}
+       */
       this.isPersonal = this.quest.isPersonal;
 
+      /**
+       * @type {any}
+       */
       this.enrich = Enrich.quest(this.quest);
 
       return this;
@@ -403,10 +496,9 @@ class QuestEntry
     *
     * @param {object}   content - The FQL quest data from journal entry.
     */
-   update(entry, content) // eslint-disable-line no-unused-vars
+   update(entry, content)
    {
       this.quest.entry = entry;
-      content.id = entry.id;
       this.quest.initData(content);
       const status = this.status;
       this.hydrate();
@@ -414,20 +506,40 @@ class QuestEntry
       // Must hydrate any parent on a change.
       if (typeof this.quest.parent === 'string')
       {
-         const parentEntry = s_GET_QUEST(this.quest.parent);
+         const parentEntry = s_GET_QUEST_ENTRY(this.quest.parent);
          if (parentEntry) { parentEntry.hydrate(); }
       }
 
       // Must hydrate any subquests on a change.
       for (const subquest of this.quest.subquests)
       {
-         const subquestEntry = s_GET_QUEST(subquest);
+         const subquestEntry = s_GET_QUEST_ENTRY(subquest);
          if (subquestEntry) { subquestEntry.hydrate(); }
       }
 
       if (status !== this.quest.status)
       {
-         s_SET_QUEST(this);
+         s_SET_QUEST_ENTRY(this);
       }
    }
 }
+
+/**
+ * @typedef FilterFunctions
+ *
+ * @property {Function} IS_OBSERVABLE -
+ */
+
+/**
+ * @typedef {Object.<string, collect<QuestEntry>>} SortedQuests Provides
+ *
+ * @property {collect<QuestEntry>} active - Active quest entries
+ *
+ * @property {collect<QuestEntry>} available - Available quests entries
+ *
+ * @property {collect<QuestEntry>} completed - Completed quests entries
+ *
+ * @property {collect<QuestEntry>} failed - Failed quests entries
+ *
+ * @property {collect<QuestEntry>} hidden - Hidden quests entries
+ */
