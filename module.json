@@ -24,12 +24,12 @@
   "flags": {
     "allowBugReporter": true
   },
-  "version": "0.7.3",
+  "version": "0.7.4",
   "minimumCoreVersion": "0.8.6",
   "compatibleCoreVersion": "0.8.8",
   "scripts": [],
   "esmodules": [
-    "./modules/init.js"
+    "./src/init.js"
   ],
   "styles": [
     "./styles/init.css"
