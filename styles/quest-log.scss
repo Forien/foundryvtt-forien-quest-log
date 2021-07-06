@@ -159,20 +159,22 @@
       }
     }
 
+    // The height parameter hard codes the height for the border to show, but in the future this may need to be
+    // adjustable.
     .tasks {
       font-size: 18px;
       flex: 0 0 50px;
       border-left: 1px solid rgba(0,0,0,.15);
-      height: 100%;
+      height: 42px;
       display: flex;
       justify-content: center;
       align-items: center;
     }
-  }
 
-  .quest-log footer {
-    flex: 0 0 1px;
-    padding: 8px 16px 0 16px;
-    display: flex;
+    // The height parameter hard codes the height for the border to show, but in the future this may need to be
+    // adjustable.
+    .actions {
+      height: 42px;
+    }
   }
 }
