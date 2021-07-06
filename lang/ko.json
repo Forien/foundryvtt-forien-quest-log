@@ -12,42 +12,30 @@
     "Quest": "퀘스트",
 
     "QuestTypes": {
-      "InProgress": "진행 중",
+      "Active": "진행 중",
+      "Available": "활성화",
       "Completed": "성공",
       "Failed": "실패",
-      "Hidden": "비공개",
+      "InActive": "비활성화",
       "Labels": {
-        "available": "활성화",
         "active": "진행 중",
+        "available": "활성화",
         "completed": "성공",
         "failed": "실패",
-        "hidden": "비공개"
+        "InActive": "비공개"
       }
     },
 
     "Buttons": {
-      "AddNewQuest": "새 퀘스트 추가",
-      "AddNewTask": "새 목표 추가"
-    },
-
-    "QuestForm": {
-      "Title": "새 퀘스트 추가",
-      "QuestGiver": "퀘스트 의뢰인",
-      "QuestGiverPlaceholder": "액터 / 엔티티 UUID",
-      "QuestGiverNamePlaceholder": "사용자 지정 퀘스트 제공자의 이름을 입력하십시오:",
-      "QuestTitle": "퀘스트 이름:",
-      "DragDropActor": "액터, 아이템, 저널을 여기로 끌어다 놓아 퀘스트 제공자를 추가합니다",
-      "QuestDescription": "퀘스트 설명:",
-      "QuestGMNotes": "GM 노트:",
-      "Submit": "퀘스트 로그에 추가",
-      "SubquestOf": "{name}의 서브 퀘스트"
+      "AddNewQuest": "퀘스트 추가",
+      "AddNewTask": "목표 추가"
     },
 
     "QuestLog": {
       "Title": "퀘스트 로그",
-      "SubTitle": "연관 : {0}",
+      "SubTitle": "서브 퀘스트 : {0}",
       "Table": {
-        "QuestGiver": "퀘스트 의뢰인",
+        "QuestGiver": "퀘스트 공급자",
         "QuestTitle": "제목",
         "Tasks": "목표",
         "Actions": "액션"
@@ -57,17 +45,20 @@
         "InProgress": "진행 중",
         "Completed": "완료",
         "Failed": "실패",
-        "Hidden": "비공개"
+        "InActive": "비활성화"
       }
     },
 
     "QuestPreview": {
-      "Title": "퀘스트 세부 정보",
-      "SubTitle": "연관 : {0}",
+      "Title": "퀘스트 세부 정보 - {name}",
+      "SubTitle": "서브 퀘스트 : {0}",
+      "Description": "설명:",
+      "GMNotes": "GM 메모:",
       "Objectives": "목표:",
       "Rewards": "보상:",
       "Objective": "목표",
       "Reward": "보상",
+      "CustomSource": "사용자 지정 공급자",
       "DragDropActor": "액터, 아이템, 저널 엔트리를 끌어다 놓아 퀘스트 제공자로 지정합니다.",
       "DragDropRewards": "보상으로 추가할 아이템을 여기로 끌어다 놓으십시오",
       "InvalidQuestId": "퀘스트 ID가 잘못되어 미리보기를 열 수 없습니다.",
@@ -83,7 +74,8 @@
         "SplashArt": "스플래시 아트",
         "QuestBranching": "서브 퀘스트:",
         "AddSubquest": "새 서브 퀘스트 생성",
-        "SplashInfo": "클릭하여 이미지 설정"
+        "SplashInfo": "클릭하여 이미지 설정",
+        "SplashQuestIcon": "퀘스트 아이콘으로 설정"
       },
 
       "Tabs": {
@@ -121,17 +113,15 @@
       "CannotOpen": "퀘스트 세부 정보를 열 수 없습니다. 권한이 없거나 퀘스트가 더 이상 존재하지 않거나 제공된 ID가 유효하지 않을 수 있습니다.",
       "UserCantOpen": "{user} 플레이어는 이 퀘스트를 열람할 권한을 가지고 있지 않습니다.",
       "LinkCopied": "이 퀘스트에 대한 엔티티 링크가 클립보드에 복사 되었습니다.",
-      "QuestMoved": "퀘스트를 새 폴더로 이동하고 새 상태를 부여했습니다 : {target}"
+      "FinishQuestAdded": "다른 퀘스트를 추가하기 전 현재 새 퀘스트를 편집 완료하여 닫으십시오.",
+      "QuestMoved": "퀘스트를 새 폴더로 이동하고 새 상태를 부여했습니다 : {target}",
+      "QuestAdded": "{status} 상태로 '{name}' 새 퀘스트가 추가되었습니다."
     },
 
     "Settings": {
       "allowPlayersDrag": {
         "Enable": "플레이어에게 보상을 인벤토리로 드래그 허용",
         "EnableHint": "플레이어들이 퀘스트 세부 정보 창에서 자신의 소유 액터로 보상을 드래그 할 수 있도록 하려면 선택한다."
-      },
-      "availableQuests": {
-        "Enable": "활성화 탭 표시",
-        "EnableHint": "퀘스트 로그에 \"활성화\" 탭을 표시하려면 선택한다. 비공개 상태가 아닌 모든 퀘스트들을 수락하기 전에 볼 수 있다."
       },
       "countHidden": {
         "Enable": "비공개 목표 세기",
@@ -173,10 +163,6 @@
         "Enable": "퀘스트 로그를 플레이어에게 숨기기",
         "EnableHint": "활성화할 경우 퀘스트 로그가 모든 플레이어에게 숨겨진다. GM 레벨 유저만 퀘스트 로그에 액세스 할 수 있다."
       },
-      "playersWelcomeScreen": {
-        "Enable": "플레이어에게 환영 화면 표시",
-        "EnableHint": "업데이트 후 로그인 시 플레이어가 시작 화면을 볼 수 없도록 하려면 선택을 취소할 것. 시작 화면은 Quest Log의 Help 아이콘을 클릭하여 볼 수 있다."
-      },
       "allowPlayersAccept": {
         "Enable": "플레이어가 수락 가능",
         "EnableHint": "플레이어가 활성화 탭에서 퀘스트를 수락할 수 있도록 하려면 선택한다."
@@ -184,6 +170,10 @@
       "allowPlayersCreate": {
         "Enable": "플레이어가 생성 가능",
         "EnableHint": "플레이어가 퀘스트를 만들 수 있게 하려면 선택한다. 플레이어가 만든 퀘스트는 플레이어 편집 권한으로 활성화 탭으로 이동된다. 코어 욥션의 '저널 생성' 권한 필요."
+      },
+      "trustedPlayerEdit": {
+        "Enable": "신뢰할 수 있는 플레이어의 퀘스트 편집 허용",
+        "EnableHint": "신뢰할 수 있는 플레이어가 퀘스트 소유를 넘어 퀘스트 편집 권한 확장과 상태 제어 권한을 허용하도록 하려면 선택하십시오."
       }
     },
 
@@ -202,7 +192,10 @@
       "RewardHidden": "보상이 비공개 상태입니다. 공개하려면 클릭하십시오.",
       "RewardVisible": "보상이 공개 상태입니다. 비공개하려면 클릭하십시오.",
       "RewardLocked": "보상이 잠금 상태입니다. 해제하려면 클릭하십시오.",
+      "RewardLockedPlayer": "보상이 잠겼습니다.",
       "RewardUnlocked": "보상이 잠금 해제 상태입니다. 잠그려면 클릭하십시오.",
+      "RewardUnlockedPlayer": "보상이 잠금 해제 되었습니다.",
+      "Status": "상태: {statusI18n}",
       "TaskHidden": "목표가 비공개 상태입니다. 공개하려면 클릭하십시오.",
       "TaskVisible": "목표가 공개 상태입니다. 비공개하려면 클릭하십시오.",
       "ToggleImage": "토큰/액터 이미지 전환",
@@ -222,25 +215,25 @@
     "Api": {
       "__COMMENT__": "No need for translating lines starting with 'API ERROR', they show in console for developers only.",
       "create": {
-        "title": "API Error: Title property is required to create new Quest"
+        "title": "API Error: Title property is required to create new Quest."
       },
       "hooks": {
         "createOpenQuestMacro": {
           "name": "Open - {name}",
           "error": {
-            "noQuest": "API Error: Can't create macro with invalid Quest ID"
+            "noQuest": "API Error: Can't create macro with invalid Quest ID."
           }
         }
       },
       "reward": {
         "create": {
-          "data": "API Error: Data property with at least {name, img} is required to create new Reward",
-          "type": "API Error: Type property is required to create new Reward"
+          "data": "API Error: Data property with at least {name, img} is required to create new Reward.",
+          "type": "API Error: Type property is required to create new Reward."
         }
       },
       "task": {
         "create": {
-          "name": "API Error: Name property is required to create new Task"
+          "name": "API Error: Name property is required to create new Objective."
         }
       }
     },
@@ -253,10 +246,6 @@
         "questTrackerBackground": {
           "name": "퀘스트 트래커 배경",
           "hint": "퀘스트 트래커의 배경을 활성화하여 특정 맵에 대한 가시성을 높이려면 체크한다."
-        },
-        "questTrackerTasks": {
-          "name": "퀘스트 트래커 작업 표시",
-          "hint": "퀘스트 트래커에서 작업을 표시하려면 이 옵션을 선택한다."
         },
         "resetQuestTracker": {
           "name": "퀘스트 트래커 포지션 재설정",
