@@ -71,13 +71,13 @@ export default class Quest
       {
          if (this.entry.data.permission.default >= CONST.ENTITY_PERMISSIONS.OBSERVER) { return false; }
 
-         for (const [actorId, permission] of Object.entries(this.entry.data.permission))
+         for (const [userId, permission] of Object.entries(this.entry.data.permission))
          {
-            if (actorId === 'default') { continue; }
+            if (userId === 'default') { continue; }
 
-            const actor = game.users.get(actorId);
+            const user = game.users.get(userId);
 
-            if (actor.isGM) { continue; }
+            if (!user || user.isGM) { continue; }
 
             if (permission >= CONST.ENTITY_PERMISSIONS.OBSERVER)
             {
@@ -145,13 +145,13 @@ export default class Quest
       if (this.entry && typeof this.entry.data.permission === 'object' &&
        this.entry.data.permission.default < CONST.ENTITY_PERMISSIONS.OBSERVER)
       {
-         for (const [actorId, permission] of Object.entries(this.entry.data.permission))
+         for (const [userId, permission] of Object.entries(this.entry.data.permission))
          {
-            if (actorId === 'default') { continue; }
+            if (userId === 'default') { continue; }
 
-            const actor = game.users.get(actorId);
+            const user = game.users.get(userId);
 
-            if (actor.isGM) { continue; }
+            if (!user || user.isGM) { continue; }
 
             if (permission < CONST.ENTITY_PERMISSIONS.OBSERVER) { continue; }
 
@@ -172,25 +172,25 @@ export default class Quest
    {
       if (!this.isPersonal) { return []; }
 
-      const actors = [];
+      const users = [];
 
       if (this.entry && typeof this.entry.data.permission === 'object')
       {
-         for (const [actorId, permission] of Object.entries(this.entry.data.permission))
+         for (const [userId, permission] of Object.entries(this.entry.data.permission))
          {
-            if (actorId === 'default') { continue; }
+            if (userId === 'default') { continue; }
 
-            const actor = game.users.get(actorId);
+            const user = game.users.get(userId);
 
-            if (actor.isGM) { continue; }
+            if (!user || user.isGM) { continue; }
 
             if (permission < CONST.ENTITY_PERMISSIONS.OBSERVER) { continue; }
 
-            actors.push(actor);
+            users.push(user);
          }
       }
 
-      return actors;
+      return users;
    }
 
    /**
