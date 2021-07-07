@@ -2,7 +2,14 @@ import Utils   from '../control/Utils.js';
 
 import { constants, questTypes } from './constants.js';
 
-// Stores any Foundry sheet class to be used to render quest. Primarily used in content linking.
+/**
+ * Stores the sheet class for Quest which is {@link QuestPreview}. This class / sheet is used to render Quest.
+ * While directly accessible from Quest the main way a QuestPreview is shown is through {@link QuestAPI.open} which
+ * provides the entry point for external API access and is also used internally when opening a quest.
+ *
+ * @type {QuestPreview}
+ * @see {Quest.sheet}
+ */
 let SheetClass;
 
 /**
@@ -249,7 +256,7 @@ export default class Quest
    addTask(data = {})
    {
       const task = new Task(data);
-      if (task.name.length) { this.tasks.push(task); }
+      if (task.name && task.name.length) { this.tasks.push(task); }
    }
 
    /**
@@ -648,7 +655,7 @@ export default class Quest
    /**
     * This mirrors document.sheet and is used in TextEditor._onClickContentLink
     *
-    * @returns {object} An associated sheet instance.
+    * @returns {QuestPreview} An associated sheet instance.
     */
    get sheet()
    {
