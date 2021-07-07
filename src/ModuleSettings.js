@@ -76,8 +76,9 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            // Must enrich all quests again in QuestDB.
-            QuestDB.enrichAll();
+            // Must perform a consistency check as there are possible quests that need to be added / removed
+            // from the in-memory DB based on trusted player edit status.
+            QuestDB.consistencyCheck();
 
             ViewManager.renderAll({ questPreview: true });
          }
