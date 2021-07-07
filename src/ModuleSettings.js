@@ -175,7 +175,7 @@ export default class ModuleSettings
          config: true,
          default: false,
          type: Boolean,
-         onChange: (value) =>
+         onChange: async(value) =>
          {
             if (ViewManager.isQuestTrackerVisible())
             {
@@ -193,19 +193,23 @@ export default class ModuleSettings
                {
                   ViewManager.closeAll({ questPreview: true });
 
-                  const notes = ui.controls.controls.find((c) => c.name === 'notes');
-                  if (notes) { notes.tools = notes.tools.filter((c) => !c.name.startsWith(constants.moduleName)); }
+                  const notes = ui?.controls?.controls.find((c) => c.name === 'notes');
+                  if (notes) { notes.tools = notes?.tools.filter((c) => !c.name.startsWith(constants.moduleName)); }
+
+                  QuestDB.removeAll();
                }
                else  // Add back ui.controls
                {
-                  const notes = ui.controls.controls.find((c) => c.name === 'notes');
+                  const notes = ui?.controls?.controls.find((c) => c.name === 'notes');
                   if (notes) { notes.tools.push(...noteControls); }
+
+                  await QuestDB.init();
                }
 
-               ui.controls.render(true);
+               ui?.controls?.render(true);
             }
 
-            game.journal.render();
+            game?.journal?.render();
          }
       });
 
