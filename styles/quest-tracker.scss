@@ -9,6 +9,13 @@
   text-shadow: 1px 1px 1px #000;
   pointer-events: none;
 
+  .scrollable {
+    overflow-y: auto;
+    max-height: 800px;
+    padding: 0 4px;
+    pointer-events: auto;
+  }
+
   &.background {
     background: #33333399;
     border: 2px solid #11111177;
