@@ -62,7 +62,7 @@ Hooks.once('ready', async () =>
    game.collections.set('Quest', QuestsCollection);
 
    await QuestDB.init();
-   await QuestFolder.initializeJournals();
+
    registerHooks();
 
    ViewManager.init();
