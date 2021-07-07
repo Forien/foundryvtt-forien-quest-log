@@ -689,7 +689,7 @@ export default class Quest
  * generated for them. This UUID regardless of type is accessible in `this.uuid`.
  *
  */
-class Reward
+export class Reward
 {
    /**
     * @param {object}   data - Serialized reward data.
@@ -778,7 +778,7 @@ class Reward
 /**
  * Encapsulates an objective / task.
  */
-class Task
+export class Task
 {
    /**
     * @param {object}   data - The task data.
