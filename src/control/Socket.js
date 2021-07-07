@@ -33,11 +33,12 @@ export default class Socket
       if (typeof deleteData === 'object')
       {
          const questId = deleteData.deleteId;
+         const questPreview = ViewManager.questPreview.get(questId);
 
-         if (ViewManager.questPreview[questId] !== void 0)
+         if (questPreview !== void 0)
          {
             // Must always use `noSave` as the quest has already been deleted; no auto-save of QuestPreview is allowed.
-            await ViewManager.questPreview[questId].close({ noSave: true });
+            await questPreview.close({ noSave: true });
          }
 
          game.socket.emit(s_EVENT_NAME, {
@@ -174,17 +175,19 @@ export default class Socket
       {
          for (const id of questId)
          {
-            if (ViewManager.questPreview[id] !== void 0)
+            const questPreview = ViewManager.questPreview.get(id);
+            if (questPreview !== void 0)
             {
-               ViewManager.questPreview[id].render(true, options);
+               questPreview.render(true, options);
             }
          }
       }
       else
       {
-         if (ViewManager.questPreview[questId] !== void 0)
+         const questPreview = ViewManager.questPreview.get(questId);
+         if (questPreview !== void 0)
          {
-            ViewManager.questPreview[questId].render(true, options);
+            questPreview.render(true, options);
          }
       }
 
@@ -225,10 +228,11 @@ async function handleDeletedQuest(data)
 {
    FQLDialog.closeDialogs({ questId: data.payload.questId });
 
-   if (ViewManager.questPreview[data.payload.questId] !== void 0)
+   const questPreview = ViewManager.questPreview.get(data.payload.questId);
+   if (questPreview !== void 0)
    {
       // Must always use `noSave` as the quest has already been deleted; no auto-save of QuestPreview is allowed.
-      await ViewManager.questPreview[data.payload.questId].close({ noSave: true });
+      await questPreview.close({ noSave: true });
    }
 }
 
@@ -261,10 +265,11 @@ async function handleMoveQuest(data)
    // For non-GM users close QuestPreview when made hidden / inactive.
    if (!game.user.isGM && target === questTypes.inactive)
    {
-      if (ViewManager.questPreview[data.payload.questId] !== void 0)
+      const questPreview = ViewManager.questPreview.get(data.payload.questId);
+      if (questPreview !== void 0)
       {
          // Use `noSave` just for sanity in this case as this is a remote close.
-         await ViewManager.questPreview[data.payload.questId].close({ noSave: true });
+         await questPreview.close({ noSave: true });
       }
    }
 }
@@ -319,7 +324,7 @@ function handleRefreshQuestPreview(data)
    {
       for (const id of questId)
       {
-         const questPreview = ViewManager.questPreview[id];
+         const questPreview = ViewManager.questPreview.get(id);
          if (questPreview !== void 0)
          {
             const quest = QuestDB.getQuest(id);
@@ -336,7 +341,7 @@ function handleRefreshQuestPreview(data)
    }
    else
    {
-      const questPreview = ViewManager.questPreview[questId];
+      const questPreview = ViewManager.questPreview.get(questId);
       if (questPreview !== void 0)
       {
          const quest = QuestDB.getQuest(questId);

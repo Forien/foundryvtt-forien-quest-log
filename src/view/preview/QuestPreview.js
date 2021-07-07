@@ -10,6 +10,17 @@ import HandlerManage          from './HandlerManage.js';
 
 import { constants, settings }  from '../../model/constants.js';
 
+/**
+ * QuestPreview is the main app / window of FQL for modifying individual Quest data. It appears reactive, but every
+ * single time a data value is manipulated in the quest it is saved and this app renders again. There are many cases
+ * when parent and subquests of the current quest also requires those QuestPreviews if visible and the {@link QuestLog}
+ * to be rendered again. Additionally for remote clients socket events are broadcast to all users logged in to Foundry
+ * in the same world. This is facilitated through {@link Socket} which controls local rendering and remote rendering.
+ *
+ * QuestPreview is the {@link Quest} sheet in Foundry parlance. In `./src/init.js` in the initial `init` Hook
+ * QuestPreview is set as the Quest sheet. All Quests are opened through this reference in Quest which is accessible
+ * by {@link Quest.sheet}
+ */
 export default class QuestPreview extends FormApplication
 {
    /**
@@ -346,7 +357,7 @@ export default class QuestPreview extends FormApplication
     */
    async close({ noSave = false, ...options } = {})
    {
-      delete ViewManager.questPreview[this.quest.id];
+      ViewManager.questPreview.delete(this.quest.id);
 
       FQLDialog.closeDialogs({ questId: this.quest.id });
 
@@ -450,7 +461,7 @@ export default class QuestPreview extends FormApplication
     */
    async render(force = false, options = { focus: true })
    {
-      ViewManager.questPreview[this.quest.id] = this;
+      ViewManager.questPreview.set(this.quest.id, this);
 
       return super.render(force, options);
    }

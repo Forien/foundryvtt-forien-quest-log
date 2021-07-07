@@ -100,7 +100,9 @@ class QuestAPI
    }
 
    /**
-    * Opens Quest Details for given quest ID
+    * Opens the Quest sheet / QuestPreview for the given questID. A check for the module setting
+    * {@link settings.hideFQLFromPlayers} provides an early out if FQL is hidden from players causing the sheet to
+    * not render. {@link ViewManager.questPreview} provides an object.
     *
     * @param {object}   options - Optional parameters.
     *
@@ -114,7 +116,7 @@ class QuestAPI
 
       try
       {
-         const questPreview = ViewManager.questPreview[questId];
+         const questPreview = ViewManager.questPreview.get(questId);
 
          // Optimization to render an existing open QuestPreview with the given quest ID instead of opening a new
          // app / view.

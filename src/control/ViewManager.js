@@ -5,11 +5,20 @@ import QuestTracker     from '../view/QuestTracker.js';
 
 import { constants, questTypes, questTypesI18n, settings } from '../model/constants.js';
 
+/**
+ * Locally stores the app instances which are accessible by getter methods.
+ *
+ * @type {{questLog: QuestLog, questLogFloating: QuestLogFloating, questPreview: Map<string, QuestPreview>, questTracker: QuestTracker}}
+ * @see {ViewManager.questLog}
+ * @see {ViewManager.questLogFloating}
+ * @see {ViewManager.questPreview}
+ * @see {ViewManager.questTracker}
+ */
 const Apps = {
    questLog: void 0,
    questLogFloating: void 0,
    questTracker: void 0,
-   questPreview: {}
+   questPreview: new Map()
 };
 
 let s_ADD_QUEST_PREVIEW_ID;
@@ -42,12 +51,29 @@ export default class ViewManager
 
    static get notifications() { return s_NOTIFICATIONS; }
 
+   /**
+    * @returns {QuestLog} The main quest log app accessible from the left hand menu bar or
+    *                     `Hook.call('ForienQuestLog.Open.QuestLog')`.
+    */
    static get questLog() { return Apps.questLog; }
 
+   /**
+    * @returns {QuestLogFloating} The floating quest log app accessible from the left hand menu bar or
+    *                             `Hooks.call('ForienQuestLog.Open.QuestLogFloating')`.
+    */
    static get questLogFloating() { return Apps.questLogFloating; }
 
+   /**
+    * @returns {Map<string, QuestPreview>} A Map that contains all currently rendered / visible QuestPreview instances
+    *                                      indexed by questId / string which is the Foundry 'id' of quests and the
+    *                                      backing journal entries.
+    */
    static get questPreview() { return Apps.questPreview; }
 
+   /**
+    * @returns {QuestTracker} Returns the quest tracker overlap app. This app is accessible when module seting
+    *                         {@link settings.enableQuestTracker} is enabled.
+    */
    static get questTracker() { return Apps.questTracker; }
 
    /**
@@ -65,7 +91,7 @@ export default class ViewManager
 
       if (questPreview)
       {
-         for (const qp of Object.values(ViewManager.questPreview))
+         for (const qp of ViewManager.questPreview.values())
          {
             qp.close(options);
          }
@@ -111,7 +137,7 @@ export default class ViewManager
 
       if (questPreview)
       {
-         for (const qp of Object.values(ViewManager.questPreview))
+         for (const qp of ViewManager.questPreview.values())
          {
             if (qp.rendered) { qp.render(force, options); }
          }
@@ -150,7 +176,7 @@ export default class ViewManager
    {
       if (ViewManager.addQuestPreviewId !== void 0)
       {
-         const qPreview = ViewManager.questPreview[ViewManager.addQuestPreviewId];
+         const qPreview = ViewManager.questPreview.get(ViewManager.addQuestPreviewId);
          if (qPreview && qPreview.rendered)
          {
             qPreview.bringToTop();
