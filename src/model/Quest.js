@@ -1,4 +1,3 @@
-import QuestDB from '../control/QuestDB.js';
 import Utils   from '../control/Utils.js';
 
 import { constants, questTypes } from './constants.js';
@@ -251,63 +250,6 @@ export default class Quest
    {
       const task = new Task(data);
       if (task.name.length) { this.tasks.push(task); }
-   }
-
-   /**
-    * Deletes this quest and updates any parent and child subquests.
-    *
-    * @returns {Promise<DeleteData>} The IDs for quests that were updated.
-    */
-   async delete()
-   {
-      const parentQuest = QuestDB.getQuest(this.parent);
-      let parentId = null;
-
-      // Stores the quest IDs which have been saved and need GUI / display aspects updated.
-      const savedIds = [];
-
-      // Remove this quest from any parent
-      if (parentQuest)
-      {
-         parentId = parentQuest._id;
-         parentQuest.removeSubquest(this._id);
-      }
-
-      // Update children to point to any new parent.
-      for (const childId of this.subquests)
-      {
-         const childQuest = QuestDB.getQuest(childId);
-         if (childQuest)
-         {
-            childQuest.parent = parentId;
-
-            await childQuest.save();
-            savedIds.push(childQuest._id);
-
-            // Update parent with new subquests.
-            if (parentQuest)
-            {
-               parentQuest.addSubquest(childQuest._id);
-            }
-         }
-      }
-
-      if (parentQuest)
-      {
-         await parentQuest.save();
-         savedIds.push(parentQuest._id);
-      }
-
-      if (this.entry)
-      {
-         await this.entry.delete();
-      }
-
-      // Return the delete and saved IDs.
-      return {
-         deleteId: this._id,
-         savedIds
-      };
    }
 
    /**
@@ -929,14 +871,6 @@ class Task
       return this.hidden;
    }
 }
-
-/**
- * @typedef {object} DeleteData The data object returned from `delete` indicating which quests were updated.
- *
- * @property {string}   deleteId - This quest ID which was deleted.
- *
- * @property {string[]} savedIds - The quest IDs of any parent / subquests that were updated.
- */
 
 /**
  * @typedef {object} QuestData

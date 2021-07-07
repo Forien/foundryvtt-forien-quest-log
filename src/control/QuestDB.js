@@ -272,6 +272,87 @@ export default class QuestDB
       return quest;
    }
 
+   /**
+    * Invoke with either a Quest instance or quest ID to delete the quest and update the QuestDB and parent / child
+    * relationships. This is an atomic sequence such that the quest is deleted via deleting the backing journal entry
+    * and before control resumes to the invoke point the in-memory DB also has the associated QuestEntry deleted.
+    *
+    * Please use await when deleting a quest!
+    *
+    * @param {object}   options - Optional parameters.
+    *
+    * @param {Quest}    [options.quest] - The Quest instance to delete.
+    *
+    * @param {string}   [options.questId] - The ID of the quest instance to delete.
+    *
+    * @returns {Promise<DeleteData|void>} The IDs for quests that were updated.
+    */
+   static async deleteQuest({ quest, questId })
+   {
+      const deleteId = quest ? quest.id : questId;
+
+      const deleteQuest = QuestDB.getQuest(deleteId);
+
+      if (!deleteQuest) { return; }
+
+      const parentQuest = QuestDB.getQuest(deleteQuest.parent);
+      let parentId = null;
+
+      // Stores the quest IDs which have been saved and need GUI / display aspects updated.
+      const savedIds = [];
+
+      // Remove this quest from any parent
+      if (parentQuest)
+      {
+         parentId = parentQuest.id;
+         parentQuest.removeSubquest(deleteId);
+      }
+
+      // Update children to point to any new parent.
+      for (const childId of deleteQuest.subquests)
+      {
+         const childQuest = QuestDB.getQuest(childId);
+         if (childQuest)
+         {
+            childQuest.parent = parentId;
+
+            await childQuest.save();
+            savedIds.push(childId);
+
+            // Update parent with new subquests.
+            if (parentQuest)
+            {
+               parentQuest.addSubquest(childId);
+            }
+         }
+      }
+
+      // Save the parent.
+      if (parentQuest)
+      {
+         await parentQuest.save();
+         savedIds.push(parentId);
+      }
+
+      // Delete the backing quest journal entry. This will cause the `deleteJournalEntry` hook to fire and QuestDB to
+      // delete the QuestEntry from the QuestDB.
+      if (deleteQuest.entry)
+      {
+         await deleteQuest.entry.delete();
+      }
+
+      const deleteData = {
+         deleteId,
+         savedIds
+      };
+
+      // Send the delete quest socket message to all clients.
+      await Socket.deletedQuest(deleteData);
+
+      // Return the delete and saved IDs.
+      return deleteData;
+   }
+
    static deleteJournalEntry(entry, options, id)
    {
       const questEntry = s_GET_QUEST_ENTRY(entry.id);
@@ -523,6 +604,14 @@ export class QuestEntry
       }
    }
 }
+
+/**
+ * @typedef {object} DeleteData The data object returned from `delete` indicating which quests were updated.
+ *
+ * @property {string}   deleteId - This quest ID which was deleted.
+ *
+ * @property {string[]} savedIds - The quest IDs of any parent / subquests that were updated.
+ */
 
 /**
  * @typedef FilterFunctions
