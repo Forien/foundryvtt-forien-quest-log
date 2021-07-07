@@ -22,139 +22,20 @@ const s_QUESTS = {
  * @type {Object.<string, Collection<QuestEntry>>}
  */
 const s_QUESTS_COLLECT = {
-   active: [],
-   available: [],
-   completed: [],
-   failed: [],
-   inactive: []
+   active: collect(),
+   available: collect(),
+   completed: collect(),
+   failed: collect(),
+   inactive: collect()
 };
+
+// Set to true after the first call to `QuestDB.init`. Protects against adding hooks multiple times.
+let s_QUEST_DB_INITIALIZED = false;
 
 /**
  * @type {Map<string, string>}
  */
 const s_QUEST_INDEX = new Map();
-
-/**
- * @type {FilterFunctions}
- */
-const Filter = {
-   IS_OBSERVABLE: (entry) => entry.isObservable,
-};
-
-/**
- * @type {{ALPHA: (function(*, *): number), DATE_START: (function(*, *)), DATE_CREATE: (function(*, *)), DATE_END: (function(*, *))}}
- */
-const Sort = {
-   ALPHA: (a, b) => a.enrich.name.localeCompare(b.enrich.name),
-   DATE_CREATE: (a, b) => a.quest.date.create - b.quest.date.create,
-   DATE_START: (a, b) => a.quest.date.start - b.quest.date.start,
-   DATE_END: (a, b) => b.quest.date.end - a.quest.date.end
-};
-
-Object.freeze(Filter);
-Object.freeze(Sort);
-
-/**
- * Deletes a QuestEntry by quest ID. Removes the quest index and then removes the QuestEntry from the map of maps
- * If this results in a deletion and generate is true then rebuild the QuestEntry Collection.
- *
- * @param {string}   questId - The Quest ID to delete.
- *
- * @param {boolean}  [generate=true] - Generate the associated QuestEntry Collection.
- *
- * @returns {boolean} Whether a QuestEntry was deleted.
- */
-const s_DELETE_QUEST_ENTRY = (questId, generate = true) =>
-{
-   const currentStatus = s_QUEST_INDEX.get(questId);
-   s_QUEST_INDEX.delete(questId);
-
-   let result = false;
-
-   if (s_QUESTS[currentStatus])
-   {
-      result = s_QUESTS[currentStatus].delete(questId);
-   }
-
-   if (result && generate)
-   {
-      s_QUESTS_COLLECT[currentStatus] = collect(Array.from(s_QUESTS[currentStatus].values()));
-   }
-
-   return result;
-};
-
-/**
- * @param {string}   questId - The Quest / JournalEntry ID.
- *
- * @returns {QuestEntry} The stored QuestEntry.
- */
-const s_GET_QUEST_ENTRY = (questId) =>
-{
-   const currentStatus = s_QUEST_INDEX.get(questId);
-   return currentStatus && s_QUESTS[currentStatus] ? s_QUESTS[currentStatus].get(questId) : null;
-};
-
-/**
- * @param {QuestEntry}  entry - QuestEntry to set.
- *
- * @param {boolean}     [generate=true] - Regenerate s_QUEST_COLLECT
- */
-const s_SET_QUEST_ENTRY = (entry, generate = true) =>
-{
-   const currentStatus = s_QUEST_INDEX.get(entry.id);
-   if (s_QUESTS[currentStatus] && currentStatus !== entry.status)
-   {
-      if (s_QUESTS[currentStatus].delete(entry.id) && generate)
-      {
-         s_QUESTS_COLLECT[currentStatus] = collect(Array.from(s_QUESTS[currentStatus].values()));
-      }
-   }
-
-   if (!s_QUESTS[entry.status])
-   {
-      console.error(`ForienQuestLog - QuestDB - set quest error - unknown status: ${entry.status}`);
-      return;
-   }
-
-   s_QUEST_INDEX.set(entry.id, entry.status);
-   s_QUESTS[entry.status].set(entry.id, entry);
-
-   if (generate)
-   {
-      s_QUESTS_COLLECT[entry.status] = collect(Array.from(s_QUESTS[entry.status].values()));
-   }
-};
-
-/**
- * Provides an iterator across the QuestEntry map of maps.
- *
- * @yields {QuestEntry} The QuestEntry iterator.
- */
-function *s_MAP_ITER()
-{
-   for (const value of s_QUESTS[questTypes.active].values()) { yield value; }
-   for (const value of s_QUESTS[questTypes.available].values()) { yield value; }
-   for (const value of s_QUESTS[questTypes.completed].values()) { yield value; }
-   for (const value of s_QUESTS[questTypes.failed].values()) { yield value; }
-   for (const value of s_QUESTS[questTypes.inactive].values()) { yield value; }
-}
-
-/**
- * Flattens the QuestEntry map of maps into and array of all entries.
- *
- * @returns {QuestEntry[]} An array of all QuestEntry values stored.
- */
-const s_MAP_FLATTEN = () =>
-{
-   return [
-    ...s_QUESTS[questTypes.active].values(),
-    ...s_QUESTS[questTypes.available].values(),
-    ...s_QUESTS[questTypes.completed].values(),
-    ...s_QUESTS[questTypes.failed].values(),
-    ...s_QUESTS[questTypes.inactive].values()
-   ];
-};
 
 export default class QuestDB
 {
@@ -162,29 +43,39 @@ export default class QuestDB
    {
       const folder = await QuestFolder.initializeJournals();
 
-      for (const entry of folder.content)
+      if (!Utils.isFQLHiddenFromPlayers())
       {
-         const content = entry.getFlag(constants.moduleName, constants.flagDB);
+         const isTrustedPlayerEdit = Utils.isTrustedPlayerEdit();
 
-         if (content)
+         for (const entry of folder.content)
          {
-            const quest = new Quest(content, entry);
+            const content = entry.getFlag(constants.moduleName, constants.flagDB);
 
-            // Must set a QuestEntry w/ an undefined enrich as all quest data must be loaded before enrichment.
-            s_SET_QUEST_ENTRY(new QuestEntry(quest, void 0), false);
+            if (content && s_IS_OBSERVABLE(content, entry, isTrustedPlayerEdit))
+            {
+               const quest = new Quest(content, entry);
+
+               // Must set a QuestEntry w/ an undefined enrich as all quest data must be loaded before enrichment.
+               s_SET_QUEST_ENTRY(new QuestEntry(quest, void 0), false);
+            }
+         }
+
+         for (const questEntry of QuestDB.iteratorEntries()) { questEntry.hydrate(); }
+
+         for (const key of Object.keys(s_QUESTS))
+         {
+            s_QUESTS_COLLECT[key] = collect(Array.from(s_QUESTS[key].values()));
          }
       }
 
-      for (const questEntry of s_MAP_ITER()) { questEntry.hydrate(); }
-
-      for (const key of Object.keys(s_QUESTS))
+      if (!s_QUEST_DB_INITIALIZED)
       {
-         s_QUESTS_COLLECT[key] = collect(Array.from(s_QUESTS[key].values()));
+         Hooks.on('createJournalEntry', s_JOURNAL_ENTRY_CREATE);
+         Hooks.on('deleteJournalEntry', s_JOURNAL_ENTRY_DELETE);
+         Hooks.on('updateJournalEntry', s_JOURNAL_ENTRY_UPDATE);
       }
 
-      Hooks.on('createJournalEntry', this.createJournalEntry);
-      Hooks.on('deleteJournalEntry', this.deleteJournalEntry);
-      Hooks.on('updateJournalEntry', this.updateJournalEntry);
+      s_QUEST_DB_INITIALIZED = true;
    }
 
    /**
@@ -194,17 +85,61 @@ export default class QuestDB
 
    static get Sort() { return Sort; }
 
-   static createJournalEntry(entry, options, id)
+   /**
+    * Loads all quests again removing any quests from the in-memory DB that are no longer observable by the current
+    * user or adding quests that are now observable. This only really needs to occur after particular module setting
+    * changes Which right now is trusted player edit.
+    *
+    * @see ModuleSettings.
+    */
+   static consistencyCheck()
    {
-      const content = entry.getFlag(constants.moduleName, constants.flagDB);
+      const folder = QuestFolder.get();
 
-      if (content)
+      if (!folder || Utils.isFQLHiddenFromPlayers()) { return; }
+
+      const questEntryMap = new Map(QuestDB.getAllQuestEntries().map((e) => [e.id, e]));
+
+      const isTrustedPlayerEdit = Utils.isTrustedPlayerEdit();
+
+      for (const entry of folder.content)
       {
-         const questEntry = new QuestEntry(new Quest(content, entry));
-         s_SET_QUEST_ENTRY(questEntry.hydrate());
+         const content = entry.getFlag(constants.moduleName, constants.flagDB);
 
-         Hooks.callAll('createQuestEntry', questEntry, options, id);
+         if (content)
+         {
+            if (s_IS_OBSERVABLE(content, entry, isTrustedPlayerEdit))
+            {
+               let questEntry = questEntryMap.get(entry.id);
+
+               if (!questEntry)
+               {
+                  questEntry = new QuestEntry(new Quest(content, entry));
+                  s_SET_QUEST_ENTRY(questEntry.hydrate());
+
+                  Hooks.callAll('addQuestEntry', questEntry, entry.flags, { diff: false, render: true }, entry.id);
+               }
+               else
+               {
+                  questEntry.update(content, entry);
+               }
+            }
+            else
+            {
+               const questEntry = questEntryMap.get(entry.id);
+               if (questEntry)
+               {
+                  questEntryMap.delete(entry.id);
+                  s_REMOVE_QUEST_ENTRY(entry.id);
+
+                  // This quest is not deleted; it has been removed from the in-memory DB.
+                  Hooks.callAll('removeQuestEntry', questEntry, entry.flags, { diff: false, render: true }, entry.id);
+               }
+            }
+         }
       }
+
+      this.enrichAll();
    }
 
    /**
@@ -353,31 +288,16 @@ export default class QuestDB
       return deleteData;
    }
 
-   static deleteJournalEntry(entry, options, id)
-   {
-      const questEntry = s_GET_QUEST_ENTRY(entry.id);
-      if (questEntry && s_DELETE_QUEST_ENTRY(entry.id))
-      {
-         Hooks.callAll('deleteQuestEntry', questEntry, options, id);
-      }
-   }
-
+   /**
+    * Enriches all stored {@link QuestEntry} instances. This is particularly useful in various callbacks when settings
+    * change in {@link ModuleSettings}.
+    */
    static enrichAll()
    {
-      for (const questEntry of s_MAP_ITER())
+      for (const questEntry of QuestDB.iteratorEntries())
       {
          questEntry.enrich = Enrich.quest(questEntry.quest);
       }
-   }
-
-   /**
-    * Provides a quicker method to get the count of active quests.
-    *
-    * @returns {number} Quest count for active quests.
-    */
-   static getActiveCount()
-   {
-      return s_QUESTS[questTypes.active].size;
    }
 
    static getAllEnrich()
@@ -385,7 +305,7 @@ export default class QuestDB
       return s_MAP_FLATTEN().map((entry) => entry.enrich);
    }
 
-   static getAllEntries()
+   static getAllQuestEntries()
    {
       return s_MAP_FLATTEN();
    }
@@ -395,20 +315,40 @@ export default class QuestDB
       return s_MAP_FLATTEN().map((entry) => entry.quest);
    }
 
+   /**
+    * Provides a quicker method to get the count of active quests.
+    *
+    * @param {object}   [options] - Optional parameters. If no options are provided the count of all quests is returned.
+    *
+    * @param {string}   [options.type] - The quest type / status to count.
+    *
+    * @returns {number} Quest count for the specified type or the count for all quests.
+    */
+   static getCount({ type = void 0 } = {})
+   {
+      if (type === void 0)
+      {
+         return s_QUESTS[questTypes.active].size + s_QUESTS[questTypes.available].size +
+          s_QUESTS[questTypes.completed].size + s_QUESTS[questTypes.failed].size + s_QUESTS[questTypes.inactive].size;
+      }
+
+      return s_QUESTS[type] ? s_QUESTS[type].size : 0;
+   }
+
    static getEnrich(questId)
    {
       const entry = s_GET_QUEST_ENTRY(questId);
       return entry ? entry.enrich : null;
    }
 
-   static getEntry(questId)
+   static getQuestEntry(questId)
    {
       return s_GET_QUEST_ENTRY(questId);
    }
 
    static getName(name)
    {
-      for (const entry of s_MAP_ITER())
+      for (const entry of QuestDB.iteratorEntries())
       {
          if (entry.quest.name === name) { return entry.quest; }
       }
@@ -420,6 +360,80 @@ export default class QuestDB
    {
       const entry = s_GET_QUEST_ENTRY(questId);
       return entry ? entry.quest : null;
+   }
+
+   /**
+    * Provides an iterator across the QuestEntry map of maps.
+    *
+    * @param {object}   [options] - Optional parameters. If no options are provided the iteration occurs across all
+    *                               quests.
+    *
+    * @param {string}   [options.type] - The quest type / status to count.
+    *
+    * @yields {QuestEntry} The QuestEntry iterator.
+    */
+   static *iteratorEntries({ type = void 0 } = {})
+   {
+      if (type === void 0)
+      {
+         for (const value of s_QUESTS[questTypes.active].values()) { yield value; }
+         for (const value of s_QUESTS[questTypes.available].values()) { yield value; }
+         for (const value of s_QUESTS[questTypes.completed].values()) { yield value; }
+         for (const value of s_QUESTS[questTypes.failed].values()) { yield value; }
+         for (const value of s_QUESTS[questTypes.inactive].values()) { yield value; }
+      }
+      else if (s_QUESTS[type])
+      {
+         for (const value of s_QUESTS[type].values()) { yield value; }
+      }
+   }
+
+   /**
+    * Provides an iterator across the QuestEntry map of maps.
+    *
+    * @param {object}   [options] - Optional parameters. If no options are provided the iteration occurs across all
+    *                               quests.
+    *
+    * @param {string}   [options.type] - The quest type / status to count.
+    *
+    * @yields {Quest} The Quest iterator.
+    */
+   static *iteratorQuests({ type = void 0 } = {})
+   {
+      if (type === void 0)
+      {
+         for (const value of s_QUESTS[questTypes.active].values()) { yield value.quest; }
+         for (const value of s_QUESTS[questTypes.available].values()) { yield value.quest; }
+         for (const value of s_QUESTS[questTypes.completed].values()) { yield value.quest; }
+         for (const value of s_QUESTS[questTypes.failed].values()) { yield value.quest; }
+         for (const value of s_QUESTS[questTypes.inactive].values()) { yield value.quest; }
+      }
+      else if (s_QUESTS[type])
+      {
+         for (const value of s_QUESTS[type].values()) { yield value; }
+      }
+   }
+
+   /**
+    * Removes all quests from the in-memory DB.
+    */
+   static removeAll()
+   {
+      s_QUESTS[questTypes.active].clear();
+      s_QUESTS[questTypes.available].clear();
+      s_QUESTS[questTypes.completed].clear();
+      s_QUESTS[questTypes.failed].clear();
+      s_QUESTS[questTypes.inactive].clear();
+
+      s_QUEST_INDEX.clear();
+
+      s_QUESTS_COLLECT[questTypes.active] = collect();
+      s_QUESTS_COLLECT[questTypes.available] = collect();
+      s_QUESTS_COLLECT[questTypes.completed] = collect();
+      s_QUESTS_COLLECT[questTypes.failed] = collect();
+      s_QUESTS_COLLECT[questTypes.inactive] = collect();
+
+      Hooks.callAll('removeAllQuestEntries');
    }
 
    /**
@@ -448,15 +462,15 @@ export default class QuestDB
          switch (status)
          {
             case questTypes.active:
-               return s_QUESTS_COLLECT[questTypes.active].filter(Filter.IS_OBSERVABLE).sort(sortActive);
+               return s_QUESTS_COLLECT[questTypes.active].sort(sortActive);
             case questTypes.available:
-               return s_QUESTS_COLLECT[questTypes.available].filter(Filter.IS_OBSERVABLE).sort(sortAvailable);
+               return s_QUESTS_COLLECT[questTypes.available].sort(sortAvailable);
             case questTypes.completed:
-               return s_QUESTS_COLLECT[questTypes.completed].filter(Filter.IS_OBSERVABLE).sort(sortCompleted);
+               return s_QUESTS_COLLECT[questTypes.completed].sort(sortCompleted);
             case questTypes.failed:
-               return s_QUESTS_COLLECT[questTypes.failed].filter(Filter.IS_OBSERVABLE).sort(sortFailed);
+               return s_QUESTS_COLLECT[questTypes.failed].sort(sortFailed);
             case questTypes.inactive:
-               return s_QUESTS_COLLECT[questTypes.inactive].filter(Filter.IS_OBSERVABLE).sort(sortInactive);
+               return s_QUESTS_COLLECT[questTypes.inactive].sort(sortInactive);
             default:
                console.error(`Forien Quest Log - QuestDB - sorted - unknown status: ${status}`);
                return null;
@@ -464,34 +478,12 @@ export default class QuestDB
       }
 
       return {
-         active: s_QUESTS_COLLECT[questTypes.active].filter(Filter.IS_OBSERVABLE).sort(sortActive),
-         available: s_QUESTS_COLLECT[questTypes.available].filter(Filter.IS_OBSERVABLE).sort(sortAvailable),
-         completed: s_QUESTS_COLLECT[questTypes.completed].filter(Filter.IS_OBSERVABLE).sort(sortCompleted),
-         failed: s_QUESTS_COLLECT[questTypes.failed].filter(Filter.IS_OBSERVABLE).sort(sortFailed),
-         inactive: s_QUESTS_COLLECT[questTypes.inactive].filter(Filter.IS_OBSERVABLE).sort(sortInactive)
+         active: s_QUESTS_COLLECT[questTypes.active].sort(sortActive),
+         available: s_QUESTS_COLLECT[questTypes.available].sort(sortAvailable),
+         completed: s_QUESTS_COLLECT[questTypes.completed].sort(sortCompleted),
+         failed: s_QUESTS_COLLECT[questTypes.failed].sort(sortFailed),
+         inactive: s_QUESTS_COLLECT[questTypes.inactive].sort(sortInactive)
       };
-   }
-
-   static updateJournalEntry(entry, flags, options, id)
-   {
-      const content = entry.getFlag(constants.moduleName, constants.flagDB);
-
-      if (content)
-      {
-         let questEntry = s_GET_QUEST_ENTRY(entry.id);
-
-         if (questEntry)
-         {
-            questEntry.update(entry, content);
-         }
-         else
-         {
-            questEntry = new QuestEntry(new Quest(content, entry));
-            s_SET_QUEST_ENTRY(questEntry.hydrate());
-         }
-
-         Hooks.callAll('updateQuestEntry', questEntry, flags, options, id);
-      }
    }
 }
 
@@ -573,11 +565,13 @@ export class QuestEntry
    }
 
    /**
+    * @param {object}   content - The FQL quest data from journal entry.
+    *
     * @param {object}   entry - The backing journal entry.
     *
-    * @param {object}   content - The FQL quest data from journal entry.
+    * @returns {boolean} Was s_SET_QUEST_ENTRY invoked.
     */
-   update(entry, content)
+   update(content, entry)
    {
       this.quest.entry = entry;
       this.quest.initData(content);
@@ -601,9 +595,245 @@ export class QuestEntry
       if (status !== this.quest.status)
       {
          s_SET_QUEST_ENTRY(this);
+         return true;
       }
+
+      return false;
    }
 }
+
+/**
+ * @type {FilterFunctions}
+ */
+const Filter = {
+   IS_OBSERVABLE: (entry) => entry.isObservable,
+};
+
+/**
+ * @type {{ALPHA: (function(*, *): number), DATE_START: (function(*, *)), DATE_CREATE: (function(*, *)), DATE_END: (function(*, *))}}
+ */
+const Sort = {
+   ALPHA: (a, b) => a.quest.name.localeCompare(b.quest.name),
+   DATE_CREATE: (a, b) => a.quest.date.create - b.quest.date.create,
+   DATE_START: (a, b) => a.quest.date.start - b.quest.date.start,
+   DATE_END: (a, b) => b.quest.date.end - a.quest.date.end
+};
+
+Object.freeze(Filter);
+Object.freeze(Sort);
+
+/**
+ * @param {string}   questId - The Quest / JournalEntry ID.
+ *
+ * @returns {QuestEntry} The stored QuestEntry.
+ */
+const s_GET_QUEST_ENTRY = (questId) =>
+{
+   const currentStatus = s_QUEST_INDEX.get(questId);
+   return currentStatus && s_QUESTS[currentStatus] ? s_QUESTS[currentStatus].get(questId) : null;
+};
+
+/**
+ *
+ * @param {object}   content - The serialized Quest data stored in the journal entry.
+ *
+ * @param {object}   entry - The backing journal entry.
+ *
+ * @param {boolean}  isTrustedPlayerEdit - Is the user trusted and is the module setting to edit granted.
+ *
+ * @returns {boolean}   is quest observable.
+ */
+const s_IS_OBSERVABLE = (content, entry, isTrustedPlayerEdit = Utils.isTrustedPlayerEdit()) =>
+{
+   let isObservable;
+
+   if (game.user.isGM)
+   {
+      isObservable = true;
+   }
+   else
+   {
+      const isInactive = questTypes.inactive === content.status;
+
+      // Special handling for trusted player edit who can only see owned quests in the hidden / inactive category.
+      if (isTrustedPlayerEdit && isInactive)
+      {
+         isObservable = entry.isOwner;
+      }
+      else
+      {
+         // Otherwise no one can see hidden / inactive quests; perform user permission check for observer.
+         isObservable = !isInactive && entry.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER);
+      }
+   }
+
+   return isObservable;
+};
+
+const s_JOURNAL_ENTRY_CREATE = (entry, options, id) =>
+{
+   const content = entry.getFlag(constants.moduleName, constants.flagDB);
+
+   if (content)
+   {
+      if (s_IS_OBSERVABLE(content, entry) && !Utils.isFQLHiddenFromPlayers())
+      {
+         const questEntry = new QuestEntry(new Quest(content, entry));
+         s_SET_QUEST_ENTRY(questEntry.hydrate());
+
+         Hooks.callAll('createQuestEntry', questEntry, options, id);
+      }
+   }
+};
+
+const s_JOURNAL_ENTRY_DELETE = (entry, options, id) =>
+{
+   const questEntry = s_GET_QUEST_ENTRY(entry.id);
+   if (questEntry && s_REMOVE_QUEST_ENTRY(entry.id))
+   {
+      Hooks.callAll('deleteQuestEntry', questEntry, options, id);
+   }
+};
+
+const s_JOURNAL_ENTRY_UPDATE = (entry, flags, options, id) =>
+{
+   const content = entry.getFlag(constants.moduleName, constants.flagDB);
+
+   if (content)
+   {
+      let questEntry = s_GET_QUEST_ENTRY(entry.id);
+
+      const isObservable = s_IS_OBSERVABLE(content, entry) && !Utils.isFQLHiddenFromPlayers();
+
+      if (questEntry)
+      {
+         if (isObservable)
+         {
+            questEntry.update(content, entry);
+            Hooks.callAll('updateQuestEntry', questEntry, flags, options, id);
+         }
+         else
+         {
+            s_REMOVE_QUEST_ENTRY(questEntry.id);
+
+            // Must hydrate any parent on a change.
+            if (typeof questEntry.quest.parent === 'string')
+            {
+               const parentEntry = s_GET_QUEST_ENTRY(questEntry.quest.parent);
+               if (parentEntry) { parentEntry.hydrate(); }
+            }
+
+            // Must hydrate any subquests on a change.
+            for (const subquest of questEntry.quest.subquests)
+            {
+               const subquestEntry = s_GET_QUEST_ENTRY(subquest);
+               if (subquestEntry) { subquestEntry.hydrate(); }
+            }
+
+            // This quest is not deleted; it has been removed from the in-memory DB.
+            Hooks.callAll('removeQuestEntry', questEntry, flags, options, id);
+         }
+      }
+      else if (isObservable)
+      {
+         questEntry = new QuestEntry(new Quest(content, entry));
+         s_SET_QUEST_ENTRY(questEntry.hydrate());
+
+         // Must hydrate any parent on a change.
+         if (typeof questEntry.quest.parent === 'string')
+         {
+            const parentEntry = s_GET_QUEST_ENTRY(questEntry.quest.parent);
+            if (parentEntry) { parentEntry.hydrate(); }
+         }
+
+         // Must hydrate any subquests on a change.
+         for (const subquest of questEntry.quest.subquests)
+         {
+            const subquestEntry = s_GET_QUEST_ENTRY(subquest);
+            if (subquestEntry) { subquestEntry.hydrate(); }
+         }
+
+         Hooks.callAll('addQuestEntry', questEntry, flags, options, id);
+      }
+   }
+};
+
+/**
+ * Removes a QuestEntry by quest ID. Removes the quest index and then removes the QuestEntry from the map of maps
+ * If this results in a deletion and generate is true then rebuild the QuestEntry Collection.
+ *
+ * @param {string}   questId - The Quest ID to delete.
+ *
+ * @param {boolean}  [generate=true] - Generate the associated QuestEntry Collection.
+ *
+ * @returns {boolean} Whether a QuestEntry was deleted.
+ */
+const s_REMOVE_QUEST_ENTRY = (questId, generate = true) =>
+{
+   const currentStatus = s_QUEST_INDEX.get(questId);
+   s_QUEST_INDEX.delete(questId);
+
+   let result = false;
+
+   if (s_QUESTS[currentStatus])
+   {
+      result = s_QUESTS[currentStatus].delete(questId);
+   }
+
+   if (result && generate)
+   {
+      s_QUESTS_COLLECT[currentStatus] = collect(Array.from(s_QUESTS[currentStatus].values()));
+   }
+
+   return result;
+};
+
+/**
+ * @param {QuestEntry}  entry - QuestEntry to set.
+ *
+ * @param {boolean}     [generate=true] - Regenerate s_QUEST_COLLECT
+ */
+const s_SET_QUEST_ENTRY = (entry, generate = true) =>
+{
+   const currentStatus = s_QUEST_INDEX.get(entry.id);
+   if (s_QUESTS[currentStatus] && currentStatus !== entry.status)
+   {
+      if (s_QUESTS[currentStatus].delete(entry.id) && generate)
+      {
+         s_QUESTS_COLLECT[currentStatus] = collect(Array.from(s_QUESTS[currentStatus].values()));
+      }
+   }
+
+   if (!s_QUESTS[entry.status])
+   {
+      console.error(`ForienQuestLog - QuestDB - set quest error - unknown status: ${entry.status}`);
+      return;
+   }
+
+   s_QUEST_INDEX.set(entry.id, entry.status);
+   s_QUESTS[entry.status].set(entry.id, entry);
+
+   if (generate)
+   {
+      s_QUESTS_COLLECT[entry.status] = collect(Array.from(s_QUESTS[entry.status].values()));
+   }
+};
+
+/**
+ * Flattens the QuestEntry map of maps into and array of all entries.
+ *
+ * @returns {QuestEntry[]} An array of all QuestEntry values stored.
+ */
+const s_MAP_FLATTEN = () =>
+{
+   return [
+    ...s_QUESTS[questTypes.active].values(),
+    ...s_QUESTS[questTypes.available].values(),
+    ...s_QUESTS[questTypes.completed].values(),
+    ...s_QUESTS[questTypes.failed].values(),
+    ...s_QUESTS[questTypes.inactive].values()
+   ];
+};
 
 /**
  * @typedef {object} DeleteData The data object returned from `delete` indicating which quests were updated.
