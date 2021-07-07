@@ -20,16 +20,57 @@ import { constants, settings }  from '../../model/constants.js';
  * QuestPreview is the {@link Quest} sheet in Foundry parlance. In `./src/init.js` in the initial `init` Hook
  * QuestPreview is set as the Quest sheet. All Quests are opened through this reference in Quest which is accessible
  * by {@link Quest.sheet}
+ *
+ * The main source of QuestPreview creation is through {@link QuestAPI.open}. Both Socket, QuestLog and external
+ * API usage invokes `QuestAPI.open`. The constructor of QuestPreview requires a Quest and passes on options to t
+ * the FormApplication.
+ *
+ * The jQuery control handling of callbacks is facilitated through three separate static control classes. Two of the
+ * control classes {@link HandlerDetails} and {@link HandlerManage} contain jQuery callbacks specific to the `details`
+ * and `management` tabs visible for GM users and trusted players with ownership permissions when the module setting
+ * {@link settings.trustedPlayerEdit} is enabled. {@link HandlerAny} contains callbacks utilized across both `details`
+ * and `management` tabs particularly around handling the action icons for manipulating the quest tasks.
+ *
+ * It is worth noting that all internal array data such as tasks and rewards from {@link Quest} a separate
+ * `UUIDv4` identifier which provides a unique ID for each {@link Task} and {@link Reward}. Tasks and Rewards that are
+ * manipulated in Quest use this UUIDv4 value passed through the template via the enriched data of a quest. As part of
+ * the caching process of {@link QuestDB} {@link QuestEntry} instances are stored with both the Quest and enriched data
+ * from {@link Enrich.quest}.
+ *
+ * In {@link QuestPreview.getData} several local variables are set that are utilized both in the Handlebars template
+ * rendering process and in {@link QuestPreview.activateListeners} to assign certain capabilities that are accessible
+ * to the user. The GM and trusted players with edit capabilities have full access to editing all parameters of a quest
+ * except no players have access to the GM notes tab which is for private notes for the GM only.
+ *
+ * The general control of Foundry when {@link https://foundryvtt.com/api/Application.html#render} is invoked goes as
+ * follows:
+ * - {@link QuestPreview.render} which is overridden to store the current QuestPreview instance in
+ * {@link ViewManager.questPreview} Map by quest ID.
+ *
+ * - {@link QuestPreview.getData} prepares all data for the Handlebars template and sets the local user tracking
+ * variables.
+ *
+ * - {@link QuestPreview.activateListeners} Receives a jQuery element for the window content of the app and is where
+ * all the control callbacks are registered.
+ *
+ * In the handler callbacks for the delete action for quests, tasks, & rewards a special semi-modal dialog is invoked
+ * via {@link FQLDialog}. A single instance of it is rendered and reused across all delete actions. Please refer to the
+ * documentation.
+ *
+ * @see HandlerAny
+ * @see HandlerDetails
+ * @see HandlerManage
  */
 export default class QuestPreview extends FormApplication
 {
    /**
-    * Since Quest Preview shows data for single Quest, it needs a Quest instance or
-    * there is no point in rendering it.
+    * Constructs a QuestPreview instance with a Quest and passes on options to FormApplication.
     *
-    * @param {Quest}   quest
+    * @param {Quest}   quest - The quest to preview / edit.
     *
-    * @param {object}   options
+    * @param {object}   options - The FormApplication options.
+    *
+    * @see https://foundryvtt.com/api/FormApplication.html#options
     */
    constructor(quest, options = {})
    {
@@ -37,7 +78,33 @@ export default class QuestPreview extends FormApplication
 
       this.quest = quest;
 
+      // Set the title of the FormApplication with the quest name.
       this.options.title = game.i18n.format('ForienQuestLog.QuestPreview.Title', this.quest);
+
+      /**
+       * Set in `getData`. Determines if the current user can fully edit the Quest; a GM or trusted player w/ edit.
+       *
+       * @type {boolean}
+       * @see QuestPreview.getData
+       */
+      this.canEdit = false;
+
+      /**
+       * Set in `getData`. Determines if the player has ownership of the quest and thereby limited editing capabilities.
+       *
+       * @type {boolean}
+       * @see QuestPreview.getData
+       */
+      this.playerEdit = false;
+
+      /**
+       * Set in `getData`. Determines if the player can accept quests which for non-GM / trusted players w/ edit allows
+       * a minimal set of options to set quests as `available` or `active`.
+       *
+       * @type {boolean}
+       * @see QuestPreview.getData
+       */
+      this.canAccept = false;
 
       /**
        * Store the input focus callback in the associated QuestPreview instance so that it can be invoked if the app is
@@ -87,7 +154,8 @@ export default class QuestPreview extends FormApplication
    /**
     * Default Application options
     *
-    * @returns {Object}
+    * @returns {object} options - FormApplication options.
+    * @see https://foundryvtt.com/api/FormApplication.html#options
     */
    static get defaultOptions()
    {
@@ -105,25 +173,53 @@ export default class QuestPreview extends FormApplication
       });
    }
 
-   /** @override */
+   /**
+    * Returns the CSS application ID which uniquely references this UI element.
+    *
+    * @returns {string} The CSS app ID.
+    * @override
+    */
    get id()
    {
       return `quest-${this.quest.id}`;
    }
 
+   /**
+    * Returns the associated Quest as the FormApplication target object.
+    *
+    * @returns {Quest} The FormApplication target object.
+    * @override
+    */
    get object()
    {
       return this.quest;
    }
 
+   /**
+    * Prevent setting of the FormApplication target object.
+    *
+    * @param {object}   value - Ignored
+    *
+    * @override
+    */
    set object(value) {}
 
-   /** @override */
+   /**
+    * Specify the set of config buttons which should appear in the Application header. Buttons should be returned as an
+    * Array of objects.
+    *
+    * Provides an explicit override of Application._getHeaderButtons to add three additional buttons for the app header
+    * including copying the content link for the Quest, showing the quest to users via {@link Socket.showQuestPreview}
+    * and showing the splash image popup.
+    *
+    * @returns {ApplicationHeaderButton[]} The app header buttons.
+    * @override
+    */
    _getHeaderButtons()
    {
       const buttons = super._getHeaderButtons();
 
-      // Share Entry
+      // Share QuestPreview w/ remote clients.
       if (game.user.isGM)
       {
          buttons.unshift({
@@ -134,19 +230,21 @@ export default class QuestPreview extends FormApplication
          });
       }
 
+      // Show splash image popup if splash image is defined.
       if (this.quest.splash.length)
       {
          buttons.unshift({
             label: '',
             class: 'splash-image',
             icon: 'far fa-image',
-            onclick: () =>
+            onclick: async () =>
             {
-               (new ImagePopout(this.quest.splash, { shareable: true })).render(true);
+               await HandlerDetails.splashImagePopupShow(this.quest, this);
             }
          });
       }
 
+      // Copy quest content link.
       buttons.unshift({
          label: '',
          class: 'copy-link',
@@ -184,7 +282,7 @@ export default class QuestPreview extends FormApplication
    }
 
    /**
-    * This might be a FormApplication, but we don't want Submit event to fire.
+    * This might be a FormApplication, but we don't want the submit event to fire.
     *
     * @private
     * @inheritDoc
@@ -196,7 +294,8 @@ export default class QuestPreview extends FormApplication
    }
 
    /**
-    * This method is called upon form submission after form data is validated.
+    * This method is called upon form submission after form data is validated. The default _updateObject workflow
+    * is prevented.
     *
     * @override
     * @private
@@ -208,9 +307,14 @@ export default class QuestPreview extends FormApplication
    }
 
    /**
-    * Provide TinyMCE overrides.
+    * Provide TinyMCE overrides when an editor is activated. The overrides are important to provide custom options to
+    * configure TinyMCE. This is very important as Foundry by default allows source code editing and that opens up an
+    * XSS vulnerability with data stored in Quest as there are no content sanitation filters applied to quest data.
+    * There are also various other content plugins enabled in the custom options and the ability to respond to the
+    * `esc` key to quit editing.
     *
     * @override
+    * @see Utils.tinyMCEOptions
     */
    activateEditor(name, options = {}, initialContent = '')
    {
@@ -218,9 +322,9 @@ export default class QuestPreview extends FormApplication
    }
 
    /**
-    * Defines all event listeners like click, drag, drop etc.
+    * Defines all jQuery control callbacks with event listeners for click, drag, drop via various CSS selectors.
     *
-    * @param html
+    * @param {jQuery}  html - The jQuery instance for the window content of this Application.
     */
    activateListeners(html)
    {
@@ -402,19 +506,23 @@ export default class QuestPreview extends FormApplication
    }
 
    /**
-    * Retrieves Data to be used in rendering template.
+    * Retrieves the cached enriched data from QuestDB to be used in the Handlebars template. Also sets the local
+    * variables used in {@link QuestPreview.activateListeners} to enable various control handling based on user
+    * permissions and module settings.
     *
     * @override
     * @inheritDoc
+    * @see QuestPreview.canAccept
+    * @see QuestPreview.canEdit
+    * @see QuestPreview.playerEdit
     */
    async getData(options = {}) // eslint-disable-line no-unused-vars
    {
-      // const content = await Enrich.quest(this.quest);
       const content = QuestDB.getEnrich(this.quest.id);
 
+      this.canAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
       this.canEdit = game.user.isGM || (this.quest.isOwner && Utils.isTrustedPlayerEdit());
       this.playerEdit = this.quest.isOwner;
-      this.canAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
 
       // By default all normal players and trusted players without ownership of a quest are always on the the default
       // tab 'details'. In the case of a trusted player who has permissions revoked to access the quest and is on the
@@ -433,11 +541,12 @@ export default class QuestPreview extends FormApplication
          playerEdit: this.playerEdit
       };
 
-      return mergeObject(content, data);
+      return mergeObject(data, content);
    }
 
    /**
-    * Refreshes the Quest Details window and emits Socket so other players get updated view as well
+    * Refreshes the QuestPreview window and emits {@link Socket.refreshQuestPreview} so remote clients view of data is
+    * updated as well. Any rendered / visible parent and subquests of this quest are also refreshed.
     *
     * @returns {Promise<void>}
     */
@@ -467,7 +576,8 @@ export default class QuestPreview extends FormApplication
    }
 
    /**
-    * When editor is saved we simply save the quest. The editor content if any is available is saved inside 'saveQuest'.
+    * When the editor is saved we simply save the quest. The editor content if any is available is saved inside
+    * 'saveQuest'.
     *
     * @override
     * @inheritDoc
@@ -478,16 +588,18 @@ export default class QuestPreview extends FormApplication
    }
 
    /**
-    * Save associated quest and refresh window
+    * Save the associated quest and refresh this app.
     *
     * @param {object} options - Optional parameters
     *
     * @param {boolean} options.refresh - Execute `QuestPreview.refresh`
     *
     * @returns {Promise<void>}
+    * @see QuestPreview.refresh
     */
    async saveQuest({ refresh = true } = {})
    {
+      // Save any altered content from the TinyMCE editors.
       for (const key of Object.keys(this.editors))
       {
          const editor = this.editors[key];
