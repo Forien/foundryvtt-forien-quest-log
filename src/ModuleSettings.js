@@ -177,15 +177,6 @@ export default class ModuleSettings
          type: Boolean,
          onChange: async(value) =>
          {
-            if (ViewManager.isQuestTrackerVisible())
-            {
-               ViewManager.questTracker.render(true, { focus: true });
-            }
-            else
-            {
-               ViewManager.questTracker.close();
-            }
-
             if (!game.user.isGM)
             {
                // Hide all FQL windows from non GM user and remove the ui.controls for FQL.
@@ -200,16 +191,25 @@ export default class ModuleSettings
                }
                else  // Add back ui.controls
                {
+                  await QuestDB.init();
+
                   const notes = ui?.controls?.controls.find((c) => c.name === 'notes');
                   if (notes) { notes.tools.push(...noteControls); }
-
-                  await QuestDB.init();
                }
 
                ui?.controls?.render(true);
             }
 
             game?.journal?.render();
+
+            if (ViewManager.isQuestTrackerVisible())
+            {
+               ViewManager.questTracker.render(true, { focus: true });
+            }
+            else
+            {
+               ViewManager.questTracker.close();
+            }
          }
       });
 
