@@ -3,7 +3,7 @@ import QuestLog         from '../view/log/QuestLog.js';
 import QuestLogFloating from '../view/QuestLogFloating.js';
 import QuestTracker     from '../view/QuestTracker.js';
 
-import { constants, questTypesI18n, settings } from '../model/constants.js';
+import { constants, questTypes, questTypesI18n, settings } from '../model/constants.js';
 
 const Apps = {
    questLog: void 0,
@@ -83,7 +83,7 @@ export default class ViewManager
    {
       return game.settings.get(constants.moduleName, settings.enableQuestTracker) &&
        (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers)) &&
-        QuestDB.getActiveCount() > 0;
+        QuestDB.getCount({ type: questTypes.active }) > 0;
    }
 
    /**
