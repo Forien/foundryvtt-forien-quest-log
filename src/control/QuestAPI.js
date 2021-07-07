@@ -40,6 +40,20 @@ class QuestAPI
    }
 
    /**
+    * Provides a quicker method to get the count of quests by quest type / status or all quests.
+    *
+    * @param {object}   [options] - Optional parameters. If no options are provided the count of all quests is returned.
+    *
+    * @param {string}   [options.type] - The quest type / status to count.
+    *
+    * @returns {number} Quest count for the specified type or the count for all quests.
+    */
+   static getCount(options)
+   {
+      return QuestDB.getCount(options);
+   }
+
+   /**
     * Retrieves Quest instance for given quest ID
     *
     * @param {string}   questId - Foundry quest ID

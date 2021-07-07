@@ -316,7 +316,7 @@ export default class QuestDB
    }
 
    /**
-    * Provides a quicker method to get the count of active quests.
+    * Provides a quicker method to get the count of quests by quest type / status or all quests.
     *
     * @param {object}   [options] - Optional parameters. If no options are provided the count of all quests is returned.
     *
