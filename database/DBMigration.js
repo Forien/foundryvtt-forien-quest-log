@@ -1,6 +1,6 @@
-import Socket        from '../modules/control/Socket.js';
-import QuestFolder   from '../modules/model/QuestFolder.js';
-import { constants } from '../modules/model/constants.js';
+import Socket        from '../src/control/Socket.js';
+import QuestFolder   from '../src/model/QuestFolder.js';
+import { constants } from '../src/model/constants.js';
 
 import dbSchema_1    from './dbSchema_1.js';
 import dbSchema_2    from './dbSchema_2.js';

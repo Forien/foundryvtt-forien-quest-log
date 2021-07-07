@@ -45,10 +45,13 @@ Hooks.once('ready', async () =>
    // Only attempt to run DB migration for GM.
    if (game.user.isGM) { await DBMigration.migrate(); }
 
-   CONST.ENTITY_TYPES?.push('Quest');
-   CONST.ENTITY_LINK_TYPES?.push('Quest');
+   CONST.ENTITY_TYPES?.push(Quest.documentName);
+   CONST.ENTITY_LINK_TYPES?.push(Quest.documentName);
 
-   CONFIG['Quest'] = {
+   /**
+    * @type {object}
+    */
+   CONFIG[Quest.documentName] = {
       entityClass: Quest,
       documentClass: Quest,
       collection: QuestsCollection,
@@ -59,7 +62,7 @@ Hooks.once('ready', async () =>
    game.collections.set('Quest', QuestsCollection);
 
    await QuestDB.init();
-   await QuestFolder.initializeJournals();
+
    registerHooks();
 
    ViewManager.init();

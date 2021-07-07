@@ -19,6 +19,62 @@ export default class HandlerDetails
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     */
+   static questEditName(event, quest, questPreview)
+   {
+      const target = $(event.target).data('target');
+
+      let value = quest[target];
+
+      value = value.replace(/'/g, '&quot;');
+
+      const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${
+       target}' maxlength="48"/>`);
+
+      const parent = $(event.target).closest('.actions-single').prev('.editable-container');
+
+      parent.html('');
+      parent.append(input);
+      input.focus();
+
+      /**
+       * Store the input focus callback in the associated QuestPreview instance so that it can be invoked if the app is
+       * closed in {@link QuestPreview.close} while the input field is focused / being edited allowing any edits to be
+       * saved. Otherwise the callback is invoked normally below as part of the input focus out event.
+       *
+       * @param {Event|void}  event - HTML5 / jQuery event.
+       *
+       * @param {object}      saveOptions - Options to pass to `saveQuest`; used in {@link QuestPreview.close}.
+       *
+       * @returns {Promise<void>}
+       * @protected
+       * @see QuestPreview.close
+       * @see QuestPreview._activeFocusOutFunction
+       */
+      questPreview._activeFocusOutFunction = async (event, saveOptions = void 0) =>
+      {
+         const valueOut = input.val();
+         questPreview._activeFocusOutFunction = void 0;
+
+         switch (target)
+         {
+            case 'name':
+               quest.name = valueOut;
+               questPreview.options.title = game.i18n.format('ForienQuestLog.QuestPreview.Title', quest);
+               break;
+         }
+         await questPreview.saveQuest(saveOptions);
+      };
+
+      input.focusout(questPreview._activeFocusOutFunction);
+   }
+
+   /**
+    * @param {Event}          event - HTML5 / jQuery event.
+    *
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    */
    static questGiverCustomEditName(event, quest, questPreview)
    {
       const target = $(event.target).data('target');
@@ -37,21 +93,37 @@ export default class HandlerDetails
       parent.append(input);
       input.focus();
 
-      input.focusout(async (event) =>
+      /**
+       * Store the input focus callback in the associated QuestPreview instance so that it can be invoked if the app is
+       * closed in {@link QuestPreview.close} while the input field is focused / being edited allowing any edits to be
+       * saved. Otherwise the callback is invoked normally below as part of the input focus out event.
+       *
+       * @param {Event|void}  event - HTML5 / jQuery event.
+       *
+       * @param {object}      saveOptions - Options to pass to `saveQuest`; used in {@link QuestPreview.close}.
+       *
+       * @returns {Promise<void>}
+       * @protected
+       * @see QuestPreview.close
+       * @see QuestPreview._activeFocusOutFunction
+       */
+      questPreview._activeFocusOutFunction = async (event, saveOptions = void 0) =>
       {
-         const targetOut = $(event.target).data('target');
-         const valueOut = $(event.target).val();
+         const valueOut = input.val();
+         questPreview._activeFocusOutFunction = void 0;
 
-         switch (targetOut)
+         switch (target)
          {
             case 'giverName':
                quest.giverName = valueOut;
                if (typeof quest.giverData === 'object') { quest.giverData.name = valueOut; }
                questPreview.options.title = game.i18n.format('ForienQuestLog.QuestPreview.Title', quest);
+               await questPreview.saveQuest(saveOptions);
                break;
          }
-         await questPreview.saveQuest();
-      });
+      };
+
+      input.focusout(questPreview._activeFocusOutFunction);
    }
 
    /**
@@ -203,25 +275,41 @@ export default class HandlerDetails
       parent.append(input);
       input.focus();
 
-      input.focusout(async (event) =>
+      /**
+       * Store the input focus callback in the associated QuestPreview instance so that it can be invoked if the app is
+       * closed in {@link QuestPreview.close} while the input field is focused / being edited allowing any edits to be
+       * saved. Otherwise the callback is invoked normally below as part of the input focus out event.
+       *
+       * @param {Event|void}  event - HTML5 / jQuery event.
+       *
+       * @param {object}      saveOptions - Options to pass to `saveQuest`; used in {@link QuestPreview.close}.
+       *
+       * @returns {Promise<void>}
+       * @protected
+       * @see QuestPreview.close
+       * @see QuestPreview._activeFocusOutFunction
+       */
+      questPreview._activeFocusOutFunction = async (event, saveOptions = void 0) =>
       {
-         const targetOut = $(event.target).data('target');
-         const valueOut = $(event.target).val();
+         const valueOut = input.val();
+         questPreview._activeFocusOutFunction = void 0;
 
-         switch (targetOut)
+         switch (target)
          {
             case 'reward.name':
             {
-               uuidv4 = $(event.target).data('uuidv4');
+               uuidv4 = input.data('uuidv4');
                const reward = quest.getReward(uuidv4);
                if (!reward) { return; }
 
                reward.data.name = valueOut;
+               await questPreview.saveQuest(saveOptions);
                break;
             }
          }
-         await questPreview.saveQuest();
-      });
+      };
+
+      input.focusout(questPreview._activeFocusOutFunction);
    }
 
    /**
@@ -660,6 +748,73 @@ export default class HandlerDetails
     * @param {Quest}          quest - The current quest being manipulated.
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    */
+   static taskEditName(event, quest, questPreview)
+   {
+      const target = $(event.target).data('target');
+      let uuidv4 = $(event.target).data('uuidv4');
+      let task = quest.getTask(uuidv4);
+
+      // Early out conditional if the target isn't `task.name` or the task doesn't exist.
+      if (target === void 0 || target !== 'task.name' || !task) { return; }
+
+      let value = task.name;
+
+      value = value.replace(/'/g, '&quot;');
+
+      const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${
+       uuidv4 !== void 0 ? `data-uuidv4='${uuidv4}'` : ``}/>`);
+
+      const parent = $(event.target).closest('.actions').prev('.editable-container');
+
+      parent.html('');
+      parent.append(input);
+      input.focus();
+
+      /**
+       * Store the input focus callback in the associated QuestPreview instance so that it can be invoked if the app is
+       * closed in {@link QuestPreview.close} while the input field is focused / being edited allowing any edits to be
+       * saved. Otherwise the callback is invoked normally below as part of the input focus out event.
+       *
+       * @param {Event|void}  event - HTML5 / jQuery event.
+       *
+       * @param {object}      saveOptions - Options to pass to `saveQuest`; used in {@link QuestPreview.close}.
+       *
+       * @returns {Promise<void>}
+       * @protected
+       * @see QuestPreview.close
+       * @see QuestPreview._activeFocusOutFunction
+       */
+      questPreview._activeFocusOutFunction = async (event, saveOptions = void 0) =>
+      {
+         const valueOut = input.val();
+         questPreview._activeFocusOutFunction = void 0;
+
+         switch (target)
+         {
+            case 'task.name':
+            {
+               uuidv4 = input.data('uuidv4');
+               task = quest.getTask(uuidv4);
+               if (task)
+               {
+                  task.name = valueOut;
+                  await questPreview.saveQuest(saveOptions);
+               }
+               break;
+            }
+         }
+      };
+
+      input.focusout(questPreview._activeFocusOutFunction);
+   }
+
+   /**
+    * @param {Event}          event - HTML5 / jQuery event.
+    *
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
     * @returns {Promise<void>} A promise
     */
@@ -693,97 +848,6 @@ export default class HandlerDetails
          task.toggle();
          await questPreview.saveQuest();
       }
-   }
-
-   /**
-    * @param {Event}          event - HTML5 / jQuery event.
-    *
-    * @param {Quest}          quest - The current quest being manipulated.
-    *
-    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
-    */
-   static taskEditName(event, quest, questPreview)
-   {
-      const target = $(event.target).data('target');
-      let uuidv4 = $(event.target).data('uuidv4');
-      let task = quest.getTask(uuidv4);
-
-      // Early out conditional if the target isn't `task.name` or the task doesn't exist.
-      if (target === void 0 || target !== 'task.name' || !task) { return; }
-
-      let value = task.name;
-
-      value = value.replace(/'/g, '&quot;');
-
-      const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${
-       uuidv4 !== void 0 ? `data-uuidv4='${uuidv4}'` : ``}/>`);
-
-      const parent = $(event.target).closest('.actions').prev('.editable-container');
-
-      parent.html('');
-      parent.append(input);
-      input.focus();
-
-      input.focusout(async (event) =>
-      {
-         const targetOut = $(event.target).data('target');
-         const valueOut = $(event.target).val();
-
-         switch (targetOut)
-         {
-            case 'task.name':
-            {
-               uuidv4 = $(event.target).data('uuidv4');
-               task = quest.getTask(uuidv4);
-               if (task)
-               {
-                  task.name = valueOut;
-                  await questPreview.saveQuest();
-               }
-               break;
-            }
-         }
-      });
-   }
-
-   /**
-    * @param {Event}          event - HTML5 / jQuery event.
-    *
-    * @param {Quest}          quest - The current quest being manipulated.
-    *
-    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
-    */
-   static questEditName(event, quest, questPreview)
-   {
-      const target = $(event.target).data('target');
-
-      let value = quest[target];
-
-      value = value.replace(/'/g, '&quot;');
-
-      const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${
-       target}' maxlength="48"/>`);
-
-      const parent = $(event.target).closest('.actions-single').prev('.editable-container');
-
-      parent.html('');
-      parent.append(input);
-      input.focus();
-
-      input.focusout(async (event) =>
-      {
-         const targetOut = $(event.target).data('target');
-         const valueOut = $(event.target).val();
-
-         switch (targetOut)
-         {
-            case 'name':
-               quest.name = valueOut;
-               questPreview.options.title = game.i18n.format('ForienQuestLog.QuestPreview.Title', quest);
-               break;
-         }
-         await questPreview.saveQuest();
-      });
    }
 }
 

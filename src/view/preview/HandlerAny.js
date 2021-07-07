@@ -23,8 +23,7 @@ export default class HandlerAny
       const result = await FQLDialog.confirmDeleteQuest({ name, result: questId, questId: quest.id });
       if (result)
       {
-         const deleteQuest = QuestDB.getQuest(result);
-         if (deleteQuest) { await Socket.deletedQuest(await deleteQuest.delete()); }
+         await QuestDB.deleteQuest({ questId: result });
       }
    }
 

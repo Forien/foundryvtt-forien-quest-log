@@ -29,25 +29,62 @@ class QuestAPI
        !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers) ? QuestDB.createQuest(options) : null;
    }
 
+   static getAllQuestEntries()
+   {
+      return QuestDB.getAllQuestEntries();
+   }
+
+   static getAllQuests()
+   {
+      return QuestDB.getAllQuests();
+   }
+
+   /**
+    * Provides a quicker method to get the count of quests by quest type / status or all quests.
+    *
+    * @param {object}   [options] - Optional parameters. If no options are provided the count of all quests is returned.
+    *
+    * @param {string}   [options.type] - The quest type / status to count.
+    *
+    * @returns {number} Quest count for the specified type or the count for all quests.
+    */
+   static getCount(options)
+   {
+      return QuestDB.getCount(options);
+   }
+
    /**
     * Retrieves Quest instance for given quest ID
     *
-    * @param questId
+    * @param {string}   questId - Foundry quest ID
     *
-    * @returns {QuestEntry} The QuestEntry
+    * @returns {Quest|null} The Quest or null if not found.
     */
    static getQuest(questId)
    {
-      if (game.user.isGM) { return QuestDB.getQuest(questId); }
-
-      const quest = QuestDB.getQuest(questId);
-
-      return quest.isObservable && !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers) ? quest : null;
+      return QuestDB.getQuest(questId);
    }
 
-   static getAllEntries()
+   /**
+    * Retrieves QuestEntry instance for given quest ID
+    *
+    * @param questId
+    *
+    * @returns {QuestEntry|null} The QuestEntry or null if not found.
+    */
+   static getQuestEntry(questId)
    {
-      return game.user.isGM ? QuestDB.getAllEntries() : null;
+      return QuestDB.getQuestEntry(questId);
+   }
+
+   static *iteratorEntries({ type = void 0 } = {})
+   {
+      for (const entry of QuestDB.iteratorEntries(type)) { yield entry; }
+   }
+
+   static *iteratorQuests({ type = void 0 } = {})
+   {
+      for (const quest of QuestDB.iteratorQuests(type)) { yield quest; }
    }
 
    /**
@@ -59,7 +96,7 @@ class QuestAPI
     */
    static sorted(options)
    {
-      return game.user.isGM ? QuestDB.sorted(options) : null;
+      return QuestDB.sorted(options);
    }
 
    /**

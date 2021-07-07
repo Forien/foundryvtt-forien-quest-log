@@ -118,6 +118,18 @@ export default class Utils
    }
 
    /**
+    * Returns true if FQL is hidden from players. This will always return false if the user is a GM.
+    *
+    * @returns {boolean} Is FQL hidden from players.
+    */
+   static isFQLHiddenFromPlayers()
+   {
+      if (game.user.isGM) { return false; }
+
+      return game.settings.get(constants.moduleName, settings.hideFQLFromPlayers);
+   }
+
+   /**
     * Shows a document sheet for the given UUID. An error message will post if the UUID is invalid and a warning
     * message will be posted if the current `game.user` does not have permission to view the document.
     *

@@ -76,8 +76,9 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
-            // Must enrich all quests again in QuestDB.
-            QuestDB.enrichAll();
+            // Must perform a consistency check as there are possible quests that need to be added / removed
+            // from the in-memory DB based on trusted player edit status.
+            QuestDB.consistencyCheck();
 
             ViewManager.renderAll({ questPreview: true });
          }
@@ -174,8 +175,33 @@ export default class ModuleSettings
          config: true,
          default: false,
          type: Boolean,
-         onChange: (value) =>
+         onChange: async(value) =>
          {
+            if (!game.user.isGM)
+            {
+               // Hide all FQL windows from non GM user and remove the ui.controls for FQL.
+               if (value)
+               {
+                  ViewManager.closeAll({ questPreview: true });
+
+                  const notes = ui?.controls?.controls.find((c) => c.name === 'notes');
+                  if (notes) { notes.tools = notes?.tools.filter((c) => !c.name.startsWith(constants.moduleName)); }
+
+                  QuestDB.removeAll();
+               }
+               else  // Add back ui.controls
+               {
+                  await QuestDB.init();
+
+                  const notes = ui?.controls?.controls.find((c) => c.name === 'notes');
+                  if (notes) { notes.tools.push(...noteControls); }
+               }
+
+               ui?.controls?.render(true);
+            }
+
+            game?.journal?.render();
+
             if (ViewManager.isQuestTrackerVisible())
             {
                ViewManager.questTracker.render(true, { focus: true });
@@ -184,27 +210,6 @@ export default class ModuleSettings
             {
                ViewManager.questTracker.close();
             }
-
-            if (!game.user.isGM)
-            {
-               // Hide all FQL windows from non GM user and remove the ui.controls for FQL.
-               if (value)
-               {
-                  ViewManager.closeAll({ questPreview: true });
-
-                  const notes = ui.controls.controls.find((c) => c.name === 'notes');
-                  if (notes) { notes.tools = notes.tools.filter((c) => !c.name.startsWith(constants.moduleName)); }
-               }
-               else  // Add back ui.controls
-               {
-                  const notes = ui.controls.controls.find((c) => c.name === 'notes');
-                  if (notes) { notes.tools.push(...noteControls); }
-               }
-
-               ui.controls.render(true);
-            }
-
-            game.journal.render();
          }
       });
 

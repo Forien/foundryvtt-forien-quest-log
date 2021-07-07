@@ -27,6 +27,50 @@ export default class QuestPreview extends FormApplication
       this.quest = quest;
 
       this.options.title = game.i18n.format('ForienQuestLog.QuestPreview.Title', this.quest);
+
+      /**
+       * Store the input focus callback in the associated QuestPreview instance so that it can be invoked if the app is
+       * closed in {@link QuestPreview.close} while the input field is focused / being edited allowing any edits to be
+       * saved. Otherwise the callback is invoked normally below as part of the input focus out event. Please see the
+       * associated jQuery callback methods in {@link HandlerDetails} linked below.
+       *
+       * @param {Event|void}  event - HTML5 / jQuery event.
+       *
+       * @param {object}      [saveOptions] - Options to pass to `saveQuest`; used in {@link QuestPreview.close}.
+       *
+       * @returns {Promise<void>}
+       *
+       * @type {Function}
+       * @protected
+       * @see HandlerDetails.questEditName
+       * @see HandlerDetails.questGiverCustomEditName
+       * @see HandlerDetails.rewardAbstractEditName
+       * @see HandlerDetails.taskEditName
+       */
+      this._activeFocusOutFunction = void 0;
+
+      /**
+       * Tracks any open FQLPermissionControl dialog that can be opened from the management tab, so that it can be
+       * closed if this QuestPreview is closed.
+       *
+       * @type {FQLPermissionControl}
+       * @protected
+       * @see HandlerManage.configurePermissions
+       * @see QuestPreview.close
+       */
+      this._permControl = void 0;
+
+      /**
+       * Stores a single instance of the ImagePopup for the splash image opened in
+       * {@link HandlerDetails.splashImagePopupShow} preventing multiple copies of the splash image from being opened
+       * at the same time. If open this ImagePopup is also closed when this QuestPreview closes in
+       * {@link QuestPreview.close}.
+       *
+       * @type {ImagePopout}
+       * @see {@link https://foundryvtt.com/api/ImagePopout.html}
+       * @protected
+       */
+      this._splashImagePopup = void 0;
    }
 
    /**
@@ -191,6 +235,9 @@ export default class QuestPreview extends FormApplication
 
       if (this.canEdit || this.playerEdit)
       {
+         html.on('click', '.actions-single.quest-name .editable', (event) =>
+          HandlerDetails.questEditName(event, this.quest, this));
+
          html.on('drop', '.quest-giver-gc', async (event) =>
           await HandlerDetails.questGiverDropDocument(event, this.quest, this));
 
@@ -199,9 +246,6 @@ export default class QuestPreview extends FormApplication
 
          html.on('click', '.quest-giver-gc .deleteQuestGiver', async () =>
           await HandlerDetails.questGiverDelete(this.quest, this));
-
-         html.on('click', '.actions-single.quest-name .editable', (event) =>
-          HandlerDetails.questEditName(event, this.quest, this));
 
          html.on('click', '.quest-tasks .add-new-task', (event) => HandlerDetails.taskAdd(event, this.quest, this));
 
@@ -218,11 +262,11 @@ export default class QuestPreview extends FormApplication
 
       if (this.canEdit || this.canAccept)
       {
-         html.on('click', '.actions.quest-status i.move', async (event) =>
-          await HandlerAny.questStatusSet(event));
-
          html.on('click', '.actions.quest-status i.delete', async (event) =>
           await HandlerAny.questDelete(event, this.quest));
+
+         html.on('click', '.actions.quest-status i.move', async (event) =>
+          await HandlerAny.questStatusSet(event));
       }
 
       if (this.canEdit)
@@ -236,13 +280,13 @@ export default class QuestPreview extends FormApplication
          html.on('click', '.quest-rewards .add-abstract', (event) =>
           HandlerDetails.rewardAddAbstract(event, this.quest, this));
 
+         html.on('click', '.actions.rewards .editable', (event) =>
+          HandlerDetails.rewardAbstractEditName(event, this.quest, this));
+
          html.on('click', '.actions.rewards .delete', async (event) =>
           await HandlerDetails.rewardDelete(event, this.quest, this));
 
          html.on('drop', '.rewards-box', async (event) => await HandlerDetails.rewardDropItem(event, this.quest, this));
-
-         html.on('click', '.actions.rewards .editable', (event) =>
-          HandlerDetails.rewardAbstractEditName(event, this.quest, this));
 
          html.on('click', '.abstract-reward .reward-image', async (event) =>
           await HandlerDetails.rewardSelectAbstractImage(event, this.quest, this));
@@ -260,7 +304,6 @@ export default class QuestPreview extends FormApplication
 
          html.on('click', '.actions.tasks .toggleHidden', async (event) =>
           await HandlerDetails.taskToggleHidden(event, this.quest, this));
-
 
          // Management view callbacks -------------------------------------------------------------------------------
 
@@ -280,18 +323,26 @@ export default class QuestPreview extends FormApplication
    }
 
    /**
-    * When closing window, remove reference from global variable.
+    * When closing this Foundry app:
+    * - Remove reference from {@link ViewManager.questPreview}
+    * - Close any associated dialogs via {@link FQLDialog.closeDialogs}
+    * - Close any associated {@link QuestPreview._permControl}
+    * - Close any associated {@link QuestPreview._splashImagePopup}
+    * - If set invoke {@link QuestPreview._activeFocusOutFunction} or {@link QuestPreview.saveQuest} if the current
+    * user is the owner of the quest and options `noSave` is false.
     *
     * Save the quest on close with no refresh of data.
     *
     * @param {object} options - Optional params
     *
-    * @param {boolean} [options.noSave] -
+    * @param {boolean} [options.noSave] - When true the quest is not saved on close otherwise save quest.
     *
-    * @param {object} [options.options] -
+    * @param {object} [options.options] - Options which are passed through to {@link FormApplication.close}
     *
     * @returns {Promise<void>}
     * @inheritDoc
+    * @see FormApplication.close
+    * @see https://foundryvtt.com/api/FormApplication.html#close
     */
    async close({ noSave = false, ...options } = {})
    {
@@ -313,9 +364,27 @@ export default class QuestPreview extends FormApplication
          this._splashImagePopup = void 0;
       }
 
+      // Only potentially save the quest if the user is the owner and noSave is false.
       if (!noSave && this.quest.isOwner)
       {
-         await this.saveQuest({ refresh: false });
+         // If there is an active input focus function set then invoke it so that the input field is saved.
+         if (typeof this._activeFocusOutFunction === 'function')
+         {
+            await this._activeFocusOutFunction(void 0, { refresh: false });
+
+            // Send a socket refresh event to all clients. This will also render all local apps as applicable.
+            // Must update parent and any subquests / children.
+            Socket.refreshQuestPreview({
+               questId: this.quest.parent ? [this.quest.parent, this.quest.id, ...this.quest.subquests] :
+                [this.quest.id, ...this.quest.subquests],
+               focus: false,
+            });
+         }
+         else
+         {
+            // Otherwise save the quest as normal.
+            await this.saveQuest({ refresh: false });
+         }
       }
 
       return super.close(options);
@@ -364,8 +433,9 @@ export default class QuestPreview extends FormApplication
    async refresh()
    {
       Socket.refreshQuestPreview({
-         questId: this.quest.parent ? [this.quest.parent, this.quest.id] : this.quest.id,
-         focus: false
+         questId: this.quest.parent ? [this.quest.parent, this.quest.id, ...this.quest.subquests] :
+          [this.quest.id, ...this.quest.subquests],
+         focus: false,
       });
 
       this.render(true, { focus: true });
@@ -398,6 +468,10 @@ export default class QuestPreview extends FormApplication
 
    /**
     * Save associated quest and refresh window
+    *
+    * @param {object} options - Optional parameters
+    *
+    * @param {boolean} options.refresh - Execute `QuestPreview.refresh`
     *
     * @returns {Promise<void>}
     */
