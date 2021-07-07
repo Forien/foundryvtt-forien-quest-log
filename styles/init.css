@@ -1238,6 +1238,12 @@
   text-shadow: 1px 1px 1px #000;
   pointer-events: none;
 }
+#quest-tracker .scrollable {
+  overflow-y: auto;
+  max-height: 800px;
+  padding: 0 4px;
+  pointer-events: auto;
+}
 #quest-tracker.background {
   background: rgba(51,51,51,0.6);
   border: 2px solid rgba(17,17,17,0.46667);

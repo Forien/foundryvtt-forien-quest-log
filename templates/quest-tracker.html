@@ -1,5 +1,6 @@
 <div id="quest-tracker" class="{{background}}" style="top: {{pos.top}}px; {{#if pos.left}}left: {{pos.left}}px{{/if}}">
     <div class="move-handle"><i class="fas fa-arrows-alt"></i></div>
+    <div class="scrollable">
     {{#each quests}}
     <div class="quest">
       <h3 class="title" {{#if (or isHidden isInactive)}}id="hidden"{{/if}}>
@@ -31,4 +32,5 @@
       </div>
     </div>
     {{/each}}
+   </div>
 </div>
