@@ -60,6 +60,7 @@
       "Reward": "보상",
       "CustomSource": "사용자 지정 공급자",
       "DragDropActor": "액터, 아이템, 저널 엔트리를 끌어다 놓아 퀘스트 제공자로 지정합니다.",
+      "DragDropActorPlayer": "액터, 아이템, 저널 엔트리를 드래그&드롭 하십시오.",
       "DragDropRewards": "보상으로 추가할 아이템을 여기로 끌어다 놓으십시오",
       "InvalidQuestId": "퀘스트 ID가 잘못되어 미리보기를 열 수 없습니다.",
       "RewardDrop": "FQL (quest reward): {userName} 유저가 '{itemName}' 아이템을 {actorName} 액터에 가져갔습니다.",
