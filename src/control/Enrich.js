@@ -332,8 +332,6 @@ export default class Enrich
          return task;
       });
 
-      data.hasObjectives = data.data_tasks.length + data.data_subquest.length > 0;
-
       data.data_rewards = data.rewards.map((item) =>
       {
          const type = item.type.toLowerCase();
@@ -367,6 +365,8 @@ export default class Enrich
          data.data_tasks = data.data_tasks.filter((t) => t.hidden === false);
          data.data_rewards = data.data_rewards.filter((r) => r.hidden === false);
       }
+
+      data.hasObjectives = data.data_tasks.length + data.data_subquest.length > 0;
 
       return data;
    }
