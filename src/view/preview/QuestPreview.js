@@ -76,6 +76,11 @@ export default class QuestPreview extends FormApplication
    {
       super(void 0, options);
 
+      /**
+       * Stores the quest being displayed / edited.
+       *
+       * @type {Quest}
+       */
       this.quest = quest;
 
       // Set the title of the FormApplication with the quest name.
@@ -109,8 +114,8 @@ export default class QuestPreview extends FormApplication
       /**
        * Store the input focus callback in the associated QuestPreview instance so that it can be invoked if the app is
        * closed in {@link QuestPreview.close} while the input field is focused / being edited allowing any edits to be
-       * saved. Otherwise the callback is invoked normally below as part of the input focus out event. Please see the
-       * associated jQuery callback methods in {@link HandlerDetails} linked below.
+       * saved. Otherwise the callback is invoked as part of the input focus out event in the jQuery handler. Please
+       * see the associated jQuery callback methods in {@link HandlerDetails} linked below.
        *
        * @param {Event|void}  event - HTML5 / jQuery event.
        *
@@ -129,7 +134,7 @@ export default class QuestPreview extends FormApplication
 
       /**
        * Tracks any open FQLPermissionControl dialog that can be opened from the management tab, so that it can be
-       * closed if this QuestPreview is closed.
+       * closed if this QuestPreview is closed or the tab is changed.
        *
        * @type {FQLPermissionControl}
        * @protected
@@ -287,7 +292,7 @@ export default class QuestPreview extends FormApplication
     * @private
     * @inheritDoc
     */
-   async _onSubmit(event)
+   async _onSubmit(event, options) // eslint-disable-line
    {
       event.preventDefault();
       return false;
@@ -323,12 +328,19 @@ export default class QuestPreview extends FormApplication
 
    /**
     * Defines all jQuery control callbacks with event listeners for click, drag, drop via various CSS selectors.
+    * The callbacks are gated by several local v
     *
     * @param {jQuery}  html - The jQuery instance for the window content of this Application.
+    *
+    * @see QuestPreview.canAccept
+    * @see QuestPreview.canEdit
+    * @see QuestPreview.playerEdit
     */
    activateListeners(html)
    {
       super.activateListeners(html);
+
+      // Callbacks for any user.
 
       html.on('click', '.quest-giver-name .open-actor-sheet', async (event) =>
        await HandlerDetails.questGiverShowActorSheet(event));
@@ -348,6 +360,7 @@ export default class QuestPreview extends FormApplication
 
       html.on('dragstart', '.quest-tasks .fa-sort', (event) => HandlerDetails.taskDragStartSort(event));
 
+      // Callbacks for GM, trusted player edit, and players with ownership
       if (this.canEdit || this.playerEdit)
       {
          html.on('click', '.actions-single.quest-name .editable', (event) =>
@@ -375,6 +388,7 @@ export default class QuestPreview extends FormApplication
           await HandlerDetails.taskToggleState(event, this.quest, this));
       }
 
+      // Callbacks for GM, trusted player edit, or players who can accept quests.
       if (this.canEdit || this.canAccept)
       {
          html.on('click', '.actions.quest-status i.delete', async (event) =>
@@ -384,6 +398,7 @@ export default class QuestPreview extends FormApplication
           await HandlerAny.questStatusSet(event));
       }
 
+      // Callbacks only for the GM and trusted player edit.
       if (this.canEdit)
       {
          html.on('click', '.quest-giver-name .actions-single .editable', (event) =>

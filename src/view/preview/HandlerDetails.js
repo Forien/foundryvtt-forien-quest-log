@@ -10,6 +10,9 @@ import FQLDialog  from '../FQLDialog.js';
  */
 const s_DEFAULT_REWARD_ICON = 'icons/svg/item-bag.svg';
 
+/**
+ * Provides all jQuery callbacks for the `details` tab.
+ */
 export default class HandlerDetails
 {
    /**
