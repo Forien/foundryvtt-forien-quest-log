@@ -1,4 +1,5 @@
 import QuestDB from '../control/QuestDB.js';
+import Quest   from '../model/Quest.js';
 
 /**
  * Provides a shim to link QuestDB to a Foundry Collection. Instead of storing any data directly the appropriate methods
@@ -9,13 +10,33 @@ import QuestDB from '../control/QuestDB.js';
 export default class QuestsCollection extends Collection
 {
    /**
+    * Returns the document name for this Collection.
+    *
+    * @returns {string} document name.
+    */
+   static get documentName()
+   {
+      return Quest.documentName;
+   }
+
+   /**
+    * Returns the document name for this Collection.
+    *
+    * @returns {string} document name.
+    */
+   get documentName()
+   {
+      return Quest.documentName;
+   }
+
+   /**
     * Returns this collection.
     *
     * @returns {QuestsCollection} This instance.
     */
    static get instance()
    {
-      return this;
+      return game.collections.get(Quest.documentName);
    }
 
    /**
