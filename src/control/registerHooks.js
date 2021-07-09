@@ -1,6 +1,7 @@
 import QuestDB       from './QuestDB.js';
 import Socket        from './Socket.js';
 import ViewManager   from './ViewManager.js';
+import DBMigration   from '../../database/DBMigration.js';
 
 import { constants, noteControls, settings } from '../model/constants.js';
 
@@ -25,6 +26,14 @@ export default function registerHooks()
       {
          ViewManager.questLogFloating.render(true, { focus: true });
       }
+   });
+
+   Hooks.on('ForienQuestLog.Run.DBMigration', (schemaVersion = void 0) =>
+   {
+      // Only GMs can run the migration.
+      if (!game.user.isGM) { return; }
+
+      DBMigration.migrate(schemaVersion);
    });
 
    Hooks.on('dropActorSheetData', async (actor, sheet, data) =>

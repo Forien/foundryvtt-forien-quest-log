@@ -1,4 +1,5 @@
 import Socket        from '../src/control/Socket.js';
+import QuestDB       from '../src/control/QuestDB.js';
 import QuestFolder   from '../src/model/QuestFolder.js';
 import { constants } from '../src/model/constants.js';
 
@@ -16,7 +17,16 @@ export default class DBMigration
    static get version() { return 2; }
    static get setting() { return 'dbSchema'; }
 
-   static async migrate()
+   /**
+    * Runs DB migration. If no `schemaVersion` is set the module setting {@link DBMigration.setting} is used to get the
+    * current schema value which is stored after any migration occurs. There is a hook available
+    * `ForienQuestLog.Run.DBMigration`.
+    *
+    * @param {number}   schemaVersion - A valid schema version from 0 to DBMigration.version - 1
+    *
+    * @returns {Promise<void>}
+    */
+   static async migrate(schemaVersion = void 0)
    {
       try
       {
@@ -28,7 +38,21 @@ export default class DBMigration
             type: Number
          });
 
-         let schemaVersion = game.settings.get(constants.moduleName, this.setting);
+         if (schemaVersion === void 0)
+         {
+            schemaVersion = game.settings.get(constants.moduleName, this.setting);
+         }
+         else
+         {
+            if (!Number.isInteger(schemaVersion) || schemaVersion < 0 || schemaVersion > DBMigration.version - 1)
+            {
+               const err = `ForienQuestLog - DBMigrate.migrate - schemaVersion must be an integer (0 - ${
+                DBMigration.version - 1})`;
+
+               ui.notifications.error(err);
+               console.error(err);
+            }
+         }
 
          // The DB schema matches the current version
          if (schemaVersion === this.version) { return; }
@@ -62,7 +86,7 @@ export default class DBMigration
 
          ui.notifications.info(game.i18n.localize('ForienQuestLog.Migration.Complete'));
 
-         Socket.refreshQuestLog();
+         Socket.refreshAll();
       }
       catch (err)
       {
