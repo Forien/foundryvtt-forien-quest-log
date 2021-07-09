@@ -3,8 +3,18 @@ import ViewManager   from './control/ViewManager.js';
 
 import { constants, noteControls, settings } from './model/constants.js';
 
+/**
+ * The default location for the QuestTracker
+ *
+ * @type {{top: number}}
+ */
 const s_QUEST_TRACKER_DEFAULT = { top: 80 };
 
+/**
+ * Constants for setting scope type.
+ *
+ * @type {{world: string, client: string}}
+ */
 const scope = {
    client: 'client',
    world: 'world'
@@ -34,6 +44,7 @@ export default class ModuleSettings
             // Must enrich all quests again in QuestDB.
             QuestDB.enrichAll();
 
+            // Render all views; immediately stops / enables player drag if Quest view is open.
             ViewManager.renderAll({ force: true, questPreview: true });
          }
       });
@@ -47,6 +58,7 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
+            // Render quest log to show / hide add quest button.
             if (ViewManager.questLog.rendered) { ViewManager.questLog.render(); }
          }
       });
@@ -63,6 +75,7 @@ export default class ModuleSettings
             // Must enrich all quests again in QuestDB.
             QuestDB.enrichAll();
 
+            // Render all views as quest status actions need to be shown or hidden for some players.
             ViewManager.renderAll({ questPreview: true });
          }
       });
@@ -80,6 +93,7 @@ export default class ModuleSettings
             // from the in-memory DB based on trusted player edit status.
             QuestDB.consistencyCheck();
 
+            // Render all views as trusted player edit adds / removes capabilities.
             ViewManager.renderAll({ questPreview: true });
          }
       });
@@ -96,6 +110,7 @@ export default class ModuleSettings
             // Must enrich all quests again in QuestDB.
             QuestDB.enrichAll();
 
+            // Must render the quest log / floating quest log / quest tracker.
             ViewManager.renderAll();
          }
       });
@@ -109,6 +124,7 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
+            // Must render the quest log.
             if (ViewManager.questLog.rendered) { ViewManager.questLog.render(); }
          }
       });
@@ -129,6 +145,7 @@ export default class ModuleSettings
             // Must enrich all quests again in QuestDB.
             QuestDB.enrichAll();
 
+            // Must render the quest log.
             if (ViewManager.questLog.rendered) { ViewManager.questLog.render(); }
          }
       });
@@ -150,7 +167,8 @@ export default class ModuleSettings
             // Must enrich all quests again in QuestDB.
             QuestDB.enrichAll();
 
-            ViewManager.renderAll({ force: true });
+            // Must render the quest log.
+            ViewManager.renderAll();
          }
       });
 
@@ -179,7 +197,7 @@ export default class ModuleSettings
          {
             if (!game.user.isGM)
             {
-               // Hide all FQL windows from non GM user and remove the ui.controls for FQL.
+               // Hide all FQL apps from non GM user and remove the ui.controls for FQL.
                if (value)
                {
                   ViewManager.closeAll({ questPreview: true });
@@ -187,12 +205,16 @@ export default class ModuleSettings
                   const notes = ui?.controls?.controls.find((c) => c.name === 'notes');
                   if (notes) { notes.tools = notes?.tools.filter((c) => !c.name.startsWith(constants.moduleName)); }
 
+                  // Remove all quests from in-memory DB. This is required so that users can not retrieve quests
+                  // from the QuestAPI or content links in Foundry resolve when FQL is hidden.
                   QuestDB.removeAll();
                }
-               else  // Add back ui.controls
+               else
                {
+                  // Initialize QuestDB loading all quests that are currently observable for the user.
                   await QuestDB.init();
 
+                  // Add back ui.controls
                   const notes = ui?.controls?.controls.find((c) => c.name === 'notes');
                   if (notes) { notes.tools.push(...noteControls); }
                }
@@ -200,8 +222,11 @@ export default class ModuleSettings
                ui?.controls?.render(true);
             }
 
+            // Render the journal to show / hide open quest log button & folder.
             game?.journal?.render();
 
+            // Close or open the quest tracker based on active quests (users w/ FQL hidden will have no quests in
+            // QuestDB)
             if (ViewManager.isQuestTrackerVisible())
             {
                ViewManager.questTracker.render(true, { focus: true });
@@ -229,7 +254,7 @@ export default class ModuleSettings
          config: true,
          default: false,
          type: Boolean,
-         onChange: () => game.journal.render()
+         onChange: () => game.journal.render()  // Render the journal to show / hide the quest folder.
       });
 
       game.settings.register(constants.moduleName, settings.questTrackerPosition, {
@@ -247,6 +272,7 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
+            // Show hide the quest tracker based on visible quests and this setting.
             if (ViewManager.isQuestTrackerVisible())
             {
                ViewManager.questTracker.render(true, { focus: true });
@@ -267,6 +293,7 @@ export default class ModuleSettings
          type: Boolean,
          onChange: (value) =>
          {
+            // Toggle the background CSS class for the quest tracker.
             if (ViewManager.questTracker.rendered)
             {
                ViewManager.questTracker.element.toggleClass('background', value);
@@ -285,8 +312,10 @@ export default class ModuleSettings
          {
             if (value)
             {
+               // Reset the quest tracker position.
                game.settings.set(constants.moduleName, settings.questTrackerPosition, s_QUEST_TRACKER_DEFAULT);
                game.settings.set(constants.moduleName, settings.resetQuestTracker, false);
+
                if (ViewManager.questTracker.rendered)
                {
                   ViewManager.questTracker.render();

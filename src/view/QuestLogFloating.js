@@ -43,7 +43,7 @@ export default class QuestLogFloating extends Application
       html.on('click', '.questlog-floating .quest-open', this._handleQuestOpen);
 
       // Open and close folders on rerender. Data is store in localstorage so display is consistent after each render.
-      for (const quest of QuestDB.sorted({ status: questTypes.active }))
+      for (const quest of QuestDB.sortCollect({ status: questTypes.active }))
       {
          const collapsed = sessionStorage.getItem(`${constants.folderState}${quest.id}`);
 
@@ -71,7 +71,7 @@ export default class QuestLogFloating extends Application
          showTasks: game.settings.get(constants.moduleName, settings.showTasks),
          style: game.settings.get(constants.moduleName, settings.navStyle),
          questTypesI18n,
-         quests: QuestDB.sorted({ status: questTypes.active })
+         quests: QuestDB.sortCollect({ status: questTypes.active })
       });
    }
 

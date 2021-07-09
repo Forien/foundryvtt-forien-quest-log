@@ -76,7 +76,7 @@ export default class QuestTracker extends RepositionableApplication
     */
    async prepareQuests()
    {
-      return QuestDB.sorted({ status: questTypes.active }).map((entry) =>
+      return QuestDB.sortCollect({ status: questTypes.active }).map((entry) =>
       {
          const q = entry.enrich;
          const collapsed = sessionStorage.getItem(`${constants.folderState}${q.id}`) === 'false';

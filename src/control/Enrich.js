@@ -5,12 +5,22 @@ import { constants, questTypes, questTypesI18n, settings } from '../model/consta
 
 /**
  * Enrich populates content with a lot of additional data that doesn't necessarily have to be saved
- * with the Quest itself such as Actor data.
+ * with the Quest itself such as Actor data and provides embellishment for the Handlebars templates for tasks, rewards,
+ * subquests, status actions, and provides a UUID lookup for the quest giver image.
  *
- * All enrich methods should only be used in getData of various Foundry apps / views.
+ * All enrich methods should only be used in the {@link QuestDB} during the caching phase of the update / create
+ * lifecycle. {@link Enrich.giverFromQuest} / {@link Enrich.giverFromUUID} are used in {@link HandlerDetails} to lookup
+ * and store the quest giver image / name in {@link Quest.giverData} when a quest giver is set.
  */
 export default class Enrich
 {
+   /**
+    * Lookup the Quest giver by UUID and return the data stored in {@link Quest.giverData}.
+    *
+    * @param {Quest} quest - The quest to lookup the quest giver.
+    *
+    * @returns {Promise<QuestImgNameData|null>} The image / name data associated with this Foundry UUID.
+    */
    static async giverFromQuest(quest)
    {
       let data = null;
@@ -31,6 +41,13 @@ export default class Enrich
       return data;
    }
 
+   /**
+    * @param {string}   uuid - The Foundry UUID to lookup for image / name data.
+    *
+    * @param {string}   [imageType] - The image type: 'actor' or 'token'
+    *
+    * @returns {Promise<QuestImgNameData|null>} The image / name data associated with this Foundry UUID.
+    */
    static async giverFromUUID(uuid, imageType = 'actor')
    {
       let data = null;
@@ -83,27 +100,14 @@ export default class Enrich
    }
 
    /**
-    * @param {SortedQuests}   sortedQuests
+    * Builds the quest status / icons div to control quest status. There are many possible states to construct across
+    * three different user states from GM, trusted player edit, to player accept so it is easier to build and cache
+    * this data as performing this setup in the Handlebars template itself is cumbersome and error prone.
     *
-    * @returns {Promise<object>}
+    * @param {Quest} quest - The quest to build status action div / icons for based on current user state.
+    *
+    * @returns {string} The HTML to insert into a Handlebars template for quest status div / icons.
     */
-   static async sorted(sortedQuests)
-   {
-      const data = {};
-
-      for (const key in sortedQuests)
-      {
-         data[key] = [];
-         for (const quest of sortedQuests[key])
-         {
-            const questView = await Enrich.quest(quest);
-            data[key].push(questView);
-         }
-      }
-
-      return data;
-   }
-
    static statusActions(quest)
    {
       let result = '';

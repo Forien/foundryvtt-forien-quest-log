@@ -888,7 +888,7 @@ export class Task
  *
  * @property {string|null} giver -
  *
- * @property {object}      giverData -
+ * @property {QuestImgNameData} giverData -
  *
  * @property {string}      description -
  *
@@ -914,9 +914,73 @@ export class Task
  *
  * @property {string[]}    subquests -
  *
- * @property {Task[]}      tasks -
+ * @property {QuestTaskData[]}      tasks -
  *
- * @property {Reward[]}    rewards -
+ * @property {QuestRewardData[]}    rewards -
  *
- * @property {{create: number|null, start: number|null, end: number|null}}    date -
+ * @property {QuestDateData}    date -
  */
+
+/**
+ * @typedef QuestDateData
+ *
+ * @property {number|null} create - Time ms since 1970 / Date.now() when quest was created.
+ *
+ * @property {number|null} end - Time ms since 1970 / Date.now() when quest ended (status: failed / complete).
+ *
+ * @property {number|null} start - Time ms since 1970 / Date.now() when quest was started (status: active).
+ */
+
+/**
+ * @typedef QuestImgNameData
+ *
+ * @property {string}   name - Quest giver or item name
+ *
+ * @property {string}   img - Quest giver or item image
+ *
+ * @property {boolean}  hasTokenImg - boolean indicating the quest giver has a token prototype image.
+ *
+ * @property {string}   [uuid] - Any associated Foundry UUID for the quest giver / item.
+ */
+
+/**
+ * @typedef QuestRewardData
+ *
+ * @property {string}   type - Reward type.
+ *
+ * @property {QuestRewardAddData}   data - Reward add data.
+ *
+ * @property {boolean}  hidden - Reward hidden.
+ *
+ * @property {boolean}  locked - Reward locked.
+ *
+ * @property {string}   uuidv4 - The FQL UUIDv4 / unique ID.
+ *
+ */
+
+/**
+ * @typedef QuestRewardAddData
+ *
+ * @property {string}            type - Reward type.
+ *
+ * @property {QuestImgNameData}  data - Reward image / name from {@link Enrich.giverFromUUID}.
+ *
+ * @property {boolean}           hidden - Reward hidden.
+ */
+
+/**
+ * @typedef QuestTaskData
+ *
+ * @property {string}   name - Task name.
+ *
+ * @property {boolean}  completed - Task completed.
+ *
+ * @property {boolean}  failed - Task failed.
+ *
+ * @property {boolean}  hidden - Task hidden.
+ *
+ * @property {string}   state - Task state.
+ *
+ * @property {string}   uuidv4 - The FQL UUIDv4 / unique ID.
+ */
+

@@ -90,7 +90,7 @@ export default class QuestLog extends Application
     */
    async getData(options = {})
    {
-      const quests = QuestDB.sorted();
+      const quests = QuestDB.sortCollect();
 
       return mergeObject(super.getData(), {
          options,

@@ -297,6 +297,105 @@ export default class QuestDB
       }
    }
 
+   /**
+    * Filter the entire QuestDB, returning an Array of entries which match a functional condition.
+    *
+    * @param {Function} condition  The functional condition to test
+    *
+    * @param {object}   [options] - Optional parameters. If no options are provided the iteration occurs across all
+    *                               quests.
+    *
+    * @param {string}   [options.type] - The quest type / status to iterate.
+    *
+    * @returns {QuestEntry[]}  An Array of matched values
+    * @see {Array#filter}
+    */
+   static filter(condition, options)
+   {
+      const entries = [];
+      for (const questEntry of QuestDB.iteratorEntries(options))
+      {
+         if (condition(questEntry)) { entries.push(questEntry); }
+      }
+      return entries;
+   }
+
+   /**
+    * @param {object}   options - Optional parameters.
+    *
+    * @param {string}   [options.status] - Specific quest status to return filtered.
+    *
+    * @param {Function} [options.filter] - The filter function for any quest status that doesn't have a filter
+    *                                      defined.
+    *
+    * @param {Function} [options.filterActive] - The filter function for active quests.
+    *
+    * @param {Function} [options.filterAvailable] - The filter function for available quests.
+    *
+    * @param {Function} [options.filterCompleted] - The filter function for completed quests.
+    *
+    * @param {Function} [options.filterFailed] - The filter function for failed quests.
+    *
+    * @param {Function} [options.filterInactive] - The filter function for inactive quests.
+    *
+    * @returns {QuestsCollect|collect<QuestEntry>|void} An object of all QuestEntries filtered by status or individual
+    *                                                   status or undefined.
+    */
+   static filterCollect({ status = void 0, filter = void 0, filterActive = void 0, filterAvailable = void 0,
+    filterCompleted = void 0, filterFailed = void 0, filterInactive = void 0 } = {})
+   {
+      if (typeof status === 'string')
+      {
+         switch (status)
+         {
+            case questTypes.active:
+               return s_QUESTS_COLLECT[questTypes.active].filter(filterActive || filter);
+            case questTypes.available:
+               return s_QUESTS_COLLECT[questTypes.available].filter(filterAvailable || filter);
+            case questTypes.completed:
+               return s_QUESTS_COLLECT[questTypes.completed].filter(filterCompleted || filter);
+            case questTypes.failed:
+               return s_QUESTS_COLLECT[questTypes.failed].filter(filterFailed || filter);
+            case questTypes.inactive:
+               return s_QUESTS_COLLECT[questTypes.inactive].filter(filterInactive || filter);
+            default:
+               console.error(`Forien Quest Log - QuestDB - filterCollect - unknown status: ${status}`);
+               return void 0;
+         }
+      }
+
+      return {
+         active: s_QUESTS_COLLECT[questTypes.active].filter(filterActive || filter),
+         available: s_QUESTS_COLLECT[questTypes.available].filter(filterAvailable || filter),
+         completed: s_QUESTS_COLLECT[questTypes.completed].filter(filterCompleted || filter),
+         failed: s_QUESTS_COLLECT[questTypes.failed].filter(filterFailed || filter),
+         inactive: s_QUESTS_COLLECT[questTypes.inactive].filter(filterInactive || filter)
+      };
+   }
+
+   /**
+    * Find an entry in the QuestDB using a functional condition.
+    *
+    * @param {Function} condition - The functional condition to test.
+    *
+    * @param {object}   [options] - Optional parameters. If no options are provided the iteration occurs across all
+    *                               quests.
+    *
+    * @param {string}   [options.type] - The quest type / status to iterate.
+    *
+    * @returns {QuestEntry} The QuestEntry, if found, otherwise undefined.
+    * @see {Array#find}
+    */
+   static find(condition, options)
+   {
+      for (const questEntry of QuestDB.iteratorEntries(options))
+      {
+         if (condition(questEntry)) { return questEntry; }
+      }
+
+      return void 0;
+   }
+
    static getAllEnrich()
    {
       return s_MAP_FLATTEN().map((entry) => entry.enrich);
@@ -341,16 +440,6 @@ export default class QuestDB
    static getQuestEntry(questId)
    {
       return s_GET_QUEST_ENTRY(questId);
-   }
-
-   static getName(name)
-   {
-      for (const entry of QuestDB.iteratorEntries())
-      {
-         if (entry.quest.name === name) { return entry.quest; }
-      }
-
-      return void 0;
    }
 
    static getQuest(questId)
@@ -407,7 +496,7 @@ export default class QuestDB
       }
       else if (s_QUESTS[type])
       {
-         for (const value of s_QUESTS[type].values()) { yield value; }
+         for (const value of s_QUESTS[type].values()) { yield value.quest; }
       }
    }
 
@@ -448,10 +537,10 @@ export default class QuestDB
     *
     * @param {Function} [options.sortInactive] - The sort function for inactive quests.
     *
-    * @returns {SortedQuests|collect<QuestEntry>|null} An object of all QuestEntries sorted by status or individual
+    * @returns {QuestsCollect|collect<QuestEntry>|void} An object of all QuestEntries sorted by status or individual
     *                                                  status or null.
     */
-   static sorted({ status = void 0, sortActive = Sort.ALPHA, sortAvailable = Sort.ALPHA,
+   static sortCollect({ status = void 0, sortActive = Sort.ALPHA, sortAvailable = Sort.ALPHA,
     sortCompleted = Sort.DATE_END, sortFailed = Sort.DATE_END, sortInactive = Sort.ALPHA } = {})
    {
       if (typeof status === 'string')
@@ -469,8 +558,8 @@ export default class QuestDB
             case questTypes.inactive:
                return s_QUESTS_COLLECT[questTypes.inactive].sort(sortInactive);
             default:
-               console.error(`Forien Quest Log - QuestDB - sorted - unknown status: ${status}`);
-               return null;
+               console.error(`Forien Quest Log - QuestDB - sortCollect - unknown status: ${status}`);
+               return void 0;
          }
       }
 
@@ -858,7 +947,7 @@ const s_MAP_FLATTEN = () =>
  */
 
 /**
- * @typedef {Object.<string, collect<QuestEntry>>} SortedQuests Provides
+ * @typedef {Object.<string, collect<QuestEntry>>} QuestsCollect Provides
  *
  * @property {collect<QuestEntry>} active - Active quest entries
  *

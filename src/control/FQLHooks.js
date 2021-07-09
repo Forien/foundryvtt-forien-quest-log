@@ -125,7 +125,7 @@ export default class FQLHooks
       };
 
       // Add our QuestsCollection shim to the game collections.
-      game.collections.set('Quest', QuestsCollection);
+      game.collections.set(Quest.documentName, new QuestsCollection());
 
       // Initialize the in-memory QuestDB. Loads all quests that the user can see at this point.
       await QuestDB.init();
