@@ -270,7 +270,7 @@ export default class HandlerDetails
       value = value.replace(/'/g, '&quot;');
 
       const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${
-       uuidv4 !== void 0 ? `data-uuidv4='${uuidv4}'` : ``} maxlength="30"/>`);
+       uuidv4 !== void 0 ? `data-uuidv4='${uuidv4}'` : ``} maxlength="48"/>`);
 
       const parent = $(event.target).closest('.actions').prev('.editable-container');
 
@@ -326,8 +326,7 @@ export default class HandlerDetails
    {
       const li = $('<li class="reward"></li>');
 
-      const input = $(`<input type="text" class="editable-input" value="" placeholder="${game.i18n.localize(
-       'ForienQuestLog.SampleReward')}" maxlength="30"/>`);
+      const input = $(`<input type="text" class="editable-input" value="" placeholder="" maxlength="48"/>`);
 
       const box = $(event.target).closest('.quest-rewards').find('.rewards-box ul');
 
@@ -659,8 +658,7 @@ export default class HandlerDetails
 
       const placeholder = $('<span><i class="fas fa-check hidden"></i></span>');
 
-      const input = $(`<input type="text" class="editable-input" value="" placeholder="${game.i18n.localize(
-       'ForienQuestLog.SampleTask')}" />`);
+      const input = $(`<input type="text" class="editable-input" value="" placeholder="" />`);
 
       const box = $(event.target).closest('.quest-tasks').find('.tasks-box ul');
 
