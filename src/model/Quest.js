@@ -882,43 +882,43 @@ export class Task
 /**
  * @typedef {object} QuestData
  *
- * @property {string}      name -
+ * @property {string}            name - The quest name.
  *
- * @property {string}      status -
+ * @property {string}            status - The quest status; one of {@link questTypes}.
  *
- * @property {string|null} giver -
+ * @property {string|null}       giver - The Foundry UUID or 'abstract' for a custom source.
  *
- * @property {QuestImgNameData} giverData -
+ * @property {QuestImgNameData}  giverData - The Foundry image / name data looked up by UUID.
  *
- * @property {string}      description -
+ * @property {string}            description - The quest description.
  *
- * @property {string}      gmnotes -
+ * @property {string}            gmnotes - The GM Notes.
  *
- * @property {string}      image -
+ * @property {string}            image - `actor` or `token` for UUID based givers or the image link for custom source.
  *
- * @property {string}      giverName -
+ * @property {string}            giverName - The name of the quest giver.
  *
- * @property {string}      splash -
+ * @property {string}            splash - The splash image.
  *
- * @property {string}      splashPos -
+ * @property {string}            splashPos - The splash position (top, center, bottom).
  *
- * @property {boolean}     splashAsIcon -
+ * @property {boolean}           splashAsIcon - Use the splash image as the quest icon.
  *
- * @property {string|null} location -
+ * @property {string|null}       location - Unused / future use for quest location.
  *
- * @property {number}      priority -
+ * @property {number}            priority - Unused / future use for quest priority sorting.
  *
- * @property {string|null} type -
+ * @property {string|null}       type - Unused / future use for sorting type of quest.
  *
- * @property {string|null} parent -
+ * @property {string|null}       parent - The parent quest ID.
  *
- * @property {string[]}    subquests -
+ * @property {string[]}          subquests - An array of quest IDs that are subquests.
  *
- * @property {QuestTaskData[]}      tasks -
+ * @property {QuestTaskData[]}   tasks - An array of tasks.
  *
- * @property {QuestRewardData[]}    rewards -
+ * @property {QuestRewardData[]} rewards - An array of rewards.
  *
- * @property {QuestDateData}    date -
+ * @property {QuestDateData}     date - The create, end, start dates of the quest.
  */
 
 /**
