@@ -5,7 +5,8 @@ import ViewManager   from './ViewManager.js';
 import { constants, settings } from '../model/constants.js';
 
 /**
- * Quest public API
+ * Quest public API. QuestAPI exposes certain QuestDB methods that are available for any player as only currently
+ * observable quests are loaded. Other methods include opening a quest if it is observable.
  */
 class QuestAPI
 {
@@ -48,6 +49,11 @@ class QuestAPI
    }
 
    /**
+    * Filters the CollectJS collections and returns a single collection if status is specified otherwise filters all
+    * quest collections and returns a QuestCollect object with all status categories. At minimum you must provide a
+    * filter function `options.filter` which will be applied across all collections otherwise you may also provide
+    * separate filters for each status category.
+    *
     * @param {object}   options - Optional parameters.
     *
     * @param {string}   [options.status] - Specific quest status to return filtered.
@@ -91,11 +97,21 @@ class QuestAPI
       return QuestDB.find(condition, options);
    }
 
+   /**
+    * Returns all QuestEntry instances.
+    *
+    * @returns {QuestEntry[]} All QuestEntry instances.
+    */
    static getAllQuestEntries()
    {
       return QuestDB.getAllQuestEntries();
    }
 
+   /**
+    * Returns all Quest instances.
+    *
+    * @returns {Quest[]} All quest instances.
+    */
    static getAllQuests()
    {
       return QuestDB.getAllQuests();
@@ -116,11 +132,11 @@ class QuestAPI
    }
 
    /**
-    * Retrieves Quest instance for given quest ID
+    * Gets the Quest by quest ID.
     *
-    * @param {string}   questId - Foundry quest ID
+    * @param {string}   questId - A Foundry ID
     *
-    * @returns {Quest|null} The Quest or null if not found.
+    * @returns {Quest|null} The Quest or null.
     */
    static getQuest(questId)
    {
@@ -128,24 +144,46 @@ class QuestAPI
    }
 
    /**
-    * Retrieves QuestEntry instance for given quest ID
+    * Retrieves a QuestEntry by quest ID.
     *
-    * @param {string}   questId - Quest ID to lookup.
+    * @param {string}   questId - A Foundry ID
     *
-    * @returns {QuestEntry|null} The QuestEntry or null if not found.
+    * @returns {QuestEntry|null} The QuestEntry or null.
     */
    static getQuestEntry(questId)
    {
       return QuestDB.getQuestEntry(questId);
    }
 
+   /**
+    * Provides an iterator across the QuestEntry map of maps.
+    *
+    * @param {object}   [options] - Optional parameters. If no options are provided the iteration occurs across all
+    *                               quests.
+    *
+    * @param {string}   [options.type] - The quest type / status to iterate.
+    *
+    * @yields {QuestEntry} The QuestEntry iterator.
+    */
    static *iteratorEntries({ type = void 0 } = {})
    {
+      // TODO CHECK IF WE CAN JUST RETURN THE ITERATOR
       for (const entry of QuestDB.iteratorEntries(type)) { yield entry; }
    }
 
+   /**
+    * Provides an iterator across the QuestEntry map of maps.
+    *
+    * @param {object}   [options] - Optional parameters. If no options are provided the iteration occurs across all
+    *                               quests.
+    *
+    * @param {string}   [options.type] - The quest type / status to iterate.
+    *
+    * @yields {Quest} The Quest iterator.
+    */
    static *iteratorQuests({ type = void 0 } = {})
    {
+      // TODO CHECK IF WE CAN JUST RETURN THE ITERATOR
       for (const quest of QuestDB.iteratorQuests(type)) { yield quest; }
    }
 

@@ -541,7 +541,7 @@ export default class QuestPreview extends FormApplication
     */
    async getData(options = {}) // eslint-disable-line no-unused-vars
    {
-      const content = QuestDB.getEnrich(this.quest.id);
+      const content = QuestDB.getQuestEntry(this.quest.id).enrich;
 
       this.canAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
       this.canEdit = game.user.isGM || (this.quest.isOwner && Utils.isTrustedPlayerEdit());
