@@ -1,20 +1,51 @@
 import Socket        from '../src/control/Socket.js';
-import QuestDB       from '../src/control/QuestDB.js';
 import QuestFolder   from '../src/model/QuestFolder.js';
 import { constants } from '../src/model/constants.js';
 
 import dbSchema_1    from './dbSchema_1.js';
 import dbSchema_2    from './dbSchema_2.js';
 
+/**
+ * Defines the callback functions to execute for each schemaVersion level.
+ *
+ * @type {Object.<number, Function>}
+ */
 const migrateImpl = {
    0: () => {},   // Schema level 0 is a noop / assume all data is stored in JE content.
    1: dbSchema_1, // Migrate to schema 1 transferring any old data to JE flags.
-   2: dbSchema_2  // Schema 2 - store quest giver image in Quest data instead of doing a UUID lookup in Enrich
+   2: dbSchema_2  // Schema 2 - store quest giver data in Quest data instead of doing a UUID lookup in Enrich.
 };
 
+/**
+ * Provides a utility module to manage DB migrations when new versions of FQL are installed / loaded for the first time.
+ * These updates are organized as schema versions with callback functions defined above. Each schema migration function
+ * stores the version number in module settings for {@link DBMigration.setting}. On startup {@link DBMigration.migrate}
+ * is invoked in the `ready` Hook callback from `./src/init.js`. If the current schema version already equals
+ * {@link DBMigration.version} no migration occurs. Also if there are no journal entries in the `_fql_quests` folder
+ * no migration occurs which is often the case with a new world and the module setting is set to not run migration
+ * again.
+ *
+ * In the case that a GM needs to manually run migration there is a hook defined in `./src/control/registerHooks.js`.
+ * This is `ForienQuestLog.Run.DBMigration` which can be executed by a macro with
+ * `Hooks.call('ForienQuestLog.Run.DBMigration', <schemaVersion>);`. To run all migration manually substitute
+ * `<schemaVersion>` with `0`.
+ *
+ * @see registerHooks
+ */
 export default class DBMigration
 {
+   /**
+    * Defines the current max schema version.
+    *
+    * @returns {number} max schema version.
+    */
    static get version() { return 2; }
+
+   /**
+    * Defines the module setting key to store current level DB migration level that already has run for schemaVersion.
+    *
+    * @returns {string} module setting for schemaVersion.
+    */
    static get setting() { return 'dbSchema'; }
 
    /**
@@ -38,12 +69,14 @@ export default class DBMigration
             type: Number
          });
 
+         // If no schemaVersion is defined then pull the value from module settings.
          if (schemaVersion === void 0)
          {
             schemaVersion = game.settings.get(constants.moduleName, this.setting);
          }
          else
          {
+            // Otherwise make sure that the schemaVersion supplied to migrate is valid.
             if (!Number.isInteger(schemaVersion) || schemaVersion < 0 || schemaVersion > DBMigration.version - 1)
             {
                const err = `ForienQuestLog - DBMigrate.migrate - schemaVersion must be an integer (0 - ${
@@ -57,6 +90,7 @@ export default class DBMigration
          // The DB schema matches the current version
          if (schemaVersion === this.version) { return; }
 
+         // Increment the schema version to run against the proper callback function.
          schemaVersion++;
 
          // Sanity check to make sure there is a schema migration function for the next schema update.
@@ -73,7 +107,7 @@ export default class DBMigration
 
          ui.notifications.info(game.i18n.localize('ForienQuestLog.Migration.Start'));
 
-         // Start at the schema version
+         // Start at the schema version and stop when the version exceeds the max version.
          for (let version = schemaVersion; version <= this.version; version++)
          {
             if (version !== 0)

@@ -62,5 +62,6 @@ export default async function()
       }
    }
 
+   // Set the DBMigration.setting to `2` indicating that migration to schema version `2` is complete.
    await game.settings.set(constants.moduleName, DBMigration.setting, 2);
 }
