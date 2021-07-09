@@ -88,11 +88,13 @@ export default class ViewManager
    static get questTracker() { return Apps.questTracker; }
 
    /**
-    * @param {object}   options - Optional parameters
+    * @param {object}      options - Optional parameters
     *
-    * @param {boolean}  [options.questPreview] -
+    * @param {boolean}     [options.questPreview=false] - If true closes all QuestPreview apps.
     *
-    * @param {object}   [options.options] -
+    * @param {...object}   [options.options] - Optional parameters passed onto {@link Application.close}
+    *
+    * @see https://foundryvtt.com/api/Application.html#close
     */
    static closeAll({ questPreview = false, ...options } = {})
    {

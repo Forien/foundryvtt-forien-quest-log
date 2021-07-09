@@ -143,7 +143,7 @@ export default class Utils
     *
     * @param {boolean}        [opts.permissionCheck=true] - Perform permission check.
     *
-    * @param {object}         [opts.options] - Options to pass to sheet render method.
+    * @param {...object}      [opts.options] - Options to pass to sheet render method.
     *
     * @returns {Promise<void>}
     */
