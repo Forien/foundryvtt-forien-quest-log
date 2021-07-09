@@ -292,7 +292,7 @@ export default class Enrich
 
          data.checkedTasks += finishedSubquests;
 
-         data.totalTasks = data.tasks.length + data.data_subquest.length;
+         data.totalTasks = data.tasks.length + data.subquests.length;
       }
       else
       {
@@ -331,6 +331,8 @@ export default class Enrich
 
          return task;
       });
+
+      data.hasObjectives = data.data_tasks.length + data.data_subquest.length > 0;
 
       data.data_rewards = data.rewards.map((item) =>
       {
