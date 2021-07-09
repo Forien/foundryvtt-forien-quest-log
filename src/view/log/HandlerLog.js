@@ -4,8 +4,16 @@ import ViewManager   from '../../control/ViewManager.js';
 import Socket        from '../../control/Socket.js';
 import FQLDialog     from '../FQLDialog.js';
 
+/**
+ * Provides all jQuery callbacks for the {@link QuestLog}.
+ */
 export default class HandlerLog
 {
+   /**
+    * Handles the quest add button.
+    *
+    * @returns {Promise<void>}
+    */
    static async questAdd()
    {
       if (ViewManager.verifyQuestCanAdd())
@@ -16,6 +24,8 @@ export default class HandlerLog
    }
 
    /**
+    * Handles deleting a quest. The trashcan icon.
+    *
     * @param {Event} event - HTML5 / jQuery event.
     *
     * @returns {Promise<void>} A promise
@@ -33,6 +43,8 @@ export default class HandlerLog
    }
 
    /**
+    * Prepares the data transfer when a quest is dragged from the {@link QuestLog}.
+    *
     * @param {Event} event - HTML5 / jQuery event.
     */
    static questDragStart(event)
@@ -46,6 +58,8 @@ export default class HandlerLog
    }
 
    /**
+    * Handles the quest open click via {@link QuestAPI.open}.
+    *
     * @param {Event} event - HTML5 / jQuery event.
     */
    static questOpen(event)
@@ -55,6 +69,8 @@ export default class HandlerLog
    }
 
    /**
+    * Handles changing the quest status via {@link Socket.moveQuest}.
+    *
     * @param {Event} event - HTML5 / jQuery event.
     *
     * @returns {Promise<void>} A promise

@@ -1,21 +1,38 @@
 import { constants } from '../model/constants.js';
 
+/**
+ * Provides a basic app that can be repositioned with this position stored as a module setting passed into the
+ * constructor and stored in {@link RepositionableApplication._positionSetting}.
+ */
 export default class RepositionableApplication extends Application
 {
    /**
-    * @param {object}   options - Optional parameters
+    * @param {object}      [options] - Optional parameters
     *
-    * @param {boolean}  [options.positionSetting] -
+    * @param {string}      [options.positionSetting] -
     *
-    * @param {object}   [options.options] -
+    * @param {...object}   [options.options] -
     */
    constructor({ positionSetting = void 0, ...options } = {})
    {
       super(options);
+
+      /**
+       * Stores the module setting to store the position of the app or generates a uniqueID.
+       *
+       * @type {string}
+       * @private
+       */
       this._positionSetting = positionSetting || getUniqueID();
    }
 
-   /** @override */
+   /**
+    * Defines all jQuery control callbacks with event listeners for click, drag, drop via various CSS selectors.
+    *
+    * @param {jQuery}  html - The jQuery instance for the window content of this Application.
+    *
+    * @see https://foundryvtt.com/api/FormApplication.html#activateListeners
+    */
    activateListeners(html)
    {
       super.activateListeners(html);
@@ -23,28 +40,35 @@ export default class RepositionableApplication extends Application
       html.find('.move-handle').mousedown(this.reposition.bind(this));
    }
 
-   /** @override */
+   /**
+    * Gets the position from module settings and sets it to the Application position.
+    *
+    * @override
+    * @inheritDoc
+    * @see https://foundryvtt.com/api/Application.html#getData
+    */
    getData(options = {})
    {
-      options = super.getData(options);
-      options.pos = game.settings.get(constants.moduleName, this._positionSetting);
-
-      return options;
+      return mergeObject(super.getData(options), {
+         pos: game.settings.get(constants.moduleName, this._positionSetting)
+      });
    }
 
    /**
-    * Repurposed code originally written by user ^ and stick for Token Action HUD
+    * Repurposed code originally written by user ^ and stick for Token Action HUD.
+    *
+    * @param {Event} ev - HTML5 / jQuery event.
     *
     * @author ^ and stick#0520
     *
-    * @url https://github.com/espositos/fvtt-tokenactionhud/blob/master/scripts/tokenactionhud.js#L199
+    * @see https://github.com/espositos/fvtt-tokenactionhud/blob/master/scripts/tokenactionhud.js#L199
     */
    reposition(ev)
    {
       ev.preventDefault();
-      ev = ev || window.event;
 
       const _this = this;
+
       const hud = $(ev.currentTarget).parent();
       const marginLeft = parseInt(hud.css('marginLeft').replace('px', ''));
       const marginTop = parseInt(hud.css('marginTop').replace('px', ''));
@@ -53,18 +77,17 @@ export default class RepositionableApplication extends Application
       let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
       /**
-       * @param elmnt
+       * @param {Element}  elmnt - The target drag element.
        */
       function dragElement(elmnt)
       {
          elmnt.onmousedown = dragMouseDown;
 
          /**
-          * @param e
+          * @param {Event} e - HTML5 event.
           */
          function dragMouseDown(e)
          {
-            e = e || window.event;
             e.preventDefault();
             pos3 = e.clientX;
             pos4 = e.clientY;
@@ -74,11 +97,12 @@ export default class RepositionableApplication extends Application
          }
 
          /**
-          * @param e
+          * Invoked on mouse move.
+          *
+          * @param {Event} e - HTML5 event.
           */
          function elementDrag(e)
          {
-            e = e || window.event;
             e.preventDefault();
 
             pos1 = pos3 - e.clientX;
@@ -93,7 +117,7 @@ export default class RepositionableApplication extends Application
          }
 
          /**
-          *
+          * Invoked on mouse up.
           */
          function closeDragElement()
          {
@@ -101,8 +125,12 @@ export default class RepositionableApplication extends Application
             elmnt.onmousedown = null;
             document.onmouseup = null;
             document.onmousemove = null;
+
             let xPos = (elmnt.offsetLeft - pos1) > window.innerWidth ? window.innerWidth : (elmnt.offsetLeft - pos1);
-            let yPos = (elmnt.offsetTop - pos2) > window.innerHeight - 20 ? window.innerHeight - 100 : (elmnt.offsetTop - pos2);
+
+            let yPos = (elmnt.offsetTop - pos2) > window.innerHeight - 20 ? window.innerHeight - 100 :
+             (elmnt.offsetTop - pos2);
+
             xPos = xPos < 0 ? 0 : xPos;
             yPos = yPos < 0 ? 0 : yPos;
 
@@ -117,6 +145,11 @@ export default class RepositionableApplication extends Application
       }
    }
 
+   /**
+    * @param {{top: number, left: number}}   pos - Position of app.
+    *
+    * @returns {Promise<*>} The module set Promise.
+    */
    async savePosition(pos = { top: 400, left: 120 })
    {
       if (pos.top && pos.left)
@@ -126,6 +159,11 @@ export default class RepositionableApplication extends Application
    }
 }
 
+/**
+ * Provides a unique ID counter incremented when the position setting is not provided.
+ *
+ * @type {number}
+ */
 let uniqueIDCntr = 0;
 
 /**

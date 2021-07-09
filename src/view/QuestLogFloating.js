@@ -4,8 +4,17 @@ import ViewManager   from '../control/ViewManager.js';
 
 import { constants, questTypes, questTypesI18n, settings }  from '../model/constants.js';
 
+/**
+ * Provides the floating quest log which provides a set of folders for all active quests which can be opened / closed
+ * to show all objectives for a given quest. The folder / open state is stored in {@link sessionStorage} and is shared
+ * between the {@link QuestTracker}.
+ */
 export default class QuestLogFloating extends Application
 {
+   /**
+    * @inheritDoc
+    * @see https://foundryvtt.com/api/Application.html
+    */
    constructor(options = {})
    {
       super(options);
@@ -14,7 +23,8 @@ export default class QuestLogFloating extends Application
    /**
     * Default Application options
     *
-    * @returns {Object}
+    * @returns {object} options - Application options.
+    * @see https://foundryvtt.com/api/Application.html#options
     */
    static get defaultOptions()
    {
@@ -31,9 +41,13 @@ export default class QuestLogFloating extends Application
    }
 
    /**
-    * Defines all event listeners like click, drag, drop etc.
+    * Defines all jQuery control callbacks with event listeners for click, drag, drop via various CSS selectors.
     *
-    * @param html
+    * Data for the quest folder open / close state is saved in {@link sessionStorage}.
+    *
+    * @param {jQuery}  html - The jQuery instance for the window content of this Application.
+    *
+    * @see https://foundryvtt.com/api/FormApplication.html#activateListeners
     */
    activateListeners(html)
    {
@@ -42,10 +56,13 @@ export default class QuestLogFloating extends Application
       html.on('click', '.folder-toggle', this._handleFolderToggle);
       html.on('click', '.questlog-floating .quest-open', this._handleQuestOpen);
 
-      // Open and close folders on rerender. Data is store in localstorage so display is consistent after each render.
+      // Open and close folders on rerender. Data is store in sessionStorage so display is consistent after each render.
       for (const quest of QuestDB.sortCollect({ status: questTypes.active }))
       {
-         const collapsed = sessionStorage.getItem(`${constants.folderState}${quest.id}`);
+         // If there are no objectives then always render in a collapsed state regardless of the
+         // value in sessionStorage..
+         const collapsed = !quest.enrich.hasObjectives ? 'true' :
+          sessionStorage.getItem(`${constants.folderState}${quest.id}`);
 
          const dirItem = $(`.directory-item[data-quest-id='${quest.id}']`);
          const dirItemIcon = $(`.folder-toggle[data-quest-id='${quest.id}'] i`);
@@ -57,16 +74,16 @@ export default class QuestLogFloating extends Application
    }
 
    /**
-    * Retrieves Data to be used in rendering template.
+    * Retrieves the sorted active quests from QuestDB to be used in the Handlebars template. Also sets a few variables
+    * for if the user is a GM and module settings {@link settings.showTasks} / {@link settings.navStyle}.
     *
-    * @param options
-    *
-    * @returns {Promise<Object>}
+    * @override
+    * @inheritDoc
+    * @see https://foundryvtt.com/api/FormApplication.html#getData
     */
    async getData(options = {})
    {
-      return mergeObject(super.getData(), {
-         options,
+      return mergeObject(super.getData(options), {
          isGM: game.user.isGM,
          showTasks: game.settings.get(constants.moduleName, settings.showTasks),
          style: game.settings.get(constants.moduleName, settings.navStyle),
@@ -76,6 +93,8 @@ export default class QuestLogFloating extends Application
    }
 
    /**
+    * Toggles the folder open / close state and saves value in {@link sessionStorage}.
+    *
     * @param {Event} event - HTML5 / jQuery event.
     */
    _handleFolderToggle(event)
@@ -96,6 +115,8 @@ export default class QuestLogFloating extends Application
    }
 
    /**
+    * Handles the quest open click via {@link QuestAPI.open}.
+    *
     * @param {Event} event - HTML5 / jQuery event.
     */
    _handleQuestOpen(event)

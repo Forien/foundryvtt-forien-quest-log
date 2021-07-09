@@ -6,8 +6,15 @@ import HandlerLog    from './HandlerLog.js';
 
 import { constants, questTypesI18n, settings } from '../../model/constants.js';
 
+/**
+ * Provides the main quest log app which shows the quests separated by status either with bookmark or classic tabs.
+ */
 export default class QuestLog extends Application
 {
+   /**
+    * @inheritDoc
+    * @see https://foundryvtt.com/api/Application.html
+    */
    constructor(options = {})
    {
       super(options);
@@ -16,7 +23,8 @@ export default class QuestLog extends Application
    /**
     * Default Application options
     *
-    * @returns {object}
+    * @returns {object} options - Application options.
+    * @see https://foundryvtt.com/api/Application.html#options
     */
    static get defaultOptions()
    {
@@ -34,9 +42,11 @@ export default class QuestLog extends Application
    }
 
    /**
-    * Defines all event listeners like click, drag, drop etc.
+    * Defines all jQuery control callbacks with event listeners for click, drag, drop via various CSS selectors.
     *
-    * @param html
+    * @param {jQuery}  html - The jQuery instance for the window content of this Application.
+    *
+    * @see https://foundryvtt.com/api/FormApplication.html#activateListeners
     */
    activateListeners(html)
    {
@@ -82,16 +92,16 @@ export default class QuestLog extends Application
    }
 
    /**
-    * Retrieves Data to be used in rendering template.
+    * Retrieves the sorted quest collection from the {@link QuestDB.sortCollect} and sets several state parameters for
+    * GM / player / trusted player edit along with several module settings: {@link settings.allowPlayersAccept},
+    * {@link settings.allowPlayersCreate}, {@link settings.showTasks} and {@link settings.navStyle}.
     *
-    * @param options
-    *
-    * @returns {Promise<Object>}
+    * @override
+    * @inheritDoc
+    * @see https://foundryvtt.com/api/FormApplication.html#getData
     */
    async getData(options = {})
    {
-      const quests = QuestDB.sortCollect();
-
       return mergeObject(super.getData(), {
          options,
          isGM: game.user.isGM,
@@ -102,7 +112,7 @@ export default class QuestLog extends Application
          showTasks: game.settings.get(constants.moduleName, settings.showTasks),
          style: game.settings.get(constants.moduleName, settings.navStyle),
          questTypesI18n,
-         quests
+         quests: QuestDB.sortCollect()
       });
    }
 }

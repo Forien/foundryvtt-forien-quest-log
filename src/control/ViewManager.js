@@ -21,10 +21,20 @@ const Apps = {
    questPreview: new Map()
 };
 
-let s_ADD_QUEST_PREVIEW_ID;
+/**
+ * Stores the QuestPreview app that is the current newly added quest. It needs to be closed before more quests can be
+ * added as a gate to prevent many quests from being added rapidly.
+ */
+let s_ADD_QUEST_PREVIEW;
 
+/**
+ * Stores and manages all the GUI apps / view for FQL.
+ */
 export default class ViewManager
 {
+   /**
+    * Initializes all GUI apps.
+    */
    static init()
    {
       Apps.questLog = new QuestLog();
@@ -36,30 +46,31 @@ export default class ViewManager
          ViewManager.questTracker.render(true);
       }
 
+      // Whenever a QuestPreview closes and matches any tracked app that is adding a new quest set it to undefined.
       Hooks.on('closeQuestPreview', (questPreview) =>
       {
-         if (ViewManager.addQuestPreviewId === questPreview.quest.id)
-         {
-            ViewManager.addQuestPreviewId = void 0;
-         }
+         if (s_ADD_QUEST_PREVIEW === questPreview) { s_ADD_QUEST_PREVIEW = void 0; }
       });
    }
 
-   static get addQuestPreviewId() { return s_ADD_QUEST_PREVIEW_ID; }
-
-   static set addQuestPreviewId(questId) { s_ADD_QUEST_PREVIEW_ID = questId; }
-
+   /**
+    * @returns {UINotifications} Returns the UINotifications helper.
+    */
    static get notifications() { return s_NOTIFICATIONS; }
 
    /**
     * @returns {QuestLog} The main quest log app accessible from the left hand menu bar or
     *                     `Hook.call('ForienQuestLog.Open.QuestLog')`.
+    *
+    * @see FQLHooks.openQuestLog
     */
    static get questLog() { return Apps.questLog; }
 
    /**
     * @returns {QuestLogFloating} The floating quest log app accessible from the left hand menu bar or
     *                             `Hooks.call('ForienQuestLog.Open.QuestLogFloating')`.
+    *
+    * @see FQLHooks.openQuestLogFloating
     */
    static get questLogFloating() { return Apps.questLogFloating; }
 
@@ -144,6 +155,17 @@ export default class ViewManager
       }
    }
 
+   /**
+    * Performs the second half of the quest addition view management.
+    *
+    * @param {object}   options - Optional parameters.
+    *
+    * @param {Quest}    options.quest - The new quest being added.
+    *
+    * @param {boolean}  [options.notify=true] - Post a UI notification with the quest name and the status / category.
+    *
+    * @param {boolean}  [options.swapTab=true] - If rendered switch to the QuestLog tab of the new quest status.
+    */
    static questAdded({ quest, notify = true, swapTab = true } = {})
    {
       if (notify)
@@ -165,33 +187,40 @@ export default class ViewManager
 
       if (quest.isObservable)
       {
-         ViewManager.addQuestPreviewId = quest.id;
-
          const questSheet = quest.sheet;
          questSheet.render(true, { focus: true });
+
+         // Set current QuestPreview being tracked as the add app.
+         s_ADD_QUEST_PREVIEW = questSheet;
       }
    }
 
+   /**
+    * The first half of the add quest action which verifies if there is a current "add" QuestPreview open. If so it
+    * will bring the current add QuestPreview app to front, post a UI notification and return false. Otherwise returns
+    * true indicating that a new quest can be added / created.
+    *
+    * @returns {boolean} Whether a new quest can be added.
+    */
    static verifyQuestCanAdd()
    {
-      if (ViewManager.addQuestPreviewId !== void 0)
+      if (s_ADD_QUEST_PREVIEW !== void 0)
       {
-         const qPreview = ViewManager.questPreview.get(ViewManager.addQuestPreviewId);
-         if (qPreview && qPreview.rendered)
+         if (s_ADD_QUEST_PREVIEW.rendered)
          {
-            qPreview.bringToTop();
+            s_ADD_QUEST_PREVIEW.bringToTop();
             ViewManager.notifications.warn(game.i18n.localize('ForienQuestLog.Notifications.FinishQuestAdded'));
             return false;
          }
          else
          {
-            ViewManager.addQuestPreviewId = void 0;
+            s_ADD_QUEST_PREVIEW = void 0;
          }
       }
+
       return true;
    }
 }
-
 
 /**
  * Provides a helper class to gate UI notifications that may come in from various players in a rapid fashion
@@ -200,12 +229,53 @@ export default class ViewManager
  */
 class UINotifications
 {
+   /**
+    */
    constructor()
    {
+      /**
+       * Stores the last notify warn time epoch in MS.
+       *
+       * @type {number}
+       * @private
+       */
       this._lastNotifyWarn = Date.now();
+
+      /**
+       * Stores the last notify info time epoch in MS.
+       *
+       * @type {number}
+       * @private
+       */
       this._lastNotifyInfo = Date.now();
+
+
+      /**
+       * Stores the last call to setTimeout for info messages, so that they can be cancelled as new notifications
+       * arrive.
+       *
+       * @type {number}
+       * @private
+       */
+      this._timeoutInfo = void 0;
+
+      /**
+       * Stores the last call to setTimeout for warn messages, so that they can be cancelled as new notifications
+       * arrive.
+       *
+       * @type {number}
+       * @private
+       */
+      this._timeoutWarn = void 0;
    }
 
+   /**
+    * Potentially gates `warn` UI notifications to prevent overloading the UI notification system.
+    *
+    * @param {string}   message - Message to post.
+    *
+    * @param {number}   delay - The delay in MS between UI notifications posted.
+    */
    warn(message, delay = 4000)
    {
       if (Date.now() - this._lastNotifyWarn > delay)
@@ -228,6 +298,13 @@ class UINotifications
       }
    }
 
+   /**
+    * Potentially gates `info` UI notifications to prevent overloading the UI notification system.
+    *
+    * @param {string}   message - Message to post.
+    *
+    * @param {number}   delay - The delay in MS between UI notifications posted.
+    */
    info(message, delay = 4000)
    {
       if (Date.now() - this._lastNotifyInfo > delay)
@@ -250,10 +327,20 @@ class UINotifications
       }
    }
 
+   /**
+    * Post all error messages with no gating.
+    *
+    * @param {string}   message - Message to post.
+    */
    error(message)
    {
       ui.notifications.error(message);
    }
 }
 
+/**
+ * Stores the UINotifications instance to return in {@link ViewManager.notifications}.
+ *
+ * @type {UINotifications}
+ */
 const s_NOTIFICATIONS = new UINotifications();
