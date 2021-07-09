@@ -25,7 +25,7 @@ const migrateImpl = {
  * no migration occurs which is often the case with a new world and the module setting is set to not run migration
  * again.
  *
- * In the case that a GM needs to manually run migration there is a hook defined in `./src/control/registerHooks.js`.
+ * In the case that a GM needs to manually run migration there is a hook defined in {@link FQLHooks.runDBMigration}.
  * This is `ForienQuestLog.Run.DBMigration` which can be executed by a macro with
  * `Hooks.call('ForienQuestLog.Run.DBMigration', <schemaVersion>);`. To run all migration manually substitute
  * `<schemaVersion>` with `0`.

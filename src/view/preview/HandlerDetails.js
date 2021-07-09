@@ -395,6 +395,7 @@ export default class HandlerDetails
           */
          const dataTransfer = {
             _fqlData: {
+               type: 'reward',
                questId: quest.id,
                uuidv4: data.uuidv4,
                itemName: data.name,
@@ -854,6 +855,8 @@ export default class HandlerDetails
 /**
  * @typedef {object} FQLDropData An object attached to drop data transfer which describes the FQL reward item and who
  *                               is dropping it into an actor sheet.
+ *
+ * @property {string} type - The type of FQL drop data; one of: ['reward']
  *
  * @property {string} questId - The Quest ID
  *
