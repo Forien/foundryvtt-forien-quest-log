@@ -53,16 +53,17 @@ let s_QUEST_DB_INITIALIZED = false;
 const s_QUEST_INDEX = new Map();
 
 /**
- * The QuestDB holds in memory only quests that are observable by the current user. By pre-sorting
+ * The QuestDB holds quests in-memory that are observable by the current user. By pre-sorting
  * quests by status and observability this cuts down on sorting and filtering operations that need to be performed on
- * quests on an ongoing basis.
+ * quests in an ongoing basis.
  *
  * QuestDB lifecycle hooks: The QuestDB has familiar lifecycle hooks to Foundry itself such as `createQuestEntry`,
  * `deleteQuestEntry` and `updateQuestEntry`, but provides more fine grained visibility of quest data that is loaded
  * into and out of the in-memory QuestDB. Additional lifecycle hooks are: `addQuestEntry`, `removeAllQuestEntries`, and
  * `removeQuestEntry`. These latter unique lifecycle events signify observability. A quest may exist in the system, but
- * only is added to the QuestDB when it is observable and this corresponds to the `addQuestEntry`. Likewise the two
- * remove quest hooks relate to when a removal of a quest based on observability; IE the quest  _is not_ deleted.
+ * only is added to the QuestDB when it is observable and this corresponds to the `addQuestEntry`. Likewise, both
+ * remove quest hooks relate to when a quest is removed based on observability; IE the quest  _is not_ deleted, but
+ * no longer visible to the user and is removed from the QuestDB.
  *
  * ```
  * - `addQuestEntry` - A quest has become observable and a QuestEntry instance is added to the QuestDB.
