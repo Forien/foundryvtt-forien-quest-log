@@ -281,9 +281,6 @@ export default class QuestDB
          savedIds
       };
 
-      // Send the delete quest socket message to all clients.
-      await Socket.deletedQuest(deleteData);
-
       // Return the delete and saved IDs.
       return deleteData;
    }
@@ -686,12 +683,23 @@ const s_JOURNAL_ENTRY_CREATE = (entry, options, id) =>
    }
 };
 
-const s_JOURNAL_ENTRY_DELETE = (entry, options, id) =>
+const s_JOURNAL_ENTRY_DELETE = async (entry, options, id) =>
 {
    const questEntry = s_GET_QUEST_ENTRY(entry.id);
    if (questEntry && s_REMOVE_QUEST_ENTRY(entry.id))
    {
       Hooks.callAll('deleteQuestEntry', questEntry, options, id);
+
+      const quest = questEntry.quest;
+      const savedIds = quest.parent ? [quest.parent, ...quest.subquests] : [...quest.subquests];
+
+      // Send the delete quest socket message to all clients.
+      await Socket.deletedQuest({
+         deleteId: entry.id,
+         savedIds
+      });
+
+      Socket.refreshAll();
    }
 };
 
