@@ -8,9 +8,12 @@ import collect       from '../../external/collect.js';
 import { constants, questTypes, settings } from '../model/constants.js';
 
 /**
+ * Stores all QuestEntry instances in a map of Maps. This provides fast retrieval and quick insert / removal with quests
+ * pre-sorted by status.
+ *
  * @type {Object.<string, Map<string, QuestEntry>>}
  */
-const s_QUESTS = {
+const s_QUESTS_MAP = {
    active: new Map(),
    available: new Map(),
    completed: new Map(),
@@ -19,7 +22,12 @@ const s_QUESTS = {
 };
 
 /**
+ * Stores all QuestEntry instances in a map of CollectJS collections. This provides rapid sorting, filtering, and many
+ * other potential operations that CollectJS collections provide for working with arrays of object data. Each collection
+ * is built from the values of the {@link s_QUESTS_MAP} per status category.
+ *
  * @type {Object.<string, Collection<QuestEntry>>}
+ * @see https://collect.js.org/api.html
  */
 const s_QUESTS_COLLECT = {
    active: collect(),
@@ -33,41 +41,118 @@ const s_QUESTS_COLLECT = {
 let s_QUEST_DB_INITIALIZED = false;
 
 /**
+ * Provides an index into the {@link s_QUESTS_MAP} for all QuestEntry instances by questId and the status category.
+ * This allows quick retrieval and removal of QuestEntry instances from {@link s_QUESTS_MAP}.
+ *
  * @type {Map<string, string>}
  */
 const s_QUEST_INDEX = new Map();
 
+/**
+ * The QuestDB holds in memory only quests that are observable by the current user. By pre-sorting
+ * quests by status and observability this cuts down on sorting and filtering operations that need to be performed on
+ * quests on an ongoing basis.
+ *
+ * QuestDB lifecycle hooks: The QuestDB has familiar lifecycle hooks to Foundry itself such as `createQuestEntry`,
+ * `deleteQuestEntry` and `updateQuestEntry`, but provides more fine grained visibility of quest data that is loaded
+ * into and out of the in-memory QuestDB. Additional lifecycle hooks are: `addQuestEntry`, `removeAllQuestEntries`, and
+ * `removeQuestEntry`. These latter unique lifecycle events signify observability. A quest may exist in the system, but
+ * only is added to the QuestDB when it is observable and this corresponds to the `addQuestEntry`. Likewise the two
+ * remove quest hooks relate to when a removal of a quest based on observability; IE the quest  _is not_ deleted.
+ *
+ * ```
+ * - `addQuestEntry` - A quest has become observable and a QuestEntry instance is added to the QuestDB.
+ *
+ * {@link QuestDB.consistencyCheck}: During a consistency check which is mainly used when module settings for
+ * trusted player edit is enabled / disabled quests can be added to QuestDB.
+ *
+ * {@link s_JOURNAL_ENTRY_UPDATE}: During the journal entry update hook a quest may become observable for the current
+ * user and added to the QuestDB.
+ * ```
+ *
+ * ```
+ * - `createQuestEntry`
+ *
+ * {@link s_JOURNAL_ENTRY_CREATE}: A new quest is added to the QuestDB through creation and is observable by the
+ * current user.
+ * ```
+ *
+ * ```
+ * - `deleteQuestEntry`
+ *
+ * {@link s_JOURNAL_ENTRY_DELETE}: A Quest has been deleted and is removed from the QuestDB.
+ * ```
+ *
+ * ```
+ * - `removeAllQuestEntries`
+ *
+ * {@link QuestDB.removeAll}: All quests have been removed from QuestDB.
+ * ```
+ *
+ * ```
+ * - `removeQuestEntry`
+ *
+ * {@link QuestDB.consistencyCheck}: During a consistency check which is mainly used when module settings for
+ * trusted player edit is enabled / disabled quests can be removed from QuestDB.
+ *
+ * {@link s_JOURNAL_ENTRY_UPDATE}: All quests have been removed from QuestDB.
+ * ```
+ *
+ * ```
+ * - `updateQuestEntry`
+ *
+ * {@link s_JOURNAL_ENTRY_UPDATE}: A quest that is currently in QuestDB has been updated.
+ * ```
+ */
 export default class QuestDB
 {
+   /**
+    * Initializes the QuestDB. If FQL is hidden from the current user then no quests load. All quests are loaded based
+    * on observability by the current user.
+    *
+    * This method may be invoked multiple times, but it is generally important to only invoke `init` when the QuestDB
+    * is empty.
+    *
+    * @returns {Promise<void>}
+    */
    static async init()
    {
       const folder = await QuestFolder.initializeJournals();
 
+      // Skip initialization of data if FQL is hidden from the current player. FQL is never hidden from GM level users.
       if (!Utils.isFQLHiddenFromPlayers())
       {
+         // Cache `isTrustedPlayerEdit`.
          const isTrustedPlayerEdit = Utils.isTrustedPlayerEdit();
 
+         // Iterate over all journal entries in `_fql_quests` folder.
          for (const entry of folder.content)
          {
             const content = entry.getFlag(constants.moduleName, constants.flagDB);
 
+            // Retrieve the flag content for the quest and if presently observable add a new QuestEntry to QuestDB.
             if (content && s_IS_OBSERVABLE(content, entry, isTrustedPlayerEdit))
             {
                const quest = new Quest(content, entry);
 
                // Must set a QuestEntry w/ an undefined enrich as all quest data must be loaded before enrichment.
+               // Also set `generate` to false as the CollectJS collections are rebuilt in below.
                s_SET_QUEST_ENTRY(new QuestEntry(quest, void 0), false);
             }
          }
 
+         // Must hydrate all QuestEntry instances after all quests have been added to s_QUEST_MAP. Hydration will build
+         // the cache of various getter functions and enriched data in QuestEntry.
          for (const questEntry of QuestDB.iteratorEntries()) { questEntry.hydrate(); }
 
-         for (const key of Object.keys(s_QUESTS))
+         // Create the CollectJS collections in build after hydration.
+         for (const key of Object.keys(s_QUESTS_MAP))
          {
-            s_QUESTS_COLLECT[key] = collect(Array.from(s_QUESTS[key].values()));
+            s_QUESTS_COLLECT[key] = collect(Array.from(s_QUESTS_MAP[key].values()));
          }
       }
 
+      // Only add the Foundry hooks once on first initialization.
       if (!s_QUEST_DB_INITIALIZED)
       {
          Hooks.on('createJournalEntry', s_JOURNAL_ENTRY_CREATE);
@@ -79,10 +164,13 @@ export default class QuestDB
    }
 
    /**
-    * @returns {FilterFunctions}
+    * @returns {FilterFunctions} Various useful filter functions.
     */
    static get Filter() { return Filter; }
 
+   /**
+    * @returns {SortFunctions} Various useful sorting functions.
+    */
    static get Sort() { return Sort; }
 
    /**
@@ -424,11 +512,11 @@ export default class QuestDB
    {
       if (type === void 0)
       {
-         return s_QUESTS[questTypes.active].size + s_QUESTS[questTypes.available].size +
-          s_QUESTS[questTypes.completed].size + s_QUESTS[questTypes.failed].size + s_QUESTS[questTypes.inactive].size;
+         return s_QUESTS_MAP[questTypes.active].size + s_QUESTS_MAP[questTypes.available].size +
+          s_QUESTS_MAP[questTypes.completed].size + s_QUESTS_MAP[questTypes.failed].size + s_QUESTS_MAP[questTypes.inactive].size;
       }
 
-      return s_QUESTS[type] ? s_QUESTS[type].size : 0;
+      return s_QUESTS_MAP[type] ? s_QUESTS_MAP[type].size : 0;
    }
 
    static getEnrich(questId)
@@ -462,15 +550,15 @@ export default class QuestDB
    {
       if (type === void 0)
       {
-         for (const value of s_QUESTS[questTypes.active].values()) { yield value; }
-         for (const value of s_QUESTS[questTypes.available].values()) { yield value; }
-         for (const value of s_QUESTS[questTypes.completed].values()) { yield value; }
-         for (const value of s_QUESTS[questTypes.failed].values()) { yield value; }
-         for (const value of s_QUESTS[questTypes.inactive].values()) { yield value; }
+         for (const value of s_QUESTS_MAP[questTypes.active].values()) { yield value; }
+         for (const value of s_QUESTS_MAP[questTypes.available].values()) { yield value; }
+         for (const value of s_QUESTS_MAP[questTypes.completed].values()) { yield value; }
+         for (const value of s_QUESTS_MAP[questTypes.failed].values()) { yield value; }
+         for (const value of s_QUESTS_MAP[questTypes.inactive].values()) { yield value; }
       }
-      else if (s_QUESTS[type])
+      else if (s_QUESTS_MAP[type])
       {
-         for (const value of s_QUESTS[type].values()) { yield value; }
+         for (const value of s_QUESTS_MAP[type].values()) { yield value; }
       }
    }
 
@@ -488,15 +576,15 @@ export default class QuestDB
    {
       if (type === void 0)
       {
-         for (const value of s_QUESTS[questTypes.active].values()) { yield value.quest; }
-         for (const value of s_QUESTS[questTypes.available].values()) { yield value.quest; }
-         for (const value of s_QUESTS[questTypes.completed].values()) { yield value.quest; }
-         for (const value of s_QUESTS[questTypes.failed].values()) { yield value.quest; }
-         for (const value of s_QUESTS[questTypes.inactive].values()) { yield value.quest; }
+         for (const value of s_QUESTS_MAP[questTypes.active].values()) { yield value.quest; }
+         for (const value of s_QUESTS_MAP[questTypes.available].values()) { yield value.quest; }
+         for (const value of s_QUESTS_MAP[questTypes.completed].values()) { yield value.quest; }
+         for (const value of s_QUESTS_MAP[questTypes.failed].values()) { yield value.quest; }
+         for (const value of s_QUESTS_MAP[questTypes.inactive].values()) { yield value.quest; }
       }
-      else if (s_QUESTS[type])
+      else if (s_QUESTS_MAP[type])
       {
-         for (const value of s_QUESTS[type].values()) { yield value.quest; }
+         for (const value of s_QUESTS_MAP[type].values()) { yield value.quest; }
       }
    }
 
@@ -505,11 +593,11 @@ export default class QuestDB
     */
    static removeAll()
    {
-      s_QUESTS[questTypes.active].clear();
-      s_QUESTS[questTypes.available].clear();
-      s_QUESTS[questTypes.completed].clear();
-      s_QUESTS[questTypes.failed].clear();
-      s_QUESTS[questTypes.inactive].clear();
+      s_QUESTS_MAP[questTypes.active].clear();
+      s_QUESTS_MAP[questTypes.available].clear();
+      s_QUESTS_MAP[questTypes.completed].clear();
+      s_QUESTS_MAP[questTypes.failed].clear();
+      s_QUESTS_MAP[questTypes.inactive].clear();
 
       s_QUEST_INDEX.clear();
 
@@ -716,7 +804,7 @@ Object.freeze(Sort);
 const s_GET_QUEST_ENTRY = (questId) =>
 {
    const currentStatus = s_QUEST_INDEX.get(questId);
-   return currentStatus && s_QUESTS[currentStatus] ? s_QUESTS[currentStatus].get(questId) : null;
+   return currentStatus && s_QUESTS_MAP[currentStatus] ? s_QUESTS_MAP[currentStatus].get(questId) : null;
 };
 
 /**
@@ -872,63 +960,74 @@ const s_REMOVE_QUEST_ENTRY = (questId, generate = true) =>
 
    let result = false;
 
-   if (s_QUESTS[currentStatus])
+   if (s_QUESTS_MAP[currentStatus])
    {
-      result = s_QUESTS[currentStatus].delete(questId);
+      result = s_QUESTS_MAP[currentStatus].delete(questId);
    }
 
    if (result && generate)
    {
-      s_QUESTS_COLLECT[currentStatus] = collect(Array.from(s_QUESTS[currentStatus].values()));
+      s_QUESTS_COLLECT[currentStatus] = collect(Array.from(s_QUESTS_MAP[currentStatus].values()));
    }
 
    return result;
 };
 
 /**
+ * Sets the QuestEntry by current status and regenerates any CollectJS collection if the status changes.
+ *
  * @param {QuestEntry}  entry - QuestEntry to set.
  *
  * @param {boolean}     [generate=true] - Regenerate s_QUEST_COLLECT
  */
 const s_SET_QUEST_ENTRY = (entry, generate = true) =>
 {
+   // Retrieve the current status from the quest entry index map.
    const currentStatus = s_QUEST_INDEX.get(entry.id);
-   if (s_QUESTS[currentStatus] && currentStatus !== entry.status)
+
+   // If defined and current status is different from the incoming QuestEntry status then delete the QuestEntry from
+   // the old map of map bin.
+   if (s_QUESTS_MAP[currentStatus] && currentStatus !== entry.status)
    {
-      if (s_QUESTS[currentStatus].delete(entry.id) && generate)
+      // If the delete is successful and generate is true then regenerate the CollectJS collection of the old status.
+      if (s_QUESTS_MAP[currentStatus].delete(entry.id) && generate)
       {
-         s_QUESTS_COLLECT[currentStatus] = collect(Array.from(s_QUESTS[currentStatus].values()));
+         s_QUESTS_COLLECT[currentStatus] = collect(Array.from(s_QUESTS_MAP[currentStatus].values()));
       }
    }
 
-   if (!s_QUESTS[entry.status])
+   if (!s_QUESTS_MAP[entry.status])
    {
       console.error(`ForienQuestLog - QuestDB - set quest error - unknown status: ${entry.status}`);
       return;
    }
 
+   // Set the quest index by quest id and new status and set the map of maps entry.
    s_QUEST_INDEX.set(entry.id, entry.status);
-   s_QUESTS[entry.status].set(entry.id, entry);
+   s_QUESTS_MAP[entry.status].set(entry.id, entry);
 
+   // If generate is true regenerate the new entry status CollectJS collection.
    if (generate)
    {
-      s_QUESTS_COLLECT[entry.status] = collect(Array.from(s_QUESTS[entry.status].values()));
+      s_QUESTS_COLLECT[entry.status] = collect(Array.from(s_QUESTS_MAP[entry.status].values()));
    }
 };
 
 /**
  * Flattens the QuestEntry map of maps into and array of all entries.
  *
+ * Please see {@link QuestDB.iteratorEntries} for an iterator across all entries.
+ *
  * @returns {QuestEntry[]} An array of all QuestEntry values stored.
  */
 const s_MAP_FLATTEN = () =>
 {
    return [
-    ...s_QUESTS[questTypes.active].values(),
-    ...s_QUESTS[questTypes.available].values(),
-    ...s_QUESTS[questTypes.completed].values(),
-    ...s_QUESTS[questTypes.failed].values(),
-    ...s_QUESTS[questTypes.inactive].values()
+    ...s_QUESTS_MAP[questTypes.active].values(),
+    ...s_QUESTS_MAP[questTypes.available].values(),
+    ...s_QUESTS_MAP[questTypes.completed].values(),
+    ...s_QUESTS_MAP[questTypes.failed].values(),
+    ...s_QUESTS_MAP[questTypes.inactive].values()
    ];
 };
 
@@ -941,21 +1040,34 @@ const s_MAP_FLATTEN = () =>
  */
 
 /**
- * @typedef FilterFunctions
+ * @typedef {object} FilterFunctions
  *
- * @property {Function} IS_OBSERVABLE -
+ * @property {Function} IS_OBSERVABLE - Filters by `isObservable` cached in QuestEntry.
  */
 
 /**
- * @typedef {Object.<string, collect<QuestEntry>>} QuestsCollect Provides
+ * @typedef {object} SortFunctions
  *
- * @property {collect<QuestEntry>} active - Active quest entries
+ * @property {Function} ALPHA - Sort by quest name.
  *
- * @property {collect<QuestEntry>} available - Available quests entries
+ * @property {Function} DATE_CREATE - Sort by quest creation date.
  *
- * @property {collect<QuestEntry>} completed - Completed quests entries
+ * @property {Function} DATE_END - Sort by quest end date. When status is 'completed' or 'failed'.
  *
- * @property {collect<QuestEntry>} failed - Failed quests entries
+ * @property {Function} DATE_START - Sort by quest start date. When status is 'active'.
+ */
+
+/**
+ * @typedef {Object.<string, collect<QuestEntry>>} QuestsCollect Returns an object with keys indexed by
+ * {@link questTypes} of CollectJS collections of QuestEntry instances.
  *
- * @property {collect<QuestEntry>} hidden - Hidden quests entries
+ * @property {collect<QuestEntry>} active - Active quest entries CollectJS collections
+ *
+ * @property {collect<QuestEntry>} available - Available quests entries CollectJS collections
+ *
+ * @property {collect<QuestEntry>} completed - Completed quests entries CollectJS collections
+ *
+ * @property {collect<QuestEntry>} failed - Failed quests entries CollectJS collections
+ *
+ * @property {collect<QuestEntry>} hidden - Hidden quests entries CollectJS collections
  */
