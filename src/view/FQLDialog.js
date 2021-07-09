@@ -1,3 +1,8 @@
+/**
+ * Stores any open FQLDialogImpl.
+ *
+ * @type {FQLDialogImpl}
+ */
 let s_DELETE_DIALOG = void 0;
 
 /**
@@ -17,6 +22,16 @@ let s_DELETE_DIALOG = void 0;
  */
 export default class FQLDialog
 {
+   /**
+    * Closes any open FQLDialogImpl that is associated with the questId or quest log. FQLDialogImpl gets associated
+    * with the last app that invoked the dialog.
+    *
+    * @param {object}   [options] - Optional parameters.
+    *
+    * @param {string}   [options.questId] - The quest ID associated with a QuestPreview app.
+    *
+    * @param {boolean}  [options.isQuestLog] - Is the quest log closing.
+    */
    static closeDialogs({ questId, isQuestLog = false } = {})
    {
       if (s_DELETE_DIALOG && (s_DELETE_DIALOG.fqlQuestId === questId || s_DELETE_DIALOG.fqlIsQuestLog === isQuestLog))
@@ -162,17 +177,32 @@ export default class FQLDialog
    }
 }
 
+/**
+ * Provides the FQL dialog implementation.
+ */
 class FQLDialogImpl extends Dialog
 {
    /**
-    * @param {Object} options FQLDialogImpl Options
+    * @param {FQLDialogOptions} options FQLDialogImpl Options
     */
    constructor(options)
    {
       super(void 0, { minimizable: false });
 
+      /**
+       * Stores the options specific to the dialog
+       *
+       * @type {FQLDialogOptions}
+       * @private
+       */
       this._fqlOptions = options;
 
+      /**
+       * The Dialog options to set.
+       *
+       * @type {object}
+       * @see https://foundryvtt.com/api/Dialog.html
+       */
       this.data = {
          title: game.i18n.format('ForienQuestLog.DeleteDialog.TitleDel', this._fqlOptions),
          content: `<h3>${game.i18n.format('ForienQuestLog.DeleteDialog.HeaderDel', this._fqlOptions)}</h3>` +
@@ -192,16 +222,36 @@ class FQLDialogImpl extends Dialog
       };
    }
 
+   /**
+    * Overrides the close action to resolve the cached Promise with undefined.
+    *
+    * @returns {Promise<void>}
+    */
    async close()
    {
       this._fqlOptions.resolve(void 0);
       return super.close();
    }
 
+   /**
+    * @returns {boolean} Returns {@link FQLDialogOptions.isQuestLog} from options.
+    */
    get fqlIsQuestLog() { return this._fqlOptions.isQuestLog; }
 
+   /**
+    * @returns {string} Returns {@link FQLDialogOptions.questId} from options.
+    */
    get fqlQuestId() { return this._fqlOptions.questId; }
 
+   /**
+    * Updates the FQLDialogOptions when a dialog is already showing and a successive delete operation is initiated.
+    *
+    * Resolves the currently cached Promise with undefined and cache a new Promise which is returned.
+    *
+    * @param {FQLDialogOptions} options - The new options to set for Dialog rendering and success return value.
+    *
+    * @returns {Promise<unknown>} The new Promise to await upon.
+    */
    updateFQLData(options)
    {
       // Resolve old promise with undefined
@@ -227,3 +277,21 @@ class FQLDialogImpl extends Dialog
       return promise;
    }
 }
+
+/**
+ * @typedef FQLDialogOptions
+ *
+ * @property {Function} [resolve] - The cached resolve function of the Dialog promise.
+ *
+ * @property {string}   name - The name of the data being deleted.
+ *
+ * @property {result}   result - The result to resolve when `OK` is pressed.
+ *
+ * @property {string}   questId - The associated QuestPreview by quest ID.
+ *
+ * @property {boolean}  isQuestLog - boolean indicating that the QuestLog owns the dialog.
+ *
+ * @property {string}   title - The title of the dialog.
+ *
+ * @property {string}   body - The body language file ID to use for dialog rendering.
+ */

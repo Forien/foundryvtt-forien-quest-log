@@ -2,7 +2,6 @@ import QuestAPI      from './QuestAPI.js';
 import QuestDB       from './QuestDB.js';
 import Utils         from './Utils.js';
 import ViewManager   from './ViewManager.js';
-import FQLDialog     from '../view/FQLDialog.js';
 
 import { constants, questTypes, questTypesI18n, settings }  from '../model/constants.js';
 
@@ -26,8 +25,39 @@ const s_MESSAGE_TYPES = {
    userCantOpenQuest: 'userCantOpenQuest'
 };
 
+/**
+ * Provides a basic Socket.io implementation to send events between all connected clients. The various methods have
+ * at as local and remote control mostly of GUI related actions. FQL appears to be a reactive application, but it really
+ * is Socket doing a lot of the heavy lifting to notify clients that particular GUI apps need to be refreshed when the
+ * underlying Quest data changes.
+ *
+ * There are also various actions that require a GM or trusted played with edit capability to act upon mostly moving
+ * quests from one status to another. Reward item drops into actor sheets invokes {@link Socket.questRewardDrop} from
+ * the {@link FQLHooks.dropActorSheetData} hook, but at least one GM level user must be logged in to receive this
+ * message to perform the drop / removal of the reward from a Quest.
+ *
+ * Please see the following view control classes and the QuestDB for socket related usage:
+ *
+ * @see HandlerAny
+ * @see HandlerDetail
+ * @see HandlerLog
+ * @see HandlerManage
+ * @see QuestDB.deleteQuest
+ */
 export default class Socket
 {
+   /**
+    * Refreshes the parent & subquest GUI apps as applicable and closes the associated QuestPreview for the quest that
+    * was deleted. This method is invoked from the private module method `QuestDB.s_JOURNAL_ENTRY_DELETE`.
+    *
+    * Handled on the receiving side by {@link handleDeletedQuest}.
+    *
+    * @param {DeleteData}  deleteData - A data object containing the views that need to be updated and which quest was
+    *                                   deleted by quest ID.
+    *
+    * @returns {Promise<void>}
+    * @see QuestDB.s_JOURNAL_ENTRY_DELETE
+    */
    static async deletedQuest(deleteData)
    {
       if (typeof deleteData === 'object')
@@ -35,6 +65,7 @@ export default class Socket
          const questId = deleteData.deleteId;
          const questPreview = ViewManager.questPreview.get(questId);
 
+         // Close the associated QuestPreview for the deleted Quest.
          if (questPreview !== void 0)
          {
             // Must always use `noSave` as the quest has already been deleted; no auto-save of QuestPreview is allowed.
@@ -48,10 +79,14 @@ export default class Socket
             }
          });
 
+         // Send a refresh quest preview message for the views that need to be updated.
          Socket.refreshQuestPreview({ questId: deleteData.savedIds });
       }
    }
 
+   /**
+    * Provides the main incoming message registration and distribution of socket messages on the receiving side.
+    */
    static listen()
    {
       game.socket.on(s_EVENT_NAME, async (data) =>
@@ -60,6 +95,7 @@ export default class Socket
 
          try
          {
+            // Dispatch the incoming message data by the message type.
             switch (data.type)
             {
                case s_MESSAGE_TYPES.deletedQuest: await handleDeletedQuest(data); break;
@@ -78,10 +114,32 @@ export default class Socket
       });
    }
 
+   /**
+    * Handles moving a quest from one status to another then refreshes the appropriate views including parent and
+    * subquests as applicable. On the invocation side if the user is a GM or trusted player with edit and ownership of
+    * the quest being moved then the action is immediately taken and `handled` set to true which is part of the message
+    * sent across the wire. If this is a player who can accept quests the local action is skipped and a socket message
+    * is sent out and the first GM level user to receive it will perform the status move for the associated quest. If
+    * no GM level users are logged in this action is never handled and the user can not change the status of a quest.
+    *
+    * Handled on the receiving side by {@link handleMoveQuest}.
+    *
+    * @param {object}   options - Options.
+    *
+    * @param {Quest}    options.quest - The quest to move.
+    *
+    * @param {string}   options.target - The target status. One of five {@link questTypes}.
+    *
+    * @returns {Promise<void>}
+    * @see HandlerAny.questSetStatus
+    * @see HandlerLog.questSetStatus
+    */
    static async moveQuest({ quest, target })
    {
       let handled = false;
 
+      // If the current user is a GM or trusted player with edit capability and owner of the quest immediately perform
+      // the status move.
       if (game.user.isGM || (Utils.isTrustedPlayerEdit() && quest.isOwner))
       {
          await quest.move(target);
@@ -99,8 +157,9 @@ export default class Socket
       }
       else
       {
+         // Provide a sanity check and early out if the player can't accept quests.
          const canPlayerAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
-         if (target !== questTypes.active && !canPlayerAccept)
+         if (questTypes.active !== target && !canPlayerAccept)
          {
             return;
          }
@@ -116,10 +175,22 @@ export default class Socket
       });
    }
 
+   /**
+    * Handles the reward drop in actor sheet action from the {@link FQLHooks.dropActorSheetData} hook. If the local user
+    * is a GM handle this action right away otherwise send a message across the wire for the first GM user reached to
+    * handle the action remotely. The reward is removed from the associated quest.
+    *
+    * Handled on the receiving side by {@link handleQuestRewardDrop}.
+    *
+    * @param {RewardDropData} data - The reward drop data generated from the hook.
+    *
+    * @returns {Promise<void>}
+    */
    static async questRewardDrop(data = {})
    {
       let handled = false;
 
+      // Perform the immediate reward removal action if the current user is the GM and set `handled` to true.
       if (game.user.isGM)
       {
          /**
@@ -137,6 +208,7 @@ export default class Socket
          handled = true;
       }
 
+      // Emit the reward drop event.
       game.socket.emit(s_EVENT_NAME, {
          type: s_MESSAGE_TYPES.questRewardDrop,
          payload: {
@@ -146,6 +218,21 @@ export default class Socket
       });
    }
 
+   /**
+    * Renders all GUI apps via {@link ViewManager.renderAll}. With the option `questPreview` set to true all
+    * QuestPreviews are also rendered. Remaining options are forwarded onto the Foundry Application render method.
+    * Sends a socket message over the wire for all remote clients to do the same.
+    *
+    * Handled on the receiving side by {@link handleRefreshAll}.
+    *
+    * @param {object}      options - Optional parameters
+    *
+    * @param {boolean}     [options.force] - Forces a data refresh.
+    *
+    * @param {boolean}     [options.questPreview] - Render all open QuestPreview apps.
+    *
+    * @param {...object}   [options.options] - Remaining options for the {@link Application.render} method.
+    */
    static refreshAll(options = {})
    {
       ViewManager.renderAll({ force: true, ...options });
@@ -159,7 +246,10 @@ export default class Socket
    }
 
    /**
-    * Sends a message indicating which quest preview windows need to be updated.
+    * Refreshes local {@link QuestPreview} apps and sends a message indicating which QuestPreview apps need to be
+    * rendered.
+    *
+    * Handled on the receiving side by {@link handleRefreshQuestPreview}.
     *
     * @param {object}            options - Optional parameters.
     *
@@ -167,10 +257,11 @@ export default class Socket
     *
     * @param {boolean}           [options.updateLog=true] - Updates the quest log and all other GUI apps if true.
     *
-    * @param {object}            [options.options] - Any options to pass onto QuestPreview render method invocation.
+    * @param {...object}         [options.options] - Any options to pass onto QuestPreview render method invocation.
     */
    static refreshQuestPreview({ questId, updateLog = true, ...options })
    {
+      // Handle local QuestPreview rendering.
       if (Array.isArray(questId))
       {
          for (const id of questId)
@@ -191,6 +282,7 @@ export default class Socket
          }
       }
 
+      // Send a socket message for remote clients to render.
       game.socket.emit(s_EVENT_NAME, {
          type: s_MESSAGE_TYPES.refreshQuestPreview,
          payload: {
@@ -203,6 +295,14 @@ export default class Socket
       if (updateLog) { Socket.refreshAll(); }
    }
 
+   /**
+    * This handles the `show to players` title bar button found in {@link QuestPreview._getHeaderButtons} to open the
+    * associated QuestPreview for all remote clients.
+    *
+    * Handled on the receiving side by {@link handleShowQuestPreview}.
+    *
+    * @param {string}   questId - The quest ID to a QuestPreview.
+    */
    static showQuestPreview(questId)
    {
       game.socket.emit(s_EVENT_NAME, {
@@ -213,6 +313,13 @@ export default class Socket
       });
    }
 
+   /**
+    * A message emitted for GM users when a player can't open a particular quest in {@link QuestAPI.open}. This is
+    * particularly useful if a GM tries to show a quest that the user doesn't have access to via the `show to players`
+    * header button in {@link QuestPreview._getHeaderButtons}.
+    *
+    * Handled on the receiving side by {@link handleUserCantOpenQuest}.
+    */
    static userCantOpenQuest()
    {
       game.socket.emit(s_EVENT_NAME, {
@@ -224,10 +331,21 @@ export default class Socket
    }
 }
 
+// Receiving message implementation ----------------------------------------------------------------------------------
+
+/**
+ * Closes the associated QuestPreview for the quest that was deleted on the remote client. The payload is a the
+ * `questId` to close. QuestPreview by default saves the quest when a QuestPreview is closed. This quest has already
+ * been deleted, so it is important to pass `noSave: true` to {@link QuestPreview.close}.
+ *
+ * This message is sent from {@link Socket.deletedQuest}.
+ *
+ * @param {object} data - The data payload.
+ *
+ * @returns {Promise<void>}
+ */
 async function handleDeletedQuest(data)
 {
-   FQLDialog.closeDialogs({ questId: data.payload.questId });
-
    const questPreview = ViewManager.questPreview.get(data.payload.questId);
    if (questPreview !== void 0)
    {
@@ -236,10 +354,21 @@ async function handleDeletedQuest(data)
    }
 }
 
+/**
+ * Sets the associated quest status to the `target` by the first GM level user receiving this message setting the
+ * handled state to `true`, so no further GM level users attempt to move the quest.
+ *
+ * This message is sent from {@link Socket.moveQuest}.
+ *
+ * @param {object} data - The data payload contains `questId` and `target` along with `handled`.
+ *
+ * @returns {Promise<void>}
+ */
 async function handleMoveQuest(data)
 {
    const target = data.payload.target;
 
+   // If this message has not already been handled and this user is a GM then handle it now then set `handled` to true.
    if (game.user.isGM && !data.payload.handled)
    {
       const quest = QuestDB.getQuest(data.payload.questId);
@@ -274,6 +403,16 @@ async function handleMoveQuest(data)
    }
 }
 
+/**
+ * Handles the reward item drop into actor sheet by the first GM level user receiving this message setting the
+ * handled state to `true`, so no further GM level users attempt to remove the item from the associated quest.
+ *
+ * This message is sent from {@link Socket.questRewardDrop}.
+ *
+ * @param {RewardDropData} data - The data payload is the reward drop data.
+ *
+ * @returns {Promise<void>}
+ */
 async function handleQuestRewardDrop(data)
 {
    if (game.user.isGM)
@@ -283,6 +422,7 @@ async function handleQuestRewardDrop(data)
        */
       const fqlData = data.payload.data._fqlData;
 
+      // Notify the
       const notify = game.settings.get(constants.moduleName, settings.notifyRewardDrop);
       if (notify)
       {
@@ -309,12 +449,27 @@ async function handleQuestRewardDrop(data)
    }
 }
 
+/**
+ * Handles refreshing all GUI apps via {@link ViewManager.renderAll} passing the `options` data payload onward.
+ *
+ * This message is sent from {@link Socket.refreshAll}.
+ *
+ * @param {object} data - Please see {@link ViewManager.renderAll} for options.
+ */
 function handleRefreshAll(data)
 {
    const options = typeof data.payload.options === 'object' ? data.payload.options : {};
    ViewManager.renderAll({ force: true, ...options });
 }
 
+/**
+ * Handles refreshing / rendering all QuestPreview apps specified or closes them if the quests specified in the payload
+ * are no longer available or observable to the current user.
+ *
+ * This message is sent from {@link Socket.refreshQuestPreview}.
+ *
+ * @param {object} data - Data payload contains `questId` which can be a string or array of strings.
+ */
 function handleRefreshQuestPreview(data)
 {
    const questId = data.payload.questId;
@@ -357,16 +512,31 @@ function handleRefreshQuestPreview(data)
    }
 }
 
+/**
+ * Handles opening a QuestPreview app specified by `questId` via {@link QuestAPI.open}.
+ *
+ * This message is sent from {@link Socket.showQuestPreview}.
+ *
+ * @param {object} data - Data payload contains a single `questId` as a string.
+ */
 function handleShowQuestPreview(data)
 {
    QuestAPI.open({ questId: data.payload.questId, notify: false });
 }
 
+/**
+ * Handles displaying a UI notification for GM level users regarding an attempt to show a quest that the user doesn't
+ * have the access to view. Uses {@link ViewManager.notification} to rate limit UI notification display.
+ *
+ * This message is sent from {@link Socket.userCantOpenQuest}.
+ *
+ * @param {object} data - Data payload contains a `user` as a string for the user name.
+ */
 function handleUserCantOpenQuest(data)
 {
    if (game.user.isGM)
    {
-      ui.notifications.warn(game.i18n.format('ForienQuestLog.Notifications.UserCantOpen',
-       { user: data.payload.user }), {});
+      ViewManager.notifications.warn(game.i18n.format('ForienQuestLog.Notifications.UserCantOpen',
+       { user: data.payload.user }));
    }
 }

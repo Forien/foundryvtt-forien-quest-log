@@ -1,5 +1,9 @@
 import { constants, settings } from '../model/constants.js';
 
+/**
+ * Provides several general utility methods interacting with Foundry via UUID lookups to generating UUIDv4 internal
+ * FQL IDs. There are also several general methods for Handlebars and TinyMCE setup.
+ */
 export default class Utils
 {
    /**
@@ -135,7 +139,11 @@ export default class Utils
     *
     * @param {string|object}  data - The UUID as a string or object with UUID key as a string.
     *
-    * @param {object}         options - Options to pass to sheet render method.
+    * @param {object}         [opts] - Optional parameters.
+    *
+    * @param {boolean}        [opts.permissionCheck=true] - Perform permission check.
+    *
+    * @param {...object}      [opts.options] - Options to pass to sheet render method.
     *
     * @returns {Promise<void>}
     */
@@ -195,6 +203,9 @@ export default class Utils
       loadTemplates(templates);
    }
 
+   /**
+    * Register additional Handlebars helpers. `format` allows invoking `game.i18n.format` from a Handlebars template.
+    */
    static registerHandlebarsHelpers()
    {
       Handlebars.registerHelper('format', (stringId, ...arrData) =>

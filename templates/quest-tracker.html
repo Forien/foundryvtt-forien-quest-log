@@ -1,16 +1,16 @@
-<div id="quest-tracker" class="{{background}}" style="top: {{pos.top}}px; {{#if pos.left}}left: {{pos.left}}px{{/if}}">
+<div id="quest-tracker" class="{{#if background}}background{{/if}}" style="top: {{pos.top}}px; {{#if pos.left}}left: {{pos.left}}px{{/if}}">
     <div class="move-handle"><i class="fas fa-arrows-alt"></i></div>
     <div class="scrollable">
     {{#each quests}}
     <div class="quest">
       <h3 class="title" {{#if (or isHidden isInactive)}}id="hidden"{{/if}}>
-        <a class="quest-tracker-header" data-quest-id="{{id}}">
+        {{#if hasObjectives}}<a class="quest-tracker-header" data-quest-id="{{id}}">{{/if}}
         {{#if isGM}}
            {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
            {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
         {{/if}}
         {{name}}
-        </a>
+        {{#if hasObjectives}}</a>{{/if}}
         <span class="quest-tracker-span"></span>
         <a class="quest-tracker-link" data-quest-id="{{id}}"><i class="fas fa-pen-nib fa-fw"></i></a>
       </h3>

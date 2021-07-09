@@ -1218,6 +1218,9 @@
   flex: 0 0 20px;
   line-height: 24px;
 }
+#forien-quest-log-floating-window .folder-toggle {
+  cursor: pointer;
+}
 #forien-quest-log-floating-window li.folder.collapsed > .folder-header h3 > i:before {
   content: "";
 }
@@ -1283,7 +1286,6 @@
   display: inline-flex;
   flex-direction: row;
   margin: 0;
-  font-family: Oswald, Montserrat, Signika, sans-serif;
   font-size: 18px;
   height: auto;
 }

@@ -10,6 +10,9 @@ import FQLDialog  from '../FQLDialog.js';
  */
 const s_DEFAULT_REWARD_ICON = 'icons/svg/item-bag.svg';
 
+/**
+ * Provides all jQuery callbacks for the `details` tab.
+ */
 export default class HandlerDetails
 {
    /**
@@ -267,7 +270,7 @@ export default class HandlerDetails
       value = value.replace(/'/g, '&quot;');
 
       const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${
-       uuidv4 !== void 0 ? `data-uuidv4='${uuidv4}'` : ``} maxlength="30"/>`);
+       uuidv4 !== void 0 ? `data-uuidv4='${uuidv4}'` : ``} maxlength="48"/>`);
 
       const parent = $(event.target).closest('.actions').prev('.editable-container');
 
@@ -323,8 +326,7 @@ export default class HandlerDetails
    {
       const li = $('<li class="reward"></li>');
 
-      const input = $(`<input type="text" class="editable-input" value="" placeholder="${game.i18n.localize(
-       'ForienQuestLog.SampleReward')}" maxlength="30"/>`);
+      const input = $(`<input type="text" class="editable-input" value="" placeholder="" maxlength="48"/>`);
 
       const box = $(event.target).closest('.quest-rewards').find('.rewards-box ul');
 
@@ -395,6 +397,7 @@ export default class HandlerDetails
           */
          const dataTransfer = {
             _fqlData: {
+               type: 'reward',
                questId: quest.id,
                uuidv4: data.uuidv4,
                itemName: data.name,
@@ -655,8 +658,7 @@ export default class HandlerDetails
 
       const placeholder = $('<span><i class="fas fa-check hidden"></i></span>');
 
-      const input = $(`<input type="text" class="editable-input" value="" placeholder="${game.i18n.localize(
-       'ForienQuestLog.SampleTask')}" />`);
+      const input = $(`<input type="text" class="editable-input" value="" placeholder="" />`);
 
       const box = $(event.target).closest('.quest-tasks').find('.tasks-box ul');
 
@@ -854,6 +856,8 @@ export default class HandlerDetails
 /**
  * @typedef {object} FQLDropData An object attached to drop data transfer which describes the FQL reward item and who
  *                               is dropping it into an actor sheet.
+ *
+ * @property {string} type - The type of FQL drop data; one of: ['reward']
  *
  * @property {string} questId - The Quest ID
  *

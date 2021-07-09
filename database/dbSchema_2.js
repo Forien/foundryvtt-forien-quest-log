@@ -9,7 +9,7 @@ import { constants, questTypes } from '../src/model/constants.js';
  * Performs DB migration from schema 1 to 2.
  *
  * New data field:
- * {string} giverImage - Stores the quest giver image.
+ * {string} giverData - Stores the quest giver data from {@link Enrich.giverFromQuest}.
  *
  * Convert data:
  * {string} status - convert 'hidden' to 'inactive' for code clarity.
@@ -29,9 +29,6 @@ export default async function()
 {
    const folder = await QuestFolder.initializeJournals();
 
-   /**
-    * @type {Quest[]}
-    */
    for (const entry of folder.content)
    {
       try
@@ -43,8 +40,11 @@ export default async function()
             const quest = new Quest(content, entry);
 
             // Load quest giver assets and store as 'giverData'.
-            const data = await Enrich.giverFromQuest(quest);
-            if (typeof data.img === 'string' && data.img.length) { quest.giverData = data; }
+            if (typeof quest.giver === 'string')
+            {
+               const data = await Enrich.giverFromQuest(quest);
+               if (data && typeof data.img === 'string' && data.img.length) { quest.giverData = data; }
+            }
 
             // Change any status of 'hidden' to 'inactive'.
             if (quest.status === 'hidden') { quest.status = questTypes.inactive; }
@@ -54,15 +54,14 @@ export default async function()
          else
          {
             console.log(game.i18n.format('ForienQuestLog.Migration.CouldNotMigrate', { name: entry.data.name }));
-            await entry.delete();
          }
       }
       catch (err)
       {
          console.log(game.i18n.format('ForienQuestLog.Migration.CouldNotMigrate', { name: entry.data.name }));
-         await entry.delete();
       }
    }
 
+   // Set the DBMigration.setting to `2` indicating that migration to schema version `2` is complete.
    await game.settings.set(constants.moduleName, DBMigration.setting, 2);
 }

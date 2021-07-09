@@ -4,7 +4,7 @@ import Socket     from '../../control/Socket.js';
 import FQLDialog  from '../FQLDialog.js';
 
 /**
- * These handler callbacks can be called on any subpage.
+ * These handler callbacks can be called on any tab.
  */
 export default class HandlerAny
 {

@@ -6,14 +6,19 @@ import { constants, questTypes } from '../src/model/constants.js';
 /**
  * Performs DB migration from schema 0 to 1.
  *
+ * Moves serialized quest data from journal entry content field to flags stored by the {@link constants.moduleName}
+ * and {@link constants.flagDB}. In the process perform any reversal of potential corrupted data which can occur on
+ * Foundry versions `0.7.10` and `0.8.6` which have improperly configured content sanitation filters that affect the
+ * journal entry content field.
+ *
  * New data fields:
- * - location -> string; default: null
- * - priority -> number; default: 0
- * - type -> string; default: null
- * - date -> object
- *    - create
- *    - active
- *    - end
+ * - location -> {string}; default: null
+ * - priority -> {number}; default: 0
+ * - type -> {string}; default: null
+ * - date -> {object}
+ *    - {number} create - Date.now().
+ *    - {number} active - set if quest is in progress to Date.now().
+ *    - {number} end - set if quest is completed / failed to Date.now().
  *
  * @returns {Promise<void>}
  */
@@ -21,15 +26,14 @@ export default async function()
 {
    const folder = await QuestFolder.initializeJournals();
 
-   /**
-    * @type {Quest[]}
-    */
+   // Iterate through all journal entries from `_fql_quests`.
    for (const entry of folder.content)
    {
       try
       {
          const flagContent = entry.getFlag(constants.moduleName, constants.flagDB);
 
+         // If there is flag content don't migrate the data otherwise execute `migrateData`.
          const content = flagContent ? flagContent : await migrateData(entry);
 
          if (content !== null)
@@ -38,6 +42,7 @@ export default async function()
             const quest = new Quest(content, entry);
 
             await entry.update({
+               name: quest.name,
                content: '',
                permission: { default: CONST.ENTITY_PERMISSIONS.OBSERVER },
                flags: {
@@ -47,17 +52,20 @@ export default async function()
          }
          else
          {
+            // Must delete any no conforming journal entries. This likely never occurs.
             console.log(game.i18n.format('ForienQuestLog.Migration.CouldNotMigrate', { name: entry.data.name }));
             await entry.delete();
          }
       }
       catch (err)
       {
+         // Must delete any journal entries / quests that fail the migration process.
          console.log(game.i18n.format('ForienQuestLog.Migration.CouldNotMigrate', { name: entry.data.name }));
          await entry.delete();
       }
    }
 
+   // Set the DBMigration.setting to `1` indicating that migration to schema version `1` is complete.
    await game.settings.set(constants.moduleName, DBMigration.setting, 1);
 }
 

@@ -1,11 +1,19 @@
+/**
+ * The hidden FQL quests folder name.
+ *
+ * @type {string}
+ */
 const s_QUEST_DIR_NAME = '_fql_quests';
 
+/**
+ * Provides utility methods to create and retrieve the hidden FQL quests folder.
+ */
 export default class QuestFolder
 {
    /**
-    * Returns true if quest directory has been created
+    * Returns true if quest directory has been created.
     *
-    * @returns {boolean}
+    * @returns {boolean} Whether the quest directory exists.
     */
    static folderExists()
    {
@@ -15,9 +23,10 @@ export default class QuestFolder
    }
 
    /**
-    * Retrieves instance of Quest folder
+    * Retrieves the Foundry quest folder.
     *
-    * @returns {*}
+    * @returns {Folder} The quest folder.
+    * @see https://foundryvtt.com/api/Folder.html
     */
    static get()
    {
@@ -25,9 +34,10 @@ export default class QuestFolder
    }
 
    /**
-    * Initializes the creation of quest folders
+    * Initializes and returns the quest folder. If it doesn't exist it is created.
     *
-    * @returns {Promise<*>}
+    * @returns {Promise<Folder>} The quest folder.
+    * @see https://foundryvtt.com/api/Folder.html
     */
    static async initializeJournals()
    {
