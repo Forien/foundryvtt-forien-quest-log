@@ -206,15 +206,13 @@ export default class Enrich
 
       data.description = TextEditor.enrichHTML(data.description);
 
-      data.data_giver = typeof data.giverData === 'object' ? data.giverData : null;
-
       data.questIconType = void 0;
 
       if (data.splashAsIcon && data.splash.length)
       {
          data.questIconType = 'splash-image';
       }
-      else if (data.data_giver && data.data_giver.img)
+      else if (data.giverData && data.giverData.img)
       {
          data.questIconType = 'quest-giver';
       }
@@ -390,9 +388,6 @@ export default class Enrich
  * @property {boolean}     canEdit - Is full editing allowed. Either GM or trusted player w/ edit capability.
  *
  * @property {number}      checkedTasks - Number of completed tasks.
- *
- * TODO: REDUNDANT
- * @property {QuestImgNameData|null}   data_giver - The quest giverData
  *
  * @property {object}      data_parent - A data object with parent quest details.
  *
