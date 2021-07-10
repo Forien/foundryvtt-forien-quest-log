@@ -145,10 +145,7 @@ export default class Socket
          await quest.move(target);
          handled = true;
 
-         Socket.refreshQuestPreview({
-            questId: quest.parent ? [quest.parent, quest.id, ...quest.subquests] : [quest.id, ...quest.subquests]
-         });
-
+         Socket.refreshQuestPreview({ questId: quest.getQuestIds() });
          Socket.refreshAll();
 
          const dirname = game.i18n.localize(questTypesI18n[target]);
@@ -159,10 +156,7 @@ export default class Socket
       {
          // Provide a sanity check and early out if the player can't accept quests.
          const canPlayerAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
-         if (questTypes.active !== target && !canPlayerAccept)
-         {
-            return;
-         }
+         if (questTypes.active !== target && !canPlayerAccept) { return; }
       }
 
       game.socket.emit(s_EVENT_NAME, {
@@ -251,36 +245,17 @@ export default class Socket
     *
     * Handled on the receiving side by {@link handleRefreshQuestPreview}.
     *
-    * @param {object}            options - Optional parameters.
+    * @param {object}            opts - Optional parameters.
     *
-    * @param {string|string[]}   options.questId - A single quest ID or an array of IDs to update.
+    * @param {string|string[]}   opts.questId - A single quest ID or an array of IDs to update.
     *
-    * @param {boolean}           [options.updateLog=true] - Updates the quest log and all other GUI apps if true.
+    * @param {boolean}           [opts.updateLog=true] - Updates the quest log and all other GUI apps if true.
     *
-    * @param {...object}         [options.options] - Any options to pass onto QuestPreview render method invocation.
+    * @param {...RenderOptions}  [opts.options] - Any options to pass onto QuestPreview render method invocation.
     */
    static refreshQuestPreview({ questId, updateLog = true, ...options })
    {
-      // Handle local QuestPreview rendering.
-      if (Array.isArray(questId))
-      {
-         for (const id of questId)
-         {
-            const questPreview = ViewManager.questPreview.get(id);
-            if (questPreview !== void 0)
-            {
-               questPreview.render(true, options);
-            }
-         }
-      }
-      else
-      {
-         const questPreview = ViewManager.questPreview.get(questId);
-         if (questPreview !== void 0)
-         {
-            questPreview.render(true, options);
-         }
-      }
+      ViewManager.refreshQuestPreview(questId, options);
 
       // Send a socket message for remote clients to render.
       game.socket.emit(s_EVENT_NAME, {

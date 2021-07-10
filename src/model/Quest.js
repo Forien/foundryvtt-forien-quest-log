@@ -170,36 +170,6 @@ export default class Quest
    }
 
    /**
-    * Returns a list of Actor data for whom this quest is personal.
-    *
-    * @returns {object[]} A list of actors who are assigned to this quest.
-    */
-   getPersonalActors()
-   {
-      if (!this.isPersonal) { return []; }
-
-      const users = [];
-
-      if (this.entry && typeof this.entry.data.permission === 'object')
-      {
-         for (const [userId, permission] of Object.entries(this.entry.data.permission))
-         {
-            if (userId === 'default') { continue; }
-
-            const user = game.users.get(userId);
-
-            if (!user || user.isGM) { continue; }
-
-            if (permission < CONST.ENTITY_PERMISSIONS.OBSERVER) { continue; }
-
-            users.push(user);
-         }
-      }
-
-      return users;
-   }
-
-   /**
     * Gets the name of the quest.
     *
     * @returns {string} Quest name.
@@ -260,6 +230,16 @@ export default class Quest
    }
 
    /**
+    * Gets all adjacent quest IDs including self. This includes any parent and subquests.
+    *
+    * @returns {string[]} All adjacent quests including self.
+    */
+   getQuestIds()
+   {
+      return this.parent ? [this.parent, this.id, ...this.subquests] : [this.id, ...this.subquests];
+   }
+
+   /**
     * Gets a Reward by Foundry VTT UUID or UUIDv4 for abstract Rewards.
     *
     * @param {string}   uuidv4 - The FVTT UUID to find.
@@ -270,6 +250,36 @@ export default class Quest
    {
       const index = this.rewards.findIndex((t) => t.uuidv4 === uuidv4);
       return index >= 0 ? this.rewards[index] : null;
+   }
+
+   /**
+    * Returns a list of Actor data for whom this quest is personal.
+    *
+    * @returns {object[]} A list of actors who are assigned to this quest.
+    */
+   getPersonalActors()
+   {
+      if (!this.isPersonal) { return []; }
+
+      const users = [];
+
+      if (this.entry && typeof this.entry.data.permission === 'object')
+      {
+         for (const [userId, permission] of Object.entries(this.entry.data.permission))
+         {
+            if (userId === 'default') { continue; }
+
+            const user = game.users.get(userId);
+
+            if (!user || user.isGM) { continue; }
+
+            if (permission < CONST.ENTITY_PERMISSIONS.OBSERVER) { continue; }
+
+            users.push(user);
+         }
+      }
+
+      return users;
    }
 
    /**

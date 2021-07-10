@@ -1,5 +1,4 @@
 import QuestDB                from '../../control/QuestDB.js';
-import Socket                 from '../../control/Socket.js';
 import ViewManager            from '../../control/ViewManager.js';
 import FQLPermissionControl   from '../FQLPermissionControl.js';
 
@@ -47,27 +46,6 @@ export default class HandlerManage
             questPreview._permControl = new FQLPermissionControl(quest.entry, {
                top: Math.min(questPreview.position.top, window.innerHeight - 350),
                left: questPreview.position.left + 125
-            });
-
-            Hooks.once('closePermissionControl', async (app) =>
-            {
-               if (app.appId === questPreview._permControl.appId)
-               {
-                  questPreview._permControl = void 0;
-
-                  // When the permissions change refresh the parent if any, this QuestPreview, and
-                  // any subquests.
-                  const questId = quest.parent ? [quest.parent, quest.id, ...quest.subquests] :
-                   [quest.id, ...quest.subquests];
-
-                  // We must check if the user intentionally or accidentally revoked their own permissions to
-                  // at least observe this quest. If so then simply close the QuestPreview and send out a refresh
-                  // notice to all clients to render again.
-                  if (!quest.isObservable) { await questPreview.close(); }
-
-                  Socket.refreshAll();
-                  Socket.refreshQuestPreview({ questId });
-               }
             });
          }
 

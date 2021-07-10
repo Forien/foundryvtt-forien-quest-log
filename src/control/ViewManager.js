@@ -49,10 +49,12 @@ export default class ViewManager
       }
 
       // Whenever a QuestPreview closes and matches any tracked app that is adding a new quest set it to undefined.
-      Hooks.on('closeQuestPreview', (questPreview) =>
-      {
-         if (s_ADD_QUEST_PREVIEW === questPreview) { s_ADD_QUEST_PREVIEW = void 0; }
-      });
+      Hooks.on('closeQuestPreview', s_QUEST_PREVIEW_CLOSED);
+
+      // Right now ViewManager responds to permission changes across add, remove, update of quests.
+      Hooks.on('addQuestEntry', s_QUEST_ENTRY_ADD);
+      Hooks.on('removeQuestEntry', s_QUEST_ENTRY_REMOVE);
+      Hooks.on('updateQuestEntry', s_QUEST_ENTRY_UPDATE);
    }
 
    /**
@@ -125,6 +127,38 @@ export default class ViewManager
       return game.settings.get(constants.moduleName, settings.enableQuestTracker) &&
        (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers)) &&
         QuestDB.getCount({ type: questTypes.active }) > 0;
+   }
+
+   /**
+    * Refreshes local {@link QuestPreview} apps and sends a message indicating which QuestPreview apps need to be
+    * rendered.
+    *
+    * @param {string|string[]}   questId - A single quest ID or an array of IDs to update.
+    *
+    * @param {RenderOptions}     [options] - Any options to pass onto QuestPreview render method invocation.
+    */
+   static refreshQuestPreview(questId, options = {})
+   {
+      // Handle local QuestPreview rendering.
+      if (Array.isArray(questId))
+      {
+         for (const id of questId)
+         {
+            const questPreview = ViewManager.questPreview.get(id);
+            if (questPreview !== void 0)
+            {
+               questPreview.render(true, options);
+            }
+         }
+      }
+      else
+      {
+         const questPreview = ViewManager.questPreview.get(questId);
+         if (questPreview !== void 0)
+         {
+            questPreview.render(true, options);
+         }
+      }
    }
 
    /**
@@ -354,3 +388,94 @@ class UINotifications
  * @type {UINotifications}
  */
 const s_NOTIFICATIONS = new UINotifications();
+
+/**
+ * Handles the `addQuestEntry` hook.
+ *
+ * @param {QuestEntry}  questEntry - The added QuestEntry.
+ *
+ * @param {object}      flags - Quest flags.
+ *
+ * @returns {Promise<void>}
+ */
+async function s_QUEST_ENTRY_ADD(questEntry, flags)
+{
+   if ('permission' in flags)
+   {
+      ViewManager.refreshQuestPreview(questEntry.questIds);
+      ViewManager.renderAll();
+   }
+}
+
+/**
+ * Handles the `removeQuestEntry` hook.
+ *
+ * @param {QuestEntry}  questEntry - The added QuestEntry.
+ *
+ * @param {object}      flags - Quest flags.
+ *
+ * @returns {Promise<void>}
+ */
+async function s_QUEST_ENTRY_REMOVE(questEntry, flags)
+{
+   const quest = questEntry.quest;
+
+   const questPreview = ViewManager.questPreview.get(quest.id);
+   if (questPreview && questPreview.rendered) { await questPreview.close({ noSave: true }); }
+
+   if ('permission' in flags)
+   {
+      ViewManager.refreshQuestPreview(questEntry.questIds);
+      ViewManager.renderAll();
+   }
+}
+
+/**
+ * Handles the `updateQuestEntry` hook.
+ *
+ * @param {QuestEntry}  questEntry - The added QuestEntry.
+ *
+ * @param {object}      flags - Quest flags.
+ *
+ * @returns {Promise<void>}
+ */
+async function s_QUEST_ENTRY_UPDATE(questEntry, flags)
+{
+   if ('permission' in flags)
+   {
+      ViewManager.refreshQuestPreview(questEntry.questIds);
+      ViewManager.renderAll();
+   }
+}
+
+/**
+ * Handles the `closeQuestPreview` hook.
+ *
+ * @param {QuestPreview}   questPreview - The closed QuestPreview.
+ */
+function s_QUEST_PREVIEW_CLOSED(questPreview)
+{
+   if (s_ADD_QUEST_PREVIEW === questPreview) { s_ADD_QUEST_PREVIEW = void 0; }
+}
+
+/**
+ * @typedef {Object} RenderOptions Additional rendering options which are applied to customize the way that the
+ * Application is rendered in the DOM.
+ *
+ * @property {number}   [left] - The left positioning attribute.
+ *
+ * @property {number}   [top] - The top positioning attribute.
+ *
+ * @property {number}   [width] - The rendered width.
+ *
+ * @property {number}   [height] - The rendered height.
+ *
+ * @property {number}   [scale] - The rendered transformation scale.
+ *
+ * @property {boolean}  [focus=false] - Apply focus to the application, maximizing it and bringing it to the top
+ *                                      of the vertical stack.
+ *
+ * @property {string}   [renderContext] - A context-providing string which suggests what event triggered the render.
+ *
+ * @property {object}   [renderData] - The data change which motivated the render request.
+ */
