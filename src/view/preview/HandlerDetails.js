@@ -631,14 +631,6 @@ export default class HandlerDetails
       {
          questPreview._splashImagePopup = new ImagePopout(quest.splash, { shareable: true });
          questPreview._splashImagePopup.render(true);
-
-         Hooks.once('closeImagePopout', async (app) =>
-         {
-            if (app.appId === questPreview?._splashImagePopup?.appId)
-            {
-               questPreview._splashImagePopup = void 0;
-            }
-         });
       }
    }
 
