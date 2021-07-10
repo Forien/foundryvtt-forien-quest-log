@@ -44,6 +44,7 @@ const settings = {
    allowPlayersCreate: 'allowPlayersCreate',
    allowPlayersDrag: 'allowPlayersDrag',
    countHidden: 'countHidden',
+   defaultAbstractRewardImage: 'defaultAbstractRewardImage',
    defaultPermission: 'defaultPermission',
    dynamicBookmarkBackground: 'dynamicBookmarkBackground',
    enableQuestTracker: 'enableQuestTracker',
@@ -94,6 +95,8 @@ export { constants, noteControls, questTypes, questTypesI18n, settings };
  * @property {string}   allowPlayersDrag - Allow players to drag reward items to actor sheet.
  *
  * @property {string}   countHidden - Count hidden objectives / subquests.
+ *
+ * @property {string}   defaultAbstractRewardImage - Sets the default abstract reward image path.
  *
  * @property {string}   defaultPermission - Sets the default permission level for new quests.
  *

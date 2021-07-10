@@ -3,12 +3,7 @@ import Socket     from '../../control/Socket.js';
 import Utils      from '../../control/Utils.js';
 import FQLDialog  from '../FQLDialog.js';
 
-/**
- * Defines the default icon used for abstract rewards.
- *
- * @type {string}
- */
-const s_DEFAULT_REWARD_ICON = 'icons/svg/item-bag.svg';
+import { constants, settings } from '../../model/constants.js';
 
 /**
  * Provides all jQuery callbacks for the `details` tab.
@@ -316,6 +311,10 @@ export default class HandlerDetails
    }
 
    /**
+    * Creates a new abstract reward if the input entry is successful or contains data and a focus out event occurs.
+    *
+    * The module setting: {@link settings.defaultAbstractRewardImage} stores the default abstract reward image.
+    *
     * @param {Event}          event - HTML5 / jQuery event.
     *
     * @param {Quest}          quest - The current quest being manipulated.
@@ -343,7 +342,7 @@ export default class HandlerDetails
             quest.addReward({
                data: {
                   name: value,
-                  img: s_DEFAULT_REWARD_ICON
+                  img: game.settings.get(constants.moduleName, settings.defaultAbstractRewardImage)
                },
                hidden: true,
                type: 'Abstract'
