@@ -932,18 +932,6 @@ export class Task
  */
 
 /**
- * @typedef QuestImgNameData
- *
- * @property {string}   name - Quest giver or item name
- *
- * @property {string}   img - Quest giver or item image
- *
- * @property {boolean}  hasTokenImg - boolean indicating the quest giver has a token prototype image.
- *
- * @property {string}   [uuid] - Any associated Foundry UUID for the quest giver / item.
- */
-
-/**
  * @typedef QuestRewardData
  *
  * @property {string}   type - Reward type.

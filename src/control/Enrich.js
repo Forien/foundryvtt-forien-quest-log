@@ -124,32 +124,44 @@ export default class Enrich
       {
          if (canEdit && questTypes.active === quest.status)
          {
-            result += `<i class="move fas fa-check-circle" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetCompleted')}" data-target="completed" data-quest-id="${quest.id}"></i>\n`;
-            result += `<i class="move fas fa-times-circle" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetFailed')}" data-target="failed" data-quest-id="${quest.id}"></i>\n`;
+            result += `<i class="move fas fa-check-circle" title="${game.i18n.localize(
+             'ForienQuestLog.Tooltips.SetCompleted')}" data-target="completed" data-quest-id="${quest.id}"></i>\n`;
+
+            result += `<i class="move fas fa-times-circle" title="${game.i18n.localize(
+             'ForienQuestLog.Tooltips.SetFailed')}" data-target="failed" data-quest-id="${quest.id}"></i>\n`;
+
             addedAction = true;
          }
 
          if ((canEdit && questTypes.inactive === quest.status) || questTypes.available === quest.status)
          {
-            result += `<i class="move fas fa-play" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetActive')}" data-target="active" data-quest-id="${quest.id}"></i>\n`;
+            result += `<i class="move fas fa-play" title="${game.i18n.localize(
+             'ForienQuestLog.Tooltips.SetActive')}" data-target="active" data-quest-id="${quest.id}"></i>\n`;
+
             addedAction = true;
          }
 
          if (canEdit && questTypes.inactive !== quest.status)
          {
-            result += `<i class="move fas fa-stop-circle" title="${game.i18n.localize('ForienQuestLog.Tooltips.Hide')}" data-target="inactive" data-quest-id="${quest.id}"></i>\n`;
+            result += `<i class="move fas fa-stop-circle" title="${game.i18n.localize(
+             'ForienQuestLog.Tooltips.Hide')}" data-target="inactive" data-quest-id="${quest.id}"></i>\n`;
+
             addedAction = true;
          }
 
          if ((canEdit && questTypes.inactive === quest.status) || questTypes.active === quest.status)
          {
-            result += `<i class="move fas fa-clipboard" title="${game.i18n.localize('ForienQuestLog.Tooltips.SetAvailable')}" data-target="available" data-quest-id="${quest.id}"></i>\n`;
+            result += `<i class="move fas fa-clipboard" title="${game.i18n.localize(
+             'ForienQuestLog.Tooltips.SetAvailable')}" data-target="available" data-quest-id="${quest.id}"></i>\n`;
+
             addedAction = true;
          }
 
          if (canEdit)
          {
-            result += `<i class="delete fas fa-trash" title="${game.i18n.localize('ForienQuestLog.Tooltips.Delete')}" data-quest-id="${quest.id}" data-quest-name="${quest.name}"></i>\n`;
+            result += `<i class="delete fas fa-trash" title="${game.i18n.localize(
+             'ForienQuestLog.Tooltips.Delete')}" data-quest-id="${quest.id}" data-quest-name="${quest.name}"></i>\n`;
+
             addedAction = true;
          }
 
@@ -165,7 +177,7 @@ export default class Enrich
     *
     * @param {Quest}  quest - Quest data to construct view data.
     *
-    * @returns {object} A single quest view or SortedQuests upgraded
+    * @returns {EnrichData} A single quest view or SortedQuests upgraded
     */
    static quest(quest)
    {
@@ -371,3 +383,122 @@ export default class Enrich
       return data;
    }
 }
+
+/**
+ * @typedef {QuestData}    EnrichData
+ *
+ * @property {boolean}     canEdit - Is full editing allowed. Either GM or trusted player w/ edit capability.
+ *
+ * @property {number}      checkedTasks - Number of completed tasks.
+ *
+ * TODO: REDUNDANT
+ * @property {QuestImgNameData|null}   data_giver - The quest giverData
+ *
+ * @property {object}      data_parent - A data object with parent quest details.
+ *
+ * @property {string|null} data_parent.id - The parent quest ID / {@link Quest.id}
+ *
+ * @property {string|null} data_parent.giver - The parent quest giver / {@link Quest.giver}
+ *
+ * @property {string}      data_parent.name - The parent quest name / {@link Quest.name}
+ *
+ * @property {string}      data_parent.status - The parent quest status / {@link Quest.status}
+ *
+ * @property {object[]}    data_rewards - A list of reward item details.
+ *
+ * @property {boolean}     data_rewards.draggable - Can the player drag the reward to actor sheet.
+ *
+ * @property {boolean}     data_rewards.hidden - Is the reward hidden / only 'canEdit' users can see it.
+ *
+ * @property {string}      data_rewards.img - The image for the reward.
+ *
+ * @property {boolean}     data_rewards.isPlayerLink - Can the player click on the reward.
+ *
+ * @property {boolean}     data_rewards.locked - Is the reward locked / only 'canEdit' manipulate it.
+ *
+ * @property {string}      data_rewards.lockedTooltip - The tooltip to display for the locked icon.
+ *
+ * @property {string}      data_rewards.name - The name of the reward.
+ *
+ * @property {string}      data_rewards.type - The type of reward / 'abstract' for abstract rewards.
+ *
+ * @property {object}      data_rewards.transfer - The data tranfer object.
+ *
+ * @property {string}      data_rewards.transfer.name - The reward name.
+ *
+ * @property {string}      data_rewards.transfer.uuid - The reward Foundry UUID.
+ *
+ * @property {string}      data_rewards.transfer.uuidv4 - The reward FQL UUIDv4.
+ *
+ * @property {string}      data_rewards.unlockedTooltip - The tooltip to display for the unlocked icon.
+ *
+ * @property {string}      data_rewards.uuidv4 - The reward FQL UUIDv4.
+ *
+ * @property {object[]}    data_subquest - A list of data objects with subquest details.
+ *
+ * @property {boolean}     data_subquest.canEdit - Is full editing allowed. Either GM or trusted player w/ edit.
+ *
+ * @property {string|null} data_subquest.giver - The parent quest giver / {@link Quest.giver}
+ *
+ * @property {string|null} data_subquest.id - The parent quest ID / {@link Quest.id}
+ *
+ * @property {boolean}     data_subquest.isHidden - Is quest hidden by permissions / {@link Quest.isHidden}
+ *
+ * @property {boolean}     data_subquest.isInactive - Is quest status 'inactive'
+ *
+ * @property {boolean}     data_subquest.isPersonal - Is quest personal / {@link Quest.isPersonal}
+ *
+ * @property {string}      data_subquest.name - The parent quest name / {@link Quest.name}
+ *
+ * @property {string[]}    data_subquest.personalActors - A sorted list of names / {@link Quest.personalActors}
+ *
+ * @property {string}      data_subquest.state - The CSS class for quest toggle / task state
+ *
+ * @property {string}      data_subquest.status - The parent quest status / {@link Quest.status}
+ *
+ * @property {string}      data_subquest.statusActions - HTML for quest status actions / {@link Enrich.statusActions}
+ *
+ * @property {string}      data_subquest.statusTooltip - The localized quest status tooltip / {@link Quest.status}
+ *
+ * @property {QuestTaskData[]}  data_tasks - The task data.
+ *
+ * @property {string}      description - The enriched quest description via {@link TextEditor.enrichHTML}.
+ *
+ * @property {boolean}     hasObjectives - Is there visible tasks & subjects.
+ *
+ * @property {string}      id - Quest ID / {@link Quest.id}
+ *
+ * @property {boolean}     isHidden - Is quest hidden by permissions / {@link Quest.isHidden}
+ *
+ * @property {boolean}     isInactive - Is quest status 'inactive'
+ *
+ * @property {boolean}     isPersonal - Is quest personal / not all players can access it / {@link Quest.isPersonal}
+ *
+ * @property {boolean}     isSubquest - Is quest a subquest.
+ *
+ * @property {string[]}    personalActors - A sorted list of names for HTML tooltip / {@link Quest.personalActors}
+ *
+ * @property {string}      questIconType - Indicates which icon to use 'splash-image' or 'quest-giver'.
+ *
+ * @property {string}      statusActions - HTML for quest status icon actions / {@link Enrich.statusActions}
+ *
+ * @property {string}      statusLabel - Localized label for {@link Quest.status}
+ *
+ * @property {string}      taskCountLabel - A label of completed / total tasks depending on module settings.
+ *
+ * @property {number}      totalTasks - Number of total tasks.
+ *
+ * @property {string}      wrapNameLengthCSS - The CSS class to add for content length wrapping based on user type.
+ */
+
+/**
+ * @typedef QuestImgNameData
+ *
+ * @property {string}   name - Quest giver or item name
+ *
+ * @property {string}   img - Quest giver or item image
+ *
+ * @property {boolean}  hasTokenImg - boolean indicating the quest giver has a token prototype image.
+ *
+ * @property {string}   [uuid] - Any associated Foundry UUID for the quest giver / item.
+ */
