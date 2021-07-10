@@ -8,11 +8,13 @@ import { constants, questTypes, questTypesI18n, settings } from '../model/consta
 /**
  * Locally stores the app instances which are accessible by getter methods.
  *
- * @type {{questLog: QuestLog, questLogFloating: QuestLogFloating, questPreview: Map<string, QuestPreview>, questTracker: QuestTracker}}
- * @see {ViewManager.questLog}
- * @see {ViewManager.questLogFloating}
- * @see {ViewManager.questPreview}
- * @see {ViewManager.questTracker}
+ * @type {{questLog: QuestLog, questLogFloating: QuestLogFloating, questPreview: Map<string, QuestPreview>,
+ * questTracker: QuestTracker}}
+ *
+ * @see {@link ViewManager.questLog}
+ * @see {@link ViewManager.questLogFloating}
+ * @see {@link ViewManager.questPreview}
+ * @see {@link ViewManager.questTracker}
  */
 const Apps = {
    questLog: void 0,
@@ -62,7 +64,7 @@ export default class ViewManager
     * @returns {QuestLog} The main quest log app accessible from the left hand menu bar or
     *                     `Hook.call('ForienQuestLog.Open.QuestLog')`.
     *
-    * @see FQLHooks.openQuestLog
+    * @see {@link FQLHooks.openQuestLog}
     */
    static get questLog() { return Apps.questLog; }
 
@@ -70,7 +72,7 @@ export default class ViewManager
     * @returns {QuestLogFloating} The floating quest log app accessible from the left hand menu bar or
     *                             `Hooks.call('ForienQuestLog.Open.QuestLogFloating')`.
     *
-    * @see FQLHooks.openQuestLogFloating
+    * @see {@link FQLHooks.openQuestLogFloating}
     */
    static get questLogFloating() { return Apps.questLogFloating; }
 

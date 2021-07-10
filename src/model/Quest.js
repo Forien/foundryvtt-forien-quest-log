@@ -8,7 +8,7 @@ import { constants, questTypes } from './constants.js';
  * provides the entry point for external API access and is also used internally when opening a quest.
  *
  * @type {QuestPreview}
- * @see {Quest.sheet}
+ * @see {@link Quest.sheet}
  */
 let SheetClass;
 
@@ -18,8 +18,8 @@ let SheetClass;
  * as when a Quest is loaded it is stored in a QuestEntry which also contains the enriched quest data for display
  * in Handlebars templates along with caching of several of the methods available in Quest for fast sorting.
  *
- * @see QuestDB
- * @see QuestEntry
+ * @see {@link QuestDB}
+ * @see {@link QuestEntry}
  */
 export default class Quest
 {
@@ -500,7 +500,7 @@ export default class Quest
     *
     * @param {string} uuidv4 - The UUIDv4 associated with a Task.
     *
-    * @see {Utils.uuidv4}
+    * @see {@link Utils.uuidv4}
     */
    removeTask(uuidv4)
    {

@@ -27,9 +27,9 @@ class QuestDBShim
    }
 
    /**
-    * Filter the entire QuestDB, returning an Array of entries which match a functional condition.
+    * Filter the entire QuestDB, returning an Array of entries which match a functional predicate.
     *
-    * @param {Function} condition  The functional condition to test
+    * @param {Function} predicate  The functional predicate to test.
     *
     * @param {object}   [options] - Optional parameters. If no options are provided the iteration occurs across all
     *                               quests.
@@ -37,11 +37,11 @@ class QuestDBShim
     * @param {string}   [options.type] - The quest type / status to iterate.
     *
     * @returns {QuestEntry[]}  An Array of matched values
-    * @see {Array#filter}
+    * @see {@link Array#filter}
     */
-   static filter(condition, options)
+   static filter(predicate, options)
    {
-      return QuestDB.filter(condition, options);
+      return QuestDB.filter(predicate, options);
    }
 
    /**
@@ -76,9 +76,9 @@ class QuestDBShim
    }
 
    /**
-    * Find an entry in the QuestDB using a functional condition.
+    * Find an entry in the QuestDB using a functional predicate.
     *
-    * @param {Function} condition - The functional condition to test.
+    * @param {Function} predicate - The functional predicate to test.
     *
     * @param {object}   [options] - Optional parameters. If no options are provided the iteration occurs across all
     *                               quests.
@@ -86,11 +86,11 @@ class QuestDBShim
     * @param {string}   [options.type] - The quest type / status to iterate.
     *
     * @returns {QuestEntry} The QuestEntry, if found, otherwise undefined.
-    * @see {Array#find}
+    * @see {@link Array#find}
     */
-   static find(condition, options)
+   static find(predicate, options)
    {
-      return QuestDB.find(condition, options);
+      return QuestDB.find(predicate, options);
    }
 
    /**

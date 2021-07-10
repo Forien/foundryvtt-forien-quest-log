@@ -57,9 +57,9 @@ import { constants, settings }  from '../../model/constants.js';
  * via {@link FQLDialog}. A single instance of it is rendered and reused across all delete actions. Please refer to the
  * documentation.
  *
- * @see HandlerAny
- * @see HandlerDetails
- * @see HandlerManage
+ * @see {@link HandlerAny}
+ * @see {@link HandlerDetails}
+ * @see {@link HandlerManage}
  */
 export default class QuestPreview extends FormApplication
 {
@@ -90,7 +90,7 @@ export default class QuestPreview extends FormApplication
        * Set in `getData`. Determines if the current user can fully edit the Quest; a GM or trusted player w/ edit.
        *
        * @type {boolean}
-       * @see QuestPreview.getData
+       * @see {@link QuestPreview.getData}
        */
       this.canEdit = false;
 
@@ -98,7 +98,7 @@ export default class QuestPreview extends FormApplication
        * Set in `getData`. Determines if the player has ownership of the quest and thereby limited editing capabilities.
        *
        * @type {boolean}
-       * @see QuestPreview.getData
+       * @see {@link QuestPreview.getData}
        */
       this.playerEdit = false;
 
@@ -107,7 +107,7 @@ export default class QuestPreview extends FormApplication
        * a minimal set of options to set quests as `available` or `active`.
        *
        * @type {boolean}
-       * @see QuestPreview.getData
+       * @see {@link QuestPreview.getData}
        */
       this.canAccept = false;
 
@@ -125,10 +125,10 @@ export default class QuestPreview extends FormApplication
        *
        * @type {Function}
        * @protected
-       * @see HandlerDetails.questEditName
-       * @see HandlerDetails.questGiverCustomEditName
-       * @see HandlerDetails.rewardAbstractEditName
-       * @see HandlerDetails.taskEditName
+       * @see {@link HandlerDetails.questEditName}
+       * @see {@link HandlerDetails.questGiverCustomEditName}
+       * @see {@link HandlerDetails.rewardAbstractEditName}
+       * @see {@link HandlerDetails.taskEditName}
        */
       this._activeFocusOutFunction = void 0;
 
@@ -138,8 +138,8 @@ export default class QuestPreview extends FormApplication
        *
        * @type {FQLPermissionControl}
        * @protected
-       * @see HandlerManage.configurePermissions
-       * @see QuestPreview.close
+       * @see {@link HandlerManage.configurePermissions}
+       * @see {@link QuestPreview.close}
        */
       this._permControl = void 0;
 
@@ -321,7 +321,7 @@ export default class QuestPreview extends FormApplication
     * `esc` key to quit editing.
     *
     * @override
-    * @see Utils.tinyMCEOptions
+    * @see {@link Utils.tinyMCEOptions}
     * @see https://foundryvtt.com/api/FormApplication.html#activateEditor
     */
    activateEditor(name, options = {}, initialContent = '')
@@ -335,12 +335,12 @@ export default class QuestPreview extends FormApplication
     *
     * @param {jQuery}  html - The jQuery instance for the window content of this Application.
     *
-    * @see HandlerAny
-    * @see HandlerDetails
-    * @see HandlerManage
-    * @see QuestPreview.canAccept
-    * @see QuestPreview.canEdit
-    * @see QuestPreview.playerEdit
+    * @see {@link HandlerAny}
+    * @see {@link HandlerDetails}
+    * @see {@link HandlerManage}
+    * @see {@link QuestPreview.canAccept}
+    * @see {@link QuestPreview.canEdit}
+    * @see {@link QuestPreview.playerEdit}
     * @see https://foundryvtt.com/api/FormApplication.html#activateListeners
     */
    activateListeners(html)
@@ -478,7 +478,7 @@ export default class QuestPreview extends FormApplication
     *
     * @returns {Promise<void>}
     * @inheritDoc
-    * @see FormApplication.close
+    * @see {@link FormApplication.close}
     * @see https://foundryvtt.com/api/FormApplication.html#close
     */
    async close({ noSave = false, ...options } = {})
@@ -534,9 +534,9 @@ export default class QuestPreview extends FormApplication
     *
     * @override
     * @inheritDoc
-    * @see QuestPreview.canAccept
-    * @see QuestPreview.canEdit
-    * @see QuestPreview.playerEdit
+    * @see {@link QuestPreview.canAccept}
+    * @see {@link QuestPreview.canEdit}
+    * @see {@link QuestPreview.playerEdit}
     * @see https://foundryvtt.com/api/FormApplication.html#getData
     */
    async getData(options = {}) // eslint-disable-line no-unused-vars
@@ -587,7 +587,7 @@ export default class QuestPreview extends FormApplication
    /**
     * When rendering window, add reference to global variable.
     *
-    * @see close()
+    * @see {@link QuestPreview.close}
     * @inheritDoc
     * @override
     * @see https://foundryvtt.com/api/Application.html#render
@@ -620,7 +620,7 @@ export default class QuestPreview extends FormApplication
     * @param {boolean} options.refresh - Execute `QuestPreview.refresh`
     *
     * @returns {Promise<void>}
-    * @see QuestPreview.refresh
+    * @see {@link QuestPreview.refresh}
     */
    async saveQuest({ refresh = true } = {})
    {

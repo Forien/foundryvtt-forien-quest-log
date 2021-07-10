@@ -28,7 +28,7 @@ export default class ModuleSettings
    /**
     * Registers all module settings.
     *
-    * @see {link:settings}
+    * @see {@link settings}
     */
    static register()
    {

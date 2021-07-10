@@ -166,7 +166,7 @@ export default class FQLHooks
     *
     * @param {SceneControl[]} controls - The scene controls to add FQL controls.
     *
-    * @see noteControls
+    * @see {@link noteControls}
     * @see https://foundryvtt.com/api/SceneControls.html
     */
    static getSceneControlButtons(controls)
