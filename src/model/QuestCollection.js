@@ -7,7 +7,7 @@ import Quest   from '../model/Quest.js';
  *
  * @see https://foundryvtt.com/api/Collection.html
  */
-export default class QuestCollection extends Collection
+export default class QuestCollection extends foundry.utils.Collection
 {
    /**
     * Returns the document name for this Collection.
