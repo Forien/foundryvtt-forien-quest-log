@@ -1,4 +1,4 @@
-import QuestAPI   from '../../control/QuestAPI.js';
+import QuestAPI   from '../../control/public/QuestAPI.js';
 import QuestDB    from '../../control/QuestDB.js';
 import Socket     from '../../control/Socket.js';
 import FQLDialog  from '../FQLDialog.js';

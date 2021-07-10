@@ -1,14 +1,10 @@
-import Socket        from './Socket.js';
-import QuestDB       from './QuestDB.js';
-import ViewManager   from './ViewManager.js';
-
-import { constants, settings } from '../model/constants.js';
+import QuestDB                 from '../QuestDB.js';
+import { constants, settings } from '../../model/constants.js';
 
 /**
- * Quest public API. QuestAPI exposes certain QuestDB methods that are available for any player as only currently
- * observable quests are loaded. Other methods include opening a quest if it is observable.
+ * Provides a shim to the publicly exposed methods of QuestDB.
  */
-class QuestAPI
+class QuestDBShim
 {
    /**
     * Creates a new quest and waits for the journal entry to update and QuestDB to pick up the new Quest which
@@ -27,7 +23,7 @@ class QuestAPI
       if (game.user.isGM) { return QuestDB.createQuest(options); }
 
       return game.settings.get(constants.moduleName, settings.allowPlayersCreate) &&
-       !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers) ? QuestDB.createQuest(options) : null;
+      !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers) ? QuestDB.createQuest(options) : null;
    }
 
    /**
@@ -163,12 +159,11 @@ class QuestAPI
     *
     * @param {string}   [options.type] - The quest type / status to iterate.
     *
-    * @yields {QuestEntry} The QuestEntry iterator.
+    * @returns {Generator<QuestEntry, void, *>}  A QuestEntry iterator.
     */
-   static *iteratorEntries({ type = void 0 } = {})
+   static iteratorEntries(options)
    {
-      // TODO CHECK IF WE CAN JUST RETURN THE ITERATOR
-      for (const entry of QuestDB.iteratorEntries(type)) { yield entry; }
+      return QuestDB.iteratorEntries(options);
    }
 
    /**
@@ -179,72 +174,11 @@ class QuestAPI
     *
     * @param {string}   [options.type] - The quest type / status to iterate.
     *
-    * @yields {Quest} The Quest iterator.
+    * @returns {Generator<Quest, void, *>}  A QuestEntry iterator.
     */
-   static *iteratorQuests({ type = void 0 } = {})
+   static iteratorQuests(options)
    {
-      // TODO CHECK IF WE CAN JUST RETURN THE ITERATOR
-      for (const quest of QuestDB.iteratorQuests(type)) { yield quest; }
-   }
-
-   /**
-    * Opens the Quest sheet / QuestPreview for the given questID. A check for the module setting
-    * {@link settings.hideFQLFromPlayers} provides an early out if FQL is hidden from players causing the sheet to
-    * not render. {@link ViewManager.questPreview} provides an object.
-    *
-    * @param {object}   options - Optional parameters.
-    *
-    * @param {string}   options.questId - Quest ID string to open.
-    *
-    * @param {boolean}  [options.notify=true] - Post UI notification on any error.
-    */
-   static open({ questId, notify = true })
-   {
-      if (!game.user.isGM && game.settings.get(constants.moduleName, settings.hideFQLFromPlayers)) { return; }
-
-      try
-      {
-         const questPreview = ViewManager.questPreview.get(questId);
-
-         // Optimization to render an existing open QuestPreview with the given quest ID instead of opening a new
-         // app / view.
-         if (questPreview !== void 0)
-         {
-            questPreview.render(true, { focus: true });
-            return;
-         }
-
-         const quest = QuestDB.getQuest(questId);
-
-         if (quest === null)
-         {
-            if (notify)
-            {
-               ui.notifications.error(game.i18n.localize('ForienQuestLog.Notifications.CannotOpen'));
-            }
-            else
-            {
-               Socket.userCantOpenQuest();
-            }
-            return;
-         }
-
-         if (quest.isObservable)
-         {
-            quest.sheet.render(true, { focus: true });
-         }
-      }
-      catch (error)
-      {
-         if (notify)
-         {
-            ui.notifications.error(game.i18n.localize('ForienQuestLog.Notifications.CannotOpen'));
-         }
-         else
-         {
-            Socket.userCantOpenQuest();
-         }
-      }
+      return QuestDB.iteratorQuests(options);
    }
 
    /**
@@ -270,6 +204,6 @@ class QuestAPI
    }
 }
 
-Object.freeze(QuestAPI);
+Object.freeze(QuestDBShim);
 
-export default QuestAPI;
+export default QuestDBShim;

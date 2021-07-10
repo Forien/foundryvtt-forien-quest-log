@@ -1,4 +1,4 @@
-import QuestAPI      from '../control/QuestAPI.js';
+import QuestAPI      from '../control/public/QuestAPI.js';
 import QuestDB       from '../control/QuestDB.js';
 import ViewManager   from '../control/ViewManager.js';
 
