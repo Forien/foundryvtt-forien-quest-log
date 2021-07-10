@@ -28,8 +28,8 @@ import { constants, settings }  from '../../model/constants.js';
  * The jQuery control handling of callbacks is facilitated through three separate static control classes. Two of the
  * control classes {@link HandlerDetails} and {@link HandlerManage} contain jQuery callbacks specific to the `details`
  * and `management` tabs visible for GM users and trusted players with ownership permissions when the module setting
- * {@link settings.trustedPlayerEdit} is enabled. {@link HandlerAny} contains callbacks utilized across both `details`
- * and `management` tabs particularly around handling the action icons for manipulating the quest tasks.
+ * {@link FQLSettings.trustedPlayerEdit} is enabled. {@link HandlerAny} contains callbacks utilized across both
+ * `details` and `management` tabs particularly around handling the action icons for manipulating the quest tasks.
  *
  * It is worth noting that all internal array data such as tasks and rewards from {@link Quest} a separate
  * `UUIDv4` identifier which provides a unique ID for each {@link Task} and {@link Reward}. Tasks and Rewards that are

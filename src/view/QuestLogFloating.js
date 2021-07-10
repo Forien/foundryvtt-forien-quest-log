@@ -75,7 +75,7 @@ export default class QuestLogFloating extends Application
 
    /**
     * Retrieves the sorted active quests from QuestDB to be used in the Handlebars template. Also sets a few variables
-    * for if the user is a GM and module settings {@link settings.showTasks} / {@link settings.navStyle}.
+    * for if the user is a GM and module settings {@link FQLSettings.showTasks} / {@link FQLSettings.navStyle}.
     *
     * @override
     * @inheritDoc

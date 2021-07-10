@@ -37,7 +37,7 @@ const questTypesI18n = {
 };
 
 /**
- * @type {Settings} Defines all the module settings for world and client.
+ * @type {FQLSettings} Defines all the module settings for world and client.
  */
 const settings = {
    allowPlayersAccept: 'allowPlayersAccept',
@@ -86,7 +86,7 @@ const noteControls = [
 export { constants, noteControls, questTypes, questTypesI18n, settings };
 
 /**
- * @typedef {object} Settings
+ * @typedef {object} FQLSettings
  *
  * @property {string}   allowPlayersAccept - Allow players to accept quests.
  *

@@ -20,7 +20,7 @@ class QuestAPI
 
    /**
     * Opens the Quest sheet / QuestPreview for the given questID. A check for the module setting
-    * {@link settings.hideFQLFromPlayers} provides an early out if FQL is hidden from players causing the sheet to
+    * {@link FQLSettings.hideFQLFromPlayers} provides an early out if FQL is hidden from players causing the sheet to
     * not render. {@link ViewManager.questPreview} provides an object.
     *
     * @param {object}   options - Optional parameters.

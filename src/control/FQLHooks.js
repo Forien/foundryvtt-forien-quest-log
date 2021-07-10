@@ -162,7 +162,7 @@ export default class FQLHooks
    /**
     * Responds to the in game hook `getSceneControlButtons` to add the FQL quest log and floating quest log to the
     * journal / 'notes' tool as sub categories. These controls are always added for the GM, but if FQL is hidden from
-    * players based on module setting {@link settings.hideFQLFromPlayers} the note controls do not display.
+    * players based on module setting {@link FQLSettings.hideFQLFromPlayers} the note controls do not display.
     *
     * @param {SceneControl[]} controls - The scene controls to add FQL controls.
     *
@@ -239,7 +239,7 @@ export default class FQLHooks
 
    /**
     * Opens the QuestLog if the game user is a GM or if FQL isn't hidden to players by module setting
-    * {@link settings.hideFQLFromPlayers}.
+    * {@link FQLSettings.hideFQLFromPlayers}.
     */
    static openQuestLog()
    {
@@ -251,7 +251,7 @@ export default class FQLHooks
 
    /**
     * Opens the QuestLogFloating if the game user is a GM or if FQL isn't hidden to players by module setting
-    * {@link settings.hideFQLFromPlayers}.
+    * {@link FQLSettings.hideFQLFromPlayers}.
     */
    static openQuestLogFloating()
    {
@@ -263,9 +263,9 @@ export default class FQLHooks
 
    /**
     * Handles adding the 'open quest log' button at the bottom of the journal directory. Always displayed for the GM,
-    * but only displayed to players if FQL isn't hidden via module setting {@link settings.hideFQLFromPlayers}.
+    * but only displayed to players if FQL isn't hidden via module setting {@link FQLSettings.hideFQLFromPlayers}.
     *
-    * For GMs if module setting {@link settings.showFolder} is true then the hidden `_fql_quests` folder is shown.
+    * For GMs if module setting {@link FQLSettings.showFolder} is true then the hidden `_fql_quests` folder is shown.
     *
     * @param {JournalDirectory}  app - The JournalDirectory app.
     *

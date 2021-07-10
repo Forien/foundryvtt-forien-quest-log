@@ -86,8 +86,8 @@ export default class ViewManager
    static get questPreview() { return Apps.questPreview; }
 
    /**
-    * @returns {QuestTracker} Returns the quest tracker overlap app. This app is accessible when module seting
-    *                         {@link settings.enableQuestTracker} is enabled.
+    * @returns {QuestTracker} Returns the quest tracker overlap app. This app is accessible when module setting
+    *                         {@link FQLSettings.enableQuestTracker} is enabled.
     */
    static get questTracker() { return Apps.questTracker; }
 

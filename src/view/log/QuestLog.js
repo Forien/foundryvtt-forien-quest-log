@@ -93,8 +93,8 @@ export default class QuestLog extends Application
 
    /**
     * Retrieves the sorted quest collection from the {@link QuestDB.sortCollect} and sets several state parameters for
-    * GM / player / trusted player edit along with several module settings: {@link settings.allowPlayersAccept},
-    * {@link settings.allowPlayersCreate}, {@link settings.showTasks} and {@link settings.navStyle}.
+    * GM / player / trusted player edit along with several module settings: {@link FQLSettings.allowPlayersAccept},
+    * {@link FQLSettings.allowPlayersCreate}, {@link FQLSettings.showTasks} and {@link FQLSettings.navStyle}.
     *
     * @override
     * @inheritDoc

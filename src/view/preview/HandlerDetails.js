@@ -313,7 +313,7 @@ export default class HandlerDetails
    /**
     * Creates a new abstract reward if the input entry is successful or contains data and a focus out event occurs.
     *
-    * The module setting: {@link settings.defaultAbstractRewardImage} stores the default abstract reward image.
+    * The module setting: {@link FQLSettings.defaultAbstractRewardImage} stores the default abstract reward image.
     *
     * @param {Event}          event - HTML5 event.
     *

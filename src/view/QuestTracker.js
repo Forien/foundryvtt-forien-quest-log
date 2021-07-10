@@ -52,7 +52,7 @@ export default class QuestTracker extends RepositionableApplication
    }
 
    /**
-    * Gets the background boolean value from module settings {@link settings.questTrackerBackground} and parses quest
+    * Gets the background boolean value from module settings {@link FQLSettings.questTrackerBackground} and parses quest
     * data in {@link QuestTracker.prepareQuests}.
     *
     * @override
