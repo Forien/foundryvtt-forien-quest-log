@@ -28,7 +28,7 @@ export default class QuestLog extends Application
     */
    static get defaultOptions()
    {
-      return mergeObject(super.defaultOptions, {
+      return foundry.utils.mergeObject(super.defaultOptions, {
          id: constants.moduleName,
          classes: [constants.moduleName],
          template: 'modules/forien-quest-log/templates/quest-log.html',
@@ -102,7 +102,7 @@ export default class QuestLog extends Application
     */
    async getData(options = {})
    {
-      return mergeObject(super.getData(), {
+      return foundry.utils.mergeObject(super.getData(), {
          options,
          isGM: game.user.isGM,
          isPlayer: !game.user.isGM,

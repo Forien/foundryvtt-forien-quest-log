@@ -29,7 +29,7 @@ export default class QuestTracker extends RepositionableApplication
     */
    static get defaultOptions()
    {
-      return mergeObject(super.defaultOptions, {
+      return foundry.utils.mergeObject(super.defaultOptions, {
          id: 'quest-tracker',
          template: 'modules/forien-quest-log/templates/quest-tracker.html',
          popOut: false
@@ -61,7 +61,7 @@ export default class QuestTracker extends RepositionableApplication
     */
    async getData(options = {})
    {
-      return mergeObject(super.getData(options), {
+      return foundry.utils.mergeObject(super.getData(options), {
          background: game.settings.get(constants.moduleName, settings.questTrackerBackground),
          quests: await this.prepareQuests()
       });

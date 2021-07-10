@@ -49,7 +49,7 @@ export default class RepositionableApplication extends Application
     */
    getData(options = {})
    {
-      return mergeObject(super.getData(options), {
+      return foundry.utils.mergeObject(super.getData(options), {
          pos: game.settings.get(constants.moduleName, this._positionSetting)
       });
    }

@@ -28,7 +28,7 @@ export default class QuestLogFloating extends Application
     */
    static get defaultOptions()
    {
-      return mergeObject(super.defaultOptions, {
+      return foundry.utils.mergeObject(super.defaultOptions, {
          id: 'forien-quest-log-floating-window',
          classes: ['sidebar-popout'],
          template: 'modules/forien-quest-log/templates/quest-floating-window.html',
@@ -83,7 +83,7 @@ export default class QuestLogFloating extends Application
     */
    async getData(options = {})
    {
-      return mergeObject(super.getData(options), {
+      return foundry.utils.mergeObject(super.getData(options), {
          isGM: game.user.isGM,
          showTasks: game.settings.get(constants.moduleName, settings.showTasks),
          style: game.settings.get(constants.moduleName, settings.navStyle),

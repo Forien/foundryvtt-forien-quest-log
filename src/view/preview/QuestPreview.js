@@ -174,7 +174,7 @@ export default class QuestPreview extends FormApplication
     */
    static get defaultOptions()
    {
-      return mergeObject(super.defaultOptions, {
+      return foundry.utils.mergeObject(super.defaultOptions, {
          classes: ['forien-quest-preview'],
          template: 'modules/forien-quest-log/templates/quest-preview.html',
          width: 700,
@@ -574,7 +574,7 @@ export default class QuestPreview extends FormApplication
          playerEdit: this.playerEdit
       };
 
-      return mergeObject(data, content);
+      return foundry.utils.mergeObject(data, content);
    }
 
    /**
