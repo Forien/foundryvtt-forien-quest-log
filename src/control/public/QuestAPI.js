@@ -1,18 +1,20 @@
 import QuestDBShim   from './QuestDBShim.js';
 import Socket        from '../Socket.js';
-
 import ViewManager   from '../ViewManager.js';
 
 import { constants, settings } from '../../model/constants.js';
 
 /**
- * Quest public API. QuestAPI exposes certain QuestDB methods that are available for any player as only currently
- * observable quests are loaded. Other methods include opening a quest if it is observable.
+ * Quest public API. QuestAPI exposes control capabilities publicly. This functionality is gated as necessary depending
+ * on user level, quest observability and module settings.
+ *
+ * A shim to the {@link QuestDB} is available via {@link QuestAPI.DB} which exposes certain QuestDB methods that are
+ * available for any player as only currently observable quests are loaded into QuestDB.
  */
 class QuestAPI
 {
    /**
-    * @returns {QuestDBShim} The public QuestDB.
+    * @returns {QuestDBShim} Public QuestDB access.
     */
    static get DB() { return QuestDBShim; }
 
