@@ -7,7 +7,7 @@ import Quest   from '../model/Quest.js';
  *
  * @see https://foundryvtt.com/api/Collection.html
  */
-export default class QuestsCollection extends Collection
+export default class QuestCollection extends Collection
 {
    /**
     * Returns the document name for this Collection.
@@ -32,7 +32,7 @@ export default class QuestsCollection extends Collection
    /**
     * Returns this collection.
     *
-    * @returns {QuestsCollection} This instance.
+    * @returns {QuestCollection} This instance.
     */
    static get instance()
    {

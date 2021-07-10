@@ -5,7 +5,7 @@ import Utils            from './Utils.js';
 import ViewManager      from './ViewManager.js';
 import Quest            from '../model/Quest.js';
 import QuestFolder      from '../model/QuestFolder.js';
-import QuestsCollection from '../model/QuestsCollection.js';
+import QuestCollection  from '../model/QuestCollection.js';
 import QuestPreview     from '../view/preview/QuestPreview.js';
 
 import ModuleSettings   from '../ModuleSettings.js';
@@ -119,13 +119,13 @@ export default class FQLHooks
       CONFIG[Quest.documentName] = {
          entityClass: Quest,
          documentClass: Quest,
-         collection: QuestsCollection,
+         collection: QuestCollection,
          sidebarIcon: 'fas fa-scroll',
          sheetClass: QuestPreview
       };
 
-      // Add our QuestsCollection shim to the game collections.
-      game.collections.set(Quest.documentName, new QuestsCollection());
+      // Add our QuestCollection to the game collections.
+      game.collections.set(Quest.documentName, new QuestCollection());
 
       // Initialize the in-memory QuestDB. Loads all quests that the user can see at this point.
       await QuestDB.init();
