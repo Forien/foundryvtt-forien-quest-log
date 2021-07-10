@@ -130,8 +130,7 @@ export default class ViewManager
    }
 
    /**
-    * Refreshes local {@link QuestPreview} apps and sends a message indicating which QuestPreview apps need to be
-    * rendered.
+    * Refreshes local {@link QuestPreview} apps.
     *
     * @param {string|string[]}   questId - A single quest ID or an array of IDs to update.
     *
