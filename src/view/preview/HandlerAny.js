@@ -9,11 +9,13 @@ import FQLDialog  from '../FQLDialog.js';
 export default class HandlerAny
 {
    /**
-    * @param {Event}          event - HTML5 / jQuery event.
+    * Confirms deleting a quest with {@link FQLDialog.confirmDeleteQuest} before invoking {@link QuestDB.deleteQuest}.
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {Event} event - HTML5 event.
     *
-    * @returns {Promise<void>} A promise
+    * @param {Quest} quest - The current quest being manipulated.
+    *
+    * @returns {Promise<void>} A promise.
     */
    static async questDelete(event, quest)
    {
@@ -28,7 +30,9 @@ export default class HandlerAny
    }
 
    /**
-    * @param {Event} event - HTML5 / jQuery event.
+    * Opens a {@link QuestPreview} via {@link QuestAPI.open}.
+    *
+    * @param {Event} event - HTML5 event.
     */
    static questOpen(event)
    {
@@ -37,9 +41,12 @@ export default class HandlerAny
    }
 
    /**
-    * @param {Event}          event - HTML5 / jQuery event.
+    * Potentially sets a new {@link Quest.status} via {@link Socket.moveQuest}. If the current user is not a GM
+    * a GM level user must be logged in for a successful completion of the set status operation.
     *
-    * @returns {Promise<void>} A promise
+    * @param {Event} event - HTML5 event.
+    *
+    * @returns {Promise<void>} A promise.
     */
    static async questStatusSet(event)
    {

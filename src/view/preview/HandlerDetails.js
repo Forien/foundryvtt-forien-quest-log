@@ -11,7 +11,7 @@ import { constants, settings } from '../../model/constants.js';
 export default class HandlerDetails
 {
    /**
-    * @param {Event}          event - HTML5 / jQuery event.
+    * @param {Event}          event - HTML5 event.
     *
     * @param {Quest}          quest - The current quest being manipulated.
     *
@@ -39,7 +39,7 @@ export default class HandlerDetails
        * closed in {@link QuestPreview.close} while the input field is focused / being edited allowing any edits to be
        * saved. Otherwise the callback is invoked normally below as part of the input focus out event.
        *
-       * @param {Event|void}  event - HTML5 / jQuery event.
+       * @param {Event|void}  event - HTML5 event.
        *
        * @param {object}      saveOptions - Options to pass to `saveQuest`; used in {@link QuestPreview.close}.
        *
@@ -67,7 +67,7 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 / jQuery event.
+    * @param {Event}          event - HTML5 event.
     *
     * @param {Quest}          quest - The current quest being manipulated.
     *
@@ -96,7 +96,7 @@ export default class HandlerDetails
        * closed in {@link QuestPreview.close} while the input field is focused / being edited allowing any edits to be
        * saved. Otherwise the callback is invoked normally below as part of the input focus out event.
        *
-       * @param {Event|void}  event - HTML5 / jQuery event.
+       * @param {Event|void}  event - HTML5 event.
        *
        * @param {object}      saveOptions - Options to pass to `saveQuest`; used in {@link QuestPreview.close}.
        *
@@ -154,7 +154,7 @@ export default class HandlerDetails
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} A promise.
+    * @returns {Promise<void>} A promise..
     */
    static async questGiverDelete(quest, questPreview)
    {
@@ -163,13 +163,13 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 / jQuery event.
+    * @param {Event}          event - HTML5 event.
     *
     * @param {Quest}          quest - The current quest being manipulated.
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} A promise.
+    * @returns {Promise<void>} A promise..
     */
    static async questGiverDropDocument(event, quest, questPreview)
    {
@@ -205,9 +205,9 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event} event - HTML5 / jQuery event.
+    * @param {Event} event - HTML5 event.
     *
-    * @returns {Promise<void>} A promise.
+    * @returns {Promise<void>} A promise..
     */
    static async questGiverShowActorSheet(event)
    {
@@ -224,7 +224,7 @@ export default class HandlerDetails
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} A promise.
+    * @returns {Promise<void>} A promise..
     */
    static async questGiverToggleImage(quest, questPreview)
    {
@@ -239,7 +239,7 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 / jQuery event.
+    * @param {Event}          event - HTML5 event.
     *
     * @param {Quest}          quest - The current quest being manipulated.
     *
@@ -278,7 +278,7 @@ export default class HandlerDetails
        * closed in {@link QuestPreview.close} while the input field is focused / being edited allowing any edits to be
        * saved. Otherwise the callback is invoked normally below as part of the input focus out event.
        *
-       * @param {Event|void}  event - HTML5 / jQuery event.
+       * @param {Event|void}  event - HTML5 event.
        *
        * @param {object}      saveOptions - Options to pass to `saveQuest`; used in {@link QuestPreview.close}.
        *
@@ -315,7 +315,7 @@ export default class HandlerDetails
     *
     * The module setting: {@link settings.defaultAbstractRewardImage} stores the default abstract reward image.
     *
-    * @param {Event}          event - HTML5 / jQuery event.
+    * @param {Event}          event - HTML5 event.
     *
     * @param {Quest}          quest - The current quest being manipulated.
     *
@@ -353,13 +353,13 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 / jQuery event.
+    * @param {Event}          event - HTML5 event.
     *
     * @param {Quest}          quest - The current quest being manipulated.
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} A promise.
+    * @returns {Promise<void>} A promise..
     */
    static async rewardDelete(event, quest, questPreview)
    {
@@ -378,7 +378,7 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event} event - HTML5 / jQuery event.
+    * @param {Event} event - HTML5 event.
     *
     * @param {Quest}          quest - The current quest being manipulated.
     */
@@ -416,7 +416,7 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event} event - HTML5 / jQuery event.
+    * @param {Event} event - HTML5 event.
     */
    static rewardDragStartSort(event)
    {
@@ -436,13 +436,13 @@ export default class HandlerDetails
    /**
     * Handles an external item reward drop. Also handles the sort reward item drop.
     *
-    * @param {Event}          event - HTML5 / jQuery event.
+    * @param {Event}          event - HTML5 event.
     *
     * @param {Quest}          quest - The current quest being manipulated.
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} A promise.
+    * @returns {Promise<void>} A promise..
     */
    static async rewardDropItem(event, quest, questPreview)
    {
@@ -496,7 +496,7 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 / jQuery event.
+    * @param {Event}          event - HTML5 event.
     *
     * @param {Quest}          quest - The current quest being manipulated.
     *
@@ -541,7 +541,7 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 / jQuery event.
+    * @param {Event}          event - HTML5 event.
     *
     * @param {Quest}          quest - The current quest being manipulated.
     *
@@ -564,7 +564,7 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 / jQuery event.
+    * @param {Event}          event - HTML5 event.
     *
     * @param {Quest}          quest - The current quest being manipulated.
     *
@@ -584,7 +584,7 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 / jQuery event.
+    * @param {Event}          event - HTML5 event.
     *
     * @param {Quest}          quest - The current quest being manipulated.
     *
@@ -643,7 +643,7 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 / jQuery event.
+    * @param {Event}          event - HTML5 event.
     *
     * @param {Quest}          quest - The current quest being manipulated.
     *
@@ -679,13 +679,13 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 / jQuery event.
+    * @param {Event}          event - HTML5 event.
     *
     * @param {Quest}          quest - The current quest being manipulated.
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} A promise
+    * @returns {Promise<void>} A promise.
     */
    static async taskDelete(event, quest, questPreview)
    {
@@ -703,7 +703,7 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event} event - HTML5 / jQuery event.
+    * @param {Event} event - HTML5 event.
     */
    static taskDragStartSort(event)
    {
@@ -722,11 +722,11 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 / jQuery event.
+    * @param {Event}          event - HTML5 event.
     *
     * @param {Quest}          quest - The current quest being manipulated.
     *
-    * @returns {Promise<void>} A promise
+    * @returns {Promise<void>} A promise.
     */
    static async taskDropItem(event, quest)
    {
@@ -744,7 +744,7 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 / jQuery event.
+    * @param {Event}          event - HTML5 event.
     *
     * @param {Quest}          quest - The current quest being manipulated.
     *
@@ -777,7 +777,7 @@ export default class HandlerDetails
        * closed in {@link QuestPreview.close} while the input field is focused / being edited allowing any edits to be
        * saved. Otherwise the callback is invoked normally below as part of the input focus out event.
        *
-       * @param {Event|void}  event - HTML5 / jQuery event.
+       * @param {Event|void}  event - HTML5 event.
        *
        * @param {object}      saveOptions - Options to pass to `saveQuest`; used in {@link QuestPreview.close}.
        *
@@ -811,13 +811,13 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 / jQuery event.
+    * @param {Event}          event - HTML5 event.
     *
     * @param {Quest}          quest - The current quest being manipulated.
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} A promise
+    * @returns {Promise<void>} A promise.
     */
    static async taskToggleHidden(event, quest, questPreview)
    {
@@ -831,13 +831,13 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 / jQuery event.
+    * @param {Event}          event - HTML5 event.
     *
     * @param {Quest}          quest - The current quest being manipulated.
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} A promise
+    * @returns {Promise<void>} A promise.
     */
    static async taskToggleState(event, quest, questPreview)
    {

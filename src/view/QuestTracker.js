@@ -70,7 +70,7 @@ export default class QuestTracker extends RepositionableApplication
    /**
     * Data for the quest folder open / close state is saved in {@link sessionStorage}.
     *
-    * @param {Event} event - HTML5 / jQuery event.
+    * @param {Event} event - HTML5 event.
     */
    _handleQuestClick(event)
    {
@@ -88,7 +88,7 @@ export default class QuestTracker extends RepositionableApplication
    /**
     * Handles the quest open click via {@link QuestAPI.open}.
     *
-    * @param {Event} event - HTML5 / jQuery event.
+    * @param {Event} event - HTML5 event.
     */
    _handleQuestOpen(event)
    {

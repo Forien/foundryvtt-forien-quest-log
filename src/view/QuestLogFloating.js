@@ -95,7 +95,7 @@ export default class QuestLogFloating extends Application
    /**
     * Toggles the folder open / close state and saves value in {@link sessionStorage}.
     *
-    * @param {Event} event - HTML5 / jQuery event.
+    * @param {Event} event - HTML5 event.
     */
    _handleFolderToggle(event)
    {
@@ -117,7 +117,7 @@ export default class QuestLogFloating extends Application
    /**
     * Handles the quest open click via {@link QuestAPI.open}.
     *
-    * @param {Event} event - HTML5 / jQuery event.
+    * @param {Event} event - HTML5 event.
     */
    _handleQuestOpen(event)
    {

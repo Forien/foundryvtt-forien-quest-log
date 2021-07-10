@@ -57,7 +57,7 @@ export default class RepositionableApplication extends Application
    /**
     * Repurposed code originally written by user ^ and stick for Token Action HUD.
     *
-    * @param {Event} ev - HTML5 / jQuery event.
+    * @param {Event} ev - HTML5 event.
     *
     * @author ^ and stick#0520
     *

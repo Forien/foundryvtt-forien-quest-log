@@ -26,9 +26,9 @@ export default class HandlerLog
    /**
     * Handles deleting a quest. The trashcan icon.
     *
-    * @param {Event} event - HTML5 / jQuery event.
+    * @param {Event} event - HTML5 event.
     *
-    * @returns {Promise<void>} A promise
+    * @returns {Promise<void>} A promise.
     */
    static async questDelete(event)
    {
@@ -45,7 +45,7 @@ export default class HandlerLog
    /**
     * Prepares the data transfer when a quest is dragged from the {@link QuestLog}.
     *
-    * @param {Event} event - HTML5 / jQuery event.
+    * @param {Event} event - HTML5 event.
     */
    static questDragStart(event)
    {
@@ -60,7 +60,7 @@ export default class HandlerLog
    /**
     * Handles the quest open click via {@link QuestAPI.open}.
     *
-    * @param {Event} event - HTML5 / jQuery event.
+    * @param {Event} event - HTML5 event.
     */
    static questOpen(event)
    {
@@ -71,9 +71,9 @@ export default class HandlerLog
    /**
     * Handles changing the quest status via {@link Socket.moveQuest}.
     *
-    * @param {Event} event - HTML5 / jQuery event.
+    * @param {Event} event - HTML5 event.
     *
-    * @returns {Promise<void>} A promise
+    * @returns {Promise<void>} A promise.
     */
    static async questStatusSet(event)
    {

@@ -93,7 +93,7 @@ export default class HandlerManage
    }
 
    /**
-    * @param {Event}          event - HTML5 / jQuery event.
+    * @param {Event}          event - HTML5 event.
     *
     * @param {Quest}          quest - The current quest being manipulated.
     *
