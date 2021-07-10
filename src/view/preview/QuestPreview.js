@@ -254,7 +254,11 @@ export default class QuestPreview extends FormApplication
             icon: 'far fa-image',
             onclick: async () =>
             {
-               await HandlerDetails.splashImagePopupShow(this._quest, this);
+               // Only show popup if a splash image is defined.
+               if (this._quest.splash.length)
+               {
+                  await HandlerDetails.splashImagePopupShow(this._quest, this);
+               }
             }
          });
       }
