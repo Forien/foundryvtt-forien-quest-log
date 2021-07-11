@@ -3,7 +3,7 @@ import QuestDB       from './QuestDB.js';
 import Utils         from './Utils.js';
 import ViewManager   from './ViewManager.js';
 
-import { constants, questTypes, questTypesI18n, settings }  from '../model/constants.js';
+import { constants, questStatus, questStatusI18n, settings }  from '../model/constants.js';
 
 /**
  * Defines the event name to send all messages to over  `game.socket`.
@@ -129,7 +129,7 @@ export default class Socket
     *
     * @param {Quest}    options.quest - The quest to move.
     *
-    * @param {string}   options.target - The target status. One of five {@link questTypes}.
+    * @param {string}   options.target - The target status. One of five {@link questStatus}.
     *
     * @returns {Promise<void>}
     * @see {@link HandlerAny.questStatusSet}
@@ -149,7 +149,7 @@ export default class Socket
          Socket.refreshQuestPreview({ questId: quest.getQuestIds() });
          Socket.refreshAll();
 
-         const dirname = game.i18n.localize(questTypesI18n[target]);
+         const dirname = game.i18n.localize(questStatusI18n[target]);
          ViewManager.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
           { name: quest.name, target: dirname }));
       }
@@ -157,7 +157,7 @@ export default class Socket
       {
          // Provide a sanity check and early out if the player can't accept quests.
          const canPlayerAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
-         if (questTypes.active !== target && !canPlayerAccept) { return; }
+         if (questStatus.active !== target && !canPlayerAccept) { return; }
       }
 
       game.socket.emit(s_EVENT_NAME, {
@@ -406,13 +406,13 @@ async function handleQuestSetStatus(data)
 
       Socket.refreshAll();
 
-      const dirname = game.i18n.localize(questTypesI18n[target]);
+      const dirname = game.i18n.localize(questStatusI18n[target]);
       ViewManager.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
        { name: quest.name, target: dirname }));
    }
 
    // For non-GM users close QuestPreview when made hidden / inactive.
-   if (!game.user.isGM && target === questTypes.inactive)
+   if (!game.user.isGM && target === questStatus.inactive)
    {
       const questPreview = ViewManager.questPreview.get(data.payload.questId);
       if (questPreview !== void 0)

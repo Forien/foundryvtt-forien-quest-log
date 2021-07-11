@@ -3,7 +3,7 @@ import Enrich        from '../src/control/Enrich.js';
 import QuestFolder   from '../src/model/QuestFolder.js';
 import Quest         from '../src/model/Quest.js';
 
-import { constants, questTypes } from '../src/model/constants.js';
+import { constants, questStatus } from '../src/model/constants.js';
 
 /**
  * Performs DB migration from schema 1 to 2.
@@ -47,7 +47,7 @@ export default async function()
             }
 
             // Change any status of 'hidden' to 'inactive'.
-            if (quest.status === 'hidden') { quest.status = questTypes.inactive; }
+            if (quest.status === 'hidden') { quest.status = questStatus.inactive; }
 
             await quest.save();
          }

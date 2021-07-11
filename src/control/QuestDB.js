@@ -5,7 +5,7 @@ import QuestFolder   from '../model/QuestFolder.js';
 import Quest         from '../model/Quest.js';
 import collect       from '../../external/collect.js';
 
-import { constants, questTypes, settings } from '../model/constants.js';
+import { constants, questStatus, settings } from '../model/constants.js';
 
 /**
  * Stores all QuestEntry instances in a map of Maps. This provides fast retrieval and quick insert / removal with quests
@@ -268,7 +268,7 @@ export default class QuestDB
       // trusted players.
       if (!game.user.isGM)
       {
-         data.status = Utils.isTrustedPlayerEdit() ? questTypes.inactive : questTypes.available;
+         data.status = Utils.isTrustedPlayerEdit() ? questStatus.inactive : questStatus.available;
          permission[game.user.id] = CONST.ENTITY_PERMISSIONS.OWNER;
       }
 
@@ -452,16 +452,16 @@ export default class QuestDB
       {
          switch (status)
          {
-            case questTypes.active:
-               return s_QUESTS_COLLECT[questTypes.active].filter(filterActive || filter);
-            case questTypes.available:
-               return s_QUESTS_COLLECT[questTypes.available].filter(filterAvailable || filter);
-            case questTypes.completed:
-               return s_QUESTS_COLLECT[questTypes.completed].filter(filterCompleted || filter);
-            case questTypes.failed:
-               return s_QUESTS_COLLECT[questTypes.failed].filter(filterFailed || filter);
-            case questTypes.inactive:
-               return s_QUESTS_COLLECT[questTypes.inactive].filter(filterInactive || filter);
+            case questStatus.active:
+               return s_QUESTS_COLLECT[questStatus.active].filter(filterActive || filter);
+            case questStatus.available:
+               return s_QUESTS_COLLECT[questStatus.available].filter(filterAvailable || filter);
+            case questStatus.completed:
+               return s_QUESTS_COLLECT[questStatus.completed].filter(filterCompleted || filter);
+            case questStatus.failed:
+               return s_QUESTS_COLLECT[questStatus.failed].filter(filterFailed || filter);
+            case questStatus.inactive:
+               return s_QUESTS_COLLECT[questStatus.inactive].filter(filterInactive || filter);
             default:
                console.error(`Forien Quest Log - QuestDB - filterCollect - unknown status: ${status}`);
                return void 0;
@@ -470,11 +470,11 @@ export default class QuestDB
 
       // Otherwise filter all status categories and return a QuestsCollect object.
       return {
-         active: s_QUESTS_COLLECT[questTypes.active].filter(filterActive || filter),
-         available: s_QUESTS_COLLECT[questTypes.available].filter(filterAvailable || filter),
-         completed: s_QUESTS_COLLECT[questTypes.completed].filter(filterCompleted || filter),
-         failed: s_QUESTS_COLLECT[questTypes.failed].filter(filterFailed || filter),
-         inactive: s_QUESTS_COLLECT[questTypes.inactive].filter(filterInactive || filter)
+         active: s_QUESTS_COLLECT[questStatus.active].filter(filterActive || filter),
+         available: s_QUESTS_COLLECT[questStatus.available].filter(filterAvailable || filter),
+         completed: s_QUESTS_COLLECT[questStatus.completed].filter(filterCompleted || filter),
+         failed: s_QUESTS_COLLECT[questStatus.failed].filter(filterFailed || filter),
+         inactive: s_QUESTS_COLLECT[questStatus.inactive].filter(filterInactive || filter)
       };
    }
 
@@ -522,24 +522,24 @@ export default class QuestDB
    }
 
    /**
-    * Provides a quicker method to get the count of quests by quest type / status or all quests.
+    * Provides a quicker method to get the count of quests by quest status or all quests.
     *
     * @param {object}   [options] - Optional parameters. If no options are provided the count of all quests is returned.
     *
-    * @param {string}   [options.type] - The quest type / status to count.
+    * @param {string}   [options.status] - The quest status category to count.
     *
     * @returns {number} Quest count for the specified type or the count for all quests.
     */
-   static getCount({ type = void 0 } = {})
+   static getCount({ status = void 0 } = {})
    {
-      if (type === void 0)
+      if (status === void 0)
       {
-         return s_QUESTS_MAP[questTypes.active].size + s_QUESTS_MAP[questTypes.available].size +
-          s_QUESTS_MAP[questTypes.completed].size + s_QUESTS_MAP[questTypes.failed].size +
-           s_QUESTS_MAP[questTypes.inactive].size;
+         return s_QUESTS_MAP[questStatus.active].size + s_QUESTS_MAP[questStatus.available].size +
+          s_QUESTS_MAP[questStatus.completed].size + s_QUESTS_MAP[questStatus.failed].size +
+           s_QUESTS_MAP[questStatus.inactive].size;
       }
 
-      return s_QUESTS_MAP[type] ? s_QUESTS_MAP[type].size : 0;
+      return s_QUESTS_MAP[status] ? s_QUESTS_MAP[status].size : 0;
    }
 
    /**
@@ -573,23 +573,23 @@ export default class QuestDB
     * @param {object}   [options] - Optional parameters. If no options are provided the iteration occurs across all
     *                               quests.
     *
-    * @param {string}   [options.type] - The quest type / status to iterate.
+    * @param {string}   [options.status] - The quest status category to iterate.
     *
     * @yields {QuestEntry} The QuestEntry iterator.
     */
-   static *iteratorEntries({ type = void 0 } = {})
+   static *iteratorEntries({ status = void 0 } = {})
    {
-      if (type === void 0)
+      if (status === void 0)
       {
-         for (const value of s_QUESTS_MAP[questTypes.active].values()) { yield value; }
-         for (const value of s_QUESTS_MAP[questTypes.available].values()) { yield value; }
-         for (const value of s_QUESTS_MAP[questTypes.completed].values()) { yield value; }
-         for (const value of s_QUESTS_MAP[questTypes.failed].values()) { yield value; }
-         for (const value of s_QUESTS_MAP[questTypes.inactive].values()) { yield value; }
+         for (const value of s_QUESTS_MAP[questStatus.active].values()) { yield value; }
+         for (const value of s_QUESTS_MAP[questStatus.available].values()) { yield value; }
+         for (const value of s_QUESTS_MAP[questStatus.completed].values()) { yield value; }
+         for (const value of s_QUESTS_MAP[questStatus.failed].values()) { yield value; }
+         for (const value of s_QUESTS_MAP[questStatus.inactive].values()) { yield value; }
       }
-      else if (s_QUESTS_MAP[type])
+      else if (s_QUESTS_MAP[status])
       {
-         for (const value of s_QUESTS_MAP[type].values()) { yield value; }
+         for (const value of s_QUESTS_MAP[status].values()) { yield value; }
       }
    }
 
@@ -599,23 +599,23 @@ export default class QuestDB
     * @param {object}   [options] - Optional parameters. If no options are provided the iteration occurs across all
     *                               quests.
     *
-    * @param {string}   [options.type] - The quest type / status to iterate.
+    * @param {string}   [options.status] - The quest status category to iterate.
     *
     * @yields {Quest} The Quest iterator.
     */
-   static *iteratorQuests({ type = void 0 } = {})
+   static *iteratorQuests({ status = void 0 } = {})
    {
-      if (type === void 0)
+      if (status === void 0)
       {
-         for (const value of s_QUESTS_MAP[questTypes.active].values()) { yield value.quest; }
-         for (const value of s_QUESTS_MAP[questTypes.available].values()) { yield value.quest; }
-         for (const value of s_QUESTS_MAP[questTypes.completed].values()) { yield value.quest; }
-         for (const value of s_QUESTS_MAP[questTypes.failed].values()) { yield value.quest; }
-         for (const value of s_QUESTS_MAP[questTypes.inactive].values()) { yield value.quest; }
+         for (const value of s_QUESTS_MAP[questStatus.active].values()) { yield value.quest; }
+         for (const value of s_QUESTS_MAP[questStatus.available].values()) { yield value.quest; }
+         for (const value of s_QUESTS_MAP[questStatus.completed].values()) { yield value.quest; }
+         for (const value of s_QUESTS_MAP[questStatus.failed].values()) { yield value.quest; }
+         for (const value of s_QUESTS_MAP[questStatus.inactive].values()) { yield value.quest; }
       }
-      else if (s_QUESTS_MAP[type])
+      else if (s_QUESTS_MAP[status])
       {
-         for (const value of s_QUESTS_MAP[type].values()) { yield value.quest; }
+         for (const value of s_QUESTS_MAP[status].values()) { yield value.quest; }
       }
    }
 
@@ -624,19 +624,19 @@ export default class QuestDB
     */
    static removeAll()
    {
-      s_QUESTS_MAP[questTypes.active].clear();
-      s_QUESTS_MAP[questTypes.available].clear();
-      s_QUESTS_MAP[questTypes.completed].clear();
-      s_QUESTS_MAP[questTypes.failed].clear();
-      s_QUESTS_MAP[questTypes.inactive].clear();
+      s_QUESTS_MAP[questStatus.active].clear();
+      s_QUESTS_MAP[questStatus.available].clear();
+      s_QUESTS_MAP[questStatus.completed].clear();
+      s_QUESTS_MAP[questStatus.failed].clear();
+      s_QUESTS_MAP[questStatus.inactive].clear();
 
       s_QUEST_INDEX.clear();
 
-      s_QUESTS_COLLECT[questTypes.active] = collect();
-      s_QUESTS_COLLECT[questTypes.available] = collect();
-      s_QUESTS_COLLECT[questTypes.completed] = collect();
-      s_QUESTS_COLLECT[questTypes.failed] = collect();
-      s_QUESTS_COLLECT[questTypes.inactive] = collect();
+      s_QUESTS_COLLECT[questStatus.active] = collect();
+      s_QUESTS_COLLECT[questStatus.available] = collect();
+      s_QUESTS_COLLECT[questStatus.completed] = collect();
+      s_QUESTS_COLLECT[questStatus.failed] = collect();
+      s_QUESTS_COLLECT[questStatus.inactive] = collect();
 
       Hooks.callAll('removeAllQuestEntries');
    }
@@ -671,16 +671,16 @@ export default class QuestDB
       {
          switch (status)
          {
-            case questTypes.active:
-               return s_QUESTS_COLLECT[questTypes.active].sort(sortActive);
-            case questTypes.available:
-               return s_QUESTS_COLLECT[questTypes.available].sort(sortAvailable);
-            case questTypes.completed:
-               return s_QUESTS_COLLECT[questTypes.completed].sort(sortCompleted);
-            case questTypes.failed:
-               return s_QUESTS_COLLECT[questTypes.failed].sort(sortFailed);
-            case questTypes.inactive:
-               return s_QUESTS_COLLECT[questTypes.inactive].sort(sortInactive);
+            case questStatus.active:
+               return s_QUESTS_COLLECT[questStatus.active].sort(sortActive);
+            case questStatus.available:
+               return s_QUESTS_COLLECT[questStatus.available].sort(sortAvailable);
+            case questStatus.completed:
+               return s_QUESTS_COLLECT[questStatus.completed].sort(sortCompleted);
+            case questStatus.failed:
+               return s_QUESTS_COLLECT[questStatus.failed].sort(sortFailed);
+            case questStatus.inactive:
+               return s_QUESTS_COLLECT[questStatus.inactive].sort(sortInactive);
             default:
                console.error(`Forien Quest Log - QuestDB - sortCollect - unknown status: ${status}`);
                return void 0;
@@ -688,11 +688,11 @@ export default class QuestDB
       }
 
       return {
-         active: s_QUESTS_COLLECT[questTypes.active].sort(sortActive),
-         available: s_QUESTS_COLLECT[questTypes.available].sort(sortAvailable),
-         completed: s_QUESTS_COLLECT[questTypes.completed].sort(sortCompleted),
-         failed: s_QUESTS_COLLECT[questTypes.failed].sort(sortFailed),
-         inactive: s_QUESTS_COLLECT[questTypes.inactive].sort(sortInactive)
+         active: s_QUESTS_COLLECT[questStatus.active].sort(sortActive),
+         available: s_QUESTS_COLLECT[questStatus.available].sort(sortAvailable),
+         completed: s_QUESTS_COLLECT[questStatus.completed].sort(sortCompleted),
+         failed: s_QUESTS_COLLECT[questStatus.failed].sort(sortFailed),
+         inactive: s_QUESTS_COLLECT[questStatus.inactive].sort(sortInactive)
       };
    }
 }
@@ -875,7 +875,7 @@ const s_IS_OBSERVABLE = (content, entry, isTrustedPlayerEdit = Utils.isTrustedPl
    }
    else
    {
-      const isInactive = questTypes.inactive === content.status;
+      const isInactive = questStatus.inactive === content.status;
 
       // Special handling for trusted player edit who can only see owned quests in the hidden / inactive category.
       if (isTrustedPlayerEdit && isInactive)
@@ -1034,11 +1034,11 @@ const s_JOURNAL_ENTRY_UPDATE = (entry, flags, options, id) =>
 const s_MAP_FLATTEN = () =>
 {
    return [
-      ...s_QUESTS_MAP[questTypes.active].values(),
-      ...s_QUESTS_MAP[questTypes.available].values(),
-      ...s_QUESTS_MAP[questTypes.completed].values(),
-      ...s_QUESTS_MAP[questTypes.failed].values(),
-      ...s_QUESTS_MAP[questTypes.inactive].values()
+      ...s_QUESTS_MAP[questStatus.active].values(),
+      ...s_QUESTS_MAP[questStatus.available].values(),
+      ...s_QUESTS_MAP[questStatus.completed].values(),
+      ...s_QUESTS_MAP[questStatus.failed].values(),
+      ...s_QUESTS_MAP[questStatus.inactive].values()
    ];
 };
 
@@ -1147,7 +1147,7 @@ const s_SET_QUEST_ENTRY = (entry, generate = true) =>
 
 /**
  * @typedef {Object.<string, Collection<QuestEntry>>} QuestsCollect Returns an object with keys indexed by
- * {@link questTypes} of CollectJS collections of QuestEntry instances.
+ * {@link questStatus} of CollectJS collections of QuestEntry instances.
  *
  * @property {Collection<QuestEntry>} active - Active quest entries CollectJS collections
  *

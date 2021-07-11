@@ -44,7 +44,7 @@ const noteControls = [
  *
  * @returns {{active: string, available: string, completed: string, failed: string, inactive: string}}
  */
-const questTypes = {
+const questStatus = {
    active: 'active',
    available: 'available',
    completed: 'completed',
@@ -57,7 +57,7 @@ const questTypes = {
  *
  * @type {{active: string, available: string, completed: string, failed: string, inactive: string}}
  */
-const questTypesI18n = {
+const questStatusI18n = {
    active: 'ForienQuestLog.QuestTypes.Active',
    available: 'ForienQuestLog.QuestTypes.Available',
    completed: 'ForienQuestLog.QuestTypes.Completed',
@@ -88,7 +88,7 @@ const settings = {
    trustedPlayerEdit: 'trustedPlayerEdit'
 };
 
-export { constants, jquery, noteControls, questTypes, questTypesI18n, settings };
+export { constants, jquery, noteControls, questStatus, questStatusI18n, settings };
 
 /**
  * @typedef {object} FQLSettings

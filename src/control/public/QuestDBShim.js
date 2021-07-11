@@ -52,7 +52,7 @@ class QuestDBShim
     *
     * @param {object}   options - Optional parameters.
     *
-    * @param {string}   [options.status] - Specific quest status to return filtered.
+    * @param {string}   [options.type] - Specific quest status to return filtered.
     *
     * @param {Function} [options.filter] - The filter function for any quest status that doesn't have a filter
     *                                      defined.
@@ -118,7 +118,7 @@ class QuestDBShim
     *
     * @param {object}   [options] - Optional parameters. If no options are provided the count of all quests is returned.
     *
-    * @param {string}   [options.type] - The quest type / status to count.
+    * @param {string}   [options.status] - The quest status category to count.
     *
     * @returns {number} Quest count for the specified type or the count for all quests.
     */
@@ -157,7 +157,7 @@ class QuestDBShim
     * @param {object}   [options] - Optional parameters. If no options are provided the iteration occurs across all
     *                               quests.
     *
-    * @param {string}   [options.type] - The quest type / status to iterate.
+    * @param {string}   [options.status] - The quest status category to iterate.
     *
     * @returns {Generator<QuestEntry, void, *>}  A QuestEntry iterator.
     */
@@ -172,7 +172,7 @@ class QuestDBShim
     * @param {object}   [options] - Optional parameters. If no options are provided the iteration occurs across all
     *                               quests.
     *
-    * @param {string}   [options.type] - The quest type / status to iterate.
+    * @param {string}   [options.status] - The quest status category to iterate.
     *
     * @returns {Generator<Quest, void, *>}  A QuestEntry iterator.
     */

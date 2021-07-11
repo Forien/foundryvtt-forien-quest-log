@@ -3,7 +3,7 @@ import QuestAPI                  from '../control/public/QuestAPI.js';
 import QuestDB                   from '../control/QuestDB.js';
 import ViewManager               from '../control/ViewManager.js';
 
-import { constants, questTypes, settings } from '../model/constants.js';
+import { constants, questStatus, settings } from '../model/constants.js';
 
 /**
  * Provides the quest tracker which provides an overview of active quests and objectives which can be opened / closed
@@ -103,7 +103,7 @@ export default class QuestTracker extends RepositionableApplication
     */
    async prepareQuests()
    {
-      return QuestDB.sortCollect({ status: questTypes.active }).map((entry) =>
+      return QuestDB.sortCollect({ status: questStatus.active }).map((entry) =>
       {
          const q = entry.enrich;
          const collapsed = sessionStorage.getItem(`${constants.folderState}${q.id}`) === 'false';

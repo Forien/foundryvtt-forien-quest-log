@@ -1,7 +1,7 @@
 import QuestDB from './QuestDB.js';
 import Utils   from './Utils.js';
 
-import { constants, questTypes, questTypesI18n, settings } from '../model/constants.js';
+import { constants, questStatus, questStatusI18n, settings } from '../model/constants.js';
 
 /**
  * Enrich populates content with a lot of additional data that doesn't necessarily have to be saved
@@ -122,7 +122,7 @@ export default class Enrich
 
       if (canEdit || canAccept)
       {
-         if (canEdit && questTypes.active === quest.status)
+         if (canEdit && questStatus.active === quest.status)
          {
             result += `<i class="move fas fa-check-circle" title="${game.i18n.localize(
              'ForienQuestLog.Tooltips.SetCompleted')}" data-target="completed" data-quest-id="${quest.id}"></i>\n`;
@@ -133,7 +133,7 @@ export default class Enrich
             addedAction = true;
          }
 
-         if ((canEdit && questTypes.inactive === quest.status) || questTypes.available === quest.status)
+         if ((canEdit && questStatus.inactive === quest.status) || questStatus.available === quest.status)
          {
             result += `<i class="move fas fa-play" title="${game.i18n.localize(
              'ForienQuestLog.Tooltips.SetActive')}" data-target="active" data-quest-id="${quest.id}"></i>\n`;
@@ -141,7 +141,7 @@ export default class Enrich
             addedAction = true;
          }
 
-         if (canEdit && questTypes.inactive !== quest.status)
+         if (canEdit && questStatus.inactive !== quest.status)
          {
             result += `<i class="move fas fa-stop-circle" title="${game.i18n.localize(
              'ForienQuestLog.Tooltips.Hide')}" data-target="inactive" data-quest-id="${quest.id}"></i>\n`;
@@ -149,7 +149,7 @@ export default class Enrich
             addedAction = true;
          }
 
-         if ((canEdit && questTypes.inactive === quest.status) || questTypes.active === quest.status)
+         if ((canEdit && questStatus.inactive === quest.status) || questStatus.active === quest.status)
          {
             result += `<i class="move fas fa-clipboard" title="${game.i18n.localize(
              'ForienQuestLog.Tooltips.SetAvailable')}" data-target="available" data-quest-id="${quest.id}"></i>\n`;
@@ -184,7 +184,7 @@ export default class Enrich
       const data = JSON.parse(JSON.stringify(quest.toJSON()));
       data.id = quest.id;
       data.isHidden = quest.isHidden;
-      data.isInactive = questTypes.inactive === data.status;
+      data.isInactive = questStatus.inactive === data.status;
 
       const personalActors = quest.getPersonalActors();
 
@@ -256,10 +256,10 @@ export default class Enrich
                let state = 'square';
                switch (subquest.status)
                {
-                  case questTypes.completed:
+                  case questStatus.completed:
                      state = 'check-square';
                      break;
-                  case questTypes.failed:
+                  case questStatus.failed:
                      state = 'minus-square';
                      break;
                }
@@ -269,8 +269,8 @@ export default class Enrich
                const isInactive = subquest.isInactive;
 
                const statusTooltipData = isInactive ?
-                { statusI18n: game.i18n.localize(questTypesI18n[questTypes.inactive]) } :
-                 { statusI18n: game.i18n.localize(questTypesI18n[subquest.status]) };
+                { statusI18n: game.i18n.localize(questStatusI18n[questStatus.inactive]) } :
+                 { statusI18n: game.i18n.localize(questStatusI18n[subquest.status]) };
 
                const statusTooltip = game.i18n.format('ForienQuestLog.Tooltips.Status', statusTooltipData);
 
@@ -298,7 +298,7 @@ export default class Enrich
       {
          data.checkedTasks = data.tasks.filter((t) => t.completed).length;
 
-         const finishedSubquests = data.data_subquest.filter((s) => questTypes.completed === s.status).length;
+         const finishedSubquests = data.data_subquest.filter((s) => questStatus.completed === s.status).length;
 
          data.checkedTasks += finishedSubquests;
 
@@ -309,7 +309,7 @@ export default class Enrich
          data.checkedTasks = data.tasks.filter((t) => !t.hidden && t.completed).length;
 
          const finishedSubquests = data.data_subquest.filter(
-          (s) => !s.isObservable && !s.isInactive && questTypes.completed === s.status).length;
+          (s) => !s.isObservable && !s.isInactive && questStatus.completed === s.status).length;
 
          data.checkedTasks += finishedSubquests;
 

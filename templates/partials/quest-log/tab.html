@@ -1,5 +1,5 @@
 <header>
-  <h1 style="flex: 1;">{{format 'ForienQuestLog.Quests' (localize (lookup questTypesI18n tab))}}</h1>
+  <h1 style="flex: 1;">{{format 'ForienQuestLog.Quests' (localize (lookup questStatusI18n tab))}}</h1>
   {{#if (or isGM canCreate)}}
     <button class="new-quest-btn"><i class="fas fa-plus"></i> {{localize 'ForienQuestLog.Buttons.AddNewQuest'}}</button>
   {{/if}}

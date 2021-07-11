@@ -2,7 +2,7 @@ import QuestAPI      from '../control/public/QuestAPI.js';
 import QuestDB       from '../control/QuestDB.js';
 import ViewManager   from '../control/ViewManager.js';
 
-import { constants, questTypes, questTypesI18n, settings }  from '../model/constants.js';
+import { constants, questStatus, settings }  from '../model/constants.js';
 
 /**
  * Provides the floating quest log which provides a set of folders for all active quests which can be opened / closed
@@ -57,7 +57,7 @@ export default class QuestLogFloating extends Application
       html.on('click', '.questlog-floating .quest-open', void 0, this._handleQuestOpen);
 
       // Open and close folders on rerender. Data is store in sessionStorage so display is consistent after each render.
-      for (const quest of QuestDB.sortCollect({ status: questTypes.active }))
+      for (const quest of QuestDB.sortCollect({ status: questStatus.active }))
       {
          // If there are no objectives then always render in a collapsed state regardless of the
          // value in sessionStorage..
@@ -87,8 +87,7 @@ export default class QuestLogFloating extends Application
          isGM: game.user.isGM,
          showTasks: game.settings.get(constants.moduleName, settings.showTasks),
          style: game.settings.get(constants.moduleName, settings.navStyle),
-         questTypesI18n,
-         quests: QuestDB.sortCollect({ status: questTypes.active })
+         quests: QuestDB.sortCollect({ status: questStatus.active })
       });
    }
 

@@ -1,6 +1,6 @@
 import Utils   from '../control/Utils.js';
 
-import { constants, questTypes } from './constants.js';
+import { constants, questStatus } from './constants.js';
 
 /**
  * Stores the sheet class for Quest which is {@link QuestPreview}. This class / sheet is used to render Quest.
@@ -105,7 +105,7 @@ export default class Quest
     */
    get isInactive()
    {
-      return questTypes.inactive === this.status;
+      return questStatus.inactive === this.status;
    }
 
    /**
@@ -314,7 +314,7 @@ export default class Quest
       /**
        * @type {string}
        */
-      this.status = data.status || questTypes.inactive;
+      this.status = data.status || questStatus.inactive;
 
       /**
        * @type {string|null}
@@ -397,7 +397,7 @@ export default class Quest
       this.rewards = Array.isArray(data.rewards) ? data.rewards.map((reward) => new Reward(reward)) : [];
 
       // Sanity check. If status is incorrect set it to inactive.
-      if (!questTypes[this.status]) { this.status = questTypes.inactive; }
+      if (!questStatus[this.status]) { this.status = questStatus.inactive; }
 
       if (typeof data.date === 'object')
       {
@@ -420,19 +420,19 @@ export default class Quest
 
          switch (this.status)
          {
-            case questTypes.active:
+            case questStatus.active:
                this.date.start = Date.now();
                this.date.end = null;
                break;
 
-            case questTypes.completed:
-            case questTypes.failed:
+            case questStatus.completed:
+            case questStatus.failed:
                this.date.start = Date.now();
                this.date.end = Date.now();
                break;
 
-            case questTypes.inactive:
-            case questTypes.available:
+            case questStatus.inactive:
+            case questStatus.available:
             default:
                this.date.start = null;
                this.date.end = null;
@@ -529,25 +529,25 @@ export default class Quest
     */
    async setStatus(target)
    {
-      if (!this.entry || !questTypes[target]) { return; }
+      if (!this.entry || !questStatus[target]) { return; }
 
       this.status = target;
 
       // Update the tracked date data based on status.
       switch (this.status)
       {
-         case questTypes.active:
+         case questStatus.active:
             this.date.start = Date.now();
             this.date.end = null;
             break;
 
-         case questTypes.completed:
-         case questTypes.failed:
+         case questStatus.completed:
+         case questStatus.failed:
             this.date.end = Date.now();
             break;
 
-         case questTypes.inactive:
-         case questTypes.available:
+         case questStatus.inactive:
+         case questStatus.available:
          default:
             this.date.start = null;
             this.date.end = null;
@@ -894,7 +894,7 @@ export class Task
  *
  * @property {string}            name - The quest name.
  *
- * @property {string}            status - The quest status; one of {@link questTypes}.
+ * @property {string}            status - The quest status; one of {@link questStatus}.
  *
  * @property {string|null}       giver - The Foundry UUID or 'abstract' for a custom source.
  *

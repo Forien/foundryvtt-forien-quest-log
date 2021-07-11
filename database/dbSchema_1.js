@@ -1,7 +1,8 @@
-import DBMigration               from './DBMigration.js';
-import QuestFolder               from '../src/model/QuestFolder.js';
-import Quest                     from '../src/model/Quest.js';
-import { constants, questTypes } from '../src/model/constants.js';
+import DBMigration   from './DBMigration.js';
+import QuestFolder   from '../src/model/QuestFolder.js';
+import Quest         from '../src/model/Quest.js';
+
+import { constants, questStatus }   from '../src/model/constants.js';
 
 /**
  * Performs DB migration from schema 0 to 1.
@@ -173,10 +174,10 @@ async function migrateData(entry)
       content.subquests = subquests;
    }
 
-   // Note: in DB schema v2 update status hidden is renamed to 'inactive'; use bare strings here instead of questTypes.
+   // Note: in DB schema v2 update status hidden is renamed to 'inactive'; use bare strings here instead of questStatus.
    try
    {
-      if (!questTypes[content.status]) { content.status = 'hidden'; }
+      if (!questStatus[content.status]) { content.status = 'hidden'; }
    }
    catch (err) { content.status = 'hidden'; }
 
