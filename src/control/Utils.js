@@ -143,9 +143,9 @@ export default class Utils
     *
     * @param {boolean}        [opts.permissionCheck=true] - Perform permission check.
     *
-    * @param {...object}      [opts.options] - Options to pass to sheet render method.
+    * @param {...*}           [opts.options] - Options to pass to sheet render method.
     *
-    * @returns {Promise<void>}
+    * @returns {Promise<number|null>} The appId if rendered otherwise null.
     */
    static async showSheetFromUUID(data, { permissionCheck = true, ...options } = {})
    {
@@ -172,10 +172,12 @@ export default class Utils
             if (document.sheet.rendered)
             {
                document.sheet.bringToTop();
+               return null;
             }
             else
             {
                document.sheet.render(true, options);
+               return document.sheet.appId;
             }
          }
       }

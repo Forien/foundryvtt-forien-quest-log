@@ -10,7 +10,7 @@
     {{#with enrich}}
     <li class="drag-quest" data-quest-id="{{id}}" draggable="true">
       {{#if (eq questIconType 'quest-giver')}}
-        <div class="img" style="background-image: url({{data_giver.img}});" title="{{data_giver.name}}"></div>
+        <div class="img" style="background-image: url({{giverData.img}});" title="{{giverData.name}}"></div>
       {{/if}}
       {{#if (eq questIconType 'splash-image')}}
         <div class="img" style="background-image: url({{splash}});background-position: {{splashPos}};" title="View Quest Image"></div>

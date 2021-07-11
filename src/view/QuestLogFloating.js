@@ -1,4 +1,4 @@
-import QuestAPI      from '../control/QuestAPI.js';
+import QuestAPI      from '../control/public/QuestAPI.js';
 import QuestDB       from '../control/QuestDB.js';
 import ViewManager   from '../control/ViewManager.js';
 
@@ -28,7 +28,7 @@ export default class QuestLogFloating extends Application
     */
    static get defaultOptions()
    {
-      return mergeObject(super.defaultOptions, {
+      return foundry.utils.mergeObject(super.defaultOptions, {
          id: 'forien-quest-log-floating-window',
          classes: ['sidebar-popout'],
          template: 'modules/forien-quest-log/templates/quest-floating-window.html',
@@ -45,7 +45,7 @@ export default class QuestLogFloating extends Application
     *
     * Data for the quest folder open / close state is saved in {@link sessionStorage}.
     *
-    * @param {jQuery}  html - The jQuery instance for the window content of this Application.
+    * @param {JQuery}  html - The jQuery instance for the window content of this Application.
     *
     * @see https://foundryvtt.com/api/FormApplication.html#activateListeners
     */
@@ -53,8 +53,8 @@ export default class QuestLogFloating extends Application
    {
       super.activateListeners(html);
 
-      html.on('click', '.folder-toggle', this._handleFolderToggle);
-      html.on('click', '.questlog-floating .quest-open', this._handleQuestOpen);
+      html.on('click', '.folder-toggle', void 0, this._handleFolderToggle);
+      html.on('click', '.questlog-floating .quest-open', void 0, this._handleQuestOpen);
 
       // Open and close folders on rerender. Data is store in sessionStorage so display is consistent after each render.
       for (const quest of QuestDB.sortCollect({ status: questTypes.active }))
@@ -75,7 +75,7 @@ export default class QuestLogFloating extends Application
 
    /**
     * Retrieves the sorted active quests from QuestDB to be used in the Handlebars template. Also sets a few variables
-    * for if the user is a GM and module settings {@link settings.showTasks} / {@link settings.navStyle}.
+    * for if the user is a GM and module settings {@link FQLSettings.showTasks} / {@link FQLSettings.navStyle}.
     *
     * @override
     * @inheritDoc
@@ -83,7 +83,7 @@ export default class QuestLogFloating extends Application
     */
    async getData(options = {})
    {
-      return mergeObject(super.getData(options), {
+      return foundry.utils.mergeObject(super.getData(options), {
          isGM: game.user.isGM,
          showTasks: game.settings.get(constants.moduleName, settings.showTasks),
          style: game.settings.get(constants.moduleName, settings.navStyle),
@@ -95,7 +95,7 @@ export default class QuestLogFloating extends Application
    /**
     * Toggles the folder open / close state and saves value in {@link sessionStorage}.
     *
-    * @param {Event} event - HTML5 / jQuery event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     */
    _handleFolderToggle(event)
    {
@@ -109,7 +109,7 @@ export default class QuestLogFloating extends Application
 
       const collapsed = dirItem.hasClass('collapsed');
 
-      sessionStorage.setItem(`${constants.folderState}${questId}`, collapsed);
+      sessionStorage.setItem(`${constants.folderState}${questId}`, collapsed.toString());
 
       if (ViewManager.questTracker.rendered) { ViewManager.questTracker.render(); }
    }
@@ -117,7 +117,7 @@ export default class QuestLogFloating extends Application
    /**
     * Handles the quest open click via {@link QuestAPI.open}.
     *
-    * @param {Event} event - HTML5 / jQuery event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     */
    _handleQuestOpen(event)
    {

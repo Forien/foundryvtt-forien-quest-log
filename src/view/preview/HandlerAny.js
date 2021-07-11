@@ -1,4 +1,4 @@
-import QuestAPI   from '../../control/QuestAPI.js';
+import QuestAPI   from '../../control/public/QuestAPI.js';
 import QuestDB    from '../../control/QuestDB.js';
 import Socket     from '../../control/Socket.js';
 import FQLDialog  from '../FQLDialog.js';
@@ -9,11 +9,13 @@ import FQLDialog  from '../FQLDialog.js';
 export default class HandlerAny
 {
    /**
-    * @param {Event}          event - HTML5 / jQuery event.
+    * Confirms deleting a quest with {@link FQLDialog.confirmDeleteQuest} before invoking {@link QuestDB.deleteQuest}.
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
-    * @returns {Promise<void>} A promise
+    * @param {Quest}             quest - The current quest being manipulated.
+    *
+    * @returns {Promise<void>}
     */
    static async questDelete(event, quest)
    {
@@ -28,7 +30,9 @@ export default class HandlerAny
    }
 
    /**
-    * @param {Event} event - HTML5 / jQuery event.
+    * Opens a {@link QuestPreview} via {@link QuestAPI.open}.
+    *
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent.
     */
    static questOpen(event)
    {
@@ -37,9 +41,12 @@ export default class HandlerAny
    }
 
    /**
-    * @param {Event}          event - HTML5 / jQuery event.
+    * Potentially sets a new {@link Quest.status} via {@link Socket.setQuestStatus}. If the current user is not a GM
+    * a GM level user must be logged in for a successful completion of the set status operation.
     *
-    * @returns {Promise<void>} A promise
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
+    *
+    * @returns {Promise<void>}
     */
    static async questStatusSet(event)
    {
@@ -47,6 +54,6 @@ export default class HandlerAny
       const questId = $(event.target).data('quest-id');
 
       const quest = QuestDB.getQuest(questId);
-      if (quest) { await Socket.moveQuest({ quest, target }); }
+      if (quest) { await Socket.setQuestStatus({ quest, target }); }
    }
 }

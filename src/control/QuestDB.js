@@ -38,13 +38,6 @@ const s_QUESTS_COLLECT = {
 };
 
 /**
- * Set to true after the first call to `QuestDB.init`. Protects against adding hooks multiple times.
- *
- * @type {boolean}
- */
-let s_QUEST_DB_INITIALIZED = false;
-
-/**
  * Provides an index into the {@link s_QUESTS_MAP} for all QuestEntry instances by questId and the status category.
  * This allows quick retrieval and removal of QuestEntry instances from {@link s_QUESTS_MAP}.
  *
@@ -53,9 +46,13 @@ let s_QUEST_DB_INITIALIZED = false;
 const s_QUEST_INDEX = new Map();
 
 /**
- * The QuestDB holds quests in-memory that are observable by the current user. By pre-sorting
- * quests by status and observability this cuts down on sorting and filtering operations that need to be performed on
- * quests in an ongoing basis.
+ * The QuestDB holds quests in-memory that are observable by the current user. By pre-sorting quests by status and
+ * observability this cuts down on sorting and filtering operations that need to be performed on quests in an ongoing
+ * basis. Based on the type of user quests may go in and out of observability for permission and status category
+ * changes.
+ *
+ * In time with future refactoring the reliance on {@link Socket} for notifications to connected clients will be
+ * reduced as the QuestDB lifecycle hooks can replace many of the notification concerns.
  *
  * QuestDB lifecycle hooks: The QuestDB has familiar lifecycle hooks to Foundry itself such as `createQuestEntry`,
  * `deleteQuestEntry` and `updateQuestEntry`, but provides more fine grained visibility of quest data that is loaded
@@ -100,7 +97,7 @@ const s_QUEST_INDEX = new Map();
  * {@link QuestDB.consistencyCheck}: During a consistency check which is mainly used when module settings for
  * trusted player edit is enabled / disabled quests can be removed from QuestDB.
  *
- * {@link s_JOURNAL_ENTRY_UPDATE}: All quests have been removed from QuestDB.
+ * {@link s_JOURNAL_ENTRY_UPDATE}: A quest is no longer observable for permission reasons or status category change.
  * ```
  *
  * ```
@@ -183,7 +180,7 @@ export default class QuestDB
     * user or adding quests that are now observable. This only really needs to occur after particular module setting
     * changes which right now is when trusted player edit is enabled / disabled.
     *
-    * @see ModuleSettings.trustedPlayerEdit
+    * @see {@link FQLSettings.trustedPlayerEdit}
     */
    static consistencyCheck()
    {
@@ -379,13 +376,11 @@ export default class QuestDB
          await deleteQuest.entry.delete();
       }
 
-      const deleteData = {
+      // Return the delete and saved IDs.
+      return {
          deleteId,
          savedIds
       };
-
-      // Return the delete and saved IDs.
-      return deleteData;
    }
 
    /**
@@ -401,24 +396,24 @@ export default class QuestDB
    }
 
    /**
-    * Filter the entire QuestDB, returning an Array of entries which match a functional condition.
+    * Filter the entire QuestDB, returning an Array of entries which match a functional predicate.
     *
-    * @param {Function} condition  The functional condition to test
+    * @param {Function} predicate  The functional predicate to test.
     *
     * @param {object}   [options] - Optional parameters. If no options are provided the iteration occurs across all
     *                               quests.
     *
     * @param {string}   [options.type] - The quest type / status to iterate.
     *
-    * @returns {QuestEntry[]}  An Array of matched values
-    * @see {Array#filter}
+    * @returns {QuestEntry[]}  An Array of matched values.
+    * @see {@link Array#filter}
     */
-   static filter(condition, options)
+   static filter(predicate, options)
    {
       const entries = [];
       for (const questEntry of QuestDB.iteratorEntries(options))
       {
-         if (condition(questEntry)) { entries.push(questEntry); }
+         if (predicate(questEntry)) { entries.push(questEntry); }
       }
       return entries;
    }
@@ -484,9 +479,9 @@ export default class QuestDB
    }
 
    /**
-    * Find an entry in the QuestDB using a functional condition.
+    * Find an entry in the QuestDB using a functional predicate.
     *
-    * @param {Function} condition - The functional condition to test.
+    * @param {Function} predicate - The functional predicate to test.
     *
     * @param {object}   [options] - Optional parameters. If no options are provided the iteration occurs across all
     *                               quests.
@@ -494,13 +489,13 @@ export default class QuestDB
     * @param {string}   [options.type] - The quest type / status to iterate.
     *
     * @returns {QuestEntry} The QuestEntry, if found, otherwise undefined.
-    * @see {Array#find}
+    * @see {@link Array#find}
     */
-   static find(condition, options)
+   static find(predicate, options)
    {
       for (const questEntry of QuestDB.iteratorEntries(options))
       {
-         if (condition(questEntry)) { return questEntry; }
+         if (predicate(questEntry)) { return questEntry; }
       }
 
       return void 0;
@@ -540,7 +535,8 @@ export default class QuestDB
       if (type === void 0)
       {
          return s_QUESTS_MAP[questTypes.active].size + s_QUESTS_MAP[questTypes.available].size +
-          s_QUESTS_MAP[questTypes.completed].size + s_QUESTS_MAP[questTypes.failed].size + s_QUESTS_MAP[questTypes.inactive].size;
+          s_QUESTS_MAP[questTypes.completed].size + s_QUESTS_MAP[questTypes.failed].size +
+           s_QUESTS_MAP[questTypes.inactive].size;
       }
 
       return s_QUESTS_MAP[type] ? s_QUESTS_MAP[type].size : 0;
@@ -551,12 +547,12 @@ export default class QuestDB
     *
     * @param {string}   questId - A Foundry ID
     *
-    * @returns {Quest|null} The Quest or null.
+    * @returns {Quest} The Quest.
     */
    static getQuest(questId)
    {
       const entry = s_GET_QUEST_ENTRY(questId);
-      return entry ? entry.quest : null;
+      return entry ? entry.quest : void 0;
    }
 
    /**
@@ -564,7 +560,7 @@ export default class QuestDB
     *
     * @param {string}   questId - A Foundry ID
     *
-    * @returns {QuestEntry|null} The QuestEntry or null.
+    * @returns {QuestEntry} The QuestEntry.
     */
    static getQuestEntry(questId)
    {
@@ -665,8 +661,8 @@ export default class QuestDB
     *
     * @param {Function} [options.sortInactive] - The sort function for inactive quests.
     *
-    * @returns {QuestsCollect|collect<QuestEntry>|void} An object of all QuestEntries sorted by status or individual
-    *                                                  status or null.
+    * @returns {QuestsCollect|Collection<QuestEntry>|void} An object of all QuestEntries sorted by status or individual
+    *                                                      status.
     */
    static sortCollect({ status = void 0, sortActive = Sort.ALPHA, sortAvailable = Sort.ALPHA,
     sortCompleted = Sort.DATE_END, sortFailed = Sort.DATE_END, sortInactive = Sort.ALPHA } = {})
@@ -708,9 +704,9 @@ export default class QuestDB
 export class QuestEntry
 {
    /**
-    * @param {Quest}    quest - The Quest object
+    * @param {Quest}       quest - The Quest object
     *
-    * @param {object}   [enrich] - The enriched Quest data. If not set be sure to hydrate.
+    * @param {EnrichData}  [enrich] - The enriched Quest data. If not set be sure to hydrate.
     */
    constructor(quest, enrich = void 0)
    {
@@ -730,7 +726,7 @@ export class QuestEntry
       this.quest = quest;
 
       /**
-       * @type {Object}
+       * @type {EnrichData}
        */
       this.enrich = enrich;
    }
@@ -771,7 +767,14 @@ export class QuestEntry
       this.isPersonal = this.quest.isPersonal;
 
       /**
-       * @type {any}
+       * Stores all adjacent quest IDs including any parent, subquests, and this quest.
+       *
+       * @type {string[]}
+       */
+      this.questIds = this.quest.getQuestIds();
+
+      /**
+       * @type {EnrichData}
        */
       this.enrich = Enrich.quest(this.quest);
 
@@ -779,9 +782,9 @@ export class QuestEntry
    }
 
    /**
-    * @param {object}   content - The FQL quest data from journal entry.
+    * @param {QuestData}      content - The FQL quest data from journal entry.
     *
-    * @param {object}   entry - The backing journal entry.
+    * @param {JournalEntry}   entry - The backing journal entry.
     *
     * @returns {boolean} Was s_SET_QUEST_ENTRY invoked.
     */
@@ -844,18 +847,23 @@ Object.freeze(Sort);
 const s_GET_QUEST_ENTRY = (questId) =>
 {
    const currentStatus = s_QUEST_INDEX.get(questId);
-   return currentStatus && s_QUESTS_MAP[currentStatus] ? s_QUESTS_MAP[currentStatus].get(questId) : null;
+   return currentStatus && s_QUESTS_MAP[currentStatus] ? s_QUESTS_MAP[currentStatus].get(questId) : void 0;
 };
 
 /**
+ * Provides the observability test for a quest based on the user level and permissions of the backing journal entry.
+ * GM level users always can observe any quests. Trusted players w/ the module setting
+ * {@link FQLSettings.trustedPlayerEdit} enabled and the owner of the quest can observe quests in the inactive status.
+ * Otherwise quests are only observable by players when the default or personal permission is
+ * {@link CONST.ENTITY_PERMISSIONS.OBSERVER} or higher.
  *
- * @param {object}   content - The serialized Quest data stored in the journal entry.
+ * @param {QuestData}      content - The serialized Quest data stored in the journal entry.
  *
- * @param {object}   entry - The backing journal entry.
+ * @param {JournalEntry}   entry - The backing journal entry.
  *
- * @param {boolean}  isTrustedPlayerEdit - Is the user trusted and is the module setting to edit granted.
+ * @param {boolean}        [isTrustedPlayerEdit] - Is the user trusted and is the module setting to edit granted.
  *
- * @returns {boolean}   is quest observable.
+ * @returns {boolean}   Is quest observable by the current user?
  */
 const s_IS_OBSERVABLE = (content, entry, isTrustedPlayerEdit = Utils.isTrustedPlayerEdit()) =>
 {
@@ -1017,6 +1025,31 @@ const s_JOURNAL_ENTRY_UPDATE = (entry, flags, options, id) =>
 };
 
 /**
+ * Flattens the QuestEntry map of maps into and array of all entries.
+ *
+ * Please see {@link QuestDB.iteratorEntries} for an iterator across all entries.
+ *
+ * @returns {QuestEntry[]} An array of all QuestEntry values stored.
+ */
+const s_MAP_FLATTEN = () =>
+{
+   return [
+      ...s_QUESTS_MAP[questTypes.active].values(),
+      ...s_QUESTS_MAP[questTypes.available].values(),
+      ...s_QUESTS_MAP[questTypes.completed].values(),
+      ...s_QUESTS_MAP[questTypes.failed].values(),
+      ...s_QUESTS_MAP[questTypes.inactive].values()
+   ];
+};
+
+/**
+ * Set to true after the first call to `QuestDB.init`. Protects against adding hooks multiple times.
+ *
+ * @type {boolean}
+ */
+let s_QUEST_DB_INITIALIZED = false;
+
+/**
  * Removes a QuestEntry by quest ID. Removes the quest index and then removes the QuestEntry from the map of maps
  * If this results in a deletion and generate is true then rebuild the QuestEntry Collection.
  *
@@ -1087,24 +1120,6 @@ const s_SET_QUEST_ENTRY = (entry, generate = true) =>
 };
 
 /**
- * Flattens the QuestEntry map of maps into and array of all entries.
- *
- * Please see {@link QuestDB.iteratorEntries} for an iterator across all entries.
- *
- * @returns {QuestEntry[]} An array of all QuestEntry values stored.
- */
-const s_MAP_FLATTEN = () =>
-{
-   return [
-    ...s_QUESTS_MAP[questTypes.active].values(),
-    ...s_QUESTS_MAP[questTypes.available].values(),
-    ...s_QUESTS_MAP[questTypes.completed].values(),
-    ...s_QUESTS_MAP[questTypes.failed].values(),
-    ...s_QUESTS_MAP[questTypes.inactive].values()
-   ];
-};
-
-/**
  * @typedef {object} DeleteData The data object returned from `delete` indicating which quests were updated.
  *
  * @property {string}   deleteId - This quest ID which was deleted.
@@ -1131,16 +1146,16 @@ const s_MAP_FLATTEN = () =>
  */
 
 /**
- * @typedef {Object.<string, collect<QuestEntry>>} QuestsCollect Returns an object with keys indexed by
+ * @typedef {Object.<string, Collection<QuestEntry>>} QuestsCollect Returns an object with keys indexed by
  * {@link questTypes} of CollectJS collections of QuestEntry instances.
  *
- * @property {collect<QuestEntry>} active - Active quest entries CollectJS collections
+ * @property {Collection<QuestEntry>} active - Active quest entries CollectJS collections
  *
- * @property {collect<QuestEntry>} available - Available quests entries CollectJS collections
+ * @property {Collection<QuestEntry>} available - Available quests entries CollectJS collections
  *
- * @property {collect<QuestEntry>} completed - Completed quests entries CollectJS collections
+ * @property {Collection<QuestEntry>} completed - Completed quests entries CollectJS collections
  *
- * @property {collect<QuestEntry>} failed - Failed quests entries CollectJS collections
+ * @property {Collection<QuestEntry>} failed - Failed quests entries CollectJS collections
  *
- * @property {collect<QuestEntry>} hidden - Hidden quests entries CollectJS collections
+ * @property {Collection<QuestEntry>} hidden - Hidden quests entries CollectJS collections
  */

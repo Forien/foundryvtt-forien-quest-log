@@ -8,11 +8,13 @@ import { constants, questTypes, questTypesI18n, settings } from '../model/consta
 /**
  * Locally stores the app instances which are accessible by getter methods.
  *
- * @type {{questLog: QuestLog, questLogFloating: QuestLogFloating, questPreview: Map<string, QuestPreview>, questTracker: QuestTracker}}
- * @see {ViewManager.questLog}
- * @see {ViewManager.questLogFloating}
- * @see {ViewManager.questPreview}
- * @see {ViewManager.questTracker}
+ * @type {{questLog: QuestLog, questLogFloating: QuestLogFloating, questPreview: Map<string, QuestPreview>,
+ * questTracker: QuestTracker}}
+ *
+ * @see {@link ViewManager.questLog}
+ * @see {@link ViewManager.questLogFloating}
+ * @see {@link ViewManager.questPreview}
+ * @see {@link ViewManager.questTracker}
  */
 const Apps = {
    questLog: void 0,
@@ -47,10 +49,12 @@ export default class ViewManager
       }
 
       // Whenever a QuestPreview closes and matches any tracked app that is adding a new quest set it to undefined.
-      Hooks.on('closeQuestPreview', (questPreview) =>
-      {
-         if (s_ADD_QUEST_PREVIEW === questPreview) { s_ADD_QUEST_PREVIEW = void 0; }
-      });
+      Hooks.on('closeQuestPreview', s_QUEST_PREVIEW_CLOSED);
+
+      // Right now ViewManager responds to permission changes across add, remove, update of quests.
+      Hooks.on('addQuestEntry', s_QUEST_ENTRY_ADD);
+      Hooks.on('removeQuestEntry', s_QUEST_ENTRY_REMOVE);
+      Hooks.on('updateQuestEntry', s_QUEST_ENTRY_UPDATE);
    }
 
    /**
@@ -62,7 +66,7 @@ export default class ViewManager
     * @returns {QuestLog} The main quest log app accessible from the left hand menu bar or
     *                     `Hook.call('ForienQuestLog.Open.QuestLog')`.
     *
-    * @see FQLHooks.openQuestLog
+    * @see {@link FQLHooks.openQuestLog}
     */
    static get questLog() { return Apps.questLog; }
 
@@ -70,7 +74,7 @@ export default class ViewManager
     * @returns {QuestLogFloating} The floating quest log app accessible from the left hand menu bar or
     *                             `Hooks.call('ForienQuestLog.Open.QuestLogFloating')`.
     *
-    * @see FQLHooks.openQuestLogFloating
+    * @see {@link FQLHooks.openQuestLogFloating}
     */
    static get questLogFloating() { return Apps.questLogFloating; }
 
@@ -82,17 +86,17 @@ export default class ViewManager
    static get questPreview() { return Apps.questPreview; }
 
    /**
-    * @returns {QuestTracker} Returns the quest tracker overlap app. This app is accessible when module seting
-    *                         {@link settings.enableQuestTracker} is enabled.
+    * @returns {QuestTracker} Returns the quest tracker overlap app. This app is accessible when module setting
+    *                         {@link FQLSettings.enableQuestTracker} is enabled.
     */
    static get questTracker() { return Apps.questTracker; }
 
    /**
-    * @param {object}      options - Optional parameters
+    * @param {object}   opts - Optional parameters
     *
-    * @param {boolean}     [options.questPreview=false] - If true closes all QuestPreview apps.
+    * @param {boolean}  [opts.questPreview=false] - If true closes all QuestPreview apps.
     *
-    * @param {...object}   [options.options] - Optional parameters passed onto {@link Application.close}
+    * @param {...*}     [opts.options] - Optional parameters passed onto {@link Application.close}
     *
     * @see https://foundryvtt.com/api/Application.html#close
     */
@@ -126,17 +130,48 @@ export default class ViewManager
    }
 
    /**
+    * Refreshes local {@link QuestPreview} apps.
+    *
+    * @param {string|string[]}   questId - A single quest ID or an array of IDs to update.
+    *
+    * @param {RenderOptions}     [options] - Any options to pass onto QuestPreview render method invocation.
+    */
+   static refreshQuestPreview(questId, options = {})
+   {
+      // Handle local QuestPreview rendering.
+      if (Array.isArray(questId))
+      {
+         for (const id of questId)
+         {
+            const questPreview = ViewManager.questPreview.get(id);
+            if (questPreview !== void 0)
+            {
+               questPreview.render(true, options);
+            }
+         }
+      }
+      else
+      {
+         const questPreview = ViewManager.questPreview.get(questId);
+         if (questPreview !== void 0)
+         {
+            questPreview.render(true, options);
+         }
+      }
+   }
+
+   /**
     * Renders all GUI apps including the quest tracker which may also be closed depending on
     * {@link ViewManager.isQuestTrackerVisible}. With the option `questPreview` set to true all QuestPreviews are also
     * rendered. Remaining options are forwarded onto the Foundry Application render method.
     *
-    * @param {object}      options - Optional parameters
+    * @param {object}   opts - Optional parameters
     *
-    * @param {boolean}     [options.force] - Forces a data refresh.
+    * @param {boolean}  [opts.force] - Forces a data refresh.
     *
-    * @param {boolean}     [options.questPreview] - Render all open QuestPreview apps.
+    * @param {boolean}  [opts.questPreview] - Render all open QuestPreview apps.
     *
-    * @param {...object}   [options.options] - Remaining options for the {@link Application.render} method.
+    * @param {...*}     [opts.options] - Remaining options for the {@link Application.render} method.
     *
     * @see https://foundryvtt.com/api/Application.html#render
     */
@@ -352,3 +387,94 @@ class UINotifications
  * @type {UINotifications}
  */
 const s_NOTIFICATIONS = new UINotifications();
+
+/**
+ * Handles the `addQuestEntry` hook.
+ *
+ * @param {QuestEntry}  questEntry - The added QuestEntry.
+ *
+ * @param {object}      flags - Quest flags.
+ *
+ * @returns {Promise<void>}
+ */
+async function s_QUEST_ENTRY_ADD(questEntry, flags)
+{
+   if ('permission' in flags)
+   {
+      ViewManager.refreshQuestPreview(questEntry.questIds);
+      ViewManager.renderAll();
+   }
+}
+
+/**
+ * Handles the `removeQuestEntry` hook.
+ *
+ * @param {QuestEntry}  questEntry - The added QuestEntry.
+ *
+ * @param {object}      flags - Quest flags.
+ *
+ * @returns {Promise<void>}
+ */
+async function s_QUEST_ENTRY_REMOVE(questEntry, flags)
+{
+   const quest = questEntry.quest;
+
+   const questPreview = ViewManager.questPreview.get(quest.id);
+   if (questPreview && questPreview.rendered) { await questPreview.close({ noSave: true }); }
+
+   if ('permission' in flags)
+   {
+      ViewManager.refreshQuestPreview(questEntry.questIds);
+      ViewManager.renderAll();
+   }
+}
+
+/**
+ * Handles the `updateQuestEntry` hook.
+ *
+ * @param {QuestEntry}  questEntry - The added QuestEntry.
+ *
+ * @param {object}      flags - Quest flags.
+ *
+ * @returns {Promise<void>}
+ */
+async function s_QUEST_ENTRY_UPDATE(questEntry, flags)
+{
+   if ('permission' in flags)
+   {
+      ViewManager.refreshQuestPreview(questEntry.questIds);
+      ViewManager.renderAll();
+   }
+}
+
+/**
+ * Handles the `closeQuestPreview` hook.
+ *
+ * @param {QuestPreview}   questPreview - The closed QuestPreview.
+ */
+function s_QUEST_PREVIEW_CLOSED(questPreview)
+{
+   if (s_ADD_QUEST_PREVIEW === questPreview) { s_ADD_QUEST_PREVIEW = void 0; }
+}
+
+/**
+ * @typedef {Object} RenderOptions Additional rendering options which are applied to customize the way that the
+ * Application is rendered in the DOM.
+ *
+ * @property {number}   [left] - The left positioning attribute.
+ *
+ * @property {number}   [top] - The top positioning attribute.
+ *
+ * @property {number}   [width] - The rendered width.
+ *
+ * @property {number}   [height] - The rendered height.
+ *
+ * @property {number}   [scale] - The rendered transformation scale.
+ *
+ * @property {boolean}  [focus=false] - Apply focus to the application, maximizing it and bringing it to the top
+ *                                      of the vertical stack.
+ *
+ * @property {string}   [renderContext] - A context-providing string which suggests what event triggered the render.
+ *
+ * @property {object}   [renderData] - The data change which motivated the render request.
+ */

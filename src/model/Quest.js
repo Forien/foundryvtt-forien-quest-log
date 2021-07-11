@@ -8,7 +8,7 @@ import { constants, questTypes } from './constants.js';
  * provides the entry point for external API access and is also used internally when opening a quest.
  *
  * @type {QuestPreview}
- * @see {Quest.sheet}
+ * @see {@link Quest.sheet}
  */
 let SheetClass;
 
@@ -18,8 +18,8 @@ let SheetClass;
  * as when a Quest is loaded it is stored in a QuestEntry which also contains the enriched quest data for display
  * in Handlebars templates along with caching of several of the methods available in Quest for fast sorting.
  *
- * @see QuestDB
- * @see QuestEntry
+ * @see {@link QuestDB}
+ * @see {@link QuestEntry}
  */
 export default class Quest
 {
@@ -170,36 +170,6 @@ export default class Quest
    }
 
    /**
-    * Returns a list of Actor data for whom this quest is personal.
-    *
-    * @returns {object[]} A list of actors who are assigned to this quest.
-    */
-   getPersonalActors()
-   {
-      if (!this.isPersonal) { return []; }
-
-      const users = [];
-
-      if (this.entry && typeof this.entry.data.permission === 'object')
-      {
-         for (const [userId, permission] of Object.entries(this.entry.data.permission))
-         {
-            if (userId === 'default') { continue; }
-
-            const user = game.users.get(userId);
-
-            if (!user || user.isGM) { continue; }
-
-            if (permission < CONST.ENTITY_PERMISSIONS.OBSERVER) { continue; }
-
-            users.push(user);
-         }
-      }
-
-      return users;
-   }
-
-   /**
     * Gets the name of the quest.
     *
     * @returns {string} Quest name.
@@ -260,6 +230,16 @@ export default class Quest
    }
 
    /**
+    * Gets all adjacent quest IDs including self. This includes any parent and subquests.
+    *
+    * @returns {string[]} All adjacent quests including self.
+    */
+   getQuestIds()
+   {
+      return this.parent ? [this.parent, this.id, ...this.subquests] : [this.id, ...this.subquests];
+   }
+
+   /**
     * Gets a Reward by Foundry VTT UUID or UUIDv4 for abstract Rewards.
     *
     * @param {string}   uuidv4 - The FVTT UUID to find.
@@ -270,6 +250,36 @@ export default class Quest
    {
       const index = this.rewards.findIndex((t) => t.uuidv4 === uuidv4);
       return index >= 0 ? this.rewards[index] : null;
+   }
+
+   /**
+    * Returns a list of Actor data for whom this quest is personal.
+    *
+    * @returns {object[]} A list of actors who are assigned to this quest.
+    */
+   getPersonalActors()
+   {
+      if (!this.isPersonal) { return []; }
+
+      const users = [];
+
+      if (this.entry && typeof this.entry.data.permission === 'object')
+      {
+         for (const [userId, permission] of Object.entries(this.entry.data.permission))
+         {
+            if (userId === 'default') { continue; }
+
+            const user = game.users.get(userId);
+
+            if (!user || user.isGM) { continue; }
+
+            if (permission < CONST.ENTITY_PERMISSIONS.OBSERVER) { continue; }
+
+            users.push(user);
+         }
+      }
+
+      return users;
    }
 
    /**
@@ -432,49 +442,6 @@ export default class Quest
    }
 
    /**
-    * Sets new status for the quest. Also updates any timestamp / date data depending on status set.
-    *
-    * @param {string}   target - The target status to set.
-    *
-    * @returns {Promise<void>}
-    */
-   async move(target)
-   {
-      if (!this.entry || !questTypes[target]) { return; }
-
-      this.status = target;
-
-      // Update the tracked date data based on status.
-      switch (this.status)
-      {
-         case questTypes.active:
-            this.date.start = Date.now();
-            this.date.end = null;
-            break;
-
-         case questTypes.completed:
-         case questTypes.failed:
-            this.date.end = Date.now();
-            break;
-
-         case questTypes.inactive:
-         case questTypes.available:
-         default:
-            this.date.start = null;
-            this.date.end = null;
-            break;
-      }
-
-      await this.entry.update({
-         flags: {
-            [constants.moduleName]: { json: this.toJSON() }
-         }
-      });
-
-      return this._id;
-   }
-
-   /**
     * Deletes Reward from Quest.
     *
     * @param {string} uuidv4 - The UUIDv4 associated with a Reward.
@@ -500,7 +467,7 @@ export default class Quest
     *
     * @param {string} uuidv4 - The UUIDv4 associated with a Task.
     *
-    * @see {Utils.uuidv4}
+    * @see {@link Utils.uuidv4}
     */
    removeTask(uuidv4)
    {
@@ -552,6 +519,49 @@ export default class Quest
     * @param {object}   NewSheetClass - The sheet class.
     */
    static setSheet(NewSheetClass) { SheetClass = NewSheetClass; }
+
+   /**
+    * Sets new status for the quest. Also updates any timestamp / date data depending on status set.
+    *
+    * @param {string}   target - The target status to set.
+    *
+    * @returns {Promise<void>}
+    */
+   async setStatus(target)
+   {
+      if (!this.entry || !questTypes[target]) { return; }
+
+      this.status = target;
+
+      // Update the tracked date data based on status.
+      switch (this.status)
+      {
+         case questTypes.active:
+            this.date.start = Date.now();
+            this.date.end = null;
+            break;
+
+         case questTypes.completed:
+         case questTypes.failed:
+            this.date.end = Date.now();
+            break;
+
+         case questTypes.inactive:
+         case questTypes.available:
+         default:
+            this.date.start = null;
+            this.date.end = null;
+            break;
+      }
+
+      await this.entry.update({
+         flags: {
+            [constants.moduleName]: { json: this.toJSON() }
+         }
+      });
+
+      return this._id;
+   }
 
    /**
     * Locates and swaps the rewards indicated by the source and target UUIDv4s provided.
@@ -929,18 +939,6 @@ export class Task
  * @property {number|null} end - Time ms since 1970 / Date.now() when quest ended (status: failed / complete).
  *
  * @property {number|null} start - Time ms since 1970 / Date.now() when quest was started (status: active).
- */
-
-/**
- * @typedef QuestImgNameData
- *
- * @property {string}   name - Quest giver or item name
- *
- * @property {string}   img - Quest giver or item image
- *
- * @property {boolean}  hasTokenImg - boolean indicating the quest giver has a token prototype image.
- *
- * @property {string}   [uuid] - Any associated Foundry UUID for the quest giver / item.
  */
 
 /**

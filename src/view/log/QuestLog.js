@@ -28,7 +28,7 @@ export default class QuestLog extends Application
     */
    static get defaultOptions()
    {
-      return mergeObject(super.defaultOptions, {
+      return foundry.utils.mergeObject(super.defaultOptions, {
          id: constants.moduleName,
          classes: [constants.moduleName],
          template: 'modules/forien-quest-log/templates/quest-log.html',
@@ -44,7 +44,7 @@ export default class QuestLog extends Application
    /**
     * Defines all jQuery control callbacks with event listeners for click, drag, drop via various CSS selectors.
     *
-    * @param {jQuery}  html - The jQuery instance for the window content of this Application.
+    * @param {JQuery}  html - The jQuery instance for the window content of this Application.
     *
     * @see https://foundryvtt.com/api/FormApplication.html#activateListeners
     */
@@ -72,9 +72,9 @@ export default class QuestLog extends Application
 
       html.on('click', '.actions.quest-status i.delete', HandlerLog.questDelete);
 
-      html.on('dragstart', '.drag-quest', HandlerLog.questDragStart);
+      html.on('dragstart', '.drag-quest', void 0, HandlerLog.questDragStart);
 
-      html.on('click', '.title', HandlerLog.questOpen);
+      html.on('click', '.title', void 0, HandlerLog.questOpen);
 
       html.on('click', '.actions.quest-status i.move', HandlerLog.questStatusSet);
    }
@@ -93,8 +93,8 @@ export default class QuestLog extends Application
 
    /**
     * Retrieves the sorted quest collection from the {@link QuestDB.sortCollect} and sets several state parameters for
-    * GM / player / trusted player edit along with several module settings: {@link settings.allowPlayersAccept},
-    * {@link settings.allowPlayersCreate}, {@link settings.showTasks} and {@link settings.navStyle}.
+    * GM / player / trusted player edit along with several module settings: {@link FQLSettings.allowPlayersAccept},
+    * {@link FQLSettings.allowPlayersCreate}, {@link FQLSettings.showTasks} and {@link FQLSettings.navStyle}.
     *
     * @override
     * @inheritDoc
@@ -102,7 +102,7 @@ export default class QuestLog extends Application
     */
    async getData(options = {})
    {
-      return mergeObject(super.getData(), {
+      return foundry.utils.mergeObject(super.getData(), {
          options,
          isGM: game.user.isGM,
          isPlayer: !game.user.isGM,

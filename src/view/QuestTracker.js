@@ -1,5 +1,5 @@
 import RepositionableApplication from './RepositionableApplication.js';
-import QuestAPI                  from '../control/QuestAPI.js';
+import QuestAPI                  from '../control/public/QuestAPI.js';
 import QuestDB                   from '../control/QuestDB.js';
 import ViewManager               from '../control/ViewManager.js';
 
@@ -29,7 +29,7 @@ export default class QuestTracker extends RepositionableApplication
     */
    static get defaultOptions()
    {
-      return mergeObject(super.defaultOptions, {
+      return foundry.utils.mergeObject(super.defaultOptions, {
          id: 'quest-tracker',
          template: 'modules/forien-quest-log/templates/quest-tracker.html',
          popOut: false
@@ -39,7 +39,7 @@ export default class QuestTracker extends RepositionableApplication
    /**
     * Defines all jQuery control callbacks with event listeners for click, drag, drop via various CSS selectors.
     *
-    * @param {jQuery}  html - The jQuery instance for the window content of this Application.
+    * @param {JQuery}  html - The jQuery instance for the window content of this Application.
     *
     * @see https://foundryvtt.com/api/FormApplication.html#activateListeners
     */
@@ -47,12 +47,12 @@ export default class QuestTracker extends RepositionableApplication
    {
       super.activateListeners(html);
 
-      html.on('click', '.quest-tracker-header', this._handleQuestClick.bind(this));
-      html.on('click', '.quest-tracker-link', this._handleQuestOpen);
+      html.on('click', '.quest-tracker-header', void 0, this._handleQuestClick.bind(this));
+      html.on('click', '.quest-tracker-link', void 0, this._handleQuestOpen);
    }
 
    /**
-    * Gets the background boolean value from module settings {@link settings.questTrackerBackground} and parses quest
+    * Gets the background boolean value from module settings {@link FQLSettings.questTrackerBackground} and parses quest
     * data in {@link QuestTracker.prepareQuests}.
     *
     * @override
@@ -61,7 +61,7 @@ export default class QuestTracker extends RepositionableApplication
     */
    async getData(options = {})
    {
-      return mergeObject(super.getData(options), {
+      return foundry.utils.mergeObject(super.getData(options), {
          background: game.settings.get(constants.moduleName, settings.questTrackerBackground),
          quests: await this.prepareQuests()
       });
@@ -70,7 +70,7 @@ export default class QuestTracker extends RepositionableApplication
    /**
     * Data for the quest folder open / close state is saved in {@link sessionStorage}.
     *
-    * @param {Event} event - HTML5 / jQuery event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     */
    _handleQuestClick(event)
    {
@@ -88,7 +88,7 @@ export default class QuestTracker extends RepositionableApplication
    /**
     * Handles the quest open click via {@link QuestAPI.open}.
     *
-    * @param {Event} event - HTML5 / jQuery event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     */
    _handleQuestOpen(event)
    {

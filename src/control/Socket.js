@@ -1,4 +1,4 @@
-import QuestAPI      from './QuestAPI.js';
+import QuestAPI      from './public/QuestAPI.js';
 import QuestDB       from './QuestDB.js';
 import Utils         from './Utils.js';
 import ViewManager   from './ViewManager.js';
@@ -17,7 +17,7 @@ const s_EVENT_NAME = 'module.forien-quest-log';
  */
 const s_MESSAGE_TYPES = {
    deletedQuest: 'deletedQuest',
-   moveQuest: 'moveQuest',
+   questSetStatus: 'questSetStatus',
    questRewardDrop: 'questRewardDrop',
    refreshAll: 'refreshAll',
    refreshQuestPreview: 'refreshQuestPreview',
@@ -38,11 +38,11 @@ const s_MESSAGE_TYPES = {
  *
  * Please see the following view control classes and the QuestDB for socket related usage:
  *
- * @see HandlerAny
- * @see HandlerDetail
- * @see HandlerLog
- * @see HandlerManage
- * @see QuestDB.deleteQuest
+ * @see {@link HandlerAny}
+ * @see {@link HandlerDetails}
+ * @see {@link HandlerLog}
+ * @see {@link HandlerManage}
+ * @see {@link QuestDB.deleteQuest}
  */
 export default class Socket
 {
@@ -56,7 +56,7 @@ export default class Socket
     *                                   deleted by quest ID.
     *
     * @returns {Promise<void>}
-    * @see QuestDB.s_JOURNAL_ENTRY_DELETE
+    * @see {@link QuestDB} s_JOURNAL_ENTRY_DELETE
     */
    static async deletedQuest(deleteData)
    {
@@ -99,8 +99,8 @@ export default class Socket
             switch (data.type)
             {
                case s_MESSAGE_TYPES.deletedQuest: await handleDeletedQuest(data); break;
-               case s_MESSAGE_TYPES.moveQuest: await handleMoveQuest(data); break;
                case s_MESSAGE_TYPES.questRewardDrop: await handleQuestRewardDrop(data); break;
+               case s_MESSAGE_TYPES.questSetStatus: await handleQuestSetStatus(data); break;
                case s_MESSAGE_TYPES.refreshAll: handleRefreshAll(data); break;
                case s_MESSAGE_TYPES.refreshQuestPreview: handleRefreshQuestPreview(data); break;
                case s_MESSAGE_TYPES.showQuestPreview: handleShowQuestPreview(data); break;
@@ -115,14 +115,15 @@ export default class Socket
    }
 
    /**
-    * Handles moving a quest from one status to another then refreshes the appropriate views including parent and
+    * Handles setting a new quest status then refreshes the appropriate views including parent and
     * subquests as applicable. On the invocation side if the user is a GM or trusted player with edit and ownership of
-    * the quest being moved then the action is immediately taken and `handled` set to true which is part of the message
-    * sent across the wire. If this is a player who can accept quests the local action is skipped and a socket message
-    * is sent out and the first GM level user to receive it will perform the status move for the associated quest. If
-    * no GM level users are logged in this action is never handled and the user can not change the status of a quest.
+    * the quest being updated then the action is immediately taken and `handled` set to true which is part of the
+    * message sent across the wire. If this is a player who can accept quests the local action is skipped and a socket
+    * message is sent out and the first GM level user to receive it will perform the status update for the associated
+    * quest. If no GM level users are logged in this action is never handled and the user can not change the status of
+    * a quest.
     *
-    * Handled on the receiving side by {@link handleMoveQuest}.
+    * Handled on the receiving side by {@link handleQuestSetStatus}.
     *
     * @param {object}   options - Options.
     *
@@ -131,10 +132,10 @@ export default class Socket
     * @param {string}   options.target - The target status. One of five {@link questTypes}.
     *
     * @returns {Promise<void>}
-    * @see HandlerAny.questSetStatus
-    * @see HandlerLog.questSetStatus
+    * @see {@link HandlerAny.questStatusSet}
+    * @see {@link HandlerLog.questStatusSet}
     */
-   static async moveQuest({ quest, target })
+   static async setQuestStatus({ quest, target })
    {
       let handled = false;
 
@@ -142,13 +143,10 @@ export default class Socket
       // the status move.
       if (game.user.isGM || (Utils.isTrustedPlayerEdit() && quest.isOwner))
       {
-         await quest.move(target);
+         await quest.setStatus(target);
          handled = true;
 
-         Socket.refreshQuestPreview({
-            questId: quest.parent ? [quest.parent, quest.id, ...quest.subquests] : [quest.id, ...quest.subquests]
-         });
-
+         Socket.refreshQuestPreview({ questId: quest.getQuestIds() });
          Socket.refreshAll();
 
          const dirname = game.i18n.localize(questTypesI18n[target]);
@@ -159,14 +157,11 @@ export default class Socket
       {
          // Provide a sanity check and early out if the player can't accept quests.
          const canPlayerAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
-         if (questTypes.active !== target && !canPlayerAccept)
-         {
-            return;
-         }
+         if (questTypes.active !== target && !canPlayerAccept) { return; }
       }
 
       game.socket.emit(s_EVENT_NAME, {
-         type: s_MESSAGE_TYPES.moveQuest,
+         type: s_MESSAGE_TYPES.questSetStatus,
          payload: {
             questId: quest.id,
             handled,
@@ -225,13 +220,11 @@ export default class Socket
     *
     * Handled on the receiving side by {@link handleRefreshAll}.
     *
-    * @param {object}      options - Optional parameters
+    * @param {object}   options - Optional parameters
     *
-    * @param {boolean}     [options.force] - Forces a data refresh.
+    * @param {boolean}  [options.force] - Forces a data refresh.
     *
-    * @param {boolean}     [options.questPreview] - Render all open QuestPreview apps.
-    *
-    * @param {...object}   [options.options] - Remaining options for the {@link Application.render} method.
+    * @param {boolean}  [options.questPreview] - Render all open QuestPreview apps.
     */
    static refreshAll(options = {})
    {
@@ -251,36 +244,17 @@ export default class Socket
     *
     * Handled on the receiving side by {@link handleRefreshQuestPreview}.
     *
-    * @param {object}            options - Optional parameters.
+    * @param {object}            opts - Optional parameters.
     *
-    * @param {string|string[]}   options.questId - A single quest ID or an array of IDs to update.
+    * @param {string|string[]}   opts.questId - A single quest ID or an array of IDs to update.
     *
-    * @param {boolean}           [options.updateLog=true] - Updates the quest log and all other GUI apps if true.
+    * @param {boolean}           [opts.updateLog=true] - Updates the quest log and all other GUI apps if true.
     *
-    * @param {...object}         [options.options] - Any options to pass onto QuestPreview render method invocation.
+    * @param {...RenderOptions}  [opts.options] - Any options to pass onto QuestPreview render method invocation.
     */
    static refreshQuestPreview({ questId, updateLog = true, ...options })
    {
-      // Handle local QuestPreview rendering.
-      if (Array.isArray(questId))
-      {
-         for (const id of questId)
-         {
-            const questPreview = ViewManager.questPreview.get(id);
-            if (questPreview !== void 0)
-            {
-               questPreview.render(true, options);
-            }
-         }
-      }
-      else
-      {
-         const questPreview = ViewManager.questPreview.get(questId);
-         if (questPreview !== void 0)
-         {
-            questPreview.render(true, options);
-         }
-      }
+      ViewManager.refreshQuestPreview(questId, options);
 
       // Send a socket message for remote clients to render.
       game.socket.emit(s_EVENT_NAME, {
@@ -355,16 +329,62 @@ async function handleDeletedQuest(data)
 }
 
 /**
- * Sets the associated quest status to the `target` by the first GM level user receiving this message setting the
- * handled state to `true`, so no further GM level users attempt to move the quest.
+ * Handles the reward item drop into actor sheet by the first GM level user receiving this message setting the
+ * handled state to `true`, so no further GM level users attempt to remove the item from the associated quest.
  *
- * This message is sent from {@link Socket.moveQuest}.
+ * This message is sent from {@link Socket.questRewardDrop}.
+ *
+ * @param {RewardDropData} data - The data payload is the reward drop data.
+ *
+ * @returns {Promise<void>}
+ */
+async function handleQuestRewardDrop(data)
+{
+   if (game.user.isGM)
+   {
+      /**
+       * @type {FQLDropData}
+       */
+      const fqlData = data.payload.data._fqlData;
+
+      // Notify the GM that a user has dropped a reward item into an actor sheet.
+      const notify = game.settings.get(constants.moduleName, settings.notifyRewardDrop);
+      if (notify)
+      {
+         ViewManager.notifications.info(game.i18n.format('ForienQuestLog.QuestPreview.RewardDrop', {
+            userName: fqlData.userName,
+            itemName: fqlData.itemName,
+            actorName: data.payload.actor.name
+         }));
+      }
+
+      // The quest reward has already been removed by a GM user.
+      if (data.payload.handled) { return; }
+
+      // Set handled to true so no more GM level users act upon this event.
+      data.payload.handled = true;
+
+      const quest = QuestDB.getQuest(fqlData.questId);
+      if (quest)
+      {
+         quest.removeReward(fqlData.uuidv4);
+         await quest.save();
+         Socket.refreshQuestPreview({ questId: fqlData.questId });
+      }
+   }
+}
+
+/**
+ * Sets the associated quest status to the `target` by the first GM level user receiving this message setting the
+ * handled state to `true`, so no further GM level users attempt to update the quest.
+ *
+ * This message is sent from {@link Socket.questSetStatus}.
  *
  * @param {object} data - The data payload contains `questId` and `target` along with `handled`.
  *
  * @returns {Promise<void>}
  */
-async function handleMoveQuest(data)
+async function handleQuestSetStatus(data)
 {
    const target = data.payload.target;
 
@@ -374,7 +394,7 @@ async function handleMoveQuest(data)
       const quest = QuestDB.getQuest(data.payload.questId);
       if (quest)
       {
-         await quest.move(target);
+         await quest.setStatus(target);
       }
 
       // Set handled to true so no other GM level users act upon the move.
@@ -399,52 +419,6 @@ async function handleMoveQuest(data)
       {
          // Use `noSave` just for sanity in this case as this is a remote close.
          await questPreview.close({ noSave: true });
-      }
-   }
-}
-
-/**
- * Handles the reward item drop into actor sheet by the first GM level user receiving this message setting the
- * handled state to `true`, so no further GM level users attempt to remove the item from the associated quest.
- *
- * This message is sent from {@link Socket.questRewardDrop}.
- *
- * @param {RewardDropData} data - The data payload is the reward drop data.
- *
- * @returns {Promise<void>}
- */
-async function handleQuestRewardDrop(data)
-{
-   if (game.user.isGM)
-   {
-      /**
-       * @type {FQLDropData}
-       */
-      const fqlData = data.payload.data._fqlData;
-
-      // Notify the
-      const notify = game.settings.get(constants.moduleName, settings.notifyRewardDrop);
-      if (notify)
-      {
-         ViewManager.notifications.info(game.i18n.format('ForienQuestLog.QuestPreview.RewardDrop', {
-            userName: fqlData.userName,
-            itemName: fqlData.itemName,
-            actorName: data.payload.actor.name
-         }));
-      }
-
-      // The quest reward has already been removed by a GM user.
-      if (data.payload.handled) { return; }
-
-      // Set handled to true so no more GM level users act upon this event.
-      data.payload.handled = true;
-
-      const quest = QuestDB.getQuest(fqlData.questId);
-      if (quest)
-      {
-         quest.removeReward(fqlData.uuidv4);
-         await quest.save();
-         Socket.refreshQuestPreview({ questId: fqlData.questId });
       }
    }
 }

@@ -1,4 +1,4 @@
-import QuestAPI      from '../../control/QuestAPI.js';
+import QuestAPI      from '../../control/public/QuestAPI.js';
 import QuestDB       from '../../control/QuestDB.js';
 import ViewManager   from '../../control/ViewManager.js';
 import Socket        from '../../control/Socket.js';
@@ -26,9 +26,9 @@ export default class HandlerLog
    /**
     * Handles deleting a quest. The trashcan icon.
     *
-    * @param {Event} event - HTML5 / jQuery event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
-    * @returns {Promise<void>} A promise
+    * @returns {Promise<void>}
     */
    static async questDelete(event)
    {
@@ -45,7 +45,7 @@ export default class HandlerLog
    /**
     * Prepares the data transfer when a quest is dragged from the {@link QuestLog}.
     *
-    * @param {Event} event - HTML5 / jQuery event.
+    * @param {JQuery.DragStartEvent} event - JQuery.DragStartEvent
     */
    static questDragStart(event)
    {
@@ -60,7 +60,7 @@ export default class HandlerLog
    /**
     * Handles the quest open click via {@link QuestAPI.open}.
     *
-    * @param {Event} event - HTML5 / jQuery event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     */
    static questOpen(event)
    {
@@ -69,11 +69,11 @@ export default class HandlerLog
    }
 
    /**
-    * Handles changing the quest status via {@link Socket.moveQuest}.
+    * Handles changing the quest status via {@link Socket.setQuestStatus}.
     *
-    * @param {Event} event - HTML5 / jQuery event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
-    * @returns {Promise<void>} A promise
+    * @returns {Promise<void>}
     */
    static async questStatusSet(event)
    {
@@ -81,6 +81,6 @@ export default class HandlerLog
       const questId = $(event.target).data('quest-id');
 
       const quest = QuestDB.getQuest(questId);
-      if (quest) { await Socket.moveQuest({ quest, target }); }
+      if (quest) { await Socket.setQuestStatus({ quest, target }); }
    }
 }

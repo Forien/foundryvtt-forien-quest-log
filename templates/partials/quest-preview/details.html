@@ -11,7 +11,7 @@
         </span>
       {{/if}}
     {{else}}
-      {{#with data_giver}}
+      {{#with giverData}}
         <div class="quest-giver-image" data-actor-uuid="{{uuid}}" style="background-image: url({{img}});" title="{{name}}"></div>
         {{#if (and (or ../canEdit ../playerEdit) ../image img)}}
           {{#if hasTokenImg}}
@@ -40,7 +40,7 @@
       <div class="quest-details">
 
         <div class="quest-giver-name">
-          {{#with data_giver}}
+          {{#with giverData}}
             <div class="editable-container">
               <h2 class="open-actor-sheet" data-actor-uuid="{{uuid}}" title="Quest Source">{{name}}</h2>
             </div>
@@ -170,7 +170,7 @@
           <div class="reward-image-container {{#if (and (eq type 'abstract') ../canEdit)}}can-edit{{/if}}">
             <div class="reward-image" style="background-image: url({{img}})" data-uuidv4="{{uuidv4}}"></div>
           </div>
-          <div class="editable-container {{#if draggable}}draggable{{/if}} {{#if isPlayerLink}}is-link{{/if}}" data-transfer="{{transfer}}" data-uuidv4="{{uuidv4}}" {{#if draggable}}draggable="true"{{/if}}>
+          <div class="editable-container {{#if draggable}}draggable{{/if}} {{#if isLink}}is-link{{/if}}" data-transfer="{{transfer}}" data-uuidv4="{{uuidv4}}" {{#if draggable}}draggable="true"{{/if}}>
             <p class="reward-name">{{name}}</p>
           </div>
           <div class="actions rewards {{#unless ../canEdit}}is-player{{/unless}}">

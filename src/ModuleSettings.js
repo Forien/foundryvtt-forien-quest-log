@@ -28,7 +28,7 @@ export default class ModuleSettings
    /**
     * Registers all module settings.
     *
-    * @see {link:settings}
+    * @see {@link settings}
     */
    static register()
    {
@@ -127,6 +127,15 @@ export default class ModuleSettings
             // Must render the quest log.
             if (ViewManager.questLog.rendered) { ViewManager.questLog.render(); }
          }
+      });
+
+      // Currently provides a hidden setting to set the default abstract reward image.
+      // It may never be displayed in the module settings menu, but if it is in the future this is where it would go.
+      game.settings.register(constants.moduleName, settings.defaultAbstractRewardImage, {
+         scope: 'world',
+         config: false,
+         default: 'icons/svg/item-bag.svg',
+         type: String
       });
 
       game.settings.register(constants.moduleName, settings.navStyle, {
