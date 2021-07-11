@@ -4,7 +4,7 @@ import FQLDialog     from '../FQLDialog.js';
 
 import HandlerLog    from './HandlerLog.js';
 
-import { constants, questTypesI18n, settings } from '../../model/constants.js';
+import { constants, questStatusI18n, settings } from '../../model/constants.js';
 
 /**
  * Provides the main quest log app which shows the quests separated by status either with bookmark or classic tabs.
@@ -111,7 +111,7 @@ export default class QuestLog extends Application
          canCreate: game.settings.get(constants.moduleName, settings.allowPlayersCreate),
          showTasks: game.settings.get(constants.moduleName, settings.showTasks),
          style: game.settings.get(constants.moduleName, settings.navStyle),
-         questTypesI18n,
+         questStatusI18n,
          quests: QuestDB.sortCollect()
       });
    }

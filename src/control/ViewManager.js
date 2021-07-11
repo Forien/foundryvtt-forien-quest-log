@@ -3,7 +3,7 @@ import QuestLog         from '../view/log/QuestLog.js';
 import QuestLogFloating from '../view/QuestLogFloating.js';
 import QuestTracker     from '../view/QuestTracker.js';
 
-import { constants, questTypes, questTypesI18n, settings } from '../model/constants.js';
+import { constants, questStatus, questStatusI18n, settings } from '../model/constants.js';
 
 /**
  * Locally stores the app instances which are accessible by getter methods.
@@ -126,7 +126,7 @@ export default class ViewManager
    {
       return game.settings.get(constants.moduleName, settings.enableQuestTracker) &&
        (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers)) &&
-        QuestDB.getCount({ type: questTypes.active }) > 0;
+        QuestDB.getCount({ status: questStatus.active }) > 0;
    }
 
    /**
@@ -215,7 +215,7 @@ export default class ViewManager
       {
          ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestAdded', {
             name: quest.name,
-            status: game.i18n.localize(questTypesI18n[quest.status])
+            status: game.i18n.localize(questStatusI18n[quest.status])
          }));
       }
 
