@@ -3,7 +3,7 @@ import Socket     from '../../control/Socket.js';
 import Utils      from '../../control/Utils.js';
 import FQLDialog  from '../FQLDialog.js';
 
-import { constants, settings } from '../../model/constants.js';
+import { constants, jquery, settings } from '../../model/constants.js';
 
 /**
  * Provides all jQuery callbacks for the `details` tab.
@@ -11,11 +11,11 @@ import { constants, settings } from '../../model/constants.js';
 export default class HandlerDetails
 {
    /**
-    * @param {Event}          event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent.
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {Quest}             quest - The current quest being manipulated.
     *
-    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    * @param {QuestPreview}      questPreview - The QuestPreview being manipulated.
     */
    static questEditName(event, quest, questPreview)
    {
@@ -32,14 +32,14 @@ export default class HandlerDetails
 
       parent.html('');
       parent.append(input);
-      input.focus();
+      input.trigger(jquery.focus);
 
       /**
        * Store the input focus callback in the associated QuestPreview instance so that it can be invoked if the app is
        * closed in {@link QuestPreview.close} while the input field is focused / being edited allowing any edits to be
        * saved. Otherwise the callback is invoked normally below as part of the input focus out event.
        *
-       * @param {Event|void}  event - HTML5 event.
+       * @param {JQuery.FocusOutEvent|void}  event - JQuery.FocusOutEvent
        *
        * @param {object}      saveOptions - Options to pass to `saveQuest`; used in {@link QuestPreview.close}.
        *
@@ -64,15 +64,15 @@ export default class HandlerDetails
          await questPreview.saveQuest(saveOptions);
       };
 
-      input.focusout(questPreview._activeFocusOutFunction);
+      input.on(jquery.focusout, questPreview._activeFocusOutFunction);
    }
 
    /**
-    * @param {Event}          event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {Quest}             quest - The current quest being manipulated.
     *
-    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    * @param {QuestPreview}      questPreview - The QuestPreview being manipulated.
     */
    static questGiverCustomEditName(event, quest, questPreview)
    {
@@ -90,14 +90,14 @@ export default class HandlerDetails
       parent.css('flex', '0 0 230px');
       parent.html('');
       parent.append(input);
-      input.focus();
+      input.trigger(jquery.focus);
 
       /**
        * Store the input focus callback in the associated QuestPreview instance so that it can be invoked if the app is
        * closed in {@link QuestPreview.close} while the input field is focused / being edited allowing any edits to be
        * saved. Otherwise the callback is invoked normally below as part of the input focus out event.
        *
-       * @param {Event|void}  event - HTML5 event.
+       * @param {JQuery.FocusOutEvent|void}  event - JQuery.FocusOutEvent
        *
        * @param {object}      saveOptions - Options to pass to `saveQuest`; used in {@link QuestPreview.close}.
        *
@@ -123,7 +123,7 @@ export default class HandlerDetails
          }
       };
 
-      input.focusout(questPreview._activeFocusOutFunction);
+      input.on(jquery.focusout, questPreview._activeFocusOutFunction);
    }
 
    /**
@@ -165,11 +165,11 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 event.
+    * @param {JQuery.DropEvent}  event - JQuery.DropEvent
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {Quest}             quest - The current quest being manipulated.
     *
-    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    * @param {QuestPreview}      questPreview - The QuestPreview being manipulated.
     *
     * @returns {Promise<void>}
     */
@@ -207,9 +207,9 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event} event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent.
     *
-    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    * @param {QuestPreview}      questPreview - The QuestPreview being manipulated.
     *
     * @returns {Promise<void>}
     */
@@ -246,11 +246,11 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {Quest}             quest - The current quest being manipulated.
     *
-    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    * @param {QuestPreview}      questPreview - The QuestPreview being manipulated.
     */
    static rewardAbstractEditName(event, quest, questPreview)
    {
@@ -278,14 +278,14 @@ export default class HandlerDetails
 
       parent.html('');
       parent.append(input);
-      input.focus();
+      input.trigger(jquery.focus);
 
       /**
        * Store the input focus callback in the associated QuestPreview instance so that it can be invoked if the app is
        * closed in {@link QuestPreview.close} while the input field is focused / being edited allowing any edits to be
        * saved. Otherwise the callback is invoked normally below as part of the input focus out event.
        *
-       * @param {Event|void}  event - HTML5 event.
+       * @param {JQuery.FocusOutEvent|void}  event - JQuery.FocusOutEvent
        *
        * @param {object}      saveOptions - Options to pass to `saveQuest`; used in {@link QuestPreview.close}.
        *
@@ -315,7 +315,7 @@ export default class HandlerDetails
          }
       };
 
-      input.focusout(questPreview._activeFocusOutFunction);
+      input.on(jquery.focusout, questPreview._activeFocusOutFunction);
    }
 
    /**
@@ -323,11 +323,11 @@ export default class HandlerDetails
     *
     * The module setting: {@link FQLSettings.defaultAbstractRewardImage} stores the default abstract reward image.
     *
-    * @param {Event}          event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {Quest}             quest - The current quest being manipulated.
     *
-    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    * @param {QuestPreview}      questPreview - The QuestPreview being manipulated.
     */
    static rewardAddAbstract(event, quest, questPreview)
    {
@@ -340,9 +340,9 @@ export default class HandlerDetails
       li.append(input);
       box.append(li);
 
-      input.focus();
+      input.trigger(jquery.focus);
 
-      input.focusout(async (event) =>
+      input.on(jquery.focusout, async (event) =>
       {
          const value = $(event.target).val();
          if (value !== void 0 && value.length)
@@ -361,11 +361,11 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {Quest}             quest - The current quest being manipulated.
     *
-    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    * @param {QuestPreview}      questPreview - The QuestPreview being manipulated.
     *
     * @returns {Promise<void>}
     */
@@ -386,9 +386,9 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event} event - HTML5 event.
+    * @param {JQuery.DragStartEvent}   event - JQuery.DragStartEvent
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {Quest}                   quest - The current quest being manipulated.
     */
    static async rewardDragStartItem(event, quest)
    {
@@ -424,7 +424,7 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event} event - HTML5 event.
+    * @param {JQuery.DragStartEvent}   event - JQuery.DragStartEvent
     */
    static rewardDragStartSort(event)
    {
@@ -444,11 +444,11 @@ export default class HandlerDetails
    /**
     * Handles an external item reward drop. Also handles the sort reward item drop.
     *
-    * @param {Event}          event - HTML5 event.
+    * @param {JQuery.DropEvent}  event - JQuery.DropEvent
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {Quest}             quest - The current quest being manipulated.
     *
-    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    * @param {QuestPreview}      questPreview - The QuestPreview being manipulated.
     *
     * @returns {Promise<void>}
     */
@@ -504,11 +504,11 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {Quest}             quest - The current quest being manipulated.
     *
-    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    * @param {QuestPreview}      questPreview - The QuestPreview being manipulated.
     *
     * @returns {Promise<void>}
     */
@@ -551,11 +551,11 @@ export default class HandlerDetails
    /**
     * If an abstract reward has an image set then show an image popout.
     *
-    * @param {Event}          event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent.
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {Quest}             quest - The current quest being manipulated.
     *
-    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    * @param {QuestPreview}      questPreview - The QuestPreview being manipulated.
     *
     * @returns {Promise<void>}
     */
@@ -589,11 +589,11 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent.
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {Quest}             quest - The current quest being manipulated.
     *
-    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    * @param {QuestPreview}      questPreview - The QuestPreview being manipulated.
     *
     * @returns {Promise<void>}
     */
@@ -615,11 +615,11 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {Quest}             quest - The current quest being manipulated.
     *
-    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    * @param {QuestPreview}      questPreview - The QuestPreview being manipulated.
     *
     * @returns {Promise<void>}
     */
@@ -635,11 +635,11 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {Quest}             quest - The current quest being manipulated.
     *
-    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    * @param {QuestPreview}      questPreview - The QuestPreview being manipulated.
     *
     * @returns {Promise<void>}
     */
@@ -686,11 +686,11 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {Quest}             quest - The current quest being manipulated.
     *
-    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    * @param {QuestPreview}      questPreview - The QuestPreview being manipulated.
     */
    static taskAdd(event, quest, questPreview)
    {
@@ -708,9 +708,9 @@ export default class HandlerDetails
       li.append(input);
       box.append(li);
 
-      input.focus();
+      input.trigger(jquery.focus);
 
-      input.focusout(async (event) =>
+      input.on(jquery.focusout, async (event) =>
       {
          const value = $(event.target).val();
          if (value !== void 0 && value.length)
@@ -722,11 +722,11 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {Quest}             quest - The current quest being manipulated.
     *
-    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    * @param {QuestPreview}      questPreview - The QuestPreview being manipulated.
     *
     * @returns {Promise<void>}
     */
@@ -746,7 +746,7 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event} event - HTML5 event.
+    * @param {JQuery.DragStartEvent}   event - JQuery.DragStartEvent
     */
    static taskDragStartSort(event)
    {
@@ -765,9 +765,9 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 event.
+    * @param {JQuery.DropEvent}  event - JQuery.DropEvent
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {Quest}             quest - The current quest being manipulated.
     *
     * @returns {Promise<void>}
     */
@@ -787,11 +787,11 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {Quest}             quest - The current quest being manipulated.
     *
-    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    * @param {QuestPreview}      questPreview - The QuestPreview being manipulated.
     */
    static taskEditName(event, quest, questPreview)
    {
@@ -813,14 +813,14 @@ export default class HandlerDetails
 
       parent.html('');
       parent.append(input);
-      input.focus();
+      input.trigger(jquery.focus);
 
       /**
        * Store the input focus callback in the associated QuestPreview instance so that it can be invoked if the app is
        * closed in {@link QuestPreview.close} while the input field is focused / being edited allowing any edits to be
        * saved. Otherwise the callback is invoked normally below as part of the input focus out event.
        *
-       * @param {Event|void}  event - HTML5 event.
+       * @param {JQuery.FocusOutEvent|void}  event -JQuery.FocusOutEvent
        *
        * @param {object}      saveOptions - Options to pass to `saveQuest`; used in {@link QuestPreview.close}.
        *
@@ -850,15 +850,15 @@ export default class HandlerDetails
          }
       };
 
-      input.focusout(questPreview._activeFocusOutFunction);
+      input.on(jquery.focusout, questPreview._activeFocusOutFunction);
    }
 
    /**
-    * @param {Event}          event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {Quest}             quest - The current quest being manipulated.
     *
-    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    * @param {QuestPreview}      questPreview - The QuestPreview being manipulated.
     *
     * @returns {Promise<void>}
     */
@@ -874,11 +874,11 @@ export default class HandlerDetails
    }
 
    /**
-    * @param {Event}          event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {Quest}             quest - The current quest being manipulated.
     *
-    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    * @param {QuestPreview}      questPreview - The QuestPreview being manipulated.
     *
     * @returns {Promise<void>}
     */

@@ -11,9 +11,9 @@ export default class HandlerAny
    /**
     * Confirms deleting a quest with {@link FQLDialog.confirmDeleteQuest} before invoking {@link QuestDB.deleteQuest}.
     *
-    * @param {Event} event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
-    * @param {Quest} quest - The current quest being manipulated.
+    * @param {Quest}             quest - The current quest being manipulated.
     *
     * @returns {Promise<void>}
     */
@@ -32,7 +32,7 @@ export default class HandlerAny
    /**
     * Opens a {@link QuestPreview} via {@link QuestAPI.open}.
     *
-    * @param {Event} event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent.
     */
    static questOpen(event)
    {
@@ -44,7 +44,7 @@ export default class HandlerAny
     * Potentially sets a new {@link Quest.status} via {@link Socket.moveQuest}. If the current user is not a GM
     * a GM level user must be logged in for a successful completion of the set status operation.
     *
-    * @param {Event} event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
     * @returns {Promise<void>}
     */

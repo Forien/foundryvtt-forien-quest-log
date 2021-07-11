@@ -124,7 +124,7 @@ export default class QuestPreview extends FormApplication
        * saved. Otherwise the callback is invoked as part of the input focus out event in the jQuery handler. Please
        * see the associated jQuery callback methods in {@link HandlerDetails} linked below.
        *
-       * @param {Event|void}  event - HTML5 event.
+       * @param {JQuery.FocusOutEvent|void}  event - JQuery.FocusOutEvent
        *
        * @param {object}      [saveOptions] - Options to pass to `saveQuest`; used in {@link QuestPreview.close}.
        *
@@ -369,7 +369,7 @@ export default class QuestPreview extends FormApplication
     * Defines all jQuery control callbacks with event listeners for click, drag, drop via various CSS selectors.
     * The callbacks are gated by several local variables defined in {@link QuestPreview.getData}.
     *
-    * @param {jQuery}  html - The jQuery instance for the window content of this Application.
+    * @param {JQuery}  html - The jQuery instance for the window content of this Application.
     *
     * @see {@link HandlerAny}
     * @see {@link HandlerDetails}

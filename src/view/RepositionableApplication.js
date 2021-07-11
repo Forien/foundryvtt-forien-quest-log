@@ -9,7 +9,7 @@ export default class RepositionableApplication extends Application
    /**
     * @param {object}      [options] - Optional parameters
     *
-    * @param {string}      [options.positionSetting] -
+    * @param {string}      [options.positionSetting] - The module setting to store position data to on move.
     *
     * @param {...object}   [options.options] -
     */
@@ -29,7 +29,7 @@ export default class RepositionableApplication extends Application
    /**
     * Defines all jQuery control callbacks with event listeners for click, drag, drop via various CSS selectors.
     *
-    * @param {jQuery}  html - The jQuery instance for the window content of this Application.
+    * @param {JQuery}  html - The jQuery instance for the window content of this Application.
     *
     * @see https://foundryvtt.com/api/FormApplication.html#activateListeners
     */
@@ -37,7 +37,7 @@ export default class RepositionableApplication extends Application
    {
       super.activateListeners(html);
 
-      html.find('.move-handle').mousedown(this.reposition.bind(this));
+      html.find('.move-handle').on('mousedown', this.reposition.bind(this));
    }
 
    /**
@@ -57,7 +57,7 @@ export default class RepositionableApplication extends Application
    /**
     * Repurposed code originally written by user ^ and stick for Token Action HUD.
     *
-    * @param {Event} ev - HTML5 event.
+    * @param {JQuery.MouseDownEvent} ev - JQuery.MouseDownEvent
     *
     * @author ^ and stick#0520
     *
@@ -77,14 +77,14 @@ export default class RepositionableApplication extends Application
       let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
       /**
-       * @param {Element}  elmnt - The target drag element.
+       * @param {HTMLElement}  elmnt - The target drag element.
        */
       function dragElement(elmnt)
       {
          elmnt.onmousedown = dragMouseDown;
 
          /**
-          * @param {Event} e - HTML5 event.
+          * @param {JQuery.MouseDownEvent} e - JQuery.MouseDownEvent
           */
          function dragMouseDown(e)
          {
@@ -99,7 +99,7 @@ export default class RepositionableApplication extends Application
          /**
           * Invoked on mouse move.
           *
-          * @param {Event} e - HTML5 event.
+          * @param {JQuery.DragEvent} e - JQuery.DragEvent
           */
          function elementDrag(e)
          {

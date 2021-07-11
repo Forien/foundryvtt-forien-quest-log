@@ -44,7 +44,7 @@ export default class QuestLog extends Application
    /**
     * Defines all jQuery control callbacks with event listeners for click, drag, drop via various CSS selectors.
     *
-    * @param {jQuery}  html - The jQuery instance for the window content of this Application.
+    * @param {JQuery}  html - The jQuery instance for the window content of this Application.
     *
     * @see https://foundryvtt.com/api/FormApplication.html#activateListeners
     */
@@ -72,9 +72,9 @@ export default class QuestLog extends Application
 
       html.on('click', '.actions.quest-status i.delete', HandlerLog.questDelete);
 
-      html.on('dragstart', '.drag-quest', HandlerLog.questDragStart);
+      html.on('dragstart', '.drag-quest', void 0, HandlerLog.questDragStart);
 
-      html.on('click', '.title', HandlerLog.questOpen);
+      html.on('click', '.title', void 0, HandlerLog.questOpen);
 
       html.on('click', '.actions.quest-status i.move', HandlerLog.questStatusSet);
    }

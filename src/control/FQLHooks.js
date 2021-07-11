@@ -269,7 +269,7 @@ export default class FQLHooks
     *
     * @param {JournalDirectory}  app - The JournalDirectory app.
     *
-    * @param {jQuery}            html - The jQuery element for the window content of the app.
+    * @param {JQuery}            html - The jQuery element for the window content of the app.
     *
     * @see https://foundryvtt.com/api/JournalDirectory.html
     */
@@ -314,7 +314,7 @@ export default class FQLHooks
     *
     * @param {JournalSheet}   app - The JournalSheet app.
     *
-    * @param {jQuery}         html - The jQuery element for the window content of the app.
+    * @param {JQuery}         html - The jQuery element for the window content of the app.
     *
     * @see https://foundryvtt.com/api/JournalSheet.html
     */

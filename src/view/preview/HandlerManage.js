@@ -71,11 +71,11 @@ export default class HandlerManage
    }
 
    /**
-    * @param {Event}          event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
-    * @param {Quest}          quest - The current quest being manipulated.
+    * @param {Quest}             quest - The current quest being manipulated.
     *
-    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    * @param {QuestPreview}      questPreview - The QuestPreview being manipulated.
     *
     * @returns {Promise<void>}
     */

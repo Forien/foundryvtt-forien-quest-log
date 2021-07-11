@@ -39,7 +39,7 @@ export default class QuestTracker extends RepositionableApplication
    /**
     * Defines all jQuery control callbacks with event listeners for click, drag, drop via various CSS selectors.
     *
-    * @param {jQuery}  html - The jQuery instance for the window content of this Application.
+    * @param {JQuery}  html - The jQuery instance for the window content of this Application.
     *
     * @see https://foundryvtt.com/api/FormApplication.html#activateListeners
     */
@@ -47,8 +47,8 @@ export default class QuestTracker extends RepositionableApplication
    {
       super.activateListeners(html);
 
-      html.on('click', '.quest-tracker-header', this._handleQuestClick.bind(this));
-      html.on('click', '.quest-tracker-link', this._handleQuestOpen);
+      html.on('click', '.quest-tracker-header', void 0, this._handleQuestClick.bind(this));
+      html.on('click', '.quest-tracker-link', void 0, this._handleQuestOpen);
    }
 
    /**
@@ -70,7 +70,7 @@ export default class QuestTracker extends RepositionableApplication
    /**
     * Data for the quest folder open / close state is saved in {@link sessionStorage}.
     *
-    * @param {Event} event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     */
    _handleQuestClick(event)
    {
@@ -88,7 +88,7 @@ export default class QuestTracker extends RepositionableApplication
    /**
     * Handles the quest open click via {@link QuestAPI.open}.
     *
-    * @param {Event} event - HTML5 event.
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     */
    _handleQuestOpen(event)
    {

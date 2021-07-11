@@ -10,6 +10,35 @@ const constants = {
    folderState: 'forien.questlog.folderstate-'
 };
 
+const jquery = {
+   focus: 'focus',
+   focusout: 'focusout'
+};
+
+/**
+ * Defines the left-hand UI control note buttons.
+ *
+ * @type {object[]}
+ */
+const noteControls = [
+   {
+      name: constants.moduleName,
+      title: 'ForienQuestLog.QuestLogButton',
+      icon: 'fas fa-scroll',
+      visible: true,
+      onClick: () => ViewManager.questLog.render(true, { focus: true }),
+      button: true
+   },
+   {
+      name: 'forien-quest-log-floating-window',
+      title: 'ForienQuestLog.FloatingQuestWindow',
+      icon: 'fas fa-tasks',
+      visible: true,
+      onClick: () => ViewManager.questLogFloating.render(true, { focus: true }),
+      button: true
+   }
+];
+
 /**
  * Stores strings for quest types (statuses)
  *
@@ -59,31 +88,7 @@ const settings = {
    trustedPlayerEdit: 'trustedPlayerEdit'
 };
 
-/**
- * Defines the left-hand UI control note buttons.
- *
- * @type {object[]}
- */
-const noteControls = [
-   {
-      name: constants.moduleName,
-      title: 'ForienQuestLog.QuestLogButton',
-      icon: 'fas fa-scroll',
-      visible: true,
-      onClick: () => ViewManager.questLog.render(true, { focus: true }),
-      button: true
-   },
-   {
-      name: 'forien-quest-log-floating-window',
-      title: 'ForienQuestLog.FloatingQuestWindow',
-      icon: 'fas fa-tasks',
-      visible: true,
-      onClick: () => ViewManager.questLogFloating.render(true, { focus: true }),
-      button: true
-   }
-];
-
-export { constants, noteControls, questTypes, questTypesI18n, settings };
+export { constants, jquery, noteControls, questTypes, questTypesI18n, settings };
 
 /**
  * @typedef {object} FQLSettings
