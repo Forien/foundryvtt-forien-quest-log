@@ -354,6 +354,13 @@ export default class Enrich
          const unlockedTooltip = canEdit ? game.i18n.localize('ForienQuestLog.Tooltips.RewardUnlocked') :
           game.i18n.localize('ForienQuestLog.Tooltips.RewardUnlockedPlayer');
 
+         // Defines if the pointer cursor is displayed. For abstract reward it always displayed for GM or when unlocked
+         // for players.
+         const abstractLink = type === 'abstract' && (canEdit || !item.locked);
+
+         // For item rewards.
+         const itemLink = type === 'item' && !canEdit && !canPlayerDrag && !item.locked;
+
          return {
             name: item.data.name,
             img: item.data.img,
@@ -362,7 +369,7 @@ export default class Enrich
             locked: item.locked,
             lockedTooltip,
             unlockedTooltip,
-            isPlayerLink: !canEdit && !canPlayerDrag && !item.locked && type !== 'abstract',
+            isLink: abstractLink || itemLink,
             draggable,
             transfer: type !== 'abstract' ? JSON.stringify(
              { uuid: item.data.uuid, uuidv4: item.uuidv4, name: item.data.name }) : void 0,
@@ -407,7 +414,7 @@ export default class Enrich
  *
  * @property {string}      data_rewards.img - The image for the reward.
  *
- * @property {boolean}     data_rewards.isPlayerLink - Can the player click on the reward.
+ * @property {boolean}     data_rewards.isLink - Is the reward a link / pointer cursor.
  *
  * @property {boolean}     data_rewards.locked - Is the reward locked / only 'canEdit' manipulate it.
  *

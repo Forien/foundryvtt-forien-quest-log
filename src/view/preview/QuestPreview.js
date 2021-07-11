@@ -88,6 +88,17 @@ export default class QuestPreview extends FormApplication
       this.options.title = game.i18n.format('ForienQuestLog.QuestPreview.Title', this._quest);
 
       /**
+       * Set in `getData`. Determines if the player can accept quests which for non-GM / trusted players w/ edit allows
+       * a minimal set of options to set quests as `available` or `active`.
+       *
+       * @type {boolean}
+       * @package
+       *
+       * @see {@link QuestPreview.getData}
+       */
+      this.canAccept = false;
+
+      /**
        * Set in `getData`. Determines if the current user can fully edit the Quest; a GM or trusted player w/ edit.
        *
        * @type {boolean}
@@ -106,17 +117,6 @@ export default class QuestPreview extends FormApplication
        * @see {@link QuestPreview.getData}
        */
       this.playerEdit = false;
-
-      /**
-       * Set in `getData`. Determines if the player can accept quests which for non-GM / trusted players w/ edit allows
-       * a minimal set of options to set quests as `available` or `active`.
-       *
-       * @type {boolean}
-       * @package
-       *
-       * @see {@link QuestPreview.getData}
-       */
-      this.canAccept = false;
 
       /**
        * Store the input focus callback in the associated QuestPreview instance so that it can be invoked if the app is
@@ -141,6 +141,15 @@ export default class QuestPreview extends FormApplication
       this._activeFocusOutFunction = void 0;
 
       /**
+       * Tracks all opened sheets whether quest giver actor sheet or reward items. Close all sheets when QuestPreview
+       * closes.
+       *
+       * @type {number[]}
+       * @package
+       */
+      this._openedAppIds = [];
+
+      /**
        * Tracks any open FQLPermissionControl dialog that can be opened from the management tab, so that it can be
        * closed if this QuestPreview is closed or the tab is changed.
        *
@@ -151,6 +160,19 @@ export default class QuestPreview extends FormApplication
        * @see {@link QuestPreview.close}
        */
       this._permControl = void 0;
+
+      /**
+       * Stores a single instance of the ImagePopup for the abstract reward image opened in
+       * {@link HandlerDetails.rewardShowImagePopout} preventing multiple copies of reward images from being opened
+       * at the same time. If open this ImagePopup is also closed when this QuestPreview closes in
+       * {@link QuestPreview.close}.
+       *
+       * @type {ImagePopout}
+       * @package
+       *
+       * @see {@link https://foundryvtt.com/api/ImagePopout.html}
+       */
+      this._rewardImagePopup = void 0;
 
       /**
        * Stores a single instance of the ImagePopup for the splash image opened in
@@ -364,7 +386,7 @@ export default class QuestPreview extends FormApplication
       // Callbacks for any user.
 
       html.on('click', '.quest-giver-name .open-actor-sheet', async (event) =>
-       await HandlerDetails.questGiverShowActorSheet(event));
+       await HandlerDetails.questGiverShowActorSheet(event, this));
 
       // This CSS selector responds to any subquest attached to the details section or subquests listed in objectives.
       html.on('click', '.quest-name-link', (event) => HandlerAny.questOpen(event));
@@ -373,6 +395,9 @@ export default class QuestPreview extends FormApplication
        await HandlerDetails.rewardDragStartItem(event, this._quest));
 
       html.on('dragstart', '.quest-rewards .fa-sort', (event) => HandlerDetails.rewardDragStartSort(event));
+
+      html.on('click', '.abstract-reward .editable-container', async (event) =>
+       await HandlerDetails.rewardShowImagePopout(event, this._quest, this));
 
       html.on('click', '.item-reward .editable-container', async (event) =>
        await HandlerDetails.rewardShowItemSheet(event, this._quest, this));
@@ -478,6 +503,7 @@ export default class QuestPreview extends FormApplication
     * - Remove reference from {@link ViewManager.questPreview}
     * - Close any associated dialogs via {@link FQLDialog.closeDialogs}
     * - Close any associated {@link QuestPreview._permControl}
+    * - Close any associated {@link QuestPreview._rewardImagePopup}
     * - Close any associated {@link QuestPreview._splashImagePopup}
     * - If set invoke {@link QuestPreview._activeFocusOutFunction} or {@link QuestPreview.saveQuest} if the current
     * user is the owner of the quest and options `noSave` is false.
@@ -506,6 +532,20 @@ export default class QuestPreview extends FormApplication
       {
          this._permControl.close();
          this._permControl = void 0;
+      }
+
+      // Close any opened actor or reward item sheets.
+      for (const appId of this._openedAppIds)
+      {
+         const app = ui.windows[appId];
+         if (app && app.rendered) { app.close(); }
+      }
+
+      // If a reward ImagePopup is open close it.
+      if (this._rewardImagePopup)
+      {
+         this._rewardImagePopup.close();
+         this._rewardImagePopup = void 0;
       }
 
       // If a splash ImagePopup is open close it.

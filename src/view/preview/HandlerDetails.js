@@ -207,15 +207,20 @@ export default class HandlerDetails
    /**
     * @param {Event} event - HTML5 event.
     *
-    * @returns {Promise<void>} A promise..
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    *
+    * @returns {Promise<void>}
     */
-   static async questGiverShowActorSheet(event)
+   static async questGiverShowActorSheet(event, questPreview)
    {
       const uuid = $(event.target).data('actor-uuid');
 
       if (typeof uuid === 'string' && uuid.length)
       {
-         await Utils.showSheetFromUUID(uuid, { editable: false });
+         const appId = await Utils.showSheetFromUUID(uuid, { editable: false });
+
+         // If a new sheet is rendered push it to the opened appIds.
+         if (appId && !questPreview._openedAppIds.includes(appId)) { questPreview._openedAppIds.push(appId); }
       }
    }
 
@@ -532,12 +537,52 @@ export default class HandlerDetails
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} The promise from `saveQuest`.
+    * @returns {Promise<void>}
     */
    static async rewardsShowAll(quest, questPreview)
    {
       for (const reward of quest.rewards) {  reward.hidden = false; }
       if (quest.rewards.length) { await questPreview.saveQuest(); }
+   }
+
+   /**
+    * If an abstract reward has an image set then show an image popout.
+    *
+    * @param {Event}          event - HTML5 event.
+    *
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    *
+    * @returns {Promise<void>}
+    */
+   static async rewardShowImagePopout(event, quest, questPreview)
+   {
+      event.stopPropagation();
+      const uuidv4 = $(event.currentTarget).data('uuidv4');
+
+      const reward = quest.getReward(uuidv4);
+
+      if (reward && (questPreview.canEdit || !reward.locked))
+      {
+         if (questPreview._rewardImagePopup !== void 0 && questPreview._rewardImagePopup.rendered)
+         {
+            if (reward.data?.img?.length)
+            {
+               questPreview._rewardImagePopup.object = reward.data.img;
+               questPreview._rewardImagePopup.render(true);
+               questPreview._rewardImagePopup.bringToTop();
+            }
+         }
+         else
+         {
+            if (reward.data?.img?.length)
+            {
+               questPreview._rewardImagePopup = new ImagePopout(reward.data.img, { shareable: true });
+               questPreview._rewardImagePopup.render(true);
+            }
+         }
+      }
    }
 
    /**
@@ -559,7 +604,10 @@ export default class HandlerDetails
 
       if (reward && (questPreview.canEdit || !reward.locked))
       {
-         await Utils.showSheetFromUUID(data, { permissionCheck: false, editable: false });
+         const appId = await Utils.showSheetFromUUID(data, { permissionCheck: false, editable: false });
+
+         // If a new sheet is rendered push it to the opened appIds.
+         if (appId && !questPreview._openedAppIds.includes(appId)) { questPreview._openedAppIds.push(appId); }
       }
    }
 
