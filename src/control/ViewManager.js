@@ -92,11 +92,11 @@ export default class ViewManager
    static get questTracker() { return Apps.questTracker; }
 
    /**
-    * @param {object}      options - Optional parameters
+    * @param {object}   opts - Optional parameters
     *
-    * @param {boolean}     [options.questPreview=false] - If true closes all QuestPreview apps.
+    * @param {boolean}  [opts.questPreview=false] - If true closes all QuestPreview apps.
     *
-    * @param {...object}   [options.options] - Optional parameters passed onto {@link Application.close}
+    * @param {...*}     [opts.options] - Optional parameters passed onto {@link Application.close}
     *
     * @see https://foundryvtt.com/api/Application.html#close
     */
@@ -165,13 +165,13 @@ export default class ViewManager
     * {@link ViewManager.isQuestTrackerVisible}. With the option `questPreview` set to true all QuestPreviews are also
     * rendered. Remaining options are forwarded onto the Foundry Application render method.
     *
-    * @param {object}      options - Optional parameters
+    * @param {object}   opts - Optional parameters
     *
-    * @param {boolean}     [options.force] - Forces a data refresh.
+    * @param {boolean}  [opts.force] - Forces a data refresh.
     *
-    * @param {boolean}     [options.questPreview] - Render all open QuestPreview apps.
+    * @param {boolean}  [opts.questPreview] - Render all open QuestPreview apps.
     *
-    * @param {...object}   [options.options] - Remaining options for the {@link Application.render} method.
+    * @param {...*}     [opts.options] - Remaining options for the {@link Application.render} method.
     *
     * @see https://foundryvtt.com/api/Application.html#render
     */

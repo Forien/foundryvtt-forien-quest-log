@@ -219,13 +219,11 @@ export default class Socket
     *
     * Handled on the receiving side by {@link handleRefreshAll}.
     *
-    * @param {object}      options - Optional parameters
+    * @param {object}   options - Optional parameters
     *
-    * @param {boolean}     [options.force] - Forces a data refresh.
+    * @param {boolean}  [options.force] - Forces a data refresh.
     *
-    * @param {boolean}     [options.questPreview] - Render all open QuestPreview apps.
-    *
-    * @param {...object}   [options.options] - Remaining options for the {@link Application.render} method.
+    * @param {boolean}  [options.questPreview] - Render all open QuestPreview apps.
     */
    static refreshAll(options = {})
    {

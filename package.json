@@ -18,6 +18,7 @@
     "@rollup/plugin-commonjs": "^19",
     "@rollup/plugin-node-resolve": "^13",
     "@rollup/plugin-virtual": "^2",
+    "@types/jquery": "^3.5.6",
     "@typhonjs-config/eslint-config": "^0.2.0",
     "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
     "autoprefixer": "^10",
