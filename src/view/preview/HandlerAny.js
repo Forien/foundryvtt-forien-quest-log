@@ -41,7 +41,7 @@ export default class HandlerAny
    }
 
    /**
-    * Potentially sets a new {@link Quest.status} via {@link Socket.moveQuest}. If the current user is not a GM
+    * Potentially sets a new {@link Quest.status} via {@link Socket.setQuestStatus}. If the current user is not a GM
     * a GM level user must be logged in for a successful completion of the set status operation.
     *
     * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
@@ -54,6 +54,6 @@ export default class HandlerAny
       const questId = $(event.target).data('quest-id');
 
       const quest = QuestDB.getQuest(questId);
-      if (quest) { await Socket.moveQuest({ quest, target }); }
+      if (quest) { await Socket.setQuestStatus({ quest, target }); }
    }
 }

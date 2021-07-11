@@ -69,7 +69,7 @@ export default class HandlerLog
    }
 
    /**
-    * Handles changing the quest status via {@link Socket.moveQuest}.
+    * Handles changing the quest status via {@link Socket.setQuestStatus}.
     *
     * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
@@ -81,6 +81,6 @@ export default class HandlerLog
       const questId = $(event.target).data('quest-id');
 
       const quest = QuestDB.getQuest(questId);
-      if (quest) { await Socket.moveQuest({ quest, target }); }
+      if (quest) { await Socket.setQuestStatus({ quest, target }); }
    }
 }

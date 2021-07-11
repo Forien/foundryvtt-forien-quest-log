@@ -442,49 +442,6 @@ export default class Quest
    }
 
    /**
-    * Sets new status for the quest. Also updates any timestamp / date data depending on status set.
-    *
-    * @param {string}   target - The target status to set.
-    *
-    * @returns {Promise<void>}
-    */
-   async move(target)
-   {
-      if (!this.entry || !questTypes[target]) { return; }
-
-      this.status = target;
-
-      // Update the tracked date data based on status.
-      switch (this.status)
-      {
-         case questTypes.active:
-            this.date.start = Date.now();
-            this.date.end = null;
-            break;
-
-         case questTypes.completed:
-         case questTypes.failed:
-            this.date.end = Date.now();
-            break;
-
-         case questTypes.inactive:
-         case questTypes.available:
-         default:
-            this.date.start = null;
-            this.date.end = null;
-            break;
-      }
-
-      await this.entry.update({
-         flags: {
-            [constants.moduleName]: { json: this.toJSON() }
-         }
-      });
-
-      return this._id;
-   }
-
-   /**
     * Deletes Reward from Quest.
     *
     * @param {string} uuidv4 - The UUIDv4 associated with a Reward.
@@ -562,6 +519,49 @@ export default class Quest
     * @param {object}   NewSheetClass - The sheet class.
     */
    static setSheet(NewSheetClass) { SheetClass = NewSheetClass; }
+
+   /**
+    * Sets new status for the quest. Also updates any timestamp / date data depending on status set.
+    *
+    * @param {string}   target - The target status to set.
+    *
+    * @returns {Promise<void>}
+    */
+   async setStatus(target)
+   {
+      if (!this.entry || !questTypes[target]) { return; }
+
+      this.status = target;
+
+      // Update the tracked date data based on status.
+      switch (this.status)
+      {
+         case questTypes.active:
+            this.date.start = Date.now();
+            this.date.end = null;
+            break;
+
+         case questTypes.completed:
+         case questTypes.failed:
+            this.date.end = Date.now();
+            break;
+
+         case questTypes.inactive:
+         case questTypes.available:
+         default:
+            this.date.start = null;
+            this.date.end = null;
+            break;
+      }
+
+      await this.entry.update({
+         flags: {
+            [constants.moduleName]: { json: this.toJSON() }
+         }
+      });
+
+      return this._id;
+   }
 
    /**
     * Locates and swaps the rewards indicated by the source and target UUIDv4s provided.

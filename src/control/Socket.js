@@ -17,7 +17,7 @@ const s_EVENT_NAME = 'module.forien-quest-log';
  */
 const s_MESSAGE_TYPES = {
    deletedQuest: 'deletedQuest',
-   moveQuest: 'moveQuest',
+   questSetStatus: 'questSetStatus',
    questRewardDrop: 'questRewardDrop',
    refreshAll: 'refreshAll',
    refreshQuestPreview: 'refreshQuestPreview',
@@ -99,8 +99,8 @@ export default class Socket
             switch (data.type)
             {
                case s_MESSAGE_TYPES.deletedQuest: await handleDeletedQuest(data); break;
-               case s_MESSAGE_TYPES.moveQuest: await handleMoveQuest(data); break;
                case s_MESSAGE_TYPES.questRewardDrop: await handleQuestRewardDrop(data); break;
+               case s_MESSAGE_TYPES.questSetStatus: await handleQuestSetStatus(data); break;
                case s_MESSAGE_TYPES.refreshAll: handleRefreshAll(data); break;
                case s_MESSAGE_TYPES.refreshQuestPreview: handleRefreshQuestPreview(data); break;
                case s_MESSAGE_TYPES.showQuestPreview: handleShowQuestPreview(data); break;
@@ -115,14 +115,15 @@ export default class Socket
    }
 
    /**
-    * Handles moving a quest from one status to another then refreshes the appropriate views including parent and
+    * Handles setting a new quest status then refreshes the appropriate views including parent and
     * subquests as applicable. On the invocation side if the user is a GM or trusted player with edit and ownership of
-    * the quest being moved then the action is immediately taken and `handled` set to true which is part of the message
-    * sent across the wire. If this is a player who can accept quests the local action is skipped and a socket message
-    * is sent out and the first GM level user to receive it will perform the status move for the associated quest. If
-    * no GM level users are logged in this action is never handled and the user can not change the status of a quest.
+    * the quest being updated then the action is immediately taken and `handled` set to true which is part of the
+    * message sent across the wire. If this is a player who can accept quests the local action is skipped and a socket
+    * message is sent out and the first GM level user to receive it will perform the status update for the associated
+    * quest. If no GM level users are logged in this action is never handled and the user can not change the status of
+    * a quest.
     *
-    * Handled on the receiving side by {@link handleMoveQuest}.
+    * Handled on the receiving side by {@link handleQuestSetStatus}.
     *
     * @param {object}   options - Options.
     *
@@ -134,7 +135,7 @@ export default class Socket
     * @see {@link HandlerAny.questStatusSet}
     * @see {@link HandlerLog.questStatusSet}
     */
-   static async moveQuest({ quest, target })
+   static async setQuestStatus({ quest, target })
    {
       let handled = false;
 
@@ -142,7 +143,7 @@ export default class Socket
       // the status move.
       if (game.user.isGM || (Utils.isTrustedPlayerEdit() && quest.isOwner))
       {
-         await quest.move(target);
+         await quest.setStatus(target);
          handled = true;
 
          Socket.refreshQuestPreview({ questId: quest.getQuestIds() });
@@ -160,7 +161,7 @@ export default class Socket
       }
 
       game.socket.emit(s_EVENT_NAME, {
-         type: s_MESSAGE_TYPES.moveQuest,
+         type: s_MESSAGE_TYPES.questSetStatus,
          payload: {
             questId: quest.id,
             handled,
@@ -328,55 +329,6 @@ async function handleDeletedQuest(data)
 }
 
 /**
- * Sets the associated quest status to the `target` by the first GM level user receiving this message setting the
- * handled state to `true`, so no further GM level users attempt to move the quest.
- *
- * This message is sent from {@link Socket.moveQuest}.
- *
- * @param {object} data - The data payload contains `questId` and `target` along with `handled`.
- *
- * @returns {Promise<void>}
- */
-async function handleMoveQuest(data)
-{
-   const target = data.payload.target;
-
-   // If this message has not already been handled and this user is a GM then handle it now then set `handled` to true.
-   if (game.user.isGM && !data.payload.handled)
-   {
-      const quest = QuestDB.getQuest(data.payload.questId);
-      if (quest)
-      {
-         await quest.move(target);
-      }
-
-      // Set handled to true so no other GM level users act upon the move.
-      data.payload.handled = true;
-
-      Socket.refreshQuestPreview({
-         questId: quest.parent ? [quest.parent, quest.id, ...quest.subquests] : [quest.id, ...quest.subquests]
-      });
-
-      Socket.refreshAll();
-
-      const dirname = game.i18n.localize(questTypesI18n[target]);
-      ViewManager.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
-       { name: quest.name, target: dirname }));
-   }
-
-   // For non-GM users close QuestPreview when made hidden / inactive.
-   if (!game.user.isGM && target === questTypes.inactive)
-   {
-      const questPreview = ViewManager.questPreview.get(data.payload.questId);
-      if (questPreview !== void 0)
-      {
-         // Use `noSave` just for sanity in this case as this is a remote close.
-         await questPreview.close({ noSave: true });
-      }
-   }
-}
-
-/**
  * Handles the reward item drop into actor sheet by the first GM level user receiving this message setting the
  * handled state to `true`, so no further GM level users attempt to remove the item from the associated quest.
  *
@@ -418,6 +370,55 @@ async function handleQuestRewardDrop(data)
          quest.removeReward(fqlData.uuidv4);
          await quest.save();
          Socket.refreshQuestPreview({ questId: fqlData.questId });
+      }
+   }
+}
+
+/**
+ * Sets the associated quest status to the `target` by the first GM level user receiving this message setting the
+ * handled state to `true`, so no further GM level users attempt to update the quest.
+ *
+ * This message is sent from {@link Socket.questSetStatus}.
+ *
+ * @param {object} data - The data payload contains `questId` and `target` along with `handled`.
+ *
+ * @returns {Promise<void>}
+ */
+async function handleQuestSetStatus(data)
+{
+   const target = data.payload.target;
+
+   // If this message has not already been handled and this user is a GM then handle it now then set `handled` to true.
+   if (game.user.isGM && !data.payload.handled)
+   {
+      const quest = QuestDB.getQuest(data.payload.questId);
+      if (quest)
+      {
+         await quest.setStatus(target);
+      }
+
+      // Set handled to true so no other GM level users act upon the move.
+      data.payload.handled = true;
+
+      Socket.refreshQuestPreview({
+         questId: quest.parent ? [quest.parent, quest.id, ...quest.subquests] : [quest.id, ...quest.subquests]
+      });
+
+      Socket.refreshAll();
+
+      const dirname = game.i18n.localize(questTypesI18n[target]);
+      ViewManager.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
+       { name: quest.name, target: dirname }));
+   }
+
+   // For non-GM users close QuestPreview when made hidden / inactive.
+   if (!game.user.isGM && target === questTypes.inactive)
+   {
+      const questPreview = ViewManager.questPreview.get(data.payload.questId);
+      if (questPreview !== void 0)
+      {
+         // Use `noSave` just for sanity in this case as this is a remote close.
+         await questPreview.close({ noSave: true });
       }
    }
 }
