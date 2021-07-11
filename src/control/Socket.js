@@ -347,7 +347,7 @@ async function handleQuestRewardDrop(data)
        */
       const fqlData = data.payload.data._fqlData;
 
-      // Notify the
+      // Notify the GM that a user has dropped a reward item into an actor sheet.
       const notify = game.settings.get(constants.moduleName, settings.notifyRewardDrop);
       if (notify)
       {
