@@ -17,6 +17,14 @@
  */
 
 /**
+ * @external {JQuery.DropEvent} https://api.jquery.com/category/events/event-object/
+ */
+
+/**
+ * @external {JQuery.FocusOutEvent} https://api.jquery.com/category/events/event-object/
+ */
+
+/**
  * @external {JQuery.MouseDownEvent} https://api.jquery.com/category/events/event-object/
  */
 
