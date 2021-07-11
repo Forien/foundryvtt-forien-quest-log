@@ -28,7 +28,7 @@ export default class HandlerLog
     *
     * @param {Event} event - HTML5 event.
     *
-    * @returns {Promise<void>} A promise.
+    * @returns {Promise<void>}
     */
    static async questDelete(event)
    {
@@ -73,7 +73,7 @@ export default class HandlerLog
     *
     * @param {Event} event - HTML5 event.
     *
-    * @returns {Promise<void>} A promise.
+    * @returns {Promise<void>}
     */
    static async questStatusSet(event)
    {

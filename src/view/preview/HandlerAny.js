@@ -15,7 +15,7 @@ export default class HandlerAny
     *
     * @param {Quest} quest - The current quest being manipulated.
     *
-    * @returns {Promise<void>} A promise.
+    * @returns {Promise<void>}
     */
    static async questDelete(event, quest)
    {
@@ -46,7 +46,7 @@ export default class HandlerAny
     *
     * @param {Event} event - HTML5 event.
     *
-    * @returns {Promise<void>} A promise.
+    * @returns {Promise<void>}
     */
    static async questStatusSet(event)
    {

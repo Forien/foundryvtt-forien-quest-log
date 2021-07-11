@@ -44,7 +44,8 @@ export default class HandlerDetails
        * @param {object}      saveOptions - Options to pass to `saveQuest`; used in {@link QuestPreview.close}.
        *
        * @returns {Promise<void>}
-       * @protected
+       * @package
+       *
        * @see {@link QuestPreview.close}
        * @see {@link QuestPreview._activeFocusOutFunction}
        */
@@ -101,7 +102,8 @@ export default class HandlerDetails
        * @param {object}      saveOptions - Options to pass to `saveQuest`; used in {@link QuestPreview.close}.
        *
        * @returns {Promise<void>}
-       * @protected
+       * @package
+       *
        * @see {@link QuestPreview.close}
        * @see {@link QuestPreview._activeFocusOutFunction}
        */
@@ -154,7 +156,7 @@ export default class HandlerDetails
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} A promise..
+    * @returns {Promise<void>}
     */
    static async questGiverDelete(quest, questPreview)
    {
@@ -169,7 +171,7 @@ export default class HandlerDetails
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} A promise..
+    * @returns {Promise<void>}
     */
    static async questGiverDropDocument(event, quest, questPreview)
    {
@@ -229,7 +231,7 @@ export default class HandlerDetails
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} A promise..
+    * @returns {Promise<void>}
     */
    static async questGiverToggleImage(quest, questPreview)
    {
@@ -288,7 +290,8 @@ export default class HandlerDetails
        * @param {object}      saveOptions - Options to pass to `saveQuest`; used in {@link QuestPreview.close}.
        *
        * @returns {Promise<void>}
-       * @protected
+       * @package
+       *
        * @see {@link QuestPreview.close}
        * @see {@link QuestPreview._activeFocusOutFunction}
        */
@@ -364,7 +367,7 @@ export default class HandlerDetails
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} A promise..
+    * @returns {Promise<void>}
     */
    static async rewardDelete(event, quest, questPreview)
    {
@@ -447,7 +450,7 @@ export default class HandlerDetails
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} A promise..
+    * @returns {Promise<void>}
     */
    static async rewardDropItem(event, quest, questPreview)
    {
@@ -507,7 +510,7 @@ export default class HandlerDetails
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} The promise from `saveQuest`.
+    * @returns {Promise<void>}
     */
    static async rewardSelectAbstractImage(event, quest, questPreview)
    {
@@ -592,7 +595,7 @@ export default class HandlerDetails
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} The promise from `saveQuest`.
+    * @returns {Promise<void>}
     */
    static async rewardShowItemSheet(event, quest, questPreview)
    {
@@ -618,7 +621,7 @@ export default class HandlerDetails
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} The promise from `saveQuest`.
+    * @returns {Promise<void>}
     */
    static async rewardToggleHidden(event, quest, questPreview)
    {
@@ -638,7 +641,7 @@ export default class HandlerDetails
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} The promise from `saveQuest`.
+    * @returns {Promise<void>}
     */
    static async rewardToggleLocked(event, quest, questPreview)
    {
@@ -656,7 +659,7 @@ export default class HandlerDetails
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} The promise from `saveQuest`.
+    * @returns {Promise<void>}
     */
    static async rewardsUnlockAll(quest, questPreview)
    {
@@ -725,7 +728,7 @@ export default class HandlerDetails
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} A promise.
+    * @returns {Promise<void>}
     */
    static async taskDelete(event, quest, questPreview)
    {
@@ -766,7 +769,7 @@ export default class HandlerDetails
     *
     * @param {Quest}          quest - The current quest being manipulated.
     *
-    * @returns {Promise<void>} A promise.
+    * @returns {Promise<void>}
     */
    static async taskDropItem(event, quest)
    {
@@ -857,7 +860,7 @@ export default class HandlerDetails
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} A promise.
+    * @returns {Promise<void>}
     */
    static async taskToggleHidden(event, quest, questPreview)
    {
@@ -877,7 +880,7 @@ export default class HandlerDetails
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} A promise.
+    * @returns {Promise<void>}
     */
    static async taskToggleState(event, quest, questPreview)
    {

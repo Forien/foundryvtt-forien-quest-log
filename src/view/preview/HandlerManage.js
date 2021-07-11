@@ -12,7 +12,7 @@ export default class HandlerManage
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} The promise from `saveQuest`.
+    * @returns {Promise<void>}
     */
    static async addSubquest(quest, questPreview)
    {
@@ -35,7 +35,7 @@ export default class HandlerManage
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} The promise from `saveQuest`.
+    * @returns {Promise<void>}
     */
    static async configurePermissions(quest, questPreview)
    {
@@ -62,12 +62,12 @@ export default class HandlerManage
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} The promise from `saveQuest`.
+    * @returns {Promise<void>}
     */
    static async deleteSplashImage(quest, questPreview)
    {
       quest.splash = '';
-      return await questPreview.saveQuest();
+      await questPreview.saveQuest();
    }
 
    /**
@@ -77,12 +77,12 @@ export default class HandlerManage
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} The promise from `saveQuest`.
+    * @returns {Promise<void>}
     */
    static async setSplashAsIcon(event, quest, questPreview)
    {
       quest.splashAsIcon = $(event.target).is(':checked');
-      return await questPreview.saveQuest();
+      await questPreview.saveQuest();
    }
 
    /**
@@ -90,7 +90,7 @@ export default class HandlerManage
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} The promise from `saveQuest`.
+    * @returns {Promise<void>}
     */
    static async setSplashImage(quest, questPreview)
    {
@@ -111,7 +111,7 @@ export default class HandlerManage
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
     *
-    * @returns {Promise<void>} The promise from `saveQuest`.
+    * @returns {Promise<void>}
     */
    static async setSplashPos(quest, questPreview)
    {
@@ -124,6 +124,6 @@ export default class HandlerManage
          quest.splashPos = quest.splashPos === 'top' ? 'bottom' : 'center';
       }
 
-      return await questPreview.saveQuest();
+      await questPreview.saveQuest();
    }
 }
