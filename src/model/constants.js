@@ -1,6 +1,8 @@
 import ViewManager from '../control/ViewManager.js';
 
 /**
+ * Defines the main FQL constants for module name and the DB flag.
+ *
  * @type {{folderState: string, flagDB: string, moduleName: string, moduleLabel: string}}
  */
 const constants = {
@@ -10,9 +12,18 @@ const constants = {
    folderState: 'forien.questlog.folderstate-'
 };
 
+/**
+ * Defines the {@link JQuery} events that are used in FQL.
+ *
+ * @type {{drop: string, focusout: string, dragstart: string, focus: string, click: string, mousedown: string}}
+ */
 const jquery = {
+   click: 'click',
+   dragstart: 'dragstart',
+   drop: 'drop',
    focus: 'focus',
-   focusout: 'focusout'
+   focusout: 'focusout',
+   mousedown: 'mousedown'
 };
 
 /**

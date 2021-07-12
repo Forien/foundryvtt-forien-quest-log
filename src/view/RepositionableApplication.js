@@ -1,4 +1,4 @@
-import { constants } from '../model/constants.js';
+import { constants, jquery } from '../model/constants.js';
 
 /**
  * Provides a basic app that can be repositioned with this position stored as a module setting passed into the
@@ -37,7 +37,7 @@ export default class RepositionableApplication extends Application
    {
       super.activateListeners(html);
 
-      html.find('.move-handle').on('mousedown', this.reposition.bind(this));
+      html.find('.move-handle').on(jquery.mousedown, this.reposition.bind(this));
    }
 
    /**

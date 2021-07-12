@@ -2,7 +2,7 @@ import QuestAPI      from '../control/public/QuestAPI.js';
 import QuestDB       from '../control/QuestDB.js';
 import ViewManager   from '../control/ViewManager.js';
 
-import { constants, questStatus, settings }  from '../model/constants.js';
+import { constants, jquery, questStatus, settings }  from '../model/constants.js';
 
 /**
  * Provides the floating quest log which provides a set of folders for all active quests which can be opened / closed
@@ -53,8 +53,8 @@ export default class QuestLogFloating extends Application
    {
       super.activateListeners(html);
 
-      html.on('click', '.folder-toggle', void 0, this._handleFolderToggle);
-      html.on('click', '.questlog-floating .quest-open', void 0, this._handleQuestOpen);
+      html.on(jquery.click, '.folder-toggle', void 0, this._handleFolderToggle);
+      html.on(jquery.click, '.questlog-floating .quest-open', void 0, this._handleQuestOpen);
 
       // Open and close folders on rerender. Data is store in sessionStorage so display is consistent after each render.
       for (const quest of QuestDB.sortCollect({ status: questStatus.active }))

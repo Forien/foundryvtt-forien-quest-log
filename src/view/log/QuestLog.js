@@ -4,7 +4,7 @@ import FQLDialog     from '../FQLDialog.js';
 
 import HandlerLog    from './HandlerLog.js';
 
-import { constants, questStatusI18n, settings } from '../../model/constants.js';
+import { constants, jquery, questStatusI18n, settings } from '../../model/constants.js';
 
 /**
  * Provides the main quest log app which shows the quests separated by status either with bookmark or classic tabs.
@@ -68,15 +68,15 @@ export default class QuestLog extends Application
          }
       }
 
-      html.on('click', '.new-quest-btn', HandlerLog.questAdd);
+      html.on(jquery.click, '.new-quest-btn', HandlerLog.questAdd);
 
-      html.on('click', '.actions.quest-status i.delete', HandlerLog.questDelete);
+      html.on(jquery.click, '.actions.quest-status i.delete', HandlerLog.questDelete);
 
-      html.on('dragstart', '.drag-quest', void 0, HandlerLog.questDragStart);
+      html.on(jquery.dragstart, '.drag-quest', void 0, HandlerLog.questDragStart);
 
-      html.on('click', '.title', void 0, HandlerLog.questOpen);
+      html.on(jquery.click, '.title', void 0, HandlerLog.questOpen);
 
-      html.on('click', '.actions.quest-status i.move', HandlerLog.questStatusSet);
+      html.on(jquery.click, '.actions.quest-status i.move', HandlerLog.questStatusSet);
    }
 
    /**

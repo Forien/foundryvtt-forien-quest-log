@@ -276,7 +276,7 @@ export default class HandlerDetails
 
       // This consumes any clicks on the input element preventing the abstract reward image popup from showing when
       // clicking on the input element.
-      input.on('click', (event) => { event.stopImmediatePropagation(); });
+      input.on(jquery.click, (event) => { event.stopImmediatePropagation(); });
 
       const parent = $(event.target).closest('.actions').prev('.editable-container');
 

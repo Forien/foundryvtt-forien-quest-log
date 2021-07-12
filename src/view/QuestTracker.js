@@ -3,7 +3,7 @@ import QuestAPI                  from '../control/public/QuestAPI.js';
 import QuestDB                   from '../control/QuestDB.js';
 import ViewManager               from '../control/ViewManager.js';
 
-import { constants, questStatus, settings } from '../model/constants.js';
+import { constants, jquery, questStatus, settings } from '../model/constants.js';
 
 /**
  * Provides the quest tracker which provides an overview of active quests and objectives which can be opened / closed
@@ -47,8 +47,8 @@ export default class QuestTracker extends RepositionableApplication
    {
       super.activateListeners(html);
 
-      html.on('click', '.quest-tracker-header', void 0, this._handleQuestClick.bind(this));
-      html.on('click', '.quest-tracker-link', void 0, this._handleQuestOpen);
+      html.on(jquery.click, '.quest-tracker-header', void 0, this._handleQuestClick.bind(this));
+      html.on(jquery.click, '.quest-tracker-link', void 0, this._handleQuestOpen);
    }
 
    /**
