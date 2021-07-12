@@ -274,6 +274,10 @@ export default class HandlerDetails
       const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${
        uuidv4 !== void 0 ? `data-uuidv4='${uuidv4}'` : ``} maxlength="48"/>`);
 
+      // This consumes any clicks on the input element preventing the abstract reward image popup from showing when
+      // clicking on the input element.
+      input.on('click', (event) => { event.stopImmediatePropagation(); });
+
       const parent = $(event.target).closest('.actions').prev('.editable-container');
 
       parent.html('');
