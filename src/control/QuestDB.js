@@ -75,9 +75,11 @@ const s_QUEST_INDEX = new Map();
  * `createQuestEntry`, `deleteQuestEntry` and `updateQuestEntry`, but provides more fine grained visibility of quest
  * data that is loaded into and out of the in-memory QuestDB. Additional lifecycle hooks are: `addedAllQuestEntries`,
  * `addQuestEntry`, `removedAllQuestEntries`, and `removeQuestEntry`. These latter unique lifecycle events signify
- * observability. A quest may exist in the system, but only is added to the QuestDB when it is observable and this
- * corresponds to the `addQuestEntry`. Likewise, both remove quest hooks relate to when a quest is removed based on
- * observability; IE the quest  _is not_ deleted, but no longer visible to the user and is removed from the QuestDB.
+ * observability. A quest may exist in the Foundry document / journal entry system, but only is added to the QuestDB
+ * when it is observable and this corresponds to the `addedAllQuestEntries` and `addQuestEntry` hooks. Likewise, both
+ * remove quest hooks relate to when a quest is removed based on observability whether through permission or quest
+ * status category updates; IE the quest  _is not_ deleted, but is no longer observable by the current user and is
+ * removed from the QuestDB.
  *
  * ```
  * - `addedAllQuestEntries` - All observable quests have been added in the {@link QuestDB.init} method.
@@ -317,6 +319,7 @@ export default class QuestDB
       const entry = await JournalEntry.create({
          name: tempQuest.name,
          folder: QuestFolder.get().id,
+         content: '',
          permission,
          flags: {
             [constants.moduleName]: {
