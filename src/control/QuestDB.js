@@ -175,7 +175,7 @@ export default class QuestDB
    }
 
    /**
-    * @returns {FQLDBHooks} The QuestDB hooks.
+    * @returns {QuestDBHooks} The QuestDB hooks.
     */
    static get hooks() { return s_DB_HOOKS; }
 
@@ -858,7 +858,7 @@ Object.freeze(Sort);
 /**
  * Defines all of the DB Hook callbacks. Please see {@link QuestDB} for more documentation.
  *
- * @type {FQLDBHooks}
+ * @type {QuestDBHooks}
  */
 const s_DB_HOOKS = {
    addedAllQuestEntries: 'addedAllQuestEntries',
@@ -1194,7 +1194,7 @@ const s_SET_QUEST_ENTRY = (entry, generate = true) =>
  */
 
 /**
- * @typedef {object} FQLDBHooks
+ * @typedef {object} QuestDBHooks
  *
  * @property {string}   addedAllQuestEntries - Invoked in {@link QuestDB.init} when all quests have been loaded.
  *

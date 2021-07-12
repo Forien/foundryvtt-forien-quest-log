@@ -2,12 +2,14 @@ import QuestDB                 from '../QuestDB.js';
 import { constants, settings } from '../../model/constants.js';
 
 /**
- * Provides a shim to the publicly exposed methods of QuestDB.
+ * Provides a shim to the publicly exposed methods of QuestDB. Except for {@link QuestDBShim.createQuest} all other
+ * methods can be exposed without gating as the QuestDB only loads in-memory quests that are observable to the current
+ * user.
  */
 class QuestDBShim
 {
    /**
-    * @returns {FQLDBHooks} The QuestDB hooks.
+    * @returns {QuestDBHooks} The QuestDB hooks.
     */
    static get hooks() { return QuestDB.hooks; }
 
