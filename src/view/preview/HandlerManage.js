@@ -3,7 +3,7 @@ import ViewManager            from '../../control/ViewManager.js';
 import FQLPermissionControl   from '../FQLPermissionControl.js';
 
 /**
- * Provides all jQuery callbacks for the `management` tab.
+ * Provides all {@link JQuery} callbacks for the `management` tab.
  */
 export default class HandlerManage
 {

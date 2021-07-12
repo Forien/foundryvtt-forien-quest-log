@@ -5,7 +5,7 @@ import Socket        from '../../control/Socket.js';
 import FQLDialog     from '../FQLDialog.js';
 
 /**
- * Provides all jQuery callbacks for the {@link QuestLog}.
+ * Provides all {@link JQuery} callbacks for the {@link QuestLog}.
  */
 export default class HandlerLog
 {

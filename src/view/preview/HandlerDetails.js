@@ -6,7 +6,7 @@ import FQLDialog  from '../FQLDialog.js';
 import { constants, jquery, settings } from '../../model/constants.js';
 
 /**
- * Provides all jQuery callbacks for the `details` tab.
+ * Provides all {@link JQuery} callbacks for the `details` tab.
  */
 export default class HandlerDetails
 {

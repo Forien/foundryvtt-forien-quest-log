@@ -1,6 +1,22 @@
 /* eslint-disable jsdoc/valid-types */  // ESDoc uses a non-conformant external tag.
 
 /**
+ * @external {collect} https://collect.js.org/api.html
+ */
+
+/**
+ * @external {CollectJS} https://collect.js.org/api.html
+ */
+
+/**
+ * @external {Collection} https://collect.js.org/api.html
+ */
+
+/**
+ * @external {Handlebars} https://handlebarsjs.com/api-reference/
+ */
+
+/**
  * @external {JQuery} https://api.jquery.com/
  */
 

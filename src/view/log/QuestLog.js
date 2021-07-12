@@ -8,6 +8,15 @@ import { constants, jquery, questStatusI18n, settings } from '../../model/consta
 
 /**
  * Provides the main quest log app which shows the quests separated by status either with bookmark or classic tabs.
+ *
+ * In {@link QuestLog.getData} the {@link QuestsCollect} data is retrieved from {@link QuestDB.sortCollect} which
+ * provides automatic sorting of each quest status category by either {@link SortFunctions.ALPHA} or
+ * {@link SortFunctions.DATE_END} for status categories {@link questStatus.completed} and {@link questStatus.failed}.
+ * Several module settings and whether the current user is a GM is also passed back as data to be used in rendering the
+ * {@link Handlebars} template.
+ *
+ * {@link JQuery} control callbacks are setup in {@link QuestLog.activateListeners} and are located in a separate static
+ * control class {@link HandlerLog}.
  */
 export default class QuestLog extends Application
 {

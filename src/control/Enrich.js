@@ -172,8 +172,9 @@ export default class Enrich
    }
 
    /**
-    * This method also performs content manipulation, for example enriching HTML or calculating amount
-    * of done/total tasks etc.
+    * This method performs content manipulation based on the current state of {@link Quest} preparing data to be
+    * displayed in a {@link Handlebars} template. This data is cached in a {@link QuestEntry} in the {@link QuestDB}
+    * and only updated when the underlying {@link Quest} changes.
     *
     * @param {Quest}  quest - Quest data to construct view data.
     *

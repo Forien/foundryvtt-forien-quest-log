@@ -16,20 +16,25 @@ import { constants, jquery, settings }  from '../../model/constants.js';
  * when parent and subquests of the current quest also requires those QuestPreviews if visible and the {@link QuestLog}
  * to be rendered again. Additionally for remote clients socket events are broadcast to all users logged in to Foundry
  * in the same world. This is facilitated through {@link Socket} which controls local rendering and remote rendering.
+ * In the future it will be possible to reduce reliance on {@link Socket} as the {@link QuestDB} has many lifecycle
+ * hooks, {@link QuestDBHooks} which can replace manual control aspects found in {@link Socket}.
  *
- * QuestPreview is the {@link Quest} sheet in Foundry parlance. In `./src/init.js` in the initial `init` Hook
- * QuestPreview is set as the Quest sheet. All Quests are opened through this reference in Quest which is accessible
- * by {@link Quest.sheet}
+ * QuestPreview is the {@link Quest} sheet in Foundry parlance. In {@link FQLHooks.foundryInit} QuestPreview is set as
+ * the Quest sheet. All Quests are opened through this reference in Quest which is accessible by {@link Quest.sheet}
  *
  * The main source of QuestPreview creation is through {@link QuestAPI.open}. Both Socket, QuestLog and external
  * API usage invokes `QuestAPI.open`. The constructor of QuestPreview requires a Quest and passes on options to t
  * the FormApplication.
  *
- * The jQuery control handling of callbacks is facilitated through three separate static control classes. Two of the
- * control classes {@link HandlerDetails} and {@link HandlerManage} contain jQuery callbacks specific to the `details`
- * and `management` tabs visible for GM users and trusted players with ownership permissions when the module setting
- * {@link FQLSettings.trustedPlayerEdit} is enabled. {@link HandlerAny} contains callbacks utilized across both
- * `details` and `management` tabs particularly around handling the action icons for manipulating the quest tasks.
+ * The {@link JQuery} control handling of callbacks is facilitated through three separate static control classes and
+ * are setup in {@link QuestPreview.activateListeners}. Two of the control classes {@link HandlerDetails} and
+ * {@link HandlerManage} contain {@link JQuery} callbacks specific to the `details` and `management` tabs visible for GM
+ * users and trusted players with ownership permissions when the module setting {@link FQLSettings.trustedPlayerEdit} is
+ * enabled. {@link HandlerAny} contains callbacks utilized across both `details` and `management` tabs particularly
+ * around handling the action icons for manipulating the quest tasks.
+ *
+ * In {@link QuestPreview.getData} the cached {@link EnrichData} from {@link QuestDB} of the associated {@link Quest}
+ * is used in rendering the {@link Handlebars} template.
  *
  * It is worth noting that all internal array data such as tasks and rewards from {@link Quest} a separate
  * `UUIDv4` identifier which provides a unique ID for each {@link Task} and {@link Reward}. Tasks and Rewards that are

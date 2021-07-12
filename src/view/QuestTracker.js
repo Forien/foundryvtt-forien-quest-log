@@ -9,6 +9,11 @@ import { constants, jquery, questStatus, settings } from '../model/constants.js'
  * Provides the quest tracker which provides an overview of active quests and objectives which can be opened / closed
  * to show all objectives for a given quest. The folder / open state is stored in {@link sessionStorage} and is shared
  * between the {@link QuestLogFloating}.
+ *
+ * In the {@link QuestTracker.getData} method {@link QuestTracker.prepareQuests} is invoked which gets all sorted
+ * {@link questStatus.active} via {@link QuestDB.sortCollect}. They are then mapped creating the specific data which is
+ * used in the {@link Handlebars} template. In the future this may be cached in a similar way that {@link Quest} data
+ * is cached for {@link QuestLog}.
  */
 export default class QuestTracker extends RepositionableApplication
 {
@@ -22,7 +27,7 @@ export default class QuestTracker extends RepositionableApplication
    }
 
    /**
-    * Default Application options
+    * Default {@link Application} options
     *
     * @returns {object} options - Application options.
     * @see https://foundryvtt.com/api/Application.html#options
@@ -37,7 +42,7 @@ export default class QuestTracker extends RepositionableApplication
    }
 
    /**
-    * Defines all jQuery control callbacks with event listeners for click, drag, drop via various CSS selectors.
+    * Defines all {@link JQuery} control callbacks with event listeners for click, drag, drop via various CSS selectors.
     *
     * @param {JQuery}  html - The jQuery instance for the window content of this Application.
     *

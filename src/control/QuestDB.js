@@ -8,8 +8,8 @@ import collect       from '../../external/collect.js';
 import { constants, questStatus, settings } from '../model/constants.js';
 
 /**
- * Stores all QuestEntry instances in a map of Maps. This provides fast retrieval and quick insert / removal with quests
- * pre-sorted by status.
+ * Stores all {@link QuestEntry} instances in a map of Maps. This provides fast retrieval and quick insert / removal
+ * with quests pre-sorted by status.
  *
  * @type {Object.<string, Map<string, QuestEntry>>}
  */
@@ -22,9 +22,9 @@ const s_QUESTS_MAP = {
 };
 
 /**
- * Stores all QuestEntry instances in a map of CollectJS collections. This provides rapid sorting, filtering, and many
- * other potential operations that CollectJS collections provide for working with arrays of object data. Each collection
- * is built from the values of the {@link s_QUESTS_MAP} per status category.
+ * Stores all {@link QuestEntry} instances in a map of CollectJS collections. This provides rapid sorting, filtering,
+ * and many other potential operations that {@link collect} / CollectJS collections provide for working with arrays of
+ * object data. Each collection is built from the values of the {@link s_QUESTS_MAP} per status category.
  *
  * @type {Object.<string, Collection<QuestEntry>>}
  * @see https://collect.js.org/api.html
@@ -54,13 +54,30 @@ const s_QUEST_INDEX = new Map();
  * In time with future refactoring the reliance on {@link Socket} for notifications to connected clients will be
  * reduced as the QuestDB lifecycle hooks can replace many of the notification concerns.
  *
- * QuestDB lifecycle hooks: The QuestDB has familiar lifecycle hooks to Foundry itself such as `createQuestEntry`,
- * `deleteQuestEntry` and `updateQuestEntry`, but provides more fine grained visibility of quest data that is loaded
- * into and out of the in-memory QuestDB. Additional lifecycle hooks are: `addedAllQuestEntries`, `addQuestEntry`,
- * `removedAllQuestEntries`, and `removeQuestEntry`. These latter unique lifecycle events signify observability. A quest
- * may exist in the system, but only is added to the QuestDB when it is observable and this corresponds to the
- * `addQuestEntry`. Likewise, both remove quest hooks relate to when a quest is removed based on observability; IE the
- * quest  _is not_ deleted, but no longer visible to the user and is removed from the QuestDB.
+ * All quests and stored in {@link QuestEntry} instances which hold a {@link Quest} and the {@link EnrichData} created
+ * by {@link Enrich.quest} which is used when rendering {@link Handlebars} templates. There are several data points
+ * cached in QuestEntry from the Quest itself on any update; mostly the getter functions of Quest are cached each update
+ * in {@link QuestEntry.hydrate}. When an update does occur in {@link s_JOURNAL_ENTRY_UPDATE} a QuestEntry is either
+ * added, removed, or updated based on the observability test found in {@link s_IS_OBSERVABLE}. Another pre-processing
+ * step for performance is to store all QuestEntry instances by the status of the quest. There are also two different
+ * views for QuestEntry data. The first is a map of Maps, {@link s_QUESTS_MAP}, with main index keys being the quest
+ * status. This preprocessing step allows quick retrieval of all quests by status category and ID without the need to
+ * filter all quests by status. Additionally when {@link s_QUESTS_MAP} is updated a second view of the data is
+ * constructed as well which is a map of {@link CollectJS} collections found in {@link s_QUESTS_COLLECT}. This allows
+ * in depth manipulation of all QuestEntry instances as a single collection. CollectJS has many options available for
+ * chained processing. There are by default two methods which apply a sort ({@link QuestDB.sortCollect}) or filter
+ * ({@link QuestDB.filterCollect}) operation to retrieve the {@link QuestsCollect} bundle returning a single status
+ * category or all quests indexed by status category. Iterators for quests are available by
+ * {@link QuestDB.iteratorQuests} and QuestEntry instances from {@link QuestDB.iteratorEntries}. Additionally there
+ * are several direct retrieval methods such as {@link QuestDB.getQuest} and {@link QuestDB.getQuestEntry}.
+ *
+ * QuestDB lifecycle hooks ({@link QuestDBHooks}): The QuestDB has familiar lifecycle hooks to Foundry itself such as
+ * `createQuestEntry`, `deleteQuestEntry` and `updateQuestEntry`, but provides more fine grained visibility of quest
+ * data that is loaded into and out of the in-memory QuestDB. Additional lifecycle hooks are: `addedAllQuestEntries`,
+ * `addQuestEntry`, `removedAllQuestEntries`, and `removeQuestEntry`. These latter unique lifecycle events signify
+ * observability. A quest may exist in the system, but only is added to the QuestDB when it is observable and this
+ * corresponds to the `addQuestEntry`. Likewise, both remove quest hooks relate to when a quest is removed based on
+ * observability; IE the quest  _is not_ deleted, but no longer visible to the user and is removed from the QuestDB.
  *
  * ```
  * - `addedAllQuestEntries` - All observable quests have been added in the {@link QuestDB.init} method.
@@ -584,7 +601,8 @@ export default class QuestDB
    }
 
    /**
-    * Provides an iterator across the QuestEntry map of maps.
+    * Provides an iterator across the QuestEntry map of maps returning all {@link QuestEntry} instances or instances of
+    * a particular status category.
     *
     * @param {object}   [options] - Optional parameters. If no options are provided the iteration occurs across all
     *                               quests.
@@ -610,7 +628,8 @@ export default class QuestDB
    }
 
    /**
-    * Provides an iterator across the QuestEntry map of maps.
+    * Provides an iterator across the QuestEntry map of maps returning all {@link Quest} instances or a instances of a
+    * particular status category.
     *
     * @param {object}   [options] - Optional parameters. If no options are provided the iteration occurs across all
     *                               quests.

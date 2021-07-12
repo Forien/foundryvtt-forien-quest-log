@@ -8,6 +8,10 @@ import { constants, jquery, questStatus, settings }  from '../model/constants.js
  * Provides the floating quest log which provides a set of folders for all active quests which can be opened / closed
  * to show all objectives for a given quest. The folder / open state is stored in {@link sessionStorage} and is shared
  * between the {@link QuestTracker}.
+ *
+ * In the {@link QuestLogFloating.getData} method gets all sorted {@link questStatus.active} via
+ * {@link QuestDB.sortCollect} which is used in the {@link Handlebars} template. Since there are only a couple of
+ * {@link JQuery} control callbacks they are implemented as methods in this class.
  */
 export default class QuestLogFloating extends Application
 {

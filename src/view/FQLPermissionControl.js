@@ -1,6 +1,10 @@
 /**
  * Provides a custom override to PermissionControl enabling GM & trusted player w/ edit capabilities to alter
  * quest permissions. The default PermissionControl only allows GM level users permission editing.
+ *
+ * When the underlying document / {@link JournalEntry} is updated the {@link QuestDB} will receive this update and
+ * fire {@link QuestDBHooks} that other parts of FQL can respond to handle as necessary. In particular
+ * {@link ViewManager} handles these hooks to update the GUI on local and remote clients when permissions change.
  */
 export default class FQLPermissionControl extends PermissionControl
 {
