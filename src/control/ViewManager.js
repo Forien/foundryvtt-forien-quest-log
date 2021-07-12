@@ -52,9 +52,9 @@ export default class ViewManager
       Hooks.on('closeQuestPreview', s_QUEST_PREVIEW_CLOSED);
 
       // Right now ViewManager responds to permission changes across add, remove, update of quests.
-      Hooks.on('addQuestEntry', s_QUEST_ENTRY_ADD);
-      Hooks.on('removeQuestEntry', s_QUEST_ENTRY_REMOVE);
-      Hooks.on('updateQuestEntry', s_QUEST_ENTRY_UPDATE);
+      Hooks.on(QuestDB.hooks.addQuestEntry, s_QUEST_ENTRY_ADD);
+      Hooks.on(QuestDB.hooks.removeQuestEntry, s_QUEST_ENTRY_REMOVE);
+      Hooks.on(QuestDB.hooks.updateQuestEntry, s_QUEST_ENTRY_UPDATE);
    }
 
    /**

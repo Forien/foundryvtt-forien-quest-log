@@ -7,6 +7,11 @@ import { constants, settings } from '../../model/constants.js';
 class QuestDBShim
 {
    /**
+    * @returns {FQLDBHooks} The QuestDB hooks.
+    */
+   static get hooks() { return QuestDB.hooks; }
+
+   /**
     * Creates a new quest and waits for the journal entry to update and QuestDB to pick up the new Quest which
     * is returned.
     *

@@ -56,11 +56,18 @@ const s_QUEST_INDEX = new Map();
  *
  * QuestDB lifecycle hooks: The QuestDB has familiar lifecycle hooks to Foundry itself such as `createQuestEntry`,
  * `deleteQuestEntry` and `updateQuestEntry`, but provides more fine grained visibility of quest data that is loaded
- * into and out of the in-memory QuestDB. Additional lifecycle hooks are: `addQuestEntry`, `removeAllQuestEntries`, and
- * `removeQuestEntry`. These latter unique lifecycle events signify observability. A quest may exist in the system, but
- * only is added to the QuestDB when it is observable and this corresponds to the `addQuestEntry`. Likewise, both
- * remove quest hooks relate to when a quest is removed based on observability; IE the quest  _is not_ deleted, but
- * no longer visible to the user and is removed from the QuestDB.
+ * into and out of the in-memory QuestDB. Additional lifecycle hooks are: `addedAllQuestEntries`, `addQuestEntry`,
+ * `removedAllQuestEntries`, and `removeQuestEntry`. These latter unique lifecycle events signify observability. A quest
+ * may exist in the system, but only is added to the QuestDB when it is observable and this corresponds to the
+ * `addQuestEntry`. Likewise, both remove quest hooks relate to when a quest is removed based on observability; IE the
+ * quest  _is not_ deleted, but no longer visible to the user and is removed from the QuestDB.
+ *
+ * ```
+ * - `addedAllQuestEntries` - All observable quests have been added in the {@link QuestDB.init} method.
+ *
+ * {@link QuestDB.init}: After all quests have been initialized this hook is called to inform any external modules that
+ * all observable quests have been loaded into the QuestDB in bulk.
+ * ```
  *
  * ```
  * - `addQuestEntry` - A quest has become observable and a QuestEntry instance is added to the QuestDB.
@@ -86,7 +93,7 @@ const s_QUEST_INDEX = new Map();
  * ```
  *
  * ```
- * - `removeAllQuestEntries`
+ * - `removedAllQuestEntries`
  *
  * {@link QuestDB.removeAll}: All quests have been removed from QuestDB.
  * ```
@@ -152,6 +159,8 @@ export default class QuestDB
          {
             s_QUESTS_COLLECT[key] = collect(Array.from(s_QUESTS_MAP[key].values()));
          }
+
+         Hooks.callAll(QuestDB.hooks.addedAllQuestEntries);
       }
 
       // Only add the Foundry hooks once on first initialization.
@@ -164,6 +173,11 @@ export default class QuestDB
 
       s_QUEST_DB_INITIALIZED = true;
    }
+
+   /**
+    * @returns {FQLDBHooks} The QuestDB hooks.
+    */
+   static get hooks() { return s_DB_HOOKS; }
 
    /**
     * @returns {FilterFunctions} Various useful filter functions.
@@ -213,7 +227,8 @@ export default class QuestDB
                   questEntry = new QuestEntry(new Quest(content, entry));
                   s_SET_QUEST_ENTRY(questEntry.hydrate());
 
-                  Hooks.callAll('addQuestEntry', questEntry, entry.flags, { diff: false, render: true }, entry.id);
+                  Hooks.callAll(QuestDB.hooks.addQuestEntry, questEntry, entry.flags, { diff: false, render: true },
+                   entry.id);
                }
                else
                {
@@ -232,7 +247,8 @@ export default class QuestDB
                   s_REMOVE_QUEST_ENTRY(entry.id);
 
                   // This quest is not deleted; it has been removed from the in-memory DB.
-                  Hooks.callAll('removeQuestEntry', questEntry, entry.flags, { diff: false, render: true }, entry.id);
+                  Hooks.callAll(QuestDB.hooks.removeQuestEntry, questEntry, entry.flags, { diff: false, render: true },
+                   entry.id);
                }
             }
          }
@@ -638,7 +654,7 @@ export default class QuestDB
       s_QUESTS_COLLECT[questStatus.failed] = collect();
       s_QUESTS_COLLECT[questStatus.inactive] = collect();
 
-      Hooks.callAll('removeAllQuestEntries');
+      Hooks.callAll(QuestDB.hooks.removedAllQuestEntries);
    }
 
    /**
@@ -840,6 +856,21 @@ Object.freeze(Filter);
 Object.freeze(Sort);
 
 /**
+ * Defines all of the DB Hook callbacks. Please see {@link QuestDB} for more documentation.
+ *
+ * @type {FQLDBHooks}
+ */
+const s_DB_HOOKS = {
+   addedAllQuestEntries: 'addedAllQuestEntries',
+   addQuestEntry: 'addQuestEntry',
+   createQuestEntry: 'createQuestEntry',
+   deleteQuestEntry: 'deleteQuestEntry',
+   removedAllQuestEntries: 'removedAllQuestEntries',
+   removeQuestEntry: 'removeQuestEntry',
+   updateQuestEntry: 'updateQuestEntry',
+};
+
+/**
  * @param {string}   questId - The Quest / JournalEntry ID.
  *
  * @returns {QuestEntry} The stored QuestEntry.
@@ -893,25 +924,54 @@ const s_IS_OBSERVABLE = (content, entry, isTrustedPlayerEdit = Utils.isTrustedPl
 };
 
 /**
- * Foundry hook callback when a new JournalEntry is created.
+ * Foundry hook callback when a new JournalEntry is created. For quests there are two cases to consider. The first
+ * is straight forward when a new quest is created from FQL. The second case is a bit more challenging and that occurs
+ * when a journal entry / quest is imported from a compendium. In this case we need to scrub the subquests that may no
+ * longer resolve to valid journal entries in the system.
  *
  * @param {JournalEntry}   entry - A journal entry.
  *
- * @param {object}         options -
+ * @param {object}         options - The create document options.
  *
  * @param {string}         id - journal entry ID.
  */
-const s_JOURNAL_ENTRY_CREATE = (entry, options, id) =>
+const s_JOURNAL_ENTRY_CREATE = async (entry, options, id) =>
 {
    const content = entry.getFlag(constants.moduleName, constants.flagDB);
 
    // Process the quest content if it is currently observable and FQL is not hidden from the current user.
    if (content && s_IS_OBSERVABLE(content, entry) && !Utils.isFQLHiddenFromPlayers())
    {
-      const questEntry = new QuestEntry(new Quest(content, entry));
+      const quest = new Quest(content, entry);
+
+      const questEntry = new QuestEntry(quest);
       s_SET_QUEST_ENTRY(questEntry.hydrate());
 
-      Hooks.callAll('createQuestEntry', questEntry, options, id);
+      Hooks.callAll(QuestDB.hooks.createQuestEntry, questEntry, options, id);
+
+      // At this point a new quest will not have subquests, but an imported journal entry / quest from a compendium
+      // may have subquests. These may not resolve to any existing journal entries, so we scrub any non-resolving
+      // subquests.
+      if (quest.subquests.length > 0)
+      {
+         const removeSubs = [];
+
+         // First push any subquest IDs that don't resolve to journal entries in `removeSubs`.
+         for (const subquest of quest.subquests)
+         {
+            if (!game.journal.get(subquest)) { removeSubs.push(subquest); }
+         }
+
+         // Remove the non-resolving subquests from the quest.
+         for (const removeSub of removeSubs)
+         {
+            const index = quest.subquests.indexOf(removeSub);
+            if (index > -1) { quest.subquests.splice(index, 1); }
+         }
+
+         // And save the quest. This will cause an update to occur and s_JOURNAL_ENTRY_UPDATE will hydrate the change.
+         if (removeSubs.length > 0) { await quest.save(); }
+      }
    }
 };
 
@@ -920,7 +980,7 @@ const s_JOURNAL_ENTRY_CREATE = (entry, options, id) =>
  *
  * @param {JournalEntry}   entry - Deleted journal entry.
  *
- * @param {object}         options -
+ * @param {object}         options - The delete document options.
  *
  * @param {string}         id - Journal entry ID.
  *
@@ -932,7 +992,7 @@ const s_JOURNAL_ENTRY_DELETE = async (entry, options, id) =>
    const questEntry = s_GET_QUEST_ENTRY(entry.id);
    if (questEntry && s_REMOVE_QUEST_ENTRY(entry.id))
    {
-      Hooks.callAll('deleteQuestEntry', questEntry, options, id);
+      Hooks.callAll(QuestDB.hooks.deleteQuestEntry, questEntry, options, id);
 
       const quest = questEntry.quest;
       const savedIds = quest.parent ? [quest.parent, ...quest.subquests] : [...quest.subquests];
@@ -955,7 +1015,7 @@ const s_JOURNAL_ENTRY_DELETE = async (entry, options, id) =>
  *
  * @param {object}         flags - Journal entry flags.
  *
- * @param {object}         options - The update options.
+ * @param {object}         options - The update document options.
  *
  * @param {string}         id - The journal entry ID.
  */
@@ -976,7 +1036,7 @@ const s_JOURNAL_ENTRY_UPDATE = (entry, flags, options, id) =>
          if (isObservable)
          {
             questEntry.update(content, entry);
-            Hooks.callAll('updateQuestEntry', questEntry, flags, options, id);
+            Hooks.callAll(QuestDB.hooks.updateQuestEntry, questEntry, flags, options, id);
          }
          else // Else remove it from the QuestDB (this is not a deletion).
          {
@@ -997,7 +1057,7 @@ const s_JOURNAL_ENTRY_UPDATE = (entry, flags, options, id) =>
             }
 
             // This quest is not deleted; it has been removed from the in-memory DB.
-            Hooks.callAll('removeQuestEntry', questEntry, flags, options, id);
+            Hooks.callAll(QuestDB.hooks.removeQuestEntry, questEntry, flags, options, id);
          }
       }
       else if (isObservable) // The Quest is not in the QuestDB and is observable so add it.
@@ -1019,7 +1079,7 @@ const s_JOURNAL_ENTRY_UPDATE = (entry, flags, options, id) =>
             if (subquestEntry) { subquestEntry.hydrate(); }
          }
 
-         Hooks.callAll('addQuestEntry', questEntry, flags, options, id);
+         Hooks.callAll(QuestDB.hooks.addQuestEntry, questEntry, flags, options, id);
       }
    }
 };
@@ -1131,6 +1191,26 @@ const s_SET_QUEST_ENTRY = (entry, generate = true) =>
  * @typedef {object} FilterFunctions
  *
  * @property {Function} IS_OBSERVABLE - Filters by `isObservable` cached in QuestEntry.
+ */
+
+/**
+ * @typedef {object} FQLDBHooks
+ *
+ * @property {string}   addedAllQuestEntries - Invoked in {@link QuestDB.init} when all quests have been loaded.
+ *
+ * @property {string}   addQuestEntry - Invoked in {@link QuestDB.consistencyCheck} and s_JOURNAL_ENTRY_UPDATE when a
+ *                                      quest is added to the {@link QuestDB}.
+ *
+ * @property {string}   createQuestEntry - Invoked in s_JOURNAL_ENTRY_CREATE in {@link QuestDB} when a quest is created.
+ *
+ * @property {string}   deleteQuestEntry - Invoked in s_JOURNAL_ENTRY_DELETE in {@link QuestDB} when a quest is deleted.
+ *
+ * @property {string}   removedAllQuestEntries - Invoked in {@link QuestDB.removeAll} when all quests are removed.
+ *
+ * @property {string}   removeQuestEntry - Invoked in {@link QuestDB.consistencyCheck} and s_JOURNAL_ENTRY_UPDATE when a
+ *                                         quest is removed from the {@link QuestDB}.
+ *
+ * @property {string}   updateQuestEntry - Invoked in s_JOURNAL_ENTRY_UPDATE when a quest is updated in {@link QuestDB}.
  */
 
 /**

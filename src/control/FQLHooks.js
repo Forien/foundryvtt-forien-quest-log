@@ -33,6 +33,10 @@ import { constants, noteControls, settings } from '../model/constants.js';
  * - `ForienQuestLog.Open.QuestLog` - {@link FQLHooks.openQuestLog} - Open the quest log.
  * - `ForienQuestLog.Open.QuestLogFloating` - {@link FQLHooks.openQuestLogFloating} - Open the floating quest log.
  * - `ForienQuestLog.Run.DBMigration` - {@link FQLHooks.runDBMigration} - Allow GMs to run the DBMigration manually.
+ *
+ * FQL hooks (called):
+ * - `ForienQuestLog.Lifecycle.ready` - {@link FQLHooks.foundryReady} - Called at the end of the `ready` hook when FQL
+ * is fully setup.
  */
 export default class FQLHooks
 {
