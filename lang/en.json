@@ -3,8 +3,6 @@
     "NewQuest": "New Quest",
     "QuestLogButton": "Quest Log",
     "Quests": "{0} Quests",
-    "SampleReward": "e.g. 300 Experience Points",
-    "SampleTask": "e.g. Kill all rats in „The Twisted Ankle” inn",
     "FloatingQuestWindow": "Floating Quest Window",
     "NoActiveQuests": "There are no Active quests",
     "NoDocument": "An entity could not be loaded for UUID: {uuid}",
