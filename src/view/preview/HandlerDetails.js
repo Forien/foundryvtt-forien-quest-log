@@ -34,6 +34,9 @@ export default class HandlerDetails
       parent.append(input);
       input.trigger(jquery.focus);
 
+      // If the HTMLElement has setSelectionRange then set cursor to the end.
+      if (input[0]?.setSelectionRange) { input[0].setSelectionRange(value.length, value.length); }
+
       /**
        * Store the input focus callback in the associated QuestPreview instance so that it can be invoked if the app is
        * closed in {@link QuestPreview.close} while the input field is focused / being edited allowing any edits to be
@@ -65,6 +68,16 @@ export default class HandlerDetails
       };
 
       input.on(jquery.focusout, questPreview._activeFocusOutFunction);
+      input.on(jquery.keydown, (event) =>
+      {
+         // Handle `Esc` key down to cancel editing.
+         if (event.which === 27)
+         {
+            questPreview._activeFocusOutFunction = void 0;
+            questPreview.render(true, { focus: true });
+            return false;
+         }
+      });
    }
 
    /**
@@ -91,6 +104,9 @@ export default class HandlerDetails
       parent.html('');
       parent.append(input);
       input.trigger(jquery.focus);
+
+      // If the HTMLElement has setSelectionRange then set cursor to the end.
+      if (input[0]?.setSelectionRange) { input[0].setSelectionRange(value.length, value.length); }
 
       /**
        * Store the input focus callback in the associated QuestPreview instance so that it can be invoked if the app is
@@ -124,6 +140,16 @@ export default class HandlerDetails
       };
 
       input.on(jquery.focusout, questPreview._activeFocusOutFunction);
+      input.on(jquery.keydown, (event) =>
+      {
+         // Handle `Esc` key down to cancel editing.
+         if (event.which === 27)
+         {
+            questPreview._activeFocusOutFunction = void 0;
+            questPreview.render(true, { focus: true });
+            return false;
+         }
+      });
    }
 
    /**
@@ -284,6 +310,9 @@ export default class HandlerDetails
       parent.append(input);
       input.trigger(jquery.focus);
 
+      // If the HTMLElement has setSelectionRange then set cursor to the end.
+      if (input[0]?.setSelectionRange) { input[0].setSelectionRange(value.length, value.length); }
+
       /**
        * Store the input focus callback in the associated QuestPreview instance so that it can be invoked if the app is
        * closed in {@link QuestPreview.close} while the input field is focused / being edited allowing any edits to be
@@ -320,6 +349,16 @@ export default class HandlerDetails
       };
 
       input.on(jquery.focusout, questPreview._activeFocusOutFunction);
+      input.on(jquery.keydown, (event) =>
+      {
+         // Handle `Esc` key down to cancel editing.
+         if (event.which === 27)
+         {
+            questPreview._activeFocusOutFunction = void 0;
+            questPreview.render(true, { focus: true });
+            return false;
+         }
+      });
    }
 
    /**
@@ -361,6 +400,15 @@ export default class HandlerDetails
             });
          }
          await questPreview.saveQuest();
+      });
+      input.on(jquery.keydown, (event) =>
+      {
+         // Handle `Esc` key down to cancel editing.
+         if (event.which === 27)
+         {
+            questPreview.render(true, { focus: true });
+            return false;
+         }
       });
    }
 
@@ -723,6 +771,15 @@ export default class HandlerDetails
          }
          await questPreview.saveQuest();
       });
+      input.on(jquery.keydown, (event) =>
+      {
+         // Handle `Esc` key down to cancel editing.
+         if (event.which === 27)
+         {
+            questPreview.render(true, { focus: true });
+            return false;
+         }
+      });
    }
 
    /**
@@ -819,6 +876,9 @@ export default class HandlerDetails
       parent.append(input);
       input.trigger(jquery.focus);
 
+      // If the HTMLElement has setSelectionRange then set cursor to the end.
+      if (input[0]?.setSelectionRange) { input[0].setSelectionRange(value.length, value.length); }
+
       /**
        * Store the input focus callback in the associated QuestPreview instance so that it can be invoked if the app is
        * closed in {@link QuestPreview.close} while the input field is focused / being edited allowing any edits to be
@@ -855,6 +915,16 @@ export default class HandlerDetails
       };
 
       input.on(jquery.focusout, questPreview._activeFocusOutFunction);
+      input.on(jquery.keydown, (event) =>
+      {
+         // Handle `Esc` key down to cancel editing.
+         if (event.which === 27)
+         {
+            questPreview._activeFocusOutFunction = void 0;
+            questPreview.render(true, { focus: true });
+            return false;
+         }
+      });
    }
 
    /**

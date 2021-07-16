@@ -103,7 +103,7 @@ export default class ModuleSettings
          hint: 'ForienQuestLog.Settings.countHidden.EnableHint',
          scope: scope.world,
          config: true,
-         default: true,
+         default: false,
          type: Boolean,
          onChange: () =>
          {
