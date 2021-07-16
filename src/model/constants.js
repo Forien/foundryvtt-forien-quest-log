@@ -15,7 +15,7 @@ const constants = {
 /**
  * Defines the {@link JQuery} events that are used in FQL.
  *
- * @type {{drop: string, focusout: string, dragstart: string, focus: string, click: string, mousedown: string}}
+ * @type {{click: string, dragstart: string, drop: string, focus: string, focusout: string, mousedown: string}}
  */
 const jquery = {
    click: 'click',
@@ -23,6 +23,7 @@ const jquery = {
    drop: 'drop',
    focus: 'focus',
    focusout: 'focusout',
+   keydown: 'keydown',
    mousedown: 'mousedown'
 };
 
