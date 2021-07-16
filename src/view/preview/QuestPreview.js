@@ -367,7 +367,7 @@ export default class QuestPreview extends FormApplication
     */
    activateEditor(name, options = {}, initialContent = '')
    {
-      super.activateEditor(name, Object.assign({}, options, Utils.tinyMCEOptions()), initialContent);
+      super.activateEditor(name, Object.assign({}, options, Utils.tinyMCEOptions(initialContent)), initialContent);
    }
 
    /**

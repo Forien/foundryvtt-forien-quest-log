@@ -237,9 +237,11 @@ export default class Utils
     * Presently (06/10/21) there isn't a way to hide the embed tag. It should be noted though that the media field
     * of TinyMCE does have a XSS sanitation filter disabling scripts in embedded content.
     *
+    * @param {string}   [initialContent=''] - The initial content of the editor. Used to reset content via `Esc` key.
+    *
     * @returns {object} TinyMCE options
     */
-   static tinyMCEOptions()
+   static tinyMCEOptions(initialContent = '')
    {
       return {
          plugins: "emoticons hr image link lists media charmap table save",
@@ -267,7 +269,7 @@ export default class Utils
             {
                if (e.keyCode === 27)
                {
-                  editor.resetContent();
+                  editor.resetContent(initialContent);
                   setTimeout(() => editor.execCallback('save_onsavecallback'), 0);
                }
             }));
