@@ -187,10 +187,12 @@ export default class Enrich
       data.isHidden = quest.isHidden;
       data.isInactive = questStatus.inactive === data.status;
 
+      const isOwner = quest.isOwner;
       const personalActors = quest.getPersonalActors();
 
       const isTrustedPlayerEdit = Utils.isTrustedPlayerEdit();
-      const canEdit =  game.user.isGM || (quest.isOwner && isTrustedPlayerEdit);
+      const canEdit =  game.user.isGM || (isOwner && isTrustedPlayerEdit);
+      const playerEdit = isOwner;
 
       const canPlayerAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
       const canPlayerDrag = game.settings.get(constants.moduleName, settings.allowPlayersDrag);
@@ -199,13 +201,13 @@ export default class Enrich
       data.canEdit = canEdit;
 
       data.wrapNameLengthCSS = 'player';
-      if (canPlayerAccept || quest.isOwner) { data.wrapNameLengthCSS = 'player-edit'; }
+      if (canPlayerAccept || playerEdit) { data.wrapNameLengthCSS = 'player-edit'; }
       if (canEdit) { data.wrapNameLengthCSS = 'can-edit'; }
 
       data.isPersonal = personalActors.length > 0;
       data.personalActors = personalActors.map((a) => a.name).sort((a, b) => a.localeCompare(b)).join('&#013;');
 
-      data.description = TextEditor.enrichHTML(data.description);
+      data.description = TextEditor.enrichHTML(data.description, { secrets: canEdit || playerEdit });
 
       data.questIconType = void 0;
 
