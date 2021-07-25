@@ -298,7 +298,7 @@ export default class HandlerDetails
       value = value.replace(/'/g, '&quot;');
 
       const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${
-       uuidv4 !== void 0 ? `data-uuidv4='${uuidv4}'` : ``} maxlength="48"/>`);
+       uuidv4 !== void 0 ? `data-uuidv4='${uuidv4}'` : ``} maxlength="96"/>`);
 
       // This consumes any clicks on the input element preventing the abstract reward image popup from showing when
       // clicking on the input element.
@@ -376,7 +376,7 @@ export default class HandlerDetails
    {
       const li = $('<li class="reward"></li>');
 
-      const input = $(`<input type="text" class="editable-input" value="" placeholder="" maxlength="48"/>`);
+      const input = $(`<input type="text" class="editable-input" value="" placeholder="" maxlength="96"/>`);
 
       const box = $(event.target).closest('.quest-rewards').find('.rewards-box ul');
 
