@@ -613,7 +613,11 @@ export default class HandlerDetails
     */
    static async rewardShowImagePopout(event, quest, questPreview)
    {
+      // Check the event target and make sure it is `p.reward-name` otherwise early out.
+      if (event.target && !$(event.target).is('p.reward-name')) { return; }
+
       event.stopPropagation();
+
       const uuidv4 = $(event.currentTarget).data('uuidv4');
 
       const reward = quest.getReward(uuidv4);
