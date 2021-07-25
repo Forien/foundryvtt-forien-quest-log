@@ -65,8 +65,9 @@ export default class QuestLog extends Application
       // background image for the bookmark tabs. This is only done if the module setting is checked which it is by
       // default and the background image actually exists. The fallback is the default parchment image set in the
       // FQL styles.
+      const navStyle = game.settings.get(constants.moduleName, settings.navStyle);
       const dynamicBackground = game.settings.get(constants.moduleName, settings.dynamicBookmarkBackground);
-      if (dynamicBackground)
+      if ('bookmarks' === navStyle && dynamicBackground)
       {
          const backImage = $('.window-app .window-content').css('background-image');
          const actualBackImage = backImage.split(/"/)[1];
