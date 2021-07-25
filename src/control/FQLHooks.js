@@ -219,7 +219,7 @@ export default class FQLHooks
          };
 
          // Determine the image for the macro. Use the splash image if `splashAsIcon` is true otherwise the giver image.
-         macroData.img = quest.splashAsIcon && quest.splash.length ? quest.splash : quest.giverData.img;
+         macroData.img = quest.splashAsIcon && quest.splash.length ? quest.splash : quest?.giverData?.img;
 
          // Search for an already existing macro with the same command.
          let macro = game.macros.contents.find((m) => (m.data.command === command));
