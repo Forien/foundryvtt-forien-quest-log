@@ -633,23 +633,32 @@
     }
 
     .editor {
-      height: calc(100% - 26px);
+      height: calc(100% - 34px);
     }
 
     .gmnotes .editor {
       height: calc(100% - 36px);
     }
 
+    // Tiny MCE overrides
+
+    .tox:not(.tox-tinymce-inline) .tox-editor-header {
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 5px;
+    }
+
     .tox .tox-toolbar-overlord {
       background-color: transparent;
-      border-bottom: 1px solid #222;
-      padding-bottom: 4px;
     }
 
     .tox .tox-toolbar,
     .tox .tox-toolbar__overflow,
     .tox .tox-toolbar__primary {
-      background: transparent;
+      background: none;
+    }
+
+    .tox .tox-editor-container {
+      background: none;
     }
 
     .tox.tox-tinymce .tox-tbtn {

@@ -1,4 +1,10 @@
 #forien-quest-log-floating-window {
+
+  .window-content {
+    color: #EEE;
+    padding: 0 2px 0 0;
+  }
+
   ol.questlog-floating {
     margin: 0;
     padding: 0;
@@ -6,10 +12,6 @@
 
   #hidden {
     color: #ffffff88;
-  }
-
-  .window-content {
-    padding: 0 2px 0 0;
   }
 
   .flexrow {
