@@ -1,4 +1,4 @@
-import path from 'path';
+import path       from 'path';
 
 import commonjs   from '@rollup/plugin-commonjs';
 import resolve    from '@rollup/plugin-node-resolve';
@@ -29,23 +29,74 @@ if (s_DEPLOY_MINIFY)
    outputPlugins.push(terser(terserConfig));
 }
 
+/**
+ * Defines the DOMPurify bundle. As per comments below a new method `sanitizeWithVideo` is added which allows
+ * `iframes`, but only ones that have a `src` field with a YouTube video embed.
+ *
+ * @type {string}
+ */
+const s_DOM_PURIFY = `import DOMPurify from './node_modules/dompurify/dist/purify.es.js';
+
+// When 'iframes' are allowed only accept ones where 'src' starts with a YouTube embed link; reject all others.
+DOMPurify.addHook('uponSanitizeElement', (node, data) => {
+   if (data.tagName === 'iframe') 
+   {
+      const src = node.getAttribute('src') || '';
+      if (!src.startsWith('https://www.youtube.com/embed/')) 
+      {
+         return node.parentNode.removeChild(node);
+      }
+   }
+});
+
+// Provide a new method that allows 'iframe' but with the 'src' requirement defined above.
+// FORCE_BODY allows 'style' tags to be entered into TinyMCE code editor.
+DOMPurify.sanitizeWithVideo = (dirty) =>
+{
+   return DOMPurify.sanitize(dirty,{
+      ADD_TAGS: ['iframe'],
+      ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling'],
+      FORCE_BODY: true
+   });
+}
+
+export default DOMPurify;
+`;
+
 export default () =>
 {
-   return [{
-      input: 'pack',
-      output: [{
-         file: `${s_DEPLOY_PATH}${path.sep}collect.js`,
-         format: 'es',
-         plugins: outputPlugins,
-         preferConst: true,
-         sourcemap: s_SOURCEMAP,
-      }],
-      plugins: [
-         virtual({
-            pack: `export { collect as default } from './node_modules/collect.js/src/index.js';`
-         }),
-         resolve({ browser: true }),
-         commonjs()
-      ]
-   }];
+   return [
+      {
+         input: 'pack',
+         output: [{
+            file: `${s_DEPLOY_PATH}${path.sep}collect.js`,
+            format: 'es',
+            plugins: outputPlugins,
+            preferConst: true,
+            sourcemap: s_SOURCEMAP,
+         }],
+         plugins: [
+            virtual({
+               pack: `export { collect as default } from './node_modules/collect.js/src/index.js';`
+            }),
+            resolve({ browser: true }),
+            commonjs()
+         ]
+      },
+      {
+         input: 'pack',
+         output: [{
+            file: `${s_DEPLOY_PATH}${path.sep}DOMPurify.js`,
+            format: 'es',
+            plugins: outputPlugins,
+            preferConst: true,
+            sourcemap: s_SOURCEMAP,
+         }],
+         plugins: [
+            virtual({
+               pack: s_DOM_PURIFY
+            })
+         ]
+      }
+   ];
 };

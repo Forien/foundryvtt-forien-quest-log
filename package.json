@@ -9,7 +9,8 @@
     "Michael Leahy <support@typhonjs.io> (https://github.com/typhonrt)"
   ],
   "dependencies": {
-    "collect.js": "^4.28.6"
+    "collect.js": "^4.28.0",
+    "dompurify": "^2.3.0"
   },
   "devDependencies": {
     "@itsjamie/esdoc-core": "^0.3",
@@ -36,6 +37,6 @@
     "esdoc": "esdoc",
     "sass": "sass ./styles/init.scss ./styles/init.css",
     "postcss": "postcss ./styles/init.css -p sass -u autoprefixer postcss-preset-env -m -o ./styles/init.css",
-    "rollup-collect.js": "rollup --config"
+    "rollup-external": "rollup --config"
   }
 }
