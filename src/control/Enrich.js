@@ -1,5 +1,6 @@
-import QuestDB from './QuestDB.js';
-import Utils   from './Utils.js';
+import QuestDB    from './QuestDB.js';
+import Utils      from './Utils.js';
+import DOMPurify  from '../../external/DOMPurify.js';
 
 import { constants, questStatus, questStatusI18n, settings } from '../model/constants.js';
 
@@ -207,7 +208,10 @@ export default class Enrich
       data.isPersonal = personalActors.length > 0;
       data.personalActors = personalActors.map((a) => a.name).sort((a, b) => a.localeCompare(b)).join('&#013;');
 
-      data.description = TextEditor.enrichHTML(data.description, { secrets: canEdit || playerEdit });
+      // Enrich w/ TextEditor, but first sanitize w/ DOMPurify, allowing only iframes with YouTube embed.
+      data.description = TextEditor.enrichHTML(DOMPurify.sanitizeWithVideo(data.description), {
+         secrets: canEdit || playerEdit
+      });
 
       data.questIconType = void 0;
 
@@ -337,12 +341,10 @@ export default class Enrich
 
       data.data_tasks = data.tasks.map((task) =>
       {
-         // Note: We no longer are allowing user data to be enriched / currently escaping in Handlebars template.
-         // XSS vulnerability w/ script data entered by user. This may change in the future as it might be possible to
-         // provide a regex to verify and only upgrade content links and avoid scripts though that is a hard task.
-         // task.name = TextEditor.enrichHTML(task.name);
-
-         return task;
+         return {
+            ...task,
+            name: TextEditor.enrichHTML(DOMPurify.sanitize(task.name))
+         };
       });
 
       data.data_rewards = data.rewards.map((item) =>
@@ -365,7 +367,7 @@ export default class Enrich
          const itemLink = type === 'item' && !canEdit && !canPlayerDrag && !item.locked;
 
          return {
-            name: item.data.name,
+            name: TextEditor.enrichHTML(DOMPurify.sanitize(item.data.name)),
             img: item.data.img,
             type,
             hidden: item.hidden,

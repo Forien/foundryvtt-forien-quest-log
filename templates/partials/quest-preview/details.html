@@ -130,7 +130,7 @@
             </div>
             {{/if}}
             <div class="editable-container">
-              <p class="task-name {{../wrapNameLengthCSS}}">{{name}}</p>
+              <p class="task-name {{../wrapNameLengthCSS}}">{{{name}}}</p>
             </div>
             {{#if (or ../canEdit ../playerEdit)}}
             <div class="actions tasks {{#unless ../canEdit}}is-player{{/unless}}">
@@ -171,7 +171,7 @@
             <div class="reward-image" style="background-image: url({{img}})" data-uuidv4="{{uuidv4}}"></div>
           </div>
           <div class="editable-container {{#if draggable}}draggable{{/if}} {{#if isLink}}is-link{{/if}}" data-transfer="{{transfer}}" data-uuidv4="{{uuidv4}}" {{#if draggable}}draggable="true"{{/if}}>
-            <p class="reward-name">{{name}}</p>
+            <p class="reward-name">{{{name}}}</p>
           </div>
           <div class="actions rewards {{#unless ../canEdit}}is-player{{/unless}}">
             {{#if ../canEdit}}
