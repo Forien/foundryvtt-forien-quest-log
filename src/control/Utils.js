@@ -244,8 +244,8 @@ export default class Utils
    static tinyMCEOptions(initialContent = '')
    {
       return {
-         plugins: "emoticons hr image link lists media charmap table save",
-         toolbar: "styleselect | formatgroup | insertgroup | table | bullist numlist | save",
+         plugins: "emoticons hr image link lists media charmap table code save",
+         toolbar: "styleselect | formatgroup | insertgroup | table | bullist numlist | code | save",
          toolbar_groups: {
             formatgroup: {
                icon: 'format',
@@ -261,6 +261,7 @@ export default class Utils
          file_picker_types: 'image media',
          media_alt_source: false,
          media_poster: false,
+         valid_children: '+body[style]',
          setup: (editor) =>
          {
             // Close the editor on 'esc' key pressed; reset content; invoke the registered Foundry save callback with
