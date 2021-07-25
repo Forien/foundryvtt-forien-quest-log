@@ -356,10 +356,8 @@ export default class QuestPreview extends FormApplication
 
    /**
     * Provide TinyMCE overrides when an editor is activated. The overrides are important to provide custom options to
-    * configure TinyMCE. This is very important as Foundry by default allows source code editing and that opens up an
-    * XSS vulnerability with data stored in Quest as there are no content sanitation filters applied to quest data.
-    * There are also various other content plugins enabled in the custom options and the ability to respond to the
-    * `esc` key to quit editing.
+    * configure TinyMCE. There are various other content plugins enabled in the custom options and the ability to
+    * respond to the `esc` key to quit editing.
     *
     * @override
     * @see {@link Utils.tinyMCEOptions}
@@ -368,6 +366,10 @@ export default class QuestPreview extends FormApplication
    activateEditor(name, options = {}, initialContent = '')
    {
       super.activateEditor(name, Object.assign({}, options, Utils.tinyMCEOptions(initialContent)), initialContent);
+
+      // Remove the activate editor button as FQL has a transparent toolbar background. If pressed twice it will create
+      // an error.
+      if (this.editors[name].button) { this.editors[name].button.remove(); }
    }
 
    /**
