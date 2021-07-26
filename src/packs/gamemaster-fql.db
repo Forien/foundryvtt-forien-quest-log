@@ -1,4 +1,13 @@
+/** 
+* Macro Compendium for Gamemasters (in progress)
+*
+* Macros related to controlling player 
+* access to the Quest Log etc. 
+* ie: Allowing players to create quests.
+* 
+*/
 
+// Turning on allows players to accept quests 
 {   "name":"allowPlayersAccept",
     "type":"script",
     "author":"9ipXx0z3SgUqte0m",
@@ -11,7 +20,8 @@
     await this.update({ img }, { diff: false });",
     "folder":null,
     "sort":0,
-    "permission":{"default":0,"9ipXx0z3SgUqte0m":3},
+    "permission":
+        {"default":0,"9ipXx0z3SgUqte0m":3},
     "flags":
         {"core":
             {"sourceId":"Macro.wORXdumwoLcSGyJm"}
@@ -19,6 +29,7 @@
     "_id":"Xcm48ES1vyez2Tsx"
 }
 
+// Turning on allows players to create quests
 {   "name":"allowPlayersCreate",
     "type":"script",
     "author":"9ipXx0z3SgUqte0m",
@@ -31,7 +42,8 @@
     await this.update({ img }, { diff: false });",
     "folder":null,
     "sort":0,
-    "permission":{"default":0,"9ipXx0z3SgUqte0m":3},
+    "permission":
+        {"default":0,"9ipXx0z3SgUqte0m":3},
     "flags":
         {"core":
             {"sourceId":"Macro.waUjPG8949x7RKaF"}
@@ -39,6 +51,7 @@
     "_id":"LubbMc37l4Q6E6Rc"
 }
 
+// Turning on allows players to quest drag rewards from the Quest Details window to their owned Actors
 {   "name":"allowPlayersDrag",
     "type":"script",
     "author":"9ipXx0z3SgUqte0m",
@@ -51,7 +64,8 @@
     \nawait this.update({ img }, { diff: false });",
     "folder":null,
     "sort":0,
-    "permission":{"default":0,"9ipXx0z3SgUqte0m":3},
+    "permission":
+        {"default":0,"9ipXx0z3SgUqte0m":3},
     "flags":
         {"core":
             {"sourceId":"Macro.Pi5kFetKpoxbDpDI"}
@@ -59,14 +73,134 @@
     "_id":"Y7IbCvfOkqKNzZtE"
 }
 
-{"name":"countHidden","type":"script","author":"9ipXx0z3SgUqte0m","img":"icons/svg/dice-target.svg","scope":"global","command":"const newState = !game.settings.get('forien-quest-log', '<countHidden>');\nawait game.settings.set('forien-quest-log', 'questTrackerTasks', newState);\nconst img = newState ? 'modules/forien-quest-log/icons/macros/<countHidden on>.jpg' : 'modules/forien-quest-log/icons/macros/<countHidden off>.jpg';\nawait this.update({ img }, { diff: false });","folder":null,"sort":0,"permission":{"default":0,"9ipXx0z3SgUqte0m":3},"flags":{"core":{"sourceId":"Macro.ZRxjNrq4TjdsT4Fq"}},"_id":"3zlgPO8hvQEGxreF"}
+// Turning on allows the number of completed/total tasks to include hidden tasks
+{   "name":"countHidden",
+    "type":"script",
+    "author":"9ipXx0z3SgUqte0m",
+    "img":"icons/svg/dice-target.svg",
+    "scope":"global",
+    "command":
+    "const newState = !game.settings.get('forien-quest-log', '<countHidden>');
+    \nawait game.settings.set('forien-quest-log', 'questTrackerTasks', newState);
+    \nconst img = newState ? 'modules/forien-quest-log/icons/macros/<countHidden on>.jpg' : 'modules/forien-quest-log/icons/macros/<countHidden off>.jpg';
+    \nawait this.update({ img }, { diff: false });",
+    "folder":null,
+    "sort":0,
+    "permission":
+        {"default":0,"9ipXx0z3SgUqte0m":3},
+    "flags":
+        {"core":
+            {"sourceId":"Macro.ZRxjNrq4TjdsT4Fq"}
+        },
+    "_id":"3zlgPO8hvQEGxreF"
+}
 
-{"name":"hideFQLFromPlayers","type":"script","author":"9ipXx0z3SgUqte0m","img":"icons/svg/dice-target.svg","scope":"global","command":"const newState = !game.settings.get('forien-quest-log', '<hideFQLFromPlayers>');\nawait game.settings.set('forien-quest-log', 'questTrackerTasks', newState);\nconst img = newState ? 'modules/forien-quest-log/icons/macros/<hideFQLFromPlayers on>.jpg' : 'modules/forien-quest-log/icons/macros/<hideFQLFromPlayers off>.jpg';\nawait this.update({ img }, { diff: false });","folder":null,"sort":0,"permission":{"default":0,"9ipXx0z3SgUqte0m":3},"flags":{"core":{"sourceId":"Macro.NAGWmHA8NbRe8n6G"}},"_id":"4iwIOXVyRJG0I3U9"}
+// Turning on hides the Quest Log from all players. Only GM level users will be able to access the Quest Log
+{   "name":"hideFQLFromPlayers",
+    "type":"script",
+    "author":"9ipXx0z3SgUqte0m",
+    "img":"icons/svg/dice-target.svg",
+    "scope":"global",
+    "command":
+    "const newState = !game.settings.get('forien-quest-log', '<hideFQLFromPlayers>');
+    \nawait game.settings.set('forien-quest-log', 'questTrackerTasks', newState);
+    \nconst img = newState ? 'modules/forien-quest-log/icons/macros/<hideFQLFromPlayers on>.jpg' : 'modules/forien-quest-log/icons/macros/<hideFQLFromPlayers off>.jpg';
+    \nawait this.update({ img }, { diff: false });",
+    "folder":null,
+    "sort":0,
+    "permission":
+        {"default":0,"9ipXx0z3SgUqte0m":3},
+    "flags":
+        {"core":
+            {"sourceId":"Macro.NAGWmHA8NbRe8n6G"}
+        },
+    "_id":"4iwIOXVyRJG0I3U9"
+}
 
-{"name":"notifyRewardDrop","type":"script","author":"9ipXx0z3SgUqte0m","img":"icons/svg/dice-target.svg","scope":"global","command":"const newState = !game.settings.get('forien-quest-log', '<notifyRewardDrop>');\nawait game.settings.set('forien-quest-log', 'questTrackerTasks', newState);\nconst img = newState ? 'modules/forien-quest-log/icons/macros/<notifyRewardDrop on>.jpg' : 'modules/forien-quest-log/icons/macros/<notifyRewardDrop off>.jpg';\nawait this.update({ img }, { diff: false });","folder":null,"sort":0,"permission":{"default":0,"9ipXx0z3SgUqte0m":3},"flags":{"core":{"sourceId":"Macro.iRpr64ujy168mPyE"}},"_id":"lxglbIWnirUmf6fX"}
+// Turning on allows UI notifications when quest rewards are dropped onto player sheets
+{   "name":"notifyRewardDrop",
+    "type":"script",
+    "author":"9ipXx0z3SgUqte0m",
+    "img":"icons/svg/dice-target.svg",
+    "scope":"global",
+    "command":
+    "const newState = !game.settings.get('forien-quest-log', '<notifyRewardDrop>');
+    \nawait game.settings.set('forien-quest-log', 'questTrackerTasks', newState);
+    \nconst img = newState ? 'modules/forien-quest-log/icons/macros/<notifyRewardDrop on>.jpg' : 'modules/forien-quest-log/icons/macros/<notifyRewardDrop off>.jpg';
+    \nawait this.update({ img }, { diff: false });",
+    "folder":null,
+    "sort":0,
+    "permission":
+        {"default":0,"9ipXx0z3SgUqte0m":3},
+    "flags":
+        {"core":
+            {"sourceId":"Macro.iRpr64ujy168mPyE"}
+        },
+    "_id":"lxglbIWnirUmf6fX"
+}
 
-{"name":"trustedPlayerEdit","type":"script","author":"9ipXx0z3SgUqte0m","img":"icons/svg/dice-target.svg","scope":"global","command":"const newState = !game.settings.get('forien-quest-log', '<trustedPlayerEdit>');\nawait game.settings.set('forien-quest-log', 'questTrackerTasks', newState);\nconst img = newState ? 'modules/forien-quest-log/icons/macros/<trustedPlayerEdit on>.jpg' : 'modules/forien-quest-log/icons/macros/<trustedPlayerEdit off>.jpg';\nawait this.update({ img }, { diff: false });","folder":null,"sort":0,"permission":{"default":0,"9ipXx0z3SgUqte0m":3},"flags":{"core":{"sourceId":"Macro.MaybnUQX4qKlbEmb"}},"_id":"PPaazW9CFQg2zTYo"}
+// Turning on allows trusted players to have expanded quest editing and status control capabilities over quests they have ownership of
+{   "name":"trustedPlayerEdit",
+    "type":"script",
+    "author":"9ipXx0z3SgUqte0m",
+    "img":"icons/svg/dice-target.svg",
+    "scope":"global",
+    "command":
+    "const newState = !game.settings.get('forien-quest-log', '<trustedPlayerEdit>');
+    \nawait game.settings.set('forien-quest-log', 'questTrackerTasks', newState);
+    \nconst img = newState ? 'modules/forien-quest-log/icons/macros/<trustedPlayerEdit on>.jpg' : 'modules/forien-quest-log/icons/macros/<trustedPlayerEdit off>.jpg';
+    \nawait this.update({ img }, { diff: false });",
+    "folder":null,
+    "sort":0,
+    "permission":
+        {"default":0,"9ipXx0z3SgUqte0m":3},
+    "flags":
+        {"core":
+            {"sourceId":"Macro.MaybnUQX4qKlbEmb"}
+        },
+    "_id":"PPaazW9CFQg2zTYo"
+}
 
-{"name":"DB Migration","type":"script","author":"9ipXx0z3SgUqte0m","img":"icons/svg/dice-target.svg","scope":"global","command":"Hooks.call('ForienQuestLog.Run.DBMigration', 0);","folder":null,"sort":0,"permission":{"default":0,"9ipXx0z3SgUqte0m":3},"flags":{"core":{"sourceId":"Macro.3iDD3kLkISvFtHPb"}},"_id":"fNUAJr0SaTRdyKd9"}
+// This macro runs all DB migration
+// @param integer parameter (0 default) can be set to run a specific migration level to max level migration
+{   "name":"DB Migration",
+    "type":"script",
+    "author":"9ipXx0z3SgUqte0m",
+    "img":"icons/svg/dice-target.svg",
+    "scope":"global",
+    "command":"Hooks.call('ForienQuestLog.Run.DBMigration', 0);",
+    "folder":null,
+    "sort":0,
+    "permission":
+        {"default":0,"9ipXx0z3SgUqte0m":3},
+    "flags":
+        {"core":
+            {"sourceId":"Macro.3iDD3kLkISvFtHPb"}
+        },
+    "_id":"fNUAJr0SaTRdyKd9"
+}
 
-{"name":"defaultAbstractRewardImage","type":"script","author":"9ipXx0z3SgUqte0m","img":"icons/svg/dice-target.svg","scope":"global","command":"new FilePicker({\n   type: 'image',\n   \n   callback: async (path) =>\n   {\n      await game.settings.set('forien-quest-log', 'defaultAbstractRewardImage', path);\n   },\n}).browse();","folder":null,"sort":0,"permission":{"default":0,"9ipXx0z3SgUqte0m":3},"flags":{"core":{"sourceId":"Macro.qE4qeNVsR0Hj88Ja"}},"_id":"a5OXk20XJUo47Krj"}
+// This macro opens a FilePicker for the GM to select the default image assigned to new abstract rewards created in quests
+{   "name":"defaultAbstractRewardImage",
+    "type":"script",
+    "author":"9ipXx0z3SgUqte0m",
+    "img":"icons/svg/dice-target.svg",
+    "scope":"global",
+    "command":
+    "new FilePicker({
+        type: 'image',
+        callback: async (path) =>
+        {
+            await game.settings.set('forien-quest-log', 'defaultAbstractRewardImage', path);
+        },
+    }).browse();",
+    "folder":null,
+    "sort":0,
+    "permission":
+        {"default":0,"9ipXx0z3SgUqte0m":3},
+    "flags":
+        {"core":
+            {"sourceId":"Macro.qE4qeNVsR0Hj88Ja"}
+        },
+    "_id":"a5OXk20XJUo47Krj"
+}
