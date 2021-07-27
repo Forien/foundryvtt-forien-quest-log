@@ -537,7 +537,7 @@
           label {
             position: absolute;
             left: 22px;
-            width: 150px;
+            width: 170px;
             display: inline;
             font-weight: lighter;
           }
@@ -560,14 +560,14 @@
         .delete-splash {
           position: absolute;
           top: 30px;
-          left: 281px;
+          right: 0;
           @include button;
         }
 
         .change-splash-pos {
           position: absolute;
           top: 209px;
-          left: 281px;
+          right: 0;
           @include button;
         }
       }

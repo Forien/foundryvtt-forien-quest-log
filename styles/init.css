@@ -1049,7 +1049,7 @@
 .window-app.forien-quest-preview .quest-body .management .quest-splash .state-container label {
   position: absolute;
   left: 22px;
-  width: 150px;
+  width: 170px;
   display: inline;
   font-weight: lighter;
 }
@@ -1068,7 +1068,7 @@
 .window-app.forien-quest-preview .quest-body .management .quest-splash .delete-splash {
   position: absolute;
   top: 30px;
-  left: 281px;
+  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1090,7 +1090,7 @@
 .window-app.forien-quest-preview .quest-body .management .quest-splash .change-splash-pos {
   position: absolute;
   top: 209px;
-  left: 281px;
+  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
