@@ -704,6 +704,7 @@
   background: rgba(255, 255, 255, 0.15);
   border-radius: 5px;
   overflow: hidden;
+  margin-right: 4px;
 }
 .window-app.forien-quest-preview .quest-body .details-header .quest-setup .quest-details {
   flex: 1;
@@ -930,14 +931,14 @@
   flex: 1;
   word-wrap: break-word;
 }
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .quest-name-link.can-edit {
-  max-width: 310px;
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .quest-name-link .can-edit {
+  max-width: 290px;
 }
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .quest-name-link.player-edit {
-  max-width: 350px;
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .quest-name-link .player-edit {
+  max-width: 330px;
 }
-.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .quest-name-link.player {
-  max-width: 410px;
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .quest-name-link .player {
+  max-width: 390px;
 }
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .quest-name-link:hover {
   color: #ff6400;

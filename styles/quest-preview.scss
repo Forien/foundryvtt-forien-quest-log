@@ -127,6 +127,7 @@
           background: rgba(255, 255, 255, .15);
           border-radius: 5px;
           overflow: hidden;
+          margin-right: 4px;
         }
 
         .quest-details {
@@ -385,16 +386,16 @@
             flex: 1;
             word-wrap: break-word;
 
-            &.can-edit {
-              max-width: 310px;
+            .can-edit {
+              max-width: 290px;
             }
 
-            &.player-edit {
-              max-width: 350px;
+            .player-edit {
+              max-width: 330px;
             }
 
-            &.player {
-              max-width: 410px;
+            .player {
+              max-width: 390px;
             }
 
             &:hover {
