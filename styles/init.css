@@ -9,9 +9,6 @@
 .window-app.forien-quest-preview .window-content {
   padding: 0;
   margin: 0;
-  height: 100%;
-  overflow-x: unset;
-  overflow-y: unset;
 }
 #forien-quest-log .tab,
 #forien-quest-log-form .tab,
@@ -793,7 +790,7 @@
 }
 .window-app.forien-quest-preview .quest-body .quest-info .quest-description .description {
   height: calc(100% - 26px);
-  overflow: hidden;
+  overflow: auto;
   background: rgba(255, 255, 255, 0.4);
   border-radius: 5px;
   padding: 8px;
@@ -846,6 +843,10 @@
   background: rgba(255, 255, 255, 0.3);
   margin: 0 4px 2px 0;
   align-items: center;
+}
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks ul li:last-of-type,
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards ul li:last-of-type {
+  margin-bottom: 0;
 }
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .is-link,
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .is-link {
@@ -960,7 +961,6 @@
   padding: 0 16px;
   text-align: center;
   margin-right: 4px;
-  margin-bottom: 4px;
   background: transparent;
   justify-content: center;
 }
@@ -1165,7 +1165,7 @@
   transition: color 0.3s ease;
 }
 .window-app.forien-quest-preview .quest-body .editor {
-  height: calc(100% - 34px);
+  height: calc(100% - 30px);
 }
 .window-app.forien-quest-preview .quest-body .gmnotes .editor {
   height: calc(100% - 36px);

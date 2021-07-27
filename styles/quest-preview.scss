@@ -235,7 +235,7 @@
 
         .description {
           height: calc(100% - 26px);
-          overflow: hidden;
+          overflow: auto;
           background: rgba(255, 255, 255, .4);
           border-radius: 5px;
           padding: 8px;
@@ -291,6 +291,10 @@
               background: rgba(255, 255, 255, .3);
               margin: 0 4px 2px 0;
               align-items: center;
+            }
+
+            li:last-of-type {
+              margin-bottom: 0;
             }
           }
 
@@ -425,7 +429,7 @@
             padding: 0 16px;
             text-align: center;
             margin-right: 4px;
-            margin-bottom: 4px;
+            //margin-bottom: 4px;
             background: transparent;
             justify-content: center;
           }
@@ -633,7 +637,7 @@
     }
 
     .editor {
-      height: calc(100% - 34px);
+      height: calc(100% - 30px);
     }
 
     .gmnotes .editor {
