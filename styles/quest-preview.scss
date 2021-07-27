@@ -652,6 +652,11 @@
       border-radius: 5px;
     }
 
+    // Fix specifically for Warhammer 4th edition
+    .tox .tox-toolbar__group {
+      width: auto;
+    }
+
     .tox .tox-toolbar-overlord {
       background-color: transparent;
     }

@@ -1176,6 +1176,9 @@
   background: rgba(255, 255, 255, 0.5);
   border-radius: 5px;
 }
+.window-app.forien-quest-preview .quest-body .tox .tox-toolbar__group {
+  width: auto;
+}
 .window-app.forien-quest-preview .quest-body .tox .tox-toolbar-overlord {
   background-color: transparent;
 }
