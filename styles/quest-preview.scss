@@ -558,15 +558,16 @@
         }
 
         .delete-splash {
-          position: absolute;
-          top: 30px;
-          right: 0;
+          position: relative;
+          top: 0;
+          left: calc(100% - 22px);
           @include button;
         }
 
         .change-splash-pos {
-          position: absolute;
-          top: 209px;
+          position: relative;
+          top: calc(100% - 44px);
+          left: calc(100% - 22px);
           right: 0;
           @include button;
         }
