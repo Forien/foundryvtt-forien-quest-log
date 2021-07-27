@@ -1226,6 +1226,9 @@
   line-height: 18px;
   text-align: center;
 }
+#forien-quest-log-floating-window a.entity-link {
+  color: black;
+}
 #forien-quest-log-floating-window i.is-personal, #forien-quest-log-floating-window i.is-hidden {
   flex: 0 0 20px;
   line-height: 24px;
