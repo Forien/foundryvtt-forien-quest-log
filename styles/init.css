@@ -821,6 +821,9 @@
   margin-bottom: 4px;
   flex: 0 0 1px;
 }
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right span.spacer-edit {
+  flex: 0 0 18px;
+}
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks,
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards {
   flex: 0 0 calc(50% - 8px);
@@ -959,6 +962,9 @@
 }
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .reward {
   flex: 0 0 25px;
+}
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards span.spacer-edit {
+  flex: 0 0 18px;
 }
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .drop-info {
   flex: 1 0 25px;

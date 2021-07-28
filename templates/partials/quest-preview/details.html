@@ -138,7 +138,6 @@
             <div class="actions tasks {{#unless ../canEdit}}is-player{{/unless}}">
               <i class="fas fa-sort" draggable="true"></i>
               <span class="spacer"></span>
-              <i class="editable fas fa-pen" data-target="task.name" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
               {{#if ../canEdit}}
                 {{#if hidden}}
                   <i class="fas fa-eye-slash toggleHidden" data-target="task" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.TaskHidden'}}"></i>
@@ -146,6 +145,7 @@
                   <i class="fas fa-eye toggleHidden" data-target="task" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.TaskVisible'}}"></i>
                 {{/if}}
               {{/if}}
+              <i class="editable fas fa-pen" data-target="task.name" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
               <i class="delete fas fa-trash" data-target="tasks" data-task-name="{{name}}" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}"></i>
               <span class="justify-center"></span>
             </div>
@@ -179,9 +179,6 @@
             {{#if ../canEdit}}
               <i class="sort fas fa-sort" draggable="true"></i>
               <span class="spacer"></span>
-              {{#if (eq type 'abstract')}}
-                <i class="editable fas fa-pen" data-target="reward.name" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
-              {{/if}}
               {{#if hidden}}
                 <i class="fas fa-eye-slash toggleHidden" data-target="reward" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.RewardHidden'}}"></i>
               {{else}}
@@ -194,6 +191,11 @@
               <i class="fas fa-unlock-alt toggleLocked {{#unless ../canEdit}}is-player{{/unless}}" data-target="reward" data-uuidv4="{{uuidv4}}" title="{{unlockedTooltip}}"></i>
             {{/if}}
             {{#if ../canEdit}}
+              {{#if (eq type 'abstract')}}
+                <i class="editable fas fa-pen" data-target="reward.name" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
+              {{else}}
+                <span class="spacer-edit"></span>
+              {{/if}}
               <i class="delete fas fa-trash" data-target="rewards" data-reward-name="{{name}}" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}"></i>
               <span class="justify-center"></span>
             {{/if}}

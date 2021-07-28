@@ -265,6 +265,10 @@
           flex: 0 0 1px;
         }
 
+        span.spacer-edit {
+          flex: 0 0 18px;
+        }
+
         .quest-tasks,
         .quest-rewards {
           flex: 0 0 calc(50% - 8px);
@@ -422,6 +426,10 @@
             flex: 0 0 25px;
           }
 
+          span.spacer-edit {
+            flex: 0 0 18px;
+          }
+
           .drop-info {
             flex: 1 0 25px;
             line-height: 20px;
@@ -430,7 +438,6 @@
             padding: 0 16px;
             text-align: center;
             margin-right: 4px;
-            //margin-bottom: 4px;
             background: transparent;
             justify-content: center;
           }
