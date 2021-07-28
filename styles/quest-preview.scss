@@ -656,6 +656,7 @@
     // Fix specifically for Warhammer 4th edition
     .tox .tox-toolbar__group {
       width: auto;
+      padding: 0 2px;
     }
 
     .tox .tox-toolbar-overlord {
@@ -674,8 +675,12 @@
 
     .tox.tox-tinymce .tox-tbtn {
       padding: 0;
-      margin: 0 0 0 4px;
-      width: 32px;
+      margin: 2px 0;
+      width: 34px;
+
+      &.tox-tbtn--select {
+        font-size: 14px;
+      }
     }
 
     .tox.tox-tinymce .tox-tbtn[title="Formats"] {

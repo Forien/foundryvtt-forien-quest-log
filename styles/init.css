@@ -1184,6 +1184,7 @@
 }
 .window-app.forien-quest-preview .quest-body .tox .tox-toolbar__group {
   width: auto;
+  padding: 0 2px;
 }
 .window-app.forien-quest-preview .quest-body .tox .tox-toolbar-overlord {
   background-color: transparent;
@@ -1198,8 +1199,11 @@
 }
 .window-app.forien-quest-preview .quest-body .tox.tox-tinymce .tox-tbtn {
   padding: 0;
-  margin: 0 0 0 4px;
-  width: 32px;
+  margin: 2px 0;
+  width: 34px;
+}
+.window-app.forien-quest-preview .quest-body .tox.tox-tinymce .tox-tbtn.tox-tbtn--select {
+  font-size: 14px;
 }
 .window-app.forien-quest-preview .quest-body .tox.tox-tinymce .tox-tbtn[title=Formats] {
   width: 90px;
