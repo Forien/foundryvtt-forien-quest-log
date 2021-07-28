@@ -258,6 +258,11 @@
   display: block;
   justify-content: flex-start;
 }
+#forien-quest-log ::-webkit-scrollbar-corner,
+#forien-quest-log-form ::-webkit-scrollbar-corner,
+.window-app.forien-quest-preview ::-webkit-scrollbar-corner {
+  background: rgba(0, 0, 0, 0.1);
+}
 
 #forien-quest-log {
   min-width: 500px;

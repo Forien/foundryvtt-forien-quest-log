@@ -236,4 +236,9 @@
     display: block;
     justify-content: flex-start;
   }
+
+  // Defines the corner of any scrollbars.
+  ::-webkit-scrollbar-corner {
+    background: rgba(0, 0, 0, 0.1);
+  }
 }
