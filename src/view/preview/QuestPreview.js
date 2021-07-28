@@ -398,6 +398,9 @@ export default class QuestPreview extends FormApplication
       // This CSS selector responds to any subquest attached to the details section or subquests listed in objectives.
       html.on(jquery.click, '.quest-name-link', (event) => HandlerAny.questOpen(event));
 
+      // This registers for any element and prevents the circle / slash icon displaying for not being a drag target.
+      html.on(jquery.dragenter, (event) => event.preventDefault());
+
       html.on(jquery.dragstart, '.item-reward .editable-container', async (event) =>
        await HandlerDetails.rewardDragStartItem(event, this._quest));
 

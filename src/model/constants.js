@@ -19,6 +19,7 @@ const constants = {
  */
 const jquery = {
    click: 'click',
+   dragenter: 'dragenter',
    dragstart: 'dragstart',
    drop: 'drop',
    focus: 'focus',
