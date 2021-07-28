@@ -1,7 +1,7 @@
 #forien-quest-log-floating-window {
 
   .window-content {
-    color: #EEE;
+    color: $primary-color-darkbg-text;
     padding: 0 2px 0 0;
   }
 
@@ -11,7 +11,7 @@
   }
 
   #hidden {
-    color: #ffffff88;
+    color: $primary-color-darkbg-text-hidden;
   }
 
   .flexrow {
@@ -33,7 +33,7 @@
   }
 
   a.entity-link {
-    color: black;
+    color: $primary-color-entity-link;
   }
 
   i {

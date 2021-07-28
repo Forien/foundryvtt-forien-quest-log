@@ -5,9 +5,9 @@
   width: 300px;
   right: 320px;
   padding: 5px;
-  color: #ddd;
-  text-shadow: 1px 1px 1px #000;
+  color: $primary-color-darkbg-text;
   pointer-events: none;
+  text-shadow: 1px 1px 1px #000;
 
   .scrollable {
     overflow-y: auto;
@@ -17,8 +17,8 @@
   }
 
   &.background {
-    background: #33333399;
-    border: 2px solid #11111177;
+    background: $primary-color-bg-repositionable-app;
+    border: 2px solid $primary-color-border-repositionable-app;
     border-radius: 5px;
   }
 
@@ -32,20 +32,25 @@
   }
 
   #hidden {
-    color: #ffffff88;
+    color: $primary-color-darkbg-text-hidden;
   }
 
   .move-handle {
     position: absolute;
     top: -18px;
     left: 4px;
-    color: #ffffff88;
+    color: $primary-color-darkbg-text-hidden;
     text-shadow: none;
     pointer-events: auto;
   }
 
-  .entity-link {
-    background: #cccccc66;
+  a.entity-link {
+    color: $primary-color-entity-link;
+
+    // Remove text-shadow inherited above, but let default style link hover take effect.
+    &:not(:hover) {
+      text-shadow: none;
+    }
   }
 
   .quest:not(:last-child) {

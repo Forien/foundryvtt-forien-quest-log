@@ -118,8 +118,8 @@
       transition: border-color .3s ease, box-shadow .3s ease;
 
       &:hover {
-        border-color: $primary-accent-color;
-        box-shadow: 0 0 2px $primary-accent-color inset;
+        border-color: $primary-color-accent;
+        box-shadow: 0 0 2px $primary-color-accent inset;
       }
     }
 

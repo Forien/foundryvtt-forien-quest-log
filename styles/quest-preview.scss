@@ -30,7 +30,7 @@
       .quest-giver-gc {
         width: 100px;
         height: 100px;
-        background-color: rgba(0, 0, 0, .1);
+        background-color: $primary-color-bg-drop;
         border-radius: 5px;
         flex: 0 0 100px;
         margin-right: 8px;
@@ -162,7 +162,7 @@
           transition: color .3s ease;
 
           &:hover {
-            color: $primary-accent-color;
+            color: $primary-color-accent;
           }
         }
 
@@ -199,7 +199,7 @@
             }
 
             &:hover {
-              color: $primary-accent-color;
+              color: $primary-color-accent;
             }
           }
         }
@@ -352,7 +352,7 @@
             transition: color .3s ease;
 
             &:hover {
-              color: $primary-accent-color;
+              color: $primary-color-accent;
             }
           }
 
@@ -403,7 +403,7 @@
             }
 
             &:hover {
-              color: $primary-accent-color;
+              color: $primary-color-accent;
             }
 
             i {
@@ -486,6 +486,13 @@
       }
     }
 
+    .gmnotes {
+      .quest-gmnotes {
+        height: 100%;
+        overflow-y: hidden;
+      }
+    }
+
     .management {
       .row {
         display: flex;
@@ -519,11 +526,11 @@
           width: 100%;
           height: 200px;
           background-size: cover;
-          background-color: rgba(0, 0, 0, .1);
+          background-color: $primary-color-bg-drop;
           border-radius: 5px;
 
           &:hover {
-            background-color: rgba(0, 0, 0, .075);
+            background-color: $primary-color-hover-drop;
           }
         }
 
@@ -626,8 +633,8 @@
             transition: border-color .3s ease, box-shadow .3s ease;
 
             &:hover {
-              border-color: $primary-accent-color;
-              box-shadow: 0 0 2px $primary-accent-color inset;
+              border-color: $primary-color-accent;
+              box-shadow: 0 0 2px $primary-color-accent inset;
             }
           }
 
@@ -656,8 +663,10 @@
     // Tiny MCE overrides
 
     .tox:not(.tox-tinymce-inline) .tox-editor-header {
-      background: rgba(255, 255, 255, 0.5);
+      background: $background-color-light;
       border-radius: 5px;
+      display: inline-flex;
+      width: fit-content;
     }
 
     // Fix specifically for Warhammer 4th edition

@@ -53,7 +53,7 @@
     height: 26px;
 
     &:hover {
-      box-shadow: 0 0 0 1px $primary-accent-color inset;
+      box-shadow: 0 0 0 1px $primary-color-accent inset;
     }
   }
 
@@ -91,7 +91,7 @@
 
       &:hover {
         text-shadow: none;
-        color: $primary-accent-color;
+        color: $primary-color-accent;
       }
 
       &:first-child {
@@ -130,7 +130,6 @@
     .editor-content {
       height: 100%;
       padding: 0;
-      padding: 0 4px 0 0;
       overflow: auto;
     }
   }
@@ -167,7 +166,7 @@
       text-align: center;
       border: none;
       cursor: pointer;
-      color: rgba(0,0,0,.75);
+      color: $primary-color-icon;
       transition: color .3s ease;
 
       // Special handling to align sort icon to the left and use margin-right: auto to push rest of content right.
@@ -199,11 +198,11 @@
       }
 
       &:hover {
-        color: $primary-accent-color;
+        color: $primary-color-accent;
       }
 
       &:hover.is-player {
-        color: black;
+        color: $primary-color-icon;
         cursor: default;
       }
 
@@ -224,7 +223,7 @@
       cursor: pointer;
 
       &:hover {
-        color: $primary-accent-color;
+        color: $primary-color-accent;
       }
     }
   }

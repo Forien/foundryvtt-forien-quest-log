@@ -145,7 +145,6 @@
 .window-app.forien-quest-preview .editor .editor-content {
   height: 100%;
   padding: 0;
-  padding: 0 4px 0 0;
   overflow: auto;
 }
 #forien-quest-log .actions,
@@ -225,7 +224,7 @@
 #forien-quest-log .actions i:hover.is-player,
 #forien-quest-log-form .actions i:hover.is-player,
 .window-app.forien-quest-preview .actions i:hover.is-player {
-  color: black;
+  color: rgba(0, 0, 0, 0.75);
   cursor: default;
 }
 #forien-quest-log .actions i:first-child,
@@ -1011,6 +1010,10 @@
   margin: 0;
   padding-right: 8px;
 }
+.window-app.forien-quest-preview .quest-body .gmnotes .quest-gmnotes {
+  height: 100%;
+  overflow-y: hidden;
+}
 .window-app.forien-quest-preview .quest-body .management .row {
   display: flex;
   flex: 0 0 1px;
@@ -1187,6 +1190,10 @@
 .window-app.forien-quest-preview .quest-body .tox:not(.tox-tinymce-inline) .tox-editor-header {
   background: rgba(255, 255, 255, 0.5);
   border-radius: 5px;
+  display: inline-flex;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 .window-app.forien-quest-preview .quest-body .tox .tox-toolbar__group {
   width: auto;
@@ -1267,9 +1274,9 @@
   width: 300px;
   right: 320px;
   padding: 5px;
-  color: #ddd;
-  text-shadow: 1px 1px 1px #000;
+  color: #EEE;
   pointer-events: none;
+  text-shadow: 1px 1px 1px #000;
 }
 #quest-tracker .scrollable {
   overflow-y: auto;
@@ -1300,8 +1307,11 @@
   text-shadow: none;
   pointer-events: auto;
 }
-#quest-tracker .entity-link {
-  background: rgba(204,204,204,0.4);
+#quest-tracker a.entity-link {
+  color: black;
+}
+#quest-tracker a.entity-link:not(:hover) {
+  text-shadow: none;
 }
 #quest-tracker .quest:not(:last-child) {
   margin-bottom: 16px;
