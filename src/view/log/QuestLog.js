@@ -82,6 +82,9 @@ export default class QuestLog extends Application
 
       html.on(jquery.click, '.actions.quest-status i.delete', HandlerLog.questDelete);
 
+      // This registers for any element and prevents the circle / slash icon displaying for not being a drag target.
+      html.on(jquery.dragenter, (event) => event.preventDefault());
+
       html.on(jquery.dragstart, '.drag-quest', void 0, HandlerLog.questDragStart);
 
       html.on(jquery.click, '.title', void 0, HandlerLog.questOpen);
