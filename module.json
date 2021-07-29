@@ -91,7 +91,20 @@
       "path": "lang/sv.json"
     }
   ],
-  "packs": [],
+  "packs": [
+    {
+      "name": "macros-gm",
+      "label": "FQL Macors (GM)",
+      "path": "./packs/macros/macros-gm.db",
+      "entity": "Macro"
+    },
+    {
+      "name": "macros-player",
+      "label": "FQL Macros (Player)",
+      "path": "./packs/macros/macros-player.db",
+      "entity": "Macro" 
+    }
+  ],
   "system": [],
   "dependencies": [],
   "socket": true,
