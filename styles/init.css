@@ -795,7 +795,7 @@
   margin-right: 8px;
 }
 .window-app.forien-quest-preview .quest-body .quest-info .quest-description .description {
-  height: calc(100% - 26px);
+  height: calc(100% - 30px);
   overflow: auto;
   background: rgba(255, 255, 255, 0.4);
   border-radius: 5px;
