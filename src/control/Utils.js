@@ -7,6 +7,71 @@ import { constants, settings } from '../model/constants.js';
 export default class Utils
 {
    /**
+    * Uses `document.execCommand('copy')` to copy the given text to the clipboard.
+    *
+    * @param {string}   text - Text to copy to the browser clipboard.
+    *
+    * @returns {boolean} Copy successful.
+    */
+   static copyTextToClipboard(text)
+   {
+      const textArea = document.createElement('textarea');
+
+      // *** This styling is an extra step which is likely not required. ***
+      //
+      // Why is it here? To ensure:
+      // 1. the element is able to have focus and selection.
+      // 2. if the element was to flash render it has minimal visual impact.
+      // 3. less flakyness with selection and copying which **might** occur if
+      //    the textarea element is not visible.
+      //
+      // The likelihood is the element won't even render, not even a
+      // flash, so some of these are just precautions. However in
+      // Internet Explorer the element is visible whilst the popup
+      // box asking the user for permission for the web page to
+      // copy to the clipboard.
+
+      // Place in the top-left corner of screen regardless of scroll position.
+      textArea.style.position = 'fixed';
+      textArea.style.top = '0';
+      textArea.style.left = '0';
+
+      // Ensure it has a small width and height. Setting to 1px / 1em
+      // doesn't work as this gives a negative w/h on some browsers.
+      textArea.style.width = '2em';
+      textArea.style.height = '2em';
+
+      // We don't need padding, reducing the size if it does flash render.
+      textArea.style.padding = '0';
+
+      // Clean up any borders.
+      textArea.style.border = 'none';
+      textArea.style.outline = 'none';
+      textArea.style.boxShadow = 'none';
+
+      // Avoid flash of the white box if rendered for any reason.
+      textArea.style.background = 'transparent';
+
+      textArea.value = text;
+
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+
+      let success = false;
+
+      try
+      {
+         success = document.execCommand('copy');
+      }
+      catch (err) { /**/ }
+
+      document.body.removeChild(textArea);
+
+      return success;
+   }
+
+   /**
     * A convenience method to return the module data object for FQL.
     *
     * This is a scoped location where we can store any FQL data.
@@ -224,75 +289,6 @@ export default class Utils
 
          return game.i18n.format(stringId, objData);
       });
-   }
-
-   /**
-    * Provides overrides for TinyMCE options. These options are selected for increased media embedding and restricting
-    * source code editing. It's important to override the default Foundry options to explicitly disable source code
-    * editing as there is no script filter on FQL quest data. Data entered normally into TinyMCE is escaped, but not
-    * through the source code tool which is turned on by default in FoundryVTT core.
-    *
-    * Note the media include. Users can input links to YouTube / Vimeo to create embeds without the need
-    * to copy / paste iframe / embed code. Also note the setup function below which hides the embed option of TinyMCE.
-    * Presently (06/10/21) there isn't a way to hide the embed tag. It should be noted though that the media field
-    * of TinyMCE does have a XSS sanitation filter disabling scripts in embedded content.
-    *
-    * @param {string}   [initialContent=''] - The initial content of the editor. Used to reset content via `Esc` key.
-    *
-    * @returns {object} TinyMCE options
-    */
-   static tinyMCEOptions(initialContent = '')
-   {
-      return {
-         plugins: "emoticons hr image link lists media charmap table code save",
-         toolbar: "styleselect | formatgroup | insertgroup | table | bullist numlist | code | save",
-         toolbar_groups: {
-            formatgroup: {
-               icon: 'format',
-               tooltip: 'Formatting',
-               items: 'forecolor backcolor | removeformat'
-            },
-            insertgroup: {
-               icon: 'plus',
-               tooltip: 'Insert',
-               items: 'link image media emoticons charmap hr'
-            }
-         },
-         file_picker_types: 'image media',
-         media_alt_source: false,
-         media_poster: false,
-         valid_children: '+body[style]',
-         setup: (editor) =>
-         {
-            // Close the editor on 'esc' key pressed; reset content; invoke the registered Foundry save callback with
-            // a deferral via setTimeout.
-            editor.on('keydown', ((e) =>
-            {
-               if (e.keyCode === 27)
-               {
-                  editor.resetContent(initialContent);
-                  setTimeout(() => editor.execCallback('save_onsavecallback'), 0);
-               }
-            }));
-
-            // Currently there is no easy way to remove the 'embed' tab from TinyMCE / media plugin; this hides it.
-            editor.on('ExecCommand', (event) =>
-            {
-               const command = event.command;
-               if (command === 'mceMedia')
-               {
-                  const tabElems = document.querySelectorAll('div[role="tablist"] .tox-tab');
-                  tabElems.forEach((tabElem) =>
-                  {
-                     if (tabElem.innerText === 'Embed')
-                     {
-                        tabElem.style.display = 'none';
-                     }
-                  });
-               }
-            });
-         }
-      };
    }
 
    /**

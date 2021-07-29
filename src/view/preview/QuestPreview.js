@@ -1,6 +1,7 @@
 import FQLDialog              from '../FQLDialog.js';
 import QuestDB                from '../../control/QuestDB.js';
 import Socket                 from '../../control/Socket.js';
+import TinyMCE                from '../../control/TinyMCE.js';
 import Utils                  from '../../control/Utils.js';
 import ViewManager            from '../../control/ViewManager.js';
 
@@ -365,7 +366,13 @@ export default class QuestPreview extends FormApplication
     */
    activateEditor(name, options = {}, initialContent = '')
    {
-      super.activateEditor(name, Object.assign({}, options, Utils.tinyMCEOptions(initialContent)), initialContent);
+      const tinyMCEOptions = TinyMCE.options({
+         editorName: name,
+         initialContent,
+         questId: this._quest.id
+      });
+
+      super.activateEditor(name, Object.assign({}, options, tinyMCEOptions), initialContent);
 
       // Remove the activate editor button as FQL has a transparent toolbar background. If pressed twice it will create
       // an error.
