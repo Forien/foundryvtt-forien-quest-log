@@ -10,7 +10,7 @@
 // Turning on allows players to accept quests 
 {   "name":"allowPlayersAccept",
     "type":"script",
-    "author":"9ipXx0z3SgUqte0m",
+    "author":"Forien's Quest Log",
     "img":"icons/svg/dice-target.svg",
     "scope":"global",
     "command":
@@ -32,7 +32,7 @@
 // Turning on allows players to create quests
 {   "name":"allowPlayersCreate",
     "type":"script",
-    "author":"9ipXx0z3SgUqte0m",
+    "author":"Forien's Quest Log",
     "img":"icons/svg/dice-target.svg",
     "scope":"global",
     "command":
@@ -54,7 +54,7 @@
 // Turning on allows players to quest drag rewards from the Quest Details window to their owned Actors
 {   "name":"allowPlayersDrag",
     "type":"script",
-    "author":"9ipXx0z3SgUqte0m",
+    "author":"Forien's Quest Log",
     "img":"icons/svg/dice-target.svg",
     "scope":"global",
     "command":
@@ -76,7 +76,7 @@
 // Turning on allows the number of completed/total tasks to include hidden tasks
 {   "name":"countHidden",
     "type":"script",
-    "author":"9ipXx0z3SgUqte0m",
+    "author":"Forien's Quest Log",
     "img":"icons/svg/dice-target.svg",
     "scope":"global",
     "command":
@@ -98,7 +98,7 @@
 // Turning on hides the Quest Log from all players. Only GM level users will be able to access the Quest Log
 {   "name":"hideFQLFromPlayers",
     "type":"script",
-    "author":"9ipXx0z3SgUqte0m",
+    "author":"Forien's Quest Log",
     "img":"icons/svg/dice-target.svg",
     "scope":"global",
     "command":
@@ -120,7 +120,7 @@
 // Turning on allows UI notifications when quest rewards are dropped onto player sheets
 {   "name":"notifyRewardDrop",
     "type":"script",
-    "author":"9ipXx0z3SgUqte0m",
+    "author":"Forien's Quest Log",
     "img":"icons/svg/dice-target.svg",
     "scope":"global",
     "command":
@@ -142,7 +142,7 @@
 // Turning on allows trusted players to have expanded quest editing and status control capabilities over quests they have ownership of
 {   "name":"trustedPlayerEdit",
     "type":"script",
-    "author":"9ipXx0z3SgUqte0m",
+    "author":"Forien's Quest Log",
     "img":"icons/svg/dice-target.svg",
     "scope":"global",
     "command":
@@ -165,7 +165,7 @@
 // @param integer parameter (0 default) can be set to run a specific migration level to max level migration
 {   "name":"DB Migration",
     "type":"script",
-    "author":"9ipXx0z3SgUqte0m",
+    "author":"Forien's Quest Log",
     "img":"icons/svg/dice-target.svg",
     "scope":"global",
     "command":"Hooks.call('ForienQuestLog.Run.DBMigration', 0);",
@@ -183,7 +183,7 @@
 // This macro opens a FilePicker for the GM to select the default image assigned to new abstract rewards created in quests
 {   "name":"defaultAbstractRewardImage",
     "type":"script",
-    "author":"9ipXx0z3SgUqte0m",
+    "author":"Forien's Quest Log",
     "img":"icons/svg/dice-target.svg",
     "scope":"global",
     "command":
