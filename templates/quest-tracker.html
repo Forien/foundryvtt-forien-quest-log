@@ -5,11 +5,13 @@
     <div class="quest">
       <h3 class="title" {{#if (or isHidden isInactive)}}id="hidden"{{/if}}>
         {{#if hasObjectives}}<a class="quest-tracker-header" data-quest-id="{{id}}">{{/if}}
-        {{#if isGM}}
-           {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
-           {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
-        {{/if}}
-        {{name}}
+        <span>
+          {{#if isGM}}
+             {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
+             {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
+          {{/if}}
+          {{name}}
+        </span>
         {{#if hasObjectives}}</a>{{/if}}
         <span class="quest-tracker-span"></span>
         <a class="quest-tracker-link" data-quest-id="{{id}}"><i class="fas fa-pen-nib fa-fw"></i></a>
