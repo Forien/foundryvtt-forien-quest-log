@@ -1,4 +1,5 @@
-import Utils   from '../control/Utils.js';
+import Utils            from '../control/Utils.js';
+import QuestPreviewShim from '../view/preview/QuestPreviewShim.js';
 
 import { constants, questStatus } from './constants.js';
 
@@ -42,6 +43,11 @@ export default class Quest
        * @type {JournalEntry}
        */
       this.entry = entry;
+
+      if (this.entry && this._id !== null)
+      {
+         this.entry._sheet = new QuestPreviewShim(this._id);
+      }
    }
 
    /**

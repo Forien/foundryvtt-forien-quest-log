@@ -1,9 +1,10 @@
-import Enrich        from './Enrich.js';
-import Socket        from './Socket.js';
-import Utils         from './Utils.js';
-import QuestFolder   from '../model/QuestFolder.js';
-import Quest         from '../model/Quest.js';
-import collect       from '../../external/collect.js';
+import Enrich           from './Enrich.js';
+import Socket           from './Socket.js';
+import Utils            from './Utils.js';
+import QuestFolder      from '../model/QuestFolder.js';
+import Quest            from '../model/Quest.js';
+import QuestPreviewShim from '../view/preview/QuestPreviewShim.js';
+import collect          from '../../external/collect.js';
 
 import { constants, questStatus, settings } from '../model/constants.js';
 
@@ -158,14 +159,21 @@ export default class QuestDB
          {
             const content = entry.getFlag(constants.moduleName, constants.flagDB);
 
+            if (!content) { continue; }
+
             // Retrieve the flag content for the quest and if presently observable add a new QuestEntry to QuestDB.
-            if (content && s_IS_OBSERVABLE(content, entry, isTrustedPlayerEdit))
+            if (s_IS_OBSERVABLE(content, entry, isTrustedPlayerEdit))
             {
                const quest = new Quest(content, entry);
 
                // Must set a QuestEntry w/ an undefined enrich as all quest data must be loaded before enrichment.
                // Also set `generate` to false as the CollectJS collections are rebuilt in below.
                s_SET_QUEST_ENTRY(new QuestEntry(quest, void 0), false);
+            }
+            else
+            {
+               // If JE / Quest is not observable then still set a QuestPreview shim.
+               entry._sheet = new QuestPreviewShim(entry.id);
             }
          }
 
@@ -583,7 +591,7 @@ export default class QuestDB
     *
     * @param {string}   questId - A Foundry ID
     *
-    * @returns {Quest} The Quest.
+    * @returns {Quest|void} The Quest.
     */
    static getQuest(questId)
    {
@@ -961,8 +969,11 @@ const s_JOURNAL_ENTRY_CREATE = async (entry, options, id) =>
 {
    const content = entry.getFlag(constants.moduleName, constants.flagDB);
 
+   // Exit early if no FQL quest data is available.
+   if (!content) { return; }
+
    // Process the quest content if it is currently observable and FQL is not hidden from the current user.
-   if (content && s_IS_OBSERVABLE(content, entry) && !Utils.isFQLHiddenFromPlayers())
+   if (s_IS_OBSERVABLE(content, entry) && !Utils.isFQLHiddenFromPlayers())
    {
       const quest = new Quest(content, entry);
 
@@ -994,6 +1005,11 @@ const s_JOURNAL_ENTRY_CREATE = async (entry, options, id) =>
          // And save the quest. This will cause an update to occur and s_JOURNAL_ENTRY_UPDATE will hydrate the change.
          if (removeSubs.length > 0) { await quest.save(); }
       }
+   }
+   else
+   {
+      // If JE / Quest is not observable then still set a QuestPreview shim.
+      entry._sheet = new QuestPreviewShim(entry.id);
    }
 };
 
@@ -1102,6 +1118,11 @@ const s_JOURNAL_ENTRY_UPDATE = (entry, flags, options, id) =>
          }
 
          Hooks.callAll(QuestDB.hooks.addQuestEntry, questEntry, flags, options, id);
+      }
+      else
+      {
+         // If JE / Quest is not observable then still set a QuestPreview shim.
+         entry._sheet = new QuestPreviewShim(entry.id);
       }
    }
 };

@@ -47,11 +47,11 @@ class QuestAPI
 
          const quest = QuestDBShim.getQuest(questId);
 
-         if (quest === null)
+         if (quest === void 0)
          {
             if (notify)
             {
-               ui.notifications.error(game.i18n.localize('ForienQuestLog.Notifications.CannotOpen'));
+               ViewManager.notifications.warn(game.i18n.localize('ForienQuestLog.Notifications.CannotOpen'));
             }
             else
             {
@@ -69,7 +69,7 @@ class QuestAPI
       {
          if (notify)
          {
-            ui.notifications.error(game.i18n.localize('ForienQuestLog.Notifications.CannotOpen'));
+            ViewManager.notifications.error(game.i18n.localize('ForienQuestLog.Notifications.CannotOpen'));
          }
          else
          {

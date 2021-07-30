@@ -139,7 +139,7 @@ class QuestDBShim
     *
     * @param {string}   questId - A Foundry ID
     *
-    * @returns {Quest|null} The Quest or null.
+    * @returns {Quest|void} The Quest or null.
     */
    static getQuest(questId)
    {
