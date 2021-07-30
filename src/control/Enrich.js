@@ -390,12 +390,25 @@ export default class Enrich
 
       data.hasObjectives = data.data_tasks.length + data.data_subquest.length > 0;
 
+      // Determine if all rewards are visible / unlocked
+      data.allRewardsVisible = true;
+      data.allRewardsUnlocked = true;
+      for (const reward of data.data_rewards)
+      {
+         if (reward.hidden) { data.allRewardsVisible = false; }
+         if (reward.locked) { data.allRewardsUnlocked = false; }
+      }
+
       return data;
    }
 }
 
 /**
  * @typedef {QuestData}    EnrichData
+ *
+ * @property {boolean}     allRewardsVisible - Are all rewards visible. Controls show all / hide all button.
+ *
+ * @property {boolean}     allRewardsUnlocked - Are all rewards unlocked. Controls unlock all / lock all button.
  *
  * @property {boolean}     canEdit - Is full editing allowed. Either GM or trusted player w/ edit capability.
  *

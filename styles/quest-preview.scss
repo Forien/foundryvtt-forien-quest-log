@@ -421,6 +421,15 @@
         }
 
         .quest-rewards {
+          button {
+            &.hide-all-rewards, &.show-all-rewards {
+              flex: 0 0 90px;
+            }
+
+            &.lock-all-rewards, &.unlock-all-rewards {
+              flex: 0 0 98px;
+            }
+          }
 
           .reward {
             flex: 0 0 25px;

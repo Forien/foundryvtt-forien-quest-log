@@ -484,10 +484,17 @@ export default class QuestPreview extends FormApplication
          html.on(jquery.drop, '.rewards-box',
           async (event) => await HandlerDetails.rewardDropItem(event, this._quest, this));
 
+         html.on(jquery.click, '.quest-rewards .hide-all-rewards', async () =>
+          await HandlerDetails.rewardsHideAll(this._quest, this));
+
+         html.on(jquery.click, '.quest-rewards .lock-all-rewards', async () =>
+          await HandlerDetails.rewardsLockAll(this._quest, this));
+
          html.on(jquery.click, '.abstract-reward .reward-image', async (event) =>
           await HandlerDetails.rewardSelectAbstractImage(event, this._quest, this));
 
-         html.on(jquery.click, '.show-all-rewards', async () => await HandlerDetails.rewardsShowAll(this._quest, this));
+         html.on(jquery.click, '.quest-rewards .show-all-rewards', async () =>
+          await HandlerDetails.rewardsShowAll(this._quest, this));
 
          html.on(jquery.click, '.actions.rewards .toggleHidden', async (event) =>
           await HandlerDetails.rewardToggleHidden(event, this._quest, this));

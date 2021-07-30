@@ -556,6 +556,32 @@ export default class HandlerDetails
    }
 
    /**
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    *
+    * @returns {Promise<void>}
+    */
+   static async rewardsHideAll(quest, questPreview)
+   {
+      for (const reward of quest.rewards) {  reward.hidden = true; }
+      if (quest.rewards.length) { await questPreview.saveQuest(); }
+   }
+
+   /**
+    * @param {Quest}          quest - The current quest being manipulated.
+    *
+    * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.
+    *
+    * @returns {Promise<void>}
+    */
+   static async rewardsLockAll(quest, questPreview)
+   {
+      for (const reward of quest.rewards) {  reward.locked = true; }
+      if (quest.rewards.length) { await questPreview.saveQuest(); }
+   }
+
+   /**
     * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
     * @param {Quest}             quest - The current quest being manipulated.

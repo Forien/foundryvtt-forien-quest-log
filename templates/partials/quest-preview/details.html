@@ -153,15 +153,25 @@
           </li>
           {{/each}}
         </ul>
-      </div>
+        <template id="camera-views">…</template>      </div>
     </div>
 
     <div class="quest-rewards">
       <header>
         <h2>{{localize 'ForienQuestLog.QuestPreview.Rewards'}}</h2>
         {{#if canEdit}}
-          <button class="show-all-rewards" title="{{localize 'ForienQuestLog.Tooltips.ShowAll'}}"><i class="fas fa-eye-slash"></i> {{localize 'ForienQuestLog.Tooltips.ShowAll'}}</button>
-          <button class="unlock-all-rewards" title="{{localize 'ForienQuestLog.Tooltips.UnlockAll'}}"><i class="fas fa-unlock-alt"></i> {{localize 'ForienQuestLog.Tooltips.UnlockAll'}}</button>
+          {{#if data_rewards.length}}
+            {{#if allRewardsVisible}}
+              <button class="hide-all-rewards" title="{{localize 'ForienQuestLog.Tooltips.HideAll'}}"><i class="fas fa-eye-slash"></i> {{localize 'ForienQuestLog.Tooltips.HideAll'}}</button>
+            {{else}}
+              <button class="show-all-rewards" title="{{localize 'ForienQuestLog.Tooltips.ShowAll'}}"><i class="fas fa-eye"></i> {{localize 'ForienQuestLog.Tooltips.ShowAll'}}</button>
+            {{/if}}
+            {{#if allRewardsUnlocked}}
+              <button class="lock-all-rewards" title="{{localize 'ForienQuestLog.Tooltips.LockAll'}}"><i class="fas fa-lock"></i> {{localize 'ForienQuestLog.Tooltips.LockAll'}}</button>
+            {{else}}
+              <button class="unlock-all-rewards" title="{{localize 'ForienQuestLog.Tooltips.UnlockAll'}}"><i class="fas fa-unlock-alt"></i> {{localize 'ForienQuestLog.Tooltips.UnlockAll'}}</button>
+            {{/if}}
+          {{/if}}
           <button class="add-abstract" title="{{localize 'ForienQuestLog.Tooltips.AddAbstract'}}"><i class="fas fa-plus"></i> {{localize 'ForienQuestLog.Tooltips.AddAbstract'}}</button>
         {{/if}}
       </header>

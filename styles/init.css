@@ -959,6 +959,12 @@
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-tasks .task-hidden .task-name {
   opacity: 0.5;
 }
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards button.hide-all-rewards, .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards button.show-all-rewards {
+  flex: 0 0 90px;
+}
+.window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards button.lock-all-rewards, .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards button.unlock-all-rewards {
+  flex: 0 0 98px;
+}
 .window-app.forien-quest-preview .quest-body .quest-info .quest-col-right .quest-rewards .reward {
   flex: 0 0 25px;
 }

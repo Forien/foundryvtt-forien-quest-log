@@ -203,6 +203,8 @@
       "Edit": "Éditer",
       "HiddenQuestNoPlayers": "Cette quête est cachée à tous les joueurs.",
       "Hide": "Cacher",
+      "HideAll": "Tout cacher",
+      "LockAll": "Tout verrouiller",
       "RewardHidden": "Récompense cachée. Cocher pour la montrer.",
       "RewardLocked": "Récompense bloquée. Cliquer pour débloquer.",
       "RewardLockedPlayer": "Récompense bloquée.",
