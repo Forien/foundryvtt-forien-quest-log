@@ -49,7 +49,7 @@ export default class QuestPreviewShim
     *
     * @private
     */
-   _render()
+   async _render()
    {
       this.render();
    }
