@@ -24,8 +24,9 @@ import { constants, noteControls, settings } from '../model/constants.js';
  *
  * Foundry game hooks:
  * - `dropActorSheetData` - {@link FQLHooks.dropActorSheetData} - Handle drop data for reward items in actor sheet.
+ * - `dropCanvasData` - {@link FQLHooks.dropCanvasData} - Handle drop data for {@link Quest} on Foundry canvas.
  * - `getSceneControlButtons` - {@link FQLHooks.getSceneControlButtons} - Add FQL scene controls to 'note'.
- * - `hotbarDrop` - {@link FQLHooks.hotbarDrop} - Handle Quest drops to the macro hotbar.
+ * - `hotbarDrop` - {@link FQLHooks.hotbarDrop} - Handle {@link Quest} drops to the macro hotbar.
  * - `renderJournalDirectory` - {@link FQLHooks.renderJournalDirectory} - Add 'open quest log' / show FQL folder.
  * - `renderJournalSheet` - {@link FQLHooks.renderJournalSheet} - Hide FQL directory from journal sheet option items.
  *
@@ -52,6 +53,7 @@ export default class FQLHooks
 
       // Respond to Foundry in game hooks.
       Hooks.on('dropActorSheetData', FQLHooks.dropActorSheetData);
+      Hooks.on('dropCanvasData', FQLHooks.dropCanvasData);
       Hooks.on('getSceneControlButtons', FQLHooks.getSceneControlButtons);
       Hooks.on('hotbarDrop', FQLHooks.hotbarDrop);
       Hooks.on('renderJournalDirectory', FQLHooks.renderJournalDirectory);
@@ -87,6 +89,21 @@ export default class FQLHooks
          sheet: { id: sheet.id },
          data
       });
+   }
+
+   /**
+    * Converts a Quest drop on the canvas type to `JournalEntry` if the quest exists in the QuestDB.
+    *
+    * @param {Canvas}   foundryCanvas - The Foundry canvas.
+    *
+    * @param {object}   data - Drop data for canvas.
+    */
+   static dropCanvasData(foundryCanvas, data)
+   {
+      if (data.type === 'Quest' && QuestDB.getQuest(data.id) !== void 0)
+      {
+         data.type = 'JournalEntry';
+      }
    }
 
    /**
