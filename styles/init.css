@@ -1222,6 +1222,11 @@
   width: 90px;
 }
 
+#forien-quest-log-floating-window {
+  max-width: 400px;
+  min-width: 300px;
+  min-height: 200px;
+}
 #forien-quest-log-floating-window .window-content {
   color: #EEE;
   padding: 0 2px 0 0;
@@ -1254,6 +1259,7 @@
 #forien-quest-log-floating-window i.is-personal, #forien-quest-log-floating-window i.is-hidden {
   flex: 0 0 20px;
   line-height: 24px;
+  cursor: pointer;
 }
 #forien-quest-log-floating-window .folder-toggle {
   cursor: pointer;
@@ -1265,6 +1271,39 @@
   text-align: center;
   margin-top: 50%;
   display: block;
+}
+#forien-quest-log-floating-window .entity-name {
+  flex: 0 0 1;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+#forien-quest-log-floating-window .entity-name i {
+  pointer-events: auto;
+  cursor: pointer;
+}
+#forien-quest-log-floating-window .entity-name.questlog-floating-task {
+  cursor: pointer;
+}
+#forien-quest-log-floating-window .entity-name::before {
+  content: "";
+  display: inline-block;
+  margin-right: 4px;
+  font-weight: 400;
+  font-family: "Font Awesome 5 Free";
+  width: 16px;
+}
+#forien-quest-log-floating-window .entity-name.minus-square::before {
+  content: "";
+  display: inline-block;
+  font-weight: 900;
+  width: 16px;
+}
+#forien-quest-log-floating-window .entity-name.check-square::before {
+  display: inline-block;
+  content: "";
+  font-weight: 900;
+  width: 16px;
 }
 
 #quest-tracker {
@@ -1280,9 +1319,8 @@
 }
 #quest-tracker .scrollable {
   overflow-y: auto;
-  max-height: 800px;
+  max-height: 750px;
   padding: 0 4px;
-  pointer-events: auto;
 }
 #quest-tracker.background {
   background: rgba(51,51,51,0.6);
@@ -1354,32 +1392,53 @@
 #quest-tracker .quest .tasks {
   margin: 3px 0 0 0;
 }
+#quest-tracker .quest .tasks .quest-tracker-task {
+  cursor: pointer;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+#quest-tracker .quest .tasks .quest-tracker-task span {
+  cursor: pointer;
+  pointer-events: auto;
+}
+#quest-tracker .quest .tasks .quest-tracker-task span.check-square, #quest-tracker .quest .tasks .quest-tracker-task span.minus-square {
+  text-decoration: line-through;
+}
+#quest-tracker .quest .tasks .task {
+  margin: 2px 0 0 0;
+}
 #quest-tracker .quest .tasks .task i {
+  cursor: pointer;
   pointer-events: auto;
 }
 #quest-tracker .quest .tasks .task span {
-  pointer-events: auto;
+  cursor: pointer;
+}
+#quest-tracker .quest .tasks .task span.check-square, #quest-tracker .quest .tasks .task span.minus-square {
+  text-decoration: line-through;
 }
 #quest-tracker .quest .tasks .task::before {
   content: "";
+  display: inline-block;
   margin-right: 4px;
   font-weight: 400;
   font-family: "Font Awesome 5 Free";
-}
-#quest-tracker .quest .tasks .task.minus-square {
-  text-decoration: line-through;
+  width: 16px;
+  pointer-events: auto;
 }
 #quest-tracker .quest .tasks .task.minus-square::before {
   content: "";
+  display: inline-block;
   font-weight: 900;
   padding-left: 1px;
-}
-#quest-tracker .quest .tasks .task.check-square {
-  text-decoration: line-through;
+  width: 15px;
 }
 #quest-tracker .quest .tasks .task.check-square::before {
+  display: inline-block;
   content: "";
   font-weight: 900;
+  width: 16px;
 }
 
 /*# sourceMappingURL=init.css.map */

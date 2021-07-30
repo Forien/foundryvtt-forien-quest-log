@@ -11,9 +11,8 @@
 
   .scrollable {
     overflow-y: auto;
-    max-height: 800px;
+    max-height: 750px;  // Just fits in a normal browser window at 1080P.
     padding: 0 4px;
-    pointer-events: auto;
   }
 
   &.background {
@@ -99,38 +98,60 @@
     .tasks {
       margin: 3px 0 0 0;
 
+      .quest-tracker-task {
+        cursor: pointer;
+        width: fit-content;
+
+        span {
+          cursor: pointer;
+          pointer-events: auto;
+          &.check-square, &.minus-square {
+            text-decoration: line-through;
+          }
+        }
+      }
+
       .task {
+        margin: 2px 0 0 0;
+
         i {
+          cursor: pointer;
           pointer-events: auto;
         }
 
         span {
-          pointer-events: auto;
+          cursor: pointer;
+          &.check-square, &.minus-square {
+            text-decoration: line-through;
+          }
         }
 
         &::before {
           content: "\f0c8";
+          display: inline-block;
           margin-right: 4px;
           font-weight: 400;
           font-family: "Font Awesome 5 Free";
+          width: 16px;
+          pointer-events: auto;
         }
 
         &.minus-square {
-          text-decoration: line-through;
-
           &::before {
             content: "\f00d";
+            display: inline-block;
             font-weight: 900;
             padding-left: 1px;
+            width: 15px;
           }
         }
 
         &.check-square {
-          text-decoration: line-through;
-
           &::before {
+            display: inline-block;
             content: "\f00c";
             font-weight: 900;
+            width: 16px;
           }
         }
       }

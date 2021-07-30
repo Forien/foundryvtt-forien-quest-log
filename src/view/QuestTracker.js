@@ -1,6 +1,8 @@
 import RepositionableApplication from './RepositionableApplication.js';
 import QuestAPI                  from '../control/public/QuestAPI.js';
 import QuestDB                   from '../control/QuestDB.js';
+import Socket                    from '../control/Socket.js';
+import Utils                     from '../control/Utils.js';
 import ViewManager               from '../control/ViewManager.js';
 
 import { constants, jquery, questStatus, settings } from '../model/constants.js';
@@ -54,6 +56,16 @@ export default class QuestTracker extends RepositionableApplication
 
       html.on(jquery.click, '.quest-tracker-header', void 0, this._handleQuestClick.bind(this));
       html.on(jquery.click, '.quest-tracker-link', void 0, this._handleQuestOpen);
+      html.on(jquery.click, '.quest-tracker-task', void 0, this._handleQuestTask.bind(this));
+
+      // A little trick to enable `pointer-events: auto` when the max-height for the scrollable container is reached.
+      // This allows mouse events to scroll. The reason for this is that with `pointer-events: none` by default
+      // Tokens underneath the quest tracker can be manipulated without moving the quest tracker.
+      const scrollable = html.find('.scrollable');
+      if (scrollable.height() >= parseInt(scrollable.css('max-height')))
+      {
+         scrollable.css('pointer-events', 'auto');
+      }
    }
 
    /**
@@ -102,6 +114,37 @@ export default class QuestTracker extends RepositionableApplication
    }
 
    /**
+    * Handles toggling {@link Quest} tasks when clicked on by a user that is the GM or owner of quest.
+    *
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
+    */
+   async _handleQuestTask(event)
+   {
+      // Don't handle any clicks of internal anchor elements such as entity content links.
+      if ($(event.target).is('.quest-tracker-task a')) { return; }
+
+      const questId = event.currentTarget.dataset.questId;
+      const uuidv4 = event.currentTarget.dataset.uuidv4;
+
+      const quest = QuestDB.getQuest(questId);
+
+      if (quest)
+      {
+         const task = quest.getTask(uuidv4);
+         if (task)
+         {
+            task.toggle();
+            await quest.save();
+
+            Socket.refreshQuestPreview({
+               questId,
+               focus: false
+            });
+         }
+      }
+   }
+
+   /**
     * Prepares the quest data from sorted active quests.
     *
     * @returns {object[]} Sorted active quests.
@@ -118,6 +161,8 @@ export default class QuestTracker extends RepositionableApplication
 
          return {
             id: q.id,
+            canEdit: game.user.isGM || (entry.isOwner && Utils.isTrustedPlayerEdit()),
+            playerEdit: entry.isOwner,
             source: q.giver,
             name: `${q.name} ${q.taskCountLabel}`,
             isGM: game.user.isGM,

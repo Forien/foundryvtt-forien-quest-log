@@ -1,5 +1,6 @@
 import QuestAPI      from '../control/public/QuestAPI.js';
 import QuestDB       from '../control/QuestDB.js';
+import Socket        from '../control/Socket.js';
 import ViewManager   from '../control/ViewManager.js';
 
 import { constants, jquery, questStatus, settings }  from '../model/constants.js';
@@ -38,8 +39,7 @@ export default class QuestLogFloating extends Application
          template: 'modules/forien-quest-log/templates/quest-floating-window.html',
          width: 300,
          height: 480,
-         minimizable: false,
-         resizable: false,
+         resizable: true,
          title: game.i18n.localize('ForienQuestLog.QuestLog.Title'),
       });
    }
@@ -59,6 +59,7 @@ export default class QuestLogFloating extends Application
 
       html.on(jquery.click, '.folder-toggle', void 0, this._handleFolderToggle);
       html.on(jquery.click, '.questlog-floating .quest-open', void 0, this._handleQuestOpen);
+      html.on(jquery.click, '.questlog-floating-task', void 0, this._handleQuestTask);
 
       // Open and close folders on rerender. Data is store in sessionStorage so display is consistent after each render.
       for (const quest of QuestDB.sortCollect({ status: questStatus.active }))
@@ -126,5 +127,36 @@ export default class QuestLogFloating extends Application
    {
       const questId = $(event.target).closest('.quest-open').data('quest-id');
       QuestAPI.open({ questId });
+   }
+
+   /**
+    * Handles toggling {@link Quest} tasks when clicked on by a user that is the GM or owner of quest.
+    *
+    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
+    */
+   async _handleQuestTask(event)
+   {
+      // Don't handle any clicks of internal anchor elements such as entity content links.
+      if ($(event.target).is('.questlog-floating-task a')) { return; }
+
+      const questId = event.currentTarget.dataset.questId;
+      const uuidv4 = event.currentTarget.dataset.uuidv4;
+
+      const quest = QuestDB.getQuest(questId);
+
+      if (quest)
+      {
+         const task = quest.getTask(uuidv4);
+         if (task)
+         {
+            task.toggle();
+            await quest.save();
+
+            Socket.refreshQuestPreview({
+               questId,
+               focus: false
+            });
+         }
+      }
    }
 }

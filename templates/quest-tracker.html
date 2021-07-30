@@ -24,12 +24,16 @@
             {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
             {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
           {{/if}}
-          <span title="{{statusTooltip}}">{{name}}</span>
+          <span class="{{state}}" title="{{statusTooltip}}">{{name}}</span>
           <a class="quest-tracker-link" data-quest-id="{{id}}"><i class="fas fa-link"></i></a>
         </div>
       {{/each}}
       {{#each tasks}}
-        <div class="task {{state}}" {{#if hidden}}id="hidden"{{/if}}>{{{name}}}</div>
+        {{#if (or ../canEdit ../playerEdit)}}
+          <div class="quest-tracker-task" data-quest-id="{{../id}}" data-uuidv4="{{uuidv4}}"><div class="task {{state}}" {{#if hidden}}id="hidden"{{/if}}><span class="{{state}}">{{{name}}}</span></div></div>
+        {{else}}
+          <div class="task {{state}}" {{#if hidden}}id="hidden"{{/if}}><span class="{{state}}">{{{name}}}</span></div>
+        {{/if}}
       {{/each}}
       </div>
     </div>
