@@ -1,71 +1,259 @@
 {
-  "ForienQuestLog.QuestLog.Tabs.InProgress": "Laufend",
-  "ForienQuestLog.QuestLog.Tabs.Completed": "Abgeschlossen",
-  "ForienQuestLog.QuestLog.Tabs.Failed": "Fehlgeschlagen",
-  "ForienQuestLog.QuestLog.Tabs.Hidden": "Verborgen",
+  "ForienQuestLog": {
+    "NewQuest": "Neue Quest",
+    "QuestLogButton": "Questlog",
+    "Quests": "{0} Quests",
+    "FloatingQuestWindow": "Schwebendes Questfenster",
+    "NoActiveQuests": "Keine aktiven Quests",
+    "NoDocument": "Entität mit UUID {uuid} konnte nicht geladen werden",
+    "NoPermission": "Du verfügst nicht über die nötigen Berechtigungen, um den Bogen dieser Entität einzusehen.",
+    "Quest": "Quest",
+    "QuestIs": "Quest ist {statusLabel}",
 
-  "ForienQuestLog.QuestPreview.Tabs.Details": "Details",
-  "ForienQuestLog.QuestPreview.Tabs.GMNotes": "GM Notes",
-  "ForienQuestLog.NewQuest": "Neue Queste",
+    "QuestTypes": {
+      "Active": "Aktive",
+      "Available": "Verfügbare",
+      "Completed": "Abgeschlossene",
+      "Failed": "Fehlgeschlagene",
+      "InActive": "Inaktive",
+      "Labels": {
+        "active": "aktiv",
+        "available": "verfügbar",
+        "completed": "abgeschlossen",
+        "failed": "fehlgeschlagen",
+        "inactive": "inaktiv"
+      }
+    },
 
-  "ForienQuestLog.Notifications.QuestMoved": "Die Queste wurde in einen neuen Ordner verschoben und hat nun den Status: {target}",
+    "Buttons": {
+      "AddNewQuest": "Quest hinzufügen",
+      "AddNewTask": "Ziel hinzufügen"
+    },
 
-  "ForienQuestLog.Buttons.AddNewQuest": "Neue Queste",
-  "ForienQuestLog.Buttons.AddNewTask": "Hinzufügen",
+    "QuestLog": {
+      "Title": "Questlog",
+      "SubTitle": "Unterquest von {0}",
+      "Table": {
+        "QuestGiver": "Quelle",
+        "QuestTitle": "Titel",
+        "Tasks": "Ziele",
+        "Actions": "Aktionen"
+      },
+      "Tabs": {
+        "Available": "Verfügbar",
+        "InProgress": "Aktiv",
+        "Completed": "Abgeschlossen",
+        "Failed": "Fehlgeschlagen",
+        "InActive": "Inaktiv"
+      }
+    },
 
-  "ForienQuestLog.QuestTypes.InProgress": "Laufende",
-  "ForienQuestLog.QuestTypes.Completed": "Abgeschlossene",
-  "ForienQuestLog.QuestTypes.Failed": "Fehlgeschlagene",
-  "ForienQuestLog.QuestTypes.Hidden": "Verborgene",
-  "ForienQuestLog.Quests": "Questen",
-  "ForienQuestLog.QuestLog.Table.QuestGiver": "Auftraggeber",
-  "ForienQuestLog.QuestLog.Table.QuestTitle": "Titel",
-  "ForienQuestLog.QuestLog.Table.Tasks": "Aufgaben",
-  "ForienQuestLog.QuestLog.Table.Actions": "Aktionen",
-  "ForienQuestLog.QuestPreview.Objectives": "Ziele",
-  "ForienQuestLog.QuestPreview.Rewards": "Belohnungen",
+    "QuestPreview": {
+      "Title": "Questdetails - {name}",
+      "SubTitle": "Unterquest von {0}",
+      "Description": "Beschreibung:",
+      "GMNotes": "GM-Notizen:",
+      "Objectives": "Ziele:",
+      "Rewards": "Belohnungen:",
+      "Objective": "Ziel",
+      "Reward": "Belohnung",
+      "CustomSource": "Eigene Quelle",
+      "DragDropActor": "Akteur, Gegenstand oder Notizbucheintrag hierher ziehen oder linksklicken, um sie als eigene Quelle festzulegen.",
+      "DragDropActorPlayer": "Akteur, Gegenstand oder Notizbucheintrag hierher ziehen.",
+      "DragDropRewards": "Gegenstände hierher ziehen, um sie als Belohnung festzulegen.",
+      "InvalidQuestId": "Cannot open Quest Preview due to invalid Quest ID.",
+      "RewardDrop": "FQL (Questbelohnung): {userName} hat '{itemName}' auf {actorName} gezogen",
 
-  "ForienQuestLog.Settings.showTasks.Enable": "Zeige Aufgaben im Questenlog",
-  "ForienQuestLog.Settings.showTasks.EnableHint": "Lege fest ob und wie die Menge von Aufgaben (Zielen) neben dem Titel der Queste im Questenlog angezeigt wird. Dies hat keine Auswirkung auf die Vorschau einer individuellen Queste.",
-  "ForienQuestLog.Settings.showTasks.default": "Zeige Aufgaben: Beendet/Gesamt",
-  "ForienQuestLog.Settings.showTasks.onlyCurrent": "Zeige Aufgaben: Beendet",
-  "ForienQuestLog.Settings.showTasks.no": "Verberge \"Aufgaben\"-Spalte",
+      "HeaderButtons": {
+        "Show": "Spielern zeigen"
+      },
 
-  "ForienQuestLog.Settings.navStyle.Enable": "Navigationsstil",
-  "ForienQuestLog.Settings.navStyle.EnableHint": "Lege fest, wie die Navigation im Questenlog angezeigt werden soll.",
-  "ForienQuestLog.Settings.navStyle.bookmarks": "Lesezeichen",
-  "ForienQuestLog.Settings.navStyle.classic": "Klassische Reiter",
+      "Management": {
+        "QuestSettings": "Questeinstellungen:",
+        "ConfigurePermissions": "Berechtigungen konfigurieren",
+        "SplashArt": "Splash Art:",
+        "QuestBranching": "Unterquests:",
+        "AddSubquest": "Unterquest hinzufügen",
+        "SplashInfo": "Klicken, um Bild zu setzen.",
+        "SplashQuestIcon": "Als Questicon setzen"
+      },
 
-  "ForienQuestLog.Settings.titleAlign.Enable": "Titelausrichtung der Queste",
-  "ForienQuestLog.Settings.titleAlign.EnableHint": "Lege fest, wie die Titel der Questen in der Tabelle im Questenlog positioniert werden sollen.",
-  "ForienQuestLog.Settings.titleAlign.left": "Linksbündig",
-  "ForienQuestLog.Settings.titleAlign.center": "Zentriert",
+      "Tabs": {
+        "Details": "Details",
+        "QuestManagement": "Quest verwalten",
+        "GMNotes": "GM-Notizen"
+      },
 
-  "ForienQuestLog.QuestLogButton": "Questenlog",
-  "ForienQuestLog.QuestForm.Title": "Neue Queste anlegen",
-  "ForienQuestLog.QuestLog.Title": "Questenlog",
-  "ForienQuestLog.QuestPreview.Title": "Details zur Queste",
+      "Notifications": {
+        "BadUUID": "Konnte Dokument mit UUID {uuid} nicht abrufen",
+        "WrongItemType": "Foriens Questlog akzeptiert nur Welt- und Kompendium-Items als Belohnungen.",
+        "WrongDocType": "Foriens Questlog akzeptnur Welt-/Kompendium-Akteure, -Items und -Notizbucheinträge als Questgeber."
+      }
+    },
 
-  "ForienQuestLog.QuestForm.QuestGiver": "Auftraggeber",
-  "ForienQuestLog.QuestForm.QuestGiverPlaceholder": "Name oder ID des Actors",
-  "ForienQuestLog.QuestForm.QuestTitle": "Titel der Queste",
-  "ForienQuestLog.QuestForm.QuestDescription": "Beschreibung der Queste",
-  "ForienQuestLog.QuestForm.QuestGMNotes": "GM notes",
-  "ForienQuestLog.QuestForm.Submit": "Übermitteln",
+    "DeleteDialog": {
+      "TitleDel": "{title} löschen",
+      "HeaderDel": "Bist du sicher, dass du <p>'{name}'</p> löschen willst",
+      "BodyQuest": "Diese Quest und die zugehörigen Daten werden permanent gelöscht.",
+      "BodyReward": "Diese Belohnung und die zugehörigen Daten werden permanent gelöscht.",
+      "BodyObjective": "Dieses Ziel und die zugehörigen Daten werden permanent gelöscht.",
+      "Delete": "Löschen",
+      "Cancel": "Abbrechen"
+    },
 
-  "ForienQuestLog.SampleTask": "z.B. Töte alle Ratten in der Schänke „Zum verstauchten Knöchel”",
-  "ForienQuestLog.QuestPreview.DragDropRewards": "Ziehe Gegenstände hier hinein, um sie als Belohnung hinzuzufügen",
+    "CloseDialog": {
+      "Title": "Formular verlassen",
+      "Header": "Bist du sicher?",
+      "Body": "Bist du sicher, dass du das Formular schließen willst? Ungespeicherte Daten gehen verloren.",
+      "Discard": "Änderungen verwerfen",
+      "Cancel": "Abbrechen"
+    },
 
-  "ForienQuestLog.DeleteDialog.Title": "Lösche {name}",
-  "ForienQuestLog.DeleteDialog.Header": "Bist du sicher?",
-  "ForienQuestLog.DeleteDialog.Body": "Diese Queste und ihre Daten werden permanent gelöscht.",
-  "ForienQuestLog.DeleteDialog.Delete": "Löschen",
-  "ForienQuestLog.DeleteDialog.Cancel": "Abbrechen",
+    "Notifications": {
+      "CannotOpen": "Questdetails können nicht geöffnet werden. Möglicherweise kann die Quest nicht betrachtet werden oder existiert nicht mehr.",
+      "UserCantOpen": "Benutzer {user} hat nicht die Berechtigungen, um diese Quest zu öffnen.",
+      "LinkCopied": "Entitätslink für diese Quest wurde in die Zwischenablage kopiert.",
+      "FinishQuestAdded": "Bitte schließe das Bearbeiten der Quest ab und schließe sie, bevor du eine neue hinzufügst.",
+      "QuestMoved": "'{name}' verschoben und Ziel gesetzt auf: {target}.",
+      "QuestAdded": "'{name}' als neue Quest mit Status {status} hinzugefügt."
+    },
 
-  "ForienQuestLog.Tooltips.ToggleImage": "Bild des Token/Actor umschalten",
-  "ForienQuestLog.Tooltips.SetActive": "Stelle auf Laufend",
-  "ForienQuestLog.Tooltips.SetCompleted": "Stelle auf Beendet",
-  "ForienQuestLog.Tooltips.SetFailed": "Stelle auf Fehlgeschlagen",
-  "ForienQuestLog.Tooltips.Hide": "Verbergen",
-  "ForienQuestLog.Tooltips.Delete": "Löschen"
+    "Settings": {
+      "allowPlayersDrag": {
+        "Enable": "Spielern das Ziehen von Belohnungen erlauben",
+        "EnableHint": "Aktivieren, um Spielern zu erlauben, Belohnungen aus dem Questdetailfenster auf Akteure in ihrem Besitz zu ziehen."
+      },
+      "countHidden": {
+        "Enable": "Verborgene Ziele mitzählen",
+        "EnableHint": "Aktivieren, um verborgene Ziele bei abgeschlossenen/gesamten Zielen mitzuzählen."
+      },
+      "dynamicBookmarkBackground": {
+        "Enable": "Dynamischer Lesezeichenhintergrund",
+        "EnableHint": "Aktivieren, um den Fensterinhalt dynamisch als den Hintergrund für den Lesezeichenreiter zu setzen."
+      },
+      "navStyle": {
+        "Enable": "Navigationsstil",
+        "EnableHint": "Festlegen, wie die Navigation in Foriens Questlog angezeigt wird.",
+        "bookmarks": "Lesezeichen",
+        "classic": "Klassische Reiter"
+      },
+      "notifyRewardDrop": {
+        "Enable": "Bei Ziehen von Belohnungen benachrichtigen",
+        "EnableHint": "Aktivieren, um eine UI-Benachrichtigung zu erhalten, wenn Questbelohnungen auf Spielerbögen gezogen werden."
+      },
+      "showFolder": {
+        "Enable": "Questordner anzeigen",
+        "EnableHint": "Aktivieren, um den Questdaten-Ordner im Notizbuchreiter anzuzeigen. Nur für DEBUG-Zwecke."
+      },
+      "showTasks": {
+        "Enable": "Ziele im Questlog anzeigen",
+        "EnableHint": "Lege fest, ob und wie die Zahl der Ziele neben dem Questtitel im Questlog angezeigt wird. Dies betrifft nicht die Quest-Vorschau.",
+        "default": "Ziele zeigen: abgeschlossen/gesamt",
+        "onlyCurrent": "Ziele zeigen: abgeschlossen",
+        "no": "Verberge \"Ziele\" Spalte"
+      },
+      "defaultPermissionLevel": {
+        "Enable": "Standard-Berechtigungen für Quests",
+        "EnableHint": "Setzt das Standard-Berechtigungslevel für neu erstellte Quests.",
+        "OBSERVER": "Beobachter",
+        "NONE": "Nichts",
+        "OWNER": "Besitzer"
+      },
+      "hideFQLFromPlayers": {
+        "Enable": "Questlog für Spieler verbergen",
+        "EnableHint": "Aktivieren, um das Questlog für alle Spieler zu verbergen. Nur GM-Benutzer können auf das Questlog zugreifen."
+      },
+      "allowPlayersAccept": {
+        "Enable": "Spieler können Quests annehmen",
+        "EnableHint": "Aktivieren, um Spielern zu erlauben, Quests aus dem Verfügbar-Reiter anzunehmen."
+      },
+      "allowPlayersCreate": {
+        "Enable": "Spieler können Quests erstellen",
+        "EnableHint": "Aktivieren, um Spielern zu erlauben, Quests zu erstellen. Von Spielern erstellte Quests erscheinen im Verfügbar-Reiter mit Bearbeitungsrechten für Spieler. BENÖTIGT Kernberechtigung 'Notizbucheinträge erstellen'."
+      },
+      "trustedPlayerEdit": {
+        "Enable": "Erlaube Seriösen Spielern das Bearbeiten von Quests",
+        "EnableHint": "Aktivieren, um Seriösen Spielern (Trusted Players) erweiterte Bearbeitungsmöglichkeiten und Statusänderungen für Quests, die sie kontrollieren einzuräumen."
+      }
+    },
+
+    "Tooltips": {
+      "SetAvailable": "Auf Verfügbar setzen",
+      "SetActive": "Auf Aktiv setzen",
+      "SetCompleted": "Auf Abgeschlossen setzen",
+      "SetFailed": "Auf Fehlgeschlagen setzen",
+      "Hide": "Als Inaktiv setzen",
+      "Delete": "Löschen",
+      "Edit": "Bearbeiten",
+      "AddAbstract": "Abstrakte hinzufügen",
+      "HideAll": "Alle verbergen",
+      "ShowAll": "Alle anzeigen",
+      "LockAll": "Alle sperren",
+      "UnlockAll": "Alle entsperren",
+      "HiddenQuestNoPlayers": "Diese Quest ist vor allen Spielern verborgen.",
+      "RewardHidden": "Belohnung verborgen. Anklicken zum Anzeigen.",
+      "RewardVisible": "Belohnung ist sichtbar. Anklicken zum Verbergen.",
+      "RewardLocked": "Belohnung ist gesperrt. Klicken zum Entsperren.",
+      "RewardLockedPlayer": "Belohnung ist gesperrt.",
+      "RewardUnlocked": "Belohnung ist entsperrt. Klicken zum Sperren.",
+      "RewardUnlockedPlayer": "Belohung ist entsperrt.",
+      "Status": "Status: {statusI18n}",
+      "TaskHidden": "Ziel ist verborgen. Anklicken zum Anzeigen.",
+      "TaskVisible": "Ziel ist sichtbar. Anklicken zum Verbergen.",
+      "ToggleImage": "Figur/Akteur-Bild umschalten",
+      "DeleteQuestGiver": "Questgeber löschen",
+      "DeleteSplash": "Splash Art löschen",
+      "ChangeGiverImgPos": "Questgeber-Bildausrichtung ändern",
+      "ChangeSplashPos": "Splash-Bildausrichtung ändern"
+    },
+
+    "Migration": {
+      "CouldNotMigrate": "Foriens Questlog - Quest konnte nicht migriert werden: '{name}'",
+      "Start": "Foriens Questlog - Daten werden migriert, bitte nicht neu laden.",
+      "Schema": "Foriens Questlog - Migriere Daten zu Schema-Version '{version}'",
+      "Complete": "Foriens Questlog - Migration der Daten abgeschlossen."
+    },
+
+    "Api": {
+      "__COMMENT__": "No need for translating lines starting with 'API ERROR', they show in console for developers only.",
+      "create": {
+        "title": "API Error: Title property is required to create new Quest."
+      },
+      "hooks": {
+        "createOpenQuestMacro": {
+          "name": "Open - {name}",
+          "error": {
+            "noQuest": "API Error: Can't create macro with invalid Quest ID."
+          }
+        }
+      },
+      "reward": {
+        "create": {
+          "data": "API Error: Data property with at least {name, img} is required to create new Reward.",
+          "type": "API Error: Type property is required to create new Reward."
+        }
+      },
+      "task": {
+        "create": {
+          "name": "API Error: Name property is required to create new Objective."
+        }
+      }
+    },
+    "WorkshopPUF": {
+      "Settings": {
+        "enableQuestTracker": {
+          "name": "Questtracker aktivieren",
+          "hint": "Aktivieren, um das Questtracker-HUD-Fenster einzuschalten."
+        },
+        "questTrackerBackground": {
+          "name": "Questtracker-Hintergrund",
+          "hint": "Aktivieren, um den Hintergrund für den Questtracker einzuschalten, was auf manchen Karten die Sichtbarkeit verbessert."
+        },
+        "resetQuestTracker": {
+          "name": "Questtracker-Position zurücksetzen",
+          "hint": "Aktivieren, um die Questtracker-Position zurückzusetzen. Nützlich, falls du den Questtracker an eine Position geschoben hast, wo du ihn nicht mehr bewegen kannst."
+        }
+      }
+    }
+  }
 }
