@@ -174,17 +174,37 @@ export default class TinyMCE
    }
 }
 
+/**
+ * Defines the CSS URL to load into TinyMCE when editing.
+ *
+ * @type {string}
+ */
 const s_CSS_URL = foundry.utils.getRoute('/modules/forien-quest-log/css/init-tinymce.css');
 
+/**
+ * Defines the fonts available.
+ *
+ * @type {string}
+ */
 const s_DEFAULT_FONTS = 'Almendra=Almendra,serif; Arial=arial,helvetica,sans-serif; ' +
- 'Arial Black=arial black,avant garde; Audiowide=Audiowide,cursive; Bilbo Swash Caps=Bilbo Swash Caps,cursive; ' +
- 'Book Antiqua=book antiqua,palatino; Brush Script MT=Brush Script MT,Brush Script Std,cursive; ' +
- 'Helvetica=helvetica; Impact=impact,chicago; MedievalSharp=MedievalSharp,cursive; Metamorphous=Metamorphous,cursive; ' +
- 'Modesto Condensed=Modesto Condensed,sans-serif; Nova Square=Nova Square,cursive; Signika=Signika,sans-serif; ' +
- 'Symbol=symbol; ';
+'Arial Black=arial black,avant garde; Audiowide=Audiowide,cursive; Bilbo Swash Caps=Bilbo Swash Caps,cursive; ' +
+'Book Antiqua=book antiqua,palatino; Brush Script MT=Brush Script MT,Brush Script Std,cursive; ' +
+'Helvetica=helvetica; Impact=impact,chicago; MedievalSharp=MedievalSharp,cursive; Metamorphous=Metamorphous,cursive; ' +
+'Modesto Condensed=Modesto Condensed,sans-serif; Nova Square=Nova Square,cursive; Signika=Signika,sans-serif; ' +
+'Symbol=symbol';
 
+/**
+ * Defines the font sizes available in the toolbar options.
+ *
+ * @type {string}
+ */
 const s_DEFAULT_FONT_SIZE = '14pt 16pt 18pt 22pt 28pt 32pt 36pt 42pt 48pt 64pt';
 
+/**
+ * Provides extra CSS styles to configure text and various elements in TinyMCE.
+ *
+ * @type {object}
+ */
 const s_DEFAULT_STYLE_FORMATS = [{
       title: "Styles",
       items: [
@@ -334,9 +354,19 @@ const s_DEFAULT_STYLE_FORMATS = [{
    },
 ];
 
+/**
+ * Provides a class list for the table dialog.
+ *
+ * @type {object}
+ */
 const s_DEFAULT_TABLE_CLASS_LIST =  [
    { title: 'None', value: '' },
    { title: 'No Colors / Border', value: 'tmce-nocolors' },
 ];
 
+/**
+ * Defines the regex to filter for YouTube.
+ *
+ * @type {RegExp}
+ */
 const s_REGEX_YOUTUBE = /^(https:\/\/youtu\.be|https:\/\/youtube.com)/;
