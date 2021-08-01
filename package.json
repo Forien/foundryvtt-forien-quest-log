@@ -23,6 +23,7 @@
     "@typhonjs-config/eslint-config": "^0.2.0",
     "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
     "autoprefixer": "^10",
+    "cssnano": "^5",
     "eslint": "^7",
     "postcss": "^8",
     "postcss-cli": "^8",
@@ -32,11 +33,13 @@
     "sass": "^1"
   },
   "scripts": {
-    "build-css": "npm run sass && npm run postcss",
+    "build-css": "npm run sass && npm run postcss && npm run sass2 && npm run postcss2",
     "eslint": "eslint .",
     "esdoc": "esdoc",
-    "sass": "sass ./styles/init.scss ./styles/init.css",
-    "postcss": "postcss ./styles/init.css -p sass -u autoprefixer postcss-preset-env -m -o ./styles/init.css",
+    "sass": "sass ./styles/init.scss ./css/init.css",
+    "sass2": "sass ./styles/init-tinymce.scss ./css/init-tinymce.css",
+    "postcss": "postcss ./css/init.css -p sass -u autoprefixer postcss-preset-env cssnano -m -o ./css/init.css",
+    "postcss2": "postcss ./css/init-tinymce.css -p sass -u autoprefixer postcss-preset-env cssnano -m -o ./css/init-tinymce.css",
     "rollup-external": "rollup --config"
   }
 }
