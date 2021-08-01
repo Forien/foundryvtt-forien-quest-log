@@ -3,6 +3,8 @@ import Utils         from './Utils.js';
 
 /**
  * Provides custom options for TinyMCE.
+ *
+ * Please see {@link CONFIG.TinyMCE} for the default Foundry options.
  */
 export default class TinyMCE
 {
@@ -31,14 +33,28 @@ export default class TinyMCE
     */
    static options({ initialContent = '', questId = void 0, editorName = void 0 } = {})
    {
+      // Strip out any unwanted custom items from other modules. Currently Monk's Extended Journals.
+      const foundryBaseItems = CONFIG.TinyMCE.style_formats[0].items.filter((e) => e.title === 'Secret');
+      const style_formats = [
+         {
+            title: "Custom",
+            items: foundryBaseItems
+         }
+      ].concat(s_DEFAULT_STYLE_FORMATS);
+
       return {
          plugins: 'emoticons hr image link lists media charmap table code save help',
-         toolbar: 'styleselect | formatgroup | insertgroup | table | bullist numlist | customcode | save | help',
+         toolbar: 'styleselect | formatgroup | removeformat | insertgroup | table | bulletgroup | customcode | save | help',
          toolbar_groups: {
+            bulletgroup: {
+               icon: 'unordered-list',
+               tooltip: 'Lists',
+               items: 'bullist | numlist'
+            },
             formatgroup: {
                icon: 'format',
                tooltip: 'Formatting',
-               items: 'fontsizeselect | forecolor backcolor | removeformat'
+               items: 'fontselect | fontsizeselect | forecolor backcolor'
             },
             insertgroup: {
                icon: 'plus',
@@ -46,10 +62,38 @@ export default class TinyMCE
                items: 'link image media emoticons charmap hr'
             }
          },
+         content_css: CONFIG.TinyMCE.content_css.concat(s_CSS_URL),
+         font_formats: s_DEFAULT_FONTS,
+         fontsize_formats: s_DEFAULT_FONT_SIZE,
          file_picker_types: 'image media',
+         image_advtab: true,
          media_alt_source: false,
-         media_poster: false,
+         media_live_embeds: false,
+         media_poster: true,
+         style_formats,
+         table_class_list: s_DEFAULT_TABLE_CLASS_LIST,
+
+         // This allows the manual addition of a style tag in the code editor.
          valid_children: '+body[style]',
+
+         // Note we can include all internal tags as we prefilter the URL to make sure it is for YouTube then use the
+         // oembed API to get the embed URL. Additionally DOMPurify is configured to only accept iframes from YouTube.
+         extended_valid_elements: 'iframe[allow|allowfullscreen|frameborder|scrolling|class|style|src|width|height]',
+         media_url_resolver: async (data, resolve, reject) =>
+         {
+            // Prefilter any non YouTube URLs
+            if (!s_REGEX_YOUTUBE.exec(data.url)) { return reject({ msg: 'Only YouTube video URLs are accepted.' }); }
+
+            // Fetch the embed URL from YouTube.
+            const response = await fetch(`https://www.youtube.com/oembed?url=${
+             data.url}&format=json&maxwidth=424&maxheight=238`);
+
+            if (!response || response.status !== 200) { return reject({ msg: 'Could not fetch YouTube embed URL.' }); }
+
+            const json = await response.json();
+
+            resolve({ html: json.html });
+         },
          setup: (editor) =>
          {
             editor.ui.registry.addMenuButton('customcode', {
@@ -129,3 +173,170 @@ export default class TinyMCE
       };
    }
 }
+
+const s_CSS_URL = foundry.utils.getRoute('/modules/forien-quest-log/css/init-tinymce.css');
+
+const s_DEFAULT_FONTS = 'Almendra=Almendra,serif; Arial=arial,helvetica,sans-serif; ' +
+ 'Arial Black=arial black,avant garde; Audiowide=Audiowide,cursive; Bilbo Swash Caps=Bilbo Swash Caps,cursive; ' +
+ 'Book Antiqua=book antiqua,palatino; Brush Script MT=Brush Script MT,Brush Script Std,cursive; ' +
+ 'Helvetica=helvetica; Impact=impact,chicago; MedievalSharp=MedievalSharp,cursive; Metamorphous=Metamorphous,cursive; ' +
+ 'Modesto Condensed=Modesto Condensed,sans-serif; Nova Square=Nova Square,cursive; Signika=Signika,sans-serif; ' +
+ 'Symbol=symbol; ';
+
+const s_DEFAULT_FONT_SIZE = '14pt 16pt 18pt 22pt 28pt 32pt 36pt 42pt 48pt 64pt';
+
+const s_DEFAULT_STYLE_FORMATS = [{
+      title: "Styles",
+      items: [
+         {
+            title: 'Border', items: [
+               {
+                  title: 'No Border', selector: '*', styles: {
+                     border: 'none'
+                  }
+               },
+               {
+                  title: 'Border Radius', items: [
+                     {
+                        title: 'BR None', selector: '*', styles: {
+                           'border-radius': 'unset'
+                        }
+                     },
+                     {
+                        title: 'BR 4px', selector: '*', styles: {
+                           'border-radius': '4px'
+                        }
+                     },
+                     {
+                        title: 'BR 8px', selector: '*', styles: {
+                           'border-radius': '8px'
+                        }
+                     },
+                     {
+                        title: 'BR 16px', selector: '*', styles: {
+                           'border-radius': '16px'
+                        }
+                     },
+                  ]
+               },
+            ]
+         },
+         {
+            title: 'Drop Shadow', items: [
+               {
+                  title: 'DS None', selector: '*', styles: {
+                     filter: 'unset'
+                  }
+               },
+               {
+                  title: 'DS 4px', selector: '*', styles: {
+                     filter: 'drop-shadow(4px 4px 3px black)'
+                  }
+               },
+               {
+                  title: 'DS 8px', selector: '*', styles: {
+                     filter: 'drop-shadow(8px 8px 6px black)'
+                  }
+               },
+            ]
+         },
+         {
+            title: 'Float', items: [
+               {
+                  title: 'Float Left', selector: '*', styles: {
+                     float: 'left',
+                     margin: '0 10px 0 0'
+                  }
+               },
+               {
+                  title: 'Float Right', selector: '*', styles: {
+                     float: 'right',
+                     margin: '0 0 0 10px'
+                  }
+               }
+            ]
+         },
+         {
+            title: "Fonts",
+            items: [
+               {
+                  title: 'Neon', items: [
+                     {
+                        title: 'Neon Blue', selector: '*', styles: {
+                           color: '#fff',
+                           'text-shadow': '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6, 0 0 25px #0073e6, 0 0 30px #0073e6, 0 0 35px #0073e6'
+                        }
+                     },
+                     {
+                        title: 'Neon Green', selector: '*', styles: {
+                           color: '#fff',
+                           'text-shadow': '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #00e704, 0 0 20px #00e704, 0 0 25px #00e704, 0 0 30px #00e704, 0 0 35px #00e704'
+                        }
+                     },
+                     {
+                        title: 'Neon Red', selector: '*', styles: {
+                           color: '#fff',
+                           'text-shadow': '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #e70000, 0 0 20px #e70000, 0 0 25px #e70000, 0 0 30px #e70000, 0 0 35px #e70000'
+                        }
+                     },
+                     {
+                        title: 'Neon Purple', selector: '*', styles: {
+                           color: '#fff',
+                           'text-shadow': '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #7900ea, 0 0 20px #7900ea, 0 0 25px #7900ea, 0 0 30px #7900ea, 0 0 35px #7900ea'
+                        }
+                     }
+                  ]
+               }
+            ]
+         },
+         {
+            title: 'Margin', items: [
+               {
+                  title: 'No Margin', selector: '*', styles: {
+                     margin: 'unset'
+                  }
+               },
+               {
+                  title: 'Left', items: [
+                     {
+                        title: 'ML 5px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-left': '5px'
+                        }
+                     },
+                     {
+                        title: 'ML 10px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-left': '10px'
+                        }
+                     }
+                  ]
+               },
+               {
+                  title: 'Right', items: [
+                     {
+                        title: 'MR 5px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-right': '5px'
+                        }
+                     },
+                     {
+                        title: 'MR 10px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-right': '10px'
+                        }
+                     }
+                  ]
+               },
+            ]
+         },
+      ]
+   },
+];
+
+const s_DEFAULT_TABLE_CLASS_LIST =  [
+   { title: 'None', value: '' },
+   { title: 'No Colors / Border', value: 'tmce-nocolors' },
+];
+
+const s_REGEX_YOUTUBE = /^(https:\/\/youtu\.be|https:\/\/youtube.com)/;

@@ -1,40 +1,4 @@
-$background-parchment: url("/ui/parchment.jpg") repeat;
-$background-color-light: rgba(255, 255, 255, .5);
+@import 'global-mixin', 'global-variables', 'tinymce', 'quest-general', 'quest-log', 'quest-form', 'quest-preview',
+ 'quest-floating-window', 'quest-tracker';
 
-$primary-color-accent: #ff6400;
-
-$primary-color-icon: rgba(0,0,0,.75);
-
-$primary-color-darkbg-text: #EEE;
-$primary-color-darkbg-text-hidden: #ffffff88;
-$primary-color-entity-link: black;
-
-$primary-color-bg-drop: rgba(0, 0, 0, .1);
-$primary-color-hover-drop: rgba(0, 0, 0, .075);
-
-$primary-color-bg-repositionable-app: #33333399;
-$primary-color-border-repositionable-app: #11111177;
-
-@mixin button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #efefef;
-  border-radius: 5px;
-  width: 22px;
-  height: 22px;
-  transition: color .3s ease;
-  cursor: pointer;
-
-  &:hover {
-    color: $primary-color-accent;
-  }
-
-  i {
-    font-size: 16px;
-    border-radius: 50%;
-    line-height: 1;
-  }
-}
-
-@import 'quest-general', 'quest-log', 'quest-form', 'quest-preview', 'quest-floating-window', 'quest-tracker';
+@include fonts;

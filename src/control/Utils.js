@@ -17,20 +17,6 @@ export default class Utils
    {
       const textArea = document.createElement('textarea');
 
-      // *** This styling is an extra step which is likely not required. ***
-      //
-      // Why is it here? To ensure:
-      // 1. the element is able to have focus and selection.
-      // 2. if the element was to flash render it has minimal visual impact.
-      // 3. less flakyness with selection and copying which **might** occur if
-      //    the textarea element is not visible.
-      //
-      // The likelihood is the element won't even render, not even a
-      // flash, so some of these are just precautions. However in
-      // Internet Explorer the element is visible whilst the popup
-      // box asking the user for permission for the web page to
-      // copy to the clipboard.
-
       // Place in the top-left corner of screen regardless of scroll position.
       textArea.style.position = 'fixed';
       textArea.style.top = '0';

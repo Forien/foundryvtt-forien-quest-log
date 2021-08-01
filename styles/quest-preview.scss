@@ -7,6 +7,9 @@
     flex-direction: column;
   }
 
+  // Include TinyMCE mixin to add styles for toolbar and editor content.
+  @include tinymce;
+
   .quest-preview {
     height: 100%;
     overflow-y: hidden;
@@ -667,49 +670,6 @@
 
     .gmnotes .editor {
       height: calc(100% - 36px);
-    }
-
-    // Tiny MCE overrides
-
-    .tox:not(.tox-tinymce-inline) .tox-editor-header {
-      background: $background-color-light;
-      border-radius: 5px;
-      display: inline-flex;
-      width: fit-content;
-    }
-
-    // Fix specifically for Warhammer 4th edition
-    .tox .tox-toolbar__group {
-      width: auto;
-      padding: 0 2px;
-    }
-
-    .tox .tox-toolbar-overlord {
-      background-color: transparent;
-    }
-
-    .tox .tox-toolbar,
-    .tox .tox-toolbar__overflow,
-    .tox .tox-toolbar__primary {
-      background: none;
-    }
-
-    .tox .tox-editor-container {
-      background: none;
-    }
-
-    .tox.tox-tinymce .tox-tbtn {
-      padding: 0;
-      margin: 2px 0;
-      width: 34px;
-
-      &.tox-tbtn--select {
-        font-size: 14px;
-      }
-    }
-
-    .tox.tox-tinymce .tox-tbtn[title="Formats"] {
-      width: 90px;
     }
   }
 }
