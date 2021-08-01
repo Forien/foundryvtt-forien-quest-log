@@ -109,7 +109,7 @@
     },
 
     "Notifications": {
-      "CannotOpen": "Cannot open Quest Details. You may lack permissions, Quest might not exist anymore, or provided ID was invalid.",
+      "CannotOpen": "Cannot open Quest Details. This quest may not be observable or may no longer exist.",
       "UserCantOpen": "User {user} doesn't have permission to open this quest.",
       "LinkCopied": "Entity Link for this quest has been copied to clipboard.",
       "FinishQuestAdded": "Please finish editing and close current new quest before adding another.",
