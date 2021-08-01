@@ -8,6 +8,7 @@
     "NoDocument": "An entity could not be loaded for UUID: {uuid}",
     "NoPermission": "You do not have sufficient permissions to view this entity sheet.",
     "Quest": "Quest",
+    "QuestIs": "Quest is {statusLabel}",
 
     "QuestTypes": {
       "Active": "In Progress",

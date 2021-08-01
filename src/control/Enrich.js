@@ -224,7 +224,10 @@ export default class Enrich
          data.questIconType = 'quest-giver';
       }
 
-      data.statusLabel = game.i18n.localize(`ForienQuestLog.QuestTypes.Labels.${data.status}`);
+      const statusLabel = game.i18n.localize(`ForienQuestLog.QuestTypes.Labels.${data.status}`);
+
+      // The quest status in the details section.
+      data.statusLabel = game.i18n.format(`ForienQuestLog.QuestIs`, { statusLabel })
 
       data.statusActions = Enrich.statusActions(quest);
 
