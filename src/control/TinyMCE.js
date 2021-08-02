@@ -43,7 +43,7 @@ export default class TinyMCE
       ].concat(s_DEFAULT_STYLE_FORMATS);
 
       return {
-         plugins: 'emoticons hr image link lists media charmap table code save help',
+         plugins: 'emoticons hr image link lists media2 charmap table code save help',
          toolbar: 'styleselect | formatgroup | removeformat | insertgroup | table | bulletgroup | customcode | save | help',
          toolbar_groups: {
             bulletgroup: {
@@ -59,7 +59,7 @@ export default class TinyMCE
             insertgroup: {
                icon: 'plus',
                tooltip: 'Insert',
-               items: 'link image media emoticons charmap hr'
+               items: 'link image media2 emoticons charmap hr'
             }
          },
          content_css: CONFIG.TinyMCE.content_css.concat(s_CSS_URL),
@@ -67,9 +67,10 @@ export default class TinyMCE
          fontsize_formats: s_DEFAULT_FONT_SIZE,
          file_picker_types: 'image media',
          image_advtab: true,
-         media_alt_source: false,
          media_live_embeds: false,
-         media_poster: true,
+         media_width: 424,
+         media_height: 238,
+         media_disable_file_source: true,
          style_formats,
          table_class_list: s_DEFAULT_TABLE_CLASS_LIST,
 
@@ -79,21 +80,6 @@ export default class TinyMCE
          // Note we can include all internal tags as we prefilter the URL to make sure it is for YouTube then use the
          // oembed API to get the embed URL. Additionally DOMPurify is configured to only accept iframes from YouTube.
          extended_valid_elements: 'iframe[allow|allowfullscreen|frameborder|scrolling|class|style|src|width|height]',
-         media_url_resolver: async (data, resolve, reject) =>
-         {
-            // Prefilter any non YouTube URLs
-            if (!s_REGEX_YOUTUBE.exec(data.url)) { return reject({ msg: 'Only YouTube video URLs are accepted.' }); }
-
-            // Fetch the embed URL from YouTube.
-            const response = await fetch(`https://www.youtube.com/oembed?url=${
-             data.url}&format=json&maxwidth=424&maxheight=238`);
-
-            if (!response || response.status !== 200) { return reject({ msg: 'Could not fetch YouTube embed URL.' }); }
-
-            const json = await response.json();
-
-            resolve({ html: json.html });
-         },
          setup: (editor) =>
          {
             editor.ui.registry.addMenuButton('customcode', {
@@ -157,16 +143,11 @@ export default class TinyMCE
             editor.on('ExecCommand', (event) =>
             {
                const command = event.command;
-               if (command === 'mceMedia')
+               if (command === 'mceMedia2')
                {
-                  const tabElems = document.querySelectorAll(`div[role='tablist'] .tox-tab`);
-                  tabElems.forEach((tabElem) =>
-                  {
-                     if (tabElem.innerText === 'Embed')
-                     {
-                        tabElem.style.display = 'none';
-                     }
-                  });
+                  const elem = $('div.tox-dialog__content-js .tox-form .tox-form__group:last-of-type');
+
+                  if (elem) { elem.remove(); }
                }
             });
          }
