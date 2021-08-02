@@ -95,13 +95,13 @@
     {
       "name": "macros-gm",
       "label": "FQL Macors (GM)",
-      "path": "./packs/macros/macros-gm.db",
+      "path": "./packs/macro-gm.db",
       "entity": "Macro"
     },
     {
       "name": "macros-player",
       "label": "FQL Macros (Player)",
-      "path": "./packs/macros/macros-player.db",
+      "path": "./packs/macro-player.db",
       "entity": "Macro" 
     }
   ],
