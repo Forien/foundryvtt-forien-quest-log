@@ -277,7 +277,7 @@ export default class ModuleSettings
          hint: 'ForienQuestLog.WorkshopPUF.Settings.enableQuestTracker.hint',
          scope: scope.client,
          config: true,
-         default: false,
+         default: true,
          type: Boolean,
          onChange: () =>
          {
