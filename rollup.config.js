@@ -37,12 +37,15 @@ if (s_DEPLOY_MINIFY)
  */
 const s_DOM_PURIFY = `import DOMPurify from './node_modules/dompurify/dist/purify.es.js';
 
+// Only allow YouTube and Vimeo embeds through.
+const s_REGEX = new RegExp('^(https://www.youtube.com/embed/|https://player.vimeo.com/)');
+
 // When 'iframes' are allowed only accept ones where 'src' starts with a YouTube embed link; reject all others.
 DOMPurify.addHook('uponSanitizeElement', (node, data) => {
    if (data.tagName === 'iframe') 
    {
       const src = node.getAttribute('src') || '';
-      if (!src.startsWith('https://www.youtube.com/embed/')) 
+      if (!s_REGEX.test(src)) 
       {
          return node.parentNode.removeChild(node);
       }

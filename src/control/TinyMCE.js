@@ -43,7 +43,7 @@ export default class TinyMCE
       ].concat(s_DEFAULT_STYLE_FORMATS);
 
       return {
-         plugins: 'emoticons hr image link lists media2 charmap table code save help',
+         plugins: 'emoticons hr image link lists typhonjs-oembed charmap table code save help',
          toolbar: 'styleselect | formatgroup | removeformat | insertgroup | table | bulletgroup | customcode | save | help',
          toolbar_groups: {
             bulletgroup: {
@@ -59,7 +59,7 @@ export default class TinyMCE
             insertgroup: {
                icon: 'plus',
                tooltip: 'Insert',
-               items: 'link image media2 emoticons charmap hr'
+               items: 'link image typhonjs-oembed emoticons charmap hr'
             }
          },
          content_css: CONFIG.TinyMCE.content_css.concat(s_CSS_URL),
@@ -67,10 +67,10 @@ export default class TinyMCE
          fontsize_formats: s_DEFAULT_FONT_SIZE,
          file_picker_types: 'image media',
          image_advtab: true,
-         media_live_embeds: false,
-         media_width: 424,
-         media_height: 238,
-         media_disable_file_source: true,
+         oembed_live_embeds: false,
+         oembed_default_width: 424,
+         oembed_default_height: 238,
+         oembed_disable_file_source: true,
          style_formats,
          table_class_list: s_DEFAULT_TABLE_CLASS_LIST,
 
@@ -138,18 +138,6 @@ export default class TinyMCE
                   setTimeout(() => editor.execCallback('save_onsavecallback'), 0);
                }
             }));
-
-            // Currently there is no easy way to remove the 'embed' tab from TinyMCE / media plugin; this hides it.
-            editor.on('ExecCommand', (event) =>
-            {
-               const command = event.command;
-               if (command === 'mceMedia2')
-               {
-                  const elem = $('div.tox-dialog__content-js .tox-form .tox-form__group:last-of-type');
-
-                  if (elem) { elem.remove(); }
-               }
-            });
          }
       };
    }
@@ -230,6 +218,11 @@ const s_DEFAULT_STYLE_FORMATS = [{
                   }
                },
                {
+                  title: 'DS 2px', selector: '*', styles: {
+                     filter: 'drop-shadow(2px 2px 2px black)'
+                  }
+               },
+               {
                   title: 'DS 4px', selector: '*', styles: {
                      filter: 'drop-shadow(4px 4px 3px black)'
                   }
@@ -261,29 +254,58 @@ const s_DEFAULT_STYLE_FORMATS = [{
             title: "Fonts",
             items: [
                {
+                  title: 'Line Height', items: [
+                     {
+                        title: 'LH Normal', selector: '*', styles: {
+                           'line-height': 'normal'
+                        }
+                     },
+                     {
+                        title: 'LH 50%', selector: '*', styles: {
+                           'line-height': '50%'
+                        }
+                     },
+                     {
+                        title: 'LH 75%', selector: '*', styles: {
+                           'line-height': '75%'
+                        }
+                     },
+                     {
+                        title: 'LH 125%', selector: '*', styles: {
+                           'line-height': '125%'
+                        }
+                     },
+                     {
+                        title: 'LH 150%', selector: '*', styles: {
+                           'line-height': '150%'
+                        }
+                     }
+                  ]
+               },
+               {
                   title: 'Neon', items: [
                      {
                         title: 'Neon Blue', selector: '*', styles: {
                            color: '#fff',
-                           'text-shadow': '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6, 0 0 25px #0073e6, 0 0 30px #0073e6, 0 0 35px #0073e6'
+                           'text-shadow': '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6, 0 0 25px #0073e6'
                         }
                      },
                      {
                         title: 'Neon Green', selector: '*', styles: {
                            color: '#fff',
-                           'text-shadow': '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #00e704, 0 0 20px #00e704, 0 0 25px #00e704, 0 0 30px #00e704, 0 0 35px #00e704'
+                           'text-shadow': '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #00e704, 0 0 20px #00e704, 0 0 25px #00e704'
                         }
                      },
                      {
                         title: 'Neon Red', selector: '*', styles: {
                            color: '#fff',
-                           'text-shadow': '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #e70000, 0 0 20px #e70000, 0 0 25px #e70000, 0 0 30px #e70000, 0 0 35px #e70000'
+                           'text-shadow': '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #e70000, 0 0 20px #e70000, 0 0 25px #e70000'
                         }
                      },
                      {
                         title: 'Neon Purple', selector: '*', styles: {
                            color: '#fff',
-                           'text-shadow': '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #7900ea, 0 0 20px #7900ea, 0 0 25px #7900ea, 0 0 30px #7900ea, 0 0 35px #7900ea'
+                           'text-shadow': '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #7900ea, 0 0 20px #7900ea, 0 0 25px #7900ea'
                         }
                      }
                   ]
@@ -298,6 +320,28 @@ const s_DEFAULT_STYLE_FORMATS = [{
                   }
                },
                {
+                  title: 'Top', items: [
+                     {
+                        title: 'MT 5px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-top': '5px'
+                        }
+                     },
+                     {
+                        title: 'MT 10px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-top': '10px'
+                        }
+                     },
+                     {
+                        title: 'MT 15px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-top': '15px'
+                        }
+                     }
+                  ]
+               },
+               {
                   title: 'Left', items: [
                      {
                         title: 'ML 5px', selector: '*', styles: {
@@ -309,6 +353,34 @@ const s_DEFAULT_STYLE_FORMATS = [{
                         title: 'ML 10px', selector: '*', styles: {
                            inline: 'span',
                            'margin-left': '10px'
+                        }
+                     },
+                     {
+                        title: 'ML 15px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-left': '15px'
+                        }
+                     }
+                  ]
+               },
+               {
+                  title: 'Bottom', items: [
+                     {
+                        title: 'MB 5px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-bottom': '5px'
+                        }
+                     },
+                     {
+                        title: 'MB 10px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-bottom': '10px'
+                        }
+                     },
+                     {
+                        title: 'MB 15px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-bottom': '15px'
                         }
                      }
                   ]
@@ -326,9 +398,15 @@ const s_DEFAULT_STYLE_FORMATS = [{
                            inline: 'span',
                            'margin-right': '10px'
                         }
+                     },
+                     {
+                        title: 'MR 15px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-right': '15px'
+                        }
                      }
                   ]
-               },
+               }
             ]
          },
       ]
@@ -344,10 +422,3 @@ const s_DEFAULT_TABLE_CLASS_LIST =  [
    { title: 'None', value: '' },
    { title: 'No Colors / Border', value: 'tmce-nocolors' },
 ];
-
-/**
- * Defines the regex to filter for YouTube.
- *
- * @type {RegExp}
- */
-const s_REGEX_YOUTUBE = /^(https:\/\/youtu\.be|https:\/\/youtube.com)/;
