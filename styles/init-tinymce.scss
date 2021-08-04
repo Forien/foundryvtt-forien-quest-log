@@ -1,0 +1,9 @@
+@import 'global-mixin', 'tinymce';
+
+body {
+  font-family: "Signika", sans-serif;
+  font-size: 18pt;
+}
+
+@include fonts;
+@include tinymce;

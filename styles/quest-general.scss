@@ -2,9 +2,15 @@
 #forien-quest-log-form,
 .window-app.forien-quest-preview {
 
+  // Some systems such as Blades In the Dark require this parameter.
+  .window-header {
+    margin: 0;
+  }
+
 	.window-content {
     padding: 0;
-    height: 100%;
+    margin: 0;
+    border-radius: 0 0 5px 5px;
   }
 
   .tab {
@@ -27,7 +33,6 @@
 
   h2 {
     font-size: 18px;
-    line-height: 1;
     font-weight: 700;
     padding: 0 0 2px 0;
     margin: 0 0 4px 0;
@@ -48,27 +53,21 @@
     height: 26px;
 
     &:hover {
-      box-shadow: 0 0 0 1px $primary-accent-color inset;
+      box-shadow: 0 0 0 1px $primary-color-accent inset;
     }
   }
 
   button {
-    background: $button-background;
     height: 30px;
-    border: 1px solid $button-border;
     border-radius: 5px;
-    margin: 0 0 0 8px;
+    margin-top: 2px;
+    margin-right: 4px;
+    margin-bottom: 2px;
     transition:
       border-color .3s ease,
       background .3s ease,
       box-shadow .3s ease;
     cursor: pointer;
-
-    &:hover {
-      box-shadow: 0 0 2px $primary-accent-color inset;
-      border-color: $primary-accent-color;
-      background: $button-hover;
-    }
 
     &:first-child {
     	margin-left: 0;
@@ -81,6 +80,7 @@
     justify-content: flex-start;
     align-items: center;
     padding: 0 16px;
+    font-size: larger;
 
     .item {
       text-align: left;
@@ -91,7 +91,7 @@
 
       &:hover {
         text-shadow: none;
-        color: $primary-accent-color;
+        color: $primary-color-accent;
       }
 
       &:first-child {
@@ -111,6 +111,16 @@
     display: none;
   }
 
+  i {
+    &.is-personal {
+      padding-left: 4px;
+    }
+
+    &.is-hidden {
+      padding-left: 4px;
+    }
+  }
+
   .editor {
     height: 100%;
     padding: 8px;
@@ -120,43 +130,114 @@
     .editor-content {
       height: 100%;
       padding: 0;
-      padding: 0 4px 0 0;
       overflow: auto;
     }
   }
 
+  // See `Enrich.statusActions` for building actions for quests.
   .actions {
-      flex: 0 0 100px;
-      border-left: 1px solid rgba(0,0,0,.15);
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    flex: 0 0 100px;
+    border-left: 1px solid rgba(0,0,0,.15);
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-      i {
-        font-size: 16px;
-        margin-left: 4px;
-        cursor: pointer;
-        color: rgba(0,0,0,.75);
-        transition: color .3s ease;
-
-        &.delete {
-          color: rgba(255,0,0,.4);
-        }
-
-        &.fa-play {
-          font-size: 14px;
-          padding-top: 2px;
-        }
-
-        &:hover {
-          color: $primary-accent-color;
-        }
-
-        &:first-child {
-          margin: 0;
-        }
-      }
+    // The flex size is reduced for players who have less actions available.
+    &.is-player {
+      flex: 0 0 60px;
     }
 
+    // Used to justify center tasks and rewards
+    span.justify-center {
+      flex: 1;
+      margin: 1px 1px 1px auto;
+      visibility: hidden;
+    }
+
+    span.spacer {
+      flex: 0 0 4px;
+    }
+
+    i {
+      flex: 0 0 18px;
+      font-size: 16px;
+      padding: 0;
+      text-align: center;
+      border: none;
+      cursor: pointer;
+      color: $primary-color-icon;
+      transition: color .3s ease;
+
+      // Special handling to align sort icon to the left and use margin-right: auto to push rest of content right.
+      // In this case add span.justify-center to the right hand of the action div to center the content.
+      &.fa-sort {
+        flex: 0 0 18px;
+        cursor: move;
+        width: 14px;
+        border-right: 1px solid rgba(0, 0, 0, 0.15);
+      }
+
+      // fa-eye-slash is slightly larger and offsets so provide specific flex settings and padding for fa-eye
+      &.fa-eye {
+        flex: 0 0 20px;
+        padding-left: 1px;
+      }
+
+      &.fa-eye-slash {
+        flex: 0 0 20px;
+      }
+
+      &.fa-trash {
+        color: rgba(255,0,0,.4);
+      }
+
+      &.fa-play {
+        font-size: 14px;
+        padding-top: 2px;
+      }
+
+      &:hover {
+        color: $primary-color-accent;
+      }
+
+      &:hover.is-player {
+        color: $primary-color-icon;
+        cursor: default;
+      }
+
+      &:first-child {
+        margin: 0;
+      }
+    }
+  }
+
+  // Used for action divs that have a single icon (see: QuestPreview quest name / fa-pen)
+  .actions-single {
+    flex: 0 0 1px;
+    padding: 0 8px;
+
+    i {
+      font-size: 18px;
+      transition: color .3s ease;
+      cursor: pointer;
+
+      &:hover {
+        color: $primary-color-accent;
+      }
+    }
+  }
+
+  // Provides specific overrides to make sure the layout is consistent across game systems.
+  // In particular this is needed for Blades In the Dark `v3.3.0`.
+  section {
+    flex-direction: row;
+    display: block;
+    justify-content: flex-start;
+  }
+
+  // Defines the corner of any scrollbars.
+  ::-webkit-scrollbar-corner {
+    background: rgba(0, 0, 0, 0.1);
+  }
 }

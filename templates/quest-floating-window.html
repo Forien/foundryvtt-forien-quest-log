@@ -1,56 +1,43 @@
+<section class="sidebar-tab sidebar-directory flexcol" id="journal" data-tab="journal">
+  <ol class="directory-list questlog-floating">
+    {{#each quests}}
+    {{#with enrich}}
+    <li class="directory-item folder flexcol collapsed" data-quest-id="{{id}}">
+      <header class="folder-header flexrow" {{#if (or isInactive isHidden)}}id="hidden"{{/if}}>
+        <h3 class="{{#if hasObjectives}}folder-toggle{{/if}}" data-quest-id="{{id}}">
+          <i class="fas fa-bookmark"></i>
+          {{name}} {{taskCountLabel}}
+        </h3>
+        {{#if canEdit}}
+          {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
+          {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
+        {{/if}}
+        <a class="quest-open create-entity" data-quest-id="{{id}}"><i class="fas fa-pen-nib fa-fw"></i></a>
+      </header>
 
-    <section class="sidebar-tab sidebar-directory flexcol" id="journal" data-tab="journal">
-
-    <ol class="directory-list">
-    {{#each quests.active}}
-        <li class="directory-item folder flexcol collapsed" data-quest-id="{{id}}" style="display: flex;">
-            <header class="folder-header flexrow">
-                <h3 class="{{#if tasks}}folder-toggle{{/if}}" data-quest-id="{{id}}">
-                    <i class="fas fa-bookmark"></i>{{title}}</h3>
-                    <a class="quest-open create-entity" data-quest-id="{{id}}"><i class="fas fa-pen-nib fa-fw"></i></a>
-            </header>
-
-            <ol class="subdirectory">
-                {{#each subquests}}
-                {{#if this.name}}
-                    <li class="directory-item entity journal flexrow {{#if (eq status 'hidden')}}task-hidden{{/if}}" data-entity-id="0z5dbNtuPgGOQ8ey" style="display: flex;">
-                        {{#if (eq status 'completed')}}
-                            <i class="fas fa-check-square"></i>
-                        {{else}}
-                            {{#if (eq status 'failed')}}
-                                <i class="fas fa-minus-square"></i>
-                            {{else}}
-                                <i class="far fa-square"></i>
-                            {{/if}}
-                        {{/if}}
-                        <h4 class="entity-name">
-                            {{name}}
-                        </h4>
-                        <a class="quest-open create-entity" style="flex: 0 0 20px" data-quest-id="{{id}}"><i class="fas fa-link"></i></a>
-
-                    </li>
-                {{/if}}
-                {{/each}}
-                {{#each tasks}}
-                <li class="directory-item entity journal flexrow" data-entity-id="0z5dbNtuPgGOQ8ey" style="display: flex;">
-                    {{#if completed}}
-                        <i class="fas fa-check-square"></i>
-                    {{else}}
-                        {{#if failed}}
-                            <i class="fas fa-minus-square"></i>
-                        {{else}}
-                            <i class="far fa-square"></i>
-                        {{/if}}
-                    {{/if}}
-                    <h4 class="entity-name">
-                        {{name}}
-                    </h4>
-                </li>
-                {{/each}}
-            </ol>
-        </li>
-{{else}}
-    <span class="no-content">{{localize 'ForienQuestLog.NoActiveQuests'}}</span>
-{{/each}}
-    </ol>
+      <ol class="subdirectory">
+        {{#each data_subquest}}
+          {{#if name}}
+          <li class="directory-item entity journal flexrow" {{#if (or isInactive isHidden)}}id="hidden"{{/if}} data-entity-id="0z5dbNtuPgGOQ8ey">
+            <h4 class="entity-name {{state}}" title="{{statusTooltip}}">{{name}}</h4>
+            {{#if canEdit}}
+              {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
+              {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
+            {{/if}}
+            <a class="quest-open create-entity" data-quest-id="{{id}}"><i class="fas fa-link"></i></a>
+          </li>
+          {{/if}}
+        {{/each}}
+        {{#each data_tasks}}
+          <li class="directory-item entity journal flexrow" {{#if hidden}}id="hidden"{{/if}} data-entity-id="0z5dbNtuPgGOQ8ey" style="display: flex;">
+            <h4 class="entity-name {{#if (or ../../../isGM ../../isOwner)}}questlog-floating-task{{/if}} {{state}}" data-quest-id="{{../id}}" data-uuidv4="{{uuidv4}}">{{{name}}}</h4>
+          </li>
+        {{/each}}
+      </ol>
+    </li>
+    {{else}}
+      <span class="no-content">{{localize 'ForienQuestLog.NoActiveQuests'}}</span>
+    {{/with}}
+    {{/each}}
+  </ol>
 </section>

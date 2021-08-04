@@ -1,12 +1,11 @@
 #forien-quest-log-form {
     
     form {
-      padding: 1rem;
+      padding: 8px 16px 16px 16px;
       display: flex;
       flex-direction: column;
       background: rgba(0,0,0,.1);
       height: 100%;
-      // overflow-y: hidden;     
     }
     
     form header {
@@ -18,7 +17,10 @@
 
       .source-image {
         flex: 0 0 100px;
+        width: 100px;
         height: 100px;
+        position: relative;
+        background-color: $primary-color-bg-drop;
         font-size: 12px;
         line-height: 1.2;
         font-weight: 700;
@@ -33,18 +35,33 @@
           border-radius: 5px;
         }
 
-        .hidden {
-          display: none;
+        .toggleImage {
+          position: absolute;
+          left: 0;
+          top: 0;
+          @include button;
         }
 
-        span {
+        .deleteQuestGiver {
+          position: absolute;
+          left: 100-22px;
+          top: 0;
+          @include button;
+        }
+
+        .drop-info {
           display: flex;
           justify-content: center;
           align-items: center;
           height: 100%;
           border: 2px dashed rgba(0,0,0,.5);
           border-radius: 5px;
-          padding: 8px; 
+          padding: 8px;
+          cursor: pointer;
+        }
+
+        .hidden {
+          display: none;
         }
       }
 
@@ -56,11 +73,9 @@
       .quest-giver {
         margin-bottom: 8px;
       }
-
-
     }
 
-    .quest-title {
+    .quest-name {
       margin-top: 8px;
     }
 
@@ -115,7 +130,6 @@
           padding: 0 12px 0 0;
         }
       }
-
     }
 
     footer {

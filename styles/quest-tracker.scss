@@ -5,11 +5,20 @@
   width: 300px;
   right: 320px;
   padding: 5px;
-  color: #ddd;
+  color: $primary-color-darkbg-text;
+  pointer-events: none;
   text-shadow: 1px 1px 1px #000;
 
+  .scrollable {
+    overflow-y: auto;
+    max-height: 750px;  // Just fits in a normal browser window at 1080P.
+    padding: 0 4px;
+  }
+
   &.background {
-    background: #33333399;
+    background: $primary-color-bg-repositionable-app;
+    border: 2px solid $primary-color-border-repositionable-app;
+    border-radius: 5px;
   }
 
   * {
@@ -21,64 +30,129 @@
     font-family: "Font Awesome 5 Free";
   }
 
+  #hidden {
+    color: $primary-color-darkbg-text-hidden;
+  }
+
   .move-handle {
     position: absolute;
-    top: -20px;
+    top: -18px;
     left: 4px;
-    color: #ffffff88;
+    color: $primary-color-darkbg-text-hidden;
     text-shadow: none;
+    pointer-events: auto;
   }
 
-  .entity-link {
-    background: #cccccc66;
+  a.entity-link {
+    color: $primary-color-entity-link;
+
+    // Remove text-shadow inherited above, but let default style link hover take effect.
+    &:not(:hover) {
+      text-shadow: none;
+    }
   }
 
-  .title {
-    margin-bottom: 0;
-    cursor: pointer;
-    font-family: Oswald, Montserrat, Signika, sans-serif;
-    font-size: 20px;
+  .quest:not(:last-child) {
+    margin-bottom: 16px;
   }
 
-  .description {
-    font-size: 12px;
-    font-style: italic;
-    margin-top: 0;
-  }
+  .quest {
+    overflow-x: hidden;
+    overflow-y: hidden;
 
-  .tasks {
-    list-style: none;
-    margin-bottom: 6px;
+    display: flex;
+    flex-direction: column;
 
-    .task {
-      position: relative;
+    .title {
+      display: inline-flex;
+      flex-direction: row;
+      margin: 0;
+      font-size: 18px;
+      height:auto;
+    }
 
-      &::before {
-        content: "\f0c8";
-        position: absolute;
-        margin-right: 4px;
-        font-weight: 400;
-        font-family: "Font Awesome 5 Free";
-        left: -15px;
-        padding-top: 3px;
+    .quest-tracker-header {
+      flex: 0 0 auto;
+      cursor: pointer;
+      pointer-events: auto;
+      width: fit-content;
+      max-width: 92%;
+      height:auto;
+    }
+
+    .quest-tracker-span {
+      flex: 1;
+    }
+
+    .quest-tracker-link {
+      pointer-events: auto;
+      flex: 0 0 20px;
+      margin-top: auto;
+
+      i {
+        width: 20px;
+        height: 20px;
       }
+    }
 
-      &.failed {
-        text-decoration: line-through;
+    .tasks {
+      margin: 3px 0 0 0;
 
-        &::before {
-          content: "\f00d";
-          font-weight: 900;
-          padding-left: 1px;
+      .quest-tracker-task {
+        cursor: pointer;
+        width: fit-content;
+
+        span {
+          cursor: pointer;
+          pointer-events: auto;
+          &.check-square, &.minus-square {
+            text-decoration: line-through;
+          }
         }
       }
 
-      &.completed {
-        text-decoration: line-through;
+      .task {
+        margin: 2px 0 0 0;
+
+        i {
+          cursor: pointer;
+          pointer-events: auto;
+        }
+
+        span {
+          cursor: pointer;
+          &.check-square, &.minus-square {
+            text-decoration: line-through;
+          }
+        }
 
         &::before {
-          content: "\f00c";
-          font-weight: 900;
+          content: "\f0c8";
+          display: inline-block;
+          margin-right: 4px;
+          font-weight: 400;
+          font-family: "Font Awesome 5 Free";
+          width: 16px;
+          pointer-events: auto;
+        }
+
+        &.minus-square {
+          &::before {
+            content: "\f00d";
+            display: inline-block;
+            font-weight: 900;
+            padding-left: 1px;
+            width: 15px;
+          }
+        }
+
+        &.check-square {
+          &::before {
+            display: inline-block;
+            content: "\f00c";
+            font-weight: 900;
+            width: 16px;
+          }
         }
       }
     }

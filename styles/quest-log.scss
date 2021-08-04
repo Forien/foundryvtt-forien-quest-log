@@ -7,14 +7,13 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    background: rgba(0,0,0,.1);
-    padding: 0 0 24px 0;
+    padding: 0 0 16px 0;
   }
 
   .quest-log.bookmarks nav {
     position: absolute;
     left: 0;
-    transform: translateX(-100%);
+    transform: translateX(-97%);
     flex-direction: column;
     align-items: flex-end;
     background: none;
@@ -22,7 +21,9 @@
     flex: 0;
 
     .item {
+      // The dynamic jQuery module setting overrides this with the window content background image. This is the fallback.
       background: $background-parchment;
+
       text-align: right;
       margin: 0;
       margin-bottom: 4px;
@@ -31,11 +32,10 @@
       border-radius: 5px 0 0 5px;
       position: relative;
       z-index: 1;
-      box-shadow: 
-        -5px 0 5px -5px rgba(0, 0, 0, 0.25) inset,
+      box-shadow:
         0 5px 5px -5px rgba(0, 0, 0, 0.3),
-        0 -5px 5px -5px rgba(0, 0, 0, 0.3),
-        -2px 0 5px -2px rgba(0, 0, 0, 0.3);
+        0 -5px 5px -5px rgba(0, 0, 0, 0.3);
+
       transition: padding .3s ease, width .3s ease, color .3s ease;
       
       &:hover {
@@ -55,7 +55,6 @@
         height: 100%;
         top: 0;
         left: 0;
-        background: rgba(0,0,0,.1);
         border-radius: 5px 0 0 5px;
         z-index: -1;
       }
@@ -66,11 +65,31 @@
     flex: 1;
     overflow-y: hidden;
     padding: 0 16px;
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0;
+      padding-top: 0;
+      margin-bottom: 4px;
+      border-bottom: 2px solid #782e22;
+
+      h1 {
+        align-self: flex-end;
+        border: none;
+        margin: 0;
+        padding-bottom: 4px;
+      }
+
+      button {
+        flex: 0 0 120px;
+      }
+    }
   }
 
   .quest-log .tab {
     flex-direction: column;
-    padding: 16px 0 0 0;
+    padding: 4px 0 0 0;
 
     &.active {
       display: flex;
@@ -95,12 +114,12 @@
       background: rgba(255, 255, 255, .3);
       border: 1px solid transparent;
       border-radius: 5px;
-      height: 42px;
+      min-height: 42px;
       transition: border-color .3s ease, box-shadow .3s ease;
 
       &:hover {
-        border-color: $primary-accent-color;
-        box-shadow: 0 0 2px $primary-accent-color inset;
+        border-color: $primary-color-accent;
+        box-shadow: 0 0 2px $primary-color-accent inset;
       }
     }
 
@@ -108,12 +127,9 @@
       flex: 0 0 40px;
       width: 40px;
       height: 40px;
-      border-radius: 5px 0 0 5px;
+      margin-right: 4px;
+      border-radius: 5px;
       background-size: cover;
-    }
-
-    .personal-quest-icon {
-      margin-left: 8px
     }
 
     .title {
@@ -122,7 +138,8 @@
       flex-direction: column;
       justify-content: center;
       height: 100%;
-      padding: 0 8px;
+      padding-left: 2px;
+      padding-right: 8px;
       cursor: pointer;
 
       h2 {
@@ -142,20 +159,22 @@
       }
     }
 
+    // The height parameter hard codes the height for the border to show, but in the future this may need to be
+    // adjustable.
     .tasks {
-      flex: 0 0 60px;
+      font-size: 18px;
+      flex: 0 0 50px;
       border-left: 1px solid rgba(0,0,0,.15);
-      height: 100%;
+      height: 42px;
       display: flex;
       justify-content: center;
       align-items: center;
     }
-  }
 
-  .quest-log footer {
-    flex: 0 0 1px;
-    padding: 8px 16px 0 16px;
-    display: flex;
+    // The height parameter hard codes the height for the border to show, but in the future this may need to be
+    // adjustable.
+    .actions {
+      height: 42px;
+    }
   }
-
 }

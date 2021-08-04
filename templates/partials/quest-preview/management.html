@@ -1,61 +1,48 @@
-<div class="row">
+<div class="row" xmlns="http://www.w3.org/1999/html">
   <section class="quest-settings">
-    <h2>Quest Settings</h2>
+    <h2>{{localize 'ForienQuestLog.QuestPreview.Management.QuestSettings'}}</h2>
     <div class="setting-groups">
-      <div class="input-group">
-        <input type="checkbox" id="player-edit" {{checked playerEdit}}/>
-        <label for="player-edit">{{localize 'ForienQuestLog.QuestPreview.Management.CanPlayerEdit'}}</label>
-      </div>
-      <div class="input-group">
-        <input id="personal-quest" type="checkbox" class="personal" {{checked personal}}>
-        <label for="personal-quest">{{localize 'ForienQuestLog.QuestPreview.Management.IsPersonalQuest'}}</label>
-      </div>
-      <p class="personal-quest-description">{{localize 'ForienQuestLog.QuestPreview.Management.IsPersonalQuestDescription'}}</p>
-    </div>
-    <div class="personal-quest-settings">
-      <ul class="users {{#unless personal}}disabled{{/unless}}">
-        {{#each users}}
-        <li class="user" title="{{this.user.name}}">
-          <input id="personal-{{this.user._id}}" data-user-id="{{this.user._id}}" type="checkbox" class="personal-user" data-value="{{gte this.level ../observerLevel}}" {{checked (gte this.level ../observerLevel)}} {{#unless ../personal}}disabled="disabled"{{/unless}}/>
-          <label for="personal-{{this.user._id}}">{{this.user.name}}</label>
-        </li>
-        {{/each}}
-      </ul>
+      <button class="btn configure-perm-btn"><i class="fas fa-lock fa-fw"></i>{{localize 'ForienQuestLog.QuestPreview.Management.ConfigurePermissions'}}</button>
     </div>
   </section>
 
   <section class="quest-splash">
-    <h2>{{localize 'ForienQuestLog.QuestPreview.Management.SplashArt'}}</h2>
-    <div class="splash-image" style="background-image: url({{splash}});background-position: {{splashPos}};" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></div>
-  {{#if splash.length}}
-    <span class="delete-splash" title="{{localize 'ForienQuestLog.Tooltips.DeleteSplash'}}"><i class="fas fa-times"></i></span>
-    <span class="change-splash-pos" title="{{localize 'ForienQuestLog.Tooltips.ChangeSplashPos'}}"><i class="fas fa-arrows-alt"></i></span>
-  {{/if}}
+    <h2>
+      {{localize 'ForienQuestLog.QuestPreview.Management.SplashArt'}}
+      <span class="state-container">
+        <input type="checkbox" id="splash-as-icon-{{id}}" name="splash-as-icon" {{#if splashAsIcon}}checked{{/if}}>
+        <label for="splash-as-icon-{{id}}">{{localize 'ForienQuestLog.QuestPreview.Management.SplashQuestIcon'}}</label>
+      </span>
+    </h2>
+    <div class="splash-image" style="background-image: url({{splash}});background-position: {{splashPos}};" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}">
+      {{#if (eq splash '')}}
+        <span class="drop-info">{{localize 'ForienQuestLog.QuestPreview.Management.SplashInfo'}}</span>
+      {{/if}}
+
+      {{#if splash.length}}
+        <span class="delete-splash" title="{{localize 'ForienQuestLog.Tooltips.DeleteSplash'}}"><i class="fas fa-times"></i></span>
+        <span class="change-splash-pos" title="{{localize 'ForienQuestLog.Tooltips.ChangeSplashPos'}}"><i class="fas fa-arrows-alt"></i></span>
+      {{/if}}
+    </div>
   </section>
 </div>
 <section class="subquests">
-  <h2>{{localize 'ForienQuestLog.QuestPreview.Management.QuestBranching'}}</h2>
+  <header>
+    <h2>{{localize 'ForienQuestLog.QuestPreview.Management.QuestBranching'}}</h2>
+    <button class="btn add-subquest-btn"><i class="fas fa-plus"></i> {{localize 'ForienQuestLog.QuestPreview.Management.AddSubquest'}}</button>
+  </header>
   <ul class="subquests-box">
-    {{#each subquests}}
-    <li class="subquest-item">
-      <h2 class="quest-name" data-id="{{this.id}}">{{this.name}}</h2>
-      <div class="actions">
-        
-        {{#if (eq this.status 'active')}}
-        <i class="move fas fa-check-circle" title="{{localize 'ForienQuestLog.Tooltips.SetCompleted'}}" data-target="completed" data-id="{{this.id}}"></i>
-        <i class="move fas fa-times-circle" title="{{localize 'ForienQuestLog.Tooltips.SetFailed'}}" data-target="failed" data-id="{{this.id}}"></i>
-        {{/if}}
-        {{#if (eq this.status 'hidden')}}
-        <i class="move fas fa-play" title="{{localize 'ForienQuestLog.Tooltips.SetActive'}}" data-target="active" data-id="{{this.id}}"></i>
-        {{else}}
-        <i class="move fas fa-stop-circle" title="{{localize 'ForienQuestLog.Tooltips.Hide'}}" data-target="hidden" data-id="{{this.id}}"></i>
-        {{/if}}
-        <i class="delete fas fa-trash" title="{{localize 'ForienQuestLog.Tooltips.Delete'}}" data-id="{{this.id}}"></i>
-      </div>
+    {{#each data_subquest}}
+    <li class="subquest-item" title="{{statusTooltip}}">
+      {{#if ../canEdit}}
+        {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
+        {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
+      {{/if}}
+      <h2 class="quest-name-link" data-quest-id="{{id}}">{{name}}</h2>
+      {{#if statusActions.length}}
+        {{{statusActions}}}
+      {{/if}}
     </li>
     {{/each}}
   </ul>
-  <footer>
-    <button class="btn add-subquest-btn">{{localize 'ForienQuestLog.QuestPreview.Management.AddSubquest'}}</button>
-  </footer>
 </section>
