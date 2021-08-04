@@ -1,242 +1,158 @@
 {
-  "ForienQuestLog": {
-    "Api": {
-      "__COMMENT__": "No need for translating lines starting with 'API ERROR', they show in console for developers only.",
-      "create": {
-        "title": "API Error: Title property is required to create new Quest"
-      },
-      "hooks": {
-        "createOpenQuestMacro": {
-          "error": {
-            "noQuest": "API Error: Can't create macro with invalid Quest ID"
-          },
-          "name": "Ouvrir la Quête „{name}”"
-        }
-      },
-      "reward": {
-        "create": {
-          "data": "API Error: Data property with at least {name, img} is required to create new Reward",
-          "type": "API Error: Type property is required to create new Reward"
-        }
-      },
-      "task": {
-        "create": {
-          "name": "API Error: Name property is required to create new Task"
-        }
-      }
-    },
-    "Buttons": {
-      "AddNewQuest": "Ajouter nouvelle Quête",
-      "AddNewTask": "Ajouter nouvelle Tâche"
-    },
-    "CloseDialog": {
-      "Body": "Êtes vous sûrs de vouloir fermer le formulaire ? Toutes données non sauvegardées serons perdus.",
-      "Cancel": "Annuler",
-      "Discard": "Abandonner les modifications",
-      "Header": "Êtes vous sûrs ?",
-      "Title": "Quitter le Formulaire"
-    },
-    "DeleteDialog": {
-      "BodyObjective": "Cet objectif et ses données seront effacées définitivement.",
-      "BodyQuest": "Cette quête et ses données seront effacées définitivement.",
-      "BodyReward": "Cette récompense et ses données seront effacées définitivement.",
-      "Cancel": "Annuler",
-      "Delete": "Effacer",
-      "HeaderDel": "Êtes vous certain de vouloir effacer : <p>'{name}'</p>",
-      "TitleDel": "Effacer {title}"
-    },
-    "FloatingQuestWindow": "Fenêtre de quête flottante",
-    "Migration": {
-      "Complete": "Forien's Quest Log - Migration des données achevée.",
-      "CouldNotMigrate": "Forien's Quest Log - ne peut pas migrer la quête : '{name}'",
-      "Schema": "Forien's Quest Log - Migration des données sous le schéma de version  '{version}'",
-      "Start": "Forien's Quest Log - Migration en cours des données, ne pas recharger."
-    },
-    "NewQuest": "Nouvelle quête",
-    "NoActiveQuests": "Il n'y a aucune quête en cours",
-    "NoDocument": "Une entité ne pourra pas être chargée pour IDuu : {uuid}",
-    "NoPermission": "Vous n'avez pas la permission de voir la feuille de cette entité.",
-    "Notifications": {
-      "CannotOpen": "Ne peut ouvrir les détails de la Quête. Soit vous n’avez pas la permission, soit la quête n’existe plus ou l’ID fournie était invalide.",
-      "FinishQuestAdded": "Finissez d'éditer et fermez la nouvelle quête actuelle avant d'en ajouter une autre.",
-      "LinkCopied": "Le lien vers cette quête a été copié dans le presse-papier.",
-      "QuestAdded": "'{name}' est ajouté comme nouvelle quête avec le statut: {status}.",
-      "QuestMoved": "Quête déplacée avec un nouveau statut : {target}",
-      "UserCantOpen": "L'utilisateur {user} n’a pas la permission d'ouvrir cette quête."
-    },
-    "Quest": "Quête",
-    "QuestLog": {
-      "SubTitle": "Quête faisant parti de: {0}",
-      "Table": {
-        "Actions": "Actions",
-        "QuestGiver": "Commanditaire",
-        "QuestTitle": "Nom de la Quête",
-        "Tasks": "Tâche(s)"
-      },
-      "Tabs": {
-        "Available": "Disponible",
-        "Completed": "Achevée",
-        "Failed": "Échouée",
-        "InProgress": "En cours"
-      },
-      "Title": "Journal de Quête"
-    },
-    "QuestLogButton": "Journal des quêtes",
-    "QuestPreview": {
-      "CustomSource": "Source personnalisée",
-      "Description": "Description :",
-      "DragDropActor": "Glisser/déposer un acteur, un objet, une entrée de journal ou clic gauche pour une source personnalisée.",
-      "DragDropActorPlayer": "Glisser/déposer un acteur, un objet ou une entrée de journal.",
-      "DragDropRewards": "Glisser/Déposer les objets ici pour en faire des récompenses",
-      "GMNotes": "Notes du MJ :",
-      "HeaderButtons": {
-        "Show": "Montrer aux joueurs"
-      },
-      "InvalidQuestId": "Impossible d'ouvrir la prévisualisation de la quête en raison d’une ID de Quête invalide.",
-      "Management": {
-        "AddSubquest": "Créer une quête secondaire",
-        "ConfigurePermissions": "Configurer les permissions",
-        "QuestBranching": "Quêtes secondaires",
-        "QuestSettings": "Réglages des quêtes:",
-        "SplashArt": "Illustration",
-        "SplashInfo": "Cliquer pour définir une image.",
-        "SplashQuestIcon": "Définissez comme icône de quête"
-      },
-      "Notifications": {
-        "BadUUID": "Ne peut récupérr le document pour IDuu : {uuid}",
-        "WrongDocType": "Forien's Quest Log accepte seulement les acteurs, les objets et les entrées de journaux du monde /compendium comme commanditaires de quêtes",
-        "WrongItemType": "Forien's Quest Log n'accepte que les objets du monde et des compendium items comme récompenses."
-      },
-      "Objective": "Objectifs :",
-      "Objectives": "Objectifs",
-      "Reward": "Récompense",
-      "RewardDrop": "FQL (récompense  de quête) : {userName} a donné '{itemName}' à {actorName}",
-      "Rewards": "Récompenses :",
-      "SubTitle": "sous quête faisant partie de: {0}",
-      "Tabs": {
-        "Details": "Détails",
-        "GMNotes": "Notes MJ",
-        "QuestManagement": "Modifier la Quête"
-      },
-      "Title": "Détails sur la quête"
-    },
-    "QuestTypes": {
-      "Active": "En cours",
-      "Available": "Disponible",
-      "Completed": "Achevée",
-      "Failed": "Échouée",
-      "InActive": "Inactive",
-      "Labels": {
-        "active": "en cours",
-        "available": "disponibles",
-        "completed": "complétées",
-        "failed": "échouées",
-        "inactive": "inactive"
-      }
-    },
-    "Quests": "Quêtes {0}",
-    "Settings": {
-      "allowPlayersAccept": {
-        "Enable": "Joueurs peuvent accepter",
-        "EnableHint": "Cocher pour permettre aux joueurs d'accepter les quêtes dans l'onglet Disponible"
-      },
-      "allowPlayersCreate": {
-        "Enable": "Joueurs peuvent créer",
-        "EnableHint": "Cocher pour permettre aux joueurs de créer des Quêtes. Les quêtes créées par des joueurs atterissent dans l'onglet 'Disponible', NECESSITE l'autorisation 'Créer Journal' dans le core."
-      },
-      "allowPlayersDrag": {
-        "Enable": "Permettre aux joueurs de récupérer les récompenses",
-        "EnableHint": "Cocher pour autoriser les joueurs à récupérer les récompenses de la fenêtre Détails de la quête vers leur propres Acteurs."
-      },
-      "countHidden": {
-        "Enable": "Montrer le nombre de tâches cachées",
-        "EnableHint": "Cocher pour que le nombre de tâche Completer/Total inclue aussi les tâches cachées."
-      },
-      "defaultPermissionLevel": {
-        "Enable": "Niveau de permission des quêtes nouvelles",
-        "EnableHint": "Fixer les permissions par défaut lorsque de nouvelles quêtes sont créées.",
-        "NONE": "Aucun",
-        "OBSERVER": "Observateur",
-        "OWNER": "Propriétaire"
-      },
-      "dynamicBookmarkBackground": {
-        "Enable": "Marques pages dynamiques en arrière plan",
-        "EnableHint": "Cochez pour que l'onglet marque page soit affichée de manière dynamique sur la fenêtre de contenu de l'arrière plan."
-      },
-      "hideFQLFromPlayers": {
-        "Enable": "Cacher le journal de quête aux joueurs",
-        "EnableHint": "Activer cette option cache le journal de quêts à tous les joueurs. Seul less joueurs ayant le nivveau MJ seront capables d'accéder au journal de quêtes."
-      },
-      "navStyle": {
-        "Enable": "Style de navigation ",
-        "EnableHint": "Décider comment la navigation dans le journal de quête sera affichée.",
-        "bookmarks": "Marque-page",
-        "classic": "Onglets classiques"
-      },
-      "notifyRewardDrop": {
-        "Enable": "Montrer les notification de récompenses accordées",
-        "EnableHint": "Cocher pour voir les notification de l'Interface utilisateur lorsque des récompenses de quêtes sont déposées sur les feuilles des joueurs."
-      },
-      "showFolder": {
-        "Enable": "Montre le dossier des quêtes",
-        "EnableHint": "Cocher pour montrer le dossier des données de quête dans l’onglet Journal. Seulement pour DÉBUGGER."
-      },
-      "showTasks": {
-        "Enable": "Montre les tâches dans le Journal de quête",
-        "EnableHint": "Décide si ou comment montrer le nombre d'objectifs à côté du Titre de la quête dans le Journal de quête. Cela n’a pas d’effet sur la prévisualisation de la Quête.",
-        "default": "montre les tâches : effectuées/total",
-        "no": "Cacher la colonne \"objectifs\"",
-        "onlyCurrent": "Montre les tâches : effectuées"
-      },
-      "trustedPlayerEdit": {
-        "Enable": "Permettre aux joueurs de confiance d'éditer",
-        "EnableHint": "Cochez pour permettre aux joueurs de disposer de capacités d'édition et de contrôle du statut des quêtes étendues pour les quêtes dont ils sont propriétaires."
-      }
-    },
-    "Tooltips": {
-      "AddAbstract": "Ajouter une récompense abstraite",
-      "ChangeGiverImgPos": "Modifier l'alignement de l'image du commanditaire",
-      "ChangeSplashPos": "Modifier l'alignement de l'image d'illustration",
-      "Delete": "Effacer",
-      "DeleteQuestGiver": "Supprimer le commanditaire",
-      "DeleteSplash": "Supprimer l'illustration",
-      "Edit": "Éditer",
-      "HiddenQuestNoPlayers": "Cette quête est cachée à tous les joueurs.",
-      "Hide": "Cacher",
-      "HideAll": "Tout cacher",
-      "LockAll": "Tout verrouiller",
-      "RewardHidden": "Récompense cachée. Cocher pour la montrer.",
-      "RewardLocked": "Récompense bloquée. Cliquer pour débloquer.",
-      "RewardLockedPlayer": "Récompense bloquée.",
-      "RewardUnlocked": "Récompense débloquée. Cliquer pour bloquer.",
-      "RewardUnlockedPlayer": "Récompense est débloquée.",
-      "RewardVisible": "Récompense visible. Cocher pour la cacher.",
-      "SetActive": "Définir comme En cours",
-      "SetAvailable": "Définir comme Disponible",
-      "SetCompleted": "Définir comme Achevée",
-      "SetFailed": "Définir comme Échouée",
-      "ShowAll": "Montrer à tous",
-      "Status": "Statut : {statusI18n}",
-      "TaskHidden": "Tache cachée. Cocher pour la montrer.",
-      "TaskVisible": "Tâche visible. Cocher pour la cacher.",
-      "ToggleImage": "Activer l’image du token/acteur",
-      "UnlockAll": "Tout débloquer"
-    },
-    "WorkshopPUF": {
-      "Settings": {
-        "enableQuestTracker": {
-          "hint": "Cocher pour activer la fenêtre HUD Traqueur de quête",
-          "name": "Activer le traqueur de quête"
-        },
-        "questTrackerBackground": {
-          "hint": "Cocher pour activer le Traqueur de quête, ce qui peut aider à sa visibilité sur certaines cartes.",
-          "name": "Arrière plan du Traqueur de quête"
-        },
-        "resetQuestTracker": {
-          "hint": "Cocher pour remettre en position le Traqueur de quête par défaut. À utiliser si vous avez déplacé le Traqueur de quête en une position d'où vous ne pouvez plus le faire bouger.",
-          "name": "Remettre en position le Traqueur de quête"
-        }
-      }
-    }
-  }
+  "ForienQuestLog.NewQuest": "Nouvelle Quête",
+  "ForienQuestLog.QuestLogButton": "Journal des quêtes",
+  "ForienQuestLog.Quests": "{0} Quêtes",
+  "ForienQuestLog.SampleReward": "par exemple 300 points d'expérience",
+  "ForienQuestLog.SampleTask": "Par exemple tuer tous les rats dans l'auberge « The Twisted Ankle »",
+  "ForienQuestLog.FloatingQuestWindow": "Fenêtre Quête flottant",
+  "ForienQuestLog.NoActiveQuests": "Il n'y a pas de quêtes actives",
+  "ForienQuestLog.NoDocument": "Une entité n'a pas pu être chargée pour UUID : {uuid}",
+  "ForienQuestLog.NoPermission": "Vous ne disposez pas des autorisations suffisantes pour afficher cette feuille d'entités.",
+  "ForienQuestLog.Quest": "Quête",
+  "ForienQuestLog.QuestTypes.InProgress": "Actif",
+  "ForienQuestLog.QuestTypes.Completed": "Terminé",
+  "ForienQuestLog.QuestTypes.Failed": "Échec",
+  "ForienQuestLog.QuestTypes.Hidden": "Inactif",
+  "ForienQuestLog.QuestTypes.Labels.available": "disponible",
+  "ForienQuestLog.QuestTypes.Labels.active": "en cours",
+  "ForienQuestLog.QuestTypes.Labels.completed": "terminé",
+  "ForienQuestLog.QuestTypes.Labels.failed": "a échoué",
+  "ForienQuestLog.QuestTypes.Labels.hidden": "inactif",
+  "ForienQuestLog.Buttons.AddNewQuest": "Ajouter une nouvelle quête",
+  "ForienQuestLog.Buttons.AddNewTask": "Ajouter un objectif",
+  "ForienQuestLog.QuestForm.Title": "Ajouter une nouvelle quête",
+  "ForienQuestLog.QuestForm.QuestGiver": "Source de la quête",
+  "ForienQuestLog.QuestForm.QuestGiverPlaceholder": "Entité/Acteur UUID :",
+  "ForienQuestLog.QuestForm.QuestGiverNamePlaceholder": "Veuillez fournir un nom pour la source Quest personnalisée :",
+  "ForienQuestLog.QuestForm.QuestName": "Nom de la quête :",
+  "ForienQuestLog.QuestForm.DragDropActor": "Glisser-déposer Acteur, Article ou Entrée de journal ou cliquez avec le bouton gauche pour définir une source personnalisée.",
+  "ForienQuestLog.QuestForm.QuestDescription": "Description de la quête :",
+  "ForienQuestLog.QuestForm.QuestGMNotes": "Notes de GM :",
+  "ForienQuestLog.QuestForm.Submit": "Ajouter au journal des quêtes",
+  "ForienQuestLog.QuestForm.SubquestOf": "Subquête de {name}",
+  "ForienQuestLog.QuestLog.Title": "Journal des quêtes",
+  "ForienQuestLog.QuestLog.SubTitle": "Subquête de {0}",
+  "ForienQuestLog.QuestLog.Table.QuestGiver": "Source de la quête",
+  "ForienQuestLog.QuestLog.Table.QuestTitle": "Titre",
+  "ForienQuestLog.QuestLog.Table.Tasks": "Objectifs",
+  "ForienQuestLog.QuestLog.Table.Actions": "Actions",
+  "ForienQuestLog.QuestLog.Tabs.Available": "Disponible",
+  "ForienQuestLog.QuestLog.Tabs.InProgress": "En cours",
+  "ForienQuestLog.QuestLog.Tabs.Completed": "Terminé",
+  "ForienQuestLog.QuestLog.Tabs.Failed": "Échec",
+  "ForienQuestLog.QuestLog.Tabs.Hidden": "Inactif",
+  "ForienQuestLog.QuestPreview.Title": "Détails de la quête - {name}",
+  "ForienQuestLog.QuestPreview.SubTitle": "Subquête de {0}",
+  "ForienQuestLog.QuestPreview.Objectives": "Objectifs :",
+  "ForienQuestLog.QuestPreview.Rewards": "Récompenses :",
+  "ForienQuestLog.QuestPreview.Objective": "Objectif",
+  "ForienQuestLog.QuestPreview.Reward": "Récompense",
+  "ForienQuestLog.QuestPreview.DragDropActor": "Glisser-déposer Acteur, Article ou Entrée de journal pour définir la source de la quête.",
+  "ForienQuestLog.QuestPreview.DragDropRewards": "Faites glisser et déposez des objets ici pour les ajouter comme récompenses.",
+  "ForienQuestLog.QuestPreview.InvalidQuestId": "Impossible d'ouvrir l'aperçu de quête en raison d'un ID de quête non valide.",
+  "ForienQuestLog.QuestPreview.RewardDrop": "FQL (récompense de quête) : {userName} a déposé '{itemName}' sur {actorName}",
+  "ForienQuestLog.QuestPreview.HeaderButtons.Show": "Afficher aux joueurs",
+  "ForienQuestLog.QuestPreview.Management.QuestSettings": "Paramètres de quête :",
+  "ForienQuestLog.QuestPreview.Management.ConfigurePermissions": "Configurer les autorisations",
+  "ForienQuestLog.QuestPreview.Management.SplashArt": "Art Splash :",
+  "ForienQuestLog.QuestPreview.Management.QuestBranching": "Sub-Quêtes :",
+  "ForienQuestLog.QuestPreview.Management.AddSubquest": "Créer une nouvelle Sub Quest",
+  "ForienQuestLog.QuestPreview.Management.SplashInfo": "Cliquez pour définir l'image.",
+  "ForienQuestLog.QuestPreview.Tabs.Details": "Détails",
+  "ForienQuestLog.QuestPreview.Tabs.QuestManagement": "Gérer la quête",
+  "ForienQuestLog.QuestPreview.Tabs.GMNotes": "Notes GM",
+  "ForienQuestLog.QuestPreview.Notifications.BadUUID": "Impossible de récupérer le document pour UUID : {uuid}",
+  "ForienQuestLog.QuestPreview.Notifications.WrongItemType": "Le journal de quêtes de Forien accepte uniquement les objets du monde et du compendium comme récompenses.",
+  "ForienQuestLog.QuestPreview.Notifications.WrongDocType": "Le journal de quêtes de Forien accepte uniquement les acteurs, les objets et les entrées de journal du monde ou du compendium comme donneurs de quête.",
+  "ForienQuestLog.DeleteDialog.TitleDel": "Supprimer {title}",
+  "ForienQuestLog.DeleteDialog.HeaderDel": "Êtes-vous sûr de vouloir supprimer :<p>'{name}'</p>",
+  "ForienQuestLog.DeleteDialog.BodyQuest": "Cette quête et ses données seront définitivement supprimées.",
+  "ForienQuestLog.DeleteDialog.BodyReward": "Cette récompense et ses données seront définitivement supprimées.",
+  "ForienQuestLog.DeleteDialog.BodyObjective": "Cet objectif et ses données seront définitivement supprimés.",
+  "ForienQuestLog.DeleteDialog.Delete": "Supprimer",
+  "ForienQuestLog.DeleteDialog.Cancel": "Annuler",
+  "ForienQuestLog.CloseDialog.Title": "Formulaire de congé",
+  "ForienQuestLog.CloseDialog.Header": "Es-tu sûr ?",
+  "ForienQuestLog.CloseDialog.Body": "Êtes-vous sûr de vouloir fermer le formulaire ? Les données non enregistrées seront perdues.",
+  "ForienQuestLog.CloseDialog.Discard": "Ignorer les modifications",
+  "ForienQuestLog.CloseDialog.Cancel": "Annuler",
+  "ForienQuestLog.Notifications.CannotOpen": "Impossible d'ouvrir les détails de la quête. Il se peut que vous ne disposiez pas d'autorisations, que Quest n'existe plus ou que l'ID fourni n'est pas valide.",
+  "ForienQuestLog.Notifications.UserCantOpen": "L'utilisateur {user} n'a pas l'autorisation d'ouvrir cette quête.",
+  "ForienQuestLog.Notifications.LinkCopied": "Le lien d'entité pour cette quête a été copié dans le presse-papiers.",
+  "ForienQuestLog.Notifications.QuestMoved": "Déplacé la quête vers un nouveau dossier et lui a donné un nouveau statut : {target}.",
+  "ForienQuestLog.Settings.allowPlayersDrag.Enable": "Permettre aux joueurs de faire glisser les récompenses vers leur inventaire",
+  "ForienQuestLog.Settings.allowPlayersDrag.EnableHint": "Cochez cette case pour permettre aux Joueurs de faire glisser les Récompenses d'une fenêtre Détails de la quête vers leurs Acteurs.",
+  "ForienQuestLog.Settings.availableQuests.Enable": "Afficher l'onglet disponible",
+  "ForienQuestLog.Settings.availableQuests.EnableHint": "Cochez pour afficher l'onglet « Disponible » dans le menu Journal des quêtes où les joueurs peuvent voir toutes les quêtes non inactives avant qu'elles ne soient acceptées.",
+  "ForienQuestLog.Settings.countHidden.Enable": "Compter les tâches masquées",
+  "ForienQuestLog.Settings.countHidden.EnableHint": "Si cette case est cochée, le nombre de tâches terminées/totales inclura les tâches masquées.",
+  "ForienQuestLog.Settings.dynamicBookmarkBackground.Enable": "Arrière-plan des favoris dynamiques",
+  "ForienQuestLog.Settings.dynamicBookmarkBackground.EnableHint": "Si cette option est cochée, l'arrière-plan de l'onglet de signet est défini dynamiquement sur l'arrière-plan du contenu de la fenêtre.",
+  "ForienQuestLog.Settings.navStyle.Enable": "Style de navigation",
+  "ForienQuestLog.Settings.navStyle.EnableHint": "Décidez comment la navigation du journal de quêtes doit être affichée.",
+  "ForienQuestLog.Settings.navStyle.bookmarks": "Signets",
+  "ForienQuestLog.Settings.navStyle.classic": "Onglets classiques",
+  "ForienQuestLog.Settings.notifyRewardDrop.Enable": "Afficher les notifications de remise de récompense",
+  "ForienQuestLog.Settings.notifyRewardDrop.EnableHint": "Vérifiez les notifications de l'interface utilisateur lorsque les récompenses de quête sont déposées sur les feuilles de joueurs.",
+  "ForienQuestLog.Settings.showFolder.Enable": "Afficher le dossier Quest",
+  "ForienQuestLog.Settings.showFolder.EnableHint": "Cochez cette case pour afficher le dossier de données de quête dans l'onglet Journal. À des fins de débogage uniquement.",
+  "ForienQuestLog.Settings.showTasks.Enable": "Afficher les tâches dans le journal des quêtes",
+  "ForienQuestLog.Settings.showTasks.EnableHint": "Décidez si ou comment afficher la quantité d'objectifs à côté du titre de la quête dans le journal des quêtes. Cela n'a aucun effet sur l'aperçu de la quête.",
+  "ForienQuestLog.Settings.showTasks.default": "Afficher les objectifs : fait/total",
+  "ForienQuestLog.Settings.showTasks.onlyCurrent": "Afficher les objectifs : fait",
+  "ForienQuestLog.Settings.showTasks.no": "Masquer la colonne « Objectifs »",
+  "ForienQuestLog.Settings.defaultPermissionLevel.Enable": "Niveau d'autorisation de quête par défaut",
+  "ForienQuestLog.Settings.defaultPermissionLevel.EnableHint": "Définit le niveau d'autorisation par défaut lors de la création de nouvelles quêtes.",
+  "ForienQuestLog.Settings.defaultPermissionLevel.OBSERVER": "Observateur",
+  "ForienQuestLog.Settings.defaultPermissionLevel.NONE": "Aucun",
+  "ForienQuestLog.Settings.defaultPermissionLevel.OWNER": "Propriétaire",
+  "ForienQuestLog.Settings.hideFQLFromPlayers.Enable": "Masquer le journal des quêtes aux joueurs",
+  "ForienQuestLog.Settings.hideFQLFromPlayers.EnableHint": "Lorsque cette option est activée, le journal des quêtes est masqué à tous les joueurs. Seuls les utilisateurs de niveau GM pourront accéder au journal de quêtes.",
+  "ForienQuestLog.Settings.playersWelcomeScreen.Enable": "Afficher l'écran de bienvenue aux joueurs",
+  "ForienQuestLog.Settings.playersWelcomeScreen.EnableHint": "Décochez pour empêcher les joueurs de voir l'écran d'accueil lors de la connexion après une mise à jour. Ils peuvent toujours le voir en cliquant sur l'icône « aide » dans le journal des quêtes.",
+  "ForienQuestLog.Settings.allowPlayersAccept.Enable": "Les joueurs peuvent accepter les quêtes",
+  "ForienQuestLog.Settings.allowPlayersAccept.EnableHint": "Cochez pour permettre aux joueurs d'accepter les Quêtes depuis l'onglet Disponible.",
+  "ForienQuestLog.Settings.allowPlayersCreate.Enable": "Les joueurs peuvent créer",
+  "ForienQuestLog.Settings.allowPlayersCreate.EnableHint": "Cochez cette case pour permettre aux joueurs de créer des quêtes. Les quêtes créées par le joueur apparaîtront dans l'onglet Disponible avec les autorisations d'édition du joueur. Nécessite l'autorisation de base 'créer un journal'.",
+  "ForienQuestLog.Tooltips.SetAvailable": "Définir comme disponible",
+  "ForienQuestLog.Tooltips.SetActive": "Définir comme En cours",
+  "ForienQuestLog.Tooltips.SetCompleted": "Définir comme terminé",
+  "ForienQuestLog.Tooltips.SetFailed": "Définir comme ayant échoué",
+  "ForienQuestLog.Tooltips.Hide": "Définir comme inactif",
+  "ForienQuestLog.Tooltips.Delete": "Supprimer",
+  "ForienQuestLog.Tooltips.Edit": "Modifier",
+  "ForienQuestLog.Tooltips.AddAbstract": "Ajouter un résumé",
+  "ForienQuestLog.Tooltips.ShowAll": "Afficher tout",
+  "ForienQuestLog.Tooltips.UnlockAll": "Déverrouiller tout",
+  "ForienQuestLog.Tooltips.HiddenQuestNoPlayers": "Cette quête est cachée à tous les joueurs.",
+  "ForienQuestLog.Tooltips.RewardHidden": "La récompense est cachée. Cliquez pour afficher.",
+  "ForienQuestLog.Tooltips.RewardVisible": "La récompense est visible. Cliquez pour masquer.",
+  "ForienQuestLog.Tooltips.RewardLocked": "La récompense est verrouillée. Cliquez pour déverrouiller.",
+  "ForienQuestLog.Tooltips.RewardUnlocked": "La récompense est débloquée. Cliquez pour verrouiller.",
+  "ForienQuestLog.Tooltips.TaskHidden": "L'objectif est caché. Cliquez pour afficher.",
+  "ForienQuestLog.Tooltips.TaskVisible": "L'objectif est visible. Cliquez pour masquer.",
+  "ForienQuestLog.Tooltips.ToggleImage": "Basculer l'image du jeton/de l'acteur",
+  "ForienQuestLog.Tooltips.DeleteQuestGiver": "Supprimer le donneur de quête",
+  "ForienQuestLog.Tooltips.DeleteSplash": "Supprimer l'image de démarrage",
+  "ForienQuestLog.Tooltips.ChangeGiverImgPos": "Modifier l'alignement de l'image du donneur de quête",
+  "ForienQuestLog.Tooltips.ChangeSplashPos": "Modifier l'alignement des éclaboussures",
+  "ForienQuestLog.Migration.CouldNotMigrate": "Journal des quêtes de Forien - Impossible de migrer la quête : '{name}'",
+  "ForienQuestLog.Migration.Start": "Journal des quêtes de Forien - Migration des données, veuillez ne pas recharger.",
+  "ForienQuestLog.Migration.Schema": "Journal des quêtes de Forien - Migration des données vers la version du schéma '{version}'",
+  "ForienQuestLog.Migration.Complete": "Journal des quêtes de Forien - Migration des données terminée.",
+  "ForienQuestLog.Api.__COMMENT__": "Pas besoin de traduire les lignes commençant par 'API ERROR', elles apparaissent dans la console uniquement pour les développeurs.",
+  "ForienQuestLog.Api.create.title": "Erreur API : la propriété Title est requise pour créer une nouvelle Quest.",
+  "ForienQuestLog.Api.hooks.createOpenQuestMacro.name": "Ouvert - {name}",
+  "ForienQuestLog.Api.hooks.createOpenQuestMacro.error.noQuest": "Erreur API : Impossible de créer une macro avec un ID Quest non valide.",
+  "ForienQuestLog.Api.reward.create.data": "Erreur API : La propriété de données avec au moins {name, img} est requise pour créer une nouvelle récompense.",
+  "ForienQuestLog.Api.reward.create.type": "Erreur API : la propriété Type est requise pour créer une nouvelle récompense.",
+  "ForienQuestLog.Api.task.create.name": "Erreur API : la propriété Name est requise pour créer un nouvel objectif.",
+  "ForienQuestLog.WorkshopPUF.Settings.enableQuestTracker.name": "Activer Quest Tracker",
+  "ForienQuestLog.WorkshopPUF.Settings.enableQuestTracker.hint": "Cochez cette case pour activer la fenêtre Quest Tracker HUD.",
+  "ForienQuestLog.WorkshopPUF.Settings.questTrackerBackground.name": "Arrière-plan du tracker",
+  "ForienQuestLog.WorkshopPUF.Settings.questTrackerBackground.hint": "Cochez cette case pour activer l'arrière-plan pour Quest Tracker, ce qui peut aider à améliorer la visibilité sur certaines cartes.",
+  "ForienQuestLog.WorkshopPUF.Settings.questTrackerTasks.name": "Afficher les tâches de Quest Tracker",
+  "ForienQuestLog.WorkshopPUF.Settings.questTrackerTasks.hint": "Cochez cette case pour activer l'affichage des tâches dans le Quest Tracker.",
+  "ForienQuestLog.WorkshopPUF.Settings.resetQuestTracker.name": "Réinitialiser la position du Tracker",
+  "ForienQuestLog.WorkshopPUF.Settings.resetQuestTracker.hint": "Cochez cette case pour réinitialiser la position par défaut de Quest Tracker. Utilisez ceci si vous avez déplacé Quest Tracker dans une position où vous ne pouvez plus le déplacer."
 }
