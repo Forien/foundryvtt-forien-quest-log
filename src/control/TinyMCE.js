@@ -178,6 +178,95 @@ const s_DEFAULT_STYLE_FORMATS = [{
       title: "Styles",
       items: [
          {
+            title: 'Blend Mode', items: [
+               {
+                  title: 'BM Unset', selector: '*', styles: {
+                     'mix-blend-mode': 'unset'
+                  }
+               },
+               {
+                  title: 'BM Normal', selector: '*', styles: {
+                     'mix-blend-mode': 'normal'
+                  }
+               },
+               {
+                  title: 'BM Multiply', selector: '*', styles: {
+                     'mix-blend-mode': 'multiply'
+                  }
+               },
+               {
+                  title: 'BM Screen', selector: '*', styles: {
+                     'mix-blend-mode': 'screen'
+                  }
+               },
+               {
+                  title: 'BM Overlay', selector: '*', styles: {
+                     'mix-blend-mode': 'overlay'
+                  }
+               },
+               {
+                  title: 'BM Darken', selector: '*', styles: {
+                     'mix-blend-mode': 'darken'
+                  }
+               },
+               {
+                  title: 'BM Lighten', selector: '*', styles: {
+                     'mix-blend-mode': 'lighten'
+                  }
+               },
+               {
+                  title: 'BM Color Dodge', selector: '*', styles: {
+                     'mix-blend-mode': 'color-dodge'
+                  }
+               },
+               {
+                  title: 'BM Color Burn', selector: '*', styles: {
+                     'mix-blend-mode': 'color-burn'
+                  }
+               },
+               {
+                  title: 'BM Hard Light', selector: '*', styles: {
+                     'mix-blend-mode': 'hard-light'
+                  }
+               },
+               {
+                  title: 'BM Soft Light', selector: '*', styles: {
+                     'mix-blend-mode': 'soft-light'
+                  }
+               },
+               {
+                  title: 'BM Difference', selector: '*', styles: {
+                     'mix-blend-mode': 'difference'
+                  }
+               },
+               {
+                  title: 'BM Exclusion', selector: '*', styles: {
+                     'mix-blend-mode': 'exclusion'
+                  }
+               },
+               {
+                  title: 'BM Hue', selector: '*', styles: {
+                     'mix-blend-mode': 'hue'
+                  }
+               },
+               {
+                  title: 'BM Saturation', selector: '*', styles: {
+                     'mix-blend-mode': 'saturation'
+                  }
+               },
+               {
+                  title: 'BM Color', selector: '*', styles: {
+                     'mix-blend-mode': 'color'
+                  }
+               },
+               {
+                  title: 'BM Luminosity', selector: '*', styles: {
+                     'mix-blend-mode': 'luminosity'
+                  }
+               },
+            ]
+         },
+         {
             title: 'Border', items: [
                {
                   title: 'No Border', selector: '*', styles: {
@@ -211,28 +300,80 @@ const s_DEFAULT_STYLE_FORMATS = [{
             ]
          },
          {
-            title: 'Drop Shadow', items: [
+            title: 'Filters', items: [
                {
-                  title: 'DS None', selector: '*', styles: {
-                     filter: 'unset'
+                  title: 'No Filter', selector: '*', styles: {
+                     filter: 'none'
                   }
                },
                {
-                  title: 'DS 2px', selector: '*', styles: {
-                     filter: 'drop-shadow(2px 2px 2px black)'
-                  }
+                  title: 'Blur', items: [
+                     {
+                        title: 'Blur 1px', selector: '*', styles: {
+                           filter: 'blur(1px)'
+                        }
+                     },
+                     {
+                        title: 'Blur 2px', selector: '*', styles: {
+                           filter: 'blur(2px)'
+                        }
+                     },
+                     {
+                        title: 'Blur 3px', selector: '*', styles: {
+                           filter: 'blur(3px)'
+                        }
+                     },
+                     {
+                        title: 'Blur 4px', selector: '*', styles: {
+                           filter: 'blur(4px)'
+                        }
+                     },
+                  ]
                },
                {
-                  title: 'DS 4px', selector: '*', styles: {
-                     filter: 'drop-shadow(4px 4px 3px black)'
-                  }
+                  title: 'Drop Shadow', items: [
+                     {
+                        title: 'DS 2px', selector: '*', styles: {
+                           filter: 'drop-shadow(2px 2px 2px black)'
+                        }
+                     },
+                     {
+                        title: 'DS 4px', selector: '*', styles: {
+                           filter: 'drop-shadow(4px 4px 3px black)'
+                        }
+                     },
+                     {
+                        title: 'DS 8px', selector: '*', styles: {
+                           filter: 'drop-shadow(8px 8px 6px black)'
+                        }
+                     },
+                  ]
                },
                {
-                  title: 'DS 8px', selector: '*', styles: {
-                     filter: 'drop-shadow(8px 8px 6px black)'
-                  }
+                  title: 'Grayscale', items: [
+                     {
+                        title: 'GS 25%', selector: '*', styles: {
+                           filter: 'grayscale(25%)'
+                        }
+                     },
+                     {
+                        title: 'GS 50%', selector: '*', styles: {
+                           filter: 'grayscale(50%)'
+                        }
+                     },
+                     {
+                        title: 'GS 75%', selector: '*', styles: {
+                           filter: 'grayscale(75%)'
+                        }
+                     },
+                     {
+                        title: 'GS 100%', selector: '*', styles: {
+                           filter: 'grayscale(100%)'
+                        }
+                     },
+                  ]
                },
-            ]
+            ],
          },
          {
             title: 'Float', items: [
@@ -360,6 +501,24 @@ const s_DEFAULT_STYLE_FORMATS = [{
                            inline: 'span',
                            'margin-left': '15px'
                         }
+                     },
+                     {
+                        title: 'ML 25px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-left': '25px'
+                        }
+                     },
+                     {
+                        title: 'ML 50px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-left': '50px'
+                        }
+                     },
+                     {
+                        title: 'ML 75px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-left': '75px'
+                        }
                      }
                   ]
                },
@@ -404,8 +563,80 @@ const s_DEFAULT_STYLE_FORMATS = [{
                            inline: 'span',
                            'margin-right': '15px'
                         }
+                     },
+                     {
+                        title: 'MR 25px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-right': '25px'
+                        }
+                     },
+                     {
+                        title: 'MR 50px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-right': '50px'
+                        }
+                     },
+                     {
+                        title: 'MR 75px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-right': '75px'
+                        }
                      }
                   ]
+               }
+            ]
+         },
+         {
+            title: 'Opacity', items: [
+               {
+                  title: 'OP 100%', selector: '*', styles: {
+                     opacity: '1'
+                  }
+               },
+               {
+                  title: 'OP 90%', selector: '*', styles: {
+                     opacity: '0.9'
+                  }
+               },
+               {
+                  title: 'OP 80%', selector: '*', styles: {
+                     opacity: '0.8'
+                  }
+               },
+               {
+                  title: 'OP 70%', selector: '*', styles: {
+                     opacity: '0.7'
+                  }
+               },
+               {
+                  title: 'OP 60%', selector: '*', styles: {
+                     opacity: '0.6'
+                  }
+               },
+               {
+                  title: 'OP 50%', selector: '*', styles: {
+                     opacity: '0.5'
+                  }
+               },
+               {
+                  title: 'OP 40%', selector: '*', styles: {
+                     opacity: '0.4'
+                  }
+               },
+               {
+                  title: 'OP 30%', selector: '*', styles: {
+                     opacity: '0.3'
+                  }
+               },
+               {
+                  title: 'OP 20%', selector: '*', styles: {
+                     opacity: '0.2'
+                  }
+               },
+               {
+                  title: 'OP 10%', selector: '*', styles: {
+                     opacity: '0.1'
+                  }
                }
             ]
          },
