@@ -13,7 +13,7 @@
       "url": "https://www.patreon.com/deathsave"
     },
     {
-      "name": "Michael Leahy (TyphonJS)",
+      "name": "Michael Leahy (TyphonJS) - MLeahy#4299",
       "url": "https://www.typhonjs.io"
     }
   ],
@@ -24,9 +24,9 @@
   "flags": {
     "allowBugReporter": true
   },
-  "version": "0.7.5",
+  "version": "0.7.6",
   "minimumCoreVersion": "0.8.6",
-  "compatibleCoreVersion": "0.8.8",
+  "compatibleCoreVersion": "0.8.9",
   "scripts": [],
   "esmodules": [
     "./src/init.js"
@@ -96,7 +96,7 @@
   "dependencies": [],
   "socket": true,
   "manifest": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/latest/download/module.json",
-  "download": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/download/0.7.5/module.zip",
+  "download": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/download/0.7.6/module.zip",
   "protected": false,
   "coreTranslation": false
 }
