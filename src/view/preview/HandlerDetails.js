@@ -23,10 +23,10 @@ export default class HandlerDetails
 
       let value = quest[target];
 
-      value = value.replace(/'/g, '&quot;');
+      value = value.replace(/"/g, '&quot;');
 
-      const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${
-       target}' maxlength="48"/>`);
+      const input = $(`<input type="text" class="editable-input" value="${value}" data-target="${
+       target}" maxlength="48"/>`);
 
       const parent = $(event.target).closest('.actions-single').prev('.editable-container');
 
@@ -93,7 +93,7 @@ export default class HandlerDetails
 
       let value = quest[target];
 
-      value = value.replace(/'/g, '&quot;');
+      value = value.replace(/"/g, '&quot;');
 
       const input = $(`<input type="text" class="editable-input" value="${value}" data-target="${
        target}" maxlength="24"/>`);
@@ -295,10 +295,10 @@ export default class HandlerDetails
          value = reward.name;
       }
 
-      value = value.replace(/'/g, '&quot;');
+      value = value.replace(/"/g, '&quot;');
 
-      const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${
-       uuidv4 !== void 0 ? `data-uuidv4='${uuidv4}'` : ``} maxlength="96"/>`);
+      const input = $(`<input type="text" class="editable-input" value="${value}" data-target="${target}" ${
+       uuidv4 !== void 0 ? `data-uuidv4="${uuidv4}"` : ``} maxlength="96"/>`);
 
       // This consumes any clicks on the input element preventing the abstract reward image popup from showing when
       // clicking on the input element.
@@ -895,10 +895,10 @@ export default class HandlerDetails
 
       let value = task.name;
 
-      value = value.replace(/'/g, '&quot;');
+      value = value.replace(/"/g, '&quot;');
 
-      const input = $(`<input type='text' class='editable-input' value='${value}' data-target='${target}' ${
-       uuidv4 !== void 0 ? `data-uuidv4='${uuidv4}'` : ``}/>`);
+      const input = $(`<input type="text" class="editable-input" value="${value}" data-target="${target}" ${
+       uuidv4 !== void 0 ? `data-uuidv4="${uuidv4}"` : ``}/>`);
 
       const parent = $(event.target).closest('.actions').prev('.editable-container');
 
