@@ -167,7 +167,7 @@ const s_DEFAULT_FONTS = 'Almendra=Almendra,serif; Arial=arial,helvetica,sans-ser
  *
  * @type {string}
  */
-const s_DEFAULT_FONT_SIZE = '14pt 16pt 18pt 22pt 28pt 32pt 36pt 42pt 48pt 64pt';
+const s_DEFAULT_FONT_SIZE = '10pt 12pt 14pt 16pt 18pt 22pt 28pt 32pt 36pt 42pt 48pt 64pt';
 
 /**
  * Provides extra CSS styles to configure text and various elements in TinyMCE.
