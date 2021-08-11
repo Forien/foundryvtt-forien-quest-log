@@ -1,6 +1,16 @@
 @import 'global-variables';
 
 @mixin tinymce {
+  .editor-content {
+    font-family: "Signika", sans-serif;
+    font-size: 14pt;
+    line-height: 1.2;
+  }
+
+  p {
+    margin: 0;
+  }
+
   // Provide a class option in table dialog to remove default table styles.
   table.tmce-nocolors {
     background: none;

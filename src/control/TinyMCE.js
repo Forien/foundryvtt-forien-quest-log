@@ -54,7 +54,7 @@ export default class TinyMCE
             formatgroup: {
                icon: 'format',
                tooltip: 'Formatting',
-               items: 'fontselect | fontsizeselect | forecolor backcolor'
+               items: 'fontselect | fontsizeselect | lineheight | forecolor backcolor'
             },
             insertgroup: {
                icon: 'plus',
@@ -67,6 +67,7 @@ export default class TinyMCE
          fontsize_formats: s_DEFAULT_FONT_SIZE,
          file_picker_types: 'image media',
          image_advtab: true,
+         lineheight_formats: s_DEFAULT_LINE_HEIGHT,
          oembed_live_embeds: false,
          oembed_default_width: 424,
          oembed_default_height: 238,
@@ -168,6 +169,13 @@ const s_DEFAULT_FONTS = 'Almendra=Almendra,serif; Arial=arial,helvetica,sans-ser
  * @type {string}
  */
 const s_DEFAULT_FONT_SIZE = '10pt 12pt 14pt 16pt 18pt 22pt 28pt 32pt 36pt 42pt 48pt 64pt';
+
+/**
+ * Defines the line-height styles available in the toolbar options.
+ *
+ * @type {string}
+ */
+const s_DEFAULT_LINE_HEIGHT = '0.8 0.9 1 1.1 1.2 1.3 1.4 1.5 1.75 2';
 
 /**
  * Provides extra CSS styles to configure text and various elements in TinyMCE.
@@ -395,35 +403,6 @@ const s_DEFAULT_STYLE_FORMATS = [{
             title: "Fonts",
             items: [
                {
-                  title: 'Line Height', items: [
-                     {
-                        title: 'LH Normal', selector: '*', styles: {
-                           'line-height': 'normal'
-                        }
-                     },
-                     {
-                        title: 'LH 50%', selector: '*', styles: {
-                           'line-height': '50%'
-                        }
-                     },
-                     {
-                        title: 'LH 75%', selector: '*', styles: {
-                           'line-height': '75%'
-                        }
-                     },
-                     {
-                        title: 'LH 125%', selector: '*', styles: {
-                           'line-height': '125%'
-                        }
-                     },
-                     {
-                        title: 'LH 150%', selector: '*', styles: {
-                           'line-height': '150%'
-                        }
-                     }
-                  ]
-               },
-               {
                   title: 'Neon', items: [
                      {
                         title: 'Neon Blue', selector: '*', styles: {
@@ -479,6 +458,12 @@ const s_DEFAULT_STYLE_FORMATS = [{
                            inline: 'span',
                            'margin-top': '15px'
                         }
+                     },
+                     {
+                        title: 'MT 25px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-top': '25px'
+                        }
                      }
                   ]
                },
@@ -519,6 +504,12 @@ const s_DEFAULT_STYLE_FORMATS = [{
                            inline: 'span',
                            'margin-left': '75px'
                         }
+                     },
+                     {
+                        title: 'ML 100px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-left': '100px'
+                        }
                      }
                   ]
                },
@@ -540,6 +531,12 @@ const s_DEFAULT_STYLE_FORMATS = [{
                         title: 'MB 15px', selector: '*', styles: {
                            inline: 'span',
                            'margin-bottom': '15px'
+                        }
+                     },
+                     {
+                        title: 'MB 25px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-bottom': '25px'
                         }
                      }
                   ]
@@ -580,6 +577,12 @@ const s_DEFAULT_STYLE_FORMATS = [{
                         title: 'MR 75px', selector: '*', styles: {
                            inline: 'span',
                            'margin-right': '75px'
+                        }
+                     },
+                     {
+                        title: 'MR 100px', selector: '*', styles: {
+                           inline: 'span',
+                           'margin-right': '100px'
                         }
                      }
                   ]
