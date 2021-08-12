@@ -94,7 +94,7 @@
   "packs": [
     {
       "name": "macros-gm",
-      "label": "FQL Macors (GM)",
+      "label": "FQL Macros (GM)",
       "path": "./packs/macro-gm.db",
       "entity": "Macro"
     },
@@ -102,7 +102,7 @@
       "name": "macros-player",
       "label": "FQL Macros (Player)",
       "path": "./packs/macro-player.db",
-      "entity": "Macro" 
+      "entity": "Macro"
     }
   ],
   "system": [],
