@@ -81,3 +81,8 @@
     url('../fonts/nova-square-v15-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
   }
 }
+
+@mixin header-buttons {
+  display: flex;
+  border-bottom: 2px solid $primary-color-header-buttons;
+}

@@ -2,6 +2,14 @@
   min-width: 500px;
   min-height: 640px;
 
+  // Necessary to ensure the bookmark tabs show.
+  &.window-app .window-content {
+    overflow-x: visible;
+    overflow-y: visible;
+  }
+
+  $quest-min-height: 42px;  // Defines the height of the quest <li> and children elements.
+
   .quest-log {
     height: 100%;
     overflow-y: auto;
@@ -22,7 +30,7 @@
 
     .item {
       // The dynamic jQuery module setting overrides this with the window content background image. This is the fallback.
-      background: $background-parchment;
+      background: $background-image;
 
       text-align: right;
       margin: 0;
@@ -37,7 +45,7 @@
         0 -5px 5px -5px rgba(0, 0, 0, 0.3);
 
       transition: padding .3s ease, width .3s ease, color .3s ease;
-      
+
       &:hover {
         padding-right: 32px;
         width: 166px;
@@ -67,12 +75,11 @@
     padding: 0 16px;
 
     header {
-      display: flex;
+      @include header-buttons;
       justify-content: space-between;
       margin-top: 0;
       padding-top: 0;
       margin-bottom: 4px;
-      border-bottom: 2px solid #782e22;
 
       h1 {
         align-self: flex-end;
@@ -114,7 +121,7 @@
       background: rgba(255, 255, 255, .3);
       border: 1px solid transparent;
       border-radius: 5px;
-      min-height: 42px;
+      min-height: $quest-min-height;
       transition: border-color .3s ease, box-shadow .3s ease;
 
       &:hover {
@@ -137,10 +144,10 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      height: 100%;
       padding-left: 2px;
       padding-right: 8px;
       cursor: pointer;
+      min-height: $quest-min-height;
 
       h2 {
         margin: 0;
@@ -165,7 +172,7 @@
       font-size: 18px;
       flex: 0 0 50px;
       border-left: 1px solid rgba(0,0,0,.15);
-      height: 42px;
+      min-height: $quest-min-height;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -174,7 +181,7 @@
     // The height parameter hard codes the height for the border to show, but in the future this may need to be
     // adjustable.
     .actions {
-      height: 42px;
+      min-height: $quest-min-height;
     }
   }
 }

@@ -1,7 +1,8 @@
-$background-parchment: url("/ui/parchment.jpg") repeat;
+// Support for Whetstone and nascent lib-themer (unfinished)
 $background-color-light: rgba(255, 255, 255, .5);
+$background-image: var(--palette-app-background-image, url("/ui/parchment.jpg")) repeat;
 
-$primary-color-accent: #ff6400;
+$primary-color-accent: var(--palette-primary, var(--default-primary-accent, #ff6400));
 
 $primary-color-icon: rgba(0,0,0,.75);
 
@@ -14,3 +15,5 @@ $primary-color-hover-drop: rgba(0, 0, 0, .075);
 
 $primary-color-bg-repositionable-app: #33333399;
 $primary-color-border-repositionable-app: #11111177;
+
+$primary-color-header-buttons: var(--palette-primary, var(--default-primary-accent, #782e22));
