@@ -69,13 +69,16 @@ export default class QuestLog extends Application
       const dynamicBackground = game.settings.get(constants.moduleName, settings.dynamicBookmarkBackground);
       if ('bookmarks' === navStyle && dynamicBackground)
       {
-         const backImage = $('.window-app .window-content').css('background-image');
-         const actualBackImage = backImage.split(/"/)[1];
+         const windowContent = $('.window-app .window-content');
+         const fqlBookmarkItem = $('#forien-quest-log .item');
 
-         if (backImage !== 'none' && actualBackImage !== void 0)
-         {
-            $('#forien-quest-log .item').css('background-image', `url(${actualBackImage})`);
-         }
+         const backImage = windowContent.css('background-image');
+         const backBlendMode = windowContent.css('background-blend-mode');
+         const backColor = windowContent.css('background-color');
+
+         fqlBookmarkItem.css('background-image', backImage);
+         fqlBookmarkItem.css('background-color', backColor);
+         fqlBookmarkItem.css('background-blend-mode', backBlendMode);
       }
 
       html.on(jquery.click, '.new-quest-btn', HandlerLog.questAdd);
