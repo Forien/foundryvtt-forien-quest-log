@@ -95,12 +95,15 @@
     {
       "name": "macros-gm",
       "label": "FQL Macros (GM)",
+      "module": "forien-quest-log",
       "path": "./packs/macro-gm.db",
-      "entity": "Macro"
+      "entity": "Macro",
+      "private": true
     },
     {
       "name": "macros-player",
       "label": "FQL Macros (Player)",
+      "module": "forien-quest-log",
       "path": "./packs/macro-player.db",
       "entity": "Macro"
     }
