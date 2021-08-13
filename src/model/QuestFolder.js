@@ -43,7 +43,7 @@ export default class QuestFolder
    {
       const dirExists = this.folderExists();
 
-      if (!dirExists)
+      if (!dirExists && game.user.isGM)
       {
          await Folder.create({ name: s_QUEST_DIR_NAME, type: 'JournalEntry', parent: null });
       }

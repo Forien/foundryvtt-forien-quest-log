@@ -146,7 +146,19 @@ export default class QuestDB
     */
    static async init()
    {
-      const folder = await QuestFolder.initializeJournals();
+      let folder = await QuestFolder.initializeJournals();
+
+      // If the folder doesn't exist then simulate the content parameter. This should only ever occur for a player
+      // logged in when a GM activates FQL for the first time or if the _fql_quests folder is deleted.
+      if (!folder)
+      {
+         if (game.user.isGM)
+         {
+            console.log('ForienQuestLog - Failed to initialize QuestDB as the quest folder / _fql_quests is missing.');
+         }
+
+         folder = { content: [] };
+      }
 
       // Skip initialization of data if FQL is hidden from the current player. FQL is never hidden from GM level users.
       if (!Utils.isFQLHiddenFromPlayers())
