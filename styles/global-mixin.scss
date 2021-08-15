@@ -84,5 +84,6 @@
 
 @mixin header-buttons {
   display: flex;
-  border-bottom: 2px solid $primary-color-header-buttons;
+  border-bottom: 2px solid $primary-color-header-border;
+  border-block-end: 2px solid $primary-color-header-border;
 }

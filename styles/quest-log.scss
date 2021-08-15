@@ -27,6 +27,7 @@
     background: none;
     padding: 0;
     flex: 0;
+    border-block-end: none;
 
     .item {
       // The dynamic jQuery module setting overrides this with the window content background image. This is the fallback.
