@@ -69,7 +69,7 @@ export default class QuestLog extends Application
       const dynamicBackground = game.settings.get(constants.moduleName, settings.dynamicBookmarkBackground);
       if ('bookmarks' === navStyle && dynamicBackground)
       {
-         const windowContent = $('.window-app .window-content');
+         const windowContent = $('#forien-quest-log .window-content');
          const fqlBookmarkItem = $('#forien-quest-log .item');
 
          const backImage = windowContent.css('background-image');
