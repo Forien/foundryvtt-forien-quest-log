@@ -79,6 +79,19 @@ const questStatusI18n = {
 };
 
 /**
+ * Stores the QuestLog tab indexes.
+ *
+ * @type {{inactive: number, available: number, active: number, completed: number, failed: number}}
+ */
+const questTabIndex = {
+   active: 1,
+   available: 0,
+   completed: 2,
+   failed: 3,
+   inactive: 4
+};
+
+/**
  * @type {FQLSettings} Defines all the module settings for world and client.
  */
 const settings = {
@@ -101,7 +114,7 @@ const settings = {
    trustedPlayerEdit: 'trustedPlayerEdit'
 };
 
-export { constants, jquery, noteControls, questStatus, questStatusI18n, settings };
+export { constants, jquery, noteControls, questStatus, questStatusI18n, questTabIndex, settings };
 
 /**
  * @typedef {object} FQLSettings
