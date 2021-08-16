@@ -189,17 +189,24 @@ export default class Utils
     *
     * @param {string}   setting - Setting name.
     *
+    * @param {boolean}  [value] - Current setting value.
+    *
     * @returns {Promise<void>}
     */
-   static async setMacroImage(setting)
+   static async setMacroImage(setting, value = void 0)
    {
       for (const macroEntry of game.macros.contents)
       {
+         // Only set macro image if the author of the macro matches the user and the user is an owner.
+         if (macroEntry.data.author !== game.user.id || !macroEntry.isOwner) { continue; }
+
+         // Test if the FQL `macro-setting` flag value against the setting supplied.
          const macroSetting = macroEntry.getFlag(constants.moduleName, 'macro-setting');
          if (macroSetting !== setting) { continue; }
 
-         const state = game.settings.get(constants.moduleName, setting);
+         const state = value ?? game.settings.get(constants.moduleName, setting);
 
+         // Pick the correct image for the current state.
          const img = typeof state === 'boolean' && state ?
           `modules/forien-quest-log/assets/icons/macros/${setting}On.png` :
            `modules/forien-quest-log/assets/icons/macros/${setting}Off.png`;

@@ -40,10 +40,10 @@ export default class ModuleSettings
          config: true,
          default: false,
          type: Boolean,
-         onChange: () =>
+         onChange: (value) =>
          {
             // Swap macro image based on current state. No need to await.
-            Utils.setMacroImage(settings.allowPlayersDrag);
+            if (game.user.isGM) { Utils.setMacroImage(settings.allowPlayersDrag, value); }
 
             // Must enrich all quests again in QuestDB.
             QuestDB.enrichAll();
@@ -60,10 +60,10 @@ export default class ModuleSettings
          config: true,
          default: false,
          type: Boolean,
-         onChange: () =>
+         onChange: (value) =>
          {
             // Swap macro image based on current state. No need to await.
-            Utils.setMacroImage(settings.allowPlayersCreate);
+            if (game.user.isGM) { Utils.setMacroImage(settings.allowPlayersCreate, value); }
 
             // Render quest log to show / hide add quest button.
             if (ViewManager.questLog.rendered) { ViewManager.questLog.render(); }
@@ -77,10 +77,10 @@ export default class ModuleSettings
          config: true,
          default: false,
          type: Boolean,
-         onChange: () =>
+         onChange: (value) =>
          {
             // Swap macro image based on current state. No need to await.
-            Utils.setMacroImage(settings.allowPlayersAccept);
+            if (game.user.isGM) { Utils.setMacroImage(settings.allowPlayersAccept, value); }
 
             // Must enrich all quests again in QuestDB.
             QuestDB.enrichAll();
@@ -97,10 +97,10 @@ export default class ModuleSettings
          config: true,
          default: false,
          type: Boolean,
-         onChange: () =>
+         onChange: (value) =>
          {
             // Swap macro image based on current state. No need to await.
-            Utils.setMacroImage(settings.trustedPlayerEdit);
+            if (game.user.isGM) { Utils.setMacroImage(settings.trustedPlayerEdit, value); }
 
             // Must perform a consistency check as there are possible quests that need to be added / removed
             // from the in-memory DB based on trusted player edit status.
@@ -118,10 +118,10 @@ export default class ModuleSettings
          config: true,
          default: false,
          type: Boolean,
-         onChange: () =>
+         onChange: (value) =>
          {
             // Swap macro image based on current state. No need to await.
-            Utils.setMacroImage(settings.countHidden);
+            if (game.user.isGM) { Utils.setMacroImage(settings.countHidden, value); }
 
             // Must enrich all quests again in QuestDB.
             QuestDB.enrichAll();
@@ -221,7 +221,7 @@ export default class ModuleSettings
          onChange: async(value) =>
          {
             // Swap macro image based on current state. No need to await.
-            Utils.setMacroImage(settings.hideFQLFromPlayers);
+            if (game.user.isGM) { Utils.setMacroImage(settings.hideFQLFromPlayers, value); }
 
             if (!game.user.isGM)
             {
@@ -273,10 +273,10 @@ export default class ModuleSettings
          config: true,
          default: false,
          type: Boolean,
-         onChange: () =>
+         onChange: (value) =>
          {
             // Swap macro image based on current state. No need to await.
-            Utils.setMacroImage(settings.notifyRewardDrop);
+            if (game.user.isGM) { Utils.setMacroImage(settings.notifyRewardDrop, value); }
          }
       });
 
@@ -303,10 +303,10 @@ export default class ModuleSettings
          config: true,
          default: true,
          type: Boolean,
-         onChange: () =>
+         onChange: (value) =>
          {
             // Swap macro image based on current state. No need to await.
-            Utils.setMacroImage(settings.enableQuestTracker);
+            Utils.setMacroImage(settings.enableQuestTracker, value);
 
             // Show hide the quest tracker based on visible quests and this setting.
             if (ViewManager.isQuestTrackerVisible())

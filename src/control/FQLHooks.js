@@ -214,14 +214,11 @@ export default class FQLHooks
 
       if (!document) { return; }
 
-      const existingMacro = game.macros.contents.find((m) => (m.data.command === document.data.command));
+      // Find any existing macro that is authored by the current user and matches the dropped macro.
+      const existingMacro = game.macros.contents.find((m) =>
+       (m.data.author === game.user.id && m.data.command === document.data.command));
 
       let macro = existingMacro;
-
-      console.log(`Document: `);
-      console.log(document.data);
-      console.log(`Existing Macro: `);
-      console.log(existingMacro);
 
       if (!existingMacro)
       {
