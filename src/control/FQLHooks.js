@@ -200,8 +200,106 @@ export default class FQLHooks
    }
 
    /**
-    * When a quest is dropped into the macro hotbar create a new Quest open macro. The macro command invokes
-    * opening the {@link QuestPreview} via {@link QuestAPI.open} by quest ID.
+    *
+    * @param {object} data - The dropped data object.
+    *
+    * @param {number} slot - The target hotbar slot
+    *
+    * @returns {Promise<void>}
+    */
+   static async handleMacroHotbarDrop(data, slot)
+   {
+      const uuid = Utils.getUUID(data);
+      const document = await fromUuid(uuid);
+
+      if (!document) { return; }
+
+      const existingMacro = game.macros.contents.find((m) => (m.data.command === document.data.command));
+
+      let macro = existingMacro;
+
+      console.log(`Document: `);
+      console.log(document.data);
+      console.log(`Existing Macro: `);
+      console.log(existingMacro);
+
+      if (!existingMacro)
+      {
+         const macroData = {
+            name: document.data.name,
+            type: document.data.type,
+            command: document.data.command,
+            img: document.data.img,
+            flags: document.data.flags
+         };
+
+         macro = await Macro.create(macroData, { displaySheet: false });
+      }
+
+      if (macro)
+      {
+         const macroSetting = macro.getFlag(constants.moduleName, 'macro-setting');
+         if (macroSetting) { await Utils.setMacroImage(macroSetting); }
+
+         await game.user.assignHotbarMacro(macro, slot);
+      }
+   }
+
+   /**
+    *
+    * @param {object} data - The dropped data object.
+    *
+    * @param {number} slot - The target hotbar slot
+    *
+    * @returns {Promise<void>}
+    */
+   static async handleQuestHotbarDrop(data, slot)
+   {
+      const questId = data.id;
+
+      const quest = QuestDB.getQuest(questId);
+
+      // Early out if Quest isn't in the QuestDB.
+      if (!quest)
+      {
+         throw new Error(game.i18n.localize('ForienQuestLog.Api.hooks.createOpenQuestMacro.error.noQuest'));
+      }
+
+      // The macro script data to open the quest via the public QuestAPI.
+      const command = `game.modules.get('${constants.moduleName}').public.QuestAPI.open({ questId: '${questId}' });`;
+
+      const macroData = {
+         name: game.i18n.format('ForienQuestLog.Api.hooks.createOpenQuestMacro.name', { name: quest.name }),
+         type: 'script',
+         command
+      };
+
+      // Determine the image for the macro. Use the splash image if `splashAsIcon` is true otherwise the giver image.
+      macroData.img = quest.splashAsIcon && quest.splash.length ? quest.splash : quest?.giverData?.img;
+
+      // Search for an already existing macro with the same command.
+      let macro = game.macros.contents.find((m) => (m.data.command === command));
+
+      // If not found then create a new macro with the command.
+      if (!macro)
+      {
+         console.log(`hotbarDrop - 3 - before create`);
+         macro = await Macro.create(macroData, { displaySheet: false });
+      }
+
+      // Assign the macro to the hotbar.
+      console.log(`hotbarDrop - 4 - before assign`);
+      await game.user.assignHotbarMacro(macro, slot);
+   }
+
+   /**
+    * Two cases are handled. Because hooks can not be asynchronous an immediate value is returned that reflects whether
+    * the drop was handled or not.
+    *
+    * The first case is when an FQL macro is dropped in from a compendium.
+    *
+    * The second is when a quest is dropped into the macro hotbar. A new Quest open macro is created. The macro command
+    * invokes opening the {@link QuestPreview} via {@link QuestAPI.open} by quest ID.
     *
     * @param {Hotbar} hotbar - The Hotbar application instance.
     *
@@ -212,50 +310,33 @@ export default class FQLHooks
     * @returns {boolean} - Whether the callback was handled.
     * @see https://foundryvtt.com/api/Hotbar.html
     */
-   static async hotbarDrop(hotbar, data, slot)
+   static hotbarDrop(hotbar, data, slot)
    {
-      if (data.type === Quest.documentName)
+      let handled = false;
+
+      // Verify if the hotbar drop is data that is handled.
+      if (data.type === Quest.documentName || (data.type === 'Macro' && typeof data.pack === 'string' &&
+       data.pack.startsWith(constants.moduleName)))
       {
-         const questId = data.id;
-
-         const quest = QuestDB.getQuest(questId);
-
-         // Early out if Quest isn't in the QuestDB.
-         if (!quest)
-         {
-            throw new Error(game.i18n.localize('ForienQuestLog.Api.hooks.createOpenQuestMacro.error.noQuest'));
-         }
-
-         // The macro script data to open the quest via the public QuestAPI.
-         const command = `game.modules.get('${constants.moduleName}').public.QuestAPI.open({ questId: '${questId}' });`;
-
-         const macroData = {
-            name: game.i18n.format('ForienQuestLog.Api.hooks.createOpenQuestMacro.name', { name: quest.name }),
-            type: 'script',
-            command
-         };
-
-         // Determine the image for the macro. Use the splash image if `splashAsIcon` is true otherwise the giver image.
-         macroData.img = quest.splashAsIcon && quest.splash.length ? quest.splash : quest?.giverData?.img;
-
-         // Search for an already existing macro with the same command.
-         let macro = game.macros.contents.find((m) => (m.data.command === command));
-
-         // If not found then create a new macro with the command.
-         if (!macro)
-         {
-            macro = await Macro.create(macroData, { displaySheet: false });
-         }
-
-         // Assign the macro to the hotbar.
-         game.user.assignHotbarMacro(macro, slot);
-
-         // FQL did handle this callback.
-         return true;
+         handled = true;
       }
 
-      // FQL didn't handle this callback.
-      return false;
+      // Wrap the handling code in an async IIFE.
+      (async () =>
+      {
+         if (data.type === 'Macro' && typeof data.pack === 'string' && data.pack.startsWith(constants.moduleName))
+         {
+            await FQLHooks.handleMacroHotbarDrop(data, slot);
+         }
+
+         if (data.type === Quest.documentName)
+         {
+            await FQLHooks.handleQuestHotbarDrop(data, slot);
+         }
+      })();
+
+      // Immediately return the handled state in the hook callback. Foundry expects false to stop the callback change.
+      return !handled;
    }
 
    /**

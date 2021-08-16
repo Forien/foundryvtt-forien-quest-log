@@ -185,6 +185,30 @@ export default class Utils
    }
 
    /**
+    * Sets an image based on boolean setting state for FQL macros.
+    *
+    * @param {string}   setting - Setting name.
+    *
+    * @returns {Promise<void>}
+    */
+   static async setMacroImage(setting)
+   {
+      for (const macroEntry of game.macros.contents)
+      {
+         const macroSetting = macroEntry.getFlag(constants.moduleName, 'macro-setting');
+         if (macroSetting !== setting) { continue; }
+
+         const state = game.settings.get(constants.moduleName, setting);
+
+         const img = typeof state === 'boolean' && state ?
+          `modules/forien-quest-log/assets/icons/macros/${setting}On.png` :
+           `modules/forien-quest-log/assets/icons/macros/${setting}Off.png`;
+
+         await macroEntry.update({ img }, { diff: false });
+      }
+   }
+
+   /**
     * Shows a document sheet for the given UUID. An error message will post if the UUID is invalid and a warning
     * message will be posted if the current `game.user` does not have permission to view the document.
     *

@@ -1,4 +1,5 @@
 import QuestDB       from './control/QuestDB.js';
+import Utils         from './control/Utils.js';
 import ViewManager   from './control/ViewManager.js';
 
 import { constants, noteControls, settings } from './model/constants.js';
@@ -41,6 +42,9 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
+            // Swap macro image based on current state. No need to await.
+            Utils.setMacroImage(settings.allowPlayersDrag);
+
             // Must enrich all quests again in QuestDB.
             QuestDB.enrichAll();
 
@@ -58,6 +62,9 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
+            // Swap macro image based on current state. No need to await.
+            Utils.setMacroImage(settings.allowPlayersCreate);
+
             // Render quest log to show / hide add quest button.
             if (ViewManager.questLog.rendered) { ViewManager.questLog.render(); }
          }
@@ -72,6 +79,9 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
+            // Swap macro image based on current state. No need to await.
+            Utils.setMacroImage(settings.allowPlayersAccept);
+
             // Must enrich all quests again in QuestDB.
             QuestDB.enrichAll();
 
@@ -89,6 +99,9 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
+            // Swap macro image based on current state. No need to await.
+            Utils.setMacroImage(settings.trustedPlayerEdit);
+
             // Must perform a consistency check as there are possible quests that need to be added / removed
             // from the in-memory DB based on trusted player edit status.
             QuestDB.consistencyCheck();
@@ -107,6 +120,9 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
+            // Swap macro image based on current state. No need to await.
+            Utils.setMacroImage(settings.countHidden);
+
             // Must enrich all quests again in QuestDB.
             QuestDB.enrichAll();
 
@@ -204,6 +220,9 @@ export default class ModuleSettings
          type: Boolean,
          onChange: async(value) =>
          {
+            // Swap macro image based on current state. No need to await.
+            Utils.setMacroImage(settings.hideFQLFromPlayers);
+
             if (!game.user.isGM)
             {
                // Hide all FQL apps from non GM user and remove the ui.controls for FQL.
@@ -254,6 +273,11 @@ export default class ModuleSettings
          config: true,
          default: false,
          type: Boolean,
+         onChange: () =>
+         {
+            // Swap macro image based on current state. No need to await.
+            Utils.setMacroImage(settings.notifyRewardDrop);
+         }
       });
 
       game.settings.register(constants.moduleName, settings.showFolder, {
@@ -281,6 +305,9 @@ export default class ModuleSettings
          type: Boolean,
          onChange: () =>
          {
+            // Swap macro image based on current state. No need to await.
+            Utils.setMacroImage(settings.enableQuestTracker);
+
             // Show hide the quest tracker based on visible quests and this setting.
             if (ViewManager.isQuestTrackerVisible())
             {
