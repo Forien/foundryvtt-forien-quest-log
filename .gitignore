@@ -1,9 +1,6 @@
 .idea/
-styles/.sass-cache/
-devtool/
 docs/
 lang/untranslated.json
 node_modules/
 foundry.js
 package-lock.json
-/changelog.html
