@@ -42,10 +42,13 @@ export default async function()
             // The new DB schema gets picked up in Quest -> initData.
             const quest = new Quest(content, entry);
 
+            // Accept the default permission if defined otherwise set to observer.
+            const defaultPermission = entry.data.permission.default ?? CONST.ENTITY_PERMISSIONS.OBSERVER;
+
             await entry.update({
                name: quest.name,
                content: '',
-               permission: { default: CONST.ENTITY_PERMISSIONS.OBSERVER },
+               permission: { default: defaultPermission },
                flags: {
                   [constants.moduleName]: { json: quest.toJSON() }
                }
