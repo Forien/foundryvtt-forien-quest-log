@@ -91,6 +91,10 @@
       }
     },
 
+    "QuestTracker": {
+      "Title": "Quest Tracker"
+    },
+
     "DeleteDialog": {
       "TitleDel": "Delete {title}",
       "HeaderDel": "Are you sure you want to delete: <p>'{name}'</p>",

@@ -1,23 +1,22 @@
-import RepositionableApplication from './RepositionableApplication.js';
-import QuestAPI                  from '../control/public/QuestAPI.js';
-import QuestDB                   from '../control/QuestDB.js';
-import Socket                    from '../control/Socket.js';
-import Utils                     from '../control/Utils.js';
-import ViewManager               from '../control/ViewManager.js';
+import Color         from '../control/Color.js';
+import QuestAPI      from '../control/public/QuestAPI.js';
+import QuestDB       from '../control/QuestDB.js';
+import Socket        from '../control/Socket.js';
+import Utils         from '../control/Utils.js';
+import rgba          from '../../external/colorRBGA.js';
 
 import { constants, jquery, questStatus, settings } from '../model/constants.js';
 
 /**
  * Provides the quest tracker which provides an overview of active quests and objectives which can be opened / closed
- * to show all objectives for a given quest. The folder / open state is stored in {@link sessionStorage} and is shared
- * between the {@link QuestLogFloating}.
+ * to show all objectives for a given quest. The folder / open state is stored in {@link sessionStorage}.
  *
  * In the {@link QuestTracker.getData} method {@link QuestTracker.prepareQuests} is invoked which gets all sorted
  * {@link questStatus.active} via {@link QuestDB.sortCollect}. They are then mapped creating the specific data which is
  * used in the {@link Handlebars} template. In the future this may be cached in a similar way that {@link Quest} data
  * is cached for {@link QuestLog}.
  */
-export default class QuestTracker extends RepositionableApplication
+export default class QuestTracker extends Application
 {
    /**
     * @inheritDoc
@@ -39,7 +38,11 @@ export default class QuestTracker extends RepositionableApplication
       return foundry.utils.mergeObject(super.defaultOptions, {
          id: 'quest-tracker',
          template: 'modules/forien-quest-log/templates/quest-tracker.html',
-         popOut: false
+         minimizable: false,
+         resizable: true,
+         width: 300,
+         height: 480,
+         title: game.i18n.localize('ForienQuestLog.QuestTracker.Title')
       });
    }
 
@@ -54,7 +57,16 @@ export default class QuestTracker extends RepositionableApplication
    {
       super.activateListeners(html);
 
-      html.on(jquery.click, '.quest-tracker-header', void 0, this._handleQuestClick.bind(this));
+      // Unregister from `ui.windows` in order to avoid closing on `Esc` key pressed. ViewManager controls
+      // the QuestTracker.
+      if (ui.windows[this.appId]) { delete ui.windows[this.appId]; }
+
+      Utils.createJQueryDblClick({
+         selector: '#quest-tracker .quest-tracker-header',
+         singleCallback: this._handleQuestClick.bind(this),
+         doubleCallback: this._handleQuestOpen,
+      });
+
       html.on(jquery.click, '.quest-tracker-link', void 0, this._handleQuestOpen);
       html.on(jquery.click, '.quest-tracker-task', void 0, this._handleQuestTask.bind(this));
 
@@ -64,13 +76,62 @@ export default class QuestTracker extends RepositionableApplication
       const scrollable = html.find('.scrollable');
       if (scrollable.height() >= parseInt(scrollable.css('max-height')))
       {
-         scrollable.css('pointer-events', 'auto');
+         html.css('pointer-events', 'auto');
       }
+
+      /**
+       * @type {JQuery} The QuestTracker app element.
+       *
+       * @private
+       */
+      this._elemQuestTracker = $('#quest-tracker');
+
+      /**
+       * @type {JQuery} The window content element.
+       *
+       * @private
+       */
+      this._elemWindowContent = $('#quest-tracker .window-content');
+
+      /**
+       * Stores the app / window extents from styles.
+       *
+       * @type {{minHeight: number, maxHeight: number, minWidth: number, maxWidth: number}}
+       *
+       * @private
+       */
+      this._appExtents = {
+         minWidth: parseInt(this._elemQuestTracker.css('min-width')),
+         maxWidth: parseInt(this._elemQuestTracker.css('max-width')),
+         minHeight: parseInt(this._elemQuestTracker.css('min-height')),
+         maxHeight: parseInt(this._elemQuestTracker.css('max-height'))
+      };
+
+      // Apply alpha to Application background color if no alpha is defined.
+      const backgroundColor = this._elemQuestTracker.css('background-color');
+      const colorComponents = rgba(backgroundColor);
+
+      if (colorComponents && colorComponents[3] === 1)
+      {
+         this._elemQuestTracker.css('background', `rgba(${colorComponents[0]}, ${colorComponents[1]}, ${
+          colorComponents[2]}, ${Color.lstarToAlpha(colorComponents, 0.2, 0.5)}`);
+      }
+
+      /**
+       * Stores whether the scroll bar is active.
+       *
+       * @type {boolean}
+       *
+       * @private
+       */
+      this._scrollbarActive = this._elemWindowContent[0].scrollHeight > this._elemWindowContent[0].clientHeight;
+
+      // Set current scrollbar active state and potentially set 'point-events' to 'auto'.
+      if (this._scrollbarActive) { this._elemQuestTracker.css('pointer-events', 'auto'); }
    }
 
    /**
-    * Gets the background boolean value from module settings {@link FQLSettings.questTrackerBackground} and parses quest
-    * data in {@link QuestTracker.prepareQuests}.
+    * Parses quest data in {@link QuestTracker.prepareQuests}.
     *
     * @override
     * @inheritDoc
@@ -79,7 +140,6 @@ export default class QuestTracker extends RepositionableApplication
    async getData(options = {})
    {
       return foundry.utils.mergeObject(super.getData(options), {
-         background: game.settings.get(constants.moduleName, settings.questTrackerBackground),
          quests: await this.prepareQuests()
       });
    }
@@ -98,8 +158,6 @@ export default class QuestTracker extends RepositionableApplication
       sessionStorage.setItem(`${constants.folderState}${questId}`, (!collapsed).toString());
 
       this.render();
-
-      if (ViewManager.questLogFloating.rendered) { ViewManager.questLogFloating.render(); }
    }
 
    /**
@@ -145,6 +203,25 @@ export default class QuestTracker extends RepositionableApplication
    }
 
    /**
+    * Sets `enableQuestTracker` to false.
+    *
+    * @param {object}   [options] - Optional parameters.
+    *
+    * @param {boolean}  [options.updateSetting=true] - If true then {@link settings.enableQuestTracker} is set to false.
+    *
+    * @returns {Promise<void>}
+    */
+   async close({ updateSetting = true } = {})
+   {
+      await super.close();
+
+      if (updateSetting)
+      {
+         await game.settings.set(constants.moduleName, settings.enableQuestTracker, false);
+      }
+   }
+
+   /**
     * Prepares the quest data from sorted active quests.
     *
     * @returns {object[]} Sorted active quests.
@@ -164,7 +241,7 @@ export default class QuestTracker extends RepositionableApplication
             canEdit: game.user.isGM || (entry.isOwner && Utils.isTrustedPlayerEdit()),
             playerEdit: entry.isOwner,
             source: q.giver,
-            name: `${q.name} ${q.taskCountLabel}`,
+            name: q.name,
             isGM: game.user.isGM,
             isHidden: q.isHidden,
             isInactive: q.isInactive,
@@ -176,4 +253,78 @@ export default class QuestTracker extends RepositionableApplication
          };
       });
    }
+
+   /**
+    * Some game systems and custom UI theming modules provide hard overrides on overflow-x / overflow-y styles. Alas we
+    * need to set these for '.window-content' to 'visible' which will cause an issue for very long tables. Thus we must
+    * manually set the table max-heights based on the position / height of the {@link Application}.
+    *
+    * @param {object}               opts - Optional parameters.
+    *
+    * @param {number|null}          opts.left - The left offset position in pixels.
+    *
+    * @param {number|null}          opts.top - The top offset position in pixels.
+    *
+    * @param {number|null}          opts.width - The application width in pixels.
+    *
+    * @param {number|string|null}   opts.height - The application height in pixels.
+    *
+    * @param {number|null}          opts.scale - The application scale as a numeric factor where 1.0 is default.
+    *
+    * @returns {{left: number, top: number, width: number, height: number, scale:number}}
+    * The updated position object for the application containing the new values.
+    */
+   setPosition(opts)
+   {
+      // Pin width / height to min / max styles if defined.
+      if (opts && opts.width && opts.height)
+      {
+         if (opts.width < this._appExtents.minWidth) { opts.width = this._appExtents.minWidth; }
+         if (opts.width > this._appExtents.maxWidth) { opts.width = this._appExtents.maxWidth; }
+         if (opts.height < this._appExtents.minHeight) { opts.height = this._appExtents.minHeight; }
+         if (opts.height > this._appExtents.maxHeight) { opts.height = this._appExtents.maxHeight; }
+      }
+
+      const currentPosition = super.setPosition(opts);
+
+      const scrollbarActive = this._elemWindowContent[0].scrollHeight > this._elemWindowContent[0].clientHeight;
+
+      if (scrollbarActive !== this._scrollbarActive)
+      {
+         this._scrollbarActive = scrollbarActive;
+         this._elemQuestTracker.css('pointer-events', scrollbarActive ? 'auto' : 'none');
+      }
+
+      if (currentPosition && currentPosition.width && currentPosition.height)
+      {
+         if (_timeoutPosition)
+         {
+            clearTimeout(_timeoutPosition);
+            _timeoutPosition = void 0;
+         }
+
+         _timeoutPosition = setTimeout(() =>
+         {
+            game.settings.set(constants.moduleName, settings.questTrackerPosition, JSON.stringify(currentPosition));
+         }, s_TIMEOUT_POSITION);
+      }
+
+      return currentPosition;
+   }
 }
+
+/**
+ * Defines the timeout length to gate saving position to settings.
+ *
+ * @type {number}
+ */
+const s_TIMEOUT_POSITION = 1000;
+
+/**
+ * Stores the last call to setTimeout for {@link QuestTracker.setPosition} changes, so that they can be cancelled as
+ * new updates arrive gating the calls to saving position to settings.
+ *
+ * @type {number}
+ * @private
+ */
+let _timeoutPosition = void 0;

@@ -1,29 +1,39 @@
 #quest-tracker {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  width: 300px;
-  right: 320px;
-  padding: 5px;
-  color: $primary-color-darkbg-text;
   pointer-events: none;
-  text-shadow: 1px 1px 1px #000;
+  min-width: 275px;
+  min-height: 150px;
+  max-width: 400px;
+  max-height: 750px;
+  backdrop-filter: none;
 
-  .scrollable {
-    overflow-y: auto;
-    max-height: 750px;  // Just fits in a normal browser window at 1080P.
-    padding: 0 4px;
+  &.app &.window-app {
+    background: none;
+    backdrop-filter: none;
   }
 
-  &.background {
-    background: $primary-color-bg-repositionable-app;
-    border: 2px solid $primary-color-border-repositionable-app;
-    border-radius: 5px;
+  .window-header {
+    pointer-events: auto;
+  }
+
+  .window-content {
+    background: none;
+    backdrop-filter: none;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    color: $primary-color-darkbg-text;
+    text-shadow: 1px 1px 1px #000;
+    height: 100%;
+    font-family: "Open Sans", Lato, Signika, sans-serif;
+  }
+
+  .window-resizable-handle {
+    pointer-events: auto;
   }
 
   * {
     box-sizing: border-box;
-    font-family: "Open Sans", Lato, Signika, sans-serif;
   }
 
   .far, .fas, .fa {
@@ -32,15 +42,6 @@
 
   #hidden {
     color: $primary-color-darkbg-text-hidden;
-  }
-
-  .move-handle {
-    position: absolute;
-    top: -18px;
-    left: 4px;
-    color: $primary-color-darkbg-text-hidden;
-    text-shadow: none;
-    pointer-events: auto;
   }
 
   a.entity-link {
@@ -59,12 +60,19 @@
   .quest {
     overflow-x: hidden;
     overflow-y: hidden;
+    height: auto;
 
     display: flex;
     flex-direction: column;
+    flex: 1;
+
+    i {
+      cursor: pointer;
+      pointer-events: auto;
+    }
 
     .title {
-      display: inline-flex;
+      display: flex;
       flex-direction: row;
       margin: 0;
       font-size: 18px;
@@ -86,17 +94,12 @@
 
     .quest-tracker-link {
       pointer-events: auto;
-      flex: 0 0 20px;
-      margin-top: auto;
-
-      i {
-        width: 20px;
-        height: 20px;
-      }
     }
 
     .tasks {
       margin: 3px 0 0 0;
+      list-style: none;
+      padding-left: 4px;
 
       .quest-tracker-task {
         cursor: pointer;
@@ -113,11 +116,7 @@
 
       .task {
         margin: 2px 0 0 0;
-
-        i {
-          cursor: pointer;
-          pointer-events: auto;
-        }
+        display: flex;
 
         span {
           cursor: pointer;

@@ -228,7 +228,7 @@ export default class ModuleSettings
                // Hide all FQL apps from non GM user and remove the ui.controls for FQL.
                if (value)
                {
-                  ViewManager.closeAll({ questPreview: true });
+                  ViewManager.closeAll({ questPreview: true, updateSetting: false });
 
                   const notes = ui?.controls?.controls.find((c) => c.name === 'notes');
                   if (notes) { notes.tools = notes?.tools.filter((c) => !c.name.startsWith(constants.moduleName)); }
@@ -255,14 +255,7 @@ export default class ModuleSettings
 
             // Close or open the quest tracker based on active quests (users w/ FQL hidden will have no quests in
             // QuestDB)
-            if (ViewManager.isQuestTrackerVisible())
-            {
-               ViewManager.questTracker.render(true, { focus: true });
-            }
-            else
-            {
-               ViewManager.questTracker.close();
-            }
+            ViewManager.renderOrCloseQuestTracker({ updateSetting: false });
          }
       });
 
@@ -297,66 +290,15 @@ export default class ModuleSettings
       });
 
       game.settings.register(constants.moduleName, settings.enableQuestTracker, {
-         name: 'ForienQuestLog.WorkshopPUF.Settings.enableQuestTracker.name',
-         hint: 'ForienQuestLog.WorkshopPUF.Settings.enableQuestTracker.hint',
          scope: scope.client,
-         config: true,
-         default: true,
+         default: false,
          type: Boolean,
          onChange: (value) =>
          {
             // Swap macro image based on current state. No need to await.
             Utils.setMacroImage(settings.enableQuestTracker, value);
 
-            // Show hide the quest tracker based on visible quests and this setting.
-            if (ViewManager.isQuestTrackerVisible())
-            {
-               ViewManager.questTracker.render(true, { focus: true });
-            }
-            else
-            {
-               ViewManager.questTracker.close();
-            }
-         }
-      });
-
-      game.settings.register(constants.moduleName, settings.questTrackerBackground, {
-         name: 'ForienQuestLog.WorkshopPUF.Settings.questTrackerBackground.name',
-         hint: 'ForienQuestLog.WorkshopPUF.Settings.questTrackerBackground.hint',
-         scope: scope.client,
-         config: true,
-         default: true,
-         type: Boolean,
-         onChange: (value) =>
-         {
-            // Toggle the background CSS class for the quest tracker.
-            if (ViewManager.questTracker.rendered)
-            {
-               ViewManager.questTracker.element.toggleClass('background', value);
-            }
-         }
-      });
-
-      game.settings.register(constants.moduleName, settings.resetQuestTracker, {
-         name: 'ForienQuestLog.WorkshopPUF.Settings.resetQuestTracker.name',
-         hint: 'ForienQuestLog.WorkshopPUF.Settings.resetQuestTracker.hint',
-         scope: scope.client,
-         config: true,
-         default: false,
-         type: Boolean,
-         onChange: (value) =>
-         {
-            if (value)
-            {
-               // Reset the quest tracker position.
-               game.settings.set(constants.moduleName, settings.questTrackerPosition, s_QUEST_TRACKER_DEFAULT);
-               game.settings.set(constants.moduleName, settings.resetQuestTracker, false);
-
-               if (ViewManager.questTracker.rendered)
-               {
-                  ViewManager.questTracker.render();
-               }
-            }
+            ViewManager.renderOrCloseQuestTracker();
          }
       });
    }

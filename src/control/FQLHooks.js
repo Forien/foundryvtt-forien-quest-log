@@ -32,7 +32,7 @@ import { constants, noteControls, settings } from '../model/constants.js';
  *
  * FQL hooks (response):
  * - `ForienQuestLog.Open.QuestLog` - {@link FQLHooks.openQuestLog} - Open the quest log.
- * - `ForienQuestLog.Open.QuestLogFloating` - {@link FQLHooks.openQuestLogFloating} - Open the floating quest log.
+ * - `ForienQuestLog.Open.QuestTracker` - {@link FQLHooks.openQuestTracker} - Open the quest tracker.
  * - `ForienQuestLog.Run.DBMigration` - {@link FQLHooks.runDBMigration} - Allow GMs to run the DBMigration manually.
  *
  * FQL hooks (called):
@@ -61,7 +61,7 @@ export default class FQLHooks
 
       // FQL specific hooks.
       Hooks.on('ForienQuestLog.Open.QuestLog', FQLHooks.openQuestLog);
-      Hooks.on('ForienQuestLog.Open.QuestLogFloating', FQLHooks.openQuestLogFloating);
+      Hooks.on('ForienQuestLog.Open.QuestTracker', FQLHooks.openQuestTracker);
       Hooks.on('ForienQuestLog.Run.DBMigration', FQLHooks.runDBMigration);
    }
 
@@ -280,12 +280,10 @@ export default class FQLHooks
       // If not found then create a new macro with the command.
       if (!macro)
       {
-         console.log(`hotbarDrop - 3 - before create`);
          macro = await Macro.create(macroData, { displaySheet: false });
       }
 
       // Assign the macro to the hotbar.
-      console.log(`hotbarDrop - 4 - before assign`);
       await game.user.assignHotbarMacro(macro, slot);
    }
 
@@ -349,15 +347,12 @@ export default class FQLHooks
    }
 
    /**
-    * Opens the QuestLogFloating if the game user is a GM or if FQL isn't hidden to players by module setting
+    * Opens the {@link QuestTracker} if the game user is a GM or if FQL isn't hidden to players by module setting
     * {@link FQLSettings.hideFQLFromPlayers}.
     */
-   static openQuestLogFloating()
+   static async openQuestTracker()
    {
-      if (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers))
-      {
-         ViewManager.questLogFloating.render(true, { focus: true });
-      }
+      await game.settings.set(constants.moduleName, settings.enableQuestTracker, true);
    }
 
    /**

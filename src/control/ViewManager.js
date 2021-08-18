@@ -1,6 +1,5 @@
 import QuestDB          from './QuestDB.js';
 import QuestLog         from '../view/log/QuestLog.js';
-import QuestLogFloating from '../view/QuestLogFloating.js';
 import QuestTracker     from '../view/QuestTracker.js';
 
 import { constants, questStatus, questStatusI18n, settings } from '../model/constants.js';
@@ -8,17 +7,14 @@ import { constants, questStatus, questStatusI18n, settings } from '../model/cons
 /**
  * Locally stores the app instances which are accessible by getter methods.
  *
- * @type {{questLog: QuestLog, questLogFloating: QuestLogFloating, questPreview: Map<string, QuestPreview>,
- * questTracker: QuestTracker}}
+ * @type {{questLog: QuestLog, questPreview: Map<string, QuestPreview>, questTracker: QuestTracker}}
  *
  * @see {@link ViewManager.questLog}
- * @see {@link ViewManager.questLogFloating}
  * @see {@link ViewManager.questPreview}
  * @see {@link ViewManager.questTracker}
  */
 const Apps = {
    questLog: void 0,
-   questLogFloating: void 0,
    questTracker: void 0,
    questPreview: new Map()
 };
@@ -40,13 +36,20 @@ export default class ViewManager
    static init()
    {
       Apps.questLog = new QuestLog();
-      Apps.questLogFloating = new QuestLogFloating();
       Apps.questTracker = new QuestTracker();
 
-      if (ViewManager.isQuestTrackerVisible() && game.modules.get(constants.moduleName)?.active)
+      // Load and set the quest tracker position from settings.
+      try
       {
-         ViewManager.questTracker.render(true);
+         const position = JSON.parse(game.settings.get(constants.moduleName, settings.questTrackerPosition));
+         if (position && position.width && position.height)
+         {
+            Apps.questTracker.position = position;
+         }
       }
+      catch (err) { /**/ }
+
+      ViewManager.renderOrCloseQuestTracker();
 
       // Whenever a QuestPreview closes and matches any tracked app that is adding a new quest set it to undefined.
       Hooks.on('closeQuestPreview', s_QUEST_PREVIEW_CLOSED);
@@ -69,14 +72,6 @@ export default class ViewManager
     * @see {@link FQLHooks.openQuestLog}
     */
    static get questLog() { return Apps.questLog; }
-
-   /**
-    * @returns {QuestLogFloating} The floating quest log app accessible from the left hand menu bar or
-    *                             `Hooks.call('ForienQuestLog.Open.QuestLogFloating')`.
-    *
-    * @see {@link FQLHooks.openQuestLogFloating}
-    */
-   static get questLogFloating() { return Apps.questLogFloating; }
 
    /**
     * @returns {Map<string, QuestPreview>} A Map that contains all currently rendered / visible QuestPreview instances
@@ -103,15 +98,11 @@ export default class ViewManager
    static closeAll({ questPreview = false, ...options } = {})
    {
       if (ViewManager.questLog.rendered) { ViewManager.questLog.close(options); }
-      if (ViewManager.questLogFloating.rendered) { ViewManager.questLogFloating.close(options); }
       if (ViewManager.questTracker.rendered) { ViewManager.questTracker.close(options); }
 
       if (questPreview)
       {
-         for (const qp of ViewManager.questPreview.values())
-         {
-            qp.close(options);
-         }
+         for (const qp of ViewManager.questPreview.values()) { qp.close(options); }
       }
    }
 
@@ -144,19 +135,13 @@ export default class ViewManager
          for (const id of questId)
          {
             const questPreview = ViewManager.questPreview.get(id);
-            if (questPreview !== void 0)
-            {
-               questPreview.render(true, options);
-            }
+            if (questPreview !== void 0) { questPreview.render(true, options); }
          }
       }
       else
       {
          const questPreview = ViewManager.questPreview.get(questId);
-         if (questPreview !== void 0)
-         {
-            questPreview.render(true, options);
-         }
+         if (questPreview !== void 0) { questPreview.render(true, options); }
       }
    }
 
@@ -178,16 +163,8 @@ export default class ViewManager
    static renderAll({ force = false, questPreview = false, ...options } = {})
    {
       if (ViewManager.questLog.rendered) { ViewManager.questLog.render(force, options); }
-      if (ViewManager.questLogFloating.rendered) { ViewManager.questLogFloating.render(force, options); }
 
-      if (ViewManager.isQuestTrackerVisible())
-      {
-         ViewManager.questTracker.render(force, options);
-      }
-      else
-      {
-         ViewManager.questTracker.close();
-      }
+      ViewManager.renderOrCloseQuestTracker();
 
       if (questPreview)
       {
@@ -195,6 +172,27 @@ export default class ViewManager
          {
             if (qp.rendered) { qp.render(force, options); }
          }
+      }
+   }
+
+   /**
+    * If the QuestTracker is visible then render it otherwise close it.
+    *
+    * @param {object}   [options] - Optional parameters.
+    *
+    * @param {boolean}  [options.updateSetting=true] - If closed true then {@link settings.enableQuestTracker} is set
+    *                                                  to false.
+    */
+   static renderOrCloseQuestTracker(options = {})
+   {
+      if (ViewManager.isQuestTrackerVisible())
+      {
+         ViewManager.questTracker.render(true, { focus: true });
+      }
+      else
+      {
+         // Necessary to check rendered state as the setting is set to false in the close method.
+         if (ViewManager.questTracker.rendered) { ViewManager.questTracker.close(options); }
       }
    }
 

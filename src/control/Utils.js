@@ -1,4 +1,4 @@
-import { constants, settings } from '../model/constants.js';
+import { constants, jquery, settings } from '../model/constants.js';
 
 /**
  * Provides several general utility methods interacting with Foundry via UUID lookups to generating UUIDv4 internal
@@ -55,6 +55,53 @@ export default class Utils
       document.body.removeChild(textArea);
 
       return success;
+   }
+
+   /**
+    * Creates a double click handler with a default delay of 400ms
+    *
+    * @param {object}   [opts] - Optional parameters.
+    *
+    * @param {string}   [opts.selector] - Data to pass to callbacks.
+    *
+    * @param {Function} [opts.singleCallback] - Single click callback.
+    *
+    * @param {Function} [opts.doubleCallback] - Double click callback.
+    *
+    * @param {number}   [opts.delay=400] - Double click delay.
+    *
+    * @param {number}   [opts._clicks] - Private data to track clicks.
+    *
+    * @param {number}   [opts._timer] - Private data to track timer.
+    *
+    * @returns {JQuery} The JQuery element.
+    */
+   static createJQueryDblClick({ selector, singleCallback, doubleCallback, delay = 400, _clicks = 0,
+    _timer = void 0 } = {})
+   {
+      const elem = $(selector);
+
+      elem.on(jquery.click, (event) =>
+      {
+         _clicks++;
+
+         if (_clicks === 1)
+         {
+            _timer = setTimeout(() =>
+            {
+               if (typeof singleCallback === 'function') { singleCallback(event); }
+               _clicks = 0;
+            }, delay);
+         }
+         else
+         {
+            clearTimeout(_timer);
+            if (typeof doubleCallback === 'function') { doubleCallback(event); }
+            _clicks = 0;
+         }
+      }).on(jquery.dblclick, (event) => event.preventDefault());
+
+      return elem;
    }
 
    /**

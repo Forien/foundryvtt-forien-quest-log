@@ -15,10 +15,11 @@ const constants = {
 /**
  * Defines the {@link JQuery} events that are used in FQL.
  *
- * @type {{click: string, dragstart: string, drop: string, focus: string, focusout: string, mousedown: string}}
+ * @type {{click: string, dblclick: string, dragstart: string, drop: string, focus: string, focusout: string, mousedown: string}}
  */
 const jquery = {
    click: 'click',
+   dblclick: 'dblclick',
    dragenter: 'dragenter',
    dragstart: 'dragstart',
    drop: 'drop',
@@ -44,10 +45,10 @@ const noteControls = [
    },
    {
       name: 'forien-quest-log-floating-window',
-      title: 'ForienQuestLog.FloatingQuestWindow',
+      title: 'ForienQuestLog.QuestTracker.Title',
       icon: 'fas fa-tasks',
       visible: true,
-      onClick: () => ViewManager.questLogFloating.render(true, { focus: true }),
+      onClick: async () => { await game.settings.set(constants.moduleName, settings.enableQuestTracker, true); },
       button: true
    }
 ];
@@ -106,7 +107,6 @@ const settings = {
    hideFQLFromPlayers: 'hideFQLFromPlayers',
    navStyle: 'navStyle',
    notifyRewardDrop: 'notifyRewardDrop',
-   questTrackerBackground: 'questTrackerBackground',
    questTrackerPosition: 'questTrackerPosition',
    resetQuestTracker: 'resetQuestTracker',
    showFolder: 'showFolder',
@@ -140,8 +140,6 @@ export { constants, jquery, noteControls, questStatus, questStatusI18n, questTab
  * @property {string}   navStyle - Navigation style / classic / or bookmark tabs.
  *
  * @property {string}   notifyRewardDrop - Post a notification UI message when rewards are dropped in actor sheets.
- *
- * @property {string}   questTrackerBackground - Renders a background for the quest tracker.
  *
  * @property {string}   questTrackerPosition - Hidden setting to store current quest tracker position.
  *
