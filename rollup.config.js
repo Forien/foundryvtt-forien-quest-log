@@ -89,6 +89,23 @@ export default () =>
       {
          input: 'pack',
          output: [{
+            file: `${s_DEPLOY_PATH}${path.sep}colorRBGA.js`,
+            format: 'es',
+            plugins: outputPlugins,
+            preferConst: true,
+            sourcemap: s_SOURCEMAP,
+         }],
+         plugins: [
+            virtual({
+               pack: `export { default as default } from './node_modules/color-rgba/index.mjs';`
+            }),
+            resolve({ browser: true }),
+            commonjs()
+         ]
+      },
+      {
+         input: 'pack',
+         output: [{
             file: `${s_DEPLOY_PATH}${path.sep}DOMPurify.js`,
             format: 'es',
             plugins: outputPlugins,
