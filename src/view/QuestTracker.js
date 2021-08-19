@@ -70,21 +70,12 @@ export default class QuestTracker extends Application
       html.on(jquery.click, '.quest-tracker-link', void 0, this._handleQuestOpen);
       html.on(jquery.click, '.quest-tracker-task', void 0, this._handleQuestTask.bind(this));
 
-      // A little trick to enable `pointer-events: auto` when the max-height for the scrollable container is reached.
-      // This allows mouse events to scroll. The reason for this is that with `pointer-events: none` by default
-      // Tokens underneath the quest tracker can be manipulated without moving the quest tracker.
-      const scrollable = html.find('.scrollable');
-      if (scrollable.height() >= parseInt(scrollable.css('max-height')))
-      {
-         html.css('pointer-events', 'auto');
-      }
-
       /**
        * @type {JQuery} The QuestTracker app element.
        *
        * @private
        */
-      this._elemQuestTracker = $('#quest-tracker');
+      this._elemQuestTracker = $('#quest-tracker.app');
 
       /**
        * @type {JQuery} The window content element.
@@ -107,14 +98,19 @@ export default class QuestTracker extends Application
          maxHeight: parseInt(this._elemQuestTracker.css('max-height'))
       };
 
+      // Set a z-index of 99 / below other Applications.
+      this._elemQuestTracker.css('z-index', '99');
+
       // Apply alpha to Application background color if no alpha is defined.
+      // `rgba` is the color-rgba external module which returns an RGBA array for any CSS color style.
       const backgroundColor = this._elemQuestTracker.css('background-color');
       const colorComponents = rgba(backgroundColor);
-
       if (colorComponents && colorComponents[3] === 1)
       {
+         // Use Color.lstarToAlpha to determine an alpha channel based on perceived lightness of the color.
+         // Lighter colors are closer to `0.2` and darker colors are closer to `0.75`.
          this._elemQuestTracker.css('background', `rgba(${colorComponents[0]}, ${colorComponents[1]}, ${
-          colorComponents[2]}, ${Color.lstarToAlpha(colorComponents, 0.2, 0.5)}`);
+          colorComponents[2]}, ${Color.lstarToAlpha(colorComponents, 0.2, 0.75)})`);
       }
 
       /**
@@ -129,6 +125,15 @@ export default class QuestTracker extends Application
       // Set current scrollbar active state and potentially set 'point-events' to 'auto'.
       if (this._scrollbarActive) { this._elemQuestTracker.css('pointer-events', 'auto'); }
    }
+
+   /**
+    * Override default Application `bringToTop` to stop adjustment of z-index.
+    *
+    * @override
+    * @inheritDoc
+    * @see https://foundryvtt.com/api/Application.html#bringToTop
+    */
+   bringToTop() {}
 
    /**
     * Parses quest data in {@link QuestTracker.prepareQuests}.

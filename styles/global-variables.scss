@@ -6,13 +6,12 @@ $primary-color-accent: var(--palette-primary, var(--default-primary-accent, #ff6
 
 $primary-color-icon: rgba(0,0,0,.75);
 
-$primary-color-darkbg-text: #EEE;
-$primary-color-darkbg-text-hidden: #ffffff88;
+$primary-color-text: var(--default-primary-color, #EEE);
+$primary-color-text-hidden: #ffffff88;
+
 $primary-color-entity-link: black;
 
 $primary-color-bg-drop: rgba(0, 0, 0, .1);
 $primary-color-hover-drop: rgba(0, 0, 0, .075);
-
-$primary-background-transparent: url("/ui/denim075.png") repeat;
 
 $primary-color-header-border: var(--palette-primary, var(--default-primary-accent, #782e22));

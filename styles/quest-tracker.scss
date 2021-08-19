@@ -22,7 +22,7 @@
     display: flex;
     flex-direction: column;
     padding: 8px;
-    color: $primary-color-darkbg-text;
+    color: $primary-color-text;
     text-shadow: 1px 1px 1px #000;
     height: 100%;
     font-family: "Open Sans", Lato, Signika, sans-serif;
@@ -41,13 +41,14 @@
   }
 
   #hidden {
-    color: $primary-color-darkbg-text-hidden;
+    color: $primary-color-text-hidden;
   }
 
   a.entity-link {
     color: $primary-color-entity-link;
 
     // Remove text-shadow inherited above, but let default style link hover take effect.
+    // For some UI theme overhaul modules this doesn't seem to work.
     &:not(:hover) {
       text-shadow: none;
     }

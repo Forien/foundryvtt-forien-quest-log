@@ -1,18 +1,23 @@
-import rgba from '../../external/colorRBGA.js';
+import BezierEasing  from '../../external/BezierEasing.js';
+import rgba          from '../../external/colorRBGA.js';
 
 /**
  * Provides various functions to manipulate colors.
  *
  * In particular {@link Color.lstarToAlpha} is used by {@link QuestTracker} to provide a transparent color background
  * based on the perceived lightness of a given color. This is useful for various UI theming modules that provide a solid
- * color for {@link Application} backgrounds.
+ * color for {@link Application} backgrounds where the QuestTracker needs a transparent background.
  *
  * @see https://stackoverflow.com/a/56678483
+ * @see http://gre.github.io/2012/02/bezier-curve-based-easing-functions-from-concept-to-implementation/
+ * @see https://cubic-bezier.com/#.7,.6,0,1
  */
 export default class Color
 {
    /**
-    * Returns an alpha value (0 - 1) based on the perceived lightness of the provided color.
+    * Returns an alpha value (0 - 1) based on the perceived lightness of the provided color using bezier curve
+    * interpolation. Lighter colors have an alpha value closer to 'start' and darker colors have a higher alpha towards
+    * 'end'.
     *
     * @param {number[]|string}   color - A CSS color string or array of RGB color channels.
     *
@@ -24,11 +29,17 @@ export default class Color
     */
    static lstarToAlpha(color, start, end)
    {
+      // Convert color to perceived lightness (0 - 100).
       const lStar = Color.lumaToLStar(Color.rgbToLuma(color));
 
+      // Invert lStar value then normalize to 0 - 1.
       const inverseLStar = (100 - lStar) / 100;
 
-      return s_LERP(start, end, inverseLStar);
+      // Interpolate w/ spline between start / end.
+      return s_LERP(start, end, s_LSTAR_TO_ALPHA_SPLINE(inverseLStar));
+
+      // Standard linear interpolation.
+      // return s_LERP(start, end, inverseLStar);
    }
 
    /**
@@ -93,3 +104,11 @@ export default class Color
  * @returns {number} Value between start and end.
  */
 const s_LERP = (start, end, midpoint) => start * (1 - midpoint) + end * midpoint;
+
+/**
+ * Defines the bezier curve / spline for 0 - 1 interpolation.
+ *
+ * @type {(function(*=): number)}
+ * @see https://cubic-bezier.com/#.7,.6,0,1
+ */
+const s_LSTAR_TO_ALPHA_SPLINE = new BezierEasing(0.7, 0.6, 0, 1);

@@ -187,7 +187,7 @@ export default class ViewManager
    {
       if (ViewManager.isQuestTrackerVisible())
       {
-         ViewManager.questTracker.render(true, { focus: true });
+         ViewManager.questTracker.render(true, { focus: false });
       }
       else
       {
