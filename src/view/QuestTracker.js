@@ -136,6 +136,25 @@ export default class QuestTracker extends Application
    bringToTop() {}
 
    /**
+    * Sets `enableQuestTracker` to false.
+    *
+    * @param {object}   [options] - Optional parameters.
+    *
+    * @param {boolean}  [options.updateSetting=true] - If true then {@link settings.enableQuestTracker} is set to false.
+    *
+    * @returns {Promise<void>}
+    */
+   async close({ updateSetting = true } = {})
+   {
+      await super.close();
+
+      if (updateSetting)
+      {
+         await game.settings.set(constants.moduleName, settings.enableQuestTracker, false);
+      }
+   }
+
+   /**
     * Parses quest data in {@link QuestTracker.prepareQuests}.
     *
     * @override
@@ -204,25 +223,6 @@ export default class QuestTracker extends Application
                focus: false
             });
          }
-      }
-   }
-
-   /**
-    * Sets `enableQuestTracker` to false.
-    *
-    * @param {object}   [options] - Optional parameters.
-    *
-    * @param {boolean}  [options.updateSetting=true] - If true then {@link settings.enableQuestTracker} is set to false.
-    *
-    * @returns {Promise<void>}
-    */
-   async close({ updateSetting = true } = {})
-   {
-      await super.close();
-
-      if (updateSetting)
-      {
-         await game.settings.set(constants.moduleName, settings.enableQuestTracker, false);
       }
    }
 

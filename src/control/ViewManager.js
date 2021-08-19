@@ -164,7 +164,7 @@ export default class ViewManager
    {
       if (ViewManager.questLog.rendered) { ViewManager.questLog.render(force, options); }
 
-      ViewManager.renderOrCloseQuestTracker();
+      ViewManager.renderOrCloseQuestTracker({ updateSetting: false });
 
       if (questPreview)
       {
