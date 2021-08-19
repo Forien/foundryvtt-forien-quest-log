@@ -72,23 +72,6 @@ export default () =>
       {
          input: 'pack',
          output: [{
-            file: `${s_DEPLOY_PATH}${path.sep}BezierEasing.js`,
-            format: 'es',
-            plugins: outputPlugins,
-            preferConst: true,
-            sourcemap: s_SOURCEMAP,
-         }],
-         plugins: [
-            virtual({
-               pack: `export { default as default } from './node_modules/bezier-easing/src/index.js';`
-            }),
-            resolve({ browser: true }),
-            commonjs()
-         ]
-      },
-      {
-         input: 'pack',
-         output: [{
             file: `${s_DEPLOY_PATH}${path.sep}collect.js`,
             format: 'es',
             plugins: outputPlugins,
@@ -98,23 +81,6 @@ export default () =>
          plugins: [
             virtual({
                pack: `export { collect as default } from './node_modules/collect.js/src/index.js';`
-            }),
-            resolve({ browser: true }),
-            commonjs()
-         ]
-      },
-      {
-         input: 'pack',
-         output: [{
-            file: `${s_DEPLOY_PATH}${path.sep}colorRBGA.js`,
-            format: 'es',
-            plugins: outputPlugins,
-            preferConst: true,
-            sourcemap: s_SOURCEMAP,
-         }],
-         plugins: [
-            virtual({
-               pack: `export { default as default } from './node_modules/color-rgba/index.mjs';`
             }),
             resolve({ browser: true }),
             commonjs()

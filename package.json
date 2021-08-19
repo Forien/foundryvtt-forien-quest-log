@@ -9,9 +9,7 @@
     "Michael Leahy <support@typhonjs.io> (https://github.com/typhonrt)"
   ],
   "dependencies": {
-    "bezier-easing": "^2.1.0",
     "collect.js": "^4.28.0",
-    "color-rgba": "^2.2.3",
     "dompurify": "^2.3.0"
   },
   "devDependencies": {
