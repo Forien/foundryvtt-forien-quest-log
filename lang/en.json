@@ -178,6 +178,12 @@
       "trustedPlayerEdit": {
         "Enable": "Allow Trusted Player Quest Editing",
         "EnableHint": "Check to allow trusted players to have expanded quest editing and status control capabilities over quests they have ownership."
+      },
+      "windowModeQuestTracker": {
+        "Enable": "Quest Tracker Window Mode",
+        "EnableHint": "Controls vertical resizing of the Quest Tracker automatically or allows manual adjustment.",
+        "automatic": "Automatic",
+        "resizable": "Resizable"
       }
     },
 

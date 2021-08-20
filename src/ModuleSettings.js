@@ -291,6 +291,7 @@ export default class ModuleSettings
 
       game.settings.register(constants.moduleName, settings.enableQuestTracker, {
          scope: scope.client,
+         config: false,
          default: false,
          type: Boolean,
          onChange: (value) =>
@@ -298,6 +299,23 @@ export default class ModuleSettings
             // Swap macro image based on current state. No need to await.
             Utils.setMacroImage(settings.enableQuestTracker, value);
 
+            ViewManager.renderOrCloseQuestTracker();
+         }
+      });
+
+      game.settings.register(constants.moduleName, settings.windowModeQuestTracker, {
+         name: 'ForienQuestLog.Settings.windowModeQuestTracker.Enable',
+         hint: 'ForienQuestLog.Settings.windowModeQuestTracker.EnableHint',
+         scope: scope.client,
+         config: true,
+         default: 'Automatic',
+         type: String,
+         choices: {
+            auto: 'ForienQuestLog.Settings.windowModeQuestTracker.automatic',
+            resize: 'ForienQuestLog.Settings.windowModeQuestTracker.resizable'
+         },
+         onChange: () =>
+         {
             ViewManager.renderOrCloseQuestTracker();
          }
       });

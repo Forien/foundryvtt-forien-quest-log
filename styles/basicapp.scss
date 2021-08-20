@@ -1,0 +1,75 @@
+.fql-app {
+  max-height: 100%;
+  background: url(/ui/denim075.png) repeat;
+  border-radius: 5px;
+  box-shadow: 0 0 20px #000;
+  margin: 3px 0;
+  color: #f0f0e0;
+  position: absolute;
+}
+
+.fql-window-app {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  padding: 0;
+  z-index: 99;
+}
+
+.fql-window-app .fql-window-header {
+  flex: 0 0 30px;
+  overflow: hidden;
+  padding: 0 8px;
+  line-height: 30px;
+  border-bottom: 1px solid #000;
+}
+
+.fql-window-app .fql-window-header .fql-window-title {
+  margin: 0;
+  word-break: break-all;
+}
+
+.fql-window-app .fql-window-header a {
+  flex: none;
+  margin: 0 0 0 8px;
+}
+
+.fql-window-app .fql-window-header i[class^=fa] {
+  margin-right: 3px;
+}
+
+.fql-window-app.minimized .fql-window-header {
+  border: 1px solid #000;
+}
+
+.fql-window-app .fql-window-content {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  padding: 8px;
+  color: #191813;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.fql-window-app .window-resizable-handle {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  bottom: -1px;
+  right: 0;
+  background: #444;
+  padding: 2px;
+  border: 1px solid #111;
+  border-radius: 4px 0 0 0;
+}
+
+.fql-window-app .window-resizable-handle i.fas {
+  transform: rotate(45deg);
+}
+
+.fql-window-app.minimized .window-resizable-handle {
+  display: none;
+}

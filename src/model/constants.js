@@ -111,7 +111,8 @@ const settings = {
    resetQuestTracker: 'resetQuestTracker',
    showFolder: 'showFolder',
    showTasks: 'showTasks',
-   trustedPlayerEdit: 'trustedPlayerEdit'
+   trustedPlayerEdit: 'trustedPlayerEdit',
+   windowModeQuestTracker: 'windowModeQuestTracker'
 };
 
 export { constants, jquery, noteControls, questStatus, questStatusI18n, questTabIndex, settings };
@@ -143,11 +144,11 @@ export { constants, jquery, noteControls, questStatus, questStatusI18n, questTab
  *
  * @property {string}   questTrackerPosition - Hidden setting to store current quest tracker position.
  *
- * @property {string}   resetQuestTracker - Resets the quest tracker position.
- *
  * @property {string}   showFolder - Shows the `_fql_quests` directory in the journal entries sidebar.
  *
  * @property {string}   showTasks - Determines if objective counts are rendered.
  *
  * @property {string}   trustedPlayerEdit - Allows trusted players to have full quest editing capabilities.
+ *
+ * @property {string}   windowModeQuestTracker - Stores the current window handling mode ('auto' or 'resize').
  */

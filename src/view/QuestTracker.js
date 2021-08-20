@@ -1,9 +1,7 @@
-import Color         from '../control/Color.js';
 import QuestAPI      from '../control/public/QuestAPI.js';
 import QuestDB       from '../control/QuestDB.js';
 import Socket        from '../control/Socket.js';
 import Utils         from '../control/Utils.js';
-import rgba          from '../../external/colorRBGA.js';
 
 import { constants, jquery, questStatus, settings } from '../model/constants.js';
 
@@ -24,7 +22,10 @@ export default class QuestTracker extends Application
     */
    constructor(options = {})
    {
-      super(Object.assign({}, options, { positionSetting: settings.questTrackerPosition }));
+      super(options);
+
+      // TODO: This needs to be tested for proper defaults.
+      this.position = game.settings.get(constants.moduleName, settings.questTrackerPosition);
    }
 
    /**
@@ -40,6 +41,7 @@ export default class QuestTracker extends Application
          template: 'modules/forien-quest-log/templates/quest-tracker.html',
          minimizable: false,
          resizable: true,
+         popOut: false,
          width: 300,
          height: 480,
          title: game.i18n.localize('ForienQuestLog.QuestTracker.Title')
@@ -57,9 +59,11 @@ export default class QuestTracker extends Application
    {
       super.activateListeners(html);
 
-      // Unregister from `ui.windows` in order to avoid closing on `Esc` key pressed. ViewManager controls
-      // the QuestTracker.
-      if (ui.windows[this.appId]) { delete ui.windows[this.appId]; }
+      // Make the window draggable
+      const header = html.find('header')[0];
+      new Draggable(this, html, header, this.options.resizable);
+
+      html.on(jquery.click, '.header-button.close', void 0, this.close);
 
       Utils.createJQueryDblClick({
          selector: '#quest-tracker .quest-tracker-header',
@@ -75,14 +79,28 @@ export default class QuestTracker extends Application
        *
        * @private
        */
-      this._elemQuestTracker = $('#quest-tracker.app');
+      this._elemQuestTracker = $('#quest-tracker.fql-app');
+
+      /**
+       * @type {JQuery} The window header element.
+       *
+       * @private
+       */
+      this._elemWindowHeader = $('#quest-tracker .fql-window-header');
 
       /**
        * @type {JQuery} The window content element.
        *
        * @private
        */
-      this._elemWindowContent = $('#quest-tracker .window-content');
+      this._elemWindowContent = $('#quest-tracker .fql-window-content');
+
+      /**
+       * @type {JQuery} The window resize handle.
+       *
+       * @private
+       */
+      this._elemResizeHandle = $('#quest-tracker .window-resizable-handle');
 
       /**
        * Stores the app / window extents from styles.
@@ -98,19 +116,28 @@ export default class QuestTracker extends Application
          maxHeight: parseInt(this._elemQuestTracker.css('max-height'))
       };
 
-      // Set a z-index of 99 / below other Applications.
-      this._elemQuestTracker.css('z-index', '99');
+      this._windowMode = game.settings.get(constants.moduleName, settings.windowModeQuestTracker);
+      if (this._windowMode !== 'auto' && this._windowMode !== 'resize') { this._windowMode = 'auto'; }
 
-      // Apply alpha to Application background color if no alpha is defined.
-      // `rgba` is the color-rgba external module which returns an RGBA array for any CSS color style.
-      const backgroundColor = this._elemQuestTracker.css('background-color');
-      const colorComponents = rgba(backgroundColor);
-      if (colorComponents && colorComponents[3] === 1)
+      switch (this._windowMode)
       {
-         // Use Color.lstarToAlpha to determine an alpha channel based on perceived lightness of the color.
-         // Lighter colors are closer to `0.2` and darker colors are closer to `0.75`.
-         this._elemQuestTracker.css('background', `rgba(${colorComponents[0]}, ${colorComponents[1]}, ${
-          colorComponents[2]}, ${Color.lstarToAlpha(colorComponents, 0.2, 0.75)})`);
+         case 'auto':
+            this._elemResizeHandle.hide();
+            this._elemQuestTracker.css('min-height', '50px');
+
+            // A bit of a hack. We need to call the Application setPosition now to make sure the element parameters
+            // are correctly set as the exact height for the element is calculated in this.setPosition which is called
+            // by Application right after this method completes.
+            // Must set popOut temporarily to true as there is a gate in `Application.setPosition`.
+            this.options.popOut = true;
+            super.setPosition(this.position);
+            this.options.popOut = false;
+            break;
+
+         case 'resize':
+            this._elemResizeHandle.show();
+            this._elemQuestTracker.css('min-height', '150px');
+            break;
       }
 
       /**
@@ -164,6 +191,8 @@ export default class QuestTracker extends Application
    async getData(options = {})
    {
       return foundry.utils.mergeObject(super.getData(options), {
+         title: this.options.title,
+         headerButtons: this._getHeaderButtons(),
          quests: await this.prepareQuests()
       });
    }
@@ -177,11 +206,15 @@ export default class QuestTracker extends Application
    {
       const questId = event.currentTarget.dataset.questId;
 
-      const folderState = sessionStorage.getItem(`${constants.folderState}${questId}`);
-      const collapsed = folderState !== 'false';
-      sessionStorage.setItem(`${constants.folderState}${questId}`, (!collapsed).toString());
+      const questEntry = QuestDB.getQuestEntry(questId);
+      if (questEntry && questEntry.enrich.hasObjectives)
+      {
+         const folderState = sessionStorage.getItem(`${constants.folderState}${questId}`);
+         const collapsed = folderState !== 'false';
+         sessionStorage.setItem(`${constants.folderState}${questId}`, (!collapsed).toString());
 
-      this.render();
+         this.render();
+      }
    }
 
    /**
@@ -229,7 +262,7 @@ export default class QuestTracker extends Application
    /**
     * Prepares the quest data from sorted active quests.
     *
-    * @returns {object[]} Sorted active quests.
+    * @returns {Promise<object[]>} Sorted active quests.
     */
    async prepareQuests()
    {
@@ -288,9 +321,18 @@ export default class QuestTracker extends Application
          if (opts.width > this._appExtents.maxWidth) { opts.width = this._appExtents.maxWidth; }
          if (opts.height < this._appExtents.minHeight) { opts.height = this._appExtents.minHeight; }
          if (opts.height > this._appExtents.maxHeight) { opts.height = this._appExtents.maxHeight; }
+
+         if (this._windowMode === 'auto')
+         {
+            // Add the extra `1` for small format (1080P and below screen size).
+            opts.height = this._elemWindowHeader[0].scrollHeight + this._elemWindowContent[0].scrollHeight + 1;
+         }
       }
 
+      // Must set popOut temporarily to true as there is a gate in `Application.setPosition`.
+      this.options.popOut = true;
       const currentPosition = super.setPosition(opts);
+      this.options.popOut = false;
 
       const scrollbarActive = this._elemWindowContent[0].scrollHeight > this._elemWindowContent[0].clientHeight;
 
@@ -305,7 +347,6 @@ export default class QuestTracker extends Application
          if (_timeoutPosition)
          {
             clearTimeout(_timeoutPosition);
-            _timeoutPosition = void 0;
          }
 
          _timeoutPosition = setTimeout(() =>
