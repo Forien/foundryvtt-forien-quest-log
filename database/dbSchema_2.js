@@ -1,6 +1,6 @@
 import DBMigration   from './DBMigration.js';
 import Enrich        from '../src/control/Enrich.js';
-import QuestFolder   from '../src/model/QuestFolder.js';
+import Utils         from '../src/control/Utils.js';
 import Quest         from '../src/model/Quest.js';
 
 import { constants, questStatus } from '../src/model/constants.js';
@@ -27,7 +27,8 @@ import { constants, questStatus } from '../src/model/constants.js';
  */
 export default async function()
 {
-   const folder = await QuestFolder.initializeJournals();
+   const folder = await Utils.initializeQuestFolder();
+   if (!folder) { return; }
 
    for (const entry of folder.content)
    {

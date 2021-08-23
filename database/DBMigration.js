@@ -1,5 +1,5 @@
 import Socket        from '../src/control/Socket.js';
-import QuestFolder   from '../src/model/QuestFolder.js';
+import Utils         from '../src/control/Utils.js';
 import { constants } from '../src/model/constants.js';
 
 import dbSchema_1    from './dbSchema_1.js';
@@ -96,7 +96,7 @@ export default class DBMigration
          // Sanity check to make sure there is a schema migration function for the next schema update.
          if (typeof migrateImpl[schemaVersion] !== 'function') { return; }
 
-         const folder = await QuestFolder.initializeJournals();
+         const folder = await Utils.initializeQuestFolder();
 
          // Early out if there are no journal entries / quests in the `_fql-quests` folder.
          if (folder?.content?.length === 0)

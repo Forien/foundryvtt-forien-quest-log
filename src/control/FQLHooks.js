@@ -4,7 +4,6 @@ import Utils            from './Utils.js';
 import ViewManager      from './ViewManager.js';
 import QuestAPI         from './public/QuestAPI.js';
 import Quest            from '../model/Quest.js';
-import QuestFolder      from '../model/QuestFolder.js';
 import QuestCollection  from '../model/QuestCollection.js';
 import QuestPreview     from '../view/preview/QuestPreview.js';
 
@@ -390,7 +389,7 @@ export default class FQLHooks
 
       if (!(game.user.isGM && game.settings.get(constants.moduleName, settings.showFolder)))
       {
-         const folder = QuestFolder.get();
+         const folder = Utils.getQuestFolder();
          if (folder !== void 0)
          {
             const element = html.find(`.folder[data-folder-id="${folder.id}"]`);
@@ -414,11 +413,13 @@ export default class FQLHooks
     */
    static renderJournalSheet(app, html)
    {
-      const folderId = QuestFolder.get().id;
+      const folder = Utils.getQuestFolder();
+      if (folder)
+      {
+         const option = html.find(`option[value="${folder.id}"]`);
 
-      const option = html.find(`option[value="${folderId}"]`);
-
-      if (option) { option.remove(); }
+         if (option) { option.remove(); }
+      }
    }
 
    /**

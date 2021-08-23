@@ -1,7 +1,6 @@
 import Enrich           from './Enrich.js';
 import Socket           from './Socket.js';
 import Utils            from './Utils.js';
-import QuestFolder      from '../model/QuestFolder.js';
 import Quest            from '../model/Quest.js';
 import QuestPreviewShim from '../view/preview/QuestPreviewShim.js';
 import collect          from '../../external/collect.js';
@@ -146,7 +145,7 @@ export default class QuestDB
     */
    static async init()
    {
-      let folder = await QuestFolder.initializeJournals();
+      let folder = await Utils.initializeQuestFolder();
 
       // If the folder doesn't exist then simulate the content parameter. This should only ever occur for a player
       // logged in when a GM activates FQL for the first time or if the _fql_quests folder is deleted.
@@ -237,7 +236,7 @@ export default class QuestDB
     */
    static consistencyCheck()
    {
-      const folder = QuestFolder.get();
+      const folder = Utils.getQuestFolder();
 
       // Early out if the folder is not available or FQL is hidden from the current player.
       if (!folder || Utils.isFQLHiddenFromPlayers()) { return; }
@@ -307,7 +306,7 @@ export default class QuestDB
     *
     * @param {string}   [options.parentId] - Any associated parent ID; if set then this is a subquest.
     *
-    * @returns {Promise<Quest>} The newly created quest.
+    * @returns {Promise<Quest|void>} The newly created quest.
     */
    static async createQuest({ data = {}, parentId = void 0 } = {})
    {
@@ -336,9 +335,16 @@ export default class QuestDB
       // Creating a new quest will add any missing data / schema.
       const tempQuest = new Quest(data);
 
+      const folder = Utils.getQuestFolder();
+      if (!folder)
+      {
+         console.log('ForienQuestLog - QuestDB.createQuest - quest folder not found.');
+         return;
+      }
+
       const entry = await JournalEntry.create({
          name: tempQuest.name,
-         folder: QuestFolder.get().id,
+         folder: folder.id,
          content: '',
          permission,
          flags: {

@@ -1,6 +1,13 @@
 import { constants, jquery, settings } from '../model/constants.js';
 
 /**
+ * The hidden FQL quests folder name.
+ *
+ * @type {string}
+ */
+const s_QUEST_DIR_NAME = '_fql_quests';
+
+/**
  * Provides several general utility methods interacting with Foundry via UUID lookups to generating UUIDv4 internal
  * FQL IDs. There are also several general methods for Handlebars and TinyMCE setup.
  */
@@ -188,6 +195,17 @@ export default class Utils
    }
 
    /**
+    * Returns the quest folder or initializes and returns the quest folder if it doesn't exist and `create` is true.
+    *
+    * @returns {Folder} The quest folder.
+    * @see https://foundryvtt.com/api/Folder.html
+    */
+   static getQuestFolder()
+   {
+      return game.journal.directory.folders.find((f) => f.name === s_QUEST_DIR_NAME);
+   }
+
+   /**
     * Builds a UUID for the given actor / journal / item data.
     *
     * @param {object}   data - document data
@@ -205,6 +223,25 @@ export default class Utils
       if (typeof type === 'string' && data.type !== type) { return void 0; }
 
       return typeof data.pack === 'string' ? `Compendium.${data.pack}.${data.id}` : `${data.type}.${data.id}`;
+   }
+
+   /**
+    * Returns the quest folder or initializes and returns the quest folder if it doesn't exist and `create` is true.
+    *
+    * @returns {Promise<Folder>} The quest folder.
+    * @see https://foundryvtt.com/api/Folder.html
+    */
+   static async initializeQuestFolder()
+   {
+      const folder = game.journal.directory.folders.find((f) => f.name === s_QUEST_DIR_NAME);
+      if (folder !== void 0) { return folder; }
+
+      if (game.user.isGM)
+      {
+         await Folder.create({ name: s_QUEST_DIR_NAME, type: 'JournalEntry', parent: null });
+      }
+
+      return game.journal.directory.folders.find((f) => f.name === s_QUEST_DIR_NAME);
    }
 
    /**
