@@ -187,8 +187,16 @@
         flex: 0 0 20px;
       }
 
+      &.fa-check-circle {
+        color: $icon-color-completed;
+      }
+
+      &.fa-times-circle {
+        color: $icon-color-failed;
+      }
+
       &.fa-trash {
-        color: rgba(255,0,0,.4);
+        color: $icon-color-trashcan;
       }
 
       &.fa-play {
