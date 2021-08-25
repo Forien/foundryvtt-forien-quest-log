@@ -458,6 +458,25 @@ export default class QuestDB
    }
 
    /**
+    * Enriches specific {@link QuestEntry} instances. This is useful in various callbacks when settings state changes
+    * that is not stored in the {@link Quest} itself. An example is storing the primary quest in world /
+    * {@link ModuleSettings}.
+    *
+    * @param {...string} questIds - The quest IDs to enrich.
+    */
+   static enrichQuests(...questIds)
+   {
+      for (const questId of questIds)
+      {
+         const questEntry = QuestDB.getQuestEntry(questId);
+         if (questEntry)
+         {
+            questEntry.enrich = Enrich.quest(questEntry.quest);
+         }
+      }
+   }
+
+   /**
     * Filter the entire QuestDB, returning an Array of entries which match a functional predicate.
     *
     * @param {Function} predicate  The functional predicate to test.

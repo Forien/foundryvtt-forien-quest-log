@@ -2,8 +2,9 @@ import QuestAPI      from '../control/public/QuestAPI.js';
 import QuestDB       from '../control/QuestDB.js';
 import Socket        from '../control/Socket.js';
 import Utils         from '../control/Utils.js';
+import collect       from '../../external/collect.js';
 
-import { constants, jquery, questStatus, settings } from '../model/constants.js';
+import { constants, jquery, questStatus, sessionConstants, settings } from '../model/constants.js';
 
 /**
  * Provides the quest tracker which provides an overview of active quests and objectives which can be opened / closed
@@ -49,6 +50,31 @@ export default class QuestTracker extends Application
    }
 
    /**
+    * Specify the set of config buttons which should appear in the Application header. Buttons should be returned as an
+    * Array of objects.
+    *
+    * Provides an explicit override of Application._getHeaderButtons to add
+    *
+    * @returns {ApplicationHeaderButton[]} The app header buttons.
+    * @override
+    */
+   _getHeaderButtons()
+   {
+      const buttons = super._getHeaderButtons();
+
+      const primaryState = sessionStorage.getItem(sessionConstants.trackerShowPrimary) === 'true';
+      const primaryIcon = primaryState ? 'fas fa-star' : 'far fa-star';
+
+      buttons.unshift({
+         // label: '',
+         class: 'show-primary',
+         icon: primaryIcon
+      });
+
+      return buttons;
+   }
+
+   /**
     * Defines all {@link JQuery} control callbacks with event listeners for click, drag, drop via various CSS selectors.
     *
     * @param {JQuery}  html - The jQuery instance for the window content of this Application.
@@ -65,6 +91,14 @@ export default class QuestTracker extends Application
 
       html.on(jquery.click, '.header-button.close', void 0, this.close);
 
+      html.on(jquery.click, '.header-button.show-primary i', void 0, () =>
+      {
+         const newPrimary = !(sessionStorage.getItem(sessionConstants.trackerShowPrimary) === 'true');
+         sessionStorage.setItem(sessionConstants.trackerShowPrimary, (newPrimary).toString());
+         $('#quest-tracker .header-button.show-primary i').attr('class', newPrimary ? 'fas fa-star' : 'far fa-star');
+         this.render();
+      });
+
       Utils.createJQueryDblClick({
          selector: '#quest-tracker .quest-tracker-header',
          singleCallback: this._handleQuestClick.bind(this),
@@ -72,6 +106,7 @@ export default class QuestTracker extends Application
       });
 
       html.on(jquery.click, '.quest-tracker-link', void 0, this._handleQuestOpen);
+
       html.on(jquery.click, '.quest-tracker-task', void 0, this._handleQuestTask.bind(this));
 
       /**
@@ -123,7 +158,7 @@ export default class QuestTracker extends Application
       {
          case 'auto':
             this._elemResizeHandle.hide();
-            this._elemQuestTracker.css('min-height', '50px');
+            this._elemQuestTracker.css('min-height', this._elemWindowHeader[0].scrollHeight);
 
             // A bit of a hack. We need to call the Application setPosition now to make sure the element parameters
             // are correctly set as the exact height for the element is calculated in this.setPosition which is called
@@ -136,7 +171,7 @@ export default class QuestTracker extends Application
 
          case 'resize':
             this._elemResizeHandle.show();
-            this._elemQuestTracker.css('min-height', '150px');
+            this._elemQuestTracker.css('min-height', this._appExtents.minHeight);
             break;
       }
 
@@ -190,10 +225,13 @@ export default class QuestTracker extends Application
     */
    async getData(options = {})
    {
+      const quests = await this.prepareQuests();
+
       return foundry.utils.mergeObject(super.getData(options), {
          title: this.options.title,
          headerButtons: this._getHeaderButtons(),
-         quests: await this.prepareQuests()
+         hasQuests: quests.count() > 0,
+         quests
       });
    }
 
@@ -209,9 +247,9 @@ export default class QuestTracker extends Application
       const questEntry = QuestDB.getQuestEntry(questId);
       if (questEntry && questEntry.enrich.hasObjectives)
       {
-         const folderState = sessionStorage.getItem(`${constants.folderState}${questId}`);
+         const folderState = sessionStorage.getItem(`${sessionConstants.trackerFolderState}${questId}`);
          const collapsed = folderState !== 'false';
-         sessionStorage.setItem(`${constants.folderState}${questId}`, (!collapsed).toString());
+         sessionStorage.setItem(`${sessionConstants.trackerFolderState}${questId}`, (!collapsed).toString());
 
          this.render();
       }
@@ -262,14 +300,30 @@ export default class QuestTracker extends Application
    /**
     * Prepares the quest data from sorted active quests.
     *
-    * @returns {Promise<object[]>} Sorted active quests.
+    * @returns {Promise<Collection<object>>} Sorted active quests.
     */
    async prepareQuests()
    {
-      return QuestDB.sortCollect({ status: questStatus.active }).map((entry) =>
+      /**
+       * @type {Collection}
+       */
+      let questEntries;
+
+      const showOnlyPrimary = sessionStorage.getItem(sessionConstants.trackerShowPrimary) === 'true';
+      if (showOnlyPrimary)
+      {
+         const primaryQuest = QuestDB.getQuestEntry(game.settings.get(constants.moduleName, settings.primaryQuest));
+         questEntries = primaryQuest ? collect([primaryQuest]) : collect([]);
+      }
+      else
+      {
+         questEntries = QuestDB.sortCollect({ status: questStatus.active });
+      }
+
+      return questEntries.transform((entry) =>
       {
          const q = entry.enrich;
-         const collapsed = sessionStorage.getItem(`${constants.folderState}${q.id}`) === 'false';
+         const collapsed = sessionStorage.getItem(`${sessionConstants.trackerFolderState}${q.id}`) === 'false';
 
          const tasks = collapsed ? q.data_tasks : [];
          const subquests = collapsed ? q.data_subquest : [];

@@ -7,7 +7,7 @@
   </header>
 
   <section class="fql-window-content">
-    <div class="quests">
+    {{#if hasQuests}}<div class="quests">{{/if}}
       {{#each quests}}
       <div class="quest">
         <h3 class="title" {{#if (or isHidden isInactive)}}id="hidden"{{/if}}>
@@ -42,6 +42,6 @@
         </ul>
       </div>
       {{/each}}
-    </div>
+    {{#if hasQuests}}</div>{{/if}}
   </section>
 </div>

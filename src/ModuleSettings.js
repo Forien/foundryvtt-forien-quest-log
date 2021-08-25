@@ -2,7 +2,7 @@ import QuestDB       from './control/QuestDB.js';
 import Utils         from './control/Utils.js';
 import ViewManager   from './control/ViewManager.js';
 
-import { constants, noteControls, settings } from './model/constants.js';
+import { constants, noteControls, sessionConstants, settings } from './model/constants.js';
 
 /**
  * The default location for the QuestTracker
@@ -145,15 +145,6 @@ export default class ModuleSettings
          }
       });
 
-      // Currently provides a hidden setting to set the default abstract reward image.
-      // It may never be displayed in the module settings menu, but if it is in the future this is where it would go.
-      game.settings.register(constants.moduleName, settings.defaultAbstractRewardImage, {
-         scope: 'world',
-         config: false,
-         default: 'icons/svg/item-bag.svg',
-         type: String
-      });
-
       game.settings.register(constants.moduleName, settings.navStyle, {
          name: 'ForienQuestLog.Settings.navStyle.Enable',
          hint: 'ForienQuestLog.Settings.navStyle.EnableHint',
@@ -283,10 +274,15 @@ export default class ModuleSettings
          onChange: () => game.journal.render()  // Render the journal to show / hide the quest folder.
       });
 
-      game.settings.register(constants.moduleName, settings.questTrackerPosition, {
-         scope: scope.client,
+// Settings not displayed in the module settings ---------------------------------------------------------------------
+
+      // Currently provides a hidden setting to set the default abstract reward image.
+      // It may never be displayed in the module settings menu, but if it is in the future this is where it would go.
+      game.settings.register(constants.moduleName, settings.defaultAbstractRewardImage, {
+         scope: scope.world,
          config: false,
-         default: s_QUEST_TRACKER_DEFAULT,
+         default: 'icons/svg/item-bag.svg',
+         type: String
       });
 
       game.settings.register(constants.moduleName, settings.enableQuestTracker, {
@@ -301,6 +297,61 @@ export default class ModuleSettings
 
             ViewManager.renderOrCloseQuestTracker();
          }
+      });
+
+      // TODO: PROVIDE BETTER COMMENTS
+      game.settings.register(constants.moduleName, settings.primaryQuest, {
+         scope: scope.world,
+         config: false,
+         default: '',
+         type: String,
+         onChange: (value) =>
+         {
+            const currentQuestEntry = QuestDB.getQuestEntry(
+             sessionStorage.getItem(sessionConstants.currentPrimaryState));
+
+            const newQuestEntry = QuestDB.getQuestEntry(value);
+
+            const updateQuestIds = [];
+            let newPrimaryQuestName = void 0;
+
+            // Update old primary quest.
+            if (currentQuestEntry && currentQuestEntry.id !== value)
+            {
+               updateQuestIds.push(...currentQuestEntry.questIds);
+               if (newQuestEntry)
+               {
+                  newPrimaryQuestName = newQuestEntry.quest.name;
+                  updateQuestIds.push(...newQuestEntry.questIds);
+               }
+            }
+            else if (newQuestEntry)
+            {
+               updateQuestIds.push(...newQuestEntry.questIds);
+               if (value.length) { newPrimaryQuestName = newQuestEntry.quest.name; }
+            }
+
+            sessionStorage.setItem(sessionConstants.currentPrimaryState, value);
+
+            if (updateQuestIds.length)
+            {
+               QuestDB.enrichQuests(...updateQuestIds);
+               ViewManager.refreshQuestPreview(updateQuestIds);
+               ViewManager.renderAll({ force: true });
+            }
+
+            if (newPrimaryQuestName)
+            {
+               ViewManager.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestPrimary',
+                { name: newPrimaryQuestName }));
+            }
+         }
+      });
+
+      game.settings.register(constants.moduleName, settings.questTrackerPosition, {
+         scope: scope.client,
+         config: false,
+         default: s_QUEST_TRACKER_DEFAULT,
       });
 
       game.settings.register(constants.moduleName, settings.windowModeQuestTracker, {

@@ -1,7 +1,7 @@
 import Utils            from '../control/Utils.js';
 import QuestPreviewShim from '../view/preview/QuestPreviewShim.js';
 
-import { constants, questStatus } from './constants.js';
+import { constants, questStatus, settings } from './constants.js';
 
 /**
  * Stores the sheet class for Quest which is {@link QuestPreview}. This class / sheet is used to render Quest.
@@ -173,6 +173,16 @@ export default class Quest
       }
 
       return isPersonal;
+   }
+
+   /**
+    * Returns whether this quest is set as the primary quest.
+    *
+    * @returns {boolean} Primary quest state.
+    */
+   get isPrimary()
+   {
+      return this._id === game.settings.get(constants.moduleName, settings.primaryQuest);
    }
 
    /**

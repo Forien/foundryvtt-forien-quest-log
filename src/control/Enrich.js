@@ -189,6 +189,7 @@ export default class Enrich
       data.isInactive = questStatus.inactive === data.status;
 
       const isOwner = quest.isOwner;
+      const isPrimary = quest.isPrimary;
       const personalActors = quest.getPersonalActors();
 
       const isTrustedPlayerEdit = Utils.isTrustedPlayerEdit();
@@ -207,6 +208,9 @@ export default class Enrich
 
       data.isPersonal = personalActors.length > 0;
       data.personalActors = personalActors.map((a) => a.name).sort((a, b) => a.localeCompare(b)).join('&#013;');
+
+      data.isPrimary = isPrimary;
+      data.primaryIcon = isPrimary ? 'fas fa-star' : 'far fa-star';
 
       // Enrich w/ TextEditor, but first sanitize w/ DOMPurify, allowing only iframes with YouTube embed.
       data.description = TextEditor.enrichHTML(DOMPurify.sanitizeWithVideo(data.description), {
@@ -227,7 +231,7 @@ export default class Enrich
       const statusLabel = game.i18n.localize(`ForienQuestLog.QuestTypes.Labels.${data.status}`);
 
       // The quest status in the details section.
-      data.statusLabel = game.i18n.format(`ForienQuestLog.QuestIs`, { statusLabel })
+      data.statusLabel = game.i18n.format(`ForienQuestLog.QuestIs`, { statusLabel });
 
       data.statusActions = Enrich.statusActions(quest);
 
@@ -277,6 +281,7 @@ export default class Enrich
                const subPersonalActors = subquest.getPersonalActors();
 
                const isInactive = subquest.isInactive;
+               const subIsPrimary = subquest.isPrimary;
 
                const statusTooltipData = isInactive ?
                 { statusI18n: game.i18n.localize(questStatusI18n[questStatus.inactive]) } :
@@ -298,7 +303,9 @@ export default class Enrich
                   isHidden: subquest.isHidden,
                   isInactive,
                   isPersonal: subPersonalActors.length > 0,
-                  personalActors: subPersonalActors.map((a) => a.name).sort((a, b) => a.localeCompare(b)).join('&#013;')
+                  personalActors: subPersonalActors.map((a) => a.name).sort((a, b) => a.localeCompare(b)).join('&#013;'),
+                  isPrimary: subIsPrimary,
+                  primaryIcon: subIsPrimary ? 'fas fa-star' : ''
                });
             }
          }

@@ -10,7 +10,7 @@ import QuestPreview     from '../view/preview/QuestPreview.js';
 import ModuleSettings   from '../ModuleSettings.js';
 import DBMigration      from '../../database/DBMigration.js';
 
-import { constants, noteControls, settings } from '../model/constants.js';
+import { constants, noteControls, sessionConstants, settings } from '../model/constants.js';
 
 /**
  * Provides implementations for all Foundry hooks that FQL responds to and registers under. Please view the
@@ -155,6 +155,11 @@ export default class FQLHooks
 
       // Allow and process incoming socket data.
       Socket.listen();
+
+      // Need to track any current primary quest as Foundry settings don't provide a old / new state on setting
+      // change. The current primary state is saved in session storage.
+      sessionStorage.setItem(sessionConstants.currentPrimaryState,
+       game.settings.get(constants.moduleName, settings.primaryQuest));
 
       // Fire our own lifecycle event to inform any other modules that depend on FQL QuestDB.
       Hooks.callAll('ForienQuestLog.Lifecycle.ready');

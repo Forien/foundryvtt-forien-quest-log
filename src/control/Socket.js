@@ -17,6 +17,7 @@ const s_EVENT_NAME = 'module.forien-quest-log';
  */
 const s_MESSAGE_TYPES = {
    deletedQuest: 'deletedQuest',
+   questSetPrimary: 'questSetPrimary',
    questSetStatus: 'questSetStatus',
    questRewardDrop: 'questRewardDrop',
    refreshAll: 'refreshAll',
@@ -100,6 +101,7 @@ export default class Socket
             {
                case s_MESSAGE_TYPES.deletedQuest: await handleDeletedQuest(data); break;
                case s_MESSAGE_TYPES.questRewardDrop: await handleQuestRewardDrop(data); break;
+               case s_MESSAGE_TYPES.questSetPrimary: await handleQuestSetPrimary(data); break;
                case s_MESSAGE_TYPES.questSetStatus: await handleQuestSetStatus(data); break;
                case s_MESSAGE_TYPES.refreshAll: handleRefreshAll(data); break;
                case s_MESSAGE_TYPES.refreshQuestPreview: handleRefreshQuestPreview(data); break;
@@ -110,62 +112,6 @@ export default class Socket
          catch (err)
          {
             console.error(err);
-         }
-      });
-   }
-
-   /**
-    * Handles setting a new quest status then refreshes the appropriate views including parent and
-    * subquests as applicable. On the invocation side if the user is a GM or trusted player with edit and ownership of
-    * the quest being updated then the action is immediately taken and `handled` set to true which is part of the
-    * message sent across the wire. If this is a player who can accept quests the local action is skipped and a socket
-    * message is sent out and the first GM level user to receive it will perform the status update for the associated
-    * quest. If no GM level users are logged in this action is never handled and the user can not change the status of
-    * a quest.
-    *
-    * Handled on the receiving side by {@link handleQuestSetStatus}.
-    *
-    * @param {object}   options - Options.
-    *
-    * @param {Quest}    options.quest - The quest to move.
-    *
-    * @param {string}   options.target - The target status. One of five {@link questStatus}.
-    *
-    * @returns {Promise<void>}
-    * @see {@link HandlerAny.questStatusSet}
-    * @see {@link HandlerLog.questStatusSet}
-    */
-   static async setQuestStatus({ quest, target })
-   {
-      let handled = false;
-
-      // If the current user is a GM or trusted player with edit capability and owner of the quest immediately perform
-      // the status move.
-      if (game.user.isGM || (Utils.isTrustedPlayerEdit() && quest.isOwner))
-      {
-         await quest.setStatus(target);
-         handled = true;
-
-         Socket.refreshQuestPreview({ questId: quest.getQuestIds() });
-         Socket.refreshAll();
-
-         const dirname = game.i18n.localize(questStatusI18n[target]);
-         ViewManager.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
-          { name: quest.name, target: dirname }));
-      }
-      else
-      {
-         // Provide a sanity check and early out if the player can't accept quests.
-         const canPlayerAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
-         if (questStatus.active !== target && !canPlayerAccept) { return; }
-      }
-
-      game.socket.emit(s_EVENT_NAME, {
-         type: s_MESSAGE_TYPES.questSetStatus,
-         payload: {
-            questId: quest.id,
-            handled,
-            target
          }
       });
    }
@@ -270,6 +216,105 @@ export default class Socket
    }
 
    /**
+    * Potentially sets a new {@link Quest.status} via {@link Socket.setQuestStatus}. If the current user is not a GM
+    * a GM level user must be logged in for a successful completion of the set status operation.
+    *
+    * @param {object}            opts - Optional parameters.
+    *
+    * @param {Quest}             opts.quest - The current quest being manipulated.
+    *
+    * @returns {Promise<void>}
+    */
+   static async setQuestPrimary({ quest })
+   {
+      let handled = false;
+
+      // If the current user is a GM or trusted player with edit capability and owner of the quest immediately perform
+      // the status move.
+      if (game.user.isGM)
+      {
+         const currentQuestEntry = QuestDB.getQuestEntry(game.settings.get(
+          constants.moduleName, settings.primaryQuest));
+
+         // Update old primary quest.
+         if (currentQuestEntry !== void 0 && currentQuestEntry.id !== quest.id)
+         {
+            await game.settings.set(constants.moduleName, settings.primaryQuest, quest.id);
+         }
+         else
+         {
+            await game.settings.set(constants.moduleName, settings.primaryQuest, quest.isPrimary ? '' : quest.id);
+         }
+
+         handled = true;
+      }
+
+      game.socket.emit(s_EVENT_NAME, {
+         type: s_MESSAGE_TYPES.questSetPrimary,
+         payload: {
+            questId: quest.id,
+            handled
+         }
+      });
+   }
+
+   /**
+    * Handles setting a new quest status then refreshes the appropriate views including parent and
+    * subquests as applicable. On the invocation side if the user is a GM or trusted player with edit and ownership of
+    * the quest being updated then the action is immediately taken and `handled` set to true which is part of the
+    * message sent across the wire. If this is a player who can accept quests the local action is skipped and a socket
+    * message is sent out and the first GM level user to receive it will perform the status update for the associated
+    * quest. If no GM level users are logged in this action is never handled and the user can not change the status of
+    * a quest.
+    *
+    * Handled on the receiving side by {@link handleQuestSetStatus}.
+    *
+    * @param {object}   options - Options.
+    *
+    * @param {Quest}    options.quest - The quest to move.
+    *
+    * @param {string}   options.target - The target status. One of five {@link questStatus}.
+    *
+    * @returns {Promise<void>}
+    * @see {@link HandlerAny.questStatusSet}
+    * @see {@link HandlerLog.questStatusSet}
+    */
+   static async setQuestStatus({ quest, target })
+   {
+      let handled = false;
+
+      // If the current user is a GM or trusted player with edit capability and owner of the quest immediately perform
+      // the status move.
+      if (game.user.isGM || (Utils.isTrustedPlayerEdit() && quest.isOwner))
+      {
+         await quest.setStatus(target);
+         handled = true;
+
+         Socket.refreshQuestPreview({ questId: quest.getQuestIds() });
+         Socket.refreshAll();
+
+         const dirname = game.i18n.localize(questStatusI18n[target]);
+         ViewManager.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
+          { name: quest.name, target: dirname }));
+      }
+      else
+      {
+         // Provide a sanity check and early out if the player can't accept quests.
+         const canPlayerAccept = game.settings.get(constants.moduleName, settings.allowPlayersAccept);
+         if (questStatus.active !== target && !canPlayerAccept) { return; }
+      }
+
+      game.socket.emit(s_EVENT_NAME, {
+         type: s_MESSAGE_TYPES.questSetStatus,
+         payload: {
+            questId: quest.id,
+            handled,
+            target
+         }
+      });
+   }
+
+   /**
     * This handles the `show to players` title bar button found in {@link QuestPreview._getHeaderButtons} to open the
     * associated QuestPreview for all remote clients.
     *
@@ -371,6 +416,40 @@ async function handleQuestRewardDrop(data)
          await quest.save();
          Socket.refreshQuestPreview({ questId: fqlData.questId });
       }
+   }
+}
+
+/**
+ * TODO: PROVIDE BETTER COMMENTS
+ *
+ * This message is sent from {@link Socket.questSetPrimary}.
+ *
+ * @param {object} data - The data payload contains `questId` and `target` along with `handled`.
+ *
+ * @returns {Promise<void>}
+ */
+async function handleQuestSetPrimary(data)
+{
+   // If this message has not already been handled and this user is a GM then handle it now then set `handled` to true.
+   if (game.user.isGM && !data.payload.handled)
+   {
+      const quest = QuestDB.getQuest(data.payload.questId);
+      if (quest === void 0) { return; }
+
+      const currentQuestEntry = QuestDB.getQuestEntry(game.settings.get(constants.moduleName, settings.primaryQuest));
+
+      // Update old primary quest.
+      if (currentQuestEntry !== void 0 && currentQuestEntry.id !== quest.id)
+      {
+         await game.settings.set(constants.moduleName, settings.primaryQuest, quest.id);
+      }
+      else
+      {
+         await game.settings.set(constants.moduleName, settings.primaryQuest, quest.isPrimary ? '' : quest.id);
+      }
+
+      // Set handled to true so no other GM level users act upon the move.
+      data.payload.handled = true;
    }
 }
 

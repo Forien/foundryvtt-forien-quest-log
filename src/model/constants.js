@@ -3,13 +3,12 @@ import ViewManager from '../control/ViewManager.js';
 /**
  * Defines the main FQL constants for module name and the DB flag.
  *
- * @type {{folderState: string, flagDB: string, moduleName: string, moduleLabel: string}}
+ * @type {{folderState: string, flagDB: string, moduleName: string, moduleLabel: string, primaryState: string}}
  */
 const constants = {
    moduleName: 'forien-quest-log',
    moduleLabel: `Forien's Quest Log`,
-   flagDB: 'json',
-   folderState: 'forien.questlog.folderstate-'
+   flagDB: 'json'
 };
 
 /**
@@ -80,7 +79,8 @@ const questStatusI18n = {
 };
 
 /**
- * Stores the QuestLog tab indexes.
+ * Stores the QuestLog tab indexes. This is used by QuestLog.setPosition to select the current table based on status
+ * name.
  *
  * @type {{inactive: number, available: number, active: number, completed: number, failed: number}}
  */
@@ -90,6 +90,17 @@ const questTabIndex = {
    completed: 2,
    failed: 3,
    inactive: 4
+};
+
+/**
+ * Stores the keys used with session storage.
+ *
+ * @type {{currentPrimaryState: string, trackerFolderState: string, trackerShowPrimary: string}}
+ */
+const sessionConstants = {
+   currentPrimaryState: 'forien.questlog.currentPrimaryState',
+   trackerFolderState: 'forien.questtracker.folderState-',
+   trackerShowPrimary: 'forien.questtracker.showPrimary'
 };
 
 /**
@@ -107,6 +118,7 @@ const settings = {
    hideFQLFromPlayers: 'hideFQLFromPlayers',
    navStyle: 'navStyle',
    notifyRewardDrop: 'notifyRewardDrop',
+   primaryQuest: 'primaryQuest',
    questTrackerPosition: 'questTrackerPosition',
    resetQuestTracker: 'resetQuestTracker',
    showFolder: 'showFolder',
@@ -115,7 +127,7 @@ const settings = {
    windowModeQuestTracker: 'windowModeQuestTracker'
 };
 
-export { constants, jquery, noteControls, questStatus, questStatusI18n, questTabIndex, settings };
+export { constants, jquery, noteControls, questStatus, questStatusI18n, questTabIndex, sessionConstants, settings };
 
 /**
  * @typedef {object} FQLSettings
@@ -141,6 +153,8 @@ export { constants, jquery, noteControls, questStatus, questStatusI18n, questTab
  * @property {string}   navStyle - Navigation style / classic / or bookmark tabs.
  *
  * @property {string}   notifyRewardDrop - Post a notification UI message when rewards are dropped in actor sheets.
+ *
+ * @property {string}   primaryQuest - Stores the quest ID of a quest that is the current primary quest.
  *
  * @property {string}   questTrackerPosition - Hidden setting to store current quest tracker position.
  *

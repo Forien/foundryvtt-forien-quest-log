@@ -110,7 +110,22 @@
     display: none;
   }
 
+  .icon-button {
+    flex: none;
+  }
+
   i {
+    flex: none;
+
+    &.fa-star {
+      padding-left: 4px;
+
+      &.fas {
+        color: $icon-color-primary-quest;
+        filter: drop-shadow(0 0 2px #000);
+      }
+    }
+
     &.is-personal {
       padding-left: 4px;
     }
