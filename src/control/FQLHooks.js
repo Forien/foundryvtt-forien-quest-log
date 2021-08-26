@@ -157,9 +157,16 @@ export default class FQLHooks
       Socket.listen();
 
       // Need to track any current primary quest as Foundry settings don't provide a old / new state on setting
-      // change. The current primary state is saved in session storage.
+      // change. The current primary quest state is saved in session storage.
       sessionStorage.setItem(sessionConstants.currentPrimaryState,
        game.settings.get(constants.moduleName, settings.primaryQuest));
+
+      // Support for LibThemer
+      const libThemer = game.modules.get('lib-themer');
+      if (libThemer.active)
+      {
+         await libThemer?.api?.registerTheme('/modules/forien-quest-log/assets/themes/lib-themer/fql.json');
+      }
 
       // Fire our own lifecycle event to inform any other modules that depend on FQL QuestDB.
       Hooks.callAll('ForienQuestLog.Lifecycle.ready');

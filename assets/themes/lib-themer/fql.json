@@ -1,0 +1,25 @@
+{
+  "title": "Forien's Quest Log",
+  "description": "Modify default Forien's Quest Log colors and background",
+
+  "--palette-fql-qt-text-color": {
+    "name": "Quest Tracker text color",
+    "hint": "Sets the Quest Tracker text color.",
+    "type": "shades",
+    "default": "#eeeeee"
+  },
+
+  "--palette-fql-qt-color-background": {
+    "name": "Quest Tracker app background color",
+    "hint": "Sets the Quest Tracker app background color.",
+    "type": "shades",
+    "default": "#00000000"
+  },
+
+  "--palette-fql-qt-image-background": {
+    "name": "Quest Tracker background image",
+    "hint": "Sets the Quest Tracker background app image.",
+    "type": "imagevideo",
+    "default": "ui/denim075.png"
+  }
+}

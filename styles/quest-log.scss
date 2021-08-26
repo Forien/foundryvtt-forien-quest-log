@@ -30,7 +30,7 @@
 
     .item {
       // The dynamic jQuery module setting overrides this with the window content background image. This is the fallback.
-      background: $background-image;
+      background: $log-bookmark-image-background;
 
       text-align: right;
       margin: 0 0 4px 0;

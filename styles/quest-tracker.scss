@@ -5,15 +5,27 @@
   max-width: 400px;
   max-height: 750px;
 
+  &.fql-app {
+    background: $tracker-image-background;
+    background-color: $tracker-color-background;
+    background-blend-mode: $tracker-image-background-blend-mode;
+
+    // Doesn't work quite right as game systems can provide specific colors.
+    //a:hover {
+    //  text-shadow: 0 0 8px $tracker-color-text-hover;
+    //}
+  }
+
   .fql-window-content {
     padding: 0 8px 0 8px;
-    color: $primary-color-text;
+    color: $tracker-color-text;
     filter: drop-shadow(2px 2px 1px #000);
     font-family: "Open Sans", Lato, Signika, sans-serif;
     overflow-y: auto;
   }
 
   .fql-window-header {
+    color: $tracker-color-text;
     pointer-events: auto;
 
     h4 {
@@ -36,7 +48,7 @@
   }
 
   #hidden {
-    color: $primary-color-text-hidden;
+    color: $tracker-color-text-hidden;
   }
 
   a.entity-link {

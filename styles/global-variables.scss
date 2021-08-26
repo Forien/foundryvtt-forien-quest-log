@@ -1,6 +1,6 @@
 // Support for Whetstone and nascent lib-themer (unfinished)
 $background-color-light: rgba(255, 255, 255, .5);
-$background-image: var(--palette-app-background-image, url("/ui/parchment.jpg")) repeat;
+$log-bookmark-image-background: var(--palette-app-background-image, url("/ui/parchment.jpg")) repeat;
 
 $primary-color-accent: var(--palette-primary, var(--default-primary-accent, #ff6400));
 
@@ -23,8 +23,19 @@ $primary-color-bg-nav: rgba(255,255,255,.2);
 
 $primary-color-text: var(--default-primary-color, #EEE);
 $primary-color-text-hidden: #ffffff88;
+$primary-color-text-hover: var(--default-primary-accent, red);
 
 $icon-color-primary-quest: gold;
 $icon-color-completed: rgba(0, 175, 0, .8);
 $icon-color-failed: rgba(200, 0, 0, .8);
 $icon-color-trashcan: rgba(255, 0, 0, .6);
+
+// LibThemer support for QuestTracker
+$tracker-color-background: var(--palette-fql-qt-color-background, #00000000);
+$tracker-color-text: var(--palette-fql-qt-text-color, #{$primary-color-text});
+$tracker-color-text-hidden: var(--palette-fql-qt-text-color-dark, #{$primary-color-text-hidden});
+$tracker-image-background: var(--palette-fql-qt-image-background, url(/ui/denim075.png)) repeat;
+$tracker-image-background-blend-mode: var(--palette-fql-qt-image-background-blend-mode, normal);
+
+// Doesn't work quite right as game systems can provide style overrides.
+//$tracker-color-text-hover: var(--palette-fql-qt-text-color-light, #{$primary-color-text-hover});
