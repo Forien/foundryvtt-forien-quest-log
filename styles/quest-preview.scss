@@ -264,7 +264,6 @@
 
         header {
           @include header-buttons;
-          //border-bottom: 2px solid #782e22;
           margin-bottom: 4px;
           flex: 0 0 1px;
         }
@@ -297,7 +296,7 @@
             li {
               display: flex;
               border-radius: 5px;
-              background: rgba(255, 255, 255, .3);
+              background: $primary-color-bg-li;
               margin: 0 4px 2px 0;
               align-items: center;
             }
@@ -416,7 +415,7 @@
           }
 
           .task-hidden {
-            background: rgba(0, 0, 0, .15);
+            background: $primary-color-bg-li-hidden;
 
             .task-name {
               opacity: .5;
@@ -446,7 +445,7 @@
           .drop-info {
             flex: 1 0 25px;
             line-height: 20px;
-            border: 2px dashed rgba(0, 0, 0, .5);
+            border: 2px dashed $primary-color-border-drop;
             border-radius: 5px;
             padding: 0 16px;
             text-align: center;
@@ -456,7 +455,7 @@
           }
 
           .reward-hidden {
-            background: rgba(0, 0, 0, .15);
+            background: $primary-color-bg-li-hidden;
 
             .reward-image {
               opacity: .5;
@@ -576,13 +575,13 @@
           justify-content: center;
           align-items: center;
           height: 100%;
-          border: 2px dashed rgba(0,0,0,.5);
+          border: 2px dashed $primary-color-border-drop;
           border-radius: 5px;
           cursor: pointer;
         }
 
         .splash-border {
-          border: 2px dashed rgba(0,0,0,.5);
+          border: 2px dashed $primary-color-border-drop;
         }
 
         .delete-splash {

@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #efefef;
+  background: $primary-color-bg-buttonspan;
   border-radius: 5px;
   width: 22px;
   height: 22px;
@@ -84,6 +84,6 @@
 
 @mixin header-buttons {
   display: flex;
-  border-bottom: 2px solid $primary-color-header-border;
-  border-block-end: 2px solid $primary-color-header-border;
+  border-bottom: 2px solid $primary-color-borderheader;
+  border-block-end: 2px solid $primary-color-borderheader;
 }

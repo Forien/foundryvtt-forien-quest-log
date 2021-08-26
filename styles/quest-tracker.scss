@@ -8,7 +8,7 @@
   .fql-window-content {
     padding: 0 8px 0 8px;
     color: $primary-color-text;
-    text-shadow: 1px 1px 1px #000;
+    filter: drop-shadow(2px 2px 1px #000);
     font-family: "Open Sans", Lato, Signika, sans-serif;
     overflow-y: auto;
   }
@@ -41,12 +41,6 @@
 
   a.entity-link {
     color: $primary-color-entity-link;
-
-    // Remove text-shadow inherited above, but let default style link hover take effect.
-    // For some UI theme overhaul modules this doesn't seem to work.
-    &:not(:hover) {
-      text-shadow: none;
-    }
   }
 
   .quest:not(:last-child) {
@@ -81,8 +75,6 @@
       flex-direction: row;
       margin: 0;
       font-size: 18px;
-      //height:auto;
-      justify-content: center;
       align-items: center;
     }
 
@@ -124,7 +116,6 @@
       .task {
         margin: 2px 0 0 0;
         display: flex;
-        justify-content: center;
         align-items: center;
 
         span {

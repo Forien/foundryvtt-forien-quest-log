@@ -1,14 +1,19 @@
 @import 'global-variables';
 
 @mixin tinymce {
-  .editor-content {
+  .editor .editor-content {
     font-family: "Signika", sans-serif;
     font-size: 14pt;
     line-height: 1.2;
-  }
+    color: #000;
 
-  p {
-    margin: 0;
+    p {
+      margin: 0;
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit;
+      color: inherit;
+    }
   }
 
   // Provide a class option in table dialog to remove default table styles.
@@ -41,7 +46,7 @@
     width: fit-content;
   }
 
-  // Fix specifically for Warhammer 4th edition
+  // Fix specifically for Warhammer 4th edition; this doesn't work for secondary menus.
   .tox .tox-toolbar__group {
     width: auto;
     padding: 0 2px;
