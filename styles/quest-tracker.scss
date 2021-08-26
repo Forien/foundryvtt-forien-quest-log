@@ -125,6 +125,14 @@
         }
       }
 
+      .subquest-separator {
+        margin-top: 3px;
+        margin-bottom: 4px;
+        width: 50px;
+        height: 1px;
+        background-color: rgba(255, 255, 255, .3);
+      }
+
       .task {
         margin: 2px 0 0 0;
         display: flex;

@@ -21,7 +21,7 @@
 
         <ul class="tasks">
           {{#each subquests}}
-          <li class="task {{state}}" {{#if (or isHidden isInactive)}}id="hidden"{{/if}}>
+          <li class="task {{state}} subquest" {{#if (or isHidden isInactive)}}id="hidden"{{/if}}>
           <a class="quest-tracker-link {{state}}" data-quest-id="{{id}}" title="{{statusTooltip}}">{{name}}</a>
           <span class="quest-tracker-span"></span>
           {{#if ../isGM}}
@@ -30,6 +30,7 @@
           {{/if}}
           </li>
           {{/each}}
+          {{#if (and subquests.length tasks.length)}}<li class="subquest-separator"></li>{{/if}}
           {{#each tasks}}
           {{#if (or ../canEdit ../playerEdit)}}
             <li class="quest-tracker-task" data-quest-id="{{../id}}" data-uuidv4="{{uuidv4}}">
