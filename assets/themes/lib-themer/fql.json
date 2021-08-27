@@ -5,14 +5,14 @@
   "--palette-fql-qt-text-color": {
     "name": "Quest Tracker text color",
     "hint": "Sets the Quest Tracker text color.",
-    "type": "shades",
+    "type": "color",
     "default": "#eeeeee"
   },
 
   "--palette-fql-qt-color-background": {
     "name": "Quest Tracker app background color",
     "hint": "Sets the Quest Tracker app background color.",
-    "type": "shades",
+    "type": "color",
     "default": "#00000000"
   },
 
