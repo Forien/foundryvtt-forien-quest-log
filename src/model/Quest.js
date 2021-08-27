@@ -71,6 +71,14 @@ export default class Quest
    }
 
    /**
+    * @returns {boolean} Is the quest active / in progress.
+    */
+   get isActive()
+   {
+      return questStatus.active === this.status;
+   }
+
+   /**
     * True when no players have OBSERVER or OWNER permissions for this quest.
     *
     * @returns {boolean} Quest is hidden.
@@ -103,11 +111,7 @@ export default class Quest
    }
 
    /**
-    * Quests are inactive depending on the available tab / available quests setting. When the available tab is showing
-    * quests are only inactive if the quest status is 'hidden' otherwise they are inactive when the status is 'hidden'
-    * or 'available'.
-    *
-    * @returns {boolean} The quest inactive state.
+    * @returns {boolean} Is the quest in the inactive state.
     */
    get isInactive()
    {
@@ -568,6 +572,16 @@ export default class Quest
             this.date.start = null;
             this.date.end = null;
             break;
+      }
+
+      // Potentially reset any tracked primary quest when the status is no longer active.
+      if (this.status !== questStatus.active)
+      {
+         const primaryQuestId = game.settings.get(constants.moduleName, settings.primaryQuest);
+         if (this._id === primaryQuestId)
+         {
+            await game.settings.set(constants.moduleName, settings.primaryQuest, '');
+         }
       }
 
       await this.entry.update({

@@ -185,8 +185,9 @@ export default class Enrich
    {
       const data = JSON.parse(JSON.stringify(quest.toJSON()));
       data.id = quest.id;
+      data.isActive = quest.isActive;
       data.isHidden = quest.isHidden;
-      data.isInactive = questStatus.inactive === data.status;
+      data.isInactive = quest.isInactive;
 
       const isOwner = quest.isOwner;
       const isPrimary = quest.isPrimary;
@@ -300,6 +301,7 @@ export default class Enrich
                   state,
                   statusActions: Enrich.statusActions(subquest),
                   canEdit: canEditSubquest,
+                  isActive: subquest.isActive,
                   isHidden: subquest.isHidden,
                   isInactive,
                   isPersonal: subPersonalActors.length > 0,
@@ -472,6 +474,8 @@ export default class Enrich
  *
  * @property {string|null} data_subquest.id - The parent quest ID / {@link Quest.id}
  *
+ * @property {boolean}     data_subquest.isActive - Is quest status 'active'
+ *
  * @property {boolean}     data_subquest.isHidden - Is quest hidden by permissions / {@link Quest.isHidden}
  *
  * @property {boolean}     data_subquest.isInactive - Is quest status 'inactive'
@@ -497,6 +501,8 @@ export default class Enrich
  * @property {boolean}     hasObjectives - Is there visible tasks & subjects.
  *
  * @property {string}      id - Quest ID / {@link Quest.id}
+ *
+ * @property {boolean}     isActive - Is quest status 'active'
  *
  * @property {boolean}     isHidden - Is quest hidden by permissions / {@link Quest.isHidden}
  *

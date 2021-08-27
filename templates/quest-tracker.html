@@ -13,6 +13,7 @@
         <h3 class="title" {{#if (or isHidden isInactive)}}id="hidden"{{/if}}>
         <a class="quest-tracker-header" data-quest-id="{{id}}">{{name}}</a>
         <span class="quest-tracker-span"></span>
+        {{#if (eq id ../primaryQuestId)}}<i class="is-primary fas fa-star" title="Hello"></i>{{/if}}
         {{#if isGM}}
           {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
           {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}

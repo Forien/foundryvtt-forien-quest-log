@@ -19,7 +19,7 @@
   .fql-window-content {
     padding: 0 8px 0 8px;
     color: $tracker-color-text;
-    filter: drop-shadow(2px 2px 1px #000);
+    filter: drop-shadow(1px 1px 1px #000);
     font-family: "Open Sans", Lato, Signika, sans-serif;
     overflow-y: auto;
   }
@@ -75,6 +75,14 @@
 
     h3 {
       font-family: "Open Sans", Lato, Signika, sans-serif;
+
+      i {
+          // Add additional width to last icon such that there is space between any previous icon.
+          &:last-of-type {
+          flex: 0 0 26px;
+          text-align: right;
+        }
+      }
     }
 
     i {

@@ -225,12 +225,20 @@ export default class QuestTracker extends Application
     */
    async getData(options = {})
    {
-      const quests = await this.prepareQuests();
+      const showOnlyPrimary = sessionStorage.getItem(sessionConstants.trackerShowPrimary) === 'true';
+      const primaryQuest = QuestDB.getQuestEntry(game.settings.get(constants.moduleName, settings.primaryQuest));
+
+      // Stores the primary quest ID when all in progress quests are shown so that the star icon is drawn for the
+      // primary quest.
+      const primaryQuestId = !showOnlyPrimary && primaryQuest ? primaryQuest.id : '';
+
+      const quests = await this.prepareQuests(showOnlyPrimary, primaryQuest);
 
       return foundry.utils.mergeObject(super.getData(options), {
          title: this.options.title,
          headerButtons: this._getHeaderButtons(),
          hasQuests: quests.count() > 0,
+         primaryQuestId,
          quests
       });
    }
@@ -298,27 +306,28 @@ export default class QuestTracker extends Application
    }
 
    /**
-    * Prepares the quest data from sorted active quests.
+    * Transforms the quest data from sorted active quests. In this case we need to determine which quests can be
+    * manipulated for trusted player edit.
+    *
+    * @param {boolean}           showOnlyPrimary - Shows only the primary quest.
+    *
+    * @param {QuestEntry|void}   primaryQuest - Any currently set primary quest.
     *
     * @returns {Promise<Collection<object>>} Sorted active quests.
     */
-   async prepareQuests()
+   async prepareQuests(showOnlyPrimary, primaryQuest)
    {
       /**
+       * If showOnlyPrimary and the primaryQuest exists then build a Collection with just the primary quest otherwise
+       * get all sorted in progress quests from the QuestDB.
+       *
        * @type {Collection}
        */
-      let questEntries;
+      const questEntries = showOnlyPrimary ? collect(primaryQuest ? [primaryQuest] : []) :
+       QuestDB.sortCollect({ status: questStatus.active });
 
-      const showOnlyPrimary = sessionStorage.getItem(sessionConstants.trackerShowPrimary) === 'true';
-      if (showOnlyPrimary)
-      {
-         const primaryQuest = QuestDB.getQuestEntry(game.settings.get(constants.moduleName, settings.primaryQuest));
-         questEntries = primaryQuest ? collect([primaryQuest]) : collect([]);
-      }
-      else
-      {
-         questEntries = QuestDB.sortCollect({ status: questStatus.active });
-      }
+      const isGM = game.user.isGM;
+      const isTrustedPlayerEdit = Utils.isTrustedPlayerEdit();
 
       return questEntries.transform((entry) =>
       {
@@ -330,11 +339,11 @@ export default class QuestTracker extends Application
 
          return {
             id: q.id,
-            canEdit: game.user.isGM || (entry.isOwner && Utils.isTrustedPlayerEdit()),
+            canEdit: isGM || (entry.isOwner && isTrustedPlayerEdit),
             playerEdit: entry.isOwner,
             source: q.giver,
             name: q.name,
-            isGM: game.user.isGM,
+            isGM,
             isHidden: q.isHidden,
             isInactive: q.isInactive,
             isPersonal: q.isPersonal,

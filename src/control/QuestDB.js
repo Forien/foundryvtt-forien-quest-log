@@ -827,6 +827,11 @@ export class QuestEntry
       /**
        * @type {boolean}
        */
+      this.isActive = this.quest.isActive;
+
+      /**
+       * @type {boolean}
+       */
       this.isHidden = this.quest.isHidden;
 
       /**
