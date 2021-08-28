@@ -15,6 +15,7 @@
       {{#if (eq questIconType 'splash-image')}}
         <div class="img" style="background-image: url({{splash}});background-position: {{splashPos}};" title="View Quest Image"></div>
       {{/if}}
+      {{#if isPrimary}}<i class="is-primary fas fa-star" title="{{localize 'ForienQuestLog.Tooltips.PrimaryQuest'}}"></i>{{/if}}
       {{#if canEdit}}
         {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
         {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
