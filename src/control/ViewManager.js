@@ -82,7 +82,7 @@ export default class ViewManager
 
    /**
     * @returns {QuestTracker} Returns the quest tracker overlap app. This app is accessible when module setting
-    *                         {@link FQLSettings.enableQuestTracker} is enabled.
+    *                         {@link FQLSettings.questTrackerEnable} is enabled.
     */
    static get questTracker() { return Apps.questTracker; }
 
@@ -115,7 +115,7 @@ export default class ViewManager
     */
    static isQuestTrackerVisible()
    {
-      return game.settings.get(constants.moduleName, settings.enableQuestTracker) &&
+      return game.settings.get(constants.moduleName, settings.questTrackerEnable) &&
        (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers)) &&
         QuestDB.getCount({ status: questStatus.active }) > 0;
    }
@@ -180,7 +180,7 @@ export default class ViewManager
     *
     * @param {object}   [options] - Optional parameters.
     *
-    * @param {boolean}  [options.updateSetting=true] - If closed true then {@link settings.enableQuestTracker} is set
+    * @param {boolean}  [options.updateSetting=true] - If closed true then {@link settings.questTrackerEnable} is set
     *                                                  to false.
     */
    static renderOrCloseQuestTracker(options = {})

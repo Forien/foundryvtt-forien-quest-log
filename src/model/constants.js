@@ -47,7 +47,7 @@ const noteControls = [
       title: 'ForienQuestLog.QuestTracker.Title',
       icon: 'fas fa-tasks',
       visible: true,
-      onClick: async () => { await game.settings.set(constants.moduleName, settings.enableQuestTracker, true); },
+      onClick: async () => { await game.settings.set(constants.moduleName, settings.questTrackerEnable, true); },
       button: true
    }
 ];
@@ -114,17 +114,16 @@ const settings = {
    defaultAbstractRewardImage: 'defaultAbstractRewardImage',
    defaultPermission: 'defaultPermission',
    dynamicBookmarkBackground: 'dynamicBookmarkBackground',
-   enableQuestTracker: 'enableQuestTracker',
    hideFQLFromPlayers: 'hideFQLFromPlayers',
    navStyle: 'navStyle',
    notifyRewardDrop: 'notifyRewardDrop',
    primaryQuest: 'primaryQuest',
+   questTrackerEnable: 'questTrackerEnable',
    questTrackerPosition: 'questTrackerPosition',
-   resetQuestTracker: 'resetQuestTracker',
+   questTrackerResizable: 'questTrackerResizable',
    showFolder: 'showFolder',
    showTasks: 'showTasks',
-   trustedPlayerEdit: 'trustedPlayerEdit',
-   windowModeQuestTracker: 'windowModeQuestTracker'
+   trustedPlayerEdit: 'trustedPlayerEdit'
 };
 
 export { constants, jquery, noteControls, questStatus, questStatusI18n, questTabIndex, sessionConstants, settings };
@@ -146,8 +145,6 @@ export { constants, jquery, noteControls, questStatus, questStatusI18n, questTab
  *
  * @property {string}   dynamicBookmarkBackground - Uses jQuery to dynamically set the tab background image.
  *
- * @property {string}   enableQuestTracker - Enables the quest tracker.
- *
  * @property {string}   hideFQLFromPlayers - Completely hides FQL from players.
  *
  * @property {string}   navStyle - Navigation style / classic / or bookmark tabs.
@@ -156,13 +153,15 @@ export { constants, jquery, noteControls, questStatus, questStatusI18n, questTab
  *
  * @property {string}   primaryQuest - Stores the quest ID of a quest that is the current primary quest.
  *
+ * @property {string}   questTrackerEnable - Enables the quest tracker.
+ *
  * @property {string}   questTrackerPosition - Hidden setting to store current quest tracker position.
+ *
+ * @property {string}   questTrackerResizable - Stores the current window handling mode ('auto' or 'resize').
  *
  * @property {string}   showFolder - Shows the `_fql_quests` directory in the journal entries sidebar.
  *
  * @property {string}   showTasks - Determines if objective counts are rendered.
  *
  * @property {string}   trustedPlayerEdit - Allows trusted players to have full quest editing capabilities.
- *
- * @property {string}   windowModeQuestTracker - Stores the current window handling mode ('auto' or 'resize').
  */

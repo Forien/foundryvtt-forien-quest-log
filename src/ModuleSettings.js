@@ -285,7 +285,7 @@ export default class ModuleSettings
          type: String
       });
 
-      game.settings.register(constants.moduleName, settings.enableQuestTracker, {
+      game.settings.register(constants.moduleName, settings.questTrackerEnable, {
          scope: scope.client,
          config: false,
          default: false,
@@ -293,7 +293,7 @@ export default class ModuleSettings
          onChange: (value) =>
          {
             // Swap macro image based on current state. No need to await.
-            Utils.setMacroImage(settings.enableQuestTracker, value);
+            Utils.setMacroImage(settings.questTrackerEnable, value);
 
             ViewManager.renderOrCloseQuestTracker();
          }
@@ -354,20 +354,19 @@ export default class ModuleSettings
          default: s_QUEST_TRACKER_DEFAULT,
       });
 
-      game.settings.register(constants.moduleName, settings.windowModeQuestTracker, {
-         name: 'ForienQuestLog.Settings.windowModeQuestTracker.Enable',
-         hint: 'ForienQuestLog.Settings.windowModeQuestTracker.EnableHint',
+      game.settings.register(constants.moduleName, settings.questTrackerResizable, {
+         name: 'ForienQuestLog.Settings.questTrackerResizable.Enable',
+         hint: 'ForienQuestLog.Settings.questTrackerResizable.EnableHint',
          scope: scope.client,
          config: true,
-         default: 'Automatic',
-         type: String,
-         choices: {
-            auto: 'ForienQuestLog.Settings.windowModeQuestTracker.automatic',
-            resize: 'ForienQuestLog.Settings.windowModeQuestTracker.resizable'
-         },
-         onChange: () =>
+         default: false,
+         type: Boolean,
+         onChange: (value) =>
          {
             ViewManager.renderOrCloseQuestTracker();
+
+            // Swap macro image based on current state. No need to await.
+            Utils.setMacroImage(settings.questTrackerResizable, value);
          }
       });
    }

@@ -363,7 +363,7 @@ export default class FQLHooks
     */
    static async openQuestTracker()
    {
-      await game.settings.set(constants.moduleName, settings.enableQuestTracker, true);
+      await game.settings.set(constants.moduleName, settings.questTrackerEnable, true);
    }
 
    /**

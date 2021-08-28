@@ -151,28 +151,25 @@ export default class QuestTracker extends Application
          maxHeight: parseInt(this._elemQuestTracker.css('max-height'))
       };
 
-      this._windowMode = game.settings.get(constants.moduleName, settings.windowModeQuestTracker);
-      if (this._windowMode !== 'auto' && this._windowMode !== 'resize') { this._windowMode = 'auto'; }
+      this._windowResizable = game.settings.get(constants.moduleName, settings.questTrackerResizable);
 
-      switch (this._windowMode)
+      if (this._windowResizable)
       {
-         case 'auto':
-            this._elemResizeHandle.hide();
-            this._elemQuestTracker.css('min-height', this._elemWindowHeader[0].scrollHeight);
+         this._elemResizeHandle.show();
+         this._elemQuestTracker.css('min-height', this._appExtents.minHeight);
+      }
+      else
+      {
+         this._elemResizeHandle.hide();
+         this._elemQuestTracker.css('min-height', this._elemWindowHeader[0].scrollHeight);
 
-            // A bit of a hack. We need to call the Application setPosition now to make sure the element parameters
-            // are correctly set as the exact height for the element is calculated in this.setPosition which is called
-            // by Application right after this method completes.
-            // Must set popOut temporarily to true as there is a gate in `Application.setPosition`.
-            this.options.popOut = true;
-            super.setPosition(this.position);
-            this.options.popOut = false;
-            break;
-
-         case 'resize':
-            this._elemResizeHandle.show();
-            this._elemQuestTracker.css('min-height', this._appExtents.minHeight);
-            break;
+         // A bit of a hack. We need to call the Application setPosition now to make sure the element parameters
+         // are correctly set as the exact height for the element is calculated in this.setPosition which is called
+         // by Application right after this method completes.
+         // Must set popOut temporarily to true as there is a gate in `Application.setPosition`.
+         this.options.popOut = true;
+         super.setPosition(this.position);
+         this.options.popOut = false;
       }
 
       /**
@@ -198,11 +195,11 @@ export default class QuestTracker extends Application
    bringToTop() {}
 
    /**
-    * Sets `enableQuestTracker` to false.
+    * Sets `questTrackerEnable` to false.
     *
     * @param {object}   [options] - Optional parameters.
     *
-    * @param {boolean}  [options.updateSetting=true] - If true then {@link settings.enableQuestTracker} is set to false.
+    * @param {boolean}  [options.updateSetting=true] - If true then {@link settings.questTrackerEnable} is set to false.
     *
     * @returns {Promise<void>}
     */
@@ -212,7 +209,7 @@ export default class QuestTracker extends Application
 
       if (updateSetting)
       {
-         await game.settings.set(constants.moduleName, settings.enableQuestTracker, false);
+         await game.settings.set(constants.moduleName, settings.questTrackerEnable, false);
       }
    }
 
@@ -385,7 +382,7 @@ export default class QuestTracker extends Application
          if (opts.height < this._appExtents.minHeight) { opts.height = this._appExtents.minHeight; }
          if (opts.height > this._appExtents.maxHeight) { opts.height = this._appExtents.maxHeight; }
 
-         if (this._windowMode === 'auto')
+         if (!this._windowResizable)
          {
             // Add the extra `1` for small format (1080P and below screen size).
             opts.height = this._elemWindowHeader[0].scrollHeight + this._elemWindowContent[0].scrollHeight + 1;

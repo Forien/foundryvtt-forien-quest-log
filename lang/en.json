@@ -45,6 +45,11 @@
         "Completed": "Completed",
         "Failed": "Failed",
         "InActive": "Inactive"
+      },
+      "ContextMenu": {
+        "CopyEntityLink": "Copy entity content link.",
+        "PrimaryQuestSet": "Set as primary quest.",
+        "PrimaryQuestUnset": "Unset as primary quest."
       }
     },
 
@@ -88,11 +93,21 @@
         "BadUUID": "Could not retrieve the document for UUID: {uuid}",
         "WrongItemType": "Forien's Quest Log only accepts world and compendium items as rewards.",
         "WrongDocType": "Forien's Quest Log only accepts world / compendium actors, items, and journal entries as quest givers."
+      },
+
+      "Tooltips": {
+        "PrimaryQuestSet": "Click to make primary quest.",
+        "PrimaryQuestUnset": "Click to unset primary quest."
       }
     },
 
     "QuestTracker": {
-      "Title": "Quest Tracker"
+      "Title": "Quest Tracker",
+
+      "Tooltips": {
+        "PrimaryQuestShow": "Click to show primary quest.",
+        "PrimaryQuestUnshow": "Click to show all quests."
+      }
     },
 
     "DeleteDialog": {
@@ -180,11 +195,9 @@
         "Enable": "Allow Trusted Player Quest Editing",
         "EnableHint": "Check to allow trusted players to have expanded quest editing and status control capabilities over quests they have ownership."
       },
-      "windowModeQuestTracker": {
-        "Enable": "Quest Tracker Window Mode",
-        "EnableHint": "Controls vertical resizing of the Quest Tracker automatically or allows manual adjustment.",
-        "automatic": "Automatic",
-        "resizable": "Resizable"
+      "questTrackerResizable": {
+        "Enable": "Quest Tracker Resizable",
+        "EnableHint": "Check to allow manual resizing control of the Quest Tracker."
       }
     },
 
