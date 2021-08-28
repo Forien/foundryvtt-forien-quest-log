@@ -19,11 +19,23 @@
     padding: 0;
   }
 
+  .quest-tabs {
+    i {
+        padding-left: 8px;
+    }
+  }
+
   .quest-body {
     height: 100%;
     flex: 1;
     overflow-y: auto;
     padding: 16px;
+
+    i {
+      &.fa-star {
+        padding-left: unset;
+      }
+    }
 
     .details-header {
       display: flex;

@@ -64,9 +64,11 @@ export default class QuestTracker extends Application
 
       const primaryState = sessionStorage.getItem(sessionConstants.trackerShowPrimary) === 'true';
       const primaryIcon = primaryState ? 'fas fa-star' : 'far fa-star';
+      const primaryTitle = primaryState ? 'ForienQuestLog.QuestTracker.Tooltips.PrimaryQuestUnshow' :
+       'ForienQuestLog.QuestTracker.Tooltips.PrimaryQuestShow';
 
       buttons.unshift({
-         // label: '',
+         title: primaryTitle,
          class: 'show-primary',
          icon: primaryIcon
       });
@@ -95,7 +97,13 @@ export default class QuestTracker extends Application
       {
          const newPrimary = !(sessionStorage.getItem(sessionConstants.trackerShowPrimary) === 'true');
          sessionStorage.setItem(sessionConstants.trackerShowPrimary, (newPrimary).toString());
-         $('#quest-tracker .header-button.show-primary i').attr('class', newPrimary ? 'fas fa-star' : 'far fa-star');
+
+         const showPrimaryIcon = $('#quest-tracker .header-button.show-primary i');
+         showPrimaryIcon.attr('class', newPrimary ? 'fas fa-star' : 'far fa-star');
+         showPrimaryIcon.attr('title', game.i18n.localize(newPrimary ?
+          'ForienQuestLog.QuestTracker.Tooltips.PrimaryQuestShow' :
+           'ForienQuestLog.QuestTracker.Tooltips.PrimaryQuestUnshow'));
+
          this.render();
       });
 

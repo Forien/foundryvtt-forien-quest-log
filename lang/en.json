@@ -215,6 +215,7 @@
       "LockAll": "Lock All",
       "UnlockAll": "Unlock All",
       "HiddenQuestNoPlayers": "This Quest is hidden from all players.",
+      "PrimaryQuest": "Primary Quest",
       "RewardHidden": "Reward is hidden. Click to show.",
       "RewardVisible": "Reward is visible. Click to hide.",
       "RewardLocked": "Reward is locked. Click to unlock.",

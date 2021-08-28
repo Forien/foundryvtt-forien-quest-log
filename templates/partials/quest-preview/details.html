@@ -56,7 +56,11 @@
             {{statusLabel}}
           </p>
           {{#if isSubquest}}
-            <p class="quest-name-link" data-quest-id="{{data_parent.id}}">{{format 'ForienQuestLog.QuestPreview.SubTitle' data_parent.name}} <i class="fas fa-link"></i></p>
+            <p class="quest-name-link" data-quest-id="{{data_parent.id}}">
+              {{format 'ForienQuestLog.QuestPreview.SubTitle' data_parent.name}}
+              <i class="fas fa-link"></i>
+              {{#if data_parent.isPrimary}}<i class="is-primary fas fa-star" title="{{localize 'ForienQuestLog.Tooltips.PrimaryQuest'}}"></i>{{/if}}
+            </p>
           {{/if}}
         </div>
       </div>
@@ -111,7 +115,11 @@
                  {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
               {{/if}}
               <div class="quest-name-link" title="{{statusTooltip}}" data-quest-id="{{id}}">
-                <div class="{{../wrapNameLengthCSS}}">{{name}} <i class="fas fa-link"></i></div>
+                <div class="{{../wrapNameLengthCSS}}">
+                  {{name}}
+                  <i class="fas fa-link"></i>
+                  {{#if isPrimary}}<i class="is-primary fas fa-star" title="{{localize 'ForienQuestLog.Tooltips.PrimaryQuest'}}"></i>{{/if}}
+                </div>
               </div>
               {{#if (or ../canEdit statusActions.length)}}
                 {{{statusActions}}}

@@ -211,7 +211,6 @@ export default class Enrich
       data.personalActors = personalActors.map((a) => a.name).sort((a, b) => a.localeCompare(b)).join('&#013;');
 
       data.isPrimary = isPrimary;
-      data.primaryIcon = isPrimary ? 'fas fa-star' : 'far fa-star';
 
       // Enrich w/ TextEditor, but first sanitize w/ DOMPurify, allowing only iframes with YouTube embed.
       data.description = TextEditor.enrichHTML(DOMPurify.sanitizeWithVideo(data.description), {
@@ -251,7 +250,8 @@ export default class Enrich
                id: data.parent,
                giver: parentQuest.giver,
                name: parentQuest.name,
-               status: parentQuest.status
+               status: parentQuest.status,
+               isPrimary: parentQuest.isPrimary
             };
          }
       }
@@ -306,8 +306,7 @@ export default class Enrich
                   isInactive,
                   isPersonal: subPersonalActors.length > 0,
                   personalActors: subPersonalActors.map((a) => a.name).sort((a, b) => a.localeCompare(b)).join('&#013;'),
-                  isPrimary: subIsPrimary,
-                  primaryIcon: subIsPrimary ? 'fas fa-star' : ''
+                  isPrimary: subIsPrimary
                });
             }
          }
@@ -433,6 +432,8 @@ export default class Enrich
  * @property {string|null} data_parent.giver - The parent quest giver / {@link Quest.giver}
  *
  * @property {string}      data_parent.name - The parent quest name / {@link Quest.name}
+ *
+ * @property {boolean}     data_parent.isPrimary - The parent quest is the primary quest / {@link Quest.isPrimary}
  *
  * @property {string}      data_parent.status - The parent quest status / {@link Quest.status}
  *

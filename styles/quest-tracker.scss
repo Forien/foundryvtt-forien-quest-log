@@ -99,11 +99,9 @@
     }
 
     .quest-tracker-header {
-      flex: 0 0 auto;
       cursor: pointer;
       pointer-events: auto;
       width: fit-content;
-      max-width: 92%;
       height:auto;
     }
 
@@ -119,6 +117,14 @@
       margin: 3px 0 0 0;
       list-style: none;
       padding-left: 4px;
+
+      i {
+        // Add additional width to last icon such that there is space between any previous icon.
+        &:last-of-type {
+          flex: 0 0 21px;
+          text-align: right;
+        }
+      }
 
       .quest-tracker-task {
         cursor: pointer;
@@ -138,7 +144,7 @@
         margin-bottom: 4px;
         width: 50px;
         height: 1px;
-        background-color: rgba(255, 255, 255, .3);
+        background-color: rgba(255, 255, 255, .5);
       }
 
       .task {
