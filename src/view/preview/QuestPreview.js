@@ -298,13 +298,10 @@ export default class QuestPreview extends FormApplication
          icon: 'fas fa-link',
          onclick: () =>
          {
-            const el = document.createElement('textarea');
-            el.value = `@Quest[${this._quest.id}]{${this._quest.name}}`;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-            ui.notifications.info(game.i18n.localize('ForienQuestLog.Notifications.LinkCopied'), {});
+            if (Utils.copyTextToClipboard(`@Quest[${this._quest.id}]{${this._quest.name}}`))
+            {
+               ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.LinkCopied'));
+            }
          }
       });
 
