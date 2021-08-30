@@ -1,4 +1,5 @@
 import QuestDB       from '../../control/QuestDB.js';
+import Socket        from '../../control/Socket.js';
 import Utils         from '../../control/Utils.js';
 import FQLDialog     from '../FQLDialog.js';
 
@@ -51,49 +52,6 @@ export default class QuestLog extends Application
    }
 
    /**
-    * Some game systems and custom UI theming modules provide hard overrides on overflow-x / overflow-y styles. Alas we
-    * need to set these for '.window-content' to 'visible' which will cause an issue for very long tables. Thus we must
-    * manually set the table max-heights based on the position / height of the {@link Application}.
-    *
-    * @param {object}               opts - Optional parameters.
-    *
-    * @param {number|null}          opts.left - The left offset position in pixels.
-    *
-    * @param {number|null}          opts.top - The top offset position in pixels.
-    *
-    * @param {number|null}          opts.width - The application width in pixels.
-    *
-    * @param {number|string|null}   opts.height - The application height in pixels.
-    *
-    * @param {number|null}          opts.scale - The application scale as a numeric factor where 1.0 is default.
-    *
-    * @returns {{left: number, top: number, width: number, height: number, scale:number}}
-    * The updated position object for the application containing the new values.
-    */
-   setPosition(opts)
-   {
-      const currentPosition = super.setPosition(opts);
-
-      // Retrieve all the table elements.
-      const tableElements = $('#forien-quest-log .table');
-
-      // Retrieve the active table.
-      const tabIndex = questTabIndex[this?._tabs[0]?.active];
-      const table = tableElements[tabIndex];
-
-      if (table)
-      {
-         const fqlPosition = $('#forien-quest-log')[0].getBoundingClientRect();
-         const tablePosition = table.getBoundingClientRect();
-
-         // Manually calculate the max height for the table based on the position of the main window div and table.
-         tableElements.css('max-height', `${currentPosition.height - (tablePosition.top - fqlPosition.top + 16)}px`);
-      }
-
-      return currentPosition;
-   }
-
-   /**
     * Defines all jQuery control callbacks with event listeners for click, drag, drop via various CSS selectors.
     *
     * @param {JQuery}  html - The jQuery instance for the window content of this Application.
@@ -136,6 +94,8 @@ export default class QuestLog extends Application
       html.on(jquery.click, '.title', void 0, HandlerLog.questOpen);
 
       html.on(jquery.click, '.actions.quest-status i.move', HandlerLog.questStatusSet);
+
+      this._contextMenu(html);
    }
 
    /**
@@ -148,6 +108,42 @@ export default class QuestLog extends Application
    {
       FQLDialog.closeDialogs({ isQuestLog: true });
       return super.close(options);
+   }
+
+   _contextMenu(html)
+   {
+      const menuItems = [
+         {
+            name: 'ForienQuestLog.QuestLog.ContextMenu.CopyEntityLink',
+            icon: '<i class="fas fa-link"></i>',
+            callback: (menu) =>
+            {
+               const questId = $(menu)?.closest('.drag-quest')?.data('quest-id');
+               const quest = QuestDB.getQuest(questId);
+
+               if (quest && Utils.copyTextToClipboard(`@Quest[${quest.id}]{${quest.name}}`))
+               {
+                  ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.LinkCopied'));
+               }
+            }
+         }
+      ];
+
+      if (game.user.isGM)
+      {
+         menuItems.push({
+            name: 'ForienQuestLog.QuestLog.ContextMenu.PrimaryQuest',
+            icon: '<i class="fas fa-star"></i>',
+            callback: (menu) =>
+            {
+               const questId = $(menu)?.closest('.drag-quest')?.data('quest-id');
+               const quest = QuestDB.getQuest(questId);
+               if (quest) { Socket.setQuestPrimary({ quest }); }
+            }
+         });
+      }
+
+      new ContextMenu(html, ".drag-quest", menuItems);
    }
 
    /**
@@ -173,5 +169,48 @@ export default class QuestLog extends Application
          questStatusI18n,
          quests: QuestDB.sortCollect()
       });
+   }
+
+   /**
+    * Some game systems and custom UI theming modules provide hard overrides on overflow-x / overflow-y styles. Alas we
+    * need to set these for '.window-content' to 'visible' which will cause an issue for very long tables. Thus we must
+    * manually set the table max-heights based on the position / height of the {@link Application}.
+    *
+    * @param {object}               opts - Optional parameters.
+    *
+    * @param {number|null}          opts.left - The left offset position in pixels.
+    *
+    * @param {number|null}          opts.top - The top offset position in pixels.
+    *
+    * @param {number|null}          opts.width - The application width in pixels.
+    *
+    * @param {number|string|null}   opts.height - The application height in pixels.
+    *
+    * @param {number|null}          opts.scale - The application scale as a numeric factor where 1.0 is default.
+    *
+    * @returns {{left: number, top: number, width: number, height: number, scale:number}}
+    * The updated position object for the application containing the new values.
+    */
+   setPosition(opts)
+   {
+      const currentPosition = super.setPosition(opts);
+
+      // Retrieve all the table elements.
+      const tableElements = $('#forien-quest-log .table');
+
+      // Retrieve the active table.
+      const tabIndex = questTabIndex[this?._tabs[0]?.active];
+      const table = tableElements[tabIndex];
+
+      if (table)
+      {
+         const fqlPosition = $('#forien-quest-log')[0].getBoundingClientRect();
+         const tablePosition = table.getBoundingClientRect();
+
+         // Manually calculate the max height for the table based on the position of the main window div and table.
+         tableElements.css('max-height', `${currentPosition.height - (tablePosition.top - fqlPosition.top + 16)}px`);
+      }
+
+      return currentPosition;
    }
 }

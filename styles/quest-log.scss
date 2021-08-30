@@ -17,7 +17,7 @@
     padding: 0 0 16px 0;
   }
 
-  .quest-log.bookmarks nav {
+  .quest-log.bookmarks nav.log-tabs {
     position: absolute;
     left: 0;
     transform: translateX(-97%);
@@ -104,6 +104,15 @@
       flex: 1;
       overflow-y: auto;
     }
+
+    // Override for Foundry context menu to fit context menu content.
+    #context-menu {
+      width: fit-content;
+
+      i.fa-star {
+        padding-left: 0;
+      }
+    }
   }
 
   .quest-log .table ul {
@@ -111,7 +120,7 @@
     margin: 0;
     padding: 0;
 
-    li {
+    li.drag-quest {
       display: flex;
       justify-content: flex-start;
       align-items: center;

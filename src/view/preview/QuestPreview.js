@@ -469,7 +469,6 @@ export default class QuestPreview extends FormApplication
          html.on(jquery.click, '.quest-giver-gc .drop-info', () =>
           HandlerDetails.questGiverCustomSelectImage(this._quest, this));
 
-         // html.on(jquery.click, '.quest-tabs .is-primary', () => HandlerAny.questPrimarySet(this._quest.id));
          html.on(jquery.click, '.quest-tabs .is-primary', () => Socket.setQuestPrimary({ quest: this._quest }));
 
          html.on(jquery.click, '.quest-rewards .add-abstract', (event) =>

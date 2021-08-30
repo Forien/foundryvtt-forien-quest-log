@@ -48,8 +48,7 @@
       },
       "ContextMenu": {
         "CopyEntityLink": "Copy entity content link.",
-        "PrimaryQuestSet": "Set as primary quest.",
-        "PrimaryQuestUnset": "Unset as primary quest."
+        "PrimaryQuest": "Set / Unset as primary quest."
       }
     },
 
