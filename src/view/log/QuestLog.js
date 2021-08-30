@@ -1,7 +1,8 @@
-import QuestDB       from '../../control/QuestDB.js';
-import Socket        from '../../control/Socket.js';
-import Utils         from '../../control/Utils.js';
-import FQLDialog     from '../FQLDialog.js';
+import QuestDB          from '../../control/QuestDB.js';
+import Socket           from '../../control/Socket.js';
+import Utils            from '../../control/Utils.js';
+import FQLContextMenu   from '../FQLContextMenu.js';
+import FQLDialog        from '../FQLDialog.js';
 
 import HandlerLog    from './HandlerLog.js';
 
@@ -112,26 +113,34 @@ export default class QuestLog extends Application
 
    _contextMenu(html)
    {
-      const menuItems = [
+      const menuItemCopyLink = {
+         name: 'ForienQuestLog.QuestLog.ContextMenu.CopyEntityLink',
+         icon: '<i class="fas fa-link"></i>',
+         callback: (menu) =>
          {
-            name: 'ForienQuestLog.QuestLog.ContextMenu.CopyEntityLink',
-            icon: '<i class="fas fa-link"></i>',
-            callback: (menu) =>
-            {
-               const questId = $(menu)?.closest('.drag-quest')?.data('quest-id');
-               const quest = QuestDB.getQuest(questId);
+            const questId = $(menu)?.closest('.drag-quest')?.data('quest-id');
+            const quest = QuestDB.getQuest(questId);
 
-               if (quest && Utils.copyTextToClipboard(`@Quest[${quest.id}]{${quest.name}}`))
-               {
-                  ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.LinkCopied'));
-               }
+            if (quest && Utils.copyTextToClipboard(`@Quest[${quest.id}]{${quest.name}}`))
+            {
+               ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.LinkCopied'));
             }
          }
-      ];
+      };
+
+      /**
+       * @type {object[]}
+       */
+      const menuItemsOther = [menuItemCopyLink];
+
+      /**
+       * @type {object[]}
+       */
+      const menuItemsActive = [menuItemCopyLink];
 
       if (game.user.isGM)
       {
-         menuItems.push({
+         menuItemsActive.push({
             name: 'ForienQuestLog.QuestLog.ContextMenu.PrimaryQuest',
             icon: '<i class="fas fa-star"></i>',
             callback: (menu) =>
@@ -143,7 +152,10 @@ export default class QuestLog extends Application
          });
       }
 
-      new ContextMenu(html, ".drag-quest", menuItems);
+      // Must show two different context menus as only the active / in progress tab potentially has the menu option to
+      // allow the GM to set the primary quest.
+      new FQLContextMenu(html, '.tab:not([data-tab="active"]) .drag-quest', menuItemsOther);
+      new FQLContextMenu(html, '.tab[data-tab="active"] .drag-quest', menuItemsActive);
    }
 
    /**

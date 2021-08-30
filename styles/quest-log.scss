@@ -107,6 +107,7 @@
 
     // Override for Foundry context menu to fit context menu content.
     #context-menu {
+      position: fixed;
       width: fit-content;
 
       i.fa-star {
