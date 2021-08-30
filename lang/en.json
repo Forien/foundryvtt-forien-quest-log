@@ -263,22 +263,6 @@
           "name": "API Error: Name property is required to create new Objective."
         }
       }
-    },
-    "WorkshopPUF": {
-      "Settings": {
-        "enableQuestTracker": {
-          "name": "Enable Quest Tracker",
-          "hint": "Check this to enable Quest Tracker HUD window."
-        },
-        "questTrackerBackground": {
-          "name": "Quest Tracker Background",
-          "hint": "Check this to enable background for Quest Tracker, which might help with visibility on certain maps."
-        },
-        "resetQuestTracker": {
-          "name": "Reset Quest Tracker Position",
-          "hint": "Check this to reset position of Quest Tracker to default. Use this if you moved Quest Tracker into position where you cannot move it anymore."
-        }
-      }
     }
   }
 }
