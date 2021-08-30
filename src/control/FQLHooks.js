@@ -163,7 +163,7 @@ export default class FQLHooks
 
       // Support for LibThemer
       const libThemer = game.modules.get('lib-themer');
-      if (libThemer.active)
+      if (libThemer?.active)
       {
          await libThemer?.api?.registerTheme('/modules/forien-quest-log/assets/themes/lib-themer/fql.json');
       }
