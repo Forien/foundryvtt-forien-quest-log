@@ -2,7 +2,7 @@ import QuestDB       from './control/QuestDB.js';
 import Utils         from './control/Utils.js';
 import ViewManager   from './control/ViewManager.js';
 
-import { constants, noteControls, sessionConstants, settings } from './model/constants.js';
+import { constants, noteControls, questStatus, sessionConstants, settings } from './model/constants.js';
 
 /**
  * The default location for the QuestTracker
@@ -292,6 +292,13 @@ export default class ModuleSettings
          type: Boolean,
          onChange: (value) =>
          {
+            // Potentially Post notification that the quest tracker is enabled, but not visible as there are no active
+            // quests.
+            if (value && QuestDB.getCount({ status: questStatus.active }) === 0)
+            {
+               ViewManager.notifications.info(game.i18n.localize('ForienQuestLog.Notifications.QuestTrackerNoActive'));
+            }
+
             // Swap macro image based on current state. No need to await.
             Utils.setMacroImage(settings.questTrackerEnable, value);
 

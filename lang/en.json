@@ -134,7 +134,8 @@
       "FinishQuestAdded": "Please finish editing and close current new quest before adding another.",
       "QuestMoved": "Moved '{name}' and set new status to: {target}.",
       "QuestAdded": "Added '{name}' as a new quest with status: {status}.",
-      "QuestPrimary": "'{name}' is the new primary quest."
+      "QuestPrimary": "'{name}' is the new primary quest.",
+      "QuestTrackerNoActive": "Quest Tracker is enabled, but there are no in progress quests currently."
     },
 
     "Settings": {
