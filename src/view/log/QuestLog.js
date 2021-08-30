@@ -111,6 +111,13 @@ export default class QuestLog extends Application
       return super.close(options);
    }
 
+   /**
+    * Create the context menu. There are two separate context menus for the active / in progress tab and all other tabs.
+    *
+    * @param {JQuery}   html - JQuery element for this application.
+    *
+    * @private
+    */
    _contextMenu(html)
    {
       const menuItemCopyLink = {

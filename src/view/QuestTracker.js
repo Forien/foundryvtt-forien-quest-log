@@ -1,8 +1,8 @@
-import QuestAPI      from '../control/public/QuestAPI.js';
-import QuestDB       from '../control/QuestDB.js';
-import Socket        from '../control/Socket.js';
-import Utils         from '../control/Utils.js';
-import collect       from '../../external/collect.js';
+import QuestAPI   from '../control/public/QuestAPI.js';
+import QuestDB    from '../control/QuestDB.js';
+import Socket     from '../control/Socket.js';
+import Utils      from '../control/Utils.js';
+import collect    from '../../external/collect.js';
 
 import { constants, jquery, questStatus, sessionConstants, settings } from '../model/constants.js';
 
@@ -25,7 +25,11 @@ export default class QuestTracker extends Application
    {
       super(options);
 
-      // TODO: This needs to be tested for proper defaults.
+      /**
+       * TODO: This needs to be tested for proper defaults.
+       *
+       * @type {object}
+       */
       this.position = game.settings.get(constants.moduleName, settings.questTrackerPosition);
    }
 
@@ -159,6 +163,12 @@ export default class QuestTracker extends Application
          maxHeight: parseInt(this._elemQuestTracker.css('max-height'))
       };
 
+      /**
+       * Stores the state of {@link FQLSettings.questTrackerResizable}.
+       *
+       * @type {boolean}
+       * @private
+       */
       this._windowResizable = game.settings.get(constants.moduleName, settings.questTrackerResizable);
 
       if (this._windowResizable)
