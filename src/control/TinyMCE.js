@@ -63,6 +63,7 @@ export default class TinyMCE
             }
          },
          content_css: CONFIG.TinyMCE.content_css.concat(s_CSS_URL),
+         contextmenu: false,  // Prefer default browser context menu
          font_formats: s_DEFAULT_FONTS,
          fontsize_formats: s_DEFAULT_FONT_SIZE,
          file_picker_types: 'image media',
