@@ -45,6 +45,10 @@
         "Completed": "Abgeschlossen",
         "Failed": "Fehlgeschlagen",
         "InActive": "Inaktiv"
+      },
+      "ContextMenu": {
+        "CopyEntityLink": "Entität-Link kopieren.",
+        "PrimaryQuest": "Als primäre Quest (de)aktivieren."
       }
     },
 
@@ -88,6 +92,20 @@
         "BadUUID": "Konnte Dokument mit UUID {uuid} nicht abrufen",
         "WrongItemType": "Foriens Questlog akzeptiert nur Welt- und Kompendium-Items als Belohnungen.",
         "WrongDocType": "Foriens Questlog akzeptnur Welt-/Kompendium-Akteure, -Items und -Notizbucheinträge als Questgeber."
+      },
+
+      "Tooltips": {
+        "PrimaryQuestSet": "Anklicken, um als primäre Quest zu setzen.",
+        "PrimaryQuestUnset": "Anklicken, um primäre Quest aufzuheben."
+      }
+    },
+
+    "QuestTracker": {
+      "Title": "Questtracker",
+
+      "Tooltips": {
+        "PrimaryQuestShow": "Anklicken, um primäre Quest anzuzeigen.",
+        "PrimaryQuestUnshow": "Anklicken, um alle Quests anzuzeigen."
       }
     },
 
@@ -115,7 +133,9 @@
       "LinkCopied": "Entitätslink für diese Quest wurde in die Zwischenablage kopiert.",
       "FinishQuestAdded": "Bitte schließe das Bearbeiten der Quest ab und schließe sie, bevor du eine neue hinzufügst.",
       "QuestMoved": "'{name}' verschoben und Ziel gesetzt auf: {target}.",
-      "QuestAdded": "'{name}' als neue Quest mit Status {status} hinzugefügt."
+      "QuestAdded": "'{name}' als neue Quest mit Status {status} hinzugefügt.",
+      "QuestPrimary": "'{name}' ist die neue primäre Quest.",
+      "QuestTrackerNoActive": "Questtracker ist aktiviert, aber aktuell gibt es keine aktiven Quests."
     },
 
     "Settings": {
@@ -174,6 +194,10 @@
       "trustedPlayerEdit": {
         "Enable": "Erlaube Seriösen Spielern das Bearbeiten von Quests",
         "EnableHint": "Aktivieren, um Seriösen Spielern (Trusted Players) erweiterte Bearbeitungsmöglichkeiten und Statusänderungen für Quests, die sie kontrollieren einzuräumen."
+      },
+      "questTrackerResizable": {
+        "Enable": "Questtracker skalierbar",
+        "EnableHint": "Aktivieren, um zu erlauben, dass manuell die Größe des Questtrackers verändert werden kann."
       }
     },
 
@@ -191,6 +215,7 @@
       "LockAll": "Alle sperren",
       "UnlockAll": "Alle entsperren",
       "HiddenQuestNoPlayers": "Diese Quest ist vor allen Spielern verborgen.",
+      "PrimaryQuest": "Primäre Quest",
       "RewardHidden": "Belohnung verborgen. Anklicken zum Anzeigen.",
       "RewardVisible": "Belohnung ist sichtbar. Anklicken zum Verbergen.",
       "RewardLocked": "Belohnung ist gesperrt. Klicken zum Entsperren.",
@@ -236,22 +261,6 @@
       "task": {
         "create": {
           "name": "API Error: Name property is required to create new Objective."
-        }
-      }
-    },
-    "WorkshopPUF": {
-      "Settings": {
-        "enableQuestTracker": {
-          "name": "Questtracker aktivieren",
-          "hint": "Aktivieren, um das Questtracker-HUD-Fenster einzuschalten."
-        },
-        "questTrackerBackground": {
-          "name": "Questtracker-Hintergrund",
-          "hint": "Aktivieren, um den Hintergrund für den Questtracker einzuschalten, was auf manchen Karten die Sichtbarkeit verbessert."
-        },
-        "resetQuestTracker": {
-          "name": "Questtracker-Position zurücksetzen",
-          "hint": "Aktivieren, um die Questtracker-Position zurückzusetzen. Nützlich, falls du den Questtracker an eine Position geschoben hast, wo du ihn nicht mehr bewegen kannst."
         }
       }
     }
