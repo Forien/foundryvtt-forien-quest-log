@@ -5,6 +5,10 @@ body {
   font-size: 14pt;
   line-height: 1.2;
   color: #000;
+
+  p {
+    margin: 0;
+  }
 }
 
 @include fonts;
