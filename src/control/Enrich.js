@@ -134,6 +134,24 @@ export default class Enrich
             addedAction = true;
          }
 
+         // If the quest status is completed add a failed button to be able to move it directly to failed.
+         if (canEdit && questStatus.completed === quest.status)
+         {
+            result += `<i class="move fas fa-times-circle" title="${game.i18n.localize(
+             'ForienQuestLog.Tooltips.SetFailed')}" data-target="failed" data-quest-id="${quest.id}"></i>\n`;
+
+            addedAction = true;
+         }
+
+         // If the quest status is failed add a completed button to be able to move it directly to completed.
+         if (canEdit && questStatus.failed === quest.status)
+         {
+            result += `<i class="move fas fa-check-circle" title="${game.i18n.localize(
+             'ForienQuestLog.Tooltips.SetCompleted')}" data-target="completed" data-quest-id="${quest.id}"></i>\n`;
+
+            addedAction = true;
+         }
+
          if ((canEdit && questStatus.inactive === quest.status) || questStatus.available === quest.status)
          {
             result += `<i class="move fas fa-play" title="${game.i18n.localize(
