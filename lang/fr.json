@@ -134,6 +134,7 @@
     },
     "QuestTracker": {
       "Title": "Traqueur de quêtes",
+      "NoPrimary": "Pas de quête primaire disponible.",
       "Tooltips": {
         "PrimaryQuestShow": "Cliquer pour montrer la quête primaire.",
         "PrimaryQuestUnshow": "Cliquer pour cacher toutes les quêtes."
