@@ -19,7 +19,6 @@
   .fql-window-content {
     padding: 0 8px 0 8px;
     color: $tracker-color-text;
-    filter: drop-shadow(1px 1px 1px #000);
     font-family: "Open Sans", Lato, Signika, sans-serif;
     overflow-y: auto;
   }
@@ -39,6 +38,19 @@
 
   * {
     box-sizing: border-box;
+  }
+
+  // Override for Foundry context menu to fit context menu content.
+  #context-menu {
+    position: fixed;
+    width: fit-content;
+    font-family: "Signika", sans-serif;
+    font-size: 14px;
+    box-shadow: 0 0 10px #000;
+
+    i.fa-star {
+      padding-left: 0;
+    }
   }
 
   i {
@@ -73,21 +85,22 @@
     flex-direction: column;
     flex: 1;
 
-    h3 {
-      font-family: "Open Sans", Lato, Signika, sans-serif;
-
-      i {
-          // Add additional width to last icon such that there is space between any previous icon.
-          &:last-of-type {
-          flex: 0 0 26px;
-          text-align: right;
-        }
+    .title {
+      a, i {
+        // Must specifically target elements to support context menu.
+        filter: drop-shadow(1px 1px 1px #000);
       }
     }
 
     i {
       cursor: pointer;
       pointer-events: auto;
+
+      // Add additional width to last icon such that there is space between any previous icon.
+      &:last-of-type {
+        flex: 0 0 26px;
+        text-align: right;
+      }
     }
 
     .title {
@@ -126,9 +139,17 @@
         }
       }
 
+      .subquest {
+        // Must specifically target elements to support context menu.
+        filter: drop-shadow(1px 1px 1px #000);
+      }
+
       .quest-tracker-task {
         cursor: pointer;
         width: fit-content;
+
+        // Must specifically target elements to support context menu.
+        filter: drop-shadow(1px 1px 1px #000);
 
         span {
           cursor: pointer;

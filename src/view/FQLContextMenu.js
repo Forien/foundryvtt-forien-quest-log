@@ -1,9 +1,9 @@
 /**
  * Provides a fixed / free placement context menu used in QuestLog. With a few modifications below and a small
- * bit of styles found in `quest-log.scss` (search for `#context-menu`) the Foundry ContextMenu is converted into a
- * fixed / free placement context menu. This is useful to free the context menu from being bound within the overflow
- * constraints of a parent element and allow the context menu to display at the exact mouse point clicked in a larger
- * element.
+ * bit of styles found in `quest-log.scss` / `quest-tracker.scss` (search for `#context-menu`) the Foundry ContextMenu
+ * is converted into a fixed / free placement context menu. This is useful to free the context menu from being bound
+ * within the overflow constraints of a parent element and allow the context menu to display at the exact mouse point
+ * clicked in a larger element.
  */
 export default class FQLContextMenu extends ContextMenu
 {

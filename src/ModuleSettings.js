@@ -9,7 +9,7 @@ import { constants, noteControls, questStatus, sessionConstants, settings } from
  *
  * @type {{top: number}}
  */
-const s_QUEST_TRACKER_DEFAULT = { top: 80 };
+const s_QUEST_TRACKER_DEFAULT = { top: 80, width: 296 };
 
 /**
  * Constants for setting scope type.

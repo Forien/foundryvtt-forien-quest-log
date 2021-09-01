@@ -1,10 +1,19 @@
-import QuestAPI   from '../control/public/QuestAPI.js';
-import QuestDB    from '../control/QuestDB.js';
-import Socket     from '../control/Socket.js';
-import Utils      from '../control/Utils.js';
-import collect    from '../../external/collect.js';
+import QuestAPI         from '../control/public/QuestAPI.js';
+import QuestDB          from '../control/QuestDB.js';
+import Socket           from '../control/Socket.js';
+import Utils            from '../control/Utils.js';
+import FQLContextMenu   from './FQLContextMenu.js';
+import collect          from '../../external/collect.js';
 
 import { constants, jquery, questStatus, sessionConstants, settings } from '../model/constants.js';
+
+/**
+ * Provides the default width for the QuestTracker if not defined.
+ *
+ * @type {number}
+ */
+const s_DEFAULT_WIDTH = 296;
+const s_DEFAULT_POSITION = { top: 80, width: s_DEFAULT_WIDTH };
 
 /**
  * Provides the quest tracker which provides an overview of active quests and objectives which can be opened / closed
@@ -26,11 +35,19 @@ export default class QuestTracker extends Application
       super(options);
 
       /**
-       * TODO: This needs to be tested for proper defaults.
-       *
        * @type {object}
        */
-      this.position = game.settings.get(constants.moduleName, settings.questTrackerPosition);
+      try
+      {
+         this.position = JSON.parse(game.settings.get(constants.moduleName, settings.questTrackerPosition));
+
+         // When upgrading to `v0.7.7` it is necessary to set the default width.
+         if (!this.position?.width) { this.position.width = s_DEFAULT_WIDTH; }
+      }
+      catch (err)
+      {
+         this.position = s_DEFAULT_POSITION;
+      }
    }
 
    /**
@@ -51,6 +68,52 @@ export default class QuestTracker extends Application
          height: 480,
          title: game.i18n.localize('ForienQuestLog.QuestTracker.Title')
       });
+   }
+
+   /**
+    * Create the context menu. There are two separate context menus for the active / in progress tab and all other tabs.
+    *
+    * @param {JQuery}   html - JQuery element for this application.
+    *
+    * @private
+    */
+   _contextMenu(html)
+   {
+      const menuItemCopyLink = {
+         name: 'ForienQuestLog.QuestLog.ContextMenu.CopyEntityLink',
+         icon: '<i class="fas fa-link"></i>',
+         callback: (menu) =>
+         {
+            const questId = $(menu)?.closest('.quest-tracker-header')?.data('quest-id');
+            const quest = QuestDB.getQuest(questId);
+
+            if (quest && Utils.copyTextToClipboard(`@Quest[${quest.id}]{${quest.name}}`))
+            {
+               ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.LinkCopied'));
+            }
+         }
+      };
+
+      /**
+       * @type {object[]}
+       */
+      const menuItems = [menuItemCopyLink];
+
+      if (game.user.isGM)
+      {
+         menuItems.push({
+            name: 'ForienQuestLog.QuestLog.ContextMenu.PrimaryQuest',
+            icon: '<i class="fas fa-star"></i>',
+            callback: (menu) =>
+            {
+               const questId = $(menu)?.closest('.quest-tracker-header')?.data('quest-id');
+               const quest = QuestDB.getQuest(questId);
+               if (quest) { Socket.setQuestPrimary({ quest }); }
+            }
+         });
+      }
+
+      new FQLContextMenu(html, '.quest-tracker-header', menuItems);
    }
 
    /**
@@ -110,6 +173,9 @@ export default class QuestTracker extends Application
 
          this.render();
       });
+
+      // Add context menu.
+      this._contextMenu(html);
 
       Utils.createJQueryDblClick({
          selector: '#quest-tracker .quest-tracker-header',
@@ -402,8 +468,8 @@ export default class QuestTracker extends Application
 
          if (!this._windowResizable)
          {
-            // Add the extra `1` for small format (1080P and below screen size).
-            opts.height = this._elemWindowHeader[0].scrollHeight + this._elemWindowContent[0].scrollHeight + 1;
+            // Add the extra `2` for small format (1080P and below screen size).
+            opts.height = this._elemWindowHeader[0].scrollHeight + this._elemWindowContent[0].scrollHeight + 2;
          }
       }
 
@@ -411,6 +477,13 @@ export default class QuestTracker extends Application
       this.options.popOut = true;
       const currentPosition = super.setPosition(opts);
       this.options.popOut = false;
+
+      if (!this._windowResizable)
+      {
+         const el = this.element[0];
+         const tHeight = this._elemWindowHeader[0].scrollHeight + this._elemWindowContent[0].scrollHeight + 2;
+         el.style.height = `${tHeight}px`;
+      }
 
       const scrollbarActive = this._elemWindowContent[0].scrollHeight > this._elemWindowContent[0].clientHeight;
 

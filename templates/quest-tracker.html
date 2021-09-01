@@ -10,16 +10,19 @@
     {{#if hasQuests}}<div class="quests">{{/if}}
       {{#each quests}}
       <div class="quest">
-        <h3 class="title" {{#if (or isHidden isInactive)}}id="hidden"{{/if}}>
-        <a class="quest-tracker-header" data-quest-id="{{id}}">{{name}}</a>
+        <div class="title" {{#if (or isHidden isInactive)}}id="hidden"{{/if}}>
+        <div class="quest-tracker-header" data-quest-id="{{id}}">
+          <a>{{name}}</a>
+        </div>
         <span class="quest-tracker-span"></span>
         {{#if (eq id ../primaryQuestId)}}<i class="is-primary fas fa-star" title="{{localize 'ForienQuestLog.Tooltips.PrimaryQuest'}}"></i>{{/if}}
         {{#if isGM}}
           {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
           {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
         {{/if}}
-        </h3>
+        </div>
 
+        {{#if (or subquests.length tasks.length)}}
         <ul class="tasks">
           {{#each subquests}}
           <li class="task {{state}} subquest" {{#if (or isHidden isInactive)}}id="hidden"{{/if}}>
@@ -43,6 +46,7 @@
           {{/if}}
         {{/each}}
         </ul>
+        {{/if}}
       </div>
       {{/each}}
     {{#if hasQuests}}</div>{{/if}}
