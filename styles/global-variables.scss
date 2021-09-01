@@ -12,8 +12,6 @@ $primary-color-border-drop: rgba(0, 0, 0, .5);
 $primary-color-bg-drop: rgba(0, 0, 0, .1);
 $primary-color-hover-drop: rgba(0, 0, 0, .075);
 
-$primary-color-entity-link: black;
-
 $primary-color-bg-li: rgba(255, 255, 255, .4);
 $primary-color-bg-li-hidden: rgba(255, 255, 255, .2);
 
@@ -32,10 +30,14 @@ $icon-color-trashcan: rgba(255, 0, 0, .6);
 
 // LibThemer support for QuestTracker
 $tracker-color-background: var(--palette-fql-qt-color-background, #00000000);
-$tracker-color-text: var(--palette-fql-qt-text-color, #{$primary-color-text});
-$tracker-color-text-hidden: var(--palette-fql-qt-text-color-shaded-text, #{$primary-color-text-hidden});
 $tracker-image-background: var(--palette-fql-qt-image-background, url(/ui/denim075.png)) repeat;
 $tracker-image-background-blend-mode: var(--palette-fql-qt-image-background-blend-mode, normal);
+
+$tracker-color-text: var(--palette-fql-qt-text-color, #{$primary-color-text});
+$tracker-color-text-hidden: var(--palette-fql-qt-text-color-shaded-text, #{$primary-color-text-hidden});
+
+$tracker-color-background-entitylink: var(--palette-fql-qt-color-background-entitylink, #ddd);
+$tracker-color-text-entitylink: var(--palette-fql-qt-color-background-entitylink-contrast-text, black);
 
 // Doesn't work quite right as game systems can provide style overrides.
 //$tracker-color-text-hover: var(--palette-fql-qt-text-color-light, #{$primary-color-text-hover});

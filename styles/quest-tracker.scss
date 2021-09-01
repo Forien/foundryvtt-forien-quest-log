@@ -5,6 +5,12 @@
   max-width: 400px;
   max-height: 750px;
 
+  a.entity-link {
+    background: $tracker-color-background-entitylink;
+    border: none;
+    color: $tracker-color-text-entitylink;
+  }
+
   &.fql-app {
     background: $tracker-image-background;
     background-color: $tracker-color-background;
@@ -61,10 +67,6 @@
 
   #hidden {
     color: $tracker-color-text-hidden;
-  }
-
-  a.entity-link {
-    color: $primary-color-entity-link;
   }
 
   .quest:not(:last-child) {

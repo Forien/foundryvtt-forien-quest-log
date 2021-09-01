@@ -21,5 +21,12 @@
     "hint": "Sets the Quest Tracker background app image.",
     "type": "imagevideo",
     "default": "ui/denim075.png"
+  },
+
+  "--palette-fql-qt-color-background-entitylink": {
+    "name": "Quest Tracker entity link background color",
+    "hint": "Sets the Quest Tracker entity link background color.",
+    "type": "color",
+    "default": "#DDD"
   }
 }
