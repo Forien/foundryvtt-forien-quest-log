@@ -1,5 +1,6 @@
-import Socket           from './Socket.js';
 import QuestDB          from './QuestDB.js';
+import SidebarManager   from './SidebarManager.js';
+import Socket           from './Socket.js';
 import Utils            from './Utils.js';
 import ViewManager      from './ViewManager.js';
 import QuestAPI         from './public/QuestAPI.js';
@@ -22,6 +23,7 @@ import { constants, noteControls, sessionConstants, settings } from '../model/co
  * - `setup` - {@link FQLHooks.foundrySetup}
  *
  * Foundry game hooks:
+ * - `collapseSidebar` - {@link FQLHooks.collapseSidebar} - Handle tracking state of the sidebar.
  * - `dropActorSheetData` - {@link FQLHooks.dropActorSheetData} - Handle drop data for reward items in actor sheet.
  * - `dropCanvasData` - {@link FQLHooks.dropCanvasData} - Handle drop data for {@link Quest} on Foundry canvas.
  * - `getSceneControlButtons` - {@link FQLHooks.getSceneControlButtons} - Add FQL scene controls to 'note'.
@@ -51,6 +53,7 @@ export default class FQLHooks
       Hooks.once('setup', FQLHooks.foundrySetup);
 
       // Respond to Foundry in game hooks.
+      Hooks.on('collapseSidebar', SidebarManager.collapseSidebar);
       Hooks.on('dropActorSheetData', FQLHooks.dropActorSheetData);
       Hooks.on('dropCanvasData', FQLHooks.dropCanvasData);
       Hooks.on('getSceneControlButtons', FQLHooks.getSceneControlButtons);
@@ -155,6 +158,9 @@ export default class FQLHooks
 
       // Allow and process incoming socket data.
       Socket.listen();
+
+      // Start watching sidebar updates.
+      SidebarManager.init();
 
       // Need to track any current primary quest as Foundry settings don't provide a old / new state on setting
       // change. The current primary quest state is saved in session storage.

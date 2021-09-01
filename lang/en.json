@@ -197,6 +197,10 @@
         "Enable": "Allow Trusted Player Quest Editing",
         "EnableHint": "Check to allow trusted players to have expanded quest editing and status control capabilities over quests they have ownership."
       },
+      "questTrackerManaged": {
+        "Enable": "Quest Tracker Managed",
+        "EnableHint": "Check to allow Quest Tracker docking and overlap control with the sidebar."
+      },
       "questTrackerResizable": {
         "Enable": "Quest Tracker Resizable",
         "EnableHint": "Check to allow manual resizing control of the Quest Tracker."

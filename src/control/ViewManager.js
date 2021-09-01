@@ -1,6 +1,6 @@
 import QuestDB          from './QuestDB.js';
 import QuestLog         from '../view/log/QuestLog.js';
-import QuestTracker     from '../view/QuestTracker.js';
+import QuestTracker     from '../view/tracker/QuestTracker.js';
 
 import { constants, questStatus, questStatusI18n, settings } from '../model/constants.js';
 

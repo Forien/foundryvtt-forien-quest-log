@@ -119,6 +119,8 @@ const settings = {
    notifyRewardDrop: 'notifyRewardDrop',
    primaryQuest: 'primaryQuest',
    questTrackerEnable: 'questTrackerEnable',
+   questTrackerManaged: 'questTrackerManaged',
+   questTrackerPinned: 'questTrackerPinned',
    questTrackerPosition: 'questTrackerPosition',
    questTrackerResizable: 'questTrackerResizable',
    showFolder: 'showFolder',
@@ -154,6 +156,10 @@ export { constants, jquery, noteControls, questStatus, questStatusI18n, questTab
  * @property {string}   primaryQuest - Stores the quest ID of a quest that is the current primary quest.
  *
  * @property {string}   questTrackerEnable - Enables the quest tracker.
+ *
+ * @property {string}   questTrackerManaged - QuestTracker docking and prevention of overlap w/ the sidebar is enabled.
+ *
+ * @property {string}   questTrackerPinned - Is the QuestTracker pinned to the side bar.
  *
  * @property {string}   questTrackerPosition - Hidden setting to store current quest tracker position.
  *

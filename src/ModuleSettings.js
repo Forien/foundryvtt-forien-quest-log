@@ -355,6 +355,25 @@ export default class ModuleSettings
          }
       });
 
+      game.settings.register(constants.moduleName, settings.questTrackerManaged, {
+         name: 'ForienQuestLog.Settings.questTrackerManaged.Enable',
+         hint: 'ForienQuestLog.Settings.questTrackerManaged.EnableHint',
+         scope: scope.world,
+         config: true,
+         default: true,
+         type: Boolean,
+         onChange: () =>
+         {
+         }
+      });
+
+      game.settings.register(constants.moduleName, settings.questTrackerPinned, {
+         scope: scope.client,
+         config: false,
+         type: Boolean,
+         default: false,
+      });
+
       game.settings.register(constants.moduleName, settings.questTrackerPosition, {
          scope: scope.client,
          config: false,

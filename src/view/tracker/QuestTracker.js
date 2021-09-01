@@ -1,11 +1,12 @@
-import QuestAPI         from '../control/public/QuestAPI.js';
-import QuestDB          from '../control/QuestDB.js';
-import Socket           from '../control/Socket.js';
-import Utils            from '../control/Utils.js';
-import FQLContextMenu   from './FQLContextMenu.js';
-import collect          from '../../external/collect.js';
+import QuestAPI         from '../../control/public/QuestAPI.js';
+import QuestDB          from '../../control/QuestDB.js';
+import SidebarManager   from '../../control/SidebarManager.js';
+import Socket           from '../../control/Socket.js';
+import Utils            from '../../control/Utils.js';
+import FQLContextMenu   from '../FQLContextMenu.js';
+import collect          from '../../../external/collect.js';
 
-import { constants, jquery, questStatus, sessionConstants, settings } from '../model/constants.js';
+import { constants, jquery, questStatus, sessionConstants, settings } from '../../model/constants.js';
 
 /**
  * Provides the default width for the QuestTracker if not defined.
@@ -48,6 +49,8 @@ export default class QuestTracker extends Application
       {
          this.position = s_DEFAULT_POSITION;
       }
+
+      this._pinned = false;
    }
 
    /**
@@ -142,6 +145,12 @@ export default class QuestTracker extends Application
 
       return buttons;
    }
+
+   /**
+    *
+    * @returns {boolean}
+    */
+   get pinned() { return this._pinned; }
 
    /**
     * Defines all {@link JQuery} control callbacks with event listeners for click, drag, drop via various CSS selectors.
@@ -441,36 +450,53 @@ export default class QuestTracker extends Application
     * need to set these for '.window-content' to 'visible' which will cause an issue for very long tables. Thus we must
     * manually set the table max-heights based on the position / height of the {@link Application}.
     *
-    * @param {object}               opts - Optional parameters.
+    * @param {object}               [opts] - Optional parameters.
     *
-    * @param {number|null}          opts.left - The left offset position in pixels.
+    * @param {number|null}          [opts.left] - The left offset position in pixels.
     *
-    * @param {number|null}          opts.top - The top offset position in pixels.
+    * @param {number|null}          [opts.top] - The top offset position in pixels.
     *
-    * @param {number|null}          opts.width - The application width in pixels.
+    * @param {number|null}          [opts.width] - The application width in pixels.
     *
-    * @param {number|string|null}   opts.height - The application height in pixels.
+    * @param {number|string|null}   [opts.height] - The application height in pixels.
     *
-    * @param {number|null}          opts.scale - The application scale as a numeric factor where 1.0 is default.
+    * @param {number|null}          [opts.scale] - The application scale as a numeric factor where 1.0 is default.
+    *
+    * @param {boolean}              [opts.pinned] -
     *
     * @returns {{left: number, top: number, width: number, height: number, scale:number}}
     * The updated position object for the application containing the new values.
     */
-   setPosition(opts)
+   setPosition({ pinned = this._pinned, ...opts } = {})
    {
       // Pin width / height to min / max styles if defined.
-      if (opts && opts.width && opts.height)
+      if (opts)
       {
-         if (opts.width < this._appExtents.minWidth) { opts.width = this._appExtents.minWidth; }
-         if (opts.width > this._appExtents.maxWidth) { opts.width = this._appExtents.maxWidth; }
-         if (opts.height < this._appExtents.minHeight) { opts.height = this._appExtents.minHeight; }
-         if (opts.height > this._appExtents.maxHeight) { opts.height = this._appExtents.maxHeight; }
-
-         if (!this._windowResizable)
+         if (typeof opts.width === 'number' && typeof opts.height === 'number')
          {
-            // Add the extra `2` for small format (1080P and below screen size).
-            opts.height = this._elemWindowHeader[0].scrollHeight + this._elemWindowContent[0].scrollHeight + 2;
+            if (opts.width < this._appExtents.minWidth) { opts.width = this._appExtents.minWidth; }
+            if (opts.width > this._appExtents.maxWidth) { opts.width = this._appExtents.maxWidth; }
+            if (opts.height < this._appExtents.minHeight) { opts.height = this._appExtents.minHeight; }
+            if (opts.height > this._appExtents.maxHeight) { opts.height = this._appExtents.maxHeight; }
+
+            if (!this._windowResizable)
+            {
+               // Add the extra `2` for small format (1080P and below screen size).
+               opts.height = this._elemWindowHeader[0].scrollHeight + this._elemWindowContent[0].scrollHeight + 2;
+            }
          }
+
+         if (typeof opts.left === 'number' && typeof opts.top === 'number')
+         {
+            if (pinned)
+            {
+               opts.left = this.position.left;
+               opts.top = this.position.top;
+            }
+         }
+
+         // Mutates `opts` to set maximum left position.
+         SidebarManager.checkPosition(opts);
       }
 
       // Must set popOut temporarily to true as there is a gate in `Application.setPosition`.
