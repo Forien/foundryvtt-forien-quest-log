@@ -169,7 +169,7 @@ const s_DEFAULT_FONTS = 'Almendra=Almendra,serif; Arial=arial,helvetica,sans-ser
  *
  * @type {string}
  */
-const s_DEFAULT_FONT_SIZE = '10pt 12pt 14pt 16pt 18pt 22pt 28pt 32pt 36pt 42pt 48pt 64pt';
+const s_DEFAULT_FONT_SIZE = '10pt 12pt 13pt 14pt 15pt 16pt 18pt 22pt 28pt 32pt 36pt 42pt 48pt 64pt';
 
 /**
  * Defines the line-height styles available in the toolbar options.

@@ -3,12 +3,11 @@
 @mixin tinymce {
   .editor .editor-content {
     font-family: "Signika", sans-serif;
-    font-size: 14pt;
+    font-size: 12pt;
     line-height: 1.2;
     color: #000;
 
     p {
-      margin: 0;
       font-family: inherit;
       font-size: inherit;
       line-height: inherit;
