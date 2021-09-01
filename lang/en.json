@@ -103,6 +103,8 @@
     "QuestTracker": {
       "Title": "Quest Tracker",
 
+      "NoPrimary": "No primary quest available.",
+
       "Tooltips": {
         "PrimaryQuestShow": "Click to show primary quest.",
         "PrimaryQuestUnshow": "Click to show all quests."

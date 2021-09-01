@@ -49,6 +49,10 @@
         {{/if}}
       </div>
       {{/each}}
-    {{#if hasQuests}}</div>{{/if}}
+    {{#if hasQuests}}
+      </div>
+    {{else}}
+      {{localize 'ForienQuestLog.QuestTracker.NoPrimary'}}
+    {{/if}}
   </section>
 </div>
