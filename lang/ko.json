@@ -8,7 +8,7 @@
       "NoDocument": "UUID: {uuid}에 대해 엔티티를 불러올 수 없습니다.",
       "NoPermission": "사용 권한이 부족하여 이 엔티티 시트를 볼 수 없습니다.",
       "Quest": "퀘스트",
-      "QuestIs": "퀘스트가 {statusLabel} 되었습니다",
+      "QuestIs": "퀘스트가 {statusLabel} 상태가 되었습니다",
   
       "QuestTypes": {
         "Active": "진행 중",
@@ -103,6 +103,8 @@
         "QuestTracker": {
             "Title": "퀘스트 트래커",
       
+            "NoPrimary": "가능한 기본 퀘스트가 없습니다.",
+
             "Tooltips": {
               "PrimaryQuestShow": "기본 퀘스트를 표시하려면 클릭한다.",
               "PrimaryQuestUnshow": "모든 퀘스트를 표시하려면 클릭한다."
@@ -195,6 +197,10 @@
           "Enable": "신뢰할 수 있는 플레이어의 퀘스트 편집 허용",
           "EnableHint": "신뢰할 수 있는 플레이어가 퀘스트 소유를 넘어 퀘스트 편집 권한 확장과 상태 제어 권한을 허용하도록 하려면 선택하십시오."
         },
+        "questTrackerManaged": {
+            "Enable": "퀘스트 트래커 관리",
+            "EnableHint": "활성화시 퀘스트 트래커 도킹과 사이드바에 제어기를 오버랩 할 수 있다."
+          },
         "questTrackerResizable": {
           "Enable": "퀘스트 트래커 크기 조절 기능",
           "EnableHint": "활성화시 퀘스트 트래커의 크기를 수동으로 조절할 수 있다."
