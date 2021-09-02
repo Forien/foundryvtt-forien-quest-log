@@ -15,6 +15,7 @@
     background: $tracker-image-background;
     background-color: $tracker-color-background;
     background-blend-mode: $tracker-image-background-blend-mode;
+    box-shadow: 0 0 12px #000;
 
     // Doesn't work quite right as game systems can provide specific colors.
     //a:hover {
@@ -44,25 +45,6 @@
 
   * {
     box-sizing: border-box;
-  }
-
-  // Override for Foundry context menu to fit context menu content.
-  #context-menu {
-    position: fixed;
-    width: fit-content;
-    font-family: "Signika", sans-serif;
-    font-size: 14px;
-    box-shadow: 0 0 10px #000;
-
-    i.fa-star {
-      padding-left: 0;
-    }
-  }
-
-  i {
-    &.fas.fa-star {
-      color: $icon-color-primary-quest;
-    }
   }
 
   #hidden {

@@ -14,6 +14,12 @@ import { constants, jquery, questStatus, sessionConstants, settings } from '../.
  * @type {number}
  */
 const s_DEFAULT_WIDTH = 296;
+
+/**
+ * Provides the default position for the QuestTracker if not defined.
+ *
+ * @type {{top: number, width: number}}
+ */
 const s_DEFAULT_POSITION = { top: 80, width: s_DEFAULT_WIDTH };
 
 /**
@@ -40,6 +46,12 @@ export default class QuestTracker extends Application
        */
       try
       {
+         /**
+          * Stores the current position of the quest tracker.
+          *
+          * @type {object}
+          * {@link Application.position}
+          */
          this.position = JSON.parse(game.settings.get(constants.moduleName, settings.questTrackerPosition));
 
          // When upgrading to `v0.7.7` it is necessary to set the default width.
@@ -50,6 +62,12 @@ export default class QuestTracker extends Application
          this.position = s_DEFAULT_POSITION;
       }
 
+      /**
+       * Stores whether the QuestTracker is pinned to the sidebar.
+       *
+       * @type {boolean}
+       * @private
+       */
       this._pinned = false;
    }
 
@@ -106,7 +124,7 @@ export default class QuestTracker extends Application
       {
          menuItems.push({
             name: 'ForienQuestLog.QuestLog.ContextMenu.PrimaryQuest',
-            icon: '<i class="fas fa-star"></i>',
+            icon: '<i class="fas fa-star pad-l-0"></i>',
             callback: (menu) =>
             {
                const questId = $(menu)?.closest('.quest-tracker-header')?.data('quest-id');

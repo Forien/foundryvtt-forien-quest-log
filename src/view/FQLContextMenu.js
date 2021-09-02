@@ -1,9 +1,12 @@
 /**
- * Provides a fixed / free placement context menu used in QuestLog. With a few modifications below and a small
- * bit of styles found in `quest-log.scss` / `quest-tracker.scss` (search for `#context-menu`) the Foundry ContextMenu
- * is converted into a fixed / free placement context menu. This is useful to free the context menu from being bound
+ * Provides a fixed / free placement context menu used in QuestLog. With a few modifications below the Foundry
+ * ContextMenu is converted into a free placement context menu. This is useful to free the context menu from being bound
  * within the overflow constraints of a parent element and allow the context menu to display at the exact mouse point
- * clicked in a larger element.
+ * clicked in a larger element. Note: be mindful that CSS style `position: fixed` is used to make the context menu
+ * display relative to the main page viewport which defines the containing block, however if you use `filter`,
+ * `perspective`, or `transform` in styles then that element becomes the containing block higher up than the main
+ * window. FQLContextMenu does not reposition the inserted HTML which is relative to the element containing the context
+ * menu.
  */
 export default class FQLContextMenu extends ContextMenu
 {
@@ -46,6 +49,19 @@ export default class FQLContextMenu extends ContextMenu
    _setPosition(html, target)
    {
       super._setPosition(html, target);
-      html.css(this._position);
+      html.css(foundry.utils.mergeObject(this._position, s_DEFAULT_STYLE));
    }
 }
+
+/**
+ * Defines the default CSS styles for the context menu.
+ *
+ * @type {{"box-shadow": string, width: string, "font-size": string, "font-family": string, position: string}}
+ */
+const s_DEFAULT_STYLE = {
+   position: 'fixed',
+   width: 'fit-content',
+   'font-family': '"Signika", sans-serif',
+   'font-size': '14px',
+   'box-shadow': '0 0 10px #000'
+};

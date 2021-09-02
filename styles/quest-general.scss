@@ -1,4 +1,25 @@
 #forien-quest-log,
+#quest-tracker,
+.window-app.forien-quest-preview {
+  .pad-l-4 {
+    padding-left: 4px;
+  }
+
+  .pad-l-8 {
+    padding-left: 8px;
+  }
+
+  i {
+    flex: none;
+
+    &.fas.fa-star {
+      color: $icon-color-primary-quest;
+      filter: drop-shadow(0 0 2px #000);
+    }
+  }
+}
+
+#forien-quest-log,
 .window-app.forien-quest-preview {
 
   // Some systems such as Blades In the Dark require this parameter.
@@ -112,27 +133,6 @@
 
   .icon-button {
     flex: none;
-  }
-
-  i {
-    flex: none;
-
-    &.fa-star {
-      padding-left: 4px;
-
-      &.fas {
-        color: $icon-color-primary-quest;
-        filter: drop-shadow(0 0 2px #000);
-      }
-    }
-
-    &.is-personal {
-      padding-left: 4px;
-    }
-
-    &.is-hidden {
-      padding-left: 4px;
-    }
   }
 
   .editor {

@@ -35,8 +35,8 @@
     {{#each data_subquest}}
     <li class="subquest-item" title="{{statusTooltip}}">
       {{#if ../canEdit}}
-        {{#if isHidden}}<i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
-        {{#if isPersonal}}<i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>{{/if}}
+        {{#if isHidden}}<i class="is-hidden fas fa-eye-slash pad-l-4" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
+        {{#if isPersonal}}<i class="is-personal fas fa-user-shield pad-l-4" title="{{{personalActors}}}"></i>{{/if}}
       {{/if}}
       <h2 class="quest-name-link" data-quest-id="{{id}}">{{name}}</h2>
       {{#if statusActions.length}}

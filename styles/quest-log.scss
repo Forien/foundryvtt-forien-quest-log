@@ -104,17 +104,6 @@
       flex: 1;
       overflow-y: auto;
     }
-
-    // Override for Foundry context menu to fit context menu content.
-    #context-menu {
-      position: fixed;
-      width: fit-content;
-      box-shadow: 0 0 10px #000;
-
-      i.fa-star {
-        padding-left: 0;
-      }
-    }
   }
 
   .quest-log .table ul {

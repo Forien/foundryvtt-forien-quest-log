@@ -7,16 +7,16 @@
     <a class="item" data-tab="management">{{localize 'ForienQuestLog.QuestPreview.Tabs.QuestManagement'}}</a>
     {{#if isActive}}
       {{#if isPrimary}}
-        <a class="icon-button"><i class="is-primary fas fa-star" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.PrimaryQuestUnset'}}"></i></a>
+        <a class="icon-button"><i class="is-primary fas fa-star pad-l-8" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.PrimaryQuestUnset'}}"></i></a>
       {{else}}
-        <a class="icon-button"><i class="is-primary far fa-star" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.PrimaryQuestSet'}}"></i></a>
+        <a class="icon-button"><i class="is-primary far fa-star pad-l-8" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.PrimaryQuestSet'}}"></i></a>
       {{/if}}
     {{/if}}
     {{#if isHidden}}
-      <i class="is-hidden fas fa-eye-slash" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>
+      <i class="is-hidden fas fa-eye-slash pad-l-8" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>
     {{/if}}
     {{#if isPersonal}}
-      <i class="is-personal fas fa-user-shield" title="{{{personalActors}}}"></i>
+      <i class="is-personal fas fa-user-shield pad-l-8" title="{{{personalActors}}}"></i>
     {{/if}}
   </nav>
 
