@@ -271,31 +271,38 @@ export default class Utils
    /**
     * Sets an image based on boolean setting state for FQL macros.
     *
-    * @param {string}   setting - Setting name.
+    * @param {string|string[]}   setting - Setting name.
     *
-    * @param {boolean}  [value] - Current setting value.
+    * @param {boolean}           [value] - Current setting value.
     *
     * @returns {Promise<void>}
     */
    static async setMacroImage(setting, value = void 0)
    {
+      const userID = game.user.id;
+
+      const fqlSettings = Array.isArray(setting) ? setting : [setting];
+
       for (const macroEntry of game.macros.contents)
       {
-         // Only set macro image if the author of the macro matches the user and the user is an owner.
-         if (macroEntry.data.author !== game.user.id || !macroEntry.isOwner) { continue; }
+         for (const currentSetting of fqlSettings)
+         {
+            // Test if the FQL `macro-setting` flag value against the setting supplied.
+            const macroSetting = macroEntry.getFlag(constants.moduleName, 'macro-setting');
+            if (macroSetting !== currentSetting) { continue; }
 
-         // Test if the FQL `macro-setting` flag value against the setting supplied.
-         const macroSetting = macroEntry.getFlag(constants.moduleName, 'macro-setting');
-         if (macroSetting !== setting) { continue; }
+            // Only set macro image if the author of the macro matches the user and the user is an owner.
+            if (macroEntry.data.author !== userID || !macroEntry.isOwner) { continue; }
 
-         const state = value ?? game.settings.get(constants.moduleName, setting);
+            const state = value ?? game.settings.get(constants.moduleName, currentSetting);
 
-         // Pick the correct image for the current state.
-         const img = typeof state === 'boolean' && state ?
-          `modules/forien-quest-log/assets/icons/macros/${setting}On.png` :
-           `modules/forien-quest-log/assets/icons/macros/${setting}Off.png`;
+            // Pick the correct image for the current state.
+            const img = typeof state === 'boolean' && state ?
+             `modules/forien-quest-log/assets/icons/macros/${currentSetting}On.png` :
+             `modules/forien-quest-log/assets/icons/macros/${currentSetting}Off.png`;
 
-         await macroEntry.update({ img }, { diff: false });
+            await macroEntry.update({ img }, { diff: false });
+         }
       }
    }
 

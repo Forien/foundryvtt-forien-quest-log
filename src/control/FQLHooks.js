@@ -167,6 +167,9 @@ export default class FQLHooks
       sessionStorage.setItem(sessionConstants.currentPrimaryState,
        game.settings.get(constants.moduleName, settings.primaryQuest));
 
+      // Initialize current client based macro images based on current state.
+      await Utils.setMacroImage([settings.questTrackerEnable, settings.questTrackerResizable]);
+
       // Support for LibThemer
       const libThemer = game.modules.get('lib-themer');
       if (libThemer?.active)
