@@ -17,7 +17,8 @@ const s_SPACE_X = 8;
 const s_SPACE_Y = 8;
 
 /**
- * Manages the state of the Foundry {@link Sidebar} providing management of the {@link QuestTracker}.
+ * Manages the state of the Foundry {@link Sidebar} providing management of the {@link QuestTracker}. Controls
+ * pinning the QuestTracker to the sidebar.
  */
 export default class SidebarManager
 {
@@ -174,9 +175,24 @@ class FQLRect
     */
    constructor(x, y, width, height)
    {
+      /**
+       * @type {number}
+       */
       this.x = x;
+
+      /**
+       * @type {number}
+       */
       this.y = y;
+
+      /**
+       * @type {number}
+       */
       this.width = width;
+
+      /**
+       * @type {number}
+       */
       this.height = height;
    }
 

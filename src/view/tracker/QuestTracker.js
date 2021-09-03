@@ -1,4 +1,4 @@
-import QuestAPI         from '../../control/public/QuestAPI.js';
+import HandlerTracker   from './HandlerTracker.js';
 import QuestDB          from '../../control/QuestDB.js';
 import SidebarManager   from '../../control/SidebarManager.js';
 import Socket           from '../../control/Socket.js';
@@ -210,62 +210,28 @@ export default class QuestTracker extends Application
       new Draggable(this, html, header[0], this.options.resizable);
 
       header[0].addEventListener('pointerdown', async (event) =>
-      {
-         if (event.target.classList.contains('fql-window-title') ||
-          event.target.classList.contains('fql-window-header'))
-         {
-            this._dragHeader = true;
-
-            this._pinned = false;
-
-            await game.settings.set(constants.moduleName, settings.questTrackerPinned, false);
-
-            header[0].setPointerCapture(event.pointerId);
-         }
-      });
+       HandlerTracker.headerPointerDown(event, header[0], this));
 
       header[0].addEventListener('pointerup', async (event) =>
-      {
-         header[0].releasePointerCapture(event.pointerId);
-         this._dragHeader = false;
-
-         if (this._inPinDropRect)
-         {
-            this._pinned = true;
-            await game.settings.set(constants.moduleName, settings.questTrackerPinned, true);
-            this.element.css('animation', '');
-            SidebarManager.updateTracker();
-         }
-      });
+       HandlerTracker.headerPointerUp(event, header[0], this));
 
       html.on(jquery.click, '.header-button.close', void 0, this.close);
 
-      html.on(jquery.click, '.header-button.show-primary i', void 0, () =>
-      {
-         const newPrimary = !(sessionStorage.getItem(sessionConstants.trackerShowPrimary) === 'true');
-         sessionStorage.setItem(sessionConstants.trackerShowPrimary, (newPrimary).toString());
-
-         const showPrimaryIcon = $('#quest-tracker .header-button.show-primary i');
-         showPrimaryIcon.attr('class', newPrimary ? 'fas fa-star' : 'far fa-star');
-         showPrimaryIcon.attr('title', game.i18n.localize(newPrimary ?
-          'ForienQuestLog.QuestTracker.Tooltips.PrimaryQuestShow' :
-           'ForienQuestLog.QuestTracker.Tooltips.PrimaryQuestUnshow'));
-
-         this.render();
-      });
+      html.on(jquery.click, '.header-button.show-primary i', void 0, () => HandlerTracker.questPrimaryShow(this));
 
       // Add context menu.
       this._contextMenu(html);
 
       Utils.createJQueryDblClick({
          selector: '#quest-tracker .quest-tracker-header',
-         singleCallback: this._handleQuestClick.bind(this),
-         doubleCallback: this._handleQuestOpen,
+         singleCallback: (event) => HandlerTracker.questClick(event, this),
+         doubleCallback: HandlerTracker.questOpen,
       });
 
-      html.on(jquery.click, '.quest-tracker-link', void 0, this._handleQuestOpen);
+      html.on(jquery.click, '.quest-tracker-link', void 0, HandlerTracker.questOpen);
 
-      html.on(jquery.click, '.quest-tracker-task', void 0, this._handleQuestTask.bind(this));
+      html.on(jquery.click, '.quest-tracker-task', void 0, async (event) =>
+       await HandlerTracker.questTaskToggle(event));
 
       /**
        * @type {JQuery} The window header element.
@@ -397,68 +363,6 @@ export default class QuestTracker extends Application
          primaryQuestId,
          quests
       });
-   }
-
-   /**
-    * Data for the quest folder open / close state is saved in {@link sessionStorage}.
-    *
-    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
-    */
-   _handleQuestClick(event)
-   {
-      const questId = event.currentTarget.dataset.questId;
-
-      const questEntry = QuestDB.getQuestEntry(questId);
-      if (questEntry && questEntry.enrich.hasObjectives)
-      {
-         const folderState = sessionStorage.getItem(`${sessionConstants.trackerFolderState}${questId}`);
-         const collapsed = folderState !== 'false';
-         sessionStorage.setItem(`${sessionConstants.trackerFolderState}${questId}`, (!collapsed).toString());
-
-         this.render();
-      }
-   }
-
-   /**
-    * Handles the quest open click via {@link QuestAPI.open}.
-    *
-    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
-    */
-   _handleQuestOpen(event)
-   {
-      const questId = event.currentTarget.dataset.questId;
-      QuestAPI.open({ questId });
-   }
-
-   /**
-    * Handles toggling {@link Quest} tasks when clicked on by a user that is the GM or owner of quest.
-    *
-    * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
-    */
-   async _handleQuestTask(event)
-   {
-      // Don't handle any clicks of internal anchor elements such as entity content links.
-      if ($(event.target).is('.quest-tracker-task a')) { return; }
-
-      const questId = event.currentTarget.dataset.questId;
-      const uuidv4 = event.currentTarget.dataset.uuidv4;
-
-      const quest = QuestDB.getQuest(questId);
-
-      if (quest)
-      {
-         const task = quest.getTask(uuidv4);
-         if (task)
-         {
-            task.toggle();
-            await quest.save();
-
-            Socket.refreshQuestPreview({
-               questId,
-               focus: false
-            });
-         }
-      }
    }
 
    /**
@@ -611,6 +515,9 @@ export default class QuestTracker extends Application
       return currentPosition;
    }
 
+   /**
+    * Resets the state when the QuestTracker is not managed.
+    */
    async setUnmanaged()
    {
       this._pinned = false;

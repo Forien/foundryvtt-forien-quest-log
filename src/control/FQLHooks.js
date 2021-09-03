@@ -170,7 +170,7 @@ export default class FQLHooks
       // Initialize current client based macro images based on current state.
       await Utils.setMacroImage([settings.questTrackerEnable, settings.questTrackerResizable]);
 
-      // Support for LibThemer
+      // Support for LibThemer; add FQL options to LibThemer.
       const libThemer = game.modules.get('lib-themer');
       if (libThemer?.active)
       {

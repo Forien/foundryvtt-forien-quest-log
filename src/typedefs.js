@@ -45,6 +45,10 @@
  */
 
 /**
+ * @external {PointerEvent} https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent
+ */
+
+/**
  * @external {sessionStorage} https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage
  */
 
