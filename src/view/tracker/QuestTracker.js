@@ -564,19 +564,22 @@ export default class QuestTracker extends Application
 
       const el = this.element[0];
 
-      currentPosition.resizeWidth = initialWidth < currentPosition.width;
-      currentPosition.resizeHeight = initialHeight < currentPosition.height;
-
-      // Mutates `checkPosition` to set maximum left position. Must do this calculation after `super.setPosition`
-      // as in some cases `super.setPosition` will override the changes of `FoundryUIManager.checkPosition`.
-      const currentInPinDropRect = this._inPinDropRect;
-      this._inPinDropRect = SidebarManager.checkPosition(currentPosition);
-
-      // Set the jiggle animation if the position movement is coming from dragging the header and the pin drop state
-      // has changed.
-      if (!this._pinned && this._dragHeader && currentInPinDropRect !== this._inPinDropRect)
+      if (game.settings.get(constants.moduleName, settings.questTrackerManaged))
       {
-         this.element.css('animation', this._inPinDropRect ? 'fql-jiggle 0.3s infinite' : '');
+         currentPosition.resizeWidth = initialWidth < currentPosition.width;
+         currentPosition.resizeHeight = initialHeight < currentPosition.height;
+
+         // Mutates `checkPosition` to set maximum left position. Must do this calculation after `super.setPosition`
+         // as in some cases `super.setPosition` will override the changes of `FoundryUIManager.checkPosition`.
+         const currentInPinDropRect = this._inPinDropRect;
+         this._inPinDropRect = SidebarManager.checkPosition(currentPosition);
+
+         // Set the jiggle animation if the position movement is coming from dragging the header and the pin drop state
+         // has changed.
+         if (!this._pinned && this._dragHeader && currentInPinDropRect !== this._inPinDropRect)
+         {
+            this.element.css('animation', this._inPinDropRect ? 'fql-jiggle 0.3s infinite' : '');
+         }
       }
 
       el.style.top = `${currentPosition.top}px`;
@@ -606,6 +609,13 @@ export default class QuestTracker extends Application
       }
 
       return currentPosition;
+   }
+
+   async setUnmanaged()
+   {
+      this._pinned = false;
+      this._inPinDropRect = false;
+      await game.settings.set(constants.moduleName, settings.questTrackerPinned, false);
    }
 }
 

@@ -363,15 +363,16 @@ export default class ModuleSettings
          config: true,
          default: true,
          type: Boolean,
-         onChange: (value) =>
+         onChange: async (value) =>
          {
             if (value)
             {
-               SidebarManager.init();
+               SidebarManager.init({ updateTracker: true });
             }
             else
             {
                SidebarManager.unregister();
+               await ViewManager.questTracker.setUnmanaged();
             }
          }
       });
