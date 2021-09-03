@@ -167,7 +167,7 @@ export default class QuestLog extends Application
 
          menuItemsActive.push({
             name: 'ForienQuestLog.QuestLog.ContextMenu.PrimaryQuest',
-            icon: '<i class="pad-l-0 fas fa-star"></i>',
+            icon: '<i class="fas fa-star"></i>',
             callback: (menu) =>
             {
                const questId = $(menu)?.closest('.drag-quest')?.data('quest-id');

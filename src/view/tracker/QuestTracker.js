@@ -155,7 +155,7 @@ export default class QuestTracker extends Application
 
          menuItems.push({
             name: 'ForienQuestLog.QuestLog.ContextMenu.PrimaryQuest',
-            icon: '<i class="fas fa-star pad-l-0"></i>',
+            icon: '<i class="fas fa-star"></i>',
             callback: (menu) =>
             {
                const questId = $(menu)?.closest('.quest-tracker-header')?.data('quest-id');
