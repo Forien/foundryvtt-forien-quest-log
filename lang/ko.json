@@ -48,6 +48,7 @@
         },
         "ContextMenu": {
           "CopyEntityLink": "엔티티 내용 링크 복사",
+          "CopyQuestID": "퀘스트 ID 복사",
           "PrimaryQuest": "기본 퀘스트로 설정/해제."
         }
       },
@@ -134,6 +135,7 @@
         "UserCantOpen": "{user} 플레이어는 이 퀘스트를 열람할 권한을 가지고 있지 않습니다.",
         "LinkCopied": "이 퀘스트에 대한 엔티티 링크가 클립보드에 복사 되었습니다.",
         "FinishQuestAdded": "다른 퀘스트를 추가하기 전 현재 새 퀘스트를 편집 완료하여 닫으십시오.",
+        "QuestIDCopied": "이 퀘스트의 퀘스트 ID가 클립보드에 복사되었습니다.",
         "QuestMoved": "퀘스트를 새 폴더로 이동하고 새 상태를 부여했습니다 : {target}",
         "QuestAdded": "{status} 상태로 '{name}' 새 퀘스트가 추가되었습니다.",
         "QuestPrimary": "'{name}' 퀘스트는 새로운 기본 퀘스트입니다..",
