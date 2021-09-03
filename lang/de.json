@@ -48,6 +48,7 @@
       },
       "ContextMenu": {
         "CopyEntityLink": "Entität-Link kopieren.",
+        "CopyQuestID": "Copy quest ID",
         "PrimaryQuest": "Als primäre Quest (de)aktivieren."
       }
     },
@@ -134,6 +135,7 @@
       "UserCantOpen": "Benutzer {user} hat nicht die Berechtigungen, um diese Quest zu öffnen.",
       "LinkCopied": "Entitätslink für diese Quest wurde in die Zwischenablage kopiert.",
       "FinishQuestAdded": "Bitte schließe das Bearbeiten der Quest ab und schließe sie, bevor du eine neue hinzufügst.",
+      "QuestIDCopied": "Quest-ID für diese Quest wurde in die Zwischenablage kopiert.",
       "QuestMoved": "'{name}' verschoben und Ziel gesetzt auf: {target}.",
       "QuestAdded": "'{name}' als neue Quest mit Status {status} hinzugefügt.",
       "QuestPrimary": "'{name}' ist die neue primäre Quest.",
