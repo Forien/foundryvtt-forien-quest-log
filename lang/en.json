@@ -47,8 +47,9 @@
         "InActive": "Inactive"
       },
       "ContextMenu": {
-        "CopyEntityLink": "Copy entity content link.",
-        "PrimaryQuest": "Set / Unset as primary quest."
+        "CopyEntityLink": "Copy entity content link",
+        "CopyQuestID": "Copy quest ID",
+        "PrimaryQuest": "Set / Unset as primary quest"
       }
     },
 
@@ -134,6 +135,7 @@
       "UserCantOpen": "User {user} doesn't have permission to open this quest.",
       "LinkCopied": "Entity Link for this quest has been copied to clipboard.",
       "FinishQuestAdded": "Please finish editing and close current new quest before adding another.",
+      "QuestIDCopied": "Quest ID for this quest has been copied to clipboard.",
       "QuestMoved": "Moved '{name}' and set new status to: {target}.",
       "QuestAdded": "Added '{name}' as a new quest with status: {status}.",
       "QuestPrimary": "'{name}' is the new primary quest.",

@@ -139,6 +139,21 @@ export default class QuestTracker extends Application
       if (game.user.isGM)
       {
          menuItems.push({
+            name: 'ForienQuestLog.QuestLog.ContextMenu.CopyQuestID',
+            icon: '<i class="fas fa-key"></i>',
+            callback: (menu) =>
+            {
+               const questId = $(menu)?.closest('.quest-tracker-header')?.data('quest-id');
+               const quest = QuestDB.getQuest(questId);
+
+               if (quest && Utils.copyTextToClipboard(quest.id))
+               {
+                  ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestIDCopied'));
+               }
+            }
+         });
+
+         menuItems.push({
             name: 'ForienQuestLog.QuestLog.ContextMenu.PrimaryQuest',
             icon: '<i class="fas fa-star pad-l-0"></i>',
             callback: (menu) =>

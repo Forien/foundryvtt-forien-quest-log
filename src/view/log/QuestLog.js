@@ -147,6 +147,24 @@ export default class QuestLog extends Application
 
       if (game.user.isGM)
       {
+         const menuItemQuestID = {
+            name: 'ForienQuestLog.QuestLog.ContextMenu.CopyQuestID',
+            icon: '<i class="fas fa-key"></i>',
+            callback: (menu) =>
+            {
+               const questId = $(menu)?.closest('.drag-quest')?.data('quest-id');
+               const quest = QuestDB.getQuest(questId);
+
+               if (quest && Utils.copyTextToClipboard(quest.id))
+               {
+                  ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestIDCopied'));
+               }
+            }
+         };
+
+         menuItemsActive.push(menuItemQuestID);
+         menuItemsOther.push(menuItemQuestID);
+
          menuItemsActive.push({
             name: 'ForienQuestLog.QuestLog.ContextMenu.PrimaryQuest',
             icon: '<i class="pad-l-0 fas fa-star"></i>',

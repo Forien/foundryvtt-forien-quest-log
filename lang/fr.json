@@ -61,6 +61,7 @@
       "FinishQuestAdded": "Finissez d'éditer et fermez la nouvelle quête actuelle avant d'en ajouter une autre.",
       "LinkCopied": "Le lien vers cette quête a été copié dans le presse-papier.",
       "QuestAdded": "'{name}' est ajouté comme nouvelle quête avec le statut: {status}.",
+      "QuestIDCopied": "L'ID de cette quête a été copiée vers le presse-papier.",
       "QuestMoved": "Quête déplacée avec un nouveau statut : {target}",
       "QuestPrimary": "'{name}' est la nouvelle quête primaire.",
       "QuestTrackerNoActive": "Le traqueur de quête est activé, mais il n'y a pas pas de quête en cours actuellement.",
@@ -71,6 +72,7 @@
     "QuestLog": {
       "ContextMenu": {
         "CopyEntityLink": "Copier le contenu du lien de l'entité.",
+        "CopyQuestID": "Copier l'ID de la quête",
         "PrimaryQuest": "Activer / Désactiver comme quête primaire."
       },
       "SubTitle": "Quête faisant parti de: {0}",
