@@ -1,6 +1,7 @@
-import QuestDB       from './control/QuestDB.js';
-import Utils         from './control/Utils.js';
-import ViewManager   from './control/ViewManager.js';
+import SidebarManager   from './control/SidebarManager.js';
+import QuestDB          from './control/QuestDB.js';
+import Utils            from './control/Utils.js';
+import ViewManager      from './control/ViewManager.js';
 
 import { constants, noteControls, questStatus, sessionConstants, settings } from './model/constants.js';
 
@@ -362,8 +363,16 @@ export default class ModuleSettings
          config: true,
          default: true,
          type: Boolean,
-         onChange: () =>
+         onChange: (value) =>
          {
+            if (value)
+            {
+               SidebarManager.init();
+            }
+            else
+            {
+               SidebarManager.unregister();
+            }
          }
       });
 

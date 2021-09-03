@@ -5,6 +5,18 @@
   max-width: 400px;
   max-height: 750px;
 
+  @keyframes fql-jiggle {
+    0% {
+      transform: rotate(-0.25deg);
+      animation-timing-function: ease-in;
+    }
+
+    50% {
+      transform: rotate(0.5deg);
+      animation-timing-function: ease-out;
+    }
+  }
+
   a.entity-link {
     background: $tracker-color-background-entitylink;
     border: none;

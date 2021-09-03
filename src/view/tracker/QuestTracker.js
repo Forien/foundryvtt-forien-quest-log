@@ -63,12 +63,28 @@ export default class QuestTracker extends Application
       }
 
       /**
+       * Stores whether the header is being dragged.
+       *
+       * @type {boolean}
+       * @private
+       */
+      this._dragHeader = false;
+
+      /**
        * Stores whether the QuestTracker is pinned to the sidebar.
        *
        * @type {boolean}
        * @private
        */
-      this._pinned = false;
+      this._pinned = game.settings.get(constants.moduleName, settings.questTrackerPinned);
+
+      /**
+       * Stores whether the current position is in the sidebar pin drop rectangle.
+       *
+       * @type {boolean}
+       * @private
+       */
+      this._inPinDropRect = false;
    }
 
    /**
@@ -165,8 +181,16 @@ export default class QuestTracker extends Application
    }
 
    /**
+    * Gets the minimum width of this Application.
     *
-    * @returns {boolean}
+    * @returns {number} Minimum width.
+    */
+   get minWidth() { return this._appExtents.minWidth || 275; }
+
+   /**
+    * Is the QuestTracker pinned to the sidebar.
+    *
+    * @returns {boolean} QuestTracker pinned.
     */
    get pinned() { return this._pinned; }
 
@@ -182,8 +206,37 @@ export default class QuestTracker extends Application
       super.activateListeners(html);
 
       // Make the window draggable
-      const header = html.find('header')[0];
-      new Draggable(this, html, header, this.options.resizable);
+      const header = html.find('header');
+      new Draggable(this, html, header[0], this.options.resizable);
+
+      header[0].addEventListener('pointerdown', async (event) =>
+      {
+         if (event.target.classList.contains('fql-window-title') ||
+          event.target.classList.contains('fql-window-header'))
+         {
+            this._dragHeader = true;
+
+            this._pinned = false;
+
+            await game.settings.set(constants.moduleName, settings.questTrackerPinned, false);
+
+            header[0].setPointerCapture(event.pointerId);
+         }
+      });
+
+      header[0].addEventListener('pointerup', async (event) =>
+      {
+         header[0].releasePointerCapture(event.pointerId);
+         this._dragHeader = false;
+
+         if (this._inPinDropRect)
+         {
+            this._pinned = true;
+            await game.settings.set(constants.moduleName, settings.questTrackerPinned, true);
+            this.element.css('animation', '');
+            SidebarManager.updateTracker();
+         }
+      });
 
       html.on(jquery.click, '.header-button.close', void 0, this.close);
 
@@ -215,13 +268,6 @@ export default class QuestTracker extends Application
       html.on(jquery.click, '.quest-tracker-task', void 0, this._handleQuestTask.bind(this));
 
       /**
-       * @type {JQuery} The QuestTracker app element.
-       *
-       * @private
-       */
-      this._elemQuestTracker = $('#quest-tracker.fql-app');
-
-      /**
        * @type {JQuery} The window header element.
        *
        * @private
@@ -250,10 +296,10 @@ export default class QuestTracker extends Application
        * @private
        */
       this._appExtents = {
-         minWidth: parseInt(this._elemQuestTracker.css('min-width')),
-         maxWidth: parseInt(this._elemQuestTracker.css('max-width')),
-         minHeight: parseInt(this._elemQuestTracker.css('min-height')),
-         maxHeight: parseInt(this._elemQuestTracker.css('max-height'))
+         minWidth: parseInt(this.element.css('min-width')),
+         maxWidth: parseInt(this.element.css('max-width')),
+         minHeight: parseInt(this.element.css('min-height')),
+         maxHeight: parseInt(this.element.css('max-height'))
       };
 
       /**
@@ -267,12 +313,12 @@ export default class QuestTracker extends Application
       if (this._windowResizable)
       {
          this._elemResizeHandle.show();
-         this._elemQuestTracker.css('min-height', this._appExtents.minHeight);
+         this.element.css('min-height', this._appExtents.minHeight);
       }
       else
       {
          this._elemResizeHandle.hide();
-         this._elemQuestTracker.css('min-height', this._elemWindowHeader[0].scrollHeight);
+         this.element.css('min-height', this._elemWindowHeader[0].scrollHeight);
 
          // A bit of a hack. We need to call the Application setPosition now to make sure the element parameters
          // are correctly set as the exact height for the element is calculated in this.setPosition which is called
@@ -293,7 +339,9 @@ export default class QuestTracker extends Application
       this._scrollbarActive = this._elemWindowContent[0].scrollHeight > this._elemWindowContent[0].clientHeight;
 
       // Set current scrollbar active state and potentially set 'point-events' to 'auto'.
-      if (this._scrollbarActive) { this._elemQuestTracker.css('pointer-events', 'auto'); }
+      if (this._scrollbarActive) { this.element.css('pointer-events', 'auto'); }
+
+      if (this._pinned) { SidebarManager.updateTracker(); }
    }
 
    /**
@@ -487,34 +535,14 @@ export default class QuestTracker extends Application
     */
    setPosition({ pinned = this._pinned, ...opts } = {})
    {
-      // Pin width / height to min / max styles if defined.
-      if (opts)
+      const initialWidth = this.position.width;
+      const initialHeight = this.position.height;
+
+      if (pinned)
       {
-         if (typeof opts.width === 'number' && typeof opts.height === 'number')
-         {
-            if (opts.width < this._appExtents.minWidth) { opts.width = this._appExtents.minWidth; }
-            if (opts.width > this._appExtents.maxWidth) { opts.width = this._appExtents.maxWidth; }
-            if (opts.height < this._appExtents.minHeight) { opts.height = this._appExtents.minHeight; }
-            if (opts.height > this._appExtents.maxHeight) { opts.height = this._appExtents.maxHeight; }
-
-            if (!this._windowResizable)
-            {
-               // Add the extra `2` for small format (1080P and below screen size).
-               opts.height = this._elemWindowHeader[0].scrollHeight + this._elemWindowContent[0].scrollHeight + 2;
-            }
-         }
-
-         if (typeof opts.left === 'number' && typeof opts.top === 'number')
-         {
-            if (pinned)
-            {
-               opts.left = this.position.left;
-               opts.top = this.position.top;
-            }
-         }
-
-         // Mutates `opts` to set maximum left position.
-         SidebarManager.checkPosition(opts);
+         if (typeof opts.left === 'number') { opts.left = this.position.left; }
+         if (typeof opts.top === 'number') { opts.top = this.position.top; }
+         if (typeof opts.width === 'number') { opts.width = this.position.width; }
       }
 
       // Must set popOut temporarily to true as there is a gate in `Application.setPosition`.
@@ -524,17 +552,44 @@ export default class QuestTracker extends Application
 
       if (!this._windowResizable)
       {
-         const el = this.element[0];
-         const tHeight = this._elemWindowHeader[0].scrollHeight + this._elemWindowContent[0].scrollHeight + 2;
-         el.style.height = `${tHeight}px`;
+         // Add the extra `2` for small format (1080P and below screen size).
+         currentPosition.height = this._elemWindowHeader[0].scrollHeight + this._elemWindowContent[0].scrollHeight + 2;
       }
+
+      // Pin width / height to min / max styles if defined.
+      if (currentPosition.width < this._appExtents.minWidth) { currentPosition.width = this._appExtents.minWidth; }
+      if (currentPosition.width > this._appExtents.maxWidth) { currentPosition.width = this._appExtents.maxWidth; }
+      if (currentPosition.height < this._appExtents.minHeight) { currentPosition.height = this._appExtents.minHeight; }
+      if (currentPosition.height > this._appExtents.maxHeight) { currentPosition.height = this._appExtents.maxHeight; }
+
+      const el = this.element[0];
+
+      currentPosition.resizeWidth = initialWidth < currentPosition.width;
+      currentPosition.resizeHeight = initialHeight < currentPosition.height;
+
+      // Mutates `checkPosition` to set maximum left position. Must do this calculation after `super.setPosition`
+      // as in some cases `super.setPosition` will override the changes of `FoundryUIManager.checkPosition`.
+      const currentInPinDropRect = this._inPinDropRect;
+      this._inPinDropRect = SidebarManager.checkPosition(currentPosition);
+
+      // Set the jiggle animation if the position movement is coming from dragging the header and the pin drop state
+      // has changed.
+      if (!this._pinned && this._dragHeader && currentInPinDropRect !== this._inPinDropRect)
+      {
+         this.element.css('animation', this._inPinDropRect ? 'fql-jiggle 0.3s infinite' : '');
+      }
+
+      el.style.top = `${currentPosition.top}px`;
+      el.style.left = `${currentPosition.left}px`;
+      el.style.width = `${currentPosition.width}px`;
+      el.style.height = `${currentPosition.height}px`;
 
       const scrollbarActive = this._elemWindowContent[0].scrollHeight > this._elemWindowContent[0].clientHeight;
 
       if (scrollbarActive !== this._scrollbarActive)
       {
          this._scrollbarActive = scrollbarActive;
-         this._elemQuestTracker.css('pointer-events', scrollbarActive ? 'auto' : 'none');
+         this.element.css('pointer-events', scrollbarActive ? 'auto' : 'none');
       }
 
       if (currentPosition && currentPosition.width && currentPosition.height)
