@@ -1,12 +1,12 @@
 <div id="quest-tracker" class="fql-app fql-window-app" data-appid="{{appId}}">
-  <header class="fql-window-header flexrow">
-    <h4 class="fql-window-title">{{title}}</h4>
+  <header class="window-header flexrow">
+    <h4 class="window-title">{{title}}</h4>
     {{#each headerButtons}}
     <a class="header-button {{this.class}}"><i class="{{this.icon}}" title="{{localize this.title}}"></i>{{localize this.label}}</a>
     {{/each}}
   </header>
 
-  <section class="fql-window-content">
+  <section class="window-content">
     {{#if hasQuests}}<div class="quests">{{/if}}
       {{#each quests}}
       <div class="quest">

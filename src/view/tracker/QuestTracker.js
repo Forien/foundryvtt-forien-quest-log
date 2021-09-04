@@ -253,14 +253,14 @@ export default class QuestTracker extends Application
        *
        * @private
        */
-      this._elemWindowHeader = $('#quest-tracker .fql-window-header');
+      this._elemWindowHeader = $('#quest-tracker .window-header');
 
       /**
        * @type {JQuery} The window content element.
        *
        * @private
        */
-      this._elemWindowContent = $('#quest-tracker .fql-window-content');
+      this._elemWindowContent = $('#quest-tracker .window-content');
 
       /**
        * @type {JQuery} The window resize handle.

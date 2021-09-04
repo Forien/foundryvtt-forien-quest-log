@@ -21,8 +21,8 @@ export default class HandlerTracker
     */
    static async headerPointerDown(event, header, questTracker)
    {
-      if (event.target.classList.contains('fql-window-title') ||
-       event.target.classList.contains('fql-window-header'))
+      if (event.target.classList.contains('window-title') ||
+       event.target.classList.contains('window-header'))
       {
          questTracker._dragHeader = true;
 
