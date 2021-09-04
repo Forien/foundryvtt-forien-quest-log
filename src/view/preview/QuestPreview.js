@@ -3,7 +3,6 @@ import QuestDB                from '../../control/QuestDB.js';
 import Socket                 from '../../control/Socket.js';
 import TinyMCE                from '../../control/TinyMCE.js';
 import Utils                  from '../../control/Utils.js';
-import ViewManager            from '../../control/ViewManager.js';
 
 import HandlerAny             from './HandlerAny.js';
 import HandlerDetails         from './HandlerDetails.js';
@@ -50,9 +49,6 @@ import { constants, jquery, settings }  from '../../model/constants.js';
  *
  * The general control of Foundry when {@link https://foundryvtt.com/api/Application.html#render} is invoked goes as
  * follows:
- * - {@link QuestPreview.render} which is overridden to store the current QuestPreview instance in
- * {@link ViewManager.questPreview} Map by quest ID.
- *
  * - {@link QuestPreview.getData} prepares all data for the Handlebars template and sets the local user tracking
  * variables.
  *
@@ -62,6 +58,9 @@ import { constants, jquery, settings }  from '../../model/constants.js';
  * In the handler callbacks for the delete action for quests, tasks, & rewards a special semi-modal dialog is invoked
  * via {@link FQLDialog}. A single instance of it is rendered and reused across all delete actions. Please refer to the
  * documentation.
+ *
+ * {@link ViewManager} responds to `closeQuestPreview` and `renderQuestPreview` tracking the opened QuestPreview
+ * instances.
  *
  * @see {@link HandlerAny}
  * @see {@link HandlerDetails}
@@ -353,6 +352,13 @@ export default class QuestPreview extends FormApplication
    }
 
    /**
+    * Returns the associated {@link Quest}
+    *
+    * @returns {Quest} Associated Quest.
+    */
+   get quest() { return this._quest; }
+
+   /**
     * Provide TinyMCE overrides when an editor is activated. The overrides are important to provide custom options to
     * configure TinyMCE. There are various other content plugins enabled in the custom options and the ability to
     * respond to the `esc` key to quit editing.
@@ -527,7 +533,6 @@ export default class QuestPreview extends FormApplication
 
    /**
     * When closing this Foundry app:
-    * - Remove reference from {@link ViewManager.questPreview}
     * - Close any associated dialogs via {@link FQLDialog.closeDialogs}
     * - Close any associated {@link QuestPreview._permControl}
     * - Close any associated {@link QuestPreview._rewardImagePopup}
@@ -550,8 +555,6 @@ export default class QuestPreview extends FormApplication
     */
    async close({ noSave = false, ...options } = {})
    {
-      ViewManager.questPreview.delete(this._quest.id);
-
       FQLDialog.closeDialogs({ questId: this._quest.id });
 
       // If a permission control app / dialog is open close it.
@@ -663,21 +666,6 @@ export default class QuestPreview extends FormApplication
       });
 
       this.render(true, { focus: true });
-   }
-
-   /**
-    * When rendering window, add reference to global variable.
-    *
-    * @see {@link QuestPreview.close}
-    * @inheritDoc
-    * @override
-    * @see https://foundryvtt.com/api/Application.html#render
-    */
-   async render(force = false, options = { focus: true })
-   {
-      ViewManager.questPreview.set(this._quest.id, this);
-
-      return super.render(force, options);
    }
 
    /**

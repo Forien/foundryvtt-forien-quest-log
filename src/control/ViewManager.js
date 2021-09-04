@@ -1,6 +1,7 @@
-import QuestDB          from './QuestDB.js';
-import QuestLog         from '../view/log/QuestLog.js';
-import QuestTracker     from '../view/tracker/QuestTracker.js';
+import QuestDB       from './QuestDB.js';
+import QuestLog      from '../view/log/QuestLog.js';
+import QuestPreview  from '../view/preview/QuestPreview.js';
+import QuestTracker  from '../view/tracker/QuestTracker.js';
 
 import { constants, questStatus, questStatusI18n, settings } from '../model/constants.js';
 
@@ -53,6 +54,7 @@ export default class ViewManager
 
       // Whenever a QuestPreview closes and matches any tracked app that is adding a new quest set it to undefined.
       Hooks.on('closeQuestPreview', s_QUEST_PREVIEW_CLOSED);
+      Hooks.on('renderQuestPreview', s_QUEST_PREVIEW_RENDER);
 
       // Right now ViewManager responds to permission changes across add, remove, update of quests.
       Hooks.on(QuestDB.hooks.addQuestEntry, s_QUEST_ENTRY_ADD);
@@ -446,13 +448,33 @@ async function s_QUEST_ENTRY_UPDATE(questEntry, flags)
 }
 
 /**
- * Handles the `closeQuestPreview` hook.
+ * Handles the `closeQuestPreview` hook. Removes the QuestPreview from tracking and removes any current set
+ * `s_ADD_QUEST_PREVIEW` state if QuestPreview matches.
  *
  * @param {QuestPreview}   questPreview - The closed QuestPreview.
  */
 function s_QUEST_PREVIEW_CLOSED(questPreview)
 {
+   if (!(questPreview instanceof QuestPreview)) { return; }
+
    if (s_ADD_QUEST_PREVIEW === questPreview) { s_ADD_QUEST_PREVIEW = void 0; }
+
+   const quest = questPreview.quest;
+   if (quest !== void 0) { ViewManager.questPreview.delete(quest.id); }
+}
+
+/**
+ * Handles the `renderQuestPreview` hook; adding the quest preview to tracking.
+ *
+ * @param {QuestPreview}   questPreview - The rendered QuestPreview.
+ */
+function s_QUEST_PREVIEW_RENDER(questPreview)
+{
+   if (questPreview instanceof QuestPreview)
+   {
+      const quest = questPreview.quest;
+      if (quest !== void 0) { ViewManager.questPreview.set(quest.id, questPreview); }
+   }
 }
 
 /**

@@ -1,6 +1,5 @@
-import ViewManager from './ViewManager.js';
-
-import { constants, settings } from '../model/constants.js';
+import ViewManager   from './ViewManager.js';
+import QuestTracker  from '../view/tracker/QuestTracker.js';
 
 /**
  * Buffer space between sidebar and right side of quest tracker.
@@ -23,7 +22,7 @@ const s_SPACE_Y = 8;
 export default class SidebarManager
 {
    /**
-    * Registers window event callbacks.
+    * Registers browser window resize event callback and Foundry render Hook for {@link QuestTracker}.
     *
     * @param {object}   [opts] - Optional parameters.
     *
@@ -32,8 +31,9 @@ export default class SidebarManager
    static init({ updateTracker = false } = {})
    {
       window.addEventListener('resize', s_WINDOW_RESIZE);
+      Hooks.on('renderQuestTracker', s_QUEST_TRACKER_RENDERED);
 
-      sidebar.currentCollapsed = ui.sidebar._collapsed;
+      sidebar.currentCollapsed = ui?.sidebar?._collapsed || false;
       s_STORE_STATE();
 
       if (updateTracker) { SidebarManager.updateTracker(); }
@@ -102,13 +102,13 @@ export default class SidebarManager
    }
 
    /**
-    * Updates the tracker bounds based on pinned state
+    * Updates the tracker bounds based on pinned state and invokes {@link QuestTracker.setPosition} if changes occur.
     */
    static updateTracker()
    {
       const tracker = ViewManager.questTracker;
 
-      if (!tracker.rendered) { return; }
+      if (!tracker.rendered && Application.RENDER_STATES.RENDERING !== tracker._state) { return; }
 
       const sidebarData = sidebar.currentCollapsed ? sidebar.collapsed : sidebar.open;
 
@@ -142,15 +142,21 @@ export default class SidebarManager
          }
       }
 
-      tracker.setPosition(position);
+      // Only post a position change if there are modifications.
+      if (position.top !== tracker.position.top || position.left !== tracker.position.left ||
+       position.width !== tracker.position.width || position.height !== tracker.position.height)
+      {
+         tracker.setPosition(position);
+      }
    }
 
    /**
-    * Unregisters window event callbacks.
+    * Unregisters browser window event callback and Foundry render hook for {@link QuestTracker}.
     */
    static unregister()
    {
       window.removeEventListener('resize', s_WINDOW_RESIZE);
+      Hooks.off('renderQuestTracker', s_QUEST_TRACKER_RENDERED);
    }
 }
 
@@ -248,6 +254,16 @@ const hotbar = {
    width: -1,
    height: -1
 };
+
+/**
+ * Invokes `updateTracker` when the QuestTracker is rendered.
+ *
+ * @param {Application} app - The Application instance being rendered.
+ */
+function s_QUEST_TRACKER_RENDERED(app)
+{
+   if (app instanceof QuestTracker) { SidebarManager.updateTracker(); }
+}
 
 /**
  * Stores the current sidebar state.

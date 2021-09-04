@@ -1,4 +1,3 @@
-import SidebarManager   from './control/SidebarManager.js';
 import QuestDB          from './control/QuestDB.js';
 import Utils            from './control/Utils.js';
 import ViewManager      from './control/ViewManager.js';

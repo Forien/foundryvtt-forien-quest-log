@@ -325,8 +325,6 @@ export default class QuestTracker extends Application
 
       // Set current scrollbar active state and potentially set 'point-events' to 'auto'.
       if (this._scrollbarActive) { this.element.css('pointer-events', 'auto'); }
-
-      if (this._pinned) { SidebarManager.updateTracker(); }
    }
 
    /**
