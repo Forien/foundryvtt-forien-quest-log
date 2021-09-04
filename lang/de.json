@@ -199,10 +199,6 @@
         "Enable": "Erlaube Seriösen Spielern das Bearbeiten von Quests",
         "EnableHint": "Aktivieren, um Seriösen Spielern (Trusted Players) erweiterte Bearbeitungsmöglichkeiten und Statusänderungen für Quests, die sie kontrollieren einzuräumen."
       },
-      "questTrackerManaged": {
-        "ForienQuestLog.Settings.questTrackerManaged.Enable": "Questtracker managen",
-        "ForienQuestLog.Settings.questTrackerManaged.EnableHint": "Aktivieren, um den Questtracker andocken und die Sidebar überlappen lassen zu können."
-      },
       "questTrackerResizable": {
         "Enable": "Questtracker skalierbar",
         "EnableHint": "Aktivieren, um zu erlauben, dass manuell die Größe des Questtrackers verändert werden kann."

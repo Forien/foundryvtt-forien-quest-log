@@ -181,7 +181,7 @@ export default class QuestTracker extends Application
    {
       const buttons = super._getHeaderButtons();
 
-      // Remove default `Close` label for close button. 
+      // Remove default `Close` label for close button.
       const closeButton = buttons.find((button) => button?.class === 'close');
       if (closeButton) { closeButton.label = void 0; }
 
@@ -487,22 +487,19 @@ export default class QuestTracker extends Application
 
       const el = this.element[0];
 
-      if (game.settings.get(constants.moduleName, settings.questTrackerManaged))
+      currentPosition.resizeWidth = initialWidth < currentPosition.width;
+      currentPosition.resizeHeight = initialHeight < currentPosition.height;
+
+      // Mutates `checkPosition` to set maximum left position. Must do this calculation after `super.setPosition`
+      // as in some cases `super.setPosition` will override the changes of `FoundryUIManager.checkPosition`.
+      const currentInPinDropRect = this._inPinDropRect;
+      this._inPinDropRect = SidebarManager.checkPosition(currentPosition);
+
+      // Set the jiggle animation if the position movement is coming from dragging the header and the pin drop state
+      // has changed.
+      if (!this._pinned && this._dragHeader && currentInPinDropRect !== this._inPinDropRect)
       {
-         currentPosition.resizeWidth = initialWidth < currentPosition.width;
-         currentPosition.resizeHeight = initialHeight < currentPosition.height;
-
-         // Mutates `checkPosition` to set maximum left position. Must do this calculation after `super.setPosition`
-         // as in some cases `super.setPosition` will override the changes of `FoundryUIManager.checkPosition`.
-         const currentInPinDropRect = this._inPinDropRect;
-         this._inPinDropRect = SidebarManager.checkPosition(currentPosition);
-
-         // Set the jiggle animation if the position movement is coming from dragging the header and the pin drop state
-         // has changed.
-         if (!this._pinned && this._dragHeader && currentInPinDropRect !== this._inPinDropRect)
-         {
-            this.element.css('animation', this._inPinDropRect ? 'fql-jiggle 0.3s infinite' : '');
-         }
+         this.element.css('animation', this._inPinDropRect ? 'fql-jiggle 0.3s infinite' : '');
       }
 
       el.style.top = `${currentPosition.top}px`;
@@ -532,16 +529,6 @@ export default class QuestTracker extends Application
       }
 
       return currentPosition;
-   }
-
-   /**
-    * Resets the state when the QuestTracker is not managed.
-    */
-   async setUnmanaged()
-   {
-      this._pinned = false;
-      this._inPinDropRect = false;
-      await game.settings.set(constants.moduleName, settings.questTrackerPinned, false);
    }
 }
 

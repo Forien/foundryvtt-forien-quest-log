@@ -23,8 +23,7 @@ const s_SPACE_Y = 8;
 export default class SidebarManager
 {
    /**
-    * Registers window event callbacks if {@link FQLSettings.questTrackerManaged} is true. Also invoked from
-    * {@link ModuleSettings} for changes to {@link FQLSettings.questTrackerManaged}.
+    * Registers window event callbacks.
     *
     * @param {object}   [opts] - Optional parameters.
     *
@@ -32,10 +31,7 @@ export default class SidebarManager
     */
    static init({ updateTracker = false } = {})
    {
-      if (game.settings.get(constants.moduleName, settings.questTrackerManaged))
-      {
-         window.addEventListener('resize', s_WINDOW_RESIZE);
-      }
+      window.addEventListener('resize', s_WINDOW_RESIZE);
 
       sidebar.currentCollapsed = ui.sidebar._collapsed;
       s_STORE_STATE();
@@ -112,7 +108,7 @@ export default class SidebarManager
    {
       const tracker = ViewManager.questTracker;
 
-      if (!tracker.rendered || !game.settings.get(constants.moduleName, settings.questTrackerManaged)) { return; }
+      if (!tracker.rendered) { return; }
 
       const sidebarData = sidebar.currentCollapsed ? sidebar.collapsed : sidebar.open;
 
@@ -150,8 +146,7 @@ export default class SidebarManager
    }
 
    /**
-    * Unregisters window event callbacks. Invoked from {@link ModuleSettings} for changes to
-    * {@link FQLSettings.questTrackerManaged}.
+    * Unregisters window event callbacks.
     */
    static unregister()
    {

@@ -356,27 +356,6 @@ export default class ModuleSettings
          }
       });
 
-      game.settings.register(constants.moduleName, settings.questTrackerManaged, {
-         name: 'ForienQuestLog.Settings.questTrackerManaged.Enable',
-         hint: 'ForienQuestLog.Settings.questTrackerManaged.EnableHint',
-         scope: scope.world,
-         config: true,
-         default: true,
-         type: Boolean,
-         onChange: async (value) =>
-         {
-            if (value)
-            {
-               SidebarManager.init({ updateTracker: true });
-            }
-            else
-            {
-               SidebarManager.unregister();
-               await ViewManager.questTracker.setUnmanaged();
-            }
-         }
-      });
-
       game.settings.register(constants.moduleName, settings.questTrackerPinned, {
          scope: scope.client,
          config: false,

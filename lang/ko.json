@@ -9,7 +9,7 @@
       "NoPermission": "사용 권한이 부족하여 이 엔티티 시트를 볼 수 없습니다.",
       "Quest": "퀘스트",
       "QuestIs": "퀘스트가 {statusLabel} 상태가 되었습니다",
-  
+
       "QuestTypes": {
         "Active": "진행 중",
         "Available": "활성화",
@@ -24,12 +24,12 @@
           "InActive": "비공개"
         }
       },
-  
+
       "Buttons": {
         "AddNewQuest": "퀘스트 추가",
         "AddNewTask": "목표 추가"
       },
-  
+
       "QuestLog": {
         "Title": "퀘스트 로그",
         "SubTitle": "서브 퀘스트 : {0}",
@@ -52,7 +52,7 @@
           "PrimaryQuest": "기본 퀘스트로 설정/해제."
         }
       },
-  
+
       "QuestPreview": {
         "Title": "퀘스트 세부 정보 - {name}",
         "SubTitle": "서브 퀘스트 : {0}",
@@ -68,11 +68,11 @@
         "DragDropRewards": "보상으로 추가할 아이템을 여기로 끌어다 놓으십시오",
         "InvalidQuestId": "퀘스트 ID가 잘못되어 미리보기를 열 수 없습니다.",
         "RewardDrop": "FQL (quest reward): {userName} 유저가 '{itemName}' 아이템을 {actorName} 액터에 가져갔습니다.",
-  
+
         "HeaderButtons": {
           "Show": "플레이어들에게 보이기"
         },
-  
+
         "Management": {
           "QuestSettings": "퀘스트 설정:",
           "ConfigurePermissions": "권한 설정",
@@ -82,13 +82,13 @@
           "SplashInfo": "클릭하여 이미지 설정",
           "SplashQuestIcon": "퀘스트 아이콘으로 설정"
         },
-  
+
         "Tabs": {
           "Details": "세부 정보",
           "QuestManagement": "퀘스트 관리",
           "GMNotes": "GM 노트"
         },
-  
+
         "Notifications": {
           "BadUUID": "UUID: {uuid}에 대한 문서를 검색할 수 없습니다.",
           "WrongItemType": "Forien's Quest Log는 월드 아이템과 컴펜디움 아이템만을 보상으로 할 수 있습니다.",
@@ -103,7 +103,7 @@
 
         "QuestTracker": {
             "Title": "퀘스트 트래커",
-      
+
             "NoPrimary": "가능한 기본 퀘스트가 없습니다.",
 
             "Tooltips": {
@@ -111,7 +111,7 @@
               "PrimaryQuestUnshow": "모든 퀘스트를 표시하려면 클릭한다."
             }
         },
-  
+
       "DeleteDialog": {
         "TitleDel": "{name} 삭제",
         "HeaderDel": "정말로 삭제하시겠습니까? : <p>'{name}'</p>",
@@ -121,7 +121,7 @@
         "Delete": "삭제",
         "Cancel": "취소"
       },
-  
+
       "CloseDialog": {
         "Title": "삭제",
         "Header": "확실합니까??",
@@ -129,7 +129,7 @@
         "Discard": "폐기",
         "Cancel": "취소"
       },
-  
+
       "Notifications": {
         "CannotOpen": "퀘스트 세부 정보를 열 수 없습니다. 권한이 없거나 퀘스트가 더 이상 존재하지 않거나 제공된 ID가 유효하지 않을 수 있습니다.",
         "UserCantOpen": "{user} 플레이어는 이 퀘스트를 열람할 권한을 가지고 있지 않습니다.",
@@ -141,7 +141,7 @@
         "QuestPrimary": "'{name}' 퀘스트는 새로운 기본 퀘스트입니다..",
         "QuestTrackerNoActive": "퀘스트 트래커가 활성화 되었지만 진행 중인 퀘스트가 없습니다."
     },
-  
+
       "Settings": {
         "allowPlayersDrag": {
           "Enable": "플레이어에게 보상을 인벤토리로 드래그 허용",
@@ -199,16 +199,12 @@
           "Enable": "신뢰할 수 있는 플레이어의 퀘스트 편집 허용",
           "EnableHint": "신뢰할 수 있는 플레이어가 퀘스트 소유를 넘어 퀘스트 편집 권한 확장과 상태 제어 권한을 허용하도록 하려면 선택하십시오."
         },
-        "questTrackerManaged": {
-            "Enable": "퀘스트 트래커 관리",
-            "EnableHint": "활성화시 퀘스트 트래커 도킹과 사이드바에 제어기를 오버랩 할 수 있다."
-          },
         "questTrackerResizable": {
           "Enable": "퀘스트 트래커 크기 조절 기능",
           "EnableHint": "활성화시 퀘스트 트래커의 크기를 수동으로 조절할 수 있다."
         }
       },
-  
+
       "Tooltips": {
         "SetAvailable": "활성화로 설정",
         "SetActive": "진행 중으로 설정",
@@ -239,14 +235,14 @@
         "ChangeGiverImgPos": "퀘스트 제공자 이미지 정렬 변경",
         "ChangeSplashPos": "스플래시 아트 정렬 변경"
       },
-  
+
       "Migration": {
         "CouldNotMigrate": "Forien's Quest Log - 마이그레이션 할 수 없었음. 퀘스트: '{name}'",
         "Start": "Forien's Quest Log - 데이터 마이그레이션 중, 리로드하지 마십시오.",
         "Schema": "Forien's Quest Log - 스키마 버전 '{version}' 데이터 마이그레이션 중 ",
         "Complete": "Forien's Quest Log - 데이터 마이그레이션 완료."
       },
-  
+
       "Api": {
         "__COMMENT__": "No need for translating lines starting with 'API ERROR', they show in console for developers only.",
         "create": {
