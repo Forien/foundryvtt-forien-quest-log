@@ -181,6 +181,10 @@ export default class QuestTracker extends Application
    {
       const buttons = super._getHeaderButtons();
 
+      // Remove default `Close` label for close button. 
+      const closeButton = buttons.find((button) => button?.class === 'close');
+      if (closeButton) { closeButton.label = void 0; }
+
       const primaryState = sessionStorage.getItem(sessionConstants.trackerShowPrimary) === 'true';
       const primaryIcon = primaryState ? 'fas fa-star' : 'far fa-star';
       const primaryTitle = primaryState ? 'ForienQuestLog.QuestTracker.Tooltips.PrimaryQuestUnshow' :

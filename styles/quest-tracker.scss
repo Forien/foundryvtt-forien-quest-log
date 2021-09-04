@@ -72,6 +72,14 @@
     padding: 8px 0 8px 0;
   }
 
+  .no-quests {
+    flex: none;
+    padding: 12px 0 8px 0;
+
+    // Must specifically target elements to support context menu.
+    filter: drop-shadow(1px 1px 1px #000);
+  }
+
   .quest {
     overflow-x: hidden;
     overflow-y: hidden;
