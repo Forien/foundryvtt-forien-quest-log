@@ -34,6 +34,7 @@
   <ul class="subquests-box">
     {{#each data_subquest}}
     <li class="subquest-item" title="{{statusTooltip}}">
+      {{#if isPrimary}}<i class="is-primary fas fa-star pad-l-4" title="{{localize 'ForienQuestLog.Tooltips.PrimaryQuest'}}"></i>{{/if}}
       {{#if ../canEdit}}
         {{#if isHidden}}<i class="is-hidden fas fa-eye-slash pad-l-4" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
         {{#if isPersonal}}<i class="is-personal fas fa-user-shield pad-l-4" title="{{{personalActors}}}"></i>{{/if}}
