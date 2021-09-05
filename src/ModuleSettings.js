@@ -1,3 +1,4 @@
+import FoundryUIManager from './control/FoundryUIManager.js';
 import QuestDB          from './control/QuestDB.js';
 import Utils            from './control/Utils.js';
 import ViewManager      from './control/ViewManager.js';
@@ -360,6 +361,10 @@ export default class ModuleSettings
          config: false,
          type: Boolean,
          default: false,
+         onChange: () =>
+         {
+            FoundryUIManager.updateTrackerPinned();
+         }
       });
 
       game.settings.register(constants.moduleName, settings.questTrackerPosition, {

@@ -1,4 +1,4 @@
-import SidebarManager   from '../../control/SidebarManager.js';
+import FoundryUIManager from '../../control/FoundryUIManager.js';
 import QuestAPI         from '../../control/public/QuestAPI.js';
 import QuestDB          from '../../control/QuestDB.js';
 import Socket           from '../../control/Socket.js';
@@ -53,7 +53,7 @@ export default class HandlerTracker
          questTracker._pinned = true;
          await game.settings.set(constants.moduleName, settings.questTrackerPinned, true);
          questTracker.element.css('animation', '');
-         SidebarManager.updateTracker();
+         FoundryUIManager.updateTracker();
       }
    }
 

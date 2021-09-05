@@ -1,5 +1,5 @@
+import FoundryUIManager from './FoundryUIManager.js';
 import QuestDB          from './QuestDB.js';
-import SidebarManager   from './SidebarManager.js';
 import Socket           from './Socket.js';
 import Utils            from './Utils.js';
 import ViewManager      from './ViewManager.js';
@@ -53,7 +53,7 @@ export default class FQLHooks
       Hooks.once('setup', FQLHooks.foundrySetup);
 
       // Respond to Foundry in game hooks.
-      Hooks.on('collapseSidebar', SidebarManager.collapseSidebar);
+      Hooks.on('collapseSidebar', FoundryUIManager.collapseSidebar);
       Hooks.on('dropActorSheetData', FQLHooks.dropActorSheetData);
       Hooks.on('dropCanvasData', FQLHooks.dropCanvasData);
       Hooks.on('getSceneControlButtons', FQLHooks.getSceneControlButtons);
@@ -160,7 +160,7 @@ export default class FQLHooks
       Socket.listen();
 
       // Start watching sidebar updates.
-      SidebarManager.init();
+      FoundryUIManager.init();
 
       // Need to track any current primary quest as Foundry settings don't provide a old / new state on setting
       // change. The current primary quest state is saved in session storage.

@@ -2,41 +2,26 @@ import ViewManager   from './ViewManager.js';
 import QuestTracker  from '../view/tracker/QuestTracker.js';
 
 /**
- * Buffer space between sidebar and right side of quest tracker.
- *
- * @type {number}
+ * Manages the state of the Foundry UI elements including the {@link Hotbar}, {@link SceneNavigation} and
+ * {@link Sidebar} providing management of the {@link QuestTracker}. Controls pinning the QuestTracker to the sidebar
+ * and modifications to the SceneNavigation width when pinned.
  */
-const s_SPACE_X = 8;
-
-/**
- * Buffer space between hotbar and bottom side of quest tracker.
- *
- * @type {number}
- */
-const s_SPACE_Y = 8;
-
-/**
- * Manages the state of the Foundry {@link Sidebar} providing management of the {@link QuestTracker}. Controls
- * pinning the QuestTracker to the sidebar.
- */
-export default class SidebarManager
+export default class FoundryUIManager
 {
    /**
-    * Registers browser window resize event callback and Foundry render Hook for {@link QuestTracker}.
-    *
-    * @param {object}   [opts] - Optional parameters.
-    *
-    * @param {boolean}  [opts.updateTracker=false] - Update QuestTracker.
+    * Registers browser window resize event callback and Foundry render Hook for {@link SceneNavigation} and
+    * {@link QuestTracker}.
     */
-   static init({ updateTracker = false } = {})
+   static init()
    {
       window.addEventListener('resize', s_WINDOW_RESIZE);
+      Hooks.on('renderSceneNavigation', FoundryUIManager.updateTrackerPinned);
       Hooks.on('renderQuestTracker', s_QUEST_TRACKER_RENDERED);
 
       sidebar.currentCollapsed = ui?.sidebar?._collapsed || false;
       s_STORE_STATE();
 
-      if (updateTracker) { SidebarManager.updateTracker(); }
+      FoundryUIManager.updateTrackerPinned();
    }
 
    /**
@@ -98,7 +83,7 @@ export default class SidebarManager
    {
       sidebar.currentCollapsed = collapsed;
       s_STORE_STATE();
-      SidebarManager.updateTracker();
+      FoundryUIManager.updateTracker();
    }
 
    /**
@@ -148,6 +133,21 @@ export default class SidebarManager
       {
          tracker.setPosition(position);
       }
+   }
+
+   /**
+    * Updates state when the quest tracker is pinned / unpinned. Currently manipulates the Foundry navigation
+    * component width so that it doesn't overlap the pinned quest tracker.
+    */
+   static updateTrackerPinned()
+   {
+      const tracker = ViewManager.questTracker;
+      const pinned = tracker.pinned;
+      const sidebarData = sidebar.open;
+
+      let width = navigation.left + sidebarData.width + s_SPACE_NAV_X;
+      width += pinned ? tracker.position.width : 0;
+      ui?.nav?.element?.css('width', `calc(100% - ${width}px`);
    }
 
    /**
@@ -213,6 +213,15 @@ class FQLRect
 }
 
 /**
+ * Stores the navigation element parameters.
+ *
+ * @type {object}
+ */
+const navigation = {
+   left: ''
+};
+
+/**
  * Stores the state of the sidebar.
  *
  * @type {object}
@@ -262,8 +271,29 @@ const hotbar = {
  */
 function s_QUEST_TRACKER_RENDERED(app)
 {
-   if (app instanceof QuestTracker) { SidebarManager.updateTracker(); }
+   if (app instanceof QuestTracker) { FoundryUIManager.updateTracker(); }
 }
+
+/**
+ * Buffer space between sidebar and right side of quest tracker.
+ *
+ * @type {number}
+ */
+const s_SPACE_X = 8;
+
+/**
+ * Buffer space between hotbar and bottom side of quest tracker.
+ *
+ * @type {number}
+ */
+const s_SPACE_Y = 8;
+
+/**
+ * Buffer space for the navigation bar.
+ *
+ * @type {number}
+ */
+const s_SPACE_NAV_X = 22;
 
 /**
  * Stores the current sidebar state.
@@ -272,6 +302,9 @@ function s_STORE_STATE()
 {
    const sidebarElem = ui?.sidebar?.element[0];
    const sidebarRect = sidebarElem?.getBoundingClientRect();
+
+   const navLeft = ui?.nav?.element?.css('left');
+   if (typeof navLeft === 'string') { navigation.left = parseInt(navLeft, 10); }
 
    if (sidebarRect)
    {
@@ -345,5 +378,5 @@ function s_STORE_STATE()
 function s_WINDOW_RESIZE()
 {
    s_STORE_STATE();
-   SidebarManager.updateTracker();
+   FoundryUIManager.updateTracker();
 }

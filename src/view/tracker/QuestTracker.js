@@ -1,6 +1,6 @@
 import HandlerTracker   from './HandlerTracker.js';
+import FoundryUIManager from '../../control/FoundryUIManager.js';
 import QuestDB          from '../../control/QuestDB.js';
-import SidebarManager   from '../../control/SidebarManager.js';
 import Socket           from '../../control/Socket.js';
 import Utils            from '../../control/Utils.js';
 import FQLContextMenu   from '../FQLContextMenu.js';
@@ -491,7 +491,7 @@ export default class QuestTracker extends Application
       // Mutates `checkPosition` to set maximum left position. Must do this calculation after `super.setPosition`
       // as in some cases `super.setPosition` will override the changes of `FoundryUIManager.checkPosition`.
       const currentInPinDropRect = this._inPinDropRect;
-      this._inPinDropRect = SidebarManager.checkPosition(currentPosition);
+      this._inPinDropRect = FoundryUIManager.checkPosition(currentPosition);
 
       // Set the jiggle animation if the position movement is coming from dragging the header and the pin drop state
       // has changed.
