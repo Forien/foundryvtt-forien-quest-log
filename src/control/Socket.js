@@ -216,46 +216,47 @@ export default class Socket
    }
 
    /**
-    * Potentially sets a new {@link Quest.status} via {@link Socket.setQuestStatus}. If the current user is not a GM
-    * a GM level user must be logged in for a successful completion of the set status operation.
+    * Sets a new primary quest if a GM user or sends a socket message if set by a trusted player w/ edit. If the
+    * current user is not a GM a GM level user must be logged in for a successful completion of the set status
+    * operation.
     *
-    * @param {object}            opts - Optional parameters.
+    * @param {object}   opts - Optional parameters.
     *
-    * @param {Quest}             opts.quest - The current quest being manipulated.
+    * @param {Quest}    opts.quest - The current quest being manipulated. It
     *
     * @returns {Promise<void>}
     */
    static async setQuestPrimary({ quest })
    {
-      let handled = false;
-
-      // If the current user is a GM or trusted player with edit capability and owner of the quest immediately perform
-      // the status move.
+      // If the current user is a GM immediately set the primary quest.
       if (game.user.isGM)
       {
+         // Get any currently set primary quest.
          const currentQuestEntry = QuestDB.getQuestEntry(game.settings.get(
           constants.moduleName, settings.primaryQuest));
 
-         // Update old primary quest.
+         // If the current set primary quest is different from provided quest then set new primary quest.
          if (currentQuestEntry !== void 0 && currentQuestEntry.id !== quest.id)
          {
             await game.settings.set(constants.moduleName, settings.primaryQuest, quest.id);
          }
          else
          {
+            // There isn't a primary quest set or the same quest is potentially being unset.
             await game.settings.set(constants.moduleName, settings.primaryQuest, quest.isPrimary ? '' : quest.id);
          }
-
-         handled = true;
       }
-
-      game.socket.emit(s_EVENT_NAME, {
-         type: s_MESSAGE_TYPES.questSetPrimary,
-         payload: {
-            questId: quest.id,
-            handled
-         }
-      });
+      else
+      {
+         // Otherwise send a socket message for any remote GMs logged in to handle request.
+         game.socket.emit(s_EVENT_NAME, {
+            type: s_MESSAGE_TYPES.questSetPrimary,
+            payload: {
+               questId: quest.id,
+               handled: false
+            }
+         });
+      }
    }
 
    /**
@@ -420,11 +421,11 @@ async function handleQuestRewardDrop(data)
 }
 
 /**
- * TODO: PROVIDE BETTER COMMENTS
+ * Handles setting a primary quest by a remote GM user.
  *
- * This message is sent from {@link Socket.questSetPrimary}.
+ * This message is sent from {@link Socket.setQuestPrimary}.
  *
- * @param {object} data - The data payload contains `questId` and `target` along with `handled`.
+ * @param {object} data - The data payload contains `questId` along with `handled`.
  *
  * @returns {Promise<void>}
  */
@@ -436,19 +437,21 @@ async function handleQuestSetPrimary(data)
       const quest = QuestDB.getQuest(data.payload.questId);
       if (quest === void 0) { return; }
 
+      // Get any currently set primary quest.
       const currentQuestEntry = QuestDB.getQuestEntry(game.settings.get(constants.moduleName, settings.primaryQuest));
 
-      // Update old primary quest.
+      // If the current set primary quest is different from provided quest then set new primary quest.
       if (currentQuestEntry !== void 0 && currentQuestEntry.id !== quest.id)
       {
          await game.settings.set(constants.moduleName, settings.primaryQuest, quest.id);
       }
       else
       {
+         // There isn't a primary quest set or the same quest is potentially being unset.
          await game.settings.set(constants.moduleName, settings.primaryQuest, quest.isPrimary ? '' : quest.id);
       }
 
-      // Set handled to true so no other GM level users act upon the move.
+      // Set handled to true so no other GM level users act upon the action.
       data.payload.handled = true;
    }
 }

@@ -41,9 +41,6 @@ export default class QuestTracker extends Application
    {
       super(options);
 
-      /**
-       * @type {object}
-       */
       try
       {
          /**
@@ -66,7 +63,7 @@ export default class QuestTracker extends Application
        * Stores whether the header is being dragged.
        *
        * @type {boolean}
-       * @private
+       * @package
        */
       this._dragHeader = false;
 
@@ -74,7 +71,7 @@ export default class QuestTracker extends Application
        * Stores whether the QuestTracker is pinned to the sidebar.
        *
        * @type {boolean}
-       * @private
+       * @package
        */
       this._pinned = game.settings.get(constants.moduleName, settings.questTrackerPinned);
 
@@ -82,7 +79,7 @@ export default class QuestTracker extends Application
        * Stores whether the current position is in the sidebar pin drop rectangle.
        *
        * @type {boolean}
-       * @private
+       * @package
        */
       this._inPinDropRect = false;
    }

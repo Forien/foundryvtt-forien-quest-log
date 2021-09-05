@@ -95,10 +95,10 @@ const questTabIndex = {
 /**
  * Stores the keys used with session storage.
  *
- * @type {{currentPrimaryState: string, trackerFolderState: string, trackerShowPrimary: string}}
+ * @type {FQLSessionConstants}
  */
 const sessionConstants = {
-   currentPrimaryState: 'forien.questlog.currentPrimaryState',
+   currentPrimaryQuest: 'forien.questlog.currentPrimaryQuest',
    trackerFolderState: 'forien.questtracker.folderState-',
    trackerShowPrimary: 'forien.questtracker.showPrimary'
 };
@@ -128,6 +128,16 @@ const settings = {
 };
 
 export { constants, jquery, noteControls, questStatus, questStatusI18n, questTabIndex, sessionConstants, settings };
+
+/**
+ * @typedef {object} FQLSessionConstants
+ *
+ * @property {string}   currentPrimaryQuest - Stores current primary quest set from {@link FQLSettings.primaryQuest}.
+ *
+ * @property {string}   trackerFolderState - Stores a boolean with tacked on quest ID for whether objectives are shown.
+ *
+ * @property {string}   trackerShowPrimary - Stores a boolean if the tracker is showing the primary quest or all quests.
+ */
 
 /**
  * @typedef {object} FQLSettings

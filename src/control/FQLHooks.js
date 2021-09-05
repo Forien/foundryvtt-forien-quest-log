@@ -23,7 +23,7 @@ import { constants, noteControls, sessionConstants, settings } from '../model/co
  * - `setup` - {@link FQLHooks.foundrySetup}
  *
  * Foundry game hooks:
- * - `collapseSidebar` - {@link FQLHooks.collapseSidebar} - Handle tracking state of the sidebar.
+ * - `collapseSidebar` - {@link FoundryUIManager.collapseSidebar} - Handle tracking state of the sidebar.
  * - `dropActorSheetData` - {@link FQLHooks.dropActorSheetData} - Handle drop data for reward items in actor sheet.
  * - `dropCanvasData` - {@link FQLHooks.dropCanvasData} - Handle drop data for {@link Quest} on Foundry canvas.
  * - `getSceneControlButtons` - {@link FQLHooks.getSceneControlButtons} - Add FQL scene controls to 'note'.
@@ -164,7 +164,7 @@ export default class FQLHooks
 
       // Need to track any current primary quest as Foundry settings don't provide a old / new state on setting
       // change. The current primary quest state is saved in session storage.
-      sessionStorage.setItem(sessionConstants.currentPrimaryState,
+      sessionStorage.setItem(sessionConstants.currentPrimaryQuest,
        game.settings.get(constants.moduleName, settings.primaryQuest));
 
       // Initialize current client based macro images based on current state.
@@ -220,6 +220,7 @@ export default class FQLHooks
    }
 
    /**
+    * Handles Quest data drops. Also handles setting image state of any macro dropped from the FQL macro compendiums.
     *
     * @param {object} data - The dropped data object.
     *
@@ -240,6 +241,7 @@ export default class FQLHooks
 
       let macro = existingMacro;
 
+      // If there is no existing macro then create one.
       if (!existingMacro)
       {
          const macroData = {
@@ -253,6 +255,7 @@ export default class FQLHooks
          macro = await Macro.create(macroData, { displaySheet: false });
       }
 
+      // If the macro is from the FQL macro compendiums then update the image state.
       if (macro)
       {
          const macroSetting = macro.getFlag(constants.moduleName, 'macro-setting');
@@ -263,6 +266,7 @@ export default class FQLHooks
    }
 
    /**
+    * Handles creating a macro for a Quest drop on the hotbar. Uses existing macro if possible before creating a macro.
     *
     * @param {object} data - The dropped data object.
     *
@@ -329,14 +333,15 @@ export default class FQLHooks
    {
       let handled = false;
 
-      // Verify if the hotbar drop is data that is handled.
+      // Verify if the hotbar drop is data that is handled; either a quest or macro from FQL macro compendium.
       if (data.type === Quest.documentName || (data.type === 'Macro' && typeof data.pack === 'string' &&
        data.pack.startsWith(constants.moduleName)))
       {
          handled = true;
       }
 
-      // Wrap the handling code in an async IIFE.
+      // Wrap the handling code in an async IIFE. If this is a Quest data drop or a macro from the FQL macro compendium
+      // pack then handle it.
       (async () =>
       {
          if (data.type === 'Macro' && typeof data.pack === 'string' && data.pack.startsWith(constants.moduleName))

@@ -93,10 +93,12 @@ export default class FoundryUIManager
    {
       const tracker = ViewManager.questTracker;
 
+      // Make sure the tracker is rendered or rendering.
       if (!tracker.rendered && Application.RENDER_STATES.RENDERING !== tracker._state) { return; }
 
       const sidebarData = sidebar.currentCollapsed ? sidebar.collapsed : sidebar.open;
 
+      // Store the current position before any modification.
       const position = {
          pinned: false,
          top: tracker.position.top,
@@ -105,12 +107,13 @@ export default class FoundryUIManager
          height: tracker.position.height
       };
 
+      // If the tracker is pinned set the top / left based on the sidebar.
       if (tracker.pinned)
       {
          position.top = sidebarData.top;
          position.left = sidebarData.left - tracker.position.width - s_SPACE_X;
       }
-      else
+      else // Make sure the tracker isn't overlapping the sidebar or hotbar.
       {
          const trackerRight = tracker.position.left + tracker.position.width;
          if (trackerRight > sidebarData.left - s_SPACE_X)
@@ -136,8 +139,8 @@ export default class FoundryUIManager
    }
 
    /**
-    * Updates state when the quest tracker is pinned / unpinned. Currently manipulates the Foundry navigation
-    * component width so that it doesn't overlap the pinned quest tracker.
+    * Updates state when the quest tracker is pinned / unpinned. Currently manipulates the Foundry
+    * {@link SceneNavigation} component width so that it doesn't overlap the pinned quest tracker.
     */
    static updateTrackerPinned()
    {
@@ -161,7 +164,8 @@ export default class FoundryUIManager
 }
 
 /**
- * Defines a rectangle with essential contains check.
+ * Defines a rectangle with essential contains check. Used to define the pinning rectangle next to the
+ * upper left of the sidebar.
  */
 class FQLRect
 {
@@ -296,7 +300,7 @@ const s_SPACE_Y = 8;
 const s_SPACE_NAV_X = 22;
 
 /**
- * Stores the current sidebar state.
+ * Stores the current Foundry UI calculated bounds state.
  */
 function s_STORE_STATE()
 {
@@ -310,7 +314,7 @@ function s_STORE_STATE()
    {
       const sidebarData = sidebar.currentCollapsed ? sidebar.collapsed : sidebar.open;
 
-      // Store gapX / gapY calculating any ::before elements if it has not already been set.
+      // Store gapX / gapY calculating including any ::before elements if it has not already been set.
       // This is only calculated one time on startup.
       if (sidebarData.gapX < 0)
       {
@@ -345,6 +349,8 @@ function s_STORE_STATE()
 
    if (hotbarRect)
    {
+      // Store gapX / gapY calculating including any ::before elements if it has not already been set.
+      // This is only calculated one time on startup.
       if (hotbar.gapX < 0)
       {
          let beforeWidth;
@@ -373,7 +379,7 @@ function s_STORE_STATE()
 }
 
 /**
- * Callback for window resize events.
+ * Callback for window resize events. Update tracker position.
  */
 function s_WINDOW_RESIZE()
 {

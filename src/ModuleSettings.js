@@ -307,7 +307,16 @@ export default class ModuleSettings
          }
       });
 
-      // TODO: PROVIDE BETTER COMMENTS
+      /**
+       * This is the most complex module setting handling as quite a bit of logic is contained below to handle
+       * setting the primary quest. Since the onChange event does not pass the old and new value the old value for
+       * {@link FQLSettings.primaryQuest} is stored in {@link FQLSessionConstants.currentPrimaryQuest} which is
+       * initially set in {@link FQLHooks.foundryReady}.
+       *
+       * This setting is set from {@link Socket.setQuestPrimary} or the handler in Socket.
+       *
+       * `value` may be a quest ID or an empty string.
+       */
       game.settings.register(constants.moduleName, settings.primaryQuest, {
          scope: scope.world,
          config: false,
@@ -315,18 +324,25 @@ export default class ModuleSettings
          type: String,
          onChange: (value) =>
          {
+            // Any current primary quest.
             const currentQuestEntry = QuestDB.getQuestEntry(
-             sessionStorage.getItem(sessionConstants.currentPrimaryState));
+             sessionStorage.getItem(sessionConstants.currentPrimaryQuest));
 
+            // The new primary quest or none at all if value is an empty string.
             const newQuestEntry = QuestDB.getQuestEntry(value);
 
+            // Store all quest IDs that need to be updated which include parent / subquests.
             const updateQuestIds = [];
+
+            // Store the new primary quest name to post a notification.
             let newPrimaryQuestName = void 0;
 
-            // Update old primary quest.
+            // Store the old primary quest IDs that need UI updates.
             if (currentQuestEntry && currentQuestEntry.id !== value)
             {
                updateQuestIds.push(...currentQuestEntry.questIds);
+
+               // If there is a new quest then store the quest name and also all quests that need UI updates.
                if (newQuestEntry)
                {
                   newPrimaryQuestName = newQuestEntry.quest.name;
@@ -335,12 +351,16 @@ export default class ModuleSettings
             }
             else if (newQuestEntry)
             {
+               // There was not a presently set primary quest, so store only the new
                updateQuestIds.push(...newQuestEntry.questIds);
+
                if (value.length) { newPrimaryQuestName = newQuestEntry.quest.name; }
             }
 
-            sessionStorage.setItem(sessionConstants.currentPrimaryState, value);
+            // Store the current primary quest. Either Quest ID or empty string.
+            sessionStorage.setItem(sessionConstants.currentPrimaryQuest, value);
 
+            // If any quest IDs were stored then update all QuestPreviews after enriching the quest data.
             if (updateQuestIds.length)
             {
                QuestDB.enrichQuests(...updateQuestIds);
@@ -348,6 +368,7 @@ export default class ModuleSettings
                ViewManager.renderAll({ force: true });
             }
 
+            // Post a notification if a new primary quest was set.
             if (newPrimaryQuestName)
             {
                ViewManager.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestPrimary',
@@ -363,6 +384,7 @@ export default class ModuleSettings
          default: false,
          onChange: () =>
          {
+            // The quest tracker pinned state has changed so update any Foundry UI management.
             FoundryUIManager.updateTrackerPinned();
          }
       });
