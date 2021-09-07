@@ -49,7 +49,7 @@
         "ContextMenu": {
           "CopyEntityLink": "엔티티 내용 링크 복사",
           "CopyQuestID": "퀘스트 ID 복사",
-          "PrimaryQuest": "기본 퀘스트로 설정/해제."
+          "PrimaryQuest": "중요 퀘스트로 설정/해제."
         }
       },
 
@@ -96,18 +96,18 @@
         },
 
         "Tooltips": {
-            "PrimaryQuestSet": "기본 퀘스트를 만들려면 클릭한다.",
-            "PrimaryQuestUnset": "기본 퀘스트를 해제하려면 클릭한다."
+            "PrimaryQuestSet": "중요 퀘스트를 만들려면 클릭한다.",
+            "PrimaryQuestUnset": "중요 퀘스트를 해제하려면 클릭한다."
           }
         },
 
         "QuestTracker": {
             "Title": "퀘스트 트래커",
 
-            "NoPrimary": "가능한 기본 퀘스트가 없습니다.",
+            "NoPrimary": "가능한 중요 퀘스트가 없습니다.",
 
             "Tooltips": {
-              "PrimaryQuestShow": "기본 퀘스트를 표시하려면 클릭한다.",
+              "PrimaryQuestShow": "중요 퀘스트를 표시하려면 클릭한다.",
               "PrimaryQuestUnshow": "모든 퀘스트를 표시하려면 클릭한다."
             }
         },
@@ -138,7 +138,7 @@
         "QuestIDCopied": "이 퀘스트의 퀘스트 ID가 클립보드에 복사되었습니다.",
         "QuestMoved": "퀘스트를 새 폴더로 이동하고 새 상태를 부여했습니다 : {target}",
         "QuestAdded": "{status} 상태로 '{name}' 새 퀘스트가 추가되었습니다.",
-        "QuestPrimary": "'{name}' 퀘스트는 새로운 기본 퀘스트입니다..",
+        "QuestPrimary": "'{name}' 퀘스트는 새로운 중요 퀘스트입니다..",
         "QuestTrackerNoActive": "퀘스트 트래커가 활성화 되었지만 진행 중인 퀘스트가 없습니다."
     },
 
@@ -219,7 +219,7 @@
         "LockAll": "모두 잠그다",
         "UnlockAll": "모두 잠금 해제",
         "HiddenQuestNoPlayers": "이 퀘스트는 모든 플레이어에게 숨겨져 있습니다.",
-        "PrimaryQuest": "기본 퀘스트",
+        "PrimaryQuest": "중요 퀘스트",
         "RewardHidden": "보상이 비공개 상태입니다. 공개하려면 클릭하십시오.",
         "RewardVisible": "보상이 공개 상태입니다. 비공개하려면 클릭하십시오.",
         "RewardLocked": "보상이 잠금 상태입니다. 해제하려면 클릭하십시오.",
