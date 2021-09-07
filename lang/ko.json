@@ -8,7 +8,7 @@
       "NoDocument": "UUID: {uuid}에 대해 엔티티를 불러올 수 없습니다.",
       "NoPermission": "사용 권한이 부족하여 이 엔티티 시트를 볼 수 없습니다.",
       "Quest": "퀘스트",
-      "QuestIs": "퀘스트가 {statusLabel} 상태가 되었습니다",
+      "QuestIs": "{statusLabel} 상태인 퀘스트입니다.",
 
       "QuestTypes": {
         "Active": "진행 중",
@@ -19,9 +19,9 @@
         "Labels": {
           "active": "진행 중",
           "available": "활성화",
-          "completed": "성공",
-          "failed": "실패",
-          "InActive": "비공개"
+          "completed": "완료된",
+          "failed": "실패한",
+          "inactive": "비공개"
         }
       },
 
@@ -42,9 +42,9 @@
         "Tabs": {
           "Available": "활성화",
           "InProgress": "진행 중",
-          "Completed": "완료",
-          "Failed": "실패",
-          "InActive": "비활성화"
+          "Completed": "완료됨",
+          "Failed": "실패함",
+          "InActive": "비공개"
         },
         "ContextMenu": {
           "CopyEntityLink": "엔티티 내용 링크 복사",
