@@ -2,15 +2,11 @@
   "name": "forien-quest-log",
   "title": "Forien's Quest Log",
   "description": "Provides comprehensive Quest Log system for players and Game Masters",
-  "author": "Forien — Forien#2130",
+  "author": "Michael Leahy (TyphonJS) - MLeahy#4299",
   "authors": [
     {
       "name": "Forien",
       "url": "https://www.patreon.com/forien"
-    },
-    {
-      "name": "Evan Clarke (errational)",
-      "url": "https://www.patreon.com/deathsave"
     },
     {
       "name": "Michael Leahy (TyphonJS) - MLeahy#4299",
@@ -24,7 +20,7 @@
   "flags": {
     "allowBugReporter": true
   },
-  "version": "0.7.6",
+  "version": "0.7.7",
   "minimumCoreVersion": "0.8.6",
   "compatibleCoreVersion": "0.8.9",
   "scripts": [],
@@ -112,7 +108,7 @@
   "dependencies": [],
   "socket": true,
   "manifest": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/latest/download/module.json",
-  "download": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/download/0.7.6/module.zip",
+  "download": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/download/0.7.7/module.zip",
   "protected": false,
   "coreTranslation": false,
   "library": false
