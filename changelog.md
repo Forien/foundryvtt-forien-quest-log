@@ -1,4 +1,77 @@
 # Changelog
+## Release 0.7.7
+This release is a major quality of life update.
+
+- Quest Tracker overhaul 
+  - Removed floating quest log.
+  - Quest tracker is now dockable / resizable.
+  - UI management 
+
+- Macro Compendiums
+  - GM & Player macro compendiums.
+  - Most common macros to control FQL are pre-made and ready to drop in hotbar.
+
+- TinyMCE Corrections
+  - Default font in editor is the same when viewing quest.
+  - New smaller font sizes.
+  - Correct implementation for line spacing.
+
+- Theming 
+  - Support for Whetstone.
+  - Support for Lib Themer (beta) / not officially released yet.
+
+## Release 0.7.6
+This release is a major quality of life update. There is deeper integration with Foundry allowing quests to be made into Notes on the canvas and many enhancements to the TinyMCE content editing capabilities.
+
+- FQL journal entry opens quest details.
+- Drag FQL journal entry or quest from quest log to canvas as a Note.
+- Quest tracker / floating log can interact w/ objectives.
+- Content entity linking in objectives / abstract rewards
+- TinyMCE
+   - New fonts
+   - oEmbed plugin
+      - style border
+      - style drop shadow
+   - Styles
+      - Blend mode
+      - Border
+      - Filters
+         - Blur
+         - Drop Shadow
+         - Grayscale
+      - Float
+      - Fonts
+         - Neon
+         - Line height
+      - Margin
+      - Opacity
+   - Source Code Editing
+   - CSS selector
+      - background gradient
+      - background before / after
+     
+## Release 0.7.5
+Small quality of life update.
+
+Fix for Issue #98.
+Esc key now cancels all single line input editing.
+For all single line input fields cursor is set to end of input.
+The default module setting for countHidden is now false instead of true.
+Updated French translation / language file.
+
+## Release 0.7.4
+Brings substantial finishing aspects to FQL
+
+Improved user experience
+Trusted Player Edit
+New quest creation workflow
+In-memory QuestDB
+and much more!
+
+## Release 0.7.0-0.7.3
+Total rewrite that fixes most known bugs, courtesy of @typhonrt.
+Existing quests will be migrated, except that quest rewards will be removed and need to re-added manually.
+Remember to back up your world before installing.
 
 ## Release 0.6.0
 * Set compatible with Foundry 0.8.6 (and removes compatibility with lower versions)

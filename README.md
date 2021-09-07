@@ -30,8 +30,9 @@ A button to access the Quest Log is situated on the bottom of Journal Directory 
 FQL is quite user-friendly with an intuitive UI, however you might want to [check out the Wiki](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/wiki) for more detailed usage including macros and Quest API details for external developers integrations. 
 
 There are also a series of useful in depth video tutorials on YouTube that cover each recent release:
-- [v0.7.5](https://youtu.be/cakE2a9MedM)
+- [v0.7.7](https://youtu.be/lfSYJXVQAcE)
 - [v0.7.6](https://youtu.be/Dn2iprrcPpY)
+- [v0.7.5](https://youtu.be/cakE2a9MedM)
 
 
 ## Features
