@@ -53,7 +53,6 @@ export default class FQLHooks
       Hooks.once('setup', FQLHooks.foundrySetup);
 
       // Respond to Foundry in game hooks.
-      Hooks.on('collapseSidebar', FoundryUIManager.collapseSidebar);
       Hooks.on('dropActorSheetData', FQLHooks.dropActorSheetData);
       Hooks.on('dropCanvasData', FQLHooks.dropCanvasData);
       Hooks.on('getSceneControlButtons', FQLHooks.getSceneControlButtons);

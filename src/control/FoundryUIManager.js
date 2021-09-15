@@ -15,6 +15,7 @@ export default class FoundryUIManager
    static init()
    {
       window.addEventListener('resize', s_WINDOW_RESIZE);
+      Hooks.on('collapseSidebar', FoundryUIManager.collapseSidebar);
       Hooks.on('renderSceneNavigation', FoundryUIManager.updateTrackerPinned);
       Hooks.on('renderQuestTracker', s_QUEST_TRACKER_RENDERED);
 
@@ -159,6 +160,8 @@ export default class FoundryUIManager
    static unregister()
    {
       window.removeEventListener('resize', s_WINDOW_RESIZE);
+      Hooks.off('collapseSidebar', FoundryUIManager.collapseSidebar);
+      Hooks.off('renderSceneNavigation', FoundryUIManager.updateTrackerPinned);
       Hooks.off('renderQuestTracker', s_QUEST_TRACKER_RENDERED);
    }
 }
