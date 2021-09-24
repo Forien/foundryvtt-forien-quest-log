@@ -206,7 +206,7 @@ export default class QuestPreview extends FormApplication
          template: 'modules/forien-quest-log/templates/quest-preview.html',
          width: 700,
          height: 540,
-         minimizable: false,
+         minimizable: true,
          resizable: true,
          submitOnChange: false,
          submitOnClose: false,
