@@ -374,9 +374,30 @@ export default class FQLHooks
     * Opens the {@link QuestTracker} if the game user is a GM or if FQL isn't hidden to players by module setting
     * {@link FQLSettings.hideFQLFromPlayers}.
     */
-   static async openQuestTracker()
+   static async openQuestTracker(options)
    {
       await game.settings.set(constants.moduleName, settings.questTrackerEnable, true);
+
+      if (typeof options === 'object')
+      {
+         // Select only constraint related parameters.
+         const constraints =
+          (({ left, top, width, height, pinned }) => ({ left, top, width, height, pinned }))(options);
+
+         if (Object.keys(constraints).length > 0)
+         {
+            // Set to indicate an override of any pinned state.
+            constraints.override = true;
+
+            const tracker = ViewManager.questTracker;
+
+            // Defer to make sure quest tracker is rendered before setting position.
+            setTimeout(() =>
+            {
+               if (tracker.rendered) { tracker.setPosition(constraints); }
+            }, 0);
+         }
+      }
    }
 
    /**
