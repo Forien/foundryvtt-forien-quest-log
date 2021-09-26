@@ -361,28 +361,60 @@ export default class FQLHooks
    /**
     * Opens the QuestLog if the game user is a GM or if FQL isn't hidden to players by module setting
     * {@link FQLSettings.hideFQLFromPlayers}.
+    *
+    * @param {object}               [opts] - Optional parameters.
+    *
+    * @param {number|null}          [opts.left] - The left offset position in pixels.
+    *
+    * @param {number|null}          [opts.top] - The top offset position in pixels.
+    *
+    * @param {number|null}          [opts.width] - The application width in pixels.
+    *
+    * @param {number|string|null}   [opts.height] - The application height in pixels.
     */
-   static openQuestLog()
+   static openQuestLog(opts)
    {
-      if (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers))
+      if (!game.user.isGM && game.settings.get(constants.moduleName, settings.hideFQLFromPlayers)) { return; }
+
+      let constraints = {};
+
+      if (typeof opts === 'object')
       {
-         ViewManager.questLog.render(true, { focus: true });
+         // Select only constraint related parameters.
+         constraints = (({ left, top, width, height }) => ({ left, top, width, height }))(opts);
       }
+
+      ViewManager.questLog.render(true, { focus: true, ...constraints });
    }
 
    /**
     * Opens the {@link QuestTracker} if the game user is a GM or if FQL isn't hidden to players by module setting
     * {@link FQLSettings.hideFQLFromPlayers}.
+    *
+    * @param {object}               [opts] - Optional parameters.
+    *
+    * @param {number|null}          [opts.left] - The left offset position in pixels.
+    *
+    * @param {number|null}          [opts.top] - The top offset position in pixels.
+    *
+    * @param {number|null}          [opts.width] - The application width in pixels.
+    *
+    * @param {number|null}          [opts.height] - The application height in pixels.
+    *
+    * @param {boolean}              [opts.pinned] - Sets the pinned state.
+    *
+    * @param {boolean}              [opts.resizable] - Sets the resizable state.
     */
-   static async openQuestTracker(options)
+   static async openQuestTracker(opts)
    {
+      if (!game.user.isGM && game.settings.get(constants.moduleName, settings.hideFQLFromPlayers)) { return; }
+
       await game.settings.set(constants.moduleName, settings.questTrackerEnable, true);
 
-      if (typeof options === 'object')
+      if (typeof opts === 'object')
       {
          // Select only constraint related parameters.
-         const constraints =
-          (({ left, top, width, height, pinned }) => ({ left, top, width, height, pinned }))(options);
+         const constraints = (({ left, top, width, height, pinned }) => ({ left, top, width, height, pinned }))(opts);
 
          if (Object.keys(constraints).length > 0)
          {
@@ -395,6 +427,15 @@ export default class FQLHooks
             setTimeout(() =>
             {
                if (tracker.rendered) { tracker.setPosition(constraints); }
+            }, 0);
+         }
+
+         // Handle setting quest tracker resizable change.
+         if (typeof opts.resizable === 'boolean')
+         {
+            setTimeout(() =>
+            {
+               game.settings.set(constants.moduleName, settings.questTrackerResizable, opts.resizable);
             }, 0);
          }
       }
