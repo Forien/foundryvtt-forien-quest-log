@@ -403,6 +403,8 @@ export default class FQLHooks
     *
     * @param {boolean}              [opts.pinned] - Sets the pinned state.
     *
+    * @param {boolean}              [opts.primary] - Sets whether showing the primary quest is enabled.
+    *
     * @param {boolean}              [opts.resizable] - Sets the resizable state.
     */
    static async openQuestTracker(opts)
@@ -413,6 +415,12 @@ export default class FQLHooks
 
       if (typeof opts === 'object')
       {
+         // Handle setting quest tracker primary change.
+         if (typeof opts.primary === 'boolean')
+         {
+            sessionStorage.setItem(sessionConstants.trackerShowPrimary, (opts.primary).toString());
+         }
+
          // Select only constraint related parameters.
          const constraints = (({ left, top, width, height, pinned }) => ({ left, top, width, height, pinned }))(opts);
 
