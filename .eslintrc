@@ -32,7 +32,8 @@
         "event",
         "name",
         "parent",
-        "status"
+        "status",
+        "top"
       ]
     }]
   }

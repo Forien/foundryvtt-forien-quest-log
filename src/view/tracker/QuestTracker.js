@@ -446,13 +446,34 @@ export default class QuestTracker extends Application
     *
     * @param {number|null}          [opts.scale] - The application scale as a numeric factor where 1.0 is default.
     *
-    * @param {boolean}              [opts.pinned] -
+    * @param {boolean}              [opts.override] - Forces any manual pinned setting to take effect.
+    *
+    * @param {boolean}              [opts.pinned] - Sets the pinned state.
     *
     * @returns {{left: number, top: number, width: number, height: number, scale:number}}
     * The updated position object for the application containing the new values.
     */
-   setPosition({ pinned = this._pinned, ...opts } = {})
+   setPosition({ override, pinned = this._pinned, ...opts } = {})
    {
+      // Potentially force override any pinned state. This is done from FQLHooks.openQuestTracker.
+      if (typeof override === 'boolean')
+      {
+         if (pinned)
+         {
+            this._pinned = true;
+            this._inPinDropRect = true;
+            game.settings.set(constants.moduleName, settings.questTrackerPinned, true);
+            FoundryUIManager.updateTracker();
+            return opts; // Early out as updateTracker above calls setPosition again.
+         }
+         else
+         {
+            this._pinned = false;
+            this._inPinDropRect = false;
+            game.settings.set(constants.moduleName, settings.questTrackerPinned, false);
+         }
+      }
+
       const initialWidth = this.position.width;
       const initialHeight = this.position.height;
 
