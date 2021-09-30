@@ -383,7 +383,7 @@ export default class Utils
     */
    static registerHandlebarsHelpers()
    {
-      Handlebars.registerHelper('format', (stringId, ...arrData) =>
+      Handlebars.registerHelper('fql_format', (stringId, ...arrData) =>
       {
          let objData;
          if (typeof arrData[0] === 'object')
