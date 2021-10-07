@@ -12,7 +12,7 @@
       {{/if}}
     {{else}}
       {{#with giverData}}
-        <div class="quest-giver-image" data-actor-uuid="{{uuid}}" style="background-image: url({{img}});" title="{{name}}"></div>
+        <div class="quest-giver-image" data-actor-uuid="{{uuid}}" style="background-image: url('{{img}}');" title="{{name}}"></div>
         {{#if (and (or ../canEdit ../playerEdit) ../image img)}}
           {{#if hasTokenImg}}
             <span class="toggleImage" title="{{localize 'ForienQuestLog.Tooltips.ToggleImage'}}"><i class="fas fa-user-circle"></i></span>
@@ -66,7 +66,7 @@
       </div>
 
       {{#if splash.length}}
-      <div class="splash-image-link" style="background-image: url({{splash}});background-position: {{splashPos}};" title="View Quest Image">
+      <div class="splash-image-link" style="background-image: url('{{splash}}');background-position: {{splashPos}};" title="View Quest Image">
         <span><i class="fas fa-eye"></i></span>
       </div>
       {{/if}}
@@ -188,7 +188,7 @@
         {{#each data_rewards}}
         <li class="reward {{type}}-reward {{#if hidden}}reward-hidden{{/if}}" data-uuidv4="{{uuidv4}}">
           <div class="reward-image-container {{#if (and (eq type 'abstract') ../canEdit)}}can-edit{{/if}}">
-            <div class="reward-image" style="background-image: url({{img}})" data-uuidv4="{{uuidv4}}"></div>
+            <div class="reward-image" style="background-image: url('{{img}}')" data-uuidv4="{{uuidv4}}"></div>
           </div>
           <div class="editable-container {{#if draggable}}draggable{{/if}} {{#if isLink}}is-link{{/if}}" data-transfer="{{transfer}}" data-uuidv4="{{uuidv4}}" {{#if draggable}}draggable="true"{{/if}}>
             <p class="reward-name">{{{name}}}</p>

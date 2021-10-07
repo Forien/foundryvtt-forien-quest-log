@@ -10,10 +10,10 @@
     {{#with enrich}}
     <li class="drag-quest" data-quest-id="{{id}}" draggable="true">
       {{#if (eq questIconType 'quest-giver')}}
-        <div class="img" style="background-image: url({{giverData.img}});" title="{{giverData.name}}"></div>
+        <div class="img" style="background-image: url('{{giverData.img}}');" title="{{giverData.name}}"></div>
       {{/if}}
       {{#if (eq questIconType 'splash-image')}}
-        <div class="img" style="background-image: url({{splash}});background-position: {{splashPos}};" title="View Quest Image"></div>
+        <div class="img" style="background-image: url('{{splash}}');background-position: {{splashPos}};" title="View Quest Image"></div>
       {{/if}}
       {{#if isPrimary}}<i class="is-primary fas fa-star pad-l-4" title="{{localize 'ForienQuestLog.Tooltips.PrimaryQuest'}}"></i>{{/if}}
       {{#if canEdit}}
