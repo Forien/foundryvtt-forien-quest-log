@@ -8,7 +8,8 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![Foundry Hub Endorsements](https://img.shields.io/endpoint?logoColor=white&url=https%3A%2F%2Fwww.foundryvtt-hub.com%2Fwp-json%2Fhubapi%2Fv1%2Fpackage%2Fforien-quest-log%2Fshield%2Fendorsements)](https://www.foundryvtt-hub.com/package/forien-quest-log/)
 
-**NOTE** This is an unofficial forked version of the module maintained by the [League of Foundry Developers](https://discord.gg/gzemMfHURH) to provide module continuity while Forien is unavailable.
+**NOTE** This is an unofficial forked version of the module maintained by the [League of Foundry Developers](https://discord.gg/gzemMfHURH) to provide module continuity while Forien is unavailable. 
+The `0.7.x` series of FQL was guided by `TyphonJS` and is in maintenance mode. However, a new module in the works by TyphonJS that moves the questing experience beyond FQL is available at [typhonjs-fvtt/quest-log](https://github.com/typhonjs-fvtt/quest-log).
 
 **[Compatibility]**: _FoundryVTT_ 0.8.6 (as of version 0.6.0)
 
