@@ -133,21 +133,28 @@ export default class FQLHooks
       // Only attempt to run DB migration for GM.
       if (game.user.isGM) { await DBMigration.migrate(); }
 
-      // Add the FQL unique Quest data type to the Foundry core data types.
-      CONST.ENTITY_TYPES?.push(Quest.documentName);
-      CONST.ENTITY_LINK_TYPES?.push(Quest.documentName);
+      // Disable synthetic quest type registration for Foundry `v9+`. As it turns out `CONST` was locked down last
+      // minute in the v9 release cycle. There is a replacement module / continuing the quest log that will enable this
+      // functionality again with a different implementation. You can join the TyphonJS Discord server to get an
+      // announcement when that is available: https://discord.gg/mnbgN8f
+      if (!foundry.utils.isNewerVersion(game.version ?? game.data.version, '0.8.9'))
+      {
+         // Add the FQL unique Quest data type to the Foundry core data types.
+         CONST.ENTITY_TYPES?.push(Quest.documentName);
+         CONST.ENTITY_LINK_TYPES?.push(Quest.documentName);
 
-      // Add the FQL Quest data type to CONFIG.
-      CONFIG[Quest.documentName] = {
-         entityClass: Quest,
-         documentClass: Quest,
-         collection: QuestCollection,
-         sidebarIcon: 'fas fa-scroll',
-         sheetClass: QuestPreview
-      };
+         // Add the FQL Quest data type to CONFIG.
+         CONFIG[Quest.documentName] = {
+            entityClass: Quest,
+            documentClass: Quest,
+            collection: QuestCollection,
+            sidebarIcon: 'fas fa-scroll',
+            sheetClass: QuestPreview
+         };
 
-      // Add our QuestCollection to the game collections.
-      game.collections.set(Quest.documentName, new QuestCollection());
+         // Add our QuestCollection to the game collections.
+         game.collections.set(Quest.documentName, new QuestCollection());
+      }
 
       // Initialize the in-memory QuestDB. Loads all quests that the user can see at this point.
       await QuestDB.init();
