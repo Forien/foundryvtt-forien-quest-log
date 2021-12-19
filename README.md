@@ -8,8 +8,14 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![Foundry Hub Endorsements](https://img.shields.io/endpoint?logoColor=white&url=https%3A%2F%2Fwww.foundryvtt-hub.com%2Fwp-json%2Fhubapi%2Fv1%2Fpackage%2Fforien-quest-log%2Fshield%2Fendorsements)](https://www.foundryvtt-hub.com/package/forien-quest-log/)
 
+**NOTE** The `0.7.9` update to FQL brings compatibility to version 9 of Foundry VTT at the expense of disabling 
+"document linking" for quests. [Please see issue #6 regarding more details](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/issues/6). 
+There is a new continuation module for the quest log that will be released in the coming months that will enable this 
+functionality again.   
+
 **NOTE** This is an unofficial forked version of the module maintained by the [League of Foundry Developers](https://discord.gg/gzemMfHURH) to provide module continuity while Forien is unavailable. 
 The `0.7.x` series of FQL was guided by `TyphonJS` and is in maintenance mode. However, a new module in the works by TyphonJS that moves the questing experience beyond FQL is available at [typhonjs-fvtt/quest-log](https://github.com/typhonjs-fvtt/quest-log).
+The estimate for the new quest log release is late January / early February and there will be an easy upgrade path.
 
 **[Compatibility]**: _FoundryVTT_ 0.8.6 (as of version 0.6.0)
 

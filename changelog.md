@@ -1,4 +1,13 @@
 # Changelog
+## Release 0.7.9
+- Disable synthetic quest type registration for Foundry `v9+`. As it turns out `CONST` was locked down last
+minute in the v9 release cycle. The feature affected is "document linking" for quests. There is a replacement module / 
+continuing the quest log that will enable this functionality again with a different implementation. You can join the 
+TyphonJS Discord server to get an announcement when the new module is available: https://discord.gg/mnbgN8f
+
+## Release 0.7.8
+- A few fixes for external module conflicts.
+
 ## Release 0.7.7
 This release is a major quality of life update.
 
