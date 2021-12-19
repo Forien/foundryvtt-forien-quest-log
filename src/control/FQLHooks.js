@@ -137,7 +137,7 @@ export default class FQLHooks
       // minute in the v9 release cycle. There is a replacement module / continuing the quest log that will enable this
       // functionality again with a different implementation. You can join the TyphonJS Discord server to get an
       // announcement when that is available: https://discord.gg/mnbgN8f
-      if (!foundry.utils.isNewerVersion(game.version ?? game.data.version, '0.8.9'))
+      if (foundry.utils.isNewerVersion(9, game.version ?? game.data.version))
       {
          // Add the FQL unique Quest data type to the Foundry core data types.
          CONST.ENTITY_TYPES?.push(Quest.documentName);
