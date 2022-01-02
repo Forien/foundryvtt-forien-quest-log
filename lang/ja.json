@@ -3,14 +3,19 @@
     "NewQuest": "クエストを追加",
     "QuestLogButton": "クエストログ",
     "Quests": "{0}個のクエスト",
-    "SampleReward": "例：300の経験点",
-    "SampleTask": "例：魔王を討伐する",
+    "FloatingQuestWindow": "フロートするクエストウィンドウ",
+    "NoActiveQuests": "アクティブなクエストがありません。",
+    "NoDocument": "UUID:{uuid}のデータを読み込めませんでした。",
+    "NoPermission": "このデータを閲覧する権限を持っていません。",
+    "Quest": "クエスト",
+    "QuestIs": "クエスト状態{statusLabel}",
 
     "QuestTypes": {
-      "InProgress": "進行中",
+      "Active": "進行中",
+      "Available": "受注可能",
       "Completed": "完了",
       "Failed": "失敗",
-      "Hidden": "秘匿",
+      "InActive": "無効",
       "Labels": {
         "available": "受注可能",
         "active": "進行中",
@@ -23,18 +28,6 @@
     "Buttons": {
       "AddNewQuest": "新しいクエストを追加",
       "AddNewTask": "追加"
-    },
-
-    "QuestForm": {
-      "Title": "新しいクエストを追加",
-      "QuestGiver": "クエスト依頼主",
-      "QuestGiverPlaceholder": "Actor's name or entity's UUID",
-      "QuestTitle": "クエスト名",
-      "DragDropActor": "キャラクター、アイテムまたは資料をここにドラッグ＆ドロップするとクエストの依頼主として設定できます。",
-      "QuestDescription": "クエスト内容",
-      "QuestGMNotes": "GMノート",
-      "Submit": "保存",
-      "SubquestOf": "{name}のサブクエストです"
     },
 
     "QuestLog": {
@@ -52,41 +45,79 @@
         "Completed": "完了",
         "Failed": "失敗",
         "Hidden": "秘匿"
+      },
+      "ContextMenu": {
+        "CopyEntityLink": "データへのリンクをコピー",
+        "CopyQuestID": "クエストIDをコピー",
+        "PrimaryQuest": "メインクエスト指定切り替え"
       }
     },
 
     "QuestPreview": {
       "Title": "クエスト詳細",
       "SubTitle": "{0}に含まれています",
+      "Description": "詳細：",
+      "GMNotes": "GMノート：",
       "Objectives": "目標",
       "Rewards": "報酬",
+      "Objective": "目標",
+      "Reward": "報酬",
+      "CustomSource": "カスタムソース",
+      "DragDropActor": "キャラ、アイテム、資料をドラッグ＆ドロップすることでソースを手動で変更できます。",
+      "DragDropActorPlayer": "キャラ、アイテム、資料をドラッグ＆ドロップしてください。",
       "DragDropRewards": "アイテムをここにドラッグ＆ドロップすると報酬として設定できます。",
       "InvalidQuestId": "クエストIDが存在しないため開けません。",
+      "RewardDrop": "FQL (quest reward): {userName}が'{itemName}'を{actorName}に移動しました。",
+
       "HeaderButtons": {
         "Show": "プレイヤーに表示"
       },
 
       "Management": {
-        "IsPersonalQuest": "個人クエスト？",
-        "IsPersonalQuestDescription": "個人クエストとして指定すると、そのプレイヤーにしか視認できなくなります。チェックをすべて外すとクエストが秘匿タブに表示されるようになります。",
-        "SplashArt": "画像",
-        "QuestBranching": "サブクエスト",
-        "AddSubquest": "サブクエストを作成する",
-        "CanPlayerEdit": "プレイヤーに編集権限を与える"
+        "QuestSettings": "クエスト設定：",
+        "ConfigurePermissions": "権限設定",
+        "SplashArt": "画像：",
+        "QuestBranching": "サブクエスト：",
+        "AddSubquest": "サブクエスト追加",
+        "SplashInfo": "クリックで画像設定。",
+        "SplashQuestIcon": "クエストアイコンとして設定"
       },
 
       "Tabs": {
         "Details": "内容",
         "QuestManagement": "クエスト管理",
         "GMNotes": "GMノート"
-      }
+      },
 
+      "Notifications": {
+        "BadUUID": "{uuid}のオブジェクトを取得できませんでした。",
+        "WrongItemType": "Forien's Quest Logはワールドや辞典に指定された報酬のみを受け付けます。",
+        "WrongDocType": "Forien's Quest Logはワールドや辞典に指定されたキャラ、アイテム、資料のみをクエスト提供者として受け付けます。"
+      },
+
+      "Tooltips": {
+        "PrimaryQuestSet": "メインクエストに設定",
+        "PrimaryQuestUnset": "メインクエストから削除"
+      }
+    },
+
+    "QuestTracker": {
+      "Title": "クエスト一覧",
+
+      "NoPrimary": "メインクエスト無し",
+
+      "Tooltips": {
+        "PrimaryQuestShow": "クリックでメインクエストを表示",
+        "PrimaryQuestUnshow": "クリックですべてのクエスト表示"
+      }
     },
 
     "DeleteDialog": {
-      "Title": "{name}を削除します",
-      "Header": "本当によろしいですか？",
-      "Body": "このクエストとその内容はすべて削除されます。",
+      "TitleDel": "{name}を削除します",
+      "HeaderDel": "<p>'{name}'</p>を削除します本当によろしいですか？",
+      "BodyQuest": "このクエストとその内容はすべて削除されます。",
+      "BodyReward": "この報酬とその内容はすべて削除されます。",
+      "BodyObjective": "この目標とその内容はすべて削除されます。",
       "Delete": "削除",
       "Cancel": "取り消す"
     },
@@ -101,9 +132,14 @@
 
     "Notifications": {
       "CannotOpen": "クエストの内容を開けませんでした。権限が無いかクエストが存在しないかもしれません。",
-      "UserCantOpen": "{user}はこのクエストを開く権限を持っていません。",
+      "UserCantOpen": "User {user} doesn'{user}はこのクエストを開く権限を持っていません。",
       "LinkCopied": "このクエストのエンティティリンクをコピーしました。",
-      "QuestMoved": "クエストを新たなフォルダに移動し状態を{target}に変更しました。"
+      "FinishQuestAdded": "他のクエストを追加する前に現在のクエスト記入を完了してください。",
+      "QuestIDCopied": "クエストIDがコピーされました。",
+      "QuestMoved": "「{name}」を移動し、状態を「{target}」に変更しました。",
+      "QuestAdded": "「{name}」を新規追加し、状態を「{status}」に設定しました。",
+      "QuestPrimary": "「{name}」がメインクエストになりました。",
+      "QuestTrackerNoActive": "クエスト一覧が有効になっていますが、進行中のクエストがありません。"
     },
 
     "Settings": {
@@ -111,19 +147,23 @@
         "Enable": "報酬のドラッグを許可",
         "EnableHint": "プレイヤーはクエスト報酬にあるアイテム等を自分のキャラシにドラッグできるようになります。"
       },
-      "availableQuests": {
-        "Enable": "受注可能タブを表示する",
-        "EnableHint": "許可するとプレイヤーは新たな「受注可能」タブを閲覧できるようになり、受注・秘匿されていないクエストの閲覧が可能となります。"
-      },
       "countHidden": {
         "Enable": "隠しタスクをカウントする",
         "EnableHint": "オンにすることでクエストの合計目標数に隠し目標も含まれるようになります。"
+      },
+      "dynamicBookmarkBackground": {
+        "Enable": "動的しおり背景",
+        "EnableHint": "有効化時、しおりタブは自動的に現在のウィンドウの背景に置かれます。"
       },
       "navStyle": {
         "Enable": "タブのスタイル",
         "EnableHint": "クエストログのタブをどのように表示するのかを設定します",
         "bookmarks": "しおり風",
         "classic": "クラシック風"
+      },
+      "notifyRewardDrop": {
+        "Enable": "報酬ドロップ通知",
+        "EnableHint": "プレイヤーのキャラクターに報酬が移動されたことを通知します。"
       },
       "showFolder": {
         "Enable": "クエストフォルダーを表示する",
@@ -136,15 +176,16 @@
         "onlyCurrent": "完了のみ",
         "no": "内容の列を隠す"
       },
-      "titleAlign": {
-        "Enable": "クエスト名位置合わせ",
-        "EnableHint": "クエストログのクエスト名の位置を調整するための設定です",
-        "left": "左寄せ",
-        "center": "中央"
+      "defaultPermissionLevel": {
+        "Enable": "デフォルト",
+        "EnableHint": "新規クエスト作成時の権限レベルを設定します。",
+        "OBSERVER": "監視者（Observer）",
+        "NONE": "なし",
+        "OWNER": "所有者（Owner）"
       },
-      "playersWelcomeScreen": {
-        "Enable": "プレイヤーにウェルカム画面を表示する",
-        "EnableHint": "チェックを外すとプレイヤーたちがアップデート後にログインしたときに表示されるウェルカム画面を見えなくなります。クエストログのヘルプボタンを押すことで再び表示できます。"
+      "hideFQLFromPlayers": {
+        "Enable": "PLからクエスト一覧を隠す",
+        "EnableHint": "有効化のとき、PLはクエスト一覧を閲覧できなくなります。GM権限を持っているユーザは依然として閲覧できます。"
       },
       "allowPlayersAccept": {
         "Enable": "プレイヤー受注可",
@@ -153,6 +194,14 @@
       "allowPlayersCreate": {
         "Enable": "プレイヤー作成可",
         "EnableHint": "チェックをいれることでプレイヤーが独自にクエストを作成できるようになります。プレイヤーが作成したクエストは受注可能タブに表示されます。この機能を使うにはプレイヤーの権限に「資料の作成」を付与している必要があります。"
+      },
+      "trustedPlayerEdit": {
+        "Enable": "優良プレイヤークエスト編集権限",
+        "EnableHint": "優良プレイヤーとして指定されているPLに所持しているクエストを編集するための上位の権限を付与します。"
+      },
+      "questTrackerResizable": {
+        "Enable": "クエスト一覧リサイズ可能",
+        "EnableHint": "クエスト一覧の大きさを手動で変更できるようにします。"
       }
     },
 
@@ -163,38 +212,59 @@
       "SetFailed": "失敗にする",
       "Hide": "秘匿",
       "Delete": "削除",
-      "AddAbstractReward": "抽象報酬を設定する",
-      "PersonalQuestButNoPlayers": "これは個人クエストですが誰も見ることができません。",
-      "PersonalQuestVisibleFor": "これは個人クエストです",
-      "RewardHidden": "報酬は秘匿されています。クリックして表示します。",
-      "RewardVisible": "報酬は表示されています。クリックして秘匿します。",
-      "TaskHidden": "内容が秘匿されています。クリックして表示します。",
-      "TaskVisible": "内容が表示されています。クリックして秘匿します。",
-      "ToggleImage": "コマ/キャラの画像切替"
+      "Edit": "編集",
+      "AddAbstract": "抽象報酬を設定する",
+      "HideAll": "全非表示",
+      "ShowAll": "全表示",
+      "LockAll": "全ロック",
+      "UnlockAll": "全アンロック",
+      "HiddenQuestNoPlayers": "このクエストはPLに表示されていません。",
+      "PrimaryQuest": "メインクエスト",
+      "RewardHidden": "報酬は非表示になっています。クリックで表示できます。",
+      "RewardVisible": "報酬は表示されています。クリックで非表示できます。",
+      "RewardLocked": "報酬はロックされています。クリックでアンロックできます。",
+      "RewardLockedPlayer": "報酬はロックされています",
+      "RewardUnlocked": "報酬はアンロックされています",
+      "RewardUnlockedPlayer": "報酬はアンロックされています",
+      "Status": "状態：{statusI18n}",
+      "TaskHidden": "目標は非表示になっています。クリックで表示できます。",
+      "TaskVisible": "目標表示されています。クリックで非表示できます。",
+      "ToggleImage": "キャラ・コマ画像切替",
+      "DeleteQuestGiver": "クエスト依頼主削除",
+      "DeleteSplash": "画像を削除",
+      "ChangeGiverImgPos": "クエスト依頼主の画像位置を調整",
+      "ChangeSplashPos": "画像の位置を調整"
+    },
+
+    "Migration": {
+      "CouldNotMigrate": "Forien's Quest Log - クエスト'{name}'をマイグレーションできませんでした。",
+      "Start": "Forien's Quest Log - データマイグレーション中です、リロードしないでください。",
+      "Schema": "Forien's Quest Log - データを最新スキーマバージョン'{version}'にマイグレーションしてます。",
+      "Complete": "Forien's Quest Log - マイグレーション完了"
     },
 
     "Api": {
       "__COMMENT__": "No need for translating lines starting with 'API ERROR', they show in console for developers only.",
       "create": {
-        "title": "API Error: Title property is required to create new Quest"
+        "title": "API Error: Title property is required to create new Quest."
       },
       "hooks": {
         "createOpenQuestMacro": {
-          "name": "「{name}」クエストを開くt",
+          "name": "{name} - 開く",
           "error": {
-            "noQuest": "API Error: Can't create macro with invalid Quest ID"
+            "noQuest": "API Error: Can't create macro with invalid Quest ID."
           }
         }
       },
       "reward": {
         "create": {
-          "data": "API Error: Data property with at least {name, img} is required to create new Reward",
-          "type": "API Error: Type property is required to create new Reward"
+          "data": "API Error: Data property with at least {name, img} is required to create new Reward.",
+          "type": "API Error: Type property is required to create new Reward."
         }
       },
       "task": {
         "create": {
-          "name": "API Error: Name property is required to create new Task"
+          "name": "API Error: Name property is required to create new Objective."
         }
       }
     }
