@@ -2,7 +2,7 @@
   "ForienQuestLog": {
     "NewQuest": "クエストを追加",
     "QuestLogButton": "クエストログ",
-    "Quests": "{0}個のクエスト",
+    "Quests": "{0}クエスト",
     "FloatingQuestWindow": "フロートするクエストウィンドウ",
     "NoActiveQuests": "アクティブなクエストがありません。",
     "NoDocument": "UUID:{uuid}のデータを読み込めませんでした。",
@@ -17,16 +17,16 @@
       "Failed": "失敗",
       "InActive": "無効",
       "Labels": {
-        "available": "受注可能",
         "active": "進行中",
+        "available": "受注可能",
         "completed": "完了",
         "failed": "失敗",
-        "hidden": "秘匿"
+        "inactive": "無効"
       }
     },
 
     "Buttons": {
-      "AddNewQuest": "新しいクエストを追加",
+      "AddNewQuest": "クエスト追加",
       "AddNewTask": "追加"
     },
 
@@ -44,7 +44,7 @@
         "InProgress": "進行中",
         "Completed": "完了",
         "Failed": "失敗",
-        "Hidden": "秘匿"
+        "InActive": "秘匿"
       },
       "ContextMenu": {
         "CopyEntityLink": "データへのリンクをコピー",
