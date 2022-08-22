@@ -99,7 +99,9 @@ export default class DBMigration
          const folder = await Utils.initializeQuestFolder();
 
          // Early out if there are no journal entries / quests in the `_fql-quests` folder.
-         if (folder?.content?.length === 0)
+         // Note: v10 compatibility w/ `folder.contents` vs `folder.content`.
+         const folderContentLength = folder?.contents?.length ?? folder?.content?.length ?? 0;
+         if (folderContentLength === 0)
          {
             await game.settings.set(constants.moduleName, DBMigration.setting, DBMigration.version);
             return;

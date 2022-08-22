@@ -166,7 +166,10 @@ export default class QuestDB
          const isTrustedPlayerEdit = Utils.isTrustedPlayerEdit();
 
          // Iterate over all journal entries in `_fql_quests` folder.
-         for (const entry of folder.content)
+         // Note: v10 compatibility w/ `folder.contents` vs `folder.content`.
+         const folderContents = folder?.contents ?? folder?.content ?? [];
+
+         for (const entry of folderContents)
          {
             const content = entry.getFlag(constants.moduleName, constants.flagDB);
 
@@ -248,7 +251,10 @@ export default class QuestDB
       const isTrustedPlayerEdit = Utils.isTrustedPlayerEdit();
 
       // Iterate over all quests.
-      for (const entry of folder.content)
+      // Note: v10 compatibility w/ `folder.contents` vs `folder.content`.
+      const folderContents = folder?.contents ?? folder?.content ?? [];
+
+      for (const entry of folderContents)
       {
          const content = entry.getFlag(constants.moduleName, constants.flagDB);
 
