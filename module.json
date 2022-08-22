@@ -94,6 +94,7 @@
       "module": "forien-quest-log",
       "path": "./packs/macro-gm.db",
       "entity": "Macro",
+      "type": "Macro",
       "private": true
     },
     {
@@ -101,7 +102,8 @@
       "label": "FQL Macros (Player)",
       "module": "forien-quest-log",
       "path": "./packs/macro-player.db",
-      "entity": "Macro"
+      "entity": "Macro",
+      "type": "Macro"
     }
   ],
   "system": [],
