@@ -1,4 +1,5 @@
 {
+  "id": "forien-quest-log",
   "name": "forien-quest-log",
   "title": "Forien's Quest Log",
   "description": "Provides comprehensive Quest Log system for players and Game Masters",
@@ -17,12 +18,13 @@
   "readme": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/blob/master/README.md",
   "bugs": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/issues",
   "changelog": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/latest/",
-  "flags": {
-    "allowBugReporter": true
+  "version": "0.7.10",
+  "minimumCoreVersion": "9",
+  "compatibleCoreVersion": "10",
+  "compatibility": {
+    "minimum": "9",
+    "verified": "10"
   },
-  "version": "0.7.9",
-  "minimumCoreVersion": "0.8.6",
-  "compatibleCoreVersion": "9",
   "scripts": [],
   "esmodules": [
     "./src/init.js"
@@ -93,7 +95,6 @@
       "label": "FQL Macros (GM)",
       "module": "forien-quest-log",
       "path": "./packs/macro-gm.db",
-      "entity": "Macro",
       "type": "Macro",
       "private": true
     },
@@ -102,15 +103,13 @@
       "label": "FQL Macros (Player)",
       "module": "forien-quest-log",
       "path": "./packs/macro-player.db",
-      "entity": "Macro",
       "type": "Macro"
     }
   ],
   "system": [],
-  "dependencies": [],
   "socket": true,
   "manifest": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/latest/download/module.json",
-  "download": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/download/0.7.9/module.zip",
+  "download": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/download/0.7.10/module.zip",
   "protected": false,
   "coreTranslation": false,
   "library": false
