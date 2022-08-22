@@ -463,7 +463,10 @@ export default class QuestPreview extends FormApplication
           await HandlerAny.questDelete(event, this._quest));
 
          html.on(jquery.click, '.actions.quest-status i.move', async (event) =>
-          await HandlerAny.questStatusSet(event));
+         {
+            await this.saveQuest({ refresh: false });
+            await HandlerAny.questStatusSet(event);
+         });
       }
 
       // Callbacks only for the GM and trusted player edit.
