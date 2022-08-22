@@ -177,7 +177,7 @@ export default class Utils
 
          const checkPerm = typeof permissionCheck === 'boolean' ? permissionCheck : true;
 
-         if (checkPerm && !doc.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER))
+         if (checkPerm && !doc.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER))
          {
             ui.notifications.warn('ForienQuestLog.NoPermission', { localize: true });
             return null;
@@ -336,7 +336,7 @@ export default class Utils
             return null;
          }
 
-         if (permissionCheck && !document.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER))
+         if (permissionCheck && !document.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER))
          {
             ui.notifications.warn('ForienQuestLog.NoPermission', { localize: true });
             return null;

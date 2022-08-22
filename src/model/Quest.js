@@ -89,7 +89,7 @@ export default class Quest
 
       if (this.entry && typeof this.entry.data.permission === 'object')
       {
-         if (this.entry.data.permission.default >= CONST.ENTITY_PERMISSIONS.OBSERVER) { return false; }
+         if (this.entry.data.permission.default >= CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER) { return false; }
 
          for (const [userId, permission] of Object.entries(this.entry.data.permission))
          {
@@ -99,7 +99,7 @@ export default class Quest
 
             if (!user || user.isGM) { continue; }
 
-            if (permission >= CONST.ENTITY_PERMISSIONS.OBSERVER)
+            if (permission >= CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER)
             {
                isHidden = false;
                break;
@@ -134,7 +134,7 @@ export default class Quest
       if (Utils.isTrustedPlayerEdit() && isInactive) { return this.isOwner; }
 
       // Otherwise no one can see hidden / inactive quests; perform user permission check for observer.
-      return !isInactive && this.entry.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER);
+      return !isInactive && this.entry.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER);
    }
 
    /**
@@ -145,7 +145,7 @@ export default class Quest
    get isOwner()
    {
       return game.user.isGM ||
-       (this.entry && this.entry.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OWNER));
+       (this.entry && this.entry.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OWNER));
    }
 
    /**
@@ -159,7 +159,7 @@ export default class Quest
       let isPersonal = false;
 
       if (this.entry && typeof this.entry.data.permission === 'object' &&
-       this.entry.data.permission.default < CONST.ENTITY_PERMISSIONS.OBSERVER)
+       this.entry.data.permission.default < CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER)
       {
          for (const [userId, permission] of Object.entries(this.entry.data.permission))
          {
@@ -169,7 +169,7 @@ export default class Quest
 
             if (!user || user.isGM) { continue; }
 
-            if (permission < CONST.ENTITY_PERMISSIONS.OBSERVER) { continue; }
+            if (permission < CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER) { continue; }
 
             isPersonal = true;
             break;
@@ -293,7 +293,7 @@ export default class Quest
 
             if (!user || user.isGM) { continue; }
 
-            if (permission < CONST.ENTITY_PERMISSIONS.OBSERVER) { continue; }
+            if (permission < CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER) { continue; }
 
             users.push(user);
          }
@@ -708,7 +708,7 @@ export default class Quest
     *
     * @param {documents.BaseUser} user       The User being tested
     *
-    * @param {string|number} permission      The permission level from ENTITY_PERMISSIONS to test
+    * @param {string|number} permission      The permission level from DOCUMENT_PERMISSION_LEVELS to test
     *
     * @param {object} options                Additional options involved in the permission test
     *
