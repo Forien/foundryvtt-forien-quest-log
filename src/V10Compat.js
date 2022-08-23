@@ -28,6 +28,3 @@ export class V10Compat
       return isV10 ? doc.ownership : doc.data.permission;
    }
 }
-
-//       {{{editor target="description" content=description button=true editable=true owner=true}}}
-//   {{{editor target="gmnotes" content=gmnotes button=true editable=true owner=true}}}

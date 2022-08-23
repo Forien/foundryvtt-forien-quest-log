@@ -371,8 +371,10 @@ export default class Utils
    {
       let templates = [
          "templates/partials/quest-log/tab.html",
-         "templates/partials/quest-preview/gmnotes.html",
-         "templates/partials/quest-preview/details.html",
+         "templates/partials/quest-preview/v9/gmnotes.html",
+         "templates/partials/quest-preview/v9/details.html",
+         "templates/partials/quest-preview/v10/gmnotes.html",
+         "templates/partials/quest-preview/v10/details.html",
          "templates/partials/quest-preview/management.html"
       ];
 

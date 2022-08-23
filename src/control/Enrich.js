@@ -236,6 +236,8 @@ export default class Enrich
          async: false
       });
 
+      data.gmnotes = TextEditor.enrichHTML(DOMPurify.sanitizeWithVideo(data.gmnotes), { async: false });
+
       data.questIconType = void 0;
 
       if (data.splashAsIcon && data.splash.length)

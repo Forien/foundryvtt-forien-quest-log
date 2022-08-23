@@ -8,6 +8,8 @@ import HandlerAny             from './HandlerAny.js';
 import HandlerDetails         from './HandlerDetails.js';
 import HandlerManage          from './HandlerManage.js';
 
+import { V10Compat }          from '../../V10Compat.js';
+
 import { constants, jquery, settings }  from '../../model/constants.js';
 
 /**
@@ -201,9 +203,13 @@ export default class QuestPreview extends FormApplication
     */
    static get defaultOptions()
    {
+      // TinyMCE editor Handlebars helper has changed. Load different templates for v10 or v9
+      const template = V10Compat.isV10 ? 'modules/forien-quest-log/templates/quest-preview-v10.html' :
+       'modules/forien-quest-log/templates/quest-preview-v9.html';
+
       return foundry.utils.mergeObject(super.defaultOptions, {
          classes: ['forien-quest-preview'],
-         template: 'modules/forien-quest-log/templates/quest-preview.html',
+         template,
          width: 700,
          height: 540,
          minimizable: true,
