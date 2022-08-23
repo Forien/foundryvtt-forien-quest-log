@@ -3,6 +3,8 @@ import QuestPreviewShim from '../view/preview/QuestPreviewShim.js';
 
 import { constants, questStatus, settings } from './constants.js';
 
+import { V10Compat }    from '../V10Compat.js';
+
 /**
  * Stores the sheet class for Quest which is {@link QuestPreview}. This class / sheet is used to render Quest.
  * While directly accessible from Quest the main way a QuestPreview is shown is through {@link QuestAPI.open} which
@@ -87,11 +89,11 @@ export default class Quest
    {
       let isHidden = true;
 
-      if (this.entry && typeof this.entry.data.permission === 'object')
+      if (this.entry && typeof V10Compat.ownership(this.entry) === 'object')
       {
-         if (this.entry.data.permission.default >= CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER) { return false; }
+         if (V10Compat.ownership(this.entry).default >= CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER) { return false; }
 
-         for (const [userId, permission] of Object.entries(this.entry.data.permission))
+         for (const [userId, permission] of Object.entries(V10Compat.ownership(this.entry)))
          {
             if (userId === 'default') { continue; }
 
@@ -158,10 +160,10 @@ export default class Quest
    {
       let isPersonal = false;
 
-      if (this.entry && typeof this.entry.data.permission === 'object' &&
-       this.entry.data.permission.default < CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER)
+      if (this.entry && typeof V10Compat.ownership(this.entry) === 'object' &&
+       V10Compat.ownership(this.entry).default < CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER)
       {
-         for (const [userId, permission] of Object.entries(this.entry.data.permission))
+         for (const [userId, permission] of Object.entries(V10Compat.ownership(this.entry)))
          {
             if (userId === 'default') { continue; }
 
@@ -283,9 +285,9 @@ export default class Quest
 
       const users = [];
 
-      if (this.entry && typeof this.entry.data.permission === 'object')
+      if (this.entry && typeof V10Compat.ownership(this.entry) === 'object')
       {
-         for (const [userId, permission] of Object.entries(this.entry.data.permission))
+         for (const [userId, permission] of Object.entries(V10Compat.ownership(this.entry)))
          {
             if (userId === 'default') { continue; }
 
