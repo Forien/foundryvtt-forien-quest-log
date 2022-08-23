@@ -1,3 +1,5 @@
+import { V10Compat }                   from '../V10Compat.js';
+
 import { constants, jquery, settings } from '../model/constants.js';
 
 /**
@@ -218,11 +220,42 @@ export default class Utils
     */
    static getUUID(data, type = void 0)
    {
+      // Verify data.
+      if (typeof data !== 'object' || data === null) { return void 0; }
+
       // 'type' doesn't match the data type.
       if (Array.isArray(type) && !type.includes(data.type)) { return void 0; }
       if (typeof type === 'string' && data.type !== type) { return void 0; }
 
-      return typeof data.pack === 'string' ? `Compendium.${data.pack}.${data.id}` : `${data.type}.${data.id}`;
+      if (V10Compat.isV10)
+      {
+         if (typeof data.uuid === 'string')
+         {
+            // Must verify that this is not an owned item from an actor. Search for multiple `.`
+            if (data.uuid.startsWith('Actor') && (data.uuid.match(/\./g) || []).length > 1)
+            {
+               return void 0;
+            }
+
+            return data.uuid;
+         }
+         else
+         {
+            return void 0;
+         }
+      }
+      else  // Create UUID from v9 data transfer.
+      {
+         // Must contain `id` and not be an owned item.
+         if (typeof data.id === 'string')
+         {
+            return typeof data.pack === 'string' ? `Compendium.${data.pack}.${data.id}` : `${data.type}.${data.id}`;
+         }
+         else
+         {
+            return void 0;
+         }
+      }
    }
 
    /**
