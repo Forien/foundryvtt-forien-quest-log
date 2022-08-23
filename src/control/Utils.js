@@ -325,8 +325,7 @@ export default class Utils
             if (macroSetting !== currentSetting) { continue; }
 
             // Only set macro image if the author of the macro matches the user and the user is an owner.
-            // Note: v10 compatibility w/ `.data` vs `direct DataModel model access`.
-            const macroAuthor = macroEntry?.author ?? macroEntry?.data?.author;
+            const macroAuthor = V10Compat.authorID(macroEntry);
             if (macroAuthor !== userID || !macroEntry.isOwner) { continue; }
 
             const state = value ?? game.settings.get(constants.moduleName, currentSetting);

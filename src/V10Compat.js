@@ -18,7 +18,35 @@ export class V10Compat
    static get isV10() { return isV10; }
 
    /**
-    * @param {foundry.abstract.Document}  doc -
+    * Returns the author ID of a document depending on v10.
+    *
+    * @param {foundry.abstract.Document|Document}  doc -
+    *
+    * @returns {string} Author ID
+    */
+   static authorID(doc)
+   {
+      if (!doc) { return void 0; }
+      return isV10 ? doc?.author?.id : doc?.data?.author;
+   }
+
+   /**
+    * Returns the data property depending on v10.
+    *
+    * @param {foundry.abstract.Document|Document}  doc -
+    *
+    * @param {string}   property - Property field.
+    *
+    * @returns {*} Data value.
+    */
+   static get(doc, property)
+   {
+      if (!doc || typeof property !== 'string') { return void 0; }
+      return isV10 ? doc[property] : doc.data[property];
+   }
+
+   /**
+    * @param {foundry.abstract.Document|Document}  doc -
     *
     * @returns {*} Foundry ownership / permission object.
     */

@@ -11,6 +11,8 @@ import QuestPreview     from '../view/preview/QuestPreview.js';
 import ModuleSettings   from '../ModuleSettings.js';
 import DBMigration      from '../../database/DBMigration.js';
 
+import { V10Compat }    from '../V10Compat.js';
+
 import { constants, noteControls, sessionConstants, settings } from '../model/constants.js';
 
 /**
@@ -243,7 +245,8 @@ export default class FQLHooks
 
       // Find any existing macro that is authored by the current user and matches the dropped macro.
       const existingMacro = game.macros.contents.find((m) =>
-       (m.data.author === game.user.id && m.data.command === document.data.command));
+       (V10Compat.get(m, 'author') === game.user.id &&
+        V10Compat.get(m, 'command') === V10Compat.get(document, 'command')));
 
       let macro = existingMacro;
 
@@ -251,11 +254,11 @@ export default class FQLHooks
       if (!existingMacro)
       {
          const macroData = {
-            name: document.data.name,
-            type: document.data.type,
-            command: document.data.command,
-            img: document.data.img,
-            flags: document.data.flags
+            name: V10Compat.get(document, 'name'),
+            type: V10Compat.get(document, 'type'),
+            command: V10Compat.get(document, 'command'),
+            img: V10Compat.get(document, 'img'),
+            flags: V10Compat.get(document, 'flags')
          };
 
          macro = await Macro.create(macroData, { displaySheet: false });
@@ -305,7 +308,7 @@ export default class FQLHooks
       macroData.img = quest.splashAsIcon && quest.splash.length ? quest.splash : quest?.giverData?.img;
 
       // Search for an already existing macro with the same command.
-      let macro = game.macros.contents.find((m) => (m.data.command === command));
+      let macro = game.macros.contents.find((m) => (V10Compat.get(m, 'command') === command));
 
       // If not found then create a new macro with the command.
       if (!macro)
