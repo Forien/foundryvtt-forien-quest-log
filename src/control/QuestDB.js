@@ -5,6 +5,8 @@ import Quest            from '../model/Quest.js';
 import QuestPreviewShim from '../view/preview/QuestPreviewShim.js';
 import collect          from '../../external/collect.js';
 
+import { V10Compat }    from '../V10Compat.js';
+
 import { constants, questStatus, settings } from '../model/constants.js';
 
 /**
@@ -166,8 +168,7 @@ export default class QuestDB
          const isTrustedPlayerEdit = Utils.isTrustedPlayerEdit();
 
          // Iterate over all journal entries in `_fql_quests` folder.
-         // Note: v10 compatibility w/ `folder.contents` vs `folder.content`.
-         const folderContents = folder?.contents ?? folder?.content ?? [];
+         const folderContents = V10Compat.folderContents(folder);
 
          for (const entry of folderContents)
          {
@@ -251,8 +252,7 @@ export default class QuestDB
       const isTrustedPlayerEdit = Utils.isTrustedPlayerEdit();
 
       // Iterate over all quests.
-      // Note: v10 compatibility w/ `folder.contents` vs `folder.content`.
-      const folderContents = folder?.contents ?? folder?.content ?? [];
+      const folderContents = V10Compat.folderContents(folder);
 
       for (const entry of folderContents)
       {

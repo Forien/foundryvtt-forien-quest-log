@@ -11,13 +11,6 @@ Hooks.once('init', () =>
 export class V10Compat
 {
    /**
-    * Returns true when Foundry is v10+
-    *
-    * @returns {boolean} Foundry v10+
-    */
-   static get isV10() { return isV10; }
-
-   /**
     * Returns the author ID of a document depending on v10.
     *
     * @param {foundry.abstract.Document|Document}  doc -
@@ -29,6 +22,27 @@ export class V10Compat
       if (!doc) { return void 0; }
       return isV10 ? doc?.author?.id : doc?.data?.author;
    }
+
+   /**
+    * Returns folder contents.
+    *
+    * @param {Folder}   folder -
+    *
+    * @returns {*[]} Folder contents;
+    */
+   static folderContents(folder)
+   {
+      if (!folder) { return void 0; }
+      return folder?.contents ?? folder?.content ?? [];
+   }
+
+   /**
+    * Returns true when Foundry is v10+
+    *
+    * @returns {boolean} Foundry v10+
+    */
+   static get isV10() { return isV10; }
+
 
    /**
     * Returns the data property depending on v10.
