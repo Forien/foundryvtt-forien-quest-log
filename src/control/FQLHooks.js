@@ -132,6 +132,9 @@ export default class FQLHooks
     */
    static async foundryReady()
    {
+      // Initialize all main GUI views.
+      ViewManager.init();
+
       // Only attempt to run DB migration for GM.
       if (game.user.isGM) { await DBMigration.migrate(); }
 
@@ -160,9 +163,6 @@ export default class FQLHooks
 
       // Initialize the in-memory QuestDB. Loads all quests that the user can see at this point.
       await QuestDB.init();
-
-      // Initialize all main GUI views.
-      ViewManager.init();
 
       // Allow and process incoming socket data.
       Socket.listen();
