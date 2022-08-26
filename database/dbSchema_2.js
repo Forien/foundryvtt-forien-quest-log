@@ -2,6 +2,7 @@ import DBMigration   from './DBMigration.js';
 import Enrich        from '../src/control/Enrich.js';
 import Utils         from '../src/control/Utils.js';
 import Quest         from '../src/model/Quest.js';
+import { V10Compat } from '../src/V10Compat.js';
 
 import { constants, questStatus } from '../src/model/constants.js';
 
@@ -30,7 +31,7 @@ export default async function()
    const folder = await Utils.initializeQuestFolder();
    if (!folder) { return; }
 
-   for (const entry of folder.content)
+   for (const entry of V10Compat.folderContents(folder))
    {
       try
       {
@@ -54,12 +55,14 @@ export default async function()
          }
          else
          {
-            console.log(game.i18n.format('ForienQuestLog.Migration.CouldNotMigrate', { name: entry.data.name }));
+            console.log(game.i18n.format('ForienQuestLog.Migration.CouldNotMigrate',
+             { name: V10Compat.get(entry, 'name') }));
          }
       }
       catch (err)
       {
-         console.log(game.i18n.format('ForienQuestLog.Migration.CouldNotMigrate', { name: entry.data.name }));
+         console.log(game.i18n.format('ForienQuestLog.Migration.CouldNotMigrate',
+          { name: V10Compat.get(entry, 'name') }));
       }
    }
 
