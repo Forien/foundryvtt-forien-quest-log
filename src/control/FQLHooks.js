@@ -154,12 +154,8 @@ export default class FQLHooks
       // Initialize current client based macro images based on current state.
       await Utils.setMacroImage([settings.questTrackerEnable, settings.questTrackerResizable]);
 
-      // Support for LibThemer; add FQL options to LibThemer.
-      const libThemer = game.modules.get('lib-themer');
-      if (libThemer?.active)
-      {
-         await libThemer?.api?.registerTheme('/modules/forien-quest-log/assets/themes/lib-themer/fql.json');
-      }
+      // Show quest tracker if applicable.
+      ViewManager.renderOrCloseQuestTracker();
 
       // Fire our own lifecycle event to inform any other modules that depend on FQL QuestDB.
       Hooks.callAll('ForienQuestLog.Lifecycle.ready');
