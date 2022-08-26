@@ -1,5 +1,6 @@
 import ViewManager   from './ViewManager.js';
 import Utils         from './Utils.js';
+import { V10Compat } from '../V10Compat.js';
 
 /**
  * Provides custom options for TinyMCE.
@@ -43,8 +44,8 @@ export default class TinyMCE
       ].concat(s_DEFAULT_STYLE_FORMATS);
 
       return {
-         plugins: 'emoticons hr image link lists typhonjs-oembed charmap table code save help',
-         toolbar: 'styleselect | formatgroup | removeformat | insertgroup | table | bulletgroup | customcode | save | help',
+         plugins: `${V10Compat.isV10 ? '' : 'hr'} emoticons image link lists typhonjs-oembed charmap table code save help`,
+         toolbar: `${V10Compat.isV10 ? 'styles' : 'styleselect'} | formatgroup | removeformat | insertgroup | table | bulletgroup | customcode | save | help`,
          toolbar_groups: {
             bulletgroup: {
                icon: 'unordered-list',
@@ -54,7 +55,7 @@ export default class TinyMCE
             formatgroup: {
                icon: 'format',
                tooltip: 'Formatting',
-               items: 'fontselect | fontsizeselect | lineheight | forecolor backcolor'
+               items: `${V10Compat.isV10 ? 'fontfamily | fontsize' : 'fontselect | fontsizeselect'} | lineheight | forecolor backcolor`
             },
             insertgroup: {
                icon: 'plus',
@@ -137,7 +138,18 @@ export default class TinyMCE
                if (e.keyCode === 27)
                {
                   editor.resetContent(initialContent);
-                  setTimeout(() => editor.execCallback('save_onsavecallback'), 0);
+
+                  const saveCallback = editor?.options?.get?.('save_onsavecallback');
+                  if (typeof saveCallback === 'function')
+                  {
+                     // For TinyMCE v6 on Foundry v10+
+                     setTimeout(() => saveCallback(), 0);
+                  }
+                  else
+                  {
+                     // For TinyMCE v5 on Foundry v9
+                     setTimeout(() => editor?.execCallback?.('save_onsavecallback'), 0);
+                  }
                }
             }));
          }
