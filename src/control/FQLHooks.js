@@ -5,7 +5,6 @@ import Utils            from './Utils.js';
 import ViewManager      from './ViewManager.js';
 import QuestAPI         from './public/QuestAPI.js';
 import Quest            from '../model/Quest.js';
-import QuestCollection  from '../model/QuestCollection.js';
 import QuestPreview     from '../view/preview/QuestPreview.js';
 
 import ModuleSettings   from '../ModuleSettings.js';
@@ -88,7 +87,7 @@ export default class FQLHooks
       if (typeof data !== 'object' || data?._fqlData?.type !== 'reward') { return; }
 
       await Socket.questRewardDrop({
-         actor: { id: actor.id, name: actor.data.name },
+         actor: { id: actor.id, name: V10Compat.get(actor, 'name') },
          sheet: { id: sheet.id },
          data
       });
@@ -137,29 +136,6 @@ export default class FQLHooks
 
       // Only attempt to run DB migration for GM.
       if (game.user.isGM) { await DBMigration.migrate(); }
-
-      // Disable synthetic quest type registration for Foundry `v9+`. As it turns out `CONST` was locked down last
-      // minute in the v9 release cycle. There is a replacement module / continuing the quest log that will enable this
-      // functionality again with a different implementation. You can join the TyphonJS Discord server to get an
-      // announcement when that is available: https://discord.gg/mnbgN8f
-      if (foundry.utils.isNewerVersion(9, game.version ?? game.data.version))
-      {
-         // Add the FQL unique Quest data type to the Foundry core data types.
-         CONST.ENTITY_TYPES?.push(Quest.documentName);
-         CONST.ENTITY_LINK_TYPES?.push(Quest.documentName);
-
-         // Add the FQL Quest data type to CONFIG.
-         CONFIG[Quest.documentName] = {
-            entityClass: Quest,
-            documentClass: Quest,
-            collection: QuestCollection,
-            sidebarIcon: 'fas fa-scroll',
-            sheetClass: QuestPreview
-         };
-
-         // Add our QuestCollection to the game collections.
-         game.collections.set(Quest.documentName, new QuestCollection());
-      }
 
       // Initialize the in-memory QuestDB. Loads all quests that the user can see at this point.
       await QuestDB.init();
