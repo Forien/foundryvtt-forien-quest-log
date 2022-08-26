@@ -474,10 +474,15 @@ export default class HandlerDetails
                userName: game.user.name,
             },
             type: 'Item',
-            data: document.data,
             uuid: data.uuid,
             id: document.id
          };
+
+         // Pass on document data on v9; v10 systems should work solely w/ UUID.
+         if (!V10Compat.isV10)
+         {
+            dataTransfer.data = document.data;
+         }
 
          // Add compendium pack info if applicable
          if (uuidData && uuidData.pack) { dataTransfer.pack = uuidData.pack; }
@@ -1041,7 +1046,7 @@ export default class HandlerDetails
  *
  * @property {string}      type - Type of document.
  *
- * @property {object}      data - Document data.
+ * @property {object}      [data] - Document data on V9
  *
  * @property {string}      uuid - The UUID of the document.
  *
