@@ -1,6 +1,8 @@
-import QuestDB    from './QuestDB.js';
-import Utils      from './Utils.js';
-import DOMPurify  from '../../external/DOMPurify.js';
+import QuestDB       from './QuestDB.js';
+import Utils         from './Utils.js';
+import DOMPurify     from '../../external/DOMPurify.js';
+
+import { V10Compat } from '../V10Compat.js';
 
 import { constants, questStatus, questStatusI18n, settings } from '../model/constants.js';
 
@@ -64,7 +66,8 @@ export default class Enrich
                case Actor.documentName:
                {
                   const actorImage = document.img;
-                  const tokenImage = document?.data?.token?.img;
+                  const tokenImage = V10Compat.tokenImg(document);
+
                   const hasTokenImg = typeof tokenImage === 'string' && tokenImage !== actorImage;
 
                   data = {
@@ -89,7 +92,7 @@ export default class Enrich
                   data = {
                      uuid,
                      name: document.name,
-                     img: document.data.img,
+                     img: V10Compat.journalImage(document),
                      hasTokenImg: false
                   };
                   break;
