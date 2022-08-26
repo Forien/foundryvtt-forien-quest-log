@@ -108,6 +108,6 @@ export class V10Compat
    {
       if (!doc) { return void 0; }
 
-      return V10Compat.isV10 ? doc?.prototypeToken?.texture?.src : doc?.data?.token?.img;
+      return isV10 ? doc?.prototypeToken?.texture?.src : doc?.data?.token?.img;
    }
 }
