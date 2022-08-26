@@ -303,7 +303,7 @@ export default class QuestPreview extends FormApplication
          icon: 'fas fa-link',
          onclick: () =>
          {
-            if (Utils.copyTextToClipboard(`@Quest[${this._quest.id}]{${this._quest.name}}`))
+            if (Utils.copyTextToClipboard(`@JournalEntry[${this._quest.id}]{${this._quest.name}}`))
             {
                ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.LinkCopied'));
             }
