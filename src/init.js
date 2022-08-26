@@ -11,7 +11,7 @@ FQLHooks.init();
  */
 Hooks.once('init', async () =>
 {
-   const isV10 = !foundry.utils.isNewerVersion(10, game.version ?? game.data.version);
+   const isV10 = !foundry.utils.isNewerVersion(10, game.version ?? game?.data?.version);
 
    try
    {
