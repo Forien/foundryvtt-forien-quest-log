@@ -160,7 +160,7 @@ export default class QuestPreview extends FormApplication
        * Tracks any open FQLPermissionControl dialog that can be opened from the management tab, so that it can be
        * closed if this QuestPreview is closed or the tab is changed.
        *
-       * @type {FQLPermissionControl}
+       * @type {FQLPermissionControlImpl|FQLDocumentOwnershipConfig}
        * @package
        *
        * @see {@link HandlerManage.configurePermissions}

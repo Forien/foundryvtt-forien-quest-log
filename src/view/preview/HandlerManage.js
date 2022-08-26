@@ -43,7 +43,7 @@ export default class HandlerManage
       {
          if (!questPreview._permControl)
          {
-            questPreview._permControl = new FQLPermissionControl(quest.entry, {
+            questPreview._permControl = await FQLPermissionControl.create(quest.entry, {
                top: Math.min(questPreview.position.top, window.innerHeight - 350),
                left: questPreview.position.left + 125
             });
