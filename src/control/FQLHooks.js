@@ -325,8 +325,7 @@ export default class FQLHooks
       let handled = false;
 
       // Verify if the hotbar drop is data that is handled; either a quest or macro from FQL macro compendium.
-      if (data.type === Quest.documentName || (data.type === 'Macro' && typeof data.pack === 'string' &&
-       data.pack.startsWith(constants.moduleName)))
+      if (data.type === Quest.documentName || V10Compat.isFQLMacroDataTransfer(data))
       {
          handled = true;
       }
