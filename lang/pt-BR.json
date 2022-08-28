@@ -1,178 +1,5 @@
 {
   "ForienQuestLog": {
-    "NewQuest": "Nova Missão",
-    "QuestLogButton": "Registro De Missões",
-    "Quests": "Missões",
-    "SampleReward": "ex. 300 pontos de Experiências",
-    "SampleTask": "ex. Matar todos os ratos da pousada „Trornozelo Torcido”",
-
-    "QuestTypes": {
-      "InProgress": "Ativas",
-      "Completed": "Completas",
-      "Failed": "Perdidas",
-      "Hidden": "Ocultas",
-      "Labels": {
-        "available": "disponivel",
-        "active": "em progresso",
-        "completed": "completa",
-        "failed": "perdida",
-        "hidden": "oculta"
-      }
-    },
-
-    "Buttons": {
-      "AddNewQuest": "Adicionar Nova Missão",
-      "AddNewTask": "adicionar nova"
-    },
-
-    "QuestForm": {
-      "Title": "Adicionar nova Missão",
-      "QuestGiver": "Missão Entregue por",
-      "QuestGiverPlaceholder": "nome do Ator ou ID",
-      "QuestTitle": "Titulo da Missão",
-      "DragDropActor": "Arraste e solte ator que entregará a missão aqui",
-      "QuestDescription": "Descritivo da Missão",
-      "QuestGMNotes": "Notas do Mestre de Jogo",
-      "Submit": "Enviar",
-      "SubquestOf": "Desdobramento de {name}"
-    },
-
-    "QuestLog": {
-      "Title": "Registro de Missão",
-      "SubTitle": "parte de: {0}",
-      "Table": {
-        "QuestGiver": "Missão Entregue por",
-        "QuestTitle": "Titulo",
-        "Tasks": "Tarefas",
-        "Actions": "Ações"
-      },
-      "Tabs": {
-        "Available": "Disponivel",
-        "InProgress": "em Progresso",
-        "Completed": "Completas",
-        "Failed": "Perdidas",
-        "Hidden": "Ocultas"
-      }
-    },
-
-    "QuestPreview": {
-      "Title": "Detalhes das Missões",
-      "SubTitle": "part of: {0}",
-      "Objectives": "Objetivos",
-      "Rewards": "Recompensas",
-      "DragDropRewards": "Arraste e Solte um item aqui apra recompensas",
-      "InvalidQuestId": "Não pode abrir a Visualização da missão, ID da Missão inválido.",
-      "HeaderButtons": {
-        "Show": "Exibir aos Jogadores"
-      },
-
-      "Management": {
-        "IsPersonalQuest": "É uma Missão Pessoal?",
-        "IsPersonalQuestDescription": "Marque a missão como pessoalCheck to mark quest as Personal. Será invisível para todos os jogadores, exceto aqueles especificamente marcados abaixo. Desmarcar esta opção removerá todas as permissões e moverá a missão para a guia Ocultas.",
-        "SplashArt": "Arte de Exibição",
-        "QuestBranching": "Desdobramento da Missão",
-        "AddSubquest": "Criar um desdobramento",
-        "CanPlayerEdit": "Permitir aos jogadores editar os Detalhes."
-      },
-
-      "Tabs": {
-        "Details": "Detalhes",
-        "QuestManagement": "Controle de Missões",
-        "GMNotes": "Notas do Mestre"
-      }
-
-    },
-
-    "DeleteDialog": {
-      "Title": "Removida {name}",
-      "Header": "Você tem certeza?",
-      "Body": "Esta missão e todos os seus arquivos serão removidos permanentemente.",
-      "Delete": "Remover",
-      "Cancel": "Cancelar"
-    },
-
-    "CloseDialog": {
-      "Title": "Sair Do Formulário",
-      "Header": "Você tem certeza?",
-      "Body": "Você tem certeza que quer fechar o formulário? Informações não salvas serão perdidas.",
-      "Discard": "Descartar Alterações",
-      "Cancel": "Cancelar"
-    },
-
-    "Notifications": {
-      "CannotOpen": "Não é possível abrir os detalhes da missão. Você pode não ter permissões, a Missão pode não existir mais ou o ID é inválido.",
-      "UserCantOpen": "o usuário {user} Não tem permissão apra abrir esta missão.",
-      "LinkCopied": "Um link da Entidade para esta missão foi copiada na área de transferência",
-      "QuestMoved": "A missão foi movida para a nova pasta e deu um novo status: {target}"
-    },
-
-    "Settings": {
-      "allowPlayersDrag": {
-        "Enable": "Permitir que os jogadores arrastem recompensas",
-        "EnableHint": "Marque para permitir que os jogadores arrastem recompensas da janela Detalhes da missão para seus proprios atores."
-      },
-      "availableQuests": {
-        "Enable": "Exibir Guia de Disponiveis",
-        "EnableHint": "Marque para mostrar a nova guia \"Disponível\" no Registro de Missões, onde os jogadores podem ver todas as Missões não ocultas antes de serem aceitas"
-      },
-      "countHidden": {
-        "Enable": "Contar as tarefas ocultas",
-        "EnableHint": "Se ativo, o numero total de tarefas completas/total incluirá as tarefas ocultas."
-      },
-      "navStyle": {
-        "Enable": "Estilo de Navegação",
-        "EnableHint": "Decide como a navegação do Registro de Missões deve ser exibida.",
-        "bookmarks": "marcador de livros",
-        "classic": "Guias Clássicas"
-      },
-      "showFolder": {
-        "Enable": "Exibir a Pasta de Missões",
-        "EnableHint": "Marque para mostrar a pasta de dados da missão na guia Diário. Apenas para fins de DEBUG."
-      },
-      "showTasks": {
-        "Enable": "Exibir tarefas no Registro de Missões",
-        "EnableHint": "Decida se ou como mostrar a quantidade de tarefas (objetivos) ao lado do título da Missão no Registro de Missões. Isso não afeta a visualização individual da missão.",
-        "default": "Exibir tarefas: feitas/total",
-        "onlyCurrent": "Exibir tarefas: feitas",
-        "no": "Esconder a coluna \"Tarefas\"."
-      },
-      "titleAlign": {
-        "Enable": "Alinhamento do Titulo da Missão",
-        "EnableHint": "Decide como a posição do titulo é exibida no Registro de Missões.",
-        "left": "Alinhada a Esquerda",
-        "center": "Centralizada"
-      },
-      "playersWelcomeScreen": {
-        "Enable": "Exibir a Tela de Boas vindas aos Jogadores",
-        "EnableHint": "Desmarque para impedir que os jogadores vejam a tela de boas-vindas no login após uma atualização. Eles ainda podem vê-lo clicando no ícone 'ajuda' no Registro de missões."
-      },
-      "allowPlayersAccept": {
-        "Enable": "Jogadores podem Aceitar",
-        "EnableHint": "Ative para permitir que os jogadores possam aceitar Missões na ana Disponiveis."
-      },
-      "allowPlayersCreate": {
-        "Enable": "Jogadores podem Criar",
-        "EnableHint": "Ative para permitir que os jogadores possam criar Missões. Jogadores criam Missões diretamente na aba Disponivel com permissão de edição. REQUER a Permissão de núcleo 'criar diário'."
-      }
-    },
-
-    "Tooltips": {
-      "SetAvailable": "Defina como Disponivel",
-      "SetActive": "Defina como Em Progresso",
-      "SetCompleted": "Defina como Completa",
-      "SetFailed": "Defina como Perdida",
-      "Hide": "Esconda",
-      "Delete": "Remova",
-      "AddAbstractReward": "Adicionar Recompensa abstrata",
-      "PersonalQuestButNoPlayers": "Esta é uma Missão Pessoal, mas ningu[em a vê",
-      "PersonalQuestVisibleFor": "Esta é uma missão pessoal para",
-      "RewardHidden": "Recompensas estão Ocultas. Clique para exibi-las.",
-      "RewardVisible": "Recompensas estão Visíveis. Clique para Oculta-las.",
-      "TaskHidden": "Tarefas estão Ocultas. Clique para exibir.",
-      "TaskVisible": "Tarefas estão visíveis. Clique para Ocultar.",
-      "ToggleImage": "Alternar entre imagem de token/actor"
-    },
-
     "Api": {
       "__COMMENT__": "No need for translating lines starting with 'API ERROR', they show in console for developers only.",
       "create": {
@@ -180,10 +7,10 @@
       },
       "hooks": {
         "createOpenQuestMacro": {
-          "name": "Open „{name}” Quest",
           "error": {
             "noQuest": "API Error: Can't create macro with invalid Quest ID"
-          }
+          },
+          "name": "Abrir a Missão „{name}”"
         }
       },
       "reward": {
@@ -197,6 +24,232 @@
           "name": "API Error: Name property is required to create new Task"
         }
       }
+    },
+    "Buttons": {
+      "AddNewQuest": "Adicionar",
+      "AddNewTask": "Adicionar Novo Objetivo"
+    },
+    "CloseDialog": {
+      "Body": "Você tem certeza que quer fechar o formulário? Informações não salvas serão perdidas.",
+      "Cancel": "Cancelar",
+      "Discard": "Descartar Alterações",
+      "Header": "Você tem certeza ?",
+      "Title": "Sair do Formulário"
+    },
+    "DeleteDialog": {
+      "BodyObjective": "Este objetivo e seus dados serão apagados permanentemente.",
+      "BodyQuest": "Esta missão e seus dados serão apagados permanentemente.",
+      "BodyReward": "Esta recompensa e seus dados serão apagados permanentemente.",
+      "Cancel": "Cancelar",
+      "Delete": "Remover",
+      "HeaderDel": "Tem certeza de que deseja excluir : <p>'{name}'</p>",
+      "TitleDel": "Excluir {title}"
+    },
+    "FloatingQuestWindow": "Janela de Missões Flutuante",
+    "Migration": {
+      "Complete": "Forien's Quest Log - Migração de dados completa.",
+      "CouldNotMigrate": "Forien's Quest Log - Não é possível migrar : '{name}'",
+      "Schema": "Forien's Quest Log - Migrando dados sob a versão:  '{version}'",
+      "Start": "Forien's Quest Log - Migrando dados, não recarregue."
+    },
+    "NewQuest": "Nova Missão",
+    "NoActiveQuests": "Nenhuma missão Em Progresso",
+    "NoDocument": "Uma entidade não pôde ser carregada para IDuu : {uuid}",
+    "NoPermission": "Você não tem permissão para visualizar o documento desta entidade.",
+    "Notifications": {
+      "CannotOpen": "Não é possível abrir os detalhes da missão. Você não tem permissão, a missão não existe mais ou o ID fornecido é inválido.",
+      "FinishQuestAdded": "Termine a edição e feche a nova missão atual antes de adicionar outra.",
+      "LinkCopied": "O link para esta missão foi copiado para a área de transferência.",
+      "QuestAdded": "'{name}' foi adicionado como uma nova missão com a condição: {status}.",
+      "QuestIDCopied": "Este ID de missão foi copiado para a área de transferência.",
+      "QuestMoved": "Missão movida com nova condição: {target}",
+      "QuestPrimary": "'{name}' é a nova missão principal.",
+      "QuestTrackerNoActive": "O rastreador de missões está ativado, mas não há missões ativas no momento.",
+      "UserCantOpen": "O usuário {user} não tem permissão para abrir esta missão."
+    },
+    "Quest": "Missão",
+    "QuestIs": "A missão está {statusLabel}",
+    "QuestLog": {
+      "ContextMenu": {
+        "CopyEntityLink": "Copiar conteúdo do link da entidade.",
+        "CopyQuestID": "Copiar ID da missão",
+        "PrimaryQuest": "Ativar / Desativar como missão principal."
+      },
+      "SubTitle": "Parte da missão de: {0}",
+      "Table": {
+        "Actions": "Ações",
+        "QuestGiver": "Missão entregue por",
+        "QuestTitle": "Título da Missão",
+        "Tasks": "Tarefas"
+      },
+      "Tabs": {
+        "Available": "Disponível",
+        "Completed": "Completa",
+        "Failed": "Perdida",
+        "InActive": "Inativa",
+        "InProgress": "Em Progresso"
+      },
+      "Title": "Registro de Missões"
+    },
+    "QuestLogButton": "Registro de Missões",
+    "QuestPreview": {
+      "CustomSource": "Fonte personalizada",
+      "Description": "Descrição :",
+      "DragDropActor": "Arraste e solte o ator que entregará a Missão aqui.",
+      "DragDropActorPlayer": "Arraste e solte o ator, um objeto ou uma entrada do journal.",
+      "DragDropRewards": "Arraste e solte itens aqui para torná-los recompensas",
+      "GMNotes": "Notas do Mestre :",
+      "HeaderButtons": {
+        "Show": "Exibir aos Jogadores"
+      },
+      "InvalidQuestId": "Não pôde abrir a Visualização da missão, ID da Missão inválido.",
+      "Management": {
+        "AddSubquest": "Criar uma Missão Secundária",
+        "ConfigurePermissions": "Configurar as permissões",
+        "QuestBranching": "Missões Secundárias",
+        "QuestSettings": "Configurações da missão:",
+        "SplashArt": "Ilustração",
+        "SplashInfo": "Clique para definir uma imagem.",
+        "SplashQuestIcon": "Definir como ícone de Missão"
+      },
+      "Notifications": {
+        "BadUUID": "Não é possível recuperar documento para IDuu : {uuid}",
+        "WrongDocType": "Forien's Quest Log só aceita atores, itens e entradas de log de mundo/compêndio como entregadores de missões",
+        "WrongItemType": "O Registro de Missões de Forien só aceita itens de mundo e itens de compêndio como recompensas."
+      },
+      "Objective": "Objectivos :",
+      "Objectives": "Objetivos",
+      "Reward": "Recompensa",
+      "RewardDrop": "FQL (recompensa de missão) : {userName} deu '{itemName}' para {actorName}",
+      "Rewards": "Recompensas :",
+      "SubTitle": "Parte de: {0}",
+      "Tabs": {
+        "Details": "Detalhes",
+        "GMNotes": "Notas do Mestre",
+        "QuestManagement": "Controle de Missões"
+      },
+      "Title": "Detalhes da Missão",
+      "Tooltips": {
+        "PrimaryQuestSet": "Clique para ativar a missão principal.",
+        "PrimaryQuestUnset": "Clique para desativar a missão principal."
+      }
+    },
+    "QuestTracker": {
+      "Title": "Registro de Missões",
+      "NoPrimary": "Nenhuma missão principal disponível.",
+      "Tooltips": {
+        "BackgroundShow": "Clique para o fundo padrão.",
+        "BackgroundUnshow": "Click para o fundo transparente.",
+        "PrimaryQuestShow": "Clique para mostrar a missão principal.",
+        "PrimaryQuestUnshow": "Clique para ocultar todas as missões."
+      }
+    },
+    "QuestTypes": {
+      "Active": "Em Progresso",
+      "Available": "Disponíveis",
+      "Completed": "Completas",
+      "Failed": "Perdidas",
+      "InActive": "Inativas",
+      "Labels": {
+        "active": "em progresso",
+        "available": "disponível",
+        "completed": "completa",
+        "failed": "perdida",
+        "inactive": "inativa"
+      }
+    },
+    "Quests": "Missões {0}",
+    "Settings": {
+      "allowPlayersAccept": {
+        "Enable": "Os jogadores podem aceitar",
+        "EnableHint": "Marque para permitir que os jogadores aceitem missões na guia Disponível"
+      },
+      "allowPlayersCreate": {
+        "Enable": "Jogadores podem Criar",
+        "EnableHint": "Ative para permitir que os jogadores possam criar Missões. Jogadores criam Missões diretamente na aba Disponivel com permissão de edição. REQUER a Permissão de núcleo 'criar diário'."
+      },
+      "allowPlayersDrag": {
+        "Enable": "Permitir que os jogadores arrastem recompensas",
+        "EnableHint": "Marque para permitir que os jogadores arrastem recompensas da janela Detalhes da missão para seus proprios atores."
+      },
+      "countHidden": {
+        "Enable": "Contar as tarefas ocultas",
+        "EnableHint": "Se ativo, o numero total de tarefas completas/total incluirá as tarefas ocultas."
+      },
+      "defaultPermissionLevel": {
+        "Enable": "Novo nível de permissão de missões",
+        "EnableHint": "Definir permissões como padrão quando novas missões forem criadas.",
+        "NONE": "Nenhum",
+        "OBSERVER": "Observador",
+        "OWNER": "Proprietário"
+      },
+      "dynamicBookmarkBackground": {
+        "Enable": "Marcadores dinâmicos em segundo plano",
+        "EnableHint": "Marque para que a guia de favoritos seja exibida dinamicamente na janela de conteúdo em segundo plano."
+      },
+      "hideFQLFromPlayers": {
+        "Enable": "Ocultar registro de missões dos jogadores",
+        "EnableHint": "Ativar esta opção oculta o registro de missões de todos os jogadores. Somente jogadores com nível GM poderão acessar o registro de missões."
+      },
+      "navStyle": {
+        "Enable": "Estilo de Navegação",
+        "EnableHint": "Decida como a navegação do registro de missões será exibida.",
+        "bookmarks": "Marcador de página",
+        "classic": "Guias Clássicas"
+      },
+      "notifyRewardDrop": {
+        "Enable": "Mostrar notificações de recompensas concedidas",
+        "EnableHint": "Verifique para ver as notificações quando as recompensas das missões forem para a fichas dos jogadores."
+      },
+      "questTrackerResizable": {
+        "Enable": "Registro de Missões redimensionável",
+        "EnableHint": "Marque para permitir o controle manual do redimensionamento do Registro de Missões"
+      },
+      "showFolder": {
+        "Enable": "Exibir a Pasta de Missões",
+        "EnableHint": "Marque para mostrar a pasta de dados da missão na guia Diário. Apenas para fins de DEBUG."
+      },
+      "showTasks": {
+        "Enable": "Exibir tarefas no Registro de Missões",
+        "EnableHint": "Decida se ou como mostrar a quantidade de tarefas (objetivos) ao lado do título da Missão no Registro de Missões. Isso não afeta a visualização individual da missão.",
+        "default": "Exibir tarefas: feitas/total",
+        "no": "Esconder a coluna \"Tarefas\"",
+        "onlyCurrent": "Exibir tarefas: feitas"
+      },
+      "trustedPlayerEdit": {
+        "Enable": "Permitir que jogadores confiáveis editem",
+        "EnableHint": "Marque para permitir que os jogadores tenham recursos expandidos de edição e verificação de status de missões para as missões que possuem."
+      }
+    },
+    "Tooltips": {
+      "AddAbstract": "Adicionar recompensa abstrata",
+      "ChangeGiverImgPos": "Modificar o alinhamento da imagem do entregador da missão",
+      "ChangeSplashPos": "Modificar o alinhamento da imagem de ilustração",
+      "Delete": "Excluir",
+      "DeleteQuestGiver": "Excluir entragor da missão",
+      "DeleteSplash": "Excluir a ilustração",
+      "Edit": "Editar",
+      "HiddenQuestNoPlayers": "Esta missão está escondida de todos os jogadores.",
+      "Hide": "Esconder",
+      "HideAll": "Esconder tudo",
+      "LockAll": "Bloquear tudo",
+      "PrimaryQuest": "Missão Principal",
+      "RewardHidden": "Recompensa escondida. Clique para mostrar.",
+      "RewardLocked": "Recompensa bloqueada. Clique para desbloquear.",
+      "RewardLockedPlayer": "Recompensa bloqueada.",
+      "RewardUnlocked": "Recompensa desbloqueada. Clique para bloquear.",
+      "RewardUnlockedPlayer": "A recompensa é desbloqueada.",
+      "RewardVisible": "Recompensa visível. Marque para ocultá-la.",
+      "SetActive": "Definir como Em Progresso",
+      "SetAvailable": "Definir como Disponível",
+      "SetCompleted": "Definir como Completa",
+      "SetFailed": "Definir como Perdida",
+      "ShowAll": "Mostrar a todos",
+      "Status": "Condição : {statusI18n}",
+      "TaskHidden": "Tarefa oculta. Marque para mostrar.",
+      "TaskVisible": "Tarefa visível. Marque para ocultá-la.",
+      "ToggleImage": "Ativar a imagem do token/ator",
+      "UnlockAll": "Desbloquear tudo"
     }
   }
 }
