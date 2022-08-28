@@ -1,6 +1,6 @@
 // Support for Whetstone and nascent lib-themer (unfinished)
 $background-color-light: rgba(255, 255, 255, .5);
-$log-bookmark-image-background: var(--palette-app-background-image, url("/ui/parchment.jpg")) repeat;
+$log-bookmark-image-background: var(--palette-app-background-image, url(../../../ui/parchment.jpg)) repeat;
 
 $primary-color-accent: var(--palette-primary, var(--default-primary-accent, #ff6400));
 
@@ -24,6 +24,7 @@ $primary-color-text-hidden: #888888;
 $primary-color-text-hover: var(--default-primary-accent, red);
 
 $icon-color-primary-quest: gold;
+$icon-color-show-background: lightblue;
 $icon-color-completed: rgba(0, 175, 0, .8);
 $icon-color-failed: rgba(200, 0, 0, .8);
 $icon-color-trashcan: rgba(255, 0, 0, .6);

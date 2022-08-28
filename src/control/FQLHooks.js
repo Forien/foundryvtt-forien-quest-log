@@ -151,6 +151,13 @@ export default class FQLHooks
       sessionStorage.setItem(sessionConstants.currentPrimaryQuest,
        game.settings.get(constants.moduleName, settings.primaryQuest));
 
+      // Must set initial session storage state for quest tracker background if it doesn't exist.
+      const showBackgroundState = sessionStorage.getItem(sessionConstants.trackerShowBackground);
+      if (showBackgroundState !== 'true' && showBackgroundState !== 'false')
+      {
+         sessionStorage.setItem(sessionConstants.trackerShowBackground, 'true');
+      }
+
       // Initialize current client based macro images based on current state.
       await Utils.setMacroImage([settings.questTrackerEnable, settings.questTrackerResizable]);
 

@@ -100,6 +100,7 @@ const questTabIndex = {
 const sessionConstants = {
    currentPrimaryQuest: 'forien.questlog.currentPrimaryQuest',
    trackerFolderState: 'forien.questtracker.folderState-',
+   trackerShowBackground: 'forien.questtracker.showBackground',
    trackerShowPrimary: 'forien.questtracker.showPrimary'
 };
 
@@ -135,6 +136,8 @@ export { constants, jquery, noteControls, questStatus, questStatusI18n, questTab
  * @property {string}   currentPrimaryQuest - Stores current primary quest set from {@link FQLSettings.primaryQuest}.
  *
  * @property {string}   trackerFolderState - Stores a boolean with tacked on quest ID for whether objectives are shown.
+ *
+ * @property {string}   trackerShowBackground - Shows / hides the quest tracker background.
  *
  * @property {string}   trackerShowPrimary - Stores a boolean if the tracker is showing the primary quest or all quests.
  */

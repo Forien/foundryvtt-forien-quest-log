@@ -29,6 +29,22 @@
     background-blend-mode: $tracker-image-background-blend-mode;
     box-shadow: 0 0 12px #000;
 
+    // The no-background class is added by QuestTrackerShell.svelte removing the background and setting the scrollbar
+    // and window resizable transparent.
+    &.no-background {
+      background: none;
+      box-shadow: none;
+
+      ::-webkit-scrollbar-thumb {
+        background: rgba(60, 60, 60, 0.5);
+        border: rgba(80, 80, 80, 0.7);
+      }
+
+      .window-resizable-handle {
+        opacity: 0.4;
+      }
+    }
+
     // Doesn't work quite right as game systems can provide specific colors.
     //a:hover {
     //  text-shadow: 0 0 8px $tracker-color-text-hover;

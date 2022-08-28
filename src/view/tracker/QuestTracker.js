@@ -182,6 +182,17 @@ export default class QuestTracker extends Application
       const closeButton = buttons.find((button) => button?.class === 'close');
       if (closeButton) { closeButton.label = void 0; }
 
+      const showBackgroundState = sessionStorage.getItem(sessionConstants.trackerShowBackground) === 'true';
+      const showBackgroundIcon = showBackgroundState ? 'fas fa-fill on' : 'far fa-fill off';
+      const showBackgroundTitle = showBackgroundState ? 'ForienQuestLog.QuestTracker.Tooltips.BackgroundUnshow' :
+       'ForienQuestLog.QuestTracker.Tooltips.BackgroundShow';
+
+      buttons.unshift({
+         title: showBackgroundTitle,
+         class: 'show-background',
+         icon: showBackgroundIcon
+      });
+
       const primaryState = sessionStorage.getItem(sessionConstants.trackerShowPrimary) === 'true';
       const primaryIcon = primaryState ? 'fas fa-star' : 'far fa-star';
       const primaryTitle = primaryState ? 'ForienQuestLog.QuestTracker.Tooltips.PrimaryQuestUnshow' :
@@ -221,6 +232,12 @@ export default class QuestTracker extends Application
    {
       super.activateListeners(html);
 
+      const showBackgroundState = sessionStorage.getItem(sessionConstants.trackerShowBackground) === 'true';
+      if (!showBackgroundState)
+      {
+         this.element[0].classList.add('no-background');
+      }
+
       // Make the window draggable
       const header = html.find('header');
       new Draggable(this, html, header[0], this.options.resizable);
@@ -232,6 +249,8 @@ export default class QuestTracker extends Application
        HandlerTracker.headerPointerUp(event, header[0], this));
 
       html.on(jquery.click, '.header-button.close', void 0, this.close);
+
+      html.on(jquery.click, '.header-button.show-background i', void 0, () => HandlerTracker.showBackground(this));
 
       html.on(jquery.click, '.header-button.show-primary i', void 0, () => HandlerTracker.questPrimaryShow(this));
 

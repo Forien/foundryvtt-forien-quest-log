@@ -139,4 +139,23 @@ export default class HandlerTracker
          }
       }
    }
+
+   /**
+    * Handles the header button to show the quest tracker background or hide it.
+    *
+    * @param {QuestTracker}   questTracker - The QuestTracker.
+    */
+   static showBackground(questTracker)
+   {
+      const newBackgroundState = !(sessionStorage.getItem(sessionConstants.trackerShowBackground) === 'true');
+      sessionStorage.setItem(sessionConstants.trackerShowBackground, (newBackgroundState).toString());
+
+      const showBackgroundIcon = $('#quest-tracker .header-button.show-background i');
+      showBackgroundIcon.attr('class', newBackgroundState ? 'fas fa-star' : 'far fa-star');
+      showBackgroundIcon.attr('title', game.i18n.localize(newBackgroundState ?
+       'ForienQuestLog.QuestTracker.Tooltips.BackgroundUnshow' :
+        'ForienQuestLog.QuestTracker.Tooltips.BackgroundShow'));
+
+      questTracker.render();
+   }
 }
