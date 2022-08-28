@@ -222,10 +222,12 @@ export default class FQLHooks
 
       if (!document) { return; }
 
-      // Find any existing macro that is authored by the current user and matches the dropped macro.
+      const macroCommand = V10Compat.get(document, 'command');
+
       const existingMacro = game.macros.contents.find((m) =>
-       (V10Compat.get(m, 'author') === game.user.id &&
-        V10Compat.get(m, 'command') === V10Compat.get(document, 'command')));
+      {
+         return (V10Compat.authorID(m) === game.user.id && V10Compat.get(m, 'command') === macroCommand);
+      });
 
       let macro = existingMacro;
 
@@ -247,6 +249,7 @@ export default class FQLHooks
       if (macro)
       {
          const macroSetting = macro.getFlag(constants.moduleName, 'macro-setting');
+
          if (macroSetting) { await Utils.setMacroImage(macroSetting); }
 
          await game.user.assignHotbarMacro(macro, slot);
@@ -332,7 +335,7 @@ export default class FQLHooks
       // pack then handle it.
       (async () =>
       {
-         if (data.type === 'Macro' && typeof data.pack === 'string' && data.pack.startsWith(constants.moduleName))
+         if (V10Compat.isFQLMacroDataTransfer(data))
          {
             await FQLHooks.handleMacroHotbarDrop(data, slot);
          }
