@@ -37,12 +37,16 @@
   }
 
   // Tiny MCE overrides
-
   .tox:not(.tox-tinymce-inline) .tox-editor-header {
     background: $background-color-light;
     border-radius: 5px;
     display: inline-flex;
     width: fit-content;
+    padding: 0;
+  }
+
+  .tox:not([dir=rtl]) .tox-toolbar__group:not(:last-of-type) {
+    border-color: #ccc;
   }
 
   // Fix specifically for Warhammer 4th edition; this doesn't work for secondary menus.

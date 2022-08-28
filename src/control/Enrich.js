@@ -1,6 +1,8 @@
-import QuestDB    from './QuestDB.js';
-import Utils      from './Utils.js';
-import DOMPurify  from '../../external/DOMPurify.js';
+import QuestDB       from './QuestDB.js';
+import Utils         from './Utils.js';
+import DOMPurify     from '../../external/DOMPurify.js';
+
+import { V10Compat } from '../V10Compat.js';
 
 import { constants, questStatus, questStatusI18n, settings } from '../model/constants.js';
 
@@ -64,7 +66,8 @@ export default class Enrich
                case Actor.documentName:
                {
                   const actorImage = document.img;
-                  const tokenImage = document?.data?.token?.img;
+                  const tokenImage = V10Compat.tokenImg(document);
+
                   const hasTokenImg = typeof tokenImage === 'string' && tokenImage !== actorImage;
 
                   data = {
@@ -89,7 +92,7 @@ export default class Enrich
                   data = {
                      uuid,
                      name: document.name,
-                     img: document.data.img,
+                     img: V10Compat.journalImage(document),
                      hasTokenImg: false
                   };
                   break;
@@ -232,8 +235,11 @@ export default class Enrich
 
       // Enrich w/ TextEditor, but first sanitize w/ DOMPurify, allowing only iframes with YouTube embed.
       data.description = TextEditor.enrichHTML(DOMPurify.sanitizeWithVideo(data.description), {
-         secrets: canEdit || playerEdit
+         secrets: canEdit || playerEdit,
+         async: false
       });
+
+      data.gmnotes = TextEditor.enrichHTML(DOMPurify.sanitizeWithVideo(data.gmnotes), { async: false });
 
       data.questIconType = void 0;
 
@@ -372,7 +378,7 @@ export default class Enrich
       {
          return {
             ...task,
-            name: TextEditor.enrichHTML(DOMPurify.sanitize(task.name))
+            name: TextEditor.enrichHTML(DOMPurify.sanitize(task.name), { async: false })
          };
       });
 
@@ -396,7 +402,7 @@ export default class Enrich
          const itemLink = type === 'item' && !canEdit && !canPlayerDrag && !item.locked;
 
          return {
-            name: TextEditor.enrichHTML(DOMPurify.sanitize(item.data.name)),
+            name: TextEditor.enrichHTML(DOMPurify.sanitize(item.data.name), { async: false }),
             img: item.data.img,
             type,
             hidden: item.hidden,

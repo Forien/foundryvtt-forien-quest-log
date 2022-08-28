@@ -121,7 +121,7 @@ export default class QuestTracker extends Application
             const questId = $(menu)?.closest('.quest-tracker-header')?.data('quest-id');
             const quest = QuestDB.getQuest(questId);
 
-            if (quest && Utils.copyTextToClipboard(`@Quest[${quest.id}]{${quest.name}}`))
+            if (quest && Utils.copyTextToClipboard(`@JournalEntry[${quest.id}]{${quest.name}}`))
             {
                ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.LinkCopied'));
             }
@@ -182,6 +182,17 @@ export default class QuestTracker extends Application
       const closeButton = buttons.find((button) => button?.class === 'close');
       if (closeButton) { closeButton.label = void 0; }
 
+      const showBackgroundState = sessionStorage.getItem(sessionConstants.trackerShowBackground) === 'true';
+      const showBackgroundIcon = showBackgroundState ? 'fas fa-fill on' : 'far fa-fill off';
+      const showBackgroundTitle = showBackgroundState ? 'ForienQuestLog.QuestTracker.Tooltips.BackgroundUnshow' :
+       'ForienQuestLog.QuestTracker.Tooltips.BackgroundShow';
+
+      buttons.unshift({
+         title: showBackgroundTitle,
+         class: 'show-background',
+         icon: showBackgroundIcon
+      });
+
       const primaryState = sessionStorage.getItem(sessionConstants.trackerShowPrimary) === 'true';
       const primaryIcon = primaryState ? 'fas fa-star' : 'far fa-star';
       const primaryTitle = primaryState ? 'ForienQuestLog.QuestTracker.Tooltips.PrimaryQuestUnshow' :
@@ -192,6 +203,16 @@ export default class QuestTracker extends Application
          class: 'show-primary',
          icon: primaryIcon
       });
+
+      // Share QuestLog w/ remote clients.
+      if (game.user.isGM)
+      {
+         buttons.unshift({
+            title: game.i18n.localize('ForienQuestLog.QuestPreview.HeaderButtons.Show'),
+            class: 'share-tracker',
+            icon: 'fas fa-eye'
+         });
+      }
 
       return buttons;
    }
@@ -221,6 +242,12 @@ export default class QuestTracker extends Application
    {
       super.activateListeners(html);
 
+      const showBackgroundState = sessionStorage.getItem(sessionConstants.trackerShowBackground) === 'true';
+      if (!showBackgroundState)
+      {
+         this.element[0].classList.add('no-background');
+      }
+
       // Make the window draggable
       const header = html.find('header');
       new Draggable(this, html, header[0], this.options.resizable);
@@ -232,6 +259,13 @@ export default class QuestTracker extends Application
        HandlerTracker.headerPointerUp(event, header[0], this));
 
       html.on(jquery.click, '.header-button.close', void 0, this.close);
+
+      if (game.user.isGM)
+      {
+         html.on(jquery.click, '.header-button.share-tracker i', void 0, () => Socket.showQuestTracker());
+      }
+
+      html.on(jquery.click, '.header-button.show-background i', void 0, () => HandlerTracker.showBackground(this));
 
       html.on(jquery.click, '.header-button.show-primary i', void 0, () => HandlerTracker.questPrimaryShow(this));
 

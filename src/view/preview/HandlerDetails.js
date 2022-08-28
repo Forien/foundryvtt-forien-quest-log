@@ -1,7 +1,9 @@
-import Enrich     from '../../control/Enrich.js';
-import Socket     from '../../control/Socket.js';
-import Utils      from '../../control/Utils.js';
-import FQLDialog  from '../FQLDialog.js';
+import Enrich        from '../../control/Enrich.js';
+import Socket        from '../../control/Socket.js';
+import Utils         from '../../control/Utils.js';
+import FQLDialog     from '../FQLDialog.js';
+
+import { V10Compat } from '../../V10Compat.js';
 
 import { constants, jquery, settings } from '../../model/constants.js';
 
@@ -205,10 +207,10 @@ export default class HandlerDetails
 
       const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
 
-      if (typeof data.id === 'string')
-      {
-         const uuid = Utils.getUUID(data, ['Actor', 'Item', 'JournalEntry']);
+      const uuid = Utils.getUUID(data, ['Actor', 'Item', 'JournalEntry']);
 
+      if (typeof uuid === 'string')
+      {
          const giverData = await Enrich.giverFromUUID(uuid);
          if (giverData)
          {
@@ -223,11 +225,20 @@ export default class HandlerDetails
       }
       else
       {
-         // Document has data, but lacks a UUID, so it is a data copy. Inform user that quest giver may only be
-         // from world and compendium sources with a UUID.
-         if (typeof data.data === 'object')
+         // Slightly awkward on v10 as we need to check if this is an actor owned item specifically.
+         if (V10Compat.isV10 && typeof data?.uuid === 'string' &&
+          data.uuid.startsWith('Actor') && (data.uuid.match(/\./g) || []).length > 1)
          {
             ui.notifications.warn(game.i18n.localize('ForienQuestLog.QuestPreview.Notifications.WrongDocType'));
+         }
+         else
+         {
+            // Document has data, but lacks a UUID, so it is a data copy. Inform user that quest giver may only be
+            // from world and compendium sources with a UUID.
+            if (typeof data?.data === 'object')
+            {
+               ui.notifications.warn(game.i18n.localize('ForienQuestLog.QuestPreview.Notifications.WrongDocType'));
+            }
          }
       }
    }
@@ -463,10 +474,15 @@ export default class HandlerDetails
                userName: game.user.name,
             },
             type: 'Item',
-            data: document.data,
             uuid: data.uuid,
             id: document.id
          };
+
+         // Pass on document data on v9; v10 systems should work solely w/ UUID.
+         if (!V10Compat.isV10)
+         {
+            dataTransfer.data = document.data;
+         }
 
          // Add compendium pack info if applicable
          if (uuidData && uuidData.pack) { dataTransfer.pack = uuidData.pack; }
@@ -528,10 +544,10 @@ export default class HandlerDetails
 
       if (data.type === 'Item' && data._fqlData === void 0)
       {
-         if (typeof data.id === 'string')
-         {
-            const uuid = Utils.getUUID(data);
+         const uuid = Utils.getUUID(data);
 
+         if (typeof uuid === 'string')
+         {
             const item = await Enrich.giverFromUUID(uuid);
             if (item)
             {
@@ -545,11 +561,20 @@ export default class HandlerDetails
          }
          else
          {
-            // Document has data, but lacks a UUID, so it is a data copy. Inform user that rewards may only be
-            // items that are backed by a document with a UUID.
-            if (typeof data.data === 'object')
+            // Slightly awkward on v10 as we need to check if this is an actor owned item specifically.
+            if (V10Compat.isV10 && typeof data?.uuid === 'string' &&
+             data.uuid.startsWith('Actor') && (data.uuid.match(/\./g) || []).length > 1)
             {
                ui.notifications.warn(game.i18n.localize('ForienQuestLog.QuestPreview.Notifications.WrongItemType'));
+            }
+            else
+            {
+               // Document has data, but lacks a UUID, so it is a data copy. Inform user that rewards may only be
+               // items that are backed by a document with a UUID.
+               if (typeof data.data === 'object')
+               {
+                  ui.notifications.warn(game.i18n.localize('ForienQuestLog.QuestPreview.Notifications.WrongItemType'));
+               }
             }
          }
       }
@@ -1021,7 +1046,7 @@ export default class HandlerDetails
  *
  * @property {string}      type - Type of document.
  *
- * @property {object}      data - Document data.
+ * @property {object}      [data] - Document data on V9
  *
  * @property {string}      uuid - The UUID of the document.
  *

@@ -5,11 +5,12 @@ import Utils            from './Utils.js';
 import ViewManager      from './ViewManager.js';
 import QuestAPI         from './public/QuestAPI.js';
 import Quest            from '../model/Quest.js';
-import QuestCollection  from '../model/QuestCollection.js';
 import QuestPreview     from '../view/preview/QuestPreview.js';
 
 import ModuleSettings   from '../ModuleSettings.js';
 import DBMigration      from '../../database/DBMigration.js';
+
+import { V10Compat }    from '../V10Compat.js';
 
 import { constants, noteControls, sessionConstants, settings } from '../model/constants.js';
 
@@ -86,7 +87,7 @@ export default class FQLHooks
       if (typeof data !== 'object' || data?._fqlData?.type !== 'reward') { return; }
 
       await Socket.questRewardDrop({
-         actor: { id: actor.id, name: actor.data.name },
+         actor: { id: actor.id, name: V10Compat.get(actor, 'name') },
          sheet: { id: sheet.id },
          data
       });
@@ -130,37 +131,14 @@ export default class FQLHooks
     */
    static async foundryReady()
    {
+      // Initialize all main GUI views.
+      ViewManager.init();
+
       // Only attempt to run DB migration for GM.
       if (game.user.isGM) { await DBMigration.migrate(); }
 
-      // Disable synthetic quest type registration for Foundry `v9+`. As it turns out `CONST` was locked down last
-      // minute in the v9 release cycle. There is a replacement module / continuing the quest log that will enable this
-      // functionality again with a different implementation. You can join the TyphonJS Discord server to get an
-      // announcement when that is available: https://discord.gg/mnbgN8f
-      if (foundry.utils.isNewerVersion(9, game.version ?? game.data.version))
-      {
-         // Add the FQL unique Quest data type to the Foundry core data types.
-         CONST.ENTITY_TYPES?.push(Quest.documentName);
-         CONST.ENTITY_LINK_TYPES?.push(Quest.documentName);
-
-         // Add the FQL Quest data type to CONFIG.
-         CONFIG[Quest.documentName] = {
-            entityClass: Quest,
-            documentClass: Quest,
-            collection: QuestCollection,
-            sidebarIcon: 'fas fa-scroll',
-            sheetClass: QuestPreview
-         };
-
-         // Add our QuestCollection to the game collections.
-         game.collections.set(Quest.documentName, new QuestCollection());
-      }
-
       // Initialize the in-memory QuestDB. Loads all quests that the user can see at this point.
       await QuestDB.init();
-
-      // Initialize all main GUI views.
-      ViewManager.init();
 
       // Allow and process incoming socket data.
       Socket.listen();
@@ -173,15 +151,18 @@ export default class FQLHooks
       sessionStorage.setItem(sessionConstants.currentPrimaryQuest,
        game.settings.get(constants.moduleName, settings.primaryQuest));
 
+      // Must set initial session storage state for quest tracker background if it doesn't exist.
+      const showBackgroundState = sessionStorage.getItem(sessionConstants.trackerShowBackground);
+      if (showBackgroundState !== 'true' && showBackgroundState !== 'false')
+      {
+         sessionStorage.setItem(sessionConstants.trackerShowBackground, 'true');
+      }
+
       // Initialize current client based macro images based on current state.
       await Utils.setMacroImage([settings.questTrackerEnable, settings.questTrackerResizable]);
 
-      // Support for LibThemer; add FQL options to LibThemer.
-      const libThemer = game.modules.get('lib-themer');
-      if (libThemer?.active)
-      {
-         await libThemer?.api?.registerTheme('/modules/forien-quest-log/assets/themes/lib-themer/fql.json');
-      }
+      // Show quest tracker if applicable.
+      ViewManager.renderOrCloseQuestTracker();
 
       // Fire our own lifecycle event to inform any other modules that depend on FQL QuestDB.
       Hooks.callAll('ForienQuestLog.Lifecycle.ready');
@@ -241,9 +222,12 @@ export default class FQLHooks
 
       if (!document) { return; }
 
-      // Find any existing macro that is authored by the current user and matches the dropped macro.
+      const macroCommand = V10Compat.get(document, 'command');
+
       const existingMacro = game.macros.contents.find((m) =>
-       (m.data.author === game.user.id && m.data.command === document.data.command));
+      {
+         return (V10Compat.authorID(m) === game.user.id && V10Compat.get(m, 'command') === macroCommand);
+      });
 
       let macro = existingMacro;
 
@@ -251,11 +235,11 @@ export default class FQLHooks
       if (!existingMacro)
       {
          const macroData = {
-            name: document.data.name,
-            type: document.data.type,
-            command: document.data.command,
-            img: document.data.img,
-            flags: document.data.flags
+            name: V10Compat.get(document, 'name'),
+            type: V10Compat.get(document, 'type'),
+            command: V10Compat.get(document, 'command'),
+            img: V10Compat.get(document, 'img'),
+            flags: V10Compat.get(document, 'flags')
          };
 
          macro = await Macro.create(macroData, { displaySheet: false });
@@ -265,6 +249,7 @@ export default class FQLHooks
       if (macro)
       {
          const macroSetting = macro.getFlag(constants.moduleName, 'macro-setting');
+
          if (macroSetting) { await Utils.setMacroImage(macroSetting); }
 
          await game.user.assignHotbarMacro(macro, slot);
@@ -305,7 +290,7 @@ export default class FQLHooks
       macroData.img = quest.splashAsIcon && quest.splash.length ? quest.splash : quest?.giverData?.img;
 
       // Search for an already existing macro with the same command.
-      let macro = game.macros.contents.find((m) => (m.data.command === command));
+      let macro = game.macros.contents.find((m) => (V10Compat.get(m, 'command') === command));
 
       // If not found then create a new macro with the command.
       if (!macro)
@@ -350,7 +335,7 @@ export default class FQLHooks
       // pack then handle it.
       (async () =>
       {
-         if (data.type === 'Macro' && typeof data.pack === 'string' && data.pack.startsWith(constants.moduleName))
+         if (V10Compat.isFQLMacroDataTransfer(data))
          {
             await FQLHooks.handleMacroHotbarDrop(data, slot);
          }

@@ -1,3 +1,5 @@
+import { V10Compat }                   from '../V10Compat.js';
+
 import { constants, jquery, settings } from '../model/constants.js';
 
 /**
@@ -177,7 +179,7 @@ export default class Utils
 
          const checkPerm = typeof permissionCheck === 'boolean' ? permissionCheck : true;
 
-         if (checkPerm && !doc.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER))
+         if (checkPerm && !doc.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER))
          {
             ui.notifications.warn('ForienQuestLog.NoPermission', { localize: true });
             return null;
@@ -218,11 +220,42 @@ export default class Utils
     */
    static getUUID(data, type = void 0)
    {
+      // Verify data.
+      if (typeof data !== 'object' || data === null) { return void 0; }
+
       // 'type' doesn't match the data type.
       if (Array.isArray(type) && !type.includes(data.type)) { return void 0; }
       if (typeof type === 'string' && data.type !== type) { return void 0; }
 
-      return typeof data.pack === 'string' ? `Compendium.${data.pack}.${data.id}` : `${data.type}.${data.id}`;
+      if (V10Compat.isV10)
+      {
+         if (typeof data.uuid === 'string')
+         {
+            // Must verify that this is not an owned item from an actor. Search for multiple `.`
+            if (data.uuid.startsWith('Actor') && (data.uuid.match(/\./g) || []).length > 1)
+            {
+               return void 0;
+            }
+
+            return data.uuid;
+         }
+         else
+         {
+            return void 0;
+         }
+      }
+      else  // Create UUID from v9 data transfer.
+      {
+         // Must contain `id` and not be an owned item.
+         if (typeof data.id === 'string')
+         {
+            return typeof data.pack === 'string' ? `Compendium.${data.pack}.${data.id}` : `${data.type}.${data.id}`;
+         }
+         else
+         {
+            return void 0;
+         }
+      }
    }
 
    /**
@@ -292,7 +325,8 @@ export default class Utils
             if (macroSetting !== currentSetting) { continue; }
 
             // Only set macro image if the author of the macro matches the user and the user is an owner.
-            if (macroEntry.data.author !== userID || !macroEntry.isOwner) { continue; }
+            const macroAuthor = V10Compat.authorID(macroEntry);
+            if (macroAuthor !== userID || !macroEntry.isOwner) { continue; }
 
             const state = value ?? game.settings.get(constants.moduleName, currentSetting);
 
@@ -334,7 +368,7 @@ export default class Utils
             return null;
          }
 
-         if (permissionCheck && !document.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER))
+         if (permissionCheck && !document.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER))
          {
             ui.notifications.warn('ForienQuestLog.NoPermission', { localize: true });
             return null;
@@ -369,8 +403,10 @@ export default class Utils
    {
       let templates = [
          "templates/partials/quest-log/tab.html",
-         "templates/partials/quest-preview/gmnotes.html",
-         "templates/partials/quest-preview/details.html",
+         "templates/partials/quest-preview/v9/gmnotes.html",
+         "templates/partials/quest-preview/v9/details.html",
+         "templates/partials/quest-preview/v10/gmnotes.html",
+         "templates/partials/quest-preview/v10/details.html",
          "templates/partials/quest-preview/management.html"
       ];
 

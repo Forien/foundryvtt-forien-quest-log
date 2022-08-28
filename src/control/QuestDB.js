@@ -5,6 +5,8 @@ import Quest            from '../model/Quest.js';
 import QuestPreviewShim from '../view/preview/QuestPreviewShim.js';
 import collect          from '../../external/collect.js';
 
+import { V10Compat }    from '../V10Compat.js';
+
 import { constants, questStatus, settings } from '../model/constants.js';
 
 /**
@@ -166,7 +168,9 @@ export default class QuestDB
          const isTrustedPlayerEdit = Utils.isTrustedPlayerEdit();
 
          // Iterate over all journal entries in `_fql_quests` folder.
-         for (const entry of folder.content)
+         const folderContents = V10Compat.folderContents(folder);
+
+         for (const entry of folderContents)
          {
             const content = entry.getFlag(constants.moduleName, constants.flagDB);
 
@@ -248,7 +252,9 @@ export default class QuestDB
       const isTrustedPlayerEdit = Utils.isTrustedPlayerEdit();
 
       // Iterate over all quests.
-      for (const entry of folder.content)
+      const folderContents = V10Compat.folderContents(folder);
+
+      for (const entry of folderContents)
       {
          const content = entry.getFlag(constants.moduleName, constants.flagDB);
 
@@ -310,12 +316,12 @@ export default class QuestDB
     */
    static async createQuest({ data = {}, parentId = void 0 } = {})
    {
-      // Get the default permission setting and attempt to set it if found in ENTITY_PERMISSIONS.
+      // Get the default permission setting and attempt to set it if found in DOCUMENT_PERMISSION_LEVELS.
       const defaultPerm = game.settings.get(constants.moduleName, settings.defaultPermission);
 
       const permission = {
-         default: typeof CONST.ENTITY_PERMISSIONS[defaultPerm] === 'number' ? CONST.ENTITY_PERMISSIONS[defaultPerm] :
-          CONST.ENTITY_PERMISSIONS.OBSERVER
+         default: typeof CONST.DOCUMENT_PERMISSION_LEVELS[defaultPerm] === 'number' ?
+          CONST.DOCUMENT_PERMISSION_LEVELS[defaultPerm] : CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER
       };
 
       // Used for a player created quest setting and the quest as 'available' for normal players or 'hidden' for
@@ -323,7 +329,7 @@ export default class QuestDB
       if (!game.user.isGM)
       {
          data.status = Utils.isTrustedPlayerEdit() ? questStatus.inactive : questStatus.available;
-         permission[game.user.id] = CONST.ENTITY_PERMISSIONS.OWNER;
+         permission[game.user.id] = CONST.DOCUMENT_PERMISSION_LEVELS.OWNER;
       }
 
       const parentQuest = QuestDB.getQuest(parentId);
@@ -958,7 +964,7 @@ const s_GET_QUEST_ENTRY = (questId) =>
  * GM level users always can observe any quests. Trusted players w/ the module setting
  * {@link FQLSettings.trustedPlayerEdit} enabled and the owner of the quest can observe quests in the inactive status.
  * Otherwise quests are only observable by players when the default or personal permission is
- * {@link CONST.ENTITY_PERMISSIONS.OBSERVER} or higher.
+ * {@link CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER} or higher.
  *
  * @param {QuestData}      content - The serialized Quest data stored in the journal entry.
  *
@@ -988,7 +994,7 @@ const s_IS_OBSERVABLE = (content, entry, isTrustedPlayerEdit = Utils.isTrustedPl
       else
       {
          // Otherwise no one can see hidden / inactive quests; perform user permission check for observer.
-         isObservable = !isInactive && entry.testUserPermission(game.user, CONST.ENTITY_PERMISSIONS.OBSERVER);
+         isObservable = !isInactive && entry.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER);
       }
    }
 

@@ -8,6 +8,8 @@ import HandlerAny             from './HandlerAny.js';
 import HandlerDetails         from './HandlerDetails.js';
 import HandlerManage          from './HandlerManage.js';
 
+import { V10Compat }          from '../../V10Compat.js';
+
 import { constants, jquery, settings }  from '../../model/constants.js';
 
 /**
@@ -158,7 +160,7 @@ export default class QuestPreview extends FormApplication
        * Tracks any open FQLPermissionControl dialog that can be opened from the management tab, so that it can be
        * closed if this QuestPreview is closed or the tab is changed.
        *
-       * @type {FQLPermissionControl}
+       * @type {FQLPermissionControlImpl|FQLDocumentOwnershipConfig}
        * @package
        *
        * @see {@link HandlerManage.configurePermissions}
@@ -201,9 +203,13 @@ export default class QuestPreview extends FormApplication
     */
    static get defaultOptions()
    {
+      // TinyMCE editor Handlebars helper has changed. Load different templates for v10 or v9
+      const template = V10Compat.isV10 ? 'modules/forien-quest-log/templates/quest-preview-v10.html' :
+       'modules/forien-quest-log/templates/quest-preview-v9.html';
+
       return foundry.utils.mergeObject(super.defaultOptions, {
          classes: ['forien-quest-preview'],
-         template: 'modules/forien-quest-log/templates/quest-preview.html',
+         template,
          width: 700,
          height: 540,
          minimizable: true,
@@ -297,7 +303,7 @@ export default class QuestPreview extends FormApplication
          icon: 'fas fa-link',
          onclick: () =>
          {
-            if (Utils.copyTextToClipboard(`@Quest[${this._quest.id}]{${this._quest.name}}`))
+            if (Utils.copyTextToClipboard(`@JournalEntry[${this._quest.id}]{${this._quest.name}}`))
             {
                ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.LinkCopied'));
             }

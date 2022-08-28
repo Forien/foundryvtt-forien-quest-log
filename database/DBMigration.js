@@ -2,18 +2,22 @@ import Socket        from '../src/control/Socket.js';
 import Utils         from '../src/control/Utils.js';
 import { constants } from '../src/model/constants.js';
 
+import { V10Compat } from '../src/V10Compat.js';
+
 import dbSchema_1    from './dbSchema_1.js';
 import dbSchema_2    from './dbSchema_2.js';
+import dbSchema_3    from './dbSchema_3.js';
 
 /**
  * Defines the callback functions to execute for each schemaVersion level.
  *
- * @type {Object.<number, Function>}
+ * @type {Object<number, Function>}
  */
 const migrateImpl = {
    0: () => {},   // Schema level 0 is a noop / assume all data is stored in JE content.
    1: dbSchema_1, // Migrate to schema 1 transferring any old data to JE flags.
-   2: dbSchema_2  // Schema 2 - store quest giver data in Quest data instead of doing a UUID lookup in Enrich.
+   2: dbSchema_2, // Schema 2 - store quest giver data in Quest data instead of doing a UUID lookup in Enrich.
+   3: dbSchema_3, // V10 image / name refresh - dnd5e system amongst others have significant image path changes for compendiums.
 };
 
 /**
@@ -36,10 +40,11 @@ export default class DBMigration
 {
    /**
     * Defines the current max schema version.
+    * NOTE: schema v3 is only run on V10 thus the ternary below.
     *
     * @returns {number} max schema version.
     */
-   static get version() { return 2; }
+   static get version() { return V10Compat.isV10 ? 3 : 2; }
 
    /**
     * Defines the module setting key to store current level DB migration level that already has run for schemaVersion.
@@ -99,7 +104,9 @@ export default class DBMigration
          const folder = await Utils.initializeQuestFolder();
 
          // Early out if there are no journal entries / quests in the `_fql-quests` folder.
-         if (folder?.content?.length === 0)
+         // Note: v10 compatibility w/ `folder.contents` vs `folder.content`.
+         const folderContentLength = folder?.contents?.length ?? folder?.content?.length ?? 0;
+         if (folderContentLength === 0)
          {
             await game.settings.set(constants.moduleName, DBMigration.setting, DBMigration.version);
             return;
