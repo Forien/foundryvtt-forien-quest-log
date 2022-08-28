@@ -1,3 +1,5 @@
+import {constants} from "./model/constants.js";
+
 let isV10 = false;
 
 Hooks.once('init', () =>
@@ -34,6 +36,19 @@ export class V10Compat
    {
       if (!folder) { return void 0; }
       return folder?.contents ?? folder?.content ?? [];
+   }
+
+   /**
+    * @param {object} data - data transfer from macro hot bar drop.
+    *
+    * @returns {boolean} Data transfer object is an FQL macro.
+    */
+   static isFQLMacroDataTransfer(data)
+   {
+      if (data?.type !== 'Macro') { return false; }
+
+      return isV10 ? typeof data?.uuid === 'string' && data.uuid.startsWith(`Compendium.${constants.moduleName}`) :
+       typeof data?.pack === 'string' && data.pack.startsWith(constants.moduleName);
    }
 
    /**
