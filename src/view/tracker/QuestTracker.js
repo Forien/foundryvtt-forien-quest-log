@@ -204,6 +204,16 @@ export default class QuestTracker extends Application
          icon: primaryIcon
       });
 
+      // Share QuestLog w/ remote clients.
+      if (game.user.isGM)
+      {
+         buttons.unshift({
+            title: game.i18n.localize('ForienQuestLog.QuestPreview.HeaderButtons.Show'),
+            class: 'share-tracker',
+            icon: 'fas fa-eye'
+         });
+      }
+
       return buttons;
    }
 
@@ -249,6 +259,11 @@ export default class QuestTracker extends Application
        HandlerTracker.headerPointerUp(event, header[0], this));
 
       html.on(jquery.click, '.header-button.close', void 0, this.close);
+
+      if (game.user.isGM)
+      {
+         html.on(jquery.click, '.header-button.share-tracker i', void 0, () => Socket.showQuestTracker());
+      }
 
       html.on(jquery.click, '.header-button.show-background i', void 0, () => HandlerTracker.showBackground(this));
 

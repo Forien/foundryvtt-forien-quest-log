@@ -22,7 +22,9 @@ const s_MESSAGE_TYPES = {
    questRewardDrop: 'questRewardDrop',
    refreshAll: 'refreshAll',
    refreshQuestPreview: 'refreshQuestPreview',
+   showQuestLog: 'showQuestLog',
    showQuestPreview: 'showQuestPreview',
+   showQuestTracker: 'showQuestTracker',
    userCantOpenQuest: 'userCantOpenQuest'
 };
 
@@ -105,7 +107,9 @@ export default class Socket
                case s_MESSAGE_TYPES.questSetStatus: await handleQuestSetStatus(data); break;
                case s_MESSAGE_TYPES.refreshAll: handleRefreshAll(data); break;
                case s_MESSAGE_TYPES.refreshQuestPreview: handleRefreshQuestPreview(data); break;
+               case s_MESSAGE_TYPES.showQuestLog: handleShowQuestLog(); break;
                case s_MESSAGE_TYPES.showQuestPreview: handleShowQuestPreview(data); break;
+               case s_MESSAGE_TYPES.showQuestTracker: handleShowQuestTracker(); break;
                case s_MESSAGE_TYPES.userCantOpenQuest: handleUserCantOpenQuest(data); break;
             }
          }
@@ -316,6 +320,19 @@ export default class Socket
    }
 
    /**
+    * This handles the `show to players` title bar button found in {@link QuestLog._getHeaderButtons} to open the
+    * QuestLog for all remote clients.
+    *
+    * Handled on the receiving side by {@link handleShowQuestLog}.
+    */
+   static showQuestLog()
+   {
+      game.socket.emit(s_EVENT_NAME, {
+         type: s_MESSAGE_TYPES.showQuestLog
+      });
+   }
+
+   /**
     * This handles the `show to players` title bar button found in {@link QuestPreview._getHeaderButtons} to open the
     * associated QuestPreview for all remote clients.
     *
@@ -330,6 +347,19 @@ export default class Socket
          payload: {
             questId
          }
+      });
+   }
+
+   /**
+    * This handles the `show to players` title bar button found in {@link QuestTracker._getHeaderButtons} to open the
+    * QuestTracker for all remote clients.
+    *
+    * Handled on the receiving side by {@link handleShowQuestTracker}.
+    */
+   static showQuestTracker()
+   {
+      game.socket.emit(s_EVENT_NAME, {
+         type: s_MESSAGE_TYPES.showQuestTracker
       });
    }
 
@@ -569,6 +599,16 @@ function handleRefreshQuestPreview(data)
 }
 
 /**
+ * Handles opening the QuestLog app.
+ *
+ * This message is sent from {@link Socket.showQuestLog}.
+ */
+function handleShowQuestLog()
+{
+   ViewManager.questLog.render(true, { focus: true });
+}
+
+/**
  * Handles opening a QuestPreview app specified by `questId` via {@link QuestAPI.open}.
  *
  * This message is sent from {@link Socket.showQuestPreview}.
@@ -578,6 +618,16 @@ function handleRefreshQuestPreview(data)
 function handleShowQuestPreview(data)
 {
    QuestAPI.open({ questId: data.payload.questId, notify: false });
+}
+
+/**
+ * Handles opening the QuestTracker app.
+ *
+ * This message is sent from {@link Socket.showQuestTracker}.
+ */
+function handleShowQuestTracker()
+{
+   game.settings.set(constants.moduleName, settings.questTrackerEnable, true);
 }
 
 /**

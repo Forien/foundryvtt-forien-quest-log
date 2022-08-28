@@ -7,6 +7,7 @@ import FQLDialog        from '../FQLDialog.js';
 import HandlerLog    from './HandlerLog.js';
 
 import { constants, jquery, questStatusI18n, questTabIndex, settings } from '../../model/constants.js';
+import HandlerDetails from "../preview/HandlerDetails.js";
 
 /**
  * Provides the main quest log app which shows the quests separated by status either with bookmark or classic tabs.
@@ -51,6 +52,35 @@ export default class QuestLog extends Application
          tabs: [{ navSelector: '.log-tabs', contentSelector: '.log-body', initial: 'active' }]
       });
    }
+
+   /**
+    * Specify the set of config buttons which should appear in the Application header. Buttons should be returned as an
+    * Array of objects.
+    *
+    * Provides an explicit override of Application._getHeaderButtons to add one additional buttons for the app header
+    * for showing the quest log to users via {@link Socket.showQuestLog}
+    *
+    * @returns {ApplicationHeaderButton[]} The app header buttons.
+    * @override
+    */
+   _getHeaderButtons()
+   {
+      const buttons = super._getHeaderButtons();
+
+      // Share QuestLog w/ remote clients.
+      if (game.user.isGM)
+      {
+         buttons.unshift({
+            label: game.i18n.localize('ForienQuestLog.QuestPreview.HeaderButtons.Show'),
+            class: 'share-quest',
+            icon: 'fas fa-eye',
+            onclick: () => Socket.showQuestLog()
+         });
+      }
+
+      return buttons;
+   }
+
 
    /**
     * Defines all jQuery control callbacks with event listeners for click, drag, drop via various CSS selectors.
