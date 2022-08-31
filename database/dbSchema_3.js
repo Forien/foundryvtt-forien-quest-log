@@ -82,7 +82,7 @@ export default async function()
        `more quests. Check the chat message or console log (press <F12>) for more info.`);
 
       let content =
-       `Forien's Quest Log (DB migration)<br>Removed unlinked quest giver or reward items from one or quests below:<p>`;
+       `Forien's Quest Log (DB migration)<br>Removed unlinked quest giver or reward items from the quests below:<p>`;
 
       for (const entry of removedData)
       {
