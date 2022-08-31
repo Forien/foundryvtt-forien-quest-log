@@ -25,7 +25,7 @@ export default async function()
 
    let dnd5eIconMap = void 0;
 
-   let removedData = false;
+   const removedData = [];
 
    // Retrieve DnD5e system icon migration map if applicable.
    if (typeof game?.dnd5e?.migrations?.getMigrationData === 'function')
@@ -48,10 +48,19 @@ export default async function()
             const quest = new Quest(content, entry);
 
             handleSplashImage(quest, dnd5eIconMap);
-            removedData |= await handleQuestGiver(quest, dnd5eIconMap);
-            removedData |= await handleRewards(quest, dnd5eIconMap);
+            const removedDataEntry = {};
+
+            await handleQuestGiver(quest, removedDataEntry, dnd5eIconMap);
+            await handleRewards(quest, removedDataEntry, dnd5eIconMap);
 
             await quest.save();
+
+            if (Object.keys(removedDataEntry).length > 0)
+            {
+               removedDataEntry.questName = quest.name;
+               removedDataEntry.questId = entry.id;
+               removedData.push(removedDataEntry);
+            }
          }
          else
          {
@@ -66,10 +75,51 @@ export default async function()
       }
    }
 
-   if (removedData)
+   // Post informational message to notifications and chat message if unlinked document data exists.
+   if (removedData.length > 0)
    {
       ui.notifications.warn(`Forien's Quest Log - Removed unlinked quest giver or reward items from one or ` +
-       `more quests. Check the console log (press <F12>) for more info.`);
+       `more quests. Check the chat message or console log (press <F12>) for more info.`);
+
+      let content =
+       `Forien's Quest Log (DB migration)<br>Removed unlinked quest giver or reward items from one or quests below:<p>`;
+
+      for (const entry of removedData)
+      {
+         // Shorten to fit in sidebar.
+         const questName = entry.questName.length > 38 ? `${entry.questName.substring(0, 38)}...` : entry.questName;
+
+         content += `@JournalEntry[${entry.questId}]{${questName}}<br>`;
+
+         if (typeof entry.giverName === 'string')
+         {
+            // Shorten to fit in sidebar.
+            const giverName = entry.giverName.length > 40 ? `${entry.giverName.substring(0, 40)}...` : entry.giverName;
+            content += `<u>Quest Giver</u><br>- ${giverName}<br>`;
+         }
+
+         if (Array.isArray(entry.rewards))
+         {
+            content += `<u>Quest Rewards (${entry.rewards.length})</u><br>`;
+
+            for (const reward of entry.rewards)
+            {
+               // Shorten to fit in sidebar.
+               const rewardName = reward.length > 40 ? `${reward.substring(0, 40)}...` : reward;
+               content += `- ${rewardName}<br>`;
+            }
+         }
+         content += `<br>`;
+      }
+
+      content +=
+       `You must manually update the above quests with valid document data from compendiums or your world.<br>`;
+
+      ChatMessage.create({
+         user: game.user.id,
+         type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+         content
+      });
    }
 
    // Set the DBMigration.setting to `3` indicating that migration to schema version `3` is complete.
@@ -124,14 +174,12 @@ function handleSplashImage(quest, dnd5eIconMap)
  *
  * @param {Quest}    quest -
  *
- * @param {object}   dnd5eIconMap -
+ * @param {object}   removedDataEntry -
  *
- * @returns {Promise<boolean>} Removed data status.
+ * @param {object}   dnd5eIconMap -
  */
-async function handleQuestGiver(quest, dnd5eIconMap)
+async function handleQuestGiver(quest, removedDataEntry, dnd5eIconMap)
 {
-   let removedData = false;
-
    // Load quest giver assets and store as 'giverData'.
    if (typeof quest.giver === 'string')
    {
@@ -165,7 +213,8 @@ async function handleQuestGiver(quest, dnd5eIconMap)
                // Document is not found, so remove quest giver and giverData.
                quest.giver = null;
                quest.giverData = null;
-               removedData = true;
+
+               removedDataEntry.giverName = giverName;
             }
          }
          catch (err)
@@ -176,12 +225,10 @@ async function handleQuestGiver(quest, dnd5eIconMap)
             // An error occurred / remove quest giver.
             quest.giver = null;
             quest.giverData = null;
-            removedData = true;
+            removedDataEntry.giverName = giverName;
          }
       }
    }
-
-   return removedData;
 }
 
 /**
@@ -191,15 +238,13 @@ async function handleQuestGiver(quest, dnd5eIconMap)
  *
  * @param {Quest}    quest -
  *
- * @param {object}   dnd5eIconMap -
+ * @param {object}   removedDataEntry -
  *
- * @returns {Promise<boolean>} Removed data status.
+ * @param {object}   dnd5eIconMap -
  */
-async function handleRewards(quest, dnd5eIconMap)
+async function handleRewards(quest, removedDataEntry, dnd5eIconMap)
 {
-   let removedData = false;
-
-   if (!Array.isArray(quest.rewards)) { return removedData; }
+   if (!Array.isArray(quest.rewards)) { return; }
 
    for (let cntr = quest.rewards.length; --cntr >= 0;)
    {
@@ -226,7 +271,9 @@ async function handleRewards(quest, dnd5eIconMap)
                console.warn(`ForienQuestLog warning; removed item reward "${rewardName}" from quest: ${quest.name}`);
 
                quest.rewards.splice(cntr, 1);
-               removedData = true;
+
+               if (!Array.isArray(removedDataEntry.rewards)) { removedDataEntry.rewards = []; }
+               removedDataEntry.rewards.push(rewardName);
             }
             else
             {
@@ -241,10 +288,10 @@ async function handleRewards(quest, dnd5eIconMap)
 
             // Remove reward on any error.
             quest.rewards.splice(cntr, 1);
-            removedData = true;
+
+            if (!Array.isArray(removedDataEntry.rewards)) { removedDataEntry.rewards = []; }
+            removedDataEntry.rewards.push(rewardName);
          }
       }
    }
-
-   return removedData;
 }
