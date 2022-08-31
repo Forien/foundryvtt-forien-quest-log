@@ -120,7 +120,7 @@
     },
     "Quests": "{0} Misje",
     "QuestTracker": {
-      "NoPrimary": "No primary quest available.",
+      "NoPrimary": "Brak dostępnych głównych zadań.",
       "Title": "Śledzenie Misji",
       "Tooltips": {
         "BackgroundShow": "Kliknij, aby pokazać tło.",
