@@ -123,8 +123,8 @@
       "NoPrimary": "No primary quest available.",
       "Title": "Śledzenie Misji",
       "Tooltips": {
-        "BackgroundShow": "Kliknij, aby uzyskać normalne tło.",
-        "BackgroundUnshow": "Kliknij, aby uzyskać przezroczyste tło.",
+        "BackgroundShow": "Kliknij, aby pokazać tło.",
+        "BackgroundUnshow": "Kliknij, aby tło było przezroczyste.",
         "PrimaryQuestShow": "Kliknij, aby wyświetlić główne zadanie.",
         "PrimaryQuestUnshow": "Kliknij, aby wyświetlić wszystkie misje."
       }

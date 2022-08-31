@@ -123,8 +123,8 @@
       "NoPrimary": "No hay misión principal disponible.",
       "Title": "Rastreador de Misiones",
       "Tooltips": {
-        "BackgroundShow": "Haga clic para obtener un fondo regular.",
-        "BackgroundUnshow": "Haga clic para fondo transparente.",
+        "BackgroundShow": "Haga clic para mostrar el fondo.",
+        "BackgroundUnshow": "Haga clic para hacer que el fondo sea transparente.",
         "PrimaryQuestShow": "Haz clic para mostrar la misión principal.",
         "PrimaryQuestUnshow": "Haz clic para mostrar todas las misiones."
       }

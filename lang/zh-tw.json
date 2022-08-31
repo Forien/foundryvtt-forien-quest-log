@@ -123,8 +123,8 @@
       "NoPrimary": "沒有可用的主要任務。",
       "Title": "使命追踪器",
       "Tooltips": {
-        "BackgroundShow": "單擊以獲得正常背景。",
-        "BackgroundUnshow": "單擊以獲得透明背景。",
+        "BackgroundShow": "點擊顯示背景。",
+        "BackgroundUnshow": "單擊以使背景透明。",
         "PrimaryQuestShow": "單擊以顯示主要使命。",
         "PrimaryQuestUnshow": "點擊顯示所有使命。"
       }

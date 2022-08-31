@@ -25,10 +25,10 @@
     },
     "Migration": {
       "ChatMessage": {
-        "Footer": "위의 퀘스트를 기록서 또는 세계의 유효한 문서 데이터로 수동으로 업데이트해야 합니다.<br>",
-        "Header": "Forien's Quest Log (DB 이주)<br>아래 퀘스트에서 연결되지 않은 퀘스트 제공자 또는 보상 아이템을 제거했습니다:<p>",
-        "Notification": "Forien's Quest Log - 하나 이상의 퀘스트에서 연결되지 않은 퀘스트 제공자 또는 보상 아이템을 제거했습니다. 자세한 내용은 채팅 메시지를 검토하세요.",
-        "QuestGiver": "퀘스트 주는 사람",
+        "Footer": "위 퀘스트를 컴펜디움 또는 월드의 유효 문서 데이터로 수동으로 업데이트 해야 합니다.<br>",
+        "Header": "Forien's Quest Log (DB 마이그레이션)<br>아래 퀘스트에서 연결되지 않은 퀘스트 제공자 또는 보상 아이템을 제거했습니다.<p>",
+        "Notification": "Forien's Quest Log - 하나 이상의 연결되지 않은 퀘스트 제공자 또는 보상 아이템이 제거되었습니다. 자세한 내용은 채팅 메시지를 확인하십시오",
+        "QuestGiver": "퀘스트 제공자",
         "QuestRewards": "퀘스트 보상"
       },
       "Complete": "Forien's Quest Log - 데이터 마이그레이션 완료.",
@@ -123,8 +123,8 @@
       "NoPrimary": "가능한 중요 퀘스트가 없습니다.",
       "Title": "퀘스트 트래커",
       "Tooltips": {
-        "BackgroundShow": "일반 배경을 보려면 클릭하세요.",
-        "BackgroundUnshow": "투명한 배경을 보려면 클릭하세요.",
+        "BackgroundShow": "클릭하여 배경을 표시",
+        "BackgroundUnshow": "클릭하여 배경을 투명화",
         "PrimaryQuestShow": "중요 퀘스트를 표시하려면 클릭한다.",
         "PrimaryQuestUnshow": "모든 퀘스트를 표시하려면 클릭한다."
       }

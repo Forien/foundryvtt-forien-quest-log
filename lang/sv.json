@@ -123,8 +123,8 @@
       "NoPrimary": "Inget primärt uppdrag tillgängligt.",
       "Title": "Målföljare",
       "Tooltips": {
-        "BackgroundShow": "Klicka för vanlig bakgrund.",
-        "BackgroundUnshow": "Klicka för transparent bakgrund.",
+        "BackgroundShow": "Klicka för att visa bakgrund.",
+        "BackgroundUnshow": "Klicka för att göra bakgrunden genomskinlig.",
         "PrimaryQuestShow": "Klicka för att visa primärt uppdrag.",
         "PrimaryQuestUnshow": "Klicka för att visa alla uppdrag."
       }

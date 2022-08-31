@@ -123,6 +123,8 @@
       "NoPrimary": "メインクエスト無し",
       "Title": "クエスト一覧",
       "Tooltips": {
+        "BackgroundShow": "クリックすると背景が表示されます。",
+        "BackgroundUnshow": "クリックすると背景が透明になります。",
         "PrimaryQuestShow": "クリックでメインクエストを表示",
         "PrimaryQuestUnshow": "クリックですべてのクエスト表示"
       }

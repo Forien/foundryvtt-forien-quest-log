@@ -123,7 +123,7 @@
       "NoPrimary": "Pas de quête primaire disponible.",
       "Title": "Traqueur de quêtes",
       "Tooltips": {
-        "BackgroundShow": "Cliquer pour un arrière plan normal.",
+        "BackgroundShow": "Cliquez pour afficher l'arrière-plan.",
         "BackgroundUnshow": "Cliquer pour un arrière plan transparent.",
         "PrimaryQuestShow": "Cliquer pour montrer la quête primaire.",
         "PrimaryQuestUnshow": "Cliquer pour cacher toutes les quêtes."

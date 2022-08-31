@@ -122,8 +122,8 @@
       "Title": "Registro de Missões",
       "NoPrimary": "Nenhuma missão principal disponível.",
       "Tooltips": {
-        "BackgroundShow": "Clique para o fundo padrão.",
-        "BackgroundUnshow": "Click para o fundo transparente.",
+        "BackgroundShow": "Clique para mostrar o plano de fundo.",
+        "BackgroundUnshow": "Clique para tornar o fundo transparente.",
         "PrimaryQuestShow": "Clique para mostrar a missão principal.",
         "PrimaryQuestUnshow": "Clique para ocultar todas as missões."
       }
