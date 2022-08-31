@@ -78,11 +78,9 @@ export default async function()
    // Post informational message to notifications and chat message if unlinked document data exists.
    if (removedData.length > 0)
    {
-      ui.notifications.warn(`Forien's Quest Log - Removed unlinked quest giver or reward items from one or ` +
-       `more quests. Check the chat message or console log (press <F12>) for more info.`);
+      ui.notifications.warn(game.i18n.localize('ForienQuestLog.Migration.ChatMessage.Notification'));
 
-      let content =
-       `Forien's Quest Log (DB migration)<br>Removed unlinked quest giver or reward items from the quests below:<p>`;
+      let content = game.i18n.localize('ForienQuestLog.Migration.ChatMessage.Header');
 
       for (const entry of removedData)
       {
@@ -95,12 +93,15 @@ export default async function()
          {
             // Shorten to fit in sidebar.
             const giverName = entry.giverName.length > 40 ? `${entry.giverName.substring(0, 40)}...` : entry.giverName;
-            content += `<u>Quest Giver</u><br>- ${giverName}<br>`;
+
+            content += `<u>${game.i18n.localize('ForienQuestLog.Migration.ChatMessage.QuestGiver')}</u><br>- ${
+             giverName}<br>`;
          }
 
          if (Array.isArray(entry.rewards))
          {
-            content += `<u>Quest Rewards (${entry.rewards.length})</u><br>`;
+            content += `<u>${game.i18n.localize('ForienQuestLog.Migration.ChatMessage.QuestRewards')} (${
+             entry.rewards.length})</u><br>`;
 
             for (const reward of entry.rewards)
             {
@@ -112,8 +113,7 @@ export default async function()
          content += `<br>`;
       }
 
-      content +=
-       `You must manually update the above quests with valid document data from compendiums or your world.<br>`;
+      content += game.i18n.localize('ForienQuestLog.Migration.ChatMessage.Footer');
 
       ChatMessage.create({
          user: game.user.id,
