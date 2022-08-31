@@ -17,6 +17,11 @@
     }
   }
 
+  .window-content {
+    // For Firefox.
+    scrollbar-width: thin;
+  }
+
   a.content-link {
     background: $tracker-color-background-entitylink;
     border: none;
@@ -34,6 +39,9 @@
     &.no-background {
       background: none;
       box-shadow: none;
+
+      // For Firefox.
+      scrollbar-color: rgba(80, 80, 80, 0.7) rgba(60, 60, 60, 0.5);
 
       ::-webkit-scrollbar-thumb {
         background: rgba(60, 60, 60, 0.5);

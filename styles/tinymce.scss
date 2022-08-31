@@ -7,6 +7,9 @@
     line-height: 1.2;
     color: #000;
 
+    // For Firefox.
+    scrollbar-width: thin;
+
     p {
       font-family: inherit;
       font-size: inherit;
