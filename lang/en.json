@@ -1,15 +1,134 @@
 {
   "ForienQuestLog": {
+    "Api": {
+      "hooks": {
+        "createOpenQuestMacro": {
+          "error": {
+            "noQuest": "API Error: Can't create macro with invalid Quest ID."
+          },
+          "name": "Open ”{name}”"
+        }
+      }
+    },
+    "Buttons": {
+      "AddNewQuest": "Add Quest",
+      "AddNewTask": "Add Objective"
+    },
+    "DeleteDialog": {
+      "BodyObjective": "This objective and its data will be permanently deleted.",
+      "BodyQuest": "This quest and its data will be permanently deleted.",
+      "BodyReward": "This reward and its data will be permanently deleted.",
+      "Cancel": "Cancel",
+      "Delete": "Delete",
+      "HeaderDel": "Are you sure you want to delete: <p>'{name}'</p>",
+      "TitleDel": "Delete {title}"
+    },
+    "Migration": {
+      "ChatMessage": {
+        "Footer": "You must manually update the above quests with valid document data from compendiums or your world.<br>",
+        "Header": "Forien's Quest Log (DB migration)<br>Removed unlinked quest giver or reward items from the quests below:<p>",
+        "Notification": "Forien's Quest Log - Removed unlinked quest giver or reward items from one or more quests. Please review the chat message for more info.",
+        "QuestGiver": "Quest Giver",
+        "QuestRewards": "Quest Rewards"
+      },
+      "Complete": "Forien's Quest Log - Migrating data complete.",
+      "CouldNotMigrate": "Forien's Quest Log - Could not migrate quest: '{name}'",
+      "Schema": "Forien's Quest Log - Migrating data to schema version '{version}'",
+      "Start": "Forien's Quest Log - Migrating data, please do not reload."
+    },
     "NewQuest": "New Quest",
-    "QuestLogButton": "Quest Log",
-    "Quests": "{0} Quests",
-    "FloatingQuestWindow": "Floating Quest Window",
-    "NoActiveQuests": "There are no Active quests",
+    "NoActiveQuests": "There are no active quests",
     "NoDocument": "An entity could not be loaded for UUID: {uuid}",
     "NoPermission": "You do not have sufficient permissions to view this entity sheet.",
+    "Notifications": {
+      "CannotOpen": "Cannot open Quest Details. This quest may not be observable or may no longer exist.",
+      "FinishQuestAdded": "Please finish editing and close current new quest before adding another.",
+      "LinkCopied": "Entity Link for this quest has been copied to clipboard.",
+      "QuestAdded": "Added '{name}' as a new quest with status: {status}.",
+      "QuestIDCopied": "Quest ID for this quest has been copied to clipboard.",
+      "QuestMoved": "Moved '{name}' and set new status to: {target}.",
+      "QuestPrimary": "'{name}' is the new primary quest.",
+      "QuestTrackerNoActive": "Quest Tracker is enabled, but there are no in progress quests currently.",
+      "UserCantOpen": "User {user} doesn't have permission to open this quest."
+    },
     "Quest": "Quest",
     "QuestIs": "Quest is {statusLabel}",
-
+    "QuestLog": {
+      "ContextMenu": {
+        "CopyEntityLink": "Copy entity content link",
+        "CopyQuestID": "Copy quest ID",
+        "PrimaryQuest": "Set / Unset as primary quest"
+      },
+      "SubTitle": "Subquest of {0}",
+      "Table": {
+        "Actions": "Actions",
+        "QuestGiver": "Quest Source",
+        "QuestTitle": "Title",
+        "Tasks": "Objectives"
+      },
+      "Tabs": {
+        "Available": "Available",
+        "Completed": "Completed",
+        "Failed": "Failed",
+        "InActive": "Inactive",
+        "InProgress": "In progress"
+      },
+      "Title": "Quest Log"
+    },
+    "QuestLogButton": "Quest Log",
+    "QuestPreview": {
+      "CustomSource": "Custom Source",
+      "Description": "Description:",
+      "DragDropActor": "Drag & Drop Actor, Item or Journal Entry or left click to set a custom source.",
+      "DragDropActorPlayer": "Drag & Drop Actor, Item or Journal Entry.",
+      "DragDropRewards": "Drag & drop items here to add them as rewards.",
+      "GMNotes": "GM Notes:",
+      "HeaderButtons": {
+        "Show": "Show to Players"
+      },
+      "InvalidQuestId": "Cannot open Quest Preview due to invalid Quest ID.",
+      "Management": {
+        "AddSubquest": "Add Subquest",
+        "ConfigurePermissions": "Configure Permissions",
+        "QuestBranching": "Subquests:",
+        "QuestSettings": "Quest Settings:",
+        "SplashArt": "Splash Art:",
+        "SplashInfo": "Click to set image.",
+        "SplashQuestIcon": "Set as quest icon"
+      },
+      "Notifications": {
+        "BadUUID": "Could not retrieve the document for UUID: {uuid}",
+        "WrongDocType": "Forien's Quest Log only accepts world / compendium actors, items, and journal entries as quest givers.",
+        "WrongItemType": "Forien's Quest Log only accepts world and compendium items as rewards."
+      },
+      "Objective": "Objective",
+      "Objectives": "Objectives:",
+      "Reward": "Reward",
+      "RewardDrop": "FQL (quest reward): {userName} dropped '{itemName}' onto {actorName}",
+      "Rewards": "Rewards:",
+      "SubTitle": "Subquest of {0}",
+      "Tabs": {
+        "Details": "Details",
+        "GMNotes": "GM Notes",
+        "QuestManagement": "Manage Quest"
+      },
+      "Title": "Quest Details - {name}",
+      "Tooltips": {
+        "PrimaryQuestSet": "Click to make primary quest.",
+        "PrimaryQuestUnset": "Click to unset primary quest."
+      }
+    },
+    "Quests": "{0} Quests",
+    "QuestTracker": {
+      "NoPrimary": "No primary quest available.",
+      "Title": "Quest Tracker",
+      "Tooltips": {
+        "BackgroundShow": "Click for regular background.",
+        "BackgroundUnshow": "Click for transparent background.",
+        "PrimaryQuestShow": "Click to show primary quest.",
+        "PrimaryQuestUnshow": "Click to show all quests."
+      }
+    },
     "QuestTypes": {
       "Active": "In Progress",
       "Available": "Available",
@@ -24,171 +143,7 @@
         "inactive": "inactive"
       }
     },
-
-    "Buttons": {
-      "AddNewQuest": "Add Quest",
-      "AddNewTask": "Add Objective"
-    },
-
-    "QuestLog": {
-      "Title": "Quest Log",
-      "SubTitle": "Subquest of {0}",
-      "Table": {
-        "QuestGiver": "Quest Source",
-        "QuestTitle": "Title",
-        "Tasks": "Objectives",
-        "Actions": "Actions"
-      },
-      "Tabs": {
-        "Available": "Available",
-        "InProgress": "In progress",
-        "Completed": "Completed",
-        "Failed": "Failed",
-        "InActive": "Inactive"
-      },
-      "ContextMenu": {
-        "CopyEntityLink": "Copy entity content link",
-        "CopyQuestID": "Copy quest ID",
-        "PrimaryQuest": "Set / Unset as primary quest"
-      }
-    },
-
-    "QuestPreview": {
-      "Title": "Quest Details - {name}",
-      "SubTitle": "Subquest of {0}",
-      "Description": "Description:",
-      "GMNotes": "GM Notes:",
-      "Objectives": "Objectives:",
-      "Rewards": "Rewards:",
-      "Objective": "Objective",
-      "Reward": "Reward",
-      "CustomSource": "Custom Source",
-      "DragDropActor": "Drag & Drop Actor, Item or Journal Entry or left click to set a custom source.",
-      "DragDropActorPlayer": "Drag & Drop Actor, Item or Journal Entry.",
-      "DragDropRewards": "Drag & drop items here to add them as rewards.",
-      "InvalidQuestId": "Cannot open Quest Preview due to invalid Quest ID.",
-      "RewardDrop": "FQL (quest reward): {userName} dropped '{itemName}' onto {actorName}",
-
-      "HeaderButtons": {
-        "Show": "Show to Players"
-      },
-
-      "Management": {
-        "QuestSettings": "Quest Settings:",
-        "ConfigurePermissions": "Configure Permissions",
-        "SplashArt": "Splash Art:",
-        "QuestBranching": "Subquests:",
-        "AddSubquest": "Add Subquest",
-        "SplashInfo": "Click to set image.",
-        "SplashQuestIcon": "Set as quest icon"
-      },
-
-      "Tabs": {
-        "Details": "Details",
-        "QuestManagement": "Manage Quest",
-        "GMNotes": "GM Notes"
-      },
-
-      "Notifications": {
-        "BadUUID": "Could not retrieve the document for UUID: {uuid}",
-        "WrongItemType": "Forien's Quest Log only accepts world and compendium items as rewards.",
-        "WrongDocType": "Forien's Quest Log only accepts world / compendium actors, items, and journal entries as quest givers."
-      },
-
-      "Tooltips": {
-        "PrimaryQuestSet": "Click to make primary quest.",
-        "PrimaryQuestUnset": "Click to unset primary quest."
-      }
-    },
-
-    "QuestTracker": {
-      "Title": "Quest Tracker",
-
-      "NoPrimary": "No primary quest available.",
-
-      "Tooltips": {
-        "BackgroundShow": "Click for regular background.",
-        "BackgroundUnshow": "Click for transparent background.",
-        "PrimaryQuestShow": "Click to show primary quest.",
-        "PrimaryQuestUnshow": "Click to show all quests."
-      }
-    },
-
-    "DeleteDialog": {
-      "TitleDel": "Delete {title}",
-      "HeaderDel": "Are you sure you want to delete: <p>'{name}'</p>",
-      "BodyQuest": "This quest and its data will be permanently deleted.",
-      "BodyReward": "This reward and its data will be permanently deleted.",
-      "BodyObjective": "This objective and its data will be permanently deleted.",
-      "Delete": "Delete",
-      "Cancel": "Cancel"
-    },
-
-    "CloseDialog": {
-      "Title": "Leave Form",
-      "Header": "Are you sure?",
-      "Body": "Are you sure you want to close the form? Unsaved data will be lost.",
-      "Discard": "Discard changes",
-      "Cancel": "Cancel"
-    },
-
-    "Notifications": {
-      "CannotOpen": "Cannot open Quest Details. This quest may not be observable or may no longer exist.",
-      "UserCantOpen": "User {user} doesn't have permission to open this quest.",
-      "LinkCopied": "Entity Link for this quest has been copied to clipboard.",
-      "FinishQuestAdded": "Please finish editing and close current new quest before adding another.",
-      "QuestIDCopied": "Quest ID for this quest has been copied to clipboard.",
-      "QuestMoved": "Moved '{name}' and set new status to: {target}.",
-      "QuestAdded": "Added '{name}' as a new quest with status: {status}.",
-      "QuestPrimary": "'{name}' is the new primary quest.",
-      "QuestTrackerNoActive": "Quest Tracker is enabled, but there are no in progress quests currently."
-    },
-
     "Settings": {
-      "allowPlayersDrag": {
-        "Enable": "Allow Player Reward Dragging",
-        "EnableHint": "Check to allow Players to drag Rewards from the Quest Details window to their owned Actors."
-      },
-      "countHidden": {
-        "Enable": "Count hidden Tasks",
-        "EnableHint": "If checked, the number of completed/total tasks will include hidden tasks."
-      },
-      "dynamicBookmarkBackground": {
-        "Enable": "Dynamic Bookmark Background",
-        "EnableHint": "If checked, the bookmark tab background is dynamically set to the window content background."
-      },
-      "navStyle": {
-        "Enable": "Navigation Style",
-        "EnableHint": "Decide how Quest Log's navigation should be displayed.",
-        "bookmarks": "Bookmarks",
-        "classic": "Classic tabs"
-      },
-      "notifyRewardDrop": {
-        "Enable": "Show Reward Drop Notifications",
-        "EnableHint": "Check to see UI notifications when quest rewards are dropped onto player sheets."
-      },
-      "showFolder": {
-        "Enable": "Show Quest Folder",
-        "EnableHint": "Check to show quest data folder in Journal tab. For DEBUG purposes only."
-      },
-      "showTasks": {
-        "Enable": "Show tasks in Quest Log",
-        "EnableHint": "Decide if or how to show the amount of Objectives next to the Quest Title in Quest Log. This has no effect on the Quest Preview.",
-        "default": "Show Objectives: done/total",
-        "onlyCurrent": "Show Objectives: done",
-        "no": "Hide \"Objectives\" column"
-      },
-      "defaultPermissionLevel": {
-        "Enable": "Default quest permission level",
-        "EnableHint": "Sets the default permission level when new quests are created.",
-        "OBSERVER": "Observer",
-        "NONE": "None",
-        "OWNER": "Owner"
-      },
-      "hideFQLFromPlayers": {
-        "Enable": "Hide Quest Log from players",
-        "EnableHint": "When enabled this option hides the Quest Log from all players. Only GM level users will be able to access the Quest Log."
-      },
       "allowPlayersAccept": {
         "Enable": "Players can accept Quests",
         "EnableHint": "Check to allow players to accept Quests from Available tab."
@@ -197,78 +152,87 @@
         "Enable": "Players can create Quests",
         "EnableHint": "Check to allow players to create Quests. Player created Quests will appear in Available tab with Player Edit permissions. REQUIRES 'create journal' core permission."
       },
-      "trustedPlayerEdit": {
-        "Enable": "Allow Trusted Player Quest Editing",
-        "EnableHint": "Check to allow trusted players to have expanded quest editing and status control capabilities over quests they have ownership."
+      "allowPlayersDrag": {
+        "Enable": "Allow Player Reward Dragging",
+        "EnableHint": "Check to allow Players to drag Rewards from the Quest Details window to their owned Actors."
+      },
+      "countHidden": {
+        "Enable": "Count hidden Tasks",
+        "EnableHint": "If checked, the number of completed/total tasks will include hidden tasks."
+      },
+      "defaultPermissionLevel": {
+        "Enable": "Default quest permission level",
+        "EnableHint": "Sets the default permission level when new quests are created.",
+        "NONE": "None",
+        "OBSERVER": "Observer",
+        "OWNER": "Owner"
+      },
+      "dynamicBookmarkBackground": {
+        "Enable": "Dynamic Bookmark Background",
+        "EnableHint": "If checked, the bookmark tab background is dynamically set to the window content background."
+      },
+      "hideFQLFromPlayers": {
+        "Enable": "Hide Quest Log from players",
+        "EnableHint": "When enabled this option hides the Quest Log from all players. Only GM level users will be able to access the Quest Log."
+      },
+      "navStyle": {
+        "bookmarks": "Bookmarks",
+        "classic": "Classic tabs",
+        "Enable": "Navigation Style",
+        "EnableHint": "Decide how Quest Log's navigation should be displayed."
+      },
+      "notifyRewardDrop": {
+        "Enable": "Show Reward Drop Notifications",
+        "EnableHint": "Check to see UI notifications when quest rewards are dropped onto player sheets."
       },
       "questTrackerResizable": {
         "Enable": "Quest Tracker Resizable",
         "EnableHint": "Check to allow manual resizing control of the Quest Tracker."
+      },
+      "showFolder": {
+        "Enable": "Show Quest Folder",
+        "EnableHint": "Check to show quest data folder in Journal tab. For DEBUG purposes only."
+      },
+      "showTasks": {
+        "default": "Show Objectives: done/total",
+        "Enable": "Show tasks in Quest Log",
+        "EnableHint": "Decide if or how to show the amount of Objectives next to the Quest Title in Quest Log. This has no effect on the Quest Preview.",
+        "no": "Hide \"Objectives\" column",
+        "onlyCurrent": "Show Objectives: done"
+      },
+      "trustedPlayerEdit": {
+        "Enable": "Allow Trusted Player Quest Editing",
+        "EnableHint": "Check to allow trusted players to have expanded quest editing and status control capabilities over quests they have ownership."
       }
     },
-
     "Tooltips": {
-      "SetAvailable": "Set as Available",
-      "SetActive": "Set as In Progress",
-      "SetCompleted": "Set as Completed",
-      "SetFailed": "Set as Failed",
-      "Hide": "Set as Inactive",
-      "Delete": "Delete",
-      "Edit": "Edit",
       "AddAbstract": "Add Abstract",
-      "HideAll": "Hide All",
-      "ShowAll": "Show All",
-      "LockAll": "Lock All",
-      "UnlockAll": "Unlock All",
+      "ChangeSplashPos": "Change Splash alignment",
+      "Delete": "Delete",
+      "DeleteQuestGiver": "Delete quest giver",
+      "DeleteSplash": "Delete splash art",
+      "Edit": "Edit",
       "HiddenQuestNoPlayers": "This Quest is hidden from all players.",
+      "Hide": "Set as Inactive",
+      "HideAll": "Hide All",
+      "LockAll": "Lock All",
       "PrimaryQuest": "Primary Quest",
       "RewardHidden": "Reward is hidden. Click to show.",
-      "RewardVisible": "Reward is visible. Click to hide.",
       "RewardLocked": "Reward is locked. Click to unlock.",
       "RewardLockedPlayer": "Reward is locked.",
       "RewardUnlocked": "Reward is unlocked. Click to lock.",
       "RewardUnlockedPlayer": "Reward is unlocked.",
+      "RewardVisible": "Reward is visible. Click to hide.",
+      "SetActive": "Set as In Progress",
+      "SetAvailable": "Set as Available",
+      "SetCompleted": "Set as Completed",
+      "SetFailed": "Set as Failed",
+      "ShowAll": "Show All",
       "Status": "Status: {statusI18n}",
       "TaskHidden": "Objective is hidden. Click to show.",
       "TaskVisible": "Objective is visible. Click to hide.",
       "ToggleImage": "Toggle Token/Actor image",
-      "DeleteQuestGiver": "Delete quest giver",
-      "DeleteSplash": "Delete splash art",
-      "ChangeGiverImgPos": "Change Quest Giver image alignment",
-      "ChangeSplashPos": "Change Splash alignment"
-    },
-
-    "Migration": {
-      "CouldNotMigrate": "Forien's Quest Log - Could not migrate quest: '{name}'",
-      "Start": "Forien's Quest Log - Migrating data, please do not reload.",
-      "Schema": "Forien's Quest Log - Migrating data to schema version '{version}'",
-      "Complete": "Forien's Quest Log - Migrating data complete."
-    },
-
-    "Api": {
-      "__COMMENT__": "No need for translating lines starting with 'API ERROR', they show in console for developers only.",
-      "create": {
-        "title": "API Error: Title property is required to create new Quest."
-      },
-      "hooks": {
-        "createOpenQuestMacro": {
-          "name": "Open - {name}",
-          "error": {
-            "noQuest": "API Error: Can't create macro with invalid Quest ID."
-          }
-        }
-      },
-      "reward": {
-        "create": {
-          "data": "API Error: Data property with at least {name, img} is required to create new Reward.",
-          "type": "API Error: Type property is required to create new Reward."
-        }
-      },
-      "task": {
-        "create": {
-          "name": "API Error: Name property is required to create new Objective."
-        }
-      }
+      "UnlockAll": "Unlock All"
     }
   }
 }

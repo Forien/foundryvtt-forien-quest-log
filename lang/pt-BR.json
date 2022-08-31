@@ -1,40 +1,18 @@
 {
   "ForienQuestLog": {
     "Api": {
-      "__COMMENT__": "No need for translating lines starting with 'API ERROR', they show in console for developers only.",
-      "create": {
-        "title": "API Error: Title property is required to create new Quest"
-      },
       "hooks": {
         "createOpenQuestMacro": {
           "error": {
             "noQuest": "API Error: Can't create macro with invalid Quest ID"
           },
-          "name": "Abrir a Missão „{name}”"
-        }
-      },
-      "reward": {
-        "create": {
-          "data": "API Error: Data property with at least {name, img} is required to create new Reward",
-          "type": "API Error: Type property is required to create new Reward"
-        }
-      },
-      "task": {
-        "create": {
-          "name": "API Error: Name property is required to create new Task"
+          "name": "Abrir a Missão ”{name}”"
         }
       }
     },
     "Buttons": {
-      "AddNewQuest": "Adicionar",
-      "AddNewTask": "Adicionar Novo Objetivo"
-    },
-    "CloseDialog": {
-      "Body": "Você tem certeza que quer fechar o formulário? Informações não salvas serão perdidas.",
-      "Cancel": "Cancelar",
-      "Discard": "Descartar Alterações",
-      "Header": "Você tem certeza ?",
-      "Title": "Sair do Formulário"
+      "AddNewQuest": "Adicionar Missão",
+      "AddNewTask": "Adicionar Objetivo"
     },
     "DeleteDialog": {
       "BodyObjective": "Este objetivo e seus dados serão apagados permanentemente.",
@@ -45,8 +23,14 @@
       "HeaderDel": "Tem certeza de que deseja excluir : <p>'{name}'</p>",
       "TitleDel": "Excluir {title}"
     },
-    "FloatingQuestWindow": "Janela de Missões Flutuante",
     "Migration": {
+      "ChatMessage": {
+        "Footer": "Você deve manualmente atualizar as missões acima com o dado valido de documentação de um dos compendiums de seu mundo.<br>",
+        "Header": "Forien's Quest Log (DB migração)<br>Removido entregador de missão ou items de recompensa das quests abaixo:<p>",
+        "Notification": "Forien's Quest Log - Removido entregador de missão ou items de recompensa de uma ou mais missões. Por favor revise a mensagem no chat para mais informação.",
+        "QuestGiver": "Entregador de Missão",
+        "QuestRewards": "Recompensa de Missão"
+      },
       "Complete": "Forien's Quest Log - Migração de dados completa.",
       "CouldNotMigrate": "Forien's Quest Log - Não é possível migrar : '{name}'",
       "Schema": "Forien's Quest Log - Migrando dados sob a versão:  '{version}'",
@@ -117,8 +101,8 @@
         "WrongDocType": "Forien's Quest Log só aceita atores, itens e entradas de log de mundo/compêndio como entregadores de missões",
         "WrongItemType": "O Registro de Missões de Forien só aceita itens de mundo e itens de compêndio como recompensas."
       },
-      "Objective": "Objectivos :",
-      "Objectives": "Objetivos",
+      "Objective": "Objetivos",
+      "Objectives": "Objetivos:",
       "Reward": "Recompensa",
       "RewardDrop": "FQL (recompensa de missão) : {userName} deu '{itemName}' para {actorName}",
       "Rewards": "Recompensas :",
@@ -223,7 +207,6 @@
     },
     "Tooltips": {
       "AddAbstract": "Adicionar recompensa abstrata",
-      "ChangeGiverImgPos": "Modificar o alinhamento da imagem do entregador da missão",
       "ChangeSplashPos": "Modificar o alinhamento da imagem de ilustração",
       "Delete": "Excluir",
       "DeleteQuestGiver": "Excluir entragor da missão",

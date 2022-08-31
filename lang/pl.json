@@ -1,109 +1,238 @@
 {
-  "ForienQuestLog.QuestLog.Title": "Dziennik Misji",
-  "ForienQuestLog.QuestLog.Tabs.Available": "Dostępne",
-  "ForienQuestLog.QuestLog.Tabs.InProgress": "W trakcie",
-  "ForienQuestLog.QuestLog.Tabs.Completed": "Zakończone",
-  "ForienQuestLog.QuestLog.Tabs.Failed": "Nieudane",
-  "ForienQuestLog.QuestLog.Tabs.Hidden": "Ukryte",
-
-  "ForienQuestLog.NewQuest": "Nowa misja",
-  "ForienQuestLog.QuestLogButton": "Dziennik",
-  "ForienQuestLog.Quests": "Misje",
-
-  "ForienQuestLog.Notifications.QuestMoved": "Przeniesiono misję do nowego folderu, a jej nowy status to: {target}",
-  "ForienQuestLog.Notifications.CannotOpen": "Nie można otworzyć okna Misji, gdyż ona nie istnieje, podane ID jest niepoprawne, lub najzwyczajniej nie masz uprawnień do jej wyświetlenia",
-  "ForienQuestLog.Notifications.UserCantOpen": "Użytkownik {user} nie posiada uprawnień do otwarcia tej Misji.",
-
-  "ForienQuestLog.Buttons.AddNewQuest": "Dodaj nową misję",
-  "ForienQuestLog.Buttons.AddNewTask": "dodaj",
-
-  "ForienQuestLog.QuestTypes.InProgress": "Aktywne",
-  "ForienQuestLog.QuestTypes.Completed": "Zakończone",
-  "ForienQuestLog.QuestTypes.Failed": "Nieudane",
-  "ForienQuestLog.QuestTypes.Hidden": "Ukryte",
-
-  "ForienQuestLog.QuestLog.Table.QuestGiver": "Zleceniodawca",
-  "ForienQuestLog.QuestLog.Table.QuestTitle": "Tytuł",
-  "ForienQuestLog.QuestLog.Table.Tasks": "Zadania",
-  "ForienQuestLog.QuestLog.Table.Actions": "Akcje",
-
-  "ForienQuestLog.Settings.showFolder.Enable": "Pokaż Folder",
-  "ForienQuestLog.Settings.showFolder.EnableHint": "Kliknij, aby pokazać Folder z danymi Misji. Tylko w celach developerskich.",
-
-  "ForienQuestLog.Settings.availableQuests.Enable": "Dostępne Misje",
-  "ForienQuestLog.Settings.availableQuests.EnableHint": "Kliknij, aby włączyć widoczność Dostępnych Misji. Doda to nową zakładkę w Dzienniku, która wyświetli wszystkie dostępne (nie ukryte) misje, które nie są Aktywne, Zakońćzone lub Nieudane.",
-
-  "ForienQuestLog.Settings.allowPlayersDrag.Enable": "Pozwól graczom przeciągać nagrody",
-  "ForienQuestLog.Settings.allowPlayersDrag.EnableHint": "Domyślnie gracze nie mogą przeciągać nagród z Misji na swoich Aktorów. Aby na to pozwolić, zaznacż tę opcję.",
-
-  "ForienQuestLog.Settings.showTasks.Enable": "Pokaż zadania w Dzienniku",
-  "ForienQuestLog.Settings.showTasks.EnableHint": "Zdecyduj czy, i w jaki sposób wyświetlać ilość Zadań obok tytułu Misji w Dzienniku Misji. Nie wpływa na widoczność Zadań na ekranie podglądu Misji.",
-  "ForienQuestLog.Settings.showTasks.default": "Pokaż zadania: wykonane/wszystkie",
-  "ForienQuestLog.Settings.showTasks.onlyCurrent": "Pokaż zadania: wykonane",
-  "ForienQuestLog.Settings.showTasks.no": "Ukryj kolumnę zadań",
-
-  "ForienQuestLog.Settings.navStyle.Enable": "Styl nawigacji",
-  "ForienQuestLog.Settings.navStyle.EnableHint": "Zdecyduj jak chcesz przełączać się między rodzajami Misji.",
-  "ForienQuestLog.Settings.navStyle.bookmarks": "Zakładki",
-  "ForienQuestLog.Settings.navStyle.classic": "Klasyczne karty",
-
-  "ForienQuestLog.Settings.titleAlign.Enable": "Wyrównanie tytułów Misji",
-  "ForienQuestLog.Settings.titleAlign.EnableHint": "Zdecyduj jak wyrównać tytuły Misji w Dzienniku Misji.",
-  "ForienQuestLog.Settings.titleAlign.left": "Wyrównaj do lewej",
-  "ForienQuestLog.Settings.titleAlign.center": "Wyśrodkuj",
-
-  "ForienQuestLog.Settings.playersWelcomeScreen.Enable": "Pokazuj graczom Ekran Powitalny",
-  "ForienQuestLog.Settings.playersWelcomeScreen.EnableHint": "Odznacz, aby graczom nie wyświetlać po zalogowaniu Ekranu Powitalnego z każdą nową wersją. Gracze wciąż mogą go wyświetlić klikając na ikonę \"pomocy\" w Dzienniku Misji.",
-
-  "ForienQuestLog.QuestForm.Title": "Stwórz nową Misję",
-  "ForienQuestLog.QuestForm.QuestGiver": "Zleceniodawca",
-  "ForienQuestLog.QuestForm.QuestGiverPlaceholder": "Imię Aktora lub UUID obiektu",
-  "ForienQuestLog.QuestForm.QuestTitle": "Tytuł misji",
-  "ForienQuestLog.QuestForm.QuestDescription": "Opis misji",
-  "ForienQuestLog.QuestForm.QuestGMNotes": "Notatki MG",
-  "ForienQuestLog.QuestForm.Submit": "Zapisz",
-  "ForienQuestLog.QuestForm.DragDropActor": "Przeciągnij Aktora, Przedmiot lub Notatkę w to miejsce, aby ustawić jako zleceniodawcę",
-
-  "ForienQuestLog.SampleTask": "np. Zabij wszystkie szczury w karczmie „Pod Skręconą Kostką”",
-  "ForienQuestLog.SampleReward": "np. „100 Punktów Doświadczenia”",
-
-  "ForienQuestLog.QuestPreview.Title": "Podgląd Misji",
-  "ForienQuestLog.QuestPreview.Objectives": "Zadania",
-  "ForienQuestLog.QuestPreview.Rewards": "Nagrody",
-  "ForienQuestLog.QuestPreview.Tabs.Details": "Szczegóły",
-  "ForienQuestLog.QuestPreview.Tabs.QuestManagement": "Zarządzaj Misją",
-  "ForienQuestLog.QuestPreview.Tabs.GMNotes": "Notatki MG",
-  "ForienQuestLog.QuestPreview.DragDropRewards": "Kliknij i Przeciągnij przedmioty w to miejsce, aby dodać je jako nagrody",
-  "ForienQuestLog.QuestPreview.Management.IsPersonalQuest": "Misja Prywatna",
-  "ForienQuestLog.QuestPreview.Management.IsPersonalQuestDescription": "Zaznacz, aby utworzyć misję prywatną. Będzie ona niewidoczna dla wszystkich graczy z wyjątkiem tych oznaczonych poniżej. Wyłączenie tej opcji usunie wszystkie uprawnienia i przeniesie tę misję do Ukrytych.",
-  "ForienQuestLog.QuestPreview.HeaderButtons.Show": "Pokaż Graczom",
-
-  "ForienQuestLog.DeleteDialog.Title": "Usuń {name}",
-  "ForienQuestLog.DeleteDialog.Header": "Na pewno?",
-  "ForienQuestLog.DeleteDialog.Body": "Ta misja i związane z nią dane zostaną utracone na stałe.",
-  "ForienQuestLog.DeleteDialog.Delete": "Usuń",
-  "ForienQuestLog.DeleteDialog.Cancel": "Anuluj",
-
-  "ForienQuestLog.CloseDialog.Title": "Opuszczasz formularz",
-  "ForienQuestLog.CloseDialog.Header": "Czy na pewno?",
-  "ForienQuestLog.CloseDialog.Body": "Opuszczasz formularz bez zapisania go. Jeśli to zrobisz, utracisz niezapisane zmiany.",
-  "ForienQuestLog.CloseDialog.Cancel": "Anuluj",
-  "ForienQuestLog.CloseDialog.Discard": "Odrzuć zmiany",
-
-  "ForienQuestLog.Tooltips.ToggleImage": "Przełącz obraz Aktora/Tokenu",
-  "ForienQuestLog.Tooltips.SetActive": "Ustaw na Aktywną",
-  "ForienQuestLog.Tooltips.SetCompleted": "Ustaw jako Zakończoną",
-  "ForienQuestLog.Tooltips.SetFailed": "Ustaw jako Nieudaną",
-  "ForienQuestLog.Tooltips.Hide": "Ukryj",
-  "ForienQuestLog.Tooltips.Delete": "Usuń",
-  "ForienQuestLog.Tooltips.SetAvailable": "Ustaw jako Dostępną",
-  "ForienQuestLog.Tooltips.TaskHidden": "Zadanie ukryte. Kliknij aby pokazać.",
-  "ForienQuestLog.Tooltips.TaskVisible": "Zadanie widoczne. Kliknij aby ukryć.",
-  "ForienQuestLog.Tooltips.AddAbstractReward": "Dodaj sztuczną nagrodę",
-  "ForienQuestLog.Tooltips.RewardHidden": "Nagroda ukryta. Kliknij aby pokazać.",
-  "ForienQuestLog.Tooltips.RewardVisible": "Nagroda widoczna. Kliknij aby ukryć.",
-  "ForienQuestLog.Tooltips.PersonalQuestVisibleFor": "Misja prywatna dla:",
-  "ForienQuestLog.Tooltips.PersonalQuestButNoPlayers": "Misja prywatna, ale nikt jej nie widzi.",
-
-  "ForienQuestLog.Api.hooks.createOpenQuestMacro.name": "Otwórz „{name}”"
+  "ForienQuestLog": {
+    "Api": {
+      "hooks": {
+        "createOpenQuestMacro": {
+          "error": {
+            "noQuest": "API Error: Can't create macro with invalid Quest ID."
+          },
+          "name": "Otwórz ”{name}”"
+        }
+      }
+    },
+    "Buttons": {
+      "AddNewQuest": "Dodaj misję",
+      "AddNewTask": "Dodaj cel"
+    },
+    "DeleteDialog": {
+      "BodyObjective": "Cel ten i jego dane zostaną trwale usunięte.",
+      "BodyQuest": "Ta misja i jej dane zostaną trwale usunięte.",
+      "BodyReward": "Ta nagroda i jej dane zostaną trwale usunięte.",
+      "Cancel": "Anuluj",
+      "Delete": "Usuń",
+      "HeaderDel": "Czy na pewno chcesz usunąć: <p>'{name}'</p>",
+      "TitleDel": "Usuń {title}"
+    },
+    "Migration": {
+      "ChatMessage": {
+        "Footer": "Musisz ręcznie zaktualizować powyższe misje prawidłowymi danymi dokumentów z kompendiów lub twojego świata.<br>",
+        "Header": "Forien's Quest Log (DB migracja)<br>Usunięto nie połączone zleceniodawcy lub nagrody z poniższych zadań:<p>",
+        "Notification": "Forien's Quest Log - Usunięto nie połączone zleceniodawcy lub nagrody z jednego lub więcej zadań. Przejrzyj wiadomość na czacie, aby uzyskać więcej informacji.",
+        "QuestGiver": "Zleceniodawca Zadań",
+        "QuestRewards": "Nagrody za Zadania"
+      },
+      "Complete": "Forien's Quest Log - Migracja danych zakończona.",
+      "CouldNotMigrate": "Forien's Quest Log - Nie udało się przenieść misji: '{name}'",
+      "Schema": "Forien's Quest Log - Migracja danych do wersji schematu '{version}'",
+      "Start": "Forien's Quest Log - Migracja danych, nie ładuj przeładować."
+    },
+    "NewQuest": "Nowa Misja",
+    "NoActiveQuests": "Brak aktywnych misji",
+    "NoDocument": "Nie można załadować dokumentu dla UUID: {uuid}",
+    "NoPermission": "Nie masz wystarczających uprawnień, aby wyświetlić ten arkusz encji.",
+    "Notifications": {
+      "CannotOpen": "Nie można otworzyć szczegółów misji. Ta misja może nie być obserwowalna lub może już nie istnieć.",
+      "FinishQuestAdded": "Zakończ edycję i zamknij bieżącą misję przed dodaniem kolejnej.",
+      "LinkCopied": "Link do dokumentu dla tej misji został skopiowany do schowka.",
+      "QuestAdded": "Dodany '{name}' jako nowa misja ze statusem: {status}.",
+      "QuestIDCopied": "Identyfikator dokumentu tej misji został skopiowany do schowka.",
+      "QuestMoved": "Wzruszony '{name}' i ustaw nowy status na: {target}.",
+      "QuestPrimary": "'{name}' to nowa główna misja.",
+      "QuestTrackerNoActive": "Śledzenie misji jest włączone, ale obecnie nie ma żadnych misji w toku.",
+      "UserCantOpen": "Użytkownik {user} nie posiada uprawnień do otwarcia tej Misji."
+    },
+    "Quest": "Misja",
+    "QuestIs": "Misja to {statusLabel}",
+    "QuestLog": {
+      "ContextMenu": {
+        "CopyEntityLink": "Skopiuj link treści encji",
+        "CopyQuestID": "Skopiuj identyfikator misji",
+        "PrimaryQuest": "Ustaw / wyłącz jako misję główną"
+      },
+      "SubTitle": "Zadanie podrzędne z {0}",
+      "Table": {
+        "Actions": "Aziałania",
+        "QuestGiver": "Źródło Misji",
+        "QuestTitle": "Tytuł",
+        "Tasks": "Cele"
+      },
+      "Tabs": {
+        "Available": "Dostępne",
+        "Completed": "Zakończone",
+        "Failed": "Nieudane",
+        "InActive": "Nieaktywny",
+        "InProgress": "W trakcie"
+      },
+      "Title": "Dziennik Misji"
+    },
+    "QuestLogButton": "Dziennik Misji",
+    "QuestPreview": {
+      "CustomSource": "Niestandardowe źródło",
+      "Description": "Opis:",
+      "DragDropActor": "Przeciągnij i upuść aktora, przedmiot lub wpis do dziennika lub kliknij lewym przyciskiem myszy, aby ustawić niestandardowe źródło.",
+      "DragDropActorPlayer": "Przeciągnij i upuść aktora, przedmiot lub wpis do dziennika.",
+      "DragDropRewards": "Przeciągnij i upuść elementy tutaj, aby dodać je jako nagrody.",
+      "GMNotes": "Notatki GM:",
+      "HeaderButtons": {
+        "Show": "Pokaż do Graczom"
+      },
+      "InvalidQuestId": "Nie można otworzyć podglądu misji z powodu nieprawidłowego identyfikatora misji.",
+      "Management": {
+        "AddSubquest": "Dodaj misję podrzędną",
+        "ConfigurePermissions": "Konfiguruj Uprawnienia",
+        "QuestBranching": "Zadania podrzędne:",
+        "QuestSettings": "Ustawienia Misji:",
+        "SplashArt": "Sztuka Rozchlapania:",
+        "SplashInfo": "Kliknij, aby ustawić obraz.",
+        "SplashQuestIcon": "Ustaw jako ikonę misji"
+      },
+      "Notifications": {
+        "BadUUID": "Nie można pobrać dokumentu dla UUID: {uuid}",
+        "WrongDocType": "Forien's Quest Log akceptuje tylko aktorów świata / kompendium, przedmioty i wpisy do dziennika jako zleceniodawców zadań.",
+        "WrongItemType": "Forien's Quest Log akceptuje tylko przedmioty ze świata i kompendium jako nagrody."
+      },
+      "Objective": "Cel",
+      "Objectives": "Cele:",
+      "Reward": "Nagroda",
+      "RewardDrop": "FQL (nagroda za misję): {userName} umieszczony '{itemName}' na {actorName}",
+      "Rewards": "Nagrody:",
+      "SubTitle": "Zadanie podrzędne z {0}",
+      "Tabs": {
+        "Details": "Szczegóły",
+        "GMNotes": "Notatki GM",
+        "QuestManagement": "Zarządzaj Misją"
+      },
+      "Title": "Szczegóły Misji - {name}",
+      "Tooltips": {
+        "PrimaryQuestSet": "Kliknij, aby ustawić misję główną.",
+        "PrimaryQuestUnset": "Kliknij, aby rozbroić misję główną."
+      }
+    },
+    "Quests": "{0} Misje",
+    "QuestTracker": {
+      "NoPrimary": "No primary quest available.",
+      "Title": "Śledzenie Misji",
+      "Tooltips": {
+        "BackgroundShow": "Kliknij, aby uzyskać normalne tło.",
+        "BackgroundUnshow": "Kliknij, aby uzyskać przezroczyste tło.",
+        "PrimaryQuestShow": "Kliknij, aby wyświetlić główne zadanie.",
+        "PrimaryQuestUnshow": "Kliknij, aby wyświetlić wszystkie misje."
+      }
+    },
+    "QuestTypes": {
+      "Active": "W trakcie",
+      "Available": "Dostępne",
+      "Completed": "Zakończone",
+      "Failed": "Nieudane",
+      "InActive": "Nieaktywny",
+      "Labels": {
+        "active": "w trakcie",
+        "available": "dostępne",
+        "completed": "zakończone",
+        "failed": "nieudane",
+        "inactive": "nieaktywny"
+      }
+    },
+    "Settings": {
+      "allowPlayersAccept": {
+        "Enable": "Gracze mogą przyjmować Zadania",
+        "EnableHint": "Zaznacz, aby umożliwić graczom przyjmowanie Zadań z zakładki Dostępne."
+      },
+      "allowPlayersCreate": {
+        "Enable": "Gracze mogą tworzyć Questy",
+        "EnableHint": "Zaznacz, aby umożliwić graczom tworzenie zadań. Zadania stworzone przez graczy pojawią się w zakładce Dostępne z uprawnieniami do edycji gracza. WYMAGA uprawnienia rdzenia do tworzenia dziennika."
+      },
+      "allowPlayersDrag": {
+        "Enable": "Zezwalaj na przeciąganie nagród gracza",
+        "EnableHint": "Zaznacz, aby umożliwić graczom przeciąganie nagród z okna szczegółów misji do posiadanych aktorów."
+      },
+      "countHidden": {
+        "Enable": "Policz ukryte zadania",
+        "EnableHint": "Jeśli zaznaczone, liczba ukończonych/ogółem zadań będzie obejmować zadania ukryte."
+      },
+      "defaultPermissionLevel": {
+        "Enable": "Domyślny poziom uprawnień do misji",
+        "EnableHint": "Ustawia domyślny poziom uprawnień podczas tworzenia nowych misji.",
+        "NONE": "Żaden",
+        "OBSERVER": "Obserwator",
+        "OWNER": "Właściciel"
+      },
+      "dynamicBookmarkBackground": {
+        "Enable": "Dynamiczne Tło Zakładki",
+        "EnableHint": "Jeśli zaznaczone, tło zakładki jest dynamicznie ustawiane na tło zawartości okna."
+      },
+      "hideFQLFromPlayers": {
+        "Enable": "Ukryj dziennik zadań przed graczami",
+        "EnableHint": "Po włączeniu ta opcja ukrywa dziennik zadań przed wszystkimi graczami. Tylko użytkownicy na poziomie GM będą mieli dostęp do dziennika zadań."
+      },
+      "navStyle": {
+        "bookmarks": "Zakładki",
+        "classic": "Klasyczne zakładki",
+        "Enable": "Styl Nawigacji",
+        "EnableHint": "Zdecyduj, jak powinna być wyświetlana nawigacja w dzienniku misji."
+      },
+      "notifyRewardDrop": {
+        "Enable": "Pokaż powiadomienia o zrzuceniu nagrody",
+        "EnableHint": "Zaznacz, aby zobaczyć powiadomienia interfejsu użytkownika, gdy nagrody za misje zostaną upuszczone na arkusze graczy."
+      },
+      "questTrackerResizable": {
+        "Enable": "Zmiana Rozmiaru śledzenia misji",
+        "EnableHint": "Zaznacz, aby umożliwić ręczną zmianę rozmiaru z Śledzenie misji."
+      },
+      "showFolder": {
+        "Enable": "Pokaż Folder Misji",
+        "EnableHint": "Zaznacz, aby wyświetlić folder danych misji w zakładce Dziennik. Wyłącznie do celów DEBUGOWANIA."
+      },
+      "showTasks": {
+        "default": "Pokaż Zadania: gotowe/ogółem",
+        "Enable": "Pokaż zadania w Dzienniku Misji",
+        "EnableHint": "Zdecyduj, czy lub jak wyświetlać liczbę celów obok tytułu zadania w dzienniku zadań. Nie ma to wpływu na podgląd zadania.",
+        "no": "Ukryj kolumnę „Cele”",
+        "onlyCurrent": "Pokaż cele: gotowe"
+      },
+      "trustedPlayerEdit": {
+        "Enable": "Zezwalaj na edycję misji zaufanych graczy",
+        "EnableHint": "Zaznacz, aby zaufani gracze mogli mieć rozszerzone możliwości edycji misji i kontroli statusu nad misjami, których są właścicielami."
+      }
+    },
+    "Tooltips": {
+      "AddAbstract": "Dodaj Abstrakcyjny",
+      "ChangeSplashPos": "Zmień wyrównanie Splash",
+      "Delete": "Usuń",
+      "DeleteQuestGiver": "Usuń zleceniodawcę misji",
+      "DeleteSplash": "Usuń grafikę pluśnięcie",
+      "Edit": "Edytować",
+      "HiddenQuestNoPlayers": "To zadanie jest ukryte przed wszystkimi graczami.",
+      "Hide": "Ustaw jako Nieaktywne",
+      "HideAll": "Schowaj wszystko",
+      "LockAll": "Zablokuj wszystko",
+      "PrimaryQuest": "Główny Misja",
+      "RewardHidden": "Nagroda jest ukryta. Kliknij, aby pokazać.",
+      "RewardLocked": "Nagroda jest zablokowana. Kliknij, aby odblokować.",
+      "RewardLockedPlayer": "Nagroda jest zablokowana.",
+      "RewardUnlocked": "Nagroda jest odblokowana. Kliknij, aby zablokować.",
+      "RewardUnlockedPlayer": "Nagroda jest odblokowana.",
+      "RewardVisible": "Nagroda jest widoczna. Kliknij, aby ukryć.",
+      "SetActive": "Ustaw na Aktywną",
+      "SetAvailable": "Ustaw jako Dostępną",
+      "SetCompleted": "Ustaw jako Zakończoną",
+      "SetFailed": "Ustaw jako Nieudaną",
+      "ShowAll": "Pokaż wszystko",
+      "Status": "Status: {statusI18n}",
+      "TaskHidden": "Zadanie jest ukryte. Kliknij, aby pokazać.",
+      "TaskVisible": "Zadanie jest widoczne. Kliknij, aby ukryć.",
+      "ToggleImage": "Przełącz obraz Aktora/Tokenu",
+      "UnlockAll": "Odblokuj wszystkie"
+    }
+  }
 }

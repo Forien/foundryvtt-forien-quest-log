@@ -1,40 +1,18 @@
 {
   "ForienQuestLog": {
     "Api": {
-      "__COMMENT__": "No need for translating lines starting with 'API ERROR', they show in console for developers only.",
-      "create": {
-        "title": "API Error: Title property is required to create new Quest"
-      },
       "hooks": {
         "createOpenQuestMacro": {
           "error": {
             "noQuest": "API Error: Can't create macro with invalid Quest ID"
           },
-          "name": "Ouvrir la Quête „{name}”"
-        }
-      },
-      "reward": {
-        "create": {
-          "data": "API Error: Data property with at least {name, img} is required to create new Reward",
-          "type": "API Error: Type property is required to create new Reward"
-        }
-      },
-      "task": {
-        "create": {
-          "name": "API Error: Name property is required to create new Task"
+          "name": "Ouvrir la Quête ”{name}”"
         }
       }
     },
     "Buttons": {
       "AddNewQuest": "Ajouter nouvelle Quête",
       "AddNewTask": "Ajouter nouvelle Tâche"
-    },
-    "CloseDialog": {
-      "Body": "Êtes vous sûrs de vouloir fermer le formulaire ? Toutes données non sauvegardées serons perdus.",
-      "Cancel": "Annuler",
-      "Discard": "Abandonner les modifications",
-      "Header": "Êtes vous sûrs ?",
-      "Title": "Quitter le Formulaire"
     },
     "DeleteDialog": {
       "BodyObjective": "Cet objectif et ses données seront effacées définitivement.",
@@ -45,8 +23,14 @@
       "HeaderDel": "Êtes vous certain de vouloir effacer : <p>'{name}'</p>",
       "TitleDel": "Effacer {title}"
     },
-    "FloatingQuestWindow": "Fenêtre de quête flottante",
     "Migration": {
+      "ChatMessage": {
+        "Footer": "Vous devez mettre à jour manuellement les quêtes ci-dessus avec des données de document valide  des compendiums ou de votre monde.<br>",
+        "Header": "Forien's Quest Log (migration de DB)<br>A retiré le donneur de quête sans lien ou les objets récompense des quêtes ci-dessous :<p>",
+        "Notification": "Forien's Quest Log - A retiré le donneur de quête sans lien ou les objets récompenses de quête d'une ou plusieurs quêtes. Regardez la conversation pour plus d'information.",
+        "QuestGiver": "Donneur de quête",
+        "QuestRewards": "Récompenses de quête"
+      },
       "Complete": "Forien's Quest Log - Migration des données achevée.",
       "CouldNotMigrate": "Forien's Quest Log - ne peut pas migrer la quête : '{name}'",
       "Schema": "Forien's Quest Log - Migration des données sous le schéma de version  '{version}'",
@@ -134,10 +118,13 @@
         "PrimaryQuestUnset": "Cliquer pour désactiver la quête primaire."
       }
     },
+    "Quests": "Quêtes {0}",
     "QuestTracker": {
-      "Title": "Traqueur de quêtes",
       "NoPrimary": "Pas de quête primaire disponible.",
+      "Title": "Traqueur de quêtes",
       "Tooltips": {
+        "BackgroundShow": "Cliquer pour un arrière plan normal.",
+        "BackgroundUnshow": "Cliquer pour un arrière plan transparent.",
         "PrimaryQuestShow": "Cliquer pour montrer la quête primaire.",
         "PrimaryQuestUnshow": "Cliquer pour cacher toutes les quêtes."
       }
@@ -156,7 +143,6 @@
         "inactive": "inactive"
       }
     },
-    "Quests": "Quêtes {0}",
     "Settings": {
       "allowPlayersAccept": {
         "Enable": "Joueurs peuvent accepter",
@@ -190,10 +176,10 @@
         "EnableHint": "Activer cette option cache le journal de quêts à tous les joueurs. Seul less joueurs ayant le nivveau MJ seront capables d'accéder au journal de quêtes."
       },
       "navStyle": {
-        "Enable": "Style de navigation ",
-        "EnableHint": "Décider comment la navigation dans le journal de quête sera affichée.",
         "bookmarks": "Marque-page",
-        "classic": "Onglets classiques"
+        "classic": "Onglets classiques",
+        "Enable": "Style de navigation ",
+        "EnableHint": "Décider comment la navigation dans le journal de quête sera affichée."
       },
       "notifyRewardDrop": {
         "Enable": "Montrer les notification de récompenses accordées",
@@ -208,9 +194,9 @@
         "EnableHint": "Cocher pour montrer le dossier des données de quête dans l’onglet Journal. Seulement pour DÉBUGGER."
       },
       "showTasks": {
+        "default": "montre les tâches : effectuées/total",
         "Enable": "Montre les tâches dans le Journal de quête",
         "EnableHint": "Décide si ou comment montrer le nombre d'objectifs à côté du Titre de la quête dans le Journal de quête. Cela n’a pas d’effet sur la prévisualisation de la Quête.",
-        "default": "montre les tâches : effectuées/total",
         "no": "Cacher la colonne \"objectifs\"",
         "onlyCurrent": "Montre les tâches : effectuées"
       },
@@ -221,7 +207,6 @@
     },
     "Tooltips": {
       "AddAbstract": "Ajouter une récompense abstraite",
-      "ChangeGiverImgPos": "Modifier l'alignement de l'image du commanditaire",
       "ChangeSplashPos": "Modifier l'alignement de l'image d'illustration",
       "Delete": "Effacer",
       "DeleteQuestGiver": "Supprimer le commanditaire",
