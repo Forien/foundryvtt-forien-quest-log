@@ -26,8 +26,8 @@
     "Migration": {
       "ChatMessage": {
         "Footer": "Sinun täytyy päivittää yllä olevat tehtävät käsin käyttämään kelpaavia dokumenttien tietoja hakemistoista tai maailmastasi.<br>",
-        "Header": "Forien's Quest Log (tietokannan siirto)<br>Alla olevien tehtävien linkittämättömät tehtävänantajat ja palkkioesineet poistettiin:<p>",
-        "Notification": "Forien's Quest Log - Linkittämätön tehtävänantaja tai palkkioesineitä poistettiin yhdestä tai useammasta tehtävästä.  Katso lisätietoja keskusteluviestistä.",
+        "Header": "Forien's Quest Log (tietokannan siirto)<br>Alla olevien tehtävien linkittämättömät tehtävänantajat ja palkkiotavarat poistettiin:<p>",
+        "Notification": "Forien's Quest Log - Linkittämätön tehtävänantaja tai palkkiotavaroita poistettiin yhdestä tai useammasta tehtävästä.  Katso lisätietoja keskusteluviestistä.",
         "QuestGiver": "Tehtävänantaja",
         "QuestRewards": "Tehtävän palkkiot"
       },
