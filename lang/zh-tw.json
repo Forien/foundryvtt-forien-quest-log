@@ -3,19 +3,14 @@
     "NewQuest": "新任務",
     "QuestLogButton": "任務欄",
     "Quests": "{0}任務",
-    "SampleReward": "例如:300點經驗值",
-    "SampleTask": "例如：消滅鴉閣裡所有的不死生物",
     "QuestTypes": {
-      "InProgress": "進行中",
       "Completed": "已完成",
       "Failed": "已失敗",
-      "Hidden": "已隱藏",
       "Labels": {
         "available": "可選",
         "active": "進行中",
         "completed": "已完成",
         "failed": "已失敗",
-        "hidden": "已隱藏",
         "inactive": "未啓動"
       },
       "Active": "進行中",
@@ -25,17 +20,6 @@
     "Buttons": {
       "AddNewQuest": "加入新任務",
       "AddNewTask": "加入新目標"
-    },
-    "QuestForm": {
-      "Title": "添加新任務",
-      "QuestGiver": "委託人",
-      "QuestGiverPlaceholder": "角色的名字或ID",
-      "QuestTitle": "任務標題",
-      "DragDropActor": "將人物拖到這里以將其設定為委託人",
-      "QuestDescription": "任務描述",
-      "QuestGMNotes": "GM筆記",
-      "Submit": "提交",
-      "SubquestOf": "是 {name} 的支線任務"
     },
     "QuestLog": {
       "Title": "任務欄",
@@ -51,7 +35,6 @@
         "InProgress": "進行中",
         "Completed": "已完成",
         "Failed": "已失敗",
-        "Hidden": "已隱藏",
         "InActive": "未啓動"
       },
       "ContextMenu": {
@@ -70,12 +53,9 @@
         "Show": "展示給玩家"
       },
       "Management": {
-        "IsPersonalQuest": "個人任務？",
-        "IsPersonalQuestDescription": "勾選以設定任務為個人任務。該任務將僅對以下被標記的玩家顯示。反勾選此選項將移除所有任務權限並將該任務移到“隱藏”標籤下。",
         "SplashArt": "Splash Art",
         "QuestBranching": "支線任務",
         "AddSubquest": "新建支線任務",
-        "CanPlayerEdit": "允許玩家修改任務詳情",
         "ConfigurePermissions": "配置權限",
         "QuestSettings": "任務設定:",
         "SplashInfo": "點擊設定圖片.",
@@ -106,9 +86,6 @@
       }
     },
     "DeleteDialog": {
-      "Title": "刪除 {name}",
-      "Header": "確定嗎？",
-      "Body": "該任務及其資料將被永久刪除。",
       "Delete": "刪除",
       "Cancel": "取消",
       "BodyObjective": "該目標及其資料將被永久刪除。",
@@ -116,13 +93,6 @@
       "BodyReward": "此獎勵及其資料將被永久刪除。",
       "HeaderDel": "你確定要刪除：<p>'{name}'</p>？",
       "TitleDel": "刪除 {title}"
-    },
-    "CloseDialog": {
-      "Title": "離開表格",
-      "Header": "確定嗎？",
-      "Body": "確定你要關閉該表格嗎？任何未保存的資料將丟失。",
-      "Discard": "放棄更改",
-      "Cancel": "取消"
     },
     "Notifications": {
       "CannotOpen": "無法查看任務詳情。你可能缺少訪問權限，或者該任務ID錯誤，或者該任務已被刪除。",
@@ -139,10 +109,6 @@
       "allowPlayersDrag": {
         "Enable": "允許玩家拖拽任務獎勵。",
         "EnableHint": "勾選以允許玩家將獎勵物品從任務詳情中拖拽到自己的角色卡上。"
-      },
-      "availableQuests": {
-        "Enable": "顯示可用標籤",
-        "EnableHint": "勾選以展示任務日誌中所有的 \"可選\" 標籤。玩家們可以在接下任務前查看所有的非隱藏任務。"
       },
       "countHidden": {
         "Enable": "包括隱藏任務數量",
@@ -164,16 +130,6 @@
         "default": "展示目標：已完成/全部",
         "onlyCurrent": "展示目標：已完成",
         "no": "隱藏 \"目標\" 列表"
-      },
-      "titleAlign": {
-        "Enable": "任務標題對齊",
-        "EnableHint": "選擇任務欄中任務標題的對齊方式。",
-        "left": "左對齊",
-        "center": "居中對齊"
-      },
-      "playersWelcomeScreen": {
-        "Enable": "向玩家們展示歡迎界面",
-        "EnableHint": "反勾選以停止在玩家們登陸時向他們展示Mod更新後的歡迎界面。他們仍可以點擊任務欄中的\"幫助\"圖標來查看更新信息。"
       },
       "allowPlayersAccept": {
         "Enable": "玩家可以接受任務",
@@ -218,9 +174,6 @@
       "SetFailed": "設定為已失敗",
       "Hide": "隱藏",
       "Delete": "刪除",
-      "AddAbstractReward": "加入非物質獎勵",
-      "PersonalQuestButNoPlayers": "這是一個個人任務，但是當前沒有被分配給任何玩家",
-      "PersonalQuestVisibleFor": "該個人任務屬於",
       "RewardHidden": "獎勵已隱藏，點擊查看。",
       "RewardVisible": "獎勵已可見，點擊隱藏。",
       "TaskHidden": "目標已隱藏，點擊查看。",
@@ -244,27 +197,12 @@
       "UnlockAll": "全部解鎖"
     },
     "Api": {
-      "__COMMENT__": "No need for translating lines starting with 'API ERROR', they show in console for developers only.",
-      "create": {
-        "title": "API Error: Title property is required to create new Quest"
-      },
       "hooks": {
         "createOpenQuestMacro": {
           "name": "打開任務 „{name}” ",
           "error": {
             "noQuest": "API Error: Can't create macro with invalid Quest ID"
           }
-        }
-      },
-      "reward": {
-        "create": {
-          "data": "API Error: Data property with at least {name, img} is required to create new Reward",
-          "type": "API Error: Type property is required to create new Reward"
-        }
-      },
-      "task": {
-        "create": {
-          "name": "API Error: Name property is required to create new Task"
         }
       }
     },
