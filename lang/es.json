@@ -4,7 +4,7 @@
       "hooks": {
         "createOpenQuestMacro": {
           "error": {
-            "noQuest": "API Error: Can't create macro with invalid Quest ID"
+            "noQuest": "API Error: No se puede crear la macro sin un Quest ID valido"
           },
           "name": "Abierto ”{name}”"
         }
@@ -15,20 +15,20 @@
       "AddNewTask": "Añadir Objetivo"
     },
     "DeleteDialog": {
-      "BodyObjective": "Este objetivo y sus datos serán eliminados permanentemente.",
+      "BodyObjective": "Este objetivo y sus datos serán eliminados de forma permanente.",
       "BodyQuest": "Esta misión y sus datos se eliminarán de forma permanente.",
       "BodyReward": "Esta recompensa y sus datos se eliminarán de forma permanente.",
       "Cancel": "Cancelar",
       "Delete": "Eliminar",
-      "HeaderDel": "¿Estás segura de que quieres eliminar? <p>'{name}'</p>",
+      "HeaderDel": "¿Estás seguro que quieres eliminar? <p>'{name}'</p>",
       "TitleDel": "Eliminar {title}"
     },
     "Migration": {
       "ChatMessage": {
         "Footer": "Debes actualizar manualmente las misiones anteriores con datos de documentos válidos de compendios o de tu mundo.<br>",
-        "Header": "Forien's Quest Log (DB migración)<br>Se eliminaron los elementos de recompensa o dador de misiones no vinculados de las misiones a continuación:<p>",
-        "Notification": "Forien's Quest Log - Se eliminó el donante de misiones desvinculado o los elementos de recompensa de una o más misiones. Revise el mensaje de chat para obtener más información.",
-        "QuestGiver": "Repartidor de Misiones",
+        "Header": "Forien's Quest Log (DB migración)<br>Se eliminaron los elementos de recompensa o no se encuentra al dador de las misiones a continuación:<p>",
+        "Notification": "Forien's Quest Log - Se eliminó al dador de misiones o los elementos de recompensa de una o más misiones. Revise el mensaje de chat para obtener más información.",
+        "QuestGiver": "Dador de Misiones",
         "QuestRewards": "Recompensas de Misiones"
       },
       "Complete": "Forien's Quest Log - Migración de datos completa.",
@@ -45,72 +45,72 @@
       "FinishQuestAdded": "Termina de editar y cierra la nueva misión actual antes de agregar otra.",
       "LinkCopied": "El link a la entidad de esta misión ha sido copiado al portapapeles",
       "QuestAdded": "Se agregó '{name}' como una nueva misión con estado: {status}.",
-      "QuestIDCopied": "El ID de misión para esta misión se ha copiado en el portapapeles.",
+      "QuestIDCopied": "El ID de misión para esta misión se ha copiado al portapapeles.",
       "QuestMoved": "Se movió '{name}' y se estableció el nuevo estado en: {target}.",
       "QuestPrimary": "'{name}' es la nueva misión principal.",
-      "QuestTrackerNoActive": "Rastreador de misiones está habilitado, pero no hay misiones en curso actualmente.",
+      "QuestTrackerNoActive": "Rastreador de Misiones está habilitado, pero no hay misiones en curso actualmente.",
       "UserCantOpen": "El usuario {user} no tiene permisos para abrir esta misión."
     },
-    "Quest": "Hacer Colecta",
-    "QuestIs": "Hacer Colecta es {statusLabel}",
+    "Quest": "Misión",
+    "QuestIs": "La Misión es {statusLabel}",
     "QuestLog": {
       "ContextMenu": {
         "CopyEntityLink": "Copiar enlace de contenido de entidad",
         "CopyQuestID": "Copiar ID de misión",
         "PrimaryQuest": "Establecer / Desestablecer como misión principal"
       },
-      "SubTitle": "parte de: {0}",
+      "SubTitle": "Sub - Misión de: {0}",
       "Table": {
         "Actions": "Acciones",
         "QuestGiver": "Dador de la misión",
-        "QuestTitle": "Nombre",
-        "Tasks": "Tareas"
+        "QuestTitle": "Título",
+        "Tasks": "Objetivos"
       },
       "Tabs": {
         "Available": "Disponibles",
         "Completed": "Completadas",
         "Failed": "Fallidas",
-        "InActive": "Inactivo",
+        "InActive": "Inactivas",
         "InProgress": "En curso"
       },
       "Title": "Misiones"
     },
     "QuestLogButton": "Misiones",
     "QuestPreview": {
-      "CustomSource": "Fonte personalizada",
+      "CustomSource": "Nombre del Dador de la Misión",
       "Description": "Descripción:",
-      "DragDropActor": "Arrastre y suelte actor, elemento o entrada de diario o haga clic con el botón izquierdo para establecer una fuente personalizada.",
-      "DragDropActorPlayer": "Arrastrar y soltar actor, elemento o entrada de diario.",
-      "DragDropRewards": "Arrastra y suelta elementos aquí para añadirlos como recompensas",
-      "GMNotes": "GM Notas:",
+      "DragDropActor": "Arrastre y Suelte al actor, elemento o entrada de diario o haga clic con el botón izquierdo para establecer un dador de misión personalizado.",
+      "DragDropActorPlayer": "Arrastrar y Soltar actor, elemento o entrada de diario.",
+      "DragDropRewards": "Arrastra y Suelta elementos aquí para añadirlos como recompensas",
+      "GMNotes": "Notas del GM:",
       "HeaderButtons": {
         "Show": "Mostrar a jugadores"
       },
       "InvalidQuestId": "No se puede abrir la vista previa de la misión debido a que el ID de la misión no es válido",
       "Management": {
-        "AddSubquest": "Crear submisión",
+        "AddSubquest": "Crear Sub - Misión",
         "ConfigurePermissions": "Configurar permisos",
-        "QuestBranching": "Submisiones:",
+        "QuestBranching": "Sub - Misiones:",
         "QuestSettings": "Configuración de la Misión:",
-        "SplashArt": "Imagen de acompañamiento:",
+        "SplashArt": "Imagen mision:",
         "SplashInfo": "Haga clic para configurar la imagen.",
         "SplashQuestIcon": "Establecer como icono de misión"
       },
       "Notifications": {
         "BadUUID": "No se pudo recuperar el documento para UUID: {uuid}",
-        "WrongDocType": "Forien's Quest Log solo acepta actores del mundo/compendio, elementos y entradas de diario como donantes de misiones.",
+        "WrongDocType": "Forien's Quest Log solo acepta actores del mundo/compendio, elementos y entradas de diario como dador de misiones.",
         "WrongItemType": "Forien's Quest Log solo acepta artículos del mundo y del compendio como recompensa."
       },
       "Objective": "Objetivo",
       "Objectives": "Objetivos",
       "Reward": "Premio",
-      "RewardDrop": "FQL (recompensa de misión): {userName} caído '{itemName}' sobre {actorName}",
+      "RewardDrop": "FQL (recompensa de misión): {userName} entrego '{itemName}' a {actorName}",
       "Rewards": "Recompensas",
-      "SubTitle": "parte de: {0}",
+      "SubTitle": "Sub - Misión de: {0}",
       "Tabs": {
         "Details": "Detalles",
         "GMNotes": "Notas del GM",
-        "QuestManagement": "Administrar misión"
+        "QuestManagement": "Administrar Misión"
       },
       "Title": "Detalles de la misión - {name}",
       "Tooltips": {
@@ -123,8 +123,8 @@
       "NoPrimary": "No hay misión principal disponible.",
       "Title": "Rastreador de Misiones",
       "Tooltips": {
-        "BackgroundShow": "Haga clic para mostrar el fondo.",
-        "BackgroundUnshow": "Haga clic para hacer que el fondo sea transparente.",
+        "BackgroundShow": "Haz clic para mostrar el fondo.",
+        "BackgroundUnshow": "Haz clic para hacer que el fondo sea transparente.",
         "PrimaryQuestShow": "Haz clic para mostrar la misión principal.",
         "PrimaryQuestUnshow": "Haz clic para mostrar todas las misiones."
       }
@@ -150,7 +150,7 @@
       },
       "allowPlayersCreate": {
         "Enable": "Los jugadores pueden crear misiones",
-        "EnableHint": "Marcar para permitir a los jugadores crear misiones. Las misiones creadas por ellos aparecerán en la pestaña 'Disponibles'. Requiere tener permisos globales de jugador 'Crear apuntes'."
+        "EnableHint": "Marcar para permitir a los jugadores crear misiones. Las misiones creadas por ellos aparecerán en la pestaña 'Disponibles'. Requiere tener permisos globales de jugador 'Crear entradas en el Diario'."
       },
       "allowPlayersDrag": {
         "Enable": "Permitir a los jugadores arrastrar las recompensas a sus fichas",
@@ -161,7 +161,7 @@
         "EnableHint": "Marcar para incluir las tareas ocultas en el número de tareas completadas / totales."
       },
       "defaultPermissionLevel": {
-        "Enable": "Nivel de permiso de mision predeterminado",
+        "Enable": "Nivel de permiso de misión predeterminado",
         "EnableHint": "Establece el nivel de permiso predeterminado cuando se crean nuevas misiones.",
         "NONE": "Ninguno",
         "OBSERVER": "Observador",
@@ -179,7 +179,7 @@
         "bookmarks": "Marcadores",
         "classic": "Pestañas clásicas",
         "Enable": "Estilo de navegación",
-        "EnableHint": "Decide como se visualizará el registro de misiones."
+        "EnableHint": "Decide cómo se visualizará el registro de misiones."
       },
       "notifyRewardDrop": {
         "Enable": "Mostrar notificaciones de entrega de recompensas",
@@ -187,50 +187,50 @@
       },
       "questTrackerResizable": {
         "Enable": "Rastreador de misiones redimensionable",
-        "EnableHint": "Marque para permitir el control de cambio de tamaño manual del Quest Tracker."
+        "EnableHint": "Marque para permitir el control de cambio de tamaño manual del Rastreador de Misiones."
       },
       "showFolder": {
         "Enable": "Mostrar carpeta de misiones",
-        "EnableHint": "Marcar para mostrar la carpeta de misiones en la pestaña de \"Apuntes\" Solo para modo DEBUG."
+        "EnableHint": "Marcar para mostrar la carpeta de misiones en la pestaña de \"Diario\" Solo para modo DEBUG."
       },
       "showTasks": {
         "default": "Mostrar tareas: completadas / totales",
         "Enable": "Mostrar tareas en el registro de misiones",
         "EnableHint": "Decide si y como se muestra la cantidad de tareas (objetivos) junto al nombre de la misión en el registro de misiones. Esto no tiene efecto en la visualización de la pantalla de detalle de misión.",
-        "no": "Ocultar columna \"tareas\"",
-        "onlyCurrent": "Mostrar tareas: completadas"
+        "no": "Ocultar columna \"Objetivos\"",
+        "onlyCurrent": "Mostrar objetivos: completados"
       },
       "trustedPlayerEdit": {
         "Enable": "Permitir la edición de misiones de jugadores de confianza",
-        "EnableHint": "Márcala para permitir que los jugadores de confianza tengan capacidades ampliadas de edición de misiones y control de estado sobre las misiones de las que son propietarios."
+        "EnableHint": "Marcar para permitir que los jugadores de confianza tengan capacidades ampliadas de edición de misiones y control de estado sobre las misiones de las que son propietarios."
       }
     },
     "Tooltips": {
-      "AddAbstract": "Agregar Abstracto",
-      "ChangeSplashPos": "Cambiar la alineación de la salpicadura",
+      "AddAbstract": "Añadir Personalizada",
+      "ChangeSplashPos": "Cambiar la alineación de la imagen de misión",
       "Delete": "Eliminar",
       "DeleteQuestGiver": "Eliminar dador de misiones",
-      "DeleteSplash": "Eliminar arte de bienvenida",
+      "DeleteSplash": "Eliminar imagen de misión",
       "Edit": "Editar",
       "HiddenQuestNoPlayers": "Esta misión está oculta a todos los jugadores.",
-      "Hide": "Establecer como inactivo",
+      "Hide": "Ocultar",
       "HideAll": "Ocultar Todo",
       "LockAll": "Bloquear Todo",
       "PrimaryQuest": "Misión Principal",
-      "RewardHidden": "La recompensa está oculta. Clic para mostrar.",
-      "RewardLocked": "La recompensa está bloqueada. Haga clic para desbloquear.",
+      "RewardHidden": "La recompensa está oculta. Haz clic para mostrar.",
+      "RewardLocked": "La recompensa está bloqueada. Haz clic para desbloquear.",
       "RewardLockedPlayer": "La recompensa está bloqueada.",
-      "RewardUnlocked": "La recompensa está desbloqueada. Haga clic para bloquear.",
+      "RewardUnlocked": "La recompensa está desbloqueada. Haz clic para bloquear.",
       "RewardUnlockedPlayer": "La recompensa está desbloqueada.",
-      "RewardVisible": "La recompensa está visible. Clic para ocultar.",
+      "RewardVisible": "La recompensa está visible. Haz clic para ocultar.",
       "SetActive": "Poner en curso",
       "SetAvailable": "Mover a disponibles",
       "SetCompleted": "Completar misión",
       "SetFailed": "Mover a fallidas",
       "ShowAll": "Mostrar Todo",
       "Status": "Estado: {statusI18n}",
-      "TaskHidden": "El objetivo está oculto. Haga clic para mostrar.",
-      "TaskVisible": "La tarea está visible. Clic para ocultar.",
+      "TaskHidden": "El objetivo está oculto. Haz clic para mostrar.",
+      "TaskVisible": "La tarea está visible. Haz clic para ocultar.",
       "ToggleImage": "Alternar entre imagen de token o actor",
       "UnlockAll": "Desbloquear Todos"
     }
