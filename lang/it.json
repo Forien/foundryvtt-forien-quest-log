@@ -1,0 +1,238 @@
+{
+  "ForienQuestLog": {
+    "Api": {
+      "hooks": {
+        "createOpenQuestMacro": {
+          "error": {
+            "noQuest": "API Error: Can't create macro with invalid Quest ID."
+          },
+          "name": "Aprire ”{name}”"
+        }
+      }
+    },
+    "Buttons": {
+      "AddNewQuest": "Aggiungi Missione",
+      "AddNewTask": "Aggiungi Obiettivo"
+    },
+    "DeleteDialog": {
+      "BodyObjective": "Questo obiettivo e i suoi dati verranno eliminati in modo permanente.",
+      "BodyQuest": "Questa ricerca e i suoi dati verranno eliminati definitivamente.",
+      "BodyReward": "Questo ricompensa e i suoi dati verranno eliminati in modo permanente.",
+      "Cancel": "Annulla",
+      "Delete": "Elimina",
+      "HeaderDel": "Sei sicuro di voler eliminare: <p>'{name}'</p>",
+      "TitleDel": "Elimina {title}"
+    },
+    "Migration": {
+      "ChatMessage": {
+        "Footer": "Devi aggiornare manualmente le missioni di cui sopra con dati di documenti validi dal compendio o dal tuo mondo.<br>",
+        "Header": "Forien's Quest Log (DB migrazione)<br>Rimosso il donatore di missioni o gli oggetti premio non collegati dalle missioni seguenti:<p>",
+        "Notification": "Forien's Quest Log - Rimosso il donatore di missioni o gli oggetti premio non collegati da una o più missioni. Si prega di rivedere il messaggio di chat per ulteriori informazioni.",
+        "QuestGiver": "Donatore di missioni",
+        "QuestRewards": "Ricompense delle missioni"
+      },
+      "Complete": "Forien's Quest Log - Migrazione dei dati completata.",
+      "CouldNotMigrate": "Forien's Quest Log - Impossibile migrare la missione: '{name}'",
+      "Schema": "Forien's Quest Log - Migrazione dei dati alla versione dello schema '{version}'",
+      "Start": "Forien's Quest Log - Migrazione dei dati, non ricaricare."
+    },
+    "NewQuest": "Nuova Missione",
+    "NoActiveQuests": "Non ci sono missioni attive",
+    "NoDocument": "Impossibile caricare un'entità UUID: {uuid}",
+    "NoPermission": "Non hai autorizzazioni sufficienti per visualizzare questo foglio di entità.",
+    "Notifications": {
+      "CannotOpen": "Impossibile aprire i dettagli della missione. Questa ricerca potrebbe non essere osservabile o potrebbe non esistere più.",
+      "FinishQuestAdded": "Completa la modifica e chiudi la nuova missione corrente prima di aggiungerne un'altra.",
+      "LinkCopied": "Il link dell'entità per questa missione è stato copiato negli appunti.",
+      "QuestAdded": "Aggiunto '{name}' come una nuova missione con status: {status}.",
+      "QuestIDCopied": "L'ID missione per questa missione è stato copiato negli appunti.",
+      "QuestMoved": "Mosso '{name}' e imposta il nuovo stato su: {target}.",
+      "QuestPrimary": "'{name}' è la nuova missione primaria.",
+      "QuestTrackerNoActive": "Tracciatore di missione è abilitato, ma al momento non ci sono missioni in corso.",
+      "UserCantOpen": "Utente {user} non dispone dell'autorizzazione per aprire questa missione."
+    },
+    "Quest": "Missione",
+    "QuestIs": "La missione è {statusLabel}",
+    "QuestLog": {
+      "ContextMenu": {
+        "CopyEntityLink": "Copia il collegamento contenuto dell'entità",
+        "CopyQuestID": "Copia ID missione",
+        "PrimaryQuest": "Attiva / Disattiva come missione principale"
+      },
+      "SubTitle": "Sottomissione di {0}",
+      "Table": {
+        "Actions": "Azioni",
+        "QuestGiver": "Fonte de missione",
+        "QuestTitle": "Titolo",
+        "Tasks": "Compiti"
+      },
+      "Tabs": {
+        "Available": "A disposizione",
+        "Completed": "Completato",
+        "Failed": "Fallito",
+        "InActive": "Non attivo",
+        "InProgress": "In corso"
+      },
+      "Title": "Registro Missione"
+    },
+    "QuestLogButton": "Registro Missione",
+    "QuestPreview": {
+      "CustomSource": "Sorgente Personalizzata",
+      "Description": "Descrizione:",
+      "DragDropActor": "Trascina e Rilascia attore, elemento o voce di diario o fai clic con il pulsante sinistro del mouse per impostare una fonte personalizzata.",
+      "DragDropActorPlayer": "Trascina e Rilascia attore, elemento o voce di diario.",
+      "DragDropRewards": "Trascina e rilascia gli oggetti qui per aggiungerli come ricompense.",
+      "GMNotes": "Note GM:",
+      "HeaderButtons": {
+        "Show": "Mostra a Giocatori"
+      },
+      "InvalidQuestId": "Impossibile aprire l'anteprima della Missione a causa di un ID Missione non valido.",
+      "Management": {
+        "AddSubquest": "Aggiungi Sottomissione",
+        "ConfigurePermissions": "Configura le Autorizzazioni",
+        "QuestBranching": "Sottomissioni:",
+        "QuestSettings": "Impostazioni Missione:",
+        "SplashArt": "Schizzo Arte:",
+        "SplashInfo": "Fare clic per impostare l'immagine.",
+        "SplashQuestIcon": "Imposta come icona missione"
+      },
+      "Notifications": {
+        "BadUUID": "Impossibile recuperare il documento per UUID: {uuid}",
+        "WrongDocType": "Forien's Quest Log accetta solo attori del mondo / compendio, oggetti e voci di diario come fonte di missioni.",
+        "WrongItemType": "Forien's Quest Log accetta solo oggetti del mondo e del compendio come ricompense."
+      },
+      "Objective": "Obbiettivo",
+      "Objectives": "Obiettivi:",
+      "Reward": "Ricompensa",
+      "RewardDrop": "FQL (ricompensa missione): {userName} caduto '{itemName}' su {actorName}",
+      "Rewards": "Ricompense:",
+      "SubTitle": "Sottomissione di {0}",
+      "Tabs": {
+        "Details": "Particolari",
+        "GMNotes": "Note GM",
+        "QuestManagement": "Gestisci Missione"
+      },
+      "Title": "Dettagli Missione - {name}",
+      "Tooltips": {
+        "PrimaryQuestSet": "Clicca per fare la missione principale.",
+        "PrimaryQuestUnset": "Fai clic per non settato la missione principale."
+      }
+    },
+    "Quests": "{0} Missioni",
+    "QuestTracker": {
+      "NoPrimary": "Nessuna missione principale disponibile.",
+      "Title": "Tracciatore Missione",
+      "Tooltips": {
+        "BackgroundShow": "Fare clic per mostrare lo sfondo.",
+        "BackgroundUnshow": "Fare clic per rendere trasparente lo sfondo.",
+        "PrimaryQuestShow": "Clicca per mostrare la missione principale.",
+        "PrimaryQuestUnshow": "Clicca per mostrare tutte le missioni."
+      }
+    },
+    "QuestTypes": {
+      "Active": "In corso",
+      "Available": "A disposizione",
+      "Completed": "Completato",
+      "Failed": "Fallito",
+      "InActive": "Non attivo",
+      "Labels": {
+        "active": "in corso",
+        "available": "a disposizione",
+        "completed": "completato",
+        "failed": "fallito",
+        "inactive": "non attivo"
+      }
+    },
+    "Settings": {
+      "allowPlayersAccept": {
+        "Enable": "I giocatori possono accettare Missioni",
+        "EnableHint": "Seleziona per consentire ai giocatori di accettare Missioni dalla scheda Disponibile."
+      },
+      "allowPlayersCreate": {
+        "Enable": "I giocatori possono creare Missioni",
+        "EnableHint": "Seleziona per consentire ai giocatori di creare Missioni. le Missioni create dai giocatori appariranno nella scheda Disponibile con le autorizzazioni di modifica giocatore. RICHIEDE l'autorizzazione 'crea diario'."
+      },
+      "allowPlayersDrag": {
+        "Enable": "Consenti trascinamento ricompensa del giocatore",
+        "EnableHint": "Seleziona per consentire ai giocatori di trascinare le ricompense dalla finestra dei dettagli della missione ai propri attori."
+      },
+      "countHidden": {
+        "Enable": "Conta Compiti Nascoste",
+        "EnableHint": "Se selezionato, il numero di attività completate/totali includerà le attività nascoste."
+      },
+      "defaultPermissionLevel": {
+        "Enable": "Livello di autorizzazione della missione predefinito",
+        "EnableHint": "Imposta il livello di autorizzazione predefinito quando vengono create nuove missioni.",
+        "NONE": "Nessuno",
+        "OBSERVER": "Osservatore",
+        "OWNER": "Proprietario"
+      },
+      "dynamicBookmarkBackground": {
+        "Enable": "Sfondo di segnalibro dinamico",
+        "EnableHint": "Se selezionato, lo sfondo della scheda del segnalibro viene impostato dinamicamente sullo sfondo del contenuto della finestra."
+      },
+      "hideFQLFromPlayers": {
+        "Enable": "Nascondi il Registro delle Missioni ai giocatori",
+        "EnableHint": "Quando abilitata, questa opzione nasconde il Registro Missione a tutti i giocatori. Solo gli utenti di livello GM potranno accedere al Registro delle Missioni."
+      },
+      "navStyle": {
+        "bookmarks": "Segnalibri",
+        "classic": "Schede classiche",
+        "Enable": "Stile di Navigazione",
+        "EnableHint": "Decidi come visualizzare la navigazione del Registro mission."
+      },
+      "notifyRewardDrop": {
+        "Enable": "Mostra le notifiche di far cadere dei premi",
+        "EnableHint": "Controlla per vedere le notifiche quando le ricompense delle missioni vengono caduto sulle schede giocatore."
+      },
+      "questTrackerResizable": {
+        "Enable": "Tracciatore Missione Ridimensionabile",
+        "EnableHint": "Selezionare per consentire il controllo del ridimensionamento manuale del Tracciatore Missione."
+      },
+      "showFolder": {
+        "Enable": "Mostra Cartella Missione",
+        "EnableHint": "Seleziona per mostrare la cartella dei dati della missione nella scheda Diario. Solo per scopi di DEBUG."
+      },
+      "showTasks": {
+        "default": "Mostra Obiettivi: fatto/totale",
+        "Enable": "Mostra le obiettivi nel registro delle missioni",
+        "EnableHint": "Decidi se o come mostrare la quantità di obiettivi accanto al titolo della missione nel registro delle missioni. Questo non ha effetto sull'anteprima della missione.",
+        "no": "Nascondi la colonna \"Obiettivi\"",
+        "onlyCurrent": "Mostra obiettivi: fatto"
+      },
+      "trustedPlayerEdit": {
+        "Enable": "Consenti la modifica della missione del giocatore affidabile",
+        "EnableHint": "Seleziona per consentire ai giocatori fidati di avere ampliato la modifica delle missioni e le capacità di controllo dello stato sulle missioni di cui sono proprietari."
+      }
+    },
+    "Tooltips": {
+      "AddAbstract": "Aggiungi Astratto",
+      "ChangeSplashPos": "Cambia allineamento Schizzo",
+      "Delete": "Elimina",
+      "DeleteQuestGiver": "Elimina il donatore della missione",
+      "DeleteSplash": "Elimina schizzo arte",
+      "Edit": "Modificare",
+      "HiddenQuestNoPlayers": "Questa Missione è nascosta a tutti i giocatori.",
+      "Hide": "Imposta come Inattivo",
+      "HideAll": "Nascondi Tutto",
+      "LockAll": "Blocca Tutto",
+      "PrimaryQuest": "Missione Primaria",
+      "RewardHidden": "La ricompensa è nascosta. Fare clic per mostrare.",
+      "RewardLocked": "La ricompensa è bloccata. Fare clic per sbloccare.",
+      "RewardLockedPlayer": "La ricompensa è bloccata.",
+      "RewardUnlocked": "La ricompensa è sbloccata. Fare clic per bloccare.",
+      "RewardUnlockedPlayer": "La ricompensa è sbloccata.",
+      "RewardVisible": "Ricompensa è visibile. Fare clic per nascondere.",
+      "SetActive": "Imposta come In corso",
+      "SetAvailable": "Imposta come Disponibile",
+      "SetCompleted": "Imposta come Completato",
+      "SetFailed": "Imposta come non Riuscito",
+      "ShowAll": "Mostra Tutto",
+      "Status": "Stato: {statusI18n}",
+      "TaskHidden": "L'obiettivo è nascosto. Fare clic per mostrare.",
+      "TaskVisible": "L'obiettivo è visibile. Fare clic per nascondere.",
+      "ToggleImage": "Attiva/disattiva immagine token/attore",
+      "UnlockAll": "Sblocca Tutto"
+    }
+  }
+}
