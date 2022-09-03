@@ -10,10 +10,6 @@
         }
       }
     },
-    "Buttons": {
-      "AddNewQuest": "クエスト追加",
-      "AddNewTask": "追加"
-    },
     "DeleteDialog": {
       "BodyObjective": "この目標とその内容はすべて削除されます。",
       "BodyQuest": "このクエストとその内容はすべて削除されます。",
@@ -22,6 +18,9 @@
       "Delete": "削除",
       "HeaderDel": "<p>'{name}'</p>を削除します本当によろしいですか？",
       "TitleDel": "{name}を削除します"
+    },
+    "HeaderLabels": {
+      "Show": "プレイヤーに表示"
     },
     "Migration": {
       "ChatMessage": {
@@ -54,18 +53,15 @@
     "Quest": "クエスト",
     "QuestIs": "クエスト状態{statusLabel}",
     "QuestLog": {
+      "Buttons": {
+        "AddQuest": "クエスト追加"
+      },
       "ContextMenu": {
         "CopyEntityLink": "データへのリンクをコピー",
         "CopyQuestID": "クエストIDをコピー",
         "PrimaryQuest": "メインクエスト指定切り替え"
       },
       "SubTitle": "{0}に含まれています",
-      "Table": {
-        "Actions": "行動",
-        "QuestGiver": "クエスト依頼主",
-        "QuestTitle": "クエスト名",
-        "Tasks": "内容"
-      },
       "Tabs": {
         "Available": "受注可能",
         "Completed": "完了",
@@ -73,27 +69,30 @@
         "InActive": "秘匿",
         "InProgress": "進行中"
       },
-      "Title": "クエストログ"
+      "Title": "クエストログ",
+      "Tooltips": {
+        "Objectives": "目標"
+      }
     },
     "QuestLogButton": "クエストログ",
     "QuestPreview": {
+      "Buttons": {
+        "AddObjective": "目標を追加"
+      },
       "CustomSource": "カスタムソース",
       "Description": "詳細：",
       "DragDropActor": "キャラ、アイテム、資料をドラッグ＆ドロップすることでソースを手動で変更できます。",
       "DragDropActorPlayer": "キャラ、アイテム、資料をドラッグ＆ドロップしてください。",
       "DragDropRewards": "アイテムをここにドラッグ＆ドロップすると報酬として設定できます。",
       "GMNotes": "GMノート：",
-      "HeaderButtons": {
-        "Show": "プレイヤーに表示"
-      },
       "InvalidQuestId": "クエストIDが存在しないため開けません。",
       "Management": {
         "AddSubquest": "サブクエスト追加",
         "ConfigurePermissions": "権限設定",
         "QuestBranching": "サブクエスト：",
         "QuestSettings": "クエスト設定：",
-        "SplashArt": "画像：",
-        "SplashInfo": "クリックで画像設定。",
+        "SplashArt": "表紙画像：",
+        "SplashInfo": "クリックしてカバー画像を設定します。",
         "SplashQuestIcon": "クエストアイコンとして設定"
       },
       "Notifications": {
@@ -114,8 +113,26 @@
       },
       "Title": "クエスト詳細",
       "Tooltips": {
+        "AddAbstract": "抽象報酬を設定する",
+        "ChangeSplashPos": "画像の位置を調整。",
+        "DeleteQuestGiver": "クエスト依頼主削除。",
+        "DeleteSplash": "カバー画像を削除します。",
+        "HideAll": "全非表示",
+        "LockAll": "全ロック",
         "PrimaryQuestSet": "メインクエストに設定",
-        "PrimaryQuestUnset": "メインクエストから削除"
+        "PrimaryQuestUnset": "メインクエストから削除",
+        "RewardHidden": "報酬は非表示になっています。クリックで表示できます。",
+        "RewardLocked": "報酬はロックされています。クリックでアンロックできます。",
+        "RewardLockedPlayer": "報酬はロックされています",
+        "RewardUnlocked": "報酬はアンロックされています",
+        "RewardUnlockedPlayer": "報酬はアンロックされています",
+        "RewardVisible": "報酬は表示されています。クリックで非表示できます。",
+        "ShowAll": "全表示",
+        "TaskHidden": "目標は非表示になっています。クリックで表示できます。",
+        "TaskVisible": "目標表示されています。クリックで非表示できます。",
+        "ToggleImage": "キャラ・コマ画像切替。",
+        "UnlockAll": "全アンロック",
+        "ViewSplashArt": "表紙画像を見る。"
       }
     },
     "Quests": "{0}クエスト",
@@ -206,33 +223,16 @@
       }
     },
     "Tooltips": {
-      "AddAbstract": "抽象報酬を設定する",
-      "ChangeSplashPos": "画像の位置を調整",
       "Delete": "削除",
-      "DeleteQuestGiver": "クエスト依頼主削除",
-      "DeleteSplash": "画像を削除",
       "Edit": "編集",
       "HiddenQuestNoPlayers": "このクエストはPLに表示されていません。",
-      "Hide": "秘匿",
-      "HideAll": "全非表示",
-      "LockAll": "全ロック",
       "PrimaryQuest": "メインクエスト",
-      "RewardHidden": "報酬は非表示になっています。クリックで表示できます。",
-      "RewardLocked": "報酬はロックされています。クリックでアンロックできます。",
-      "RewardLockedPlayer": "報酬はロックされています",
-      "RewardUnlocked": "報酬はアンロックされています",
-      "RewardUnlockedPlayer": "報酬はアンロックされています",
-      "RewardVisible": "報酬は表示されています。クリックで非表示できます。",
-      "SetActive": "進行中にする",
-      "SetAvailable": "受注可能にする",
-      "SetCompleted": "完了にする",
-      "SetFailed": "失敗にする",
-      "ShowAll": "全表示",
-      "Status": "状態：{statusI18n}",
-      "TaskHidden": "目標は非表示になっています。クリックで表示できます。",
-      "TaskVisible": "目標表示されています。クリックで非表示できます。",
-      "ToggleImage": "キャラ・コマ画像切替",
-      "UnlockAll": "全アンロック"
+      "SetActive": "進行中として設定",
+      "SetAvailable": "利用可能に設定",
+      "SetCompleted": "完了として設定",
+      "SetFailed": "失敗として設定",
+      "SetInactive": "非アクティブに設定",
+      "Status": "状態：{statusI18n}"
     }
   }
 }

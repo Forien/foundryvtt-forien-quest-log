@@ -10,10 +10,6 @@
         }
       }
     },
-    "Buttons": {
-      "AddNewQuest": "퀘스트 추가",
-      "AddNewTask": "목표 추가"
-    },
     "DeleteDialog": {
       "BodyObjective": "이 목표와 데이터가 영구적으로 삭제됩니다.",
       "BodyQuest": "이 퀘스트와 데이터가 영구적으로 삭제됩니다.",
@@ -22,6 +18,9 @@
       "Delete": "삭제",
       "HeaderDel": "정말로 삭제하시겠습니까? : <p>'{name}'</p>",
       "TitleDel": "{name} 삭제"
+    },
+    "HeaderLabels": {
+      "Show": "플레이어에게 표시"
     },
     "Migration": {
       "ChatMessage": {
@@ -54,18 +53,15 @@
     "Quest": "퀘스트",
     "QuestIs": "{statusLabel} 상태인 퀘스트입니다.",
     "QuestLog": {
+      "Buttons": {
+        "AddQuest": "퀘스트 추가"
+      },
       "ContextMenu": {
         "CopyEntityLink": "엔티티 내용 링크 복사",
         "CopyQuestID": "퀘스트 ID 복사",
         "PrimaryQuest": "중요 퀘스트로 설정/해제."
       },
       "SubTitle": "서브 퀘스트 : {0}",
-      "Table": {
-        "Actions": "액션",
-        "QuestGiver": "퀘스트 공급자",
-        "QuestTitle": "제목",
-        "Tasks": "목표"
-      },
       "Tabs": {
         "Available": "활성화",
         "Completed": "완료됨",
@@ -73,19 +69,22 @@
         "InActive": "비공개",
         "InProgress": "진행 중"
       },
-      "Title": "퀘스트 로그"
+      "Title": "퀘스트 로그",
+      "Tooltips": {
+        "Objectives": "목표"
+      }
     },
     "QuestLogButton": "퀘스트 로그",
     "QuestPreview": {
+      "Buttons": {
+        "AddObjective": "목표 추가"
+      },
       "CustomSource": "사용자 지정 공급자",
       "Description": "설명:",
       "DragDropActor": "액터, 아이템, 저널 엔트리를 끌어다 놓아 퀘스트 제공자로 지정합니다.",
       "DragDropActorPlayer": "액터, 아이템, 저널 엔트리를 드래그&드롭 하십시오.",
       "DragDropRewards": "보상으로 추가할 아이템을 여기로 끌어다 놓으십시오.",
       "GMNotes": "GM 메모:",
-      "HeaderButtons": {
-        "Show": "플레이어들에게 보이기"
-      },
       "InvalidQuestId": "퀘스트 ID가 잘못되어 미리보기를 열 수 없습니다.",
       "Management": {
         "AddSubquest": "새 서브 퀘스트 생성",
@@ -114,8 +113,26 @@
       },
       "Title": "퀘스트 세부 정보 - {name}",
       "Tooltips": {
+        "AddAbstract": "보상 추가",
+        "ChangeSplashPos": "스플래시 아트 정렬 변경.",
+        "DeleteQuestGiver": "퀘스트 제공자 제거.",
+        "DeleteSplash": "스플래시 아트 제거.",
+        "HideAll": "모두 숨기기",
+        "LockAll": "모두 잠그다",
         "PrimaryQuestSet": "중요 퀘스트를 만들려면 클릭한다.",
-        "PrimaryQuestUnset": "중요 퀘스트를 해제하려면 클릭한다."
+        "PrimaryQuestUnset": "중요 퀘스트를 해제하려면 클릭한다.",
+        "RewardHidden": "보상이 비공개 상태입니다. 공개하려면 클릭하십시오.",
+        "RewardLocked": "보상이 잠금 상태입니다. 해제하려면 클릭하십시오.",
+        "RewardLockedPlayer": "보상이 잠겼습니다.",
+        "RewardUnlocked": "보상이 잠금 해제 상태입니다. 잠그려면 클릭하십시오.",
+        "RewardUnlockedPlayer": "보상이 잠금 해제 되었습니다.",
+        "RewardVisible": "보상이 공개 상태입니다. 비공개하려면 클릭하십시오.",
+        "ShowAll": "모두 보기",
+        "TaskHidden": "목표가 비공개 상태입니다. 공개하려면 클릭하십시오.",
+        "TaskVisible": "목표가 공개 상태입니다. 비공개하려면 클릭하십시오.",
+        "ToggleImage": "토큰/액터 이미지 전환.",
+        "UnlockAll": "모두 잠금 해제",
+        "ViewSplashArt": "스플래시 아트를 봅니다."
       }
     },
     "Quests": "{0} 퀘스트",
@@ -206,33 +223,16 @@
       }
     },
     "Tooltips": {
-      "AddAbstract": "보상 추가",
-      "ChangeSplashPos": "스플래시 아트 정렬 변경",
       "Delete": "삭제",
-      "DeleteQuestGiver": "퀘스트 제공자 제거",
-      "DeleteSplash": "스플래시 아트 제거",
       "Edit": "편집",
       "HiddenQuestNoPlayers": "이 퀘스트는 모든 플레이어에게 숨겨져 있습니다.",
-      "Hide": "비공개",
-      "HideAll": "모두 숨기기",
-      "LockAll": "모두 잠그다",
       "PrimaryQuest": "중요 퀘스트",
-      "RewardHidden": "보상이 비공개 상태입니다. 공개하려면 클릭하십시오.",
-      "RewardLocked": "보상이 잠금 상태입니다. 해제하려면 클릭하십시오.",
-      "RewardLockedPlayer": "보상이 잠겼습니다.",
-      "RewardUnlocked": "보상이 잠금 해제 상태입니다. 잠그려면 클릭하십시오.",
-      "RewardUnlockedPlayer": "보상이 잠금 해제 되었습니다.",
-      "RewardVisible": "보상이 공개 상태입니다. 비공개하려면 클릭하십시오.",
       "SetActive": "진행 중으로 설정",
       "SetAvailable": "활성화로 설정",
       "SetCompleted": "완료로 설정",
       "SetFailed": "실패로 설정",
-      "ShowAll": "모두 보기",
-      "Status": "상태: {statusI18n}",
-      "TaskHidden": "목표가 비공개 상태입니다. 공개하려면 클릭하십시오.",
-      "TaskVisible": "목표가 공개 상태입니다. 비공개하려면 클릭하십시오.",
-      "ToggleImage": "토큰/액터 이미지 전환",
-      "UnlockAll": "모두 잠금 해제"
+      "SetInactive": "비활성으로 설정",
+      "Status": "상태: {statusI18n}"
     }
   }
 }

@@ -10,10 +10,6 @@
         }
       }
     },
-    "Buttons": {
-      "AddNewQuest": "Lägg till uppdrag",
-      "AddNewTask": "Lägg till uppgift"
-    },
     "DeleteDialog": {
       "BodyObjective": "Detta mål och dess data kommer att raderas permanent.",
       "BodyQuest": "Detta uppdrag och dess data kommer att raderas permanent.",
@@ -22,6 +18,9 @@
       "Delete": "Radera",
       "HeaderDel": "Är du säker att du vill radera: <p>'{name}'</p>",
       "TitleDel": "Radera {title}"
+    },
+    "HeaderLabels": {
+      "Show": "Visa för spelare"
     },
     "Migration": {
       "ChatMessage": {
@@ -54,18 +53,15 @@
     "Quest": "Uppdrag",
     "QuestIs": "Uppdrag är {statusLabel}",
     "QuestLog": {
+      "Buttons": {
+        "AddQuest": "Lägg till uppdrag"
+      },
       "ContextMenu": {
         "CopyEntityLink": "Kopiera entitetsinnehållslänk",
         "CopyQuestID": "Kopiera uppdrags-ID",
         "PrimaryQuest": "Ställ in / avaktivera som primärt uppdrag"
       },
       "SubTitle": "Delfråga av {0}",
-      "Table": {
-        "Actions": "Åtgärder",
-        "QuestGiver": "Uppdragskälla",
-        "QuestTitle": "Titel",
-        "Tasks": "Uppgifter"
-      },
       "Tabs": {
         "Available": "Tillgängliga",
         "Completed": "Avsklarade",
@@ -73,25 +69,28 @@
         "InActive": "Inaktiv",
         "InProgress": "Pågår"
       },
-      "Title": "Uppdragslogg"
+      "Title": "Uppdragslogg",
+      "Tooltips": {
+        "Objectives": "Mål"
+      }
     },
     "QuestLogButton": "Uppdragslogg",
     "QuestPreview": {
+      "Buttons": {
+        "AddObjective": "Lägg till mål"
+      },
       "CustomSource": "Anpassad källa",
       "Description": "Beskrivning:",
       "DragDropActor": "Dra och släpp skådespelare, objekt eller journalanteckning eller vänsterklicka för att ställa in en anpassad källa.",
       "DragDropActorPlayer": "Dra och släpp skådespelare, artikel eller journalanteckning eller vänsterklicka för att ställa in en anpassad källa.",
       "DragDropRewards": "Dra och släpp objekt här för att lägga till dem som belöningar.",
       "GMNotes": "GM Anteckningar:",
-      "HeaderButtons": {
-        "Show": "Visa för spelare"
-      },
       "InvalidQuestId": "Det går inte att öppna Uppdragsförvisning på grund av ogiltigt Uppdrags ID.",
       "Management": {
         "AddSubquest": "Skapa underuppdrag",
         "ConfigurePermissions": "Konfigurera Behörigheter",
         "QuestBranching": "Underuppdrag:",
-        "QuestSettings": "Quest Settings:",
+        "QuestSettings": "Quest-Inställningar:",
         "SplashArt": "Skvätt Konst:",
         "SplashInfo": "Klicka för att ställa in bild.",
         "SplashQuestIcon": "Ställ in som uppdragsikon"
@@ -114,8 +113,26 @@
       },
       "Title": "Uppdragsdetaljer",
       "Tooltips": {
+        "AddAbstract": "Lägg till abstrakt",
+        "ChangeSplashPos": "Ändra stänkjustering.",
+        "DeleteQuestGiver": "Ta bort uppdragsgivare.",
+        "DeleteSplash": "Ta bort stänkkonst.",
+        "HideAll": "Göm alla",
+        "LockAll": "Lås allt",
         "PrimaryQuestSet": "Klicka för att göra primärt uppdrag.",
-        "PrimaryQuestUnset": "Klicka för att avaktivera primärt uppdrag."
+        "PrimaryQuestUnset": "Klicka för att avaktivera primärt uppdrag.",
+        "RewardHidden": "Belöningen är dold. Klicka för att visa.",
+        "RewardLocked": "Belöningen är låst. Klicka för att låsa upp.",
+        "RewardLockedPlayer": "Belöningen är låst.",
+        "RewardUnlocked": "Belöningen är upplåst. Klicka för att låsa.",
+        "RewardUnlockedPlayer": "Belöningen är upplåst.",
+        "RewardVisible": "Belöningen är synlig. Klicka för att dölja.",
+        "ShowAll": "Visa Allt",
+        "TaskHidden": "Mål är dolt. Klicka för att visa.",
+        "TaskVisible": "Mål är synligt. Klicka för att dölja.",
+        "ToggleImage": "Toggla Spelfigursbild / Aktörsbild.",
+        "UnlockAll": "Lås upp Alla",
+        "ViewSplashArt": "Se skvätt konst."
       }
     },
     "Quests": "{0} Uppdrag",
@@ -206,33 +223,16 @@
       }
     },
     "Tooltips": {
-      "AddAbstract": "Lägg till abstrakt",
-      "ChangeSplashPos": "Ändra stänkjustering",
       "Delete": "Radera",
-      "DeleteQuestGiver": "Ta bort uppdragsgivare",
-      "DeleteSplash": "Ta bort stänkkonst",
       "Edit": "Redigera",
       "HiddenQuestNoPlayers": "Detta uppdrag är dolt för alla spelare.",
-      "Hide": "Ange som inaktivt",
-      "HideAll": "Göm alla",
-      "LockAll": "Lås allt",
       "PrimaryQuest": "Primär Uppdrag",
-      "RewardHidden": "Belöningen är dold. Klicka för att visa.",
-      "RewardLocked": "Belöningen är låst. Klicka för att låsa upp.",
-      "RewardLockedPlayer": "Belöningen är låst.",
-      "RewardUnlocked": "Belöningen är upplåst. Klicka för att låsa.",
-      "RewardUnlockedPlayer": "Belöningen är upplåst.",
-      "RewardVisible": "Belöningen är synlig. Klicka för att dölja.",
-      "SetActive": "Ange som pågår",
-      "SetAvailable": "Ange som tillgängligt",
-      "SetCompleted": "Ange som avklarad",
-      "SetFailed": "Ange som misslyckade",
-      "ShowAll": "Visa Allt",
-      "Status": "Status: {statusI18n}",
-      "TaskHidden": "Mål är dolt. Klicka för att visa.",
-      "TaskVisible": "Mål är synligt. Klicka för att dölja.",
-      "ToggleImage": "Toggla Spelfigursbild / Aktörsbild",
-      "UnlockAll": "Lås upp Alla"
+      "SetActive": "Ställ in som pågår",
+      "SetAvailable": "Ställ in som tillgänglig",
+      "SetCompleted": "Ställ in som slutfört",
+      "SetFailed": "Ställ in som misslyckad",
+      "SetInactive": "Ställ in som inaktiv",
+      "Status": "Status: {statusI18n}"
     }
   }
 }

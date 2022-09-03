@@ -10,10 +10,6 @@
         }
       }
     },
-    "Buttons": {
-      "AddNewQuest": "Aggiungi Missione",
-      "AddNewTask": "Aggiungi Obiettivo"
-    },
     "DeleteDialog": {
       "BodyObjective": "Questo obiettivo e i suoi dati verranno eliminati in modo permanente.",
       "BodyQuest": "Questa ricerca e i suoi dati verranno eliminati definitivamente.",
@@ -22,6 +18,9 @@
       "Delete": "Elimina",
       "HeaderDel": "Sei sicuro di voler eliminare: <p>'{name}'</p>",
       "TitleDel": "Elimina {title}"
+    },
+    "HeaderLabels": {
+      "Show": "Mostra a Giocatori"
     },
     "Migration": {
       "ChatMessage": {
@@ -54,18 +53,15 @@
     "Quest": "Missione",
     "QuestIs": "La missione è {statusLabel}",
     "QuestLog": {
+      "Buttons": {
+        "AddQuest": "Aggiungi Missione"
+      },
       "ContextMenu": {
         "CopyEntityLink": "Copia il collegamento contenuto dell'entità",
         "CopyQuestID": "Copia ID missione",
         "PrimaryQuest": "Attiva / Disattiva come missione principale"
       },
       "SubTitle": "Sottomissione di {0}",
-      "Table": {
-        "Actions": "Azioni",
-        "QuestGiver": "Fonte de missione",
-        "QuestTitle": "Titolo",
-        "Tasks": "Compiti"
-      },
       "Tabs": {
         "Available": "A disposizione",
         "Completed": "Completato",
@@ -73,19 +69,22 @@
         "InActive": "Non attivo",
         "InProgress": "In corso"
       },
-      "Title": "Registro Missione"
+      "Title": "Registro Missione",
+      "Tooltips": {
+        "Objectives": "Obiettivi"
+      }
     },
     "QuestLogButton": "Registro Missione",
     "QuestPreview": {
+      "Buttons": {
+        "AddObjective": "Aggiungi Obiettivo"
+      },
       "CustomSource": "Sorgente Personalizzata",
       "Description": "Descrizione:",
       "DragDropActor": "Trascina e Rilascia attore, elemento o voce di diario o fai clic con il pulsante sinistro del mouse per impostare una fonte personalizzata.",
       "DragDropActorPlayer": "Trascina e Rilascia attore, elemento o voce di diario.",
       "DragDropRewards": "Trascina e rilascia gli oggetti qui per aggiungerli come ricompense.",
       "GMNotes": "Note GM:",
-      "HeaderButtons": {
-        "Show": "Mostra a Giocatori"
-      },
       "InvalidQuestId": "Impossibile aprire l'anteprima della Missione a causa di un ID Missione non valido.",
       "Management": {
         "AddSubquest": "Aggiungi Sottomissione",
@@ -114,8 +113,26 @@
       },
       "Title": "Dettagli Missione - {name}",
       "Tooltips": {
+        "AddAbstract": "Aggiungi Astratto",
+        "ChangeSplashPos": "Cambia allineamento Schizzo.",
+        "DeleteQuestGiver": "Elimina il donatore della missione.",
+        "DeleteSplash": "Elimina schizzo arte.",
+        "HideAll": "Nascondi Tutto",
+        "LockAll": "Blocca Tutto",
         "PrimaryQuestSet": "Clicca per fare la missione principale.",
-        "PrimaryQuestUnset": "Fai clic per non settato la missione principale."
+        "PrimaryQuestUnset": "Fai clic per non settato la missione principale.",
+        "RewardHidden": "La ricompensa è nascosta. Fare clic per mostrare.",
+        "RewardLocked": "La ricompensa è bloccata. Fare clic per sbloccare.",
+        "RewardLockedPlayer": "La ricompensa è bloccata.",
+        "RewardUnlocked": "La ricompensa è sbloccata. Fare clic per bloccare.",
+        "RewardUnlockedPlayer": "La ricompensa è sbloccata.",
+        "RewardVisible": "Ricompensa è visibile. Fare clic per nascondere.",
+        "ShowAll": "Mostra Tutto",
+        "TaskHidden": "L'obiettivo è nascosto. Fare clic per mostrare.",
+        "TaskVisible": "L'obiettivo è visibile. Fare clic per nascondere.",
+        "ToggleImage": "Attiva/disattiva immagine token/attore.",
+        "UnlockAll": "Sblocca Tutto",
+        "ViewSplashArt": "Visualizza l'art schizzo."
       }
     },
     "Quests": "{0} Missioni",
@@ -206,33 +223,16 @@
       }
     },
     "Tooltips": {
-      "AddAbstract": "Aggiungi Astratto",
-      "ChangeSplashPos": "Cambia allineamento Schizzo",
       "Delete": "Elimina",
-      "DeleteQuestGiver": "Elimina il donatore della missione",
-      "DeleteSplash": "Elimina schizzo arte",
       "Edit": "Modificare",
       "HiddenQuestNoPlayers": "Questa Missione è nascosta a tutti i giocatori.",
-      "Hide": "Imposta come Inattivo",
-      "HideAll": "Nascondi Tutto",
-      "LockAll": "Blocca Tutto",
       "PrimaryQuest": "Missione Primaria",
-      "RewardHidden": "La ricompensa è nascosta. Fare clic per mostrare.",
-      "RewardLocked": "La ricompensa è bloccata. Fare clic per sbloccare.",
-      "RewardLockedPlayer": "La ricompensa è bloccata.",
-      "RewardUnlocked": "La ricompensa è sbloccata. Fare clic per bloccare.",
-      "RewardUnlockedPlayer": "La ricompensa è sbloccata.",
-      "RewardVisible": "Ricompensa è visibile. Fare clic per nascondere.",
       "SetActive": "Imposta come In corso",
       "SetAvailable": "Imposta come Disponibile",
       "SetCompleted": "Imposta come Completato",
       "SetFailed": "Imposta come non Riuscito",
-      "ShowAll": "Mostra Tutto",
-      "Status": "Stato: {statusI18n}",
-      "TaskHidden": "L'obiettivo è nascosto. Fare clic per mostrare.",
-      "TaskVisible": "L'obiettivo è visibile. Fare clic per nascondere.",
-      "ToggleImage": "Attiva/disattiva immagine token/attore",
-      "UnlockAll": "Sblocca Tutto"
+      "SetInactive": "Imposta come Inattivo",
+      "Status": "Stato: {statusI18n}"
     }
   }
 }

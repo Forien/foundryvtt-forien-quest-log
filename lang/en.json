@@ -10,10 +10,6 @@
         }
       }
     },
-    "Buttons": {
-      "AddNewQuest": "Add Quest",
-      "AddNewTask": "Add Objective"
-    },
     "DeleteDialog": {
       "BodyObjective": "This objective and its data will be permanently deleted.",
       "BodyQuest": "This quest and its data will be permanently deleted.",
@@ -22,6 +18,9 @@
       "Delete": "Delete",
       "HeaderDel": "Are you sure you want to delete: <p>'{name}'</p>",
       "TitleDel": "Delete {title}"
+    },
+    "HeaderLabels": {
+      "Show": "Show to Players"
     },
     "Migration": {
       "ChatMessage": {
@@ -54,18 +53,15 @@
     "Quest": "Quest",
     "QuestIs": "Quest is {statusLabel}",
     "QuestLog": {
+      "Buttons": {
+        "AddQuest": "Add Quest"
+      },
       "ContextMenu": {
         "CopyEntityLink": "Copy entity content link",
         "CopyQuestID": "Copy quest ID",
         "PrimaryQuest": "Set / Unset as primary quest"
       },
       "SubTitle": "Subquest of {0}",
-      "Table": {
-        "Actions": "Actions",
-        "QuestGiver": "Quest Source",
-        "QuestTitle": "Title",
-        "Tasks": "Objectives"
-      },
       "Tabs": {
         "Available": "Available",
         "Completed": "Completed",
@@ -73,19 +69,22 @@
         "InActive": "Inactive",
         "InProgress": "In progress"
       },
-      "Title": "Quest Log"
+      "Title": "Quest Log",
+      "Tooltips": {
+        "Objectives": "Objectives"
+      }
     },
     "QuestLogButton": "Quest Log",
     "QuestPreview": {
+      "Buttons": {
+        "AddObjective": "Add Objective"
+      },
       "CustomSource": "Custom Source",
       "Description": "Description:",
       "DragDropActor": "Drag & Drop Actor, Item or Journal Entry or left click to set a custom source.",
       "DragDropActorPlayer": "Drag & Drop Actor, Item or Journal Entry.",
       "DragDropRewards": "Drag & drop items here to add them as rewards.",
       "GMNotes": "GM Notes:",
-      "HeaderButtons": {
-        "Show": "Show to Players"
-      },
       "InvalidQuestId": "Cannot open Quest Preview due to invalid Quest ID.",
       "Management": {
         "AddSubquest": "Add Subquest",
@@ -114,8 +113,26 @@
       },
       "Title": "Quest Details - {name}",
       "Tooltips": {
+        "AddAbstract": "Add Abstract",
+        "ChangeSplashPos": "Change splash art alignment.",
+        "DeleteQuestGiver": "Delete quest giver.",
+        "DeleteSplash": "Delete splash art.",
+        "HideAll": "Hide All",
+        "LockAll": "Lock All",
         "PrimaryQuestSet": "Click to make primary quest.",
-        "PrimaryQuestUnset": "Click to unset primary quest."
+        "PrimaryQuestUnset": "Click to unset primary quest.",
+        "RewardHidden": "Reward is hidden. Click to show.",
+        "RewardLocked": "Reward is locked. Click to unlock.",
+        "RewardLockedPlayer": "Reward is locked.",
+        "RewardUnlocked": "Reward is unlocked. Click to lock.",
+        "RewardUnlockedPlayer": "Reward is unlocked.",
+        "RewardVisible": "Reward is visible. Click to hide.",
+        "ShowAll": "Show All",
+        "TaskHidden": "Objective is hidden. Click to show.",
+        "TaskVisible": "Objective is visible. Click to hide.",
+        "ToggleImage": "Toggle Token/Actor image.",
+        "UnlockAll": "Unlock All",
+        "ViewSplashArt": "View splash art."
       }
     },
     "Quests": "{0} Quests",
@@ -206,33 +223,16 @@
       }
     },
     "Tooltips": {
-      "AddAbstract": "Add Abstract",
-      "ChangeSplashPos": "Change Splash alignment",
       "Delete": "Delete",
-      "DeleteQuestGiver": "Delete quest giver",
-      "DeleteSplash": "Delete splash art",
       "Edit": "Edit",
       "HiddenQuestNoPlayers": "This Quest is hidden from all players.",
-      "Hide": "Set as Inactive",
-      "HideAll": "Hide All",
-      "LockAll": "Lock All",
       "PrimaryQuest": "Primary Quest",
-      "RewardHidden": "Reward is hidden. Click to show.",
-      "RewardLocked": "Reward is locked. Click to unlock.",
-      "RewardLockedPlayer": "Reward is locked.",
-      "RewardUnlocked": "Reward is unlocked. Click to lock.",
-      "RewardUnlockedPlayer": "Reward is unlocked.",
-      "RewardVisible": "Reward is visible. Click to hide.",
       "SetActive": "Set as In Progress",
       "SetAvailable": "Set as Available",
       "SetCompleted": "Set as Completed",
       "SetFailed": "Set as Failed",
-      "ShowAll": "Show All",
-      "Status": "Status: {statusI18n}",
-      "TaskHidden": "Objective is hidden. Click to show.",
-      "TaskVisible": "Objective is visible. Click to hide.",
-      "ToggleImage": "Toggle Token/Actor image",
-      "UnlockAll": "Unlock All"
+      "SetInactive": "Set as Inactive",
+      "Status": "Status: {statusI18n}"
     }
   }
 }

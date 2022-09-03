@@ -10,10 +10,6 @@
         }
       }
     },
-    "Buttons": {
-      "AddNewQuest": "Dodaj misję",
-      "AddNewTask": "Dodaj cel"
-    },
     "DeleteDialog": {
       "BodyObjective": "Cel ten i jego dane zostaną trwale usunięte.",
       "BodyQuest": "Ta misja i jej dane zostaną trwale usunięte.",
@@ -22,6 +18,9 @@
       "Delete": "Usuń",
       "HeaderDel": "Czy na pewno chcesz usunąć: <p>'{name}'</p>",
       "TitleDel": "Usuń {title}"
+    },
+    "HeaderLabels": {
+      "Show": "Pokaż do Graczom"
     },
     "Migration": {
       "ChatMessage": {
@@ -54,18 +53,15 @@
     "Quest": "Misja",
     "QuestIs": "Misja to {statusLabel}",
     "QuestLog": {
+      "Buttons": {
+        "AddQuest": "Dodaj misję"
+      },
       "ContextMenu": {
         "CopyEntityLink": "Skopiuj link treści encji",
         "CopyQuestID": "Skopiuj identyfikator misji",
         "PrimaryQuest": "Ustaw / wyłącz jako misję główną"
       },
       "SubTitle": "Zadanie podrzędne z {0}",
-      "Table": {
-        "Actions": "Aziałania",
-        "QuestGiver": "Źródło Misji",
-        "QuestTitle": "Tytuł",
-        "Tasks": "Cele"
-      },
       "Tabs": {
         "Available": "Dostępne",
         "Completed": "Zakończone",
@@ -73,19 +69,22 @@
         "InActive": "Nieaktywny",
         "InProgress": "W trakcie"
       },
-      "Title": "Dziennik Misji"
+      "Title": "Dziennik Misji",
+      "Tooltips": {
+        "Objectives": "Cele"
+      }
     },
     "QuestLogButton": "Dziennik Misji",
     "QuestPreview": {
+      "Buttons": {
+        "AddObjective": "Dodaj cel"
+      },
       "CustomSource": "Niestandardowe źródło",
       "Description": "Opis:",
       "DragDropActor": "Przeciągnij i upuść aktora, przedmiot lub wpis do dziennika lub kliknij lewym przyciskiem myszy, aby ustawić niestandardowe źródło.",
       "DragDropActorPlayer": "Przeciągnij i upuść aktora, przedmiot lub wpis do dziennika.",
       "DragDropRewards": "Przeciągnij i upuść elementy tutaj, aby dodać je jako nagrody.",
       "GMNotes": "Notatki GM:",
-      "HeaderButtons": {
-        "Show": "Pokaż do Graczom"
-      },
       "InvalidQuestId": "Nie można otworzyć podglądu misji z powodu nieprawidłowego identyfikatora misji.",
       "Management": {
         "AddSubquest": "Dodaj misję podrzędną",
@@ -114,8 +113,26 @@
       },
       "Title": "Szczegóły Misji - {name}",
       "Tooltips": {
+        "AddAbstract": "Dodaj Abstrakcyjny",
+        "ChangeSplashPos": "Zmień pozycję obrazu powitalnego.",
+        "DeleteQuestGiver": "Usuń zleceniodawcę misji.",
+        "DeleteSplash": "Usuń grafikę pluśnięcie.",
+        "HideAll": "Schowaj wszystko",
+        "LockAll": "Zablokuj wszystko",
         "PrimaryQuestSet": "Kliknij, aby ustawić misję główną.",
-        "PrimaryQuestUnset": "Kliknij, aby rozbroić misję główną."
+        "PrimaryQuestUnset": "Kliknij, aby rozbroić misję główną.",
+        "RewardHidden": "Nagroda jest ukryta. Kliknij, aby pokazać.",
+        "RewardLocked": "Nagroda jest zablokowana. Kliknij, aby odblokować.",
+        "RewardLockedPlayer": "Nagroda jest zablokowana.",
+        "RewardUnlocked": "Nagroda jest odblokowana. Kliknij, aby zablokować.",
+        "RewardUnlockedPlayer": "Nagroda jest odblokowana.",
+        "RewardVisible": "Nagroda jest widoczna. Kliknij, aby ukryć.",
+        "ShowAll": "Pokaż wszystko",
+        "TaskHidden": "Zadanie jest ukryte. Kliknij, aby pokazać.",
+        "TaskVisible": "Zadanie jest widoczne. Kliknij, aby ukryć.",
+        "ToggleImage": "Przełącz obraz Aktora/Tokenu.",
+        "UnlockAll": "Odblokuj wszystkie",
+        "ViewSplashArt": "Obejrzeć sztuka rozchlapania."
       }
     },
     "Quests": "{0} Misje",
@@ -206,33 +223,16 @@
       }
     },
     "Tooltips": {
-      "AddAbstract": "Dodaj Abstrakcyjny",
-      "ChangeSplashPos": "Zmień wyrównanie Splash",
       "Delete": "Usuń",
-      "DeleteQuestGiver": "Usuń zleceniodawcę misji",
-      "DeleteSplash": "Usuń grafikę pluśnięcie",
       "Edit": "Edytować",
       "HiddenQuestNoPlayers": "To zadanie jest ukryte przed wszystkimi graczami.",
-      "Hide": "Ustaw jako Nieaktywne",
-      "HideAll": "Schowaj wszystko",
-      "LockAll": "Zablokuj wszystko",
       "PrimaryQuest": "Główny Misja",
-      "RewardHidden": "Nagroda jest ukryta. Kliknij, aby pokazać.",
-      "RewardLocked": "Nagroda jest zablokowana. Kliknij, aby odblokować.",
-      "RewardLockedPlayer": "Nagroda jest zablokowana.",
-      "RewardUnlocked": "Nagroda jest odblokowana. Kliknij, aby zablokować.",
-      "RewardUnlockedPlayer": "Nagroda jest odblokowana.",
-      "RewardVisible": "Nagroda jest widoczna. Kliknij, aby ukryć.",
       "SetActive": "Ustaw na Aktywną",
       "SetAvailable": "Ustaw jako Dostępną",
       "SetCompleted": "Ustaw jako Zakończoną",
       "SetFailed": "Ustaw jako Nieudaną",
-      "ShowAll": "Pokaż wszystko",
-      "Status": "Status: {statusI18n}",
-      "TaskHidden": "Zadanie jest ukryte. Kliknij, aby pokazać.",
-      "TaskVisible": "Zadanie jest widoczne. Kliknij, aby ukryć.",
-      "ToggleImage": "Przełącz obraz Aktora/Tokenu",
-      "UnlockAll": "Odblokuj wszystkie"
+      "SetInactive": "Ustaw jako Nieaktywne",
+      "Status": "Status: {statusI18n}"
     }
   }
 }

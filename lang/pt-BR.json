@@ -10,10 +10,6 @@
         }
       }
     },
-    "Buttons": {
-      "AddNewQuest": "Adicionar Missão",
-      "AddNewTask": "Adicionar Objetivo"
-    },
     "DeleteDialog": {
       "BodyObjective": "Este objetivo e seus dados serão apagados permanentemente.",
       "BodyQuest": "Esta missão e seus dados serão apagados permanentemente.",
@@ -22,6 +18,9 @@
       "Delete": "Remover",
       "HeaderDel": "Tem certeza de que deseja excluir : <p>'{name}'</p>",
       "TitleDel": "Excluir {title}"
+    },
+    "HeaderLabels": {
+      "Show": "Exibir aos Jogadores"
     },
     "Migration": {
       "ChatMessage": {
@@ -54,18 +53,15 @@
     "Quest": "Missão",
     "QuestIs": "A missão está {statusLabel}",
     "QuestLog": {
+      "Buttons": {
+        "AddQuest": "Adicionar Missão"
+      },
       "ContextMenu": {
         "CopyEntityLink": "Copiar conteúdo do link da entidade.",
         "CopyQuestID": "Copiar ID da missão",
         "PrimaryQuest": "Ativar / Desativar como missão principal."
       },
       "SubTitle": "Parte da missão de: {0}",
-      "Table": {
-        "Actions": "Ações",
-        "QuestGiver": "Missão entregue por",
-        "QuestTitle": "Título da Missão",
-        "Tasks": "Tarefas"
-      },
       "Tabs": {
         "Available": "Disponível",
         "Completed": "Completa",
@@ -73,19 +69,22 @@
         "InActive": "Inativa",
         "InProgress": "Em Progresso"
       },
-      "Title": "Registro de Missões"
+      "Title": "Registro de Missões",
+      "Tooltips": {
+        "Objectives": "Objetivos"
+      }
     },
     "QuestLogButton": "Registro de Missões",
     "QuestPreview": {
+      "Buttons": {
+        "AddObjective": "Adicionar Objetivo"
+      },
       "CustomSource": "Fonte personalizada",
       "Description": "Descrição:",
-      "DragDropActor": "Arraste e solte o ator que entregará a Missão aqui.",
+      "DragDropActor": "Arraste e solte o ator, item, journal ou clique com o botão esquerdo para definir uma fonte customizada.",
       "DragDropActorPlayer": "Arraste e solte o ator, um objeto ou uma entrada do journal.",
       "DragDropRewards": "Arraste e solte itens aqui para torná-los recompensas.",
       "GMNotes": "Notas do Mestre :",
-      "HeaderButtons": {
-        "Show": "Exibir aos Jogadores"
-      },
       "InvalidQuestId": "Não pôde abrir a Visualização da missão, ID da Missão inválido.",
       "Management": {
         "AddSubquest": "Criar uma Missão Secundária",
@@ -114,8 +113,26 @@
       },
       "Title": "Detalhes da Missão",
       "Tooltips": {
+        "AddAbstract": "Adicionar recompensa abstrata",
+        "ChangeSplashPos": "Modificar o alinhamento da imagem de ilustração.",
+        "DeleteQuestGiver": "Excluir entragor da missão.",
+        "DeleteSplash": "Excluir a ilustração.",
+        "HideAll": "Esconder tudo",
+        "LockAll": "Bloquear tudo",
         "PrimaryQuestSet": "Clique para ativar a missão principal.",
-        "PrimaryQuestUnset": "Clique para desativar a missão principal."
+        "PrimaryQuestUnset": "Clique para desativar a missão principal.",
+        "RewardHidden": "Recompensa escondida. Clique para mostrar.",
+        "RewardLocked": "Recompensa bloqueada. Clique para desbloquear.",
+        "RewardLockedPlayer": "Recompensa bloqueada.",
+        "RewardUnlocked": "Recompensa desbloqueada. Clique para bloquear.",
+        "RewardUnlockedPlayer": "A recompensa é desbloqueada.",
+        "RewardVisible": "Recompensa visível. Marque para ocultá-la.",
+        "ShowAll": "Mostrar a todos",
+        "TaskHidden": "Tarefa oculta. Marque para mostrar.",
+        "TaskVisible": "Tarefa visível. Marque para ocultá-la.",
+        "ToggleImage": "Ativar a imagem do token/ator.",
+        "UnlockAll": "Desbloquear tudo",
+        "ViewSplashArt": "Ver ilustração."
       }
     },
     "QuestTracker": {
@@ -206,33 +223,16 @@
       }
     },
     "Tooltips": {
-      "AddAbstract": "Adicionar recompensa abstrata",
-      "ChangeSplashPos": "Modificar o alinhamento da imagem de ilustração",
       "Delete": "Excluir",
-      "DeleteQuestGiver": "Excluir entragor da missão",
-      "DeleteSplash": "Excluir a ilustração",
       "Edit": "Editar",
       "HiddenQuestNoPlayers": "Esta missão está escondida de todos os jogadores.",
-      "Hide": "Esconder",
-      "HideAll": "Esconder tudo",
-      "LockAll": "Bloquear tudo",
       "PrimaryQuest": "Missão Principal",
-      "RewardHidden": "Recompensa escondida. Clique para mostrar.",
-      "RewardLocked": "Recompensa bloqueada. Clique para desbloquear.",
-      "RewardLockedPlayer": "Recompensa bloqueada.",
-      "RewardUnlocked": "Recompensa desbloqueada. Clique para bloquear.",
-      "RewardUnlockedPlayer": "A recompensa é desbloqueada.",
-      "RewardVisible": "Recompensa visível. Marque para ocultá-la.",
       "SetActive": "Definir como Em Progresso",
       "SetAvailable": "Definir como Disponível",
       "SetCompleted": "Definir como Completa",
       "SetFailed": "Definir como Perdida",
-      "ShowAll": "Mostrar a todos",
-      "Status": "Condição : {statusI18n}",
-      "TaskHidden": "Tarefa oculta. Marque para mostrar.",
-      "TaskVisible": "Tarefa visível. Marque para ocultá-la.",
-      "ToggleImage": "Ativar a imagem do token/ator",
-      "UnlockAll": "Desbloquear tudo"
+      "SetInactive": "Definir como Inativo",
+      "Status": "Condição : {statusI18n}"
     }
   }
 }

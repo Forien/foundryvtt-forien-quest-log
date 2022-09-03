@@ -10,10 +10,6 @@
         }
       }
     },
-    "Buttons": {
-      "AddNewQuest": "Añadir misión",
-      "AddNewTask": "Añadir Objetivo"
-    },
     "DeleteDialog": {
       "BodyObjective": "Este objetivo y sus datos serán eliminados de forma permanente.",
       "BodyQuest": "Esta misión y sus datos se eliminarán de forma permanente.",
@@ -22,6 +18,9 @@
       "Delete": "Eliminar",
       "HeaderDel": "¿Estás seguro que quieres eliminar? <p>'{name}'</p>",
       "TitleDel": "Eliminar {title}"
+    },
+    "HeaderLabels": {
+      "Show": "Mostrar a jugadores"
     },
     "Migration": {
       "ChatMessage": {
@@ -54,18 +53,15 @@
     "Quest": "Misión",
     "QuestIs": "La Misión es {statusLabel}",
     "QuestLog": {
+      "Buttons": {
+        "AddQuest": "Añadir misión"
+      },
       "ContextMenu": {
         "CopyEntityLink": "Copiar enlace de contenido de entidad",
         "CopyQuestID": "Copiar ID de misión",
         "PrimaryQuest": "Establecer / Desestablecer como misión principal"
       },
       "SubTitle": "Sub - Misión de: {0}",
-      "Table": {
-        "Actions": "Acciones",
-        "QuestGiver": "Dador de la misión",
-        "QuestTitle": "Título",
-        "Tasks": "Objetivos"
-      },
       "Tabs": {
         "Available": "Disponibles",
         "Completed": "Completadas",
@@ -73,28 +69,31 @@
         "InActive": "Inactivas",
         "InProgress": "En curso"
       },
-      "Title": "Misiones"
+      "Title": "Misiones",
+      "Tooltips": {
+        "Objectives": "Objetivos"
+      }
     },
     "QuestLogButton": "Misiones",
     "QuestPreview": {
+      "Buttons": {
+        "AddObjective": "Añadir Objetivo"
+      },
       "CustomSource": "Nombre del Dador de la Misión",
       "Description": "Descripción:",
       "DragDropActor": "Arrastre y Suelte al actor, elemento o entrada de diario o haga clic con el botón izquierdo para establecer un dador de misión personalizado.",
       "DragDropActorPlayer": "Arrastrar y Soltar actor, elemento o entrada de diario.",
       "DragDropRewards": "Arrastra y Suelta elementos aquí para añadirlos como recompensas.",
       "GMNotes": "Notas del GM:",
-      "HeaderButtons": {
-        "Show": "Mostrar a jugadores"
-      },
       "InvalidQuestId": "No se puede abrir la vista previa de la misión debido a que el ID de la misión no es válido",
       "Management": {
         "AddSubquest": "Crear Sub - Misión",
-        "ConfigurePermissions": "Configurar permisos",
+        "ConfigurePermissions": "Configurar Permisos",
         "QuestBranching": "Sub - Misiones:",
         "QuestSettings": "Configuración de la Misión:",
-        "SplashArt": "Imagen mision:",
+        "SplashArt": "Imagen Portada:",
         "SplashInfo": "Haga clic para configurar la imagen.",
-        "SplashQuestIcon": "Establecer como icono de misión"
+        "SplashQuestIcon": "Establecer como icono misión"
       },
       "Notifications": {
         "BadUUID": "No se pudo recuperar el documento para UUID: {uuid}",
@@ -114,8 +113,26 @@
       },
       "Title": "Detalles de la misión - {name}",
       "Tooltips": {
+        "AddAbstract": "Añadir Personalizada",
+        "ChangeSplashPos": "Cambiar la alineación de la imagen de misión",
+        "DeleteQuestGiver": "Eliminar dador de misiones",
+        "DeleteSplash": "Eliminar imagen de misión",
+        "HideAll": "Ocultar Todo",
+        "LockAll": "Bloquear Todo",
         "PrimaryQuestSet": "Haz clic para hacer la misión principal.",
-        "PrimaryQuestUnset": "Haz clic para anular la misión principal."
+        "PrimaryQuestUnset": "Haz clic para anular la misión principal.",
+        "RewardHidden": "La recompensa está oculta. Haz clic para mostrar.",
+        "RewardLocked": "La recompensa está bloqueada. Haz clic para desbloquear.",
+        "RewardLockedPlayer": "La recompensa está bloqueada.",
+        "RewardUnlocked": "La recompensa está desbloqueada. Haz clic para bloquear.",
+        "RewardUnlockedPlayer": "La recompensa está desbloqueada.",
+        "RewardVisible": "La recompensa está visible. Haz clic para ocultar.",
+        "ShowAll": "Mostrar Todo",
+        "TaskHidden": "El objetivo está oculto. Haz clic para mostrar.",
+        "TaskVisible": "La tarea está visible. Haz clic para ocultar.",
+        "ToggleImage": "Alternar entre imagen de token o actor",
+        "UnlockAll": "Desbloquear Todos",
+        "ViewSplashArt": "Ver imagen de portada"
       }
     },
     "Quests": "{0} Misiones",
@@ -206,33 +223,16 @@
       }
     },
     "Tooltips": {
-      "AddAbstract": "Añadir Personalizada",
-      "ChangeSplashPos": "Cambiar la alineación de la imagen de misión",
       "Delete": "Eliminar",
-      "DeleteQuestGiver": "Eliminar dador de misiones",
-      "DeleteSplash": "Eliminar imagen de misión",
       "Edit": "Editar",
       "HiddenQuestNoPlayers": "Esta misión está oculta a todos los jugadores.",
-      "Hide": "Ocultar",
-      "HideAll": "Ocultar Todo",
-      "LockAll": "Bloquear Todo",
       "PrimaryQuest": "Misión Principal",
-      "RewardHidden": "La recompensa está oculta. Haz clic para mostrar.",
-      "RewardLocked": "La recompensa está bloqueada. Haz clic para desbloquear.",
-      "RewardLockedPlayer": "La recompensa está bloqueada.",
-      "RewardUnlocked": "La recompensa está desbloqueada. Haz clic para bloquear.",
-      "RewardUnlockedPlayer": "La recompensa está desbloqueada.",
-      "RewardVisible": "La recompensa está visible. Haz clic para ocultar.",
-      "SetActive": "Poner en curso",
-      "SetAvailable": "Mover a disponibles",
-      "SetCompleted": "Completar misión",
-      "SetFailed": "Mover a fallidas",
-      "ShowAll": "Mostrar Todo",
-      "Status": "Estado: {statusI18n}",
-      "TaskHidden": "El objetivo está oculto. Haz clic para mostrar.",
-      "TaskVisible": "La tarea está visible. Haz clic para ocultar.",
-      "ToggleImage": "Alternar entre imagen de token o actor",
-      "UnlockAll": "Desbloquear Todos"
+      "SetActive": "Establecer como En Progreso",
+      "SetAvailable": "Establecer como Disponible",
+      "SetCompleted": "Establecer como Completado",
+      "SetFailed": "Establecer como Fallido",
+      "SetInactive": "Establecer como Inactivo",
+      "Status": "Estado: {statusI18n}"
     }
   }
 }
