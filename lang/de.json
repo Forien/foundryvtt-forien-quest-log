@@ -77,7 +77,12 @@
     "QuestLogButton": "Questlog",
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "Ziel hinzufügen"
+        "AddObjective": "Ziel hinzufügen",
+        "RewardCustom": "Benutzerdefinierten",
+        "RewardHide": "Verbergen",
+        "RewardLock": "Sperren",
+        "RewardShow": "Anzeigen",
+        "RewardUnlock": "Entsperren"
       },
       "CustomSource": "Eigene Quelle",
       "Description": "Beschreibung:",
@@ -113,7 +118,7 @@
       },
       "Title": "Questdetails - {name}",
       "Tooltips": {
-        "AddAbstract": "Abstrakte hinzufügen",
+        "AddCustom": "Benutzerdefiniert Hinzufügen",
         "ChangeSplashPos": "Splash-Bildausrichtung ändern",
         "DeleteQuestGiver": "Questgeber löschen",
         "DeleteSplash": "Splash Art löschen",
@@ -132,7 +137,7 @@
         "TaskVisible": "Ziel ist sichtbar. Anklicken zum Verbergen.",
         "ToggleImage": "Figur/Akteur-Bild umschalten",
         "UnlockAll": "Alle entsperren",
-        "ViewSplashArt": "Titelfoto ansehen"
+        "ViewSplashArt": "Titelfoto ansehen."
       }
     },
     "Quests": "{0} Quests",

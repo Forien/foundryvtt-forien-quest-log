@@ -77,7 +77,12 @@
     "QuestLogButton": "Quest Log",
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "Add Objective"
+        "AddObjective": "Add Objective",
+        "RewardCustom": "Custom",
+        "RewardHide": "Hide",
+        "RewardLock": "Lock",
+        "RewardShow": "Show",
+        "RewardUnlock": "Unlock"
       },
       "CustomSource": "Custom Source",
       "Description": "Description:",
@@ -113,7 +118,7 @@
       },
       "Title": "Quest Details - {name}",
       "Tooltips": {
-        "AddAbstract": "Add Abstract",
+        "AddCustom": "Add Custom",
         "ChangeSplashPos": "Change splash art alignment.",
         "DeleteQuestGiver": "Delete quest giver.",
         "DeleteSplash": "Delete splash art.",

@@ -77,7 +77,12 @@
     "QuestLogButton": "任务栏",
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "加入新目标"
+        "AddObjective": "加入新目标",
+        "RewardCustom": "添加用户定义",
+        "RewardHide": "全部藏起来",
+        "RewardLock": "锁定所有",
+        "RewardShow": "显示所有",
+        "RewardUnlock": "全部解锁"
       },
       "CustomSource": "自定义来源",
       "Description": "描述：",
@@ -113,7 +118,7 @@
       },
       "Title": "任务详情",
       "Tooltips": {
-        "AddAbstract": "添加抽象的",
+        "AddCustom": "添加用户定义",
         "ChangeSplashPos": "更改插画对齐",
         "DeleteQuestGiver": "删除发布者",
         "DeleteSplash": "删除插画",

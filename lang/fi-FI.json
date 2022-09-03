@@ -77,7 +77,12 @@
     "QuestLogButton": "Tehtäväloki",
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "Lisää tavoite"
+        "AddObjective": "Lisää tavoite",
+        "RewardCustom": "Käyttäjän Määrittelemä",
+        "RewardHide": "Kätkeä",
+        "RewardLock": "Lukita",
+        "RewardShow": "Näyttää",
+        "RewardUnlock": "Avata"
       },
       "CustomSource": "Mukautettu alkuperä",
       "Description": "Kuvaus:",
@@ -113,7 +118,7 @@
       },
       "Title": "Tehtävän yksityiskohdat - {name}",
       "Tooltips": {
-        "AddAbstract": "Lisää tiivistelmä",
+        "AddCustom": "Lisää käyttäjän määrittämä",
         "ChangeSplashPos": "Muuta kansikuvan tasausta",
         "DeleteQuestGiver": "Poista tehtävänantaja",
         "DeleteSplash": "Poista kansikuva",

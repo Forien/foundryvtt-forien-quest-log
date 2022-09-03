@@ -77,7 +77,12 @@
     "QuestLogButton": "Misiones",
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "Añadir Objetivo"
+        "AddObjective": "Añadir Objetivo",
+        "RewardCustom": "Definido Usuario",
+        "RewardHide": "Ocultar",
+        "RewardLock": "Cerrar",
+        "RewardShow": "Mostrar",
+        "RewardUnlock": "Desbloquear"
       },
       "CustomSource": "Nombre del Dador de la Misión",
       "Description": "Descripción:",
@@ -113,7 +118,7 @@
       },
       "Title": "Detalles de la misión - {name}",
       "Tooltips": {
-        "AddAbstract": "Añadir Personalizada",
+        "AddCustom": "Agregar definido por el usuario.",
         "ChangeSplashPos": "Cambiar la alineación de la imagen de misión",
         "DeleteQuestGiver": "Eliminar dador de misiones",
         "DeleteSplash": "Eliminar imagen de misión",
@@ -131,7 +136,7 @@
         "TaskHidden": "El objetivo está oculto. Haz clic para mostrar.",
         "TaskVisible": "La tarea está visible. Haz clic para ocultar.",
         "ToggleImage": "Alternar entre imagen de token o actor",
-        "UnlockAll": "Desbloquear Todos",
+        "UnlockAll": "Desbloquear Todo",
         "ViewSplashArt": "Ver imagen de portada"
       }
     },

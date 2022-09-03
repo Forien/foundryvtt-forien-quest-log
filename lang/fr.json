@@ -77,7 +77,12 @@
     "QuestLogButton": "Journal des quêtes",
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "Ajouter Objectif"
+        "AddObjective": "Ajouter Objectif",
+        "RewardCustom": "Défini par l'utilisateur",
+        "RewardHide": "Cacher",
+        "RewardLock": "Bloquer",
+        "RewardShow": "Montrer",
+        "RewardUnlock": "Ouvrir"
       },
       "CustomSource": "Source personnalisée",
       "Description": "Description:",
@@ -113,7 +118,7 @@
       },
       "Title": "Détails sur la quête",
       "Tooltips": {
-        "AddAbstract": "Ajouter une récompense abstraite",
+        "AddCustom": "Ajouter défini par l'utilisateur",
         "ChangeSplashPos": "Modifier l'alignement de l'image d'illustration",
         "DeleteQuestGiver": "Supprimer le commanditaire",
         "DeleteSplash": "Supprimer l'illustration",

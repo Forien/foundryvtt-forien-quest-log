@@ -77,7 +77,12 @@
     "QuestLogButton": "Registro de Missões",
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "Adicionar Objetivo"
+        "AddObjective": "Adicionar Objetivo",
+        "RewardCustom": "Usuário Definido",
+        "RewardHide": "Esconder",
+        "RewardLock": "Trancar",
+        "RewardShow": "Mostrar",
+        "RewardUnlock": "Desbloquear"
       },
       "CustomSource": "Fonte personalizada",
       "Description": "Descrição:",
@@ -113,12 +118,12 @@
       },
       "Title": "Detalhes da Missão",
       "Tooltips": {
-        "AddAbstract": "Adicionar recompensa abstrata",
+        "AddCustom": "Adicionar definido pelo usuário.",
         "ChangeSplashPos": "Modificar o alinhamento da imagem de ilustração.",
         "DeleteQuestGiver": "Excluir entragor da missão.",
         "DeleteSplash": "Excluir a ilustração.",
-        "HideAll": "Esconder tudo",
-        "LockAll": "Bloquear tudo",
+        "HideAll": "Esconder Tudo",
+        "LockAll": "Bloquear Tudo",
         "PrimaryQuestSet": "Clique para ativar a missão principal.",
         "PrimaryQuestUnset": "Clique para desativar a missão principal.",
         "RewardHidden": "Recompensa escondida. Clique para mostrar.",
@@ -127,11 +132,11 @@
         "RewardUnlocked": "Recompensa desbloqueada. Clique para bloquear.",
         "RewardUnlockedPlayer": "A recompensa é desbloqueada.",
         "RewardVisible": "Recompensa visível. Marque para ocultá-la.",
-        "ShowAll": "Mostrar a todos",
+        "ShowAll": "Mostrar Todo",
         "TaskHidden": "Tarefa oculta. Marque para mostrar.",
         "TaskVisible": "Tarefa visível. Marque para ocultá-la.",
         "ToggleImage": "Ativar a imagem do token/ator.",
-        "UnlockAll": "Desbloquear tudo",
+        "UnlockAll": "Destrancar Tudo",
         "ViewSplashArt": "Ver ilustração."
       }
     },

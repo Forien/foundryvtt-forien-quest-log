@@ -77,7 +77,12 @@
     "QuestLogButton": "Uppdragslogg",
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "Lägg till mål"
+        "AddObjective": "Lägg till Mål",
+        "RewardCustom": "Användardefinierad",
+        "RewardHide": "Dölja",
+        "RewardLock": "Låsa",
+        "RewardShow": "Visa",
+        "RewardUnlock": "Låsa Upp"
       },
       "CustomSource": "Anpassad källa",
       "Description": "Beskrivning:",
@@ -113,11 +118,11 @@
       },
       "Title": "Uppdragsdetaljer",
       "Tooltips": {
-        "AddAbstract": "Lägg till abstrakt",
+        "AddCustom": "Lägg till användardefinierad",
         "ChangeSplashPos": "Ändra stänkjustering.",
         "DeleteQuestGiver": "Ta bort uppdragsgivare.",
         "DeleteSplash": "Ta bort stänkkonst.",
-        "HideAll": "Göm alla",
+        "HideAll": "Dölj Alla",
         "LockAll": "Lås allt",
         "PrimaryQuestSet": "Klicka för att göra primärt uppdrag.",
         "PrimaryQuestUnset": "Klicka för att avaktivera primärt uppdrag.",

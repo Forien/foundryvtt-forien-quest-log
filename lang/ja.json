@@ -77,7 +77,12 @@
     "QuestLogButton": "クエストログ",
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "目標を追加"
+        "AddObjective": "目標を追加",
+        "RewardCustom": "ユーザー定義の",
+        "RewardHide": "隠す",
+        "RewardLock": "閉ざす",
+        "RewardShow": "示す",
+        "RewardUnlock": "ロック解除"
       },
       "CustomSource": "カスタムソース",
       "Description": "詳細：",
@@ -113,7 +118,7 @@
       },
       "Title": "クエスト詳細",
       "Tooltips": {
-        "AddAbstract": "抽象報酬を設定する",
+        "AddCustom": "ユーザー定義を追加",
         "ChangeSplashPos": "画像の位置を調整。",
         "DeleteQuestGiver": "クエスト依頼主削除。",
         "DeleteSplash": "カバー画像を削除します。",

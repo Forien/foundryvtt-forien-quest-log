@@ -77,7 +77,12 @@
     "QuestLogButton" : "任務欄",
     "QuestPreview" : {
       "Buttons": {
-        "AddObjective": "添加目標"
+        "AddObjective": "添加目標",
+        "RewardCustom": "添加用戶定義",
+        "RewardHide": "隱藏所有",
+        "RewardLock": "鎖定所有",
+        "RewardShow": "顯示全部",
+        "RewardUnlock": "全部解鎖"
       },
       "CustomSource" : "自定義來源",
       "Description" : "描述：",
@@ -113,7 +118,7 @@
       },
       "Title" : "任務詳情",
       "Tooltips" : {
-        "AddAbstract" : "新增摘要",
+        "AddCustom" : "添加用戶定義",
         "ChangeSplashPos" : "改變插畫對齊方式。",
         "DeleteQuestGiver" : "刪除任務給予者。",
         "DeleteSplash" : "刪除插畫。",

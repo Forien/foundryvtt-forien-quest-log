@@ -77,7 +77,12 @@
     "QuestLogButton": "Dziennik Misji",
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "Dodaj cel"
+        "AddObjective": "Dodaj Cel",
+        "RewardCustom": "Określony przez użytkownika",
+        "RewardHide": "Schowaj",
+        "RewardLock": "Zablokuj",
+        "RewardShow": "Pokazać",
+        "RewardUnlock": "Odemknąć"
       },
       "CustomSource": "Niestandardowe źródło",
       "Description": "Opis:",
@@ -113,7 +118,7 @@
       },
       "Title": "Szczegóły Misji - {name}",
       "Tooltips": {
-        "AddAbstract": "Dodaj Abstrakcyjny",
+        "AddCustom": "Dodaj zdefiniowane przez użytkownika",
         "ChangeSplashPos": "Zmień pozycję obrazu powitalnego.",
         "DeleteQuestGiver": "Usuń zleceniodawcę misji.",
         "DeleteSplash": "Usuń grafikę pluśnięcie.",
@@ -127,7 +132,7 @@
         "RewardUnlocked": "Nagroda jest odblokowana. Kliknij, aby zablokować.",
         "RewardUnlockedPlayer": "Nagroda jest odblokowana.",
         "RewardVisible": "Nagroda jest widoczna. Kliknij, aby ukryć.",
-        "ShowAll": "Pokaż wszystko",
+        "ShowAll": "Pokazać wszystko",
         "TaskHidden": "Zadanie jest ukryte. Kliknij, aby pokazać.",
         "TaskVisible": "Zadanie jest widoczne. Kliknij, aby ukryć.",
         "ToggleImage": "Przełącz obraz Aktora/Tokenu.",

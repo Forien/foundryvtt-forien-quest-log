@@ -77,7 +77,12 @@
     "QuestLogButton": "퀘스트 로그",
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "목표 추가"
+        "AddObjective": "목표 추가",
+        "RewardCustom": "사용자 정의",
+        "RewardHide": "모두 숨기기",
+        "RewardLock": "모두 잠그다",
+        "RewardShow": "모두 보기",
+        "RewardUnlock": "모두 잠금 해제"
       },
       "CustomSource": "사용자 지정 공급자",
       "Description": "설명:",
@@ -113,7 +118,7 @@
       },
       "Title": "퀘스트 세부 정보 - {name}",
       "Tooltips": {
-        "AddAbstract": "보상 추가",
+        "AddCustom": "사용자 정의 추가",
         "ChangeSplashPos": "스플래시 아트 정렬 변경.",
         "DeleteQuestGiver": "퀘스트 제공자 제거.",
         "DeleteSplash": "스플래시 아트 제거.",
