@@ -105,6 +105,7 @@ export default class FQLHooks
       if (data.type === 'Quest' && QuestDB.getQuest(data.id) !== void 0)
       {
          data.type = 'JournalEntry';
+         data.uuid = `JournalEntry.${data.id}`;
       }
    }
 

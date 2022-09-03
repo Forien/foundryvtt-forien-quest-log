@@ -64,7 +64,7 @@ export default class HandlerLog
     */
    static questOpen(event)
    {
-      const questId = $(event.target)?.closest('.title')?.data('quest-id');
+      const questId = $(event.target)?.closest('.drag-quest')?.data('quest-id');
       QuestAPI.open({ questId });
    }
 
