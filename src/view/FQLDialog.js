@@ -187,7 +187,7 @@ class FQLDialogImpl extends Dialog
     */
    constructor(options)
    {
-      super(void 0, { minimizable: false });
+      super(void 0, { minimizable: false, height: 'auto' });
 
       /**
        * Stores the options specific to the dialog
