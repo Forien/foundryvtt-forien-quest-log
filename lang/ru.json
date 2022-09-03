@@ -67,7 +67,7 @@
         "Completed": "Завершённые",
         "Failed": "Проваленные",
         "InActive": "Неактивные",
-        "InProgress": "В ходе выполнения"
+        "InProgress": "В процессе"
       },
       "Title": "Журнал заданий",
       "Tooltips": {
