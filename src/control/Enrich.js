@@ -166,7 +166,7 @@ export default class Enrich
          if (canEdit && questStatus.inactive !== quest.status)
          {
             result += `<i class="move fas fa-stop-circle" title="${game.i18n.localize(
-             'ForienQuestLog.Tooltips.Hide')}" data-target="inactive" data-quest-id="${quest.id}"></i>\n`;
+             'ForienQuestLog.Tooltips.SetInactive')}" data-target="inactive" data-quest-id="${quest.id}"></i>\n`;
 
             addedAction = true;
          }
@@ -388,11 +388,11 @@ export default class Enrich
 
          const draggable = (canEdit || canPlayerDrag) && (canEdit || !item.locked) && type !== 'abstract';
 
-         const lockedTooltip = canEdit ? game.i18n.localize('ForienQuestLog.Tooltips.RewardLocked') :
-          game.i18n.localize('ForienQuestLog.Tooltips.RewardLockedPlayer');
+         const lockedTooltip = canEdit ? game.i18n.localize('ForienQuestLog.QuestPreview.Tooltips.RewardLocked') :
+          game.i18n.localize('ForienQuestLog.QuestPreview.Tooltips.RewardLockedPlayer');
 
-         const unlockedTooltip = canEdit ? game.i18n.localize('ForienQuestLog.Tooltips.RewardUnlocked') :
-          game.i18n.localize('ForienQuestLog.Tooltips.RewardUnlockedPlayer');
+         const unlockedTooltip = canEdit ? game.i18n.localize('ForienQuestLog.QuestPreview.Tooltips.RewardUnlocked') :
+          game.i18n.localize('ForienQuestLog.QuestPreview.Tooltips.RewardUnlockedPlayer');
 
          // Defines if the pointer cursor is displayed. For abstract reward it always displayed for GM or when unlocked
          // for players.

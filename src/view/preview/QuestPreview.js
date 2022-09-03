@@ -210,8 +210,8 @@ export default class QuestPreview extends FormApplication
       return foundry.utils.mergeObject(super.defaultOptions, {
          classes: ['forien-quest-preview'],
          template,
-         width: 700,
-         height: 540,
+         width: 1030,
+         height: 640,
          minimizable: true,
          resizable: true,
          submitOnChange: false,
@@ -271,7 +271,7 @@ export default class QuestPreview extends FormApplication
       if (game.user.isGM)
       {
          buttons.unshift({
-            label: game.i18n.localize('ForienQuestLog.QuestPreview.HeaderButtons.Show'),
+            label: game.i18n.localize('ForienQuestLog.HeaderLabels.Show'),
             class: 'share-quest',
             icon: 'fas fa-eye',
             onclick: () => Socket.showQuestPreview(this._quest.id)

@@ -71,7 +71,7 @@ export default class QuestLog extends Application
       if (game.user.isGM)
       {
          buttons.unshift({
-            label: game.i18n.localize('ForienQuestLog.QuestPreview.HeaderButtons.Show'),
+            label: game.i18n.localize('ForienQuestLog.HeaderLabels.Show'),
             class: 'share-quest',
             icon: 'fas fa-eye',
             onclick: () => Socket.showQuestLog()
