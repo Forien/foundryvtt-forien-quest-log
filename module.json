@@ -34,19 +34,14 @@
   ],
   "languages": [
     {
-      "lang": "de",
-      "name": "Deutsch",
-      "path": "lang/de.json"
-    },
-    {
       "lang": "cn",
       "name": "中文（简体",
       "path": "lang/cn.json"
     },
     {
-      "lang": "zh-tw",
-      "name": "正體中文",
-      "path": "lang/zh-tw.json"
+      "lang": "de",
+      "name": "Deutsch",
+      "path": "lang/de.json"
     },
     {
       "lang": "en",
@@ -59,9 +54,19 @@
       "path": "lang/es.json"
     },
     {
+      "lang": "fi-Fl",
+      "name": "Finnish",
+      "path": "lang/fi-FI.json"
+    },
+    {
       "lang": "fr",
       "name": "Français",
       "path": "lang/fr.json"
+    },
+    {
+      "lang": "it",
+      "name": "Italiano",
+      "path": "lang/it.json"
     },
     {
       "lang": "ja",
@@ -84,9 +89,19 @@
       "path": "lang/pt-BR.json"
     },
     {
+      "lang": "ru",
+      "name": "Russian",
+      "path": "lang/ru.json"
+    },
+    {
       "lang": "sv",
       "name": "Svenska",
       "path": "lang/sv.json"
+    },
+    {
+      "lang": "zh-tw",
+      "name": "正體中文",
+      "path": "lang/zh-tw.json"
     }
   ],
   "packs": [
