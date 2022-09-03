@@ -170,17 +170,17 @@
         {{#if canEdit}}
           {{#if data_rewards.length}}
             {{#if allRewardsVisible}}
-              <button class="hide-all-rewards" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.HideAll'}}"><i class="fas fa-eye-slash"></i> {{localize 'ForienQuestLog.QuestPreview.Tooltips.HideAll'}}</button>
+              <button class="hide-all-rewards" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.HideAll'}}"><i class="fas fa-eye-slash"></i> {{localize 'ForienQuestLog.QuestPreview.Buttons.RewardHide'}}</button>
             {{else}}
-              <button class="show-all-rewards" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.ShowAll'}}"><i class="fas fa-eye"></i> {{localize 'ForienQuestLog.QuestPreview.Tooltips.ShowAll'}}</button>
+              <button class="show-all-rewards" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.ShowAll'}}"><i class="fas fa-eye"></i> {{localize 'ForienQuestLog.QuestPreview.Buttons.RewardShow'}}</button>
             {{/if}}
             {{#if allRewardsUnlocked}}
-              <button class="lock-all-rewards" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.LockAll'}}"><i class="fas fa-lock"></i> {{localize 'ForienQuestLog.QuestPreview.Tooltips.LockAll'}}</button>
+              <button class="lock-all-rewards" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.LockAll'}}"><i class="fas fa-lock"></i> {{localize 'ForienQuestLog.QuestPreview.Buttons.RewardLock'}}</button>
             {{else}}
-              <button class="unlock-all-rewards" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.UnlockAll'}}"><i class="fas fa-unlock-alt"></i> {{localize 'ForienQuestLog.QuestPreview.Tooltips.UnlockAll'}}</button>
+              <button class="unlock-all-rewards" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.UnlockAll'}}"><i class="fas fa-unlock-alt"></i> {{localize 'ForienQuestLog.QuestPreview.Buttons.RewardUnlock'}}</button>
             {{/if}}
           {{/if}}
-          <button class="add-abstract" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.AddAbstract'}}"><i class="fas fa-plus"></i> {{localize 'ForienQuestLog.QuestPreview.Tooltips.AddAbstract'}}</button>
+          <button class="add-abstract" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.AddCustom'}}"><i class="fas fa-plus"></i> {{localize 'ForienQuestLog.QuestPreview.Buttons.RewardCustom'}}</button>
         {{/if}}
       </header>
       <div class="quest-box rewards-box">
