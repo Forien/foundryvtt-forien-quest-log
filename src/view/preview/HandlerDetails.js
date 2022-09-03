@@ -98,7 +98,7 @@ export default class HandlerDetails
       value = value.replace(/"/g, '&quot;');
 
       const input = $(`<input type="text" class="editable-input" value="${value}" data-target="${
-       target}" maxlength="24"/>`);
+       target}" maxlength="36"/>`);
 
       const parent = $(event.target).closest('.actions-single').prev('.editable-container');
 
