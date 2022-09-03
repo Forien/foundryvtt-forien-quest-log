@@ -179,8 +179,8 @@
         "EnableHint": "Check to allow Players to drag Rewards from the Quest Details window to their owned Actors."
       },
       "countHidden": {
-        "Enable": "Count hidden Tasks",
-        "EnableHint": "If checked, the number of completed/total tasks will include hidden tasks."
+        "Enable": "Count hidden objectives",
+        "EnableHint": "If checked, the number of completed / total objectives will include hidden objectives."
       },
       "defaultPermissionLevel": {
         "Enable": "Default quest permission level",
@@ -217,7 +217,7 @@
       },
       "showTasks": {
         "default": "Show Objectives: done/total",
-        "Enable": "Show tasks in Quest Log",
+        "Enable": "Show objectives in Quest Log",
         "EnableHint": "Decide if or how to show the amount of Objectives next to the Quest Title in Quest Log. This has no effect on the Quest Preview.",
         "no": "Hide \"Objectives\" column",
         "onlyCurrent": "Show Objectives: done"
