@@ -10,24 +10,24 @@
     {{#with enrich}}
     <li class="drag-quest" data-quest-id="{{id}}" draggable="true">
       {{#if (eq questIconType 'quest-giver')}}
-        <div class="img" style="background-image: url('{{giverData.img}}');" title="{{giverData.name}}"></div>
+        <div class="open-quest img" style="background-image: url('{{giverData.img}}');" title="{{giverData.name}}"></div>
       {{/if}}
       {{#if (eq questIconType 'splash-image')}}
-        <div class="img" style="background-image: url('{{splash}}')"></div>
+        <div class="open-quest img" style="background-image: url('{{splash}}')"></div>
       {{/if}}
-      {{#if isPrimary}}<i class="is-primary fas fa-star pad-l-4" title="{{localize 'ForienQuestLog.Tooltips.PrimaryQuest'}}"></i>{{/if}}
+      {{#if isPrimary}}<i class="open-quest is-primary fas fa-star pad-l-4" title="{{localize 'ForienQuestLog.Tooltips.PrimaryQuest'}}"></i>{{/if}}
       {{#if canEdit}}
-        {{#if isHidden}}<i class="is-hidden fas fa-eye-slash pad-l-4" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
-        {{#if isPersonal}}<i class="is-personal fas fa-user-shield pad-l-4" title="{{{personalActors}}}"></i>{{/if}}
+        {{#if isHidden}}<i class="open-quest is-hidden fas fa-eye-slash pad-l-4" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
+        {{#if isPersonal}}<i class="open-quest is-personal fas fa-user-shield pad-l-4" title="{{{personalActors}}}"></i>{{/if}}
       {{/if}}
-      <div class="title" data-quest-id="{{id}}">
+      <div class="open-quest title" data-quest-id="{{id}}">
         <h2>{{name}}</h2>
         {{#if isSubquest}}
           <p class="subquest">{{fql_format 'ForienQuestLog.QuestPreview.SubTitle' data_parent.name}}</p>
         {{/if}}
       </div>
       {{#unless (eq ../../showTasks 'no')}}
-        <div class="tasks" title="{{localize 'ForienQuestLog.QuestLog.Tooltips.Objectives'}}">{{checkedTasks}}{{#unless (eq ../../showTasks 'onlyCurrent')}}/{{totalTasks}}{{/unless}}</div>
+        <div class="open-quest tasks" title="{{localize 'ForienQuestLog.QuestLog.Tooltips.Objectives'}}">{{checkedTasks}}{{#unless (eq ../../showTasks 'onlyCurrent')}}/{{totalTasks}}{{/unless}}</div>
       {{/unless}}
       {{#if statusActions.length}}
         {{{statusActions}}}

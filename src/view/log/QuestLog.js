@@ -122,7 +122,7 @@ export default class QuestLog extends Application
 
       html.on(jquery.dragstart, '.drag-quest', void 0, HandlerLog.questDragStart);
 
-      html.on(jquery.click, '.drag-quest', void 0, HandlerLog.questOpen);
+      html.on(jquery.click, '.open-quest', void 0, HandlerLog.questOpen);
 
       html.on(jquery.click, '.actions.quest-status i.move', HandlerLog.questStatusSet);
 

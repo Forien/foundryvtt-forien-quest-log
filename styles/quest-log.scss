@@ -131,6 +131,10 @@
       }
     }
 
+    .open-quest {
+      cursor: pointer;
+    }
+
     .img {
       flex: 0 0 40px;
       width: 40px;
@@ -146,7 +150,6 @@
       justify-content: center;
       padding-left: 2px;
       padding-right: 8px;
-      cursor: pointer;
       min-height: $quest-min-height;
 
       h2 {
