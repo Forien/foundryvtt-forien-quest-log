@@ -210,7 +210,7 @@ export default class QuestPreview extends FormApplication
       return foundry.utils.mergeObject(super.defaultOptions, {
          classes: ['forien-quest-preview'],
          template,
-         width: 1030,
+         width: 1000,
          height: 640,
          minimizable: true,
          resizable: true,
