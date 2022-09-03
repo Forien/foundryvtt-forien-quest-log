@@ -67,7 +67,7 @@
         "Completed": "Завершённые",
         "Failed": "Проваленные",
         "InActive": "Неактивные",
-        "InProgress": "Текущие"
+        "InProgress": "В ходе выполнения"
       },
       "Title": "Журнал заданий",
       "Tooltips": {
@@ -158,7 +158,7 @@
       "Failed": "Проваленные",
       "InActive": "Неактивные",
       "Labels": {
-        "active": "текущее",
+        "active": "в процессе",
         "available": "доступно",
         "completed": "завершено",
         "failed": "провалено",
