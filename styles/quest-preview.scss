@@ -1,5 +1,5 @@
 .window-app.forien-quest-preview {
-  min-width: 940px;
+  min-width: 1000px;
   min-height: 640px;
 
   .tab.active {
@@ -22,20 +22,21 @@
   .quest-body {
     height: 100%;
     flex: 1;
+    overflow-x: hidden;
     overflow-y: auto;
-    padding: 16px;
+    padding: 6px 14px 14px 14px;
 
     .details-header {
       display: flex;
       flex: 0 0 1px;
-      margin-bottom: 16px;
+      margin-bottom: 6px;
 
       .quest-giver-gc {
-        width: 100px;
-        height: 100px;
+        width: 116px;
+        height: 116px;
         background-color: $primary-color-bg-drop;
         border-radius: 5px;
-        flex: 0 0 100px;
+        flex: 0 0 116px;
         margin-right: 8px;
         position: relative;
 
@@ -71,7 +72,7 @@
         .deleteQuestGiver {
           position: absolute;
           top: 0;
-          left: 100-22px;
+          right: 0;
           @include button;
         }
       }
@@ -89,6 +90,7 @@
 
         .editable-container {
           flex: 1;
+          padding-left: 6px;
 
           input {
             margin-bottom: 8px;
@@ -138,7 +140,7 @@
           display: flex;
           flex-direction: column;
           justify-content: center;
-          padding: 8px 16px;
+          padding-right: 16px;
         }
 
         .quest-giver-name {
@@ -175,6 +177,7 @@
 
         .quest-status {
           display: flex;
+          padding-left: 6px;
 
           p {
             margin: 0 8px 0 0;
@@ -232,7 +235,7 @@
       }
 
       .quest-description {
-        flex: 0 0 50%;
+        flex: 0 0 48%;
         height: 100%;
         overflow-y: hidden;
         margin-right: 8px;
@@ -253,13 +256,13 @@
       }
 
       .quest-col-right {
-        flex: 1;
+        flex: 0 0 51%;
         display: flex;
         flex-direction: column;
 
         h2 {
           border: none;
-          margin: 0;
+          margin: 0 auto 0 0;
         }
 
         header {
@@ -531,7 +534,7 @@
       }
 
       .quest-splash {
-        flex: 0 0 calc(100% / 3);
+        flex: 0 0 calc(100% / 2.5);
         position: relative;
 
         .splash-image {
@@ -564,7 +567,7 @@
           label {
             position: absolute;
             left: 22px;
-            width: 170px;
+            width: 260px;
             display: inline;
             font-weight: lighter;
           }
@@ -623,7 +626,7 @@
         }
 
         button {
-          flex: 0 0 140px;
+          flex: 0 0 fit-content;
         }
 
         .subquests-box {
