@@ -15,9 +15,9 @@
         <div class="quest-giver-image" data-actor-uuid="{{uuid}}" style="background-image: url('{{img}}');" title="{{name}}"></div>
         {{#if (and (or ../canEdit ../playerEdit) ../image img)}}
           {{#if hasTokenImg}}
-            <span class="toggleImage" title="{{localize 'ForienQuestLog.Tooltips.ToggleImage'}}"><i class="fas fa-user-circle"></i></span>
+            <span class="toggleImage" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.ToggleImage'}}"><i class="fas fa-user-circle"></i></span>
           {{/if}}
-        <span class="deleteQuestGiver" title="{{localize 'ForienQuestLog.Tooltips.DeleteQuestGiver'}}"><i class="fas fa-times"></i></span>
+        <span class="deleteQuestGiver" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.DeleteQuestGiver'}}"><i class="fas fa-times"></i></span>
         {{/if}}
       {{/with}}
     {{/if}}
@@ -66,7 +66,7 @@
       </div>
 
       {{#if splash.length}}
-      <div class="splash-image-link" style="background-image: url('{{splash}}');background-position: {{splashPos}};" title="View Quest Image">
+      <div class="splash-image-link" style="background-image: url('{{splash}}');background-position: {{splashPos}};" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.ViewSplashArt'}}">
         <span><i class="fas fa-eye"></i></span>
       </div>
       {{/if}}
@@ -97,7 +97,7 @@
     <div class="quest-tasks">
       <header>
         <h2>{{localize 'ForienQuestLog.QuestPreview.Objectives'}}</h2>
-        {{#if (or canEdit playerEdit)}}<button class="add-new-task"><i class="fas fa-plus"></i> {{localize 'ForienQuestLog.Buttons.AddNewTask'}}</button>{{/if}}
+        {{#if (or canEdit playerEdit)}}<button class="add-new-task"><i class="fas fa-plus"></i> {{localize 'ForienQuestLog.QuestPreview.Buttons.AddObjective'}}</button>{{/if}}
       </header>
       <div class="quest-box tasks-box">
         <ul>
@@ -148,9 +148,9 @@
               <span class="spacer"></span>
               {{#if ../canEdit}}
                 {{#if hidden}}
-                  <i class="fas fa-eye-slash toggleHidden" data-target="task" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.TaskHidden'}}"></i>
+                  <i class="fas fa-eye-slash toggleHidden" data-target="task" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.TaskHidden'}}"></i>
                 {{else}}
-                  <i class="fas fa-eye toggleHidden" data-target="task" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.TaskVisible'}}"></i>
+                  <i class="fas fa-eye toggleHidden" data-target="task" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.TaskVisible'}}"></i>
                 {{/if}}
               {{/if}}
               <i class="editable fas fa-pen" data-target="task.name" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.Edit'}}"></i>
@@ -170,17 +170,17 @@
         {{#if canEdit}}
           {{#if data_rewards.length}}
             {{#if allRewardsVisible}}
-              <button class="hide-all-rewards" title="{{localize 'ForienQuestLog.Tooltips.HideAll'}}"><i class="fas fa-eye-slash"></i> {{localize 'ForienQuestLog.Tooltips.HideAll'}}</button>
+              <button class="hide-all-rewards" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.HideAll'}}"><i class="fas fa-eye-slash"></i> {{localize 'ForienQuestLog.QuestPreview.Tooltips.HideAll'}}</button>
             {{else}}
-              <button class="show-all-rewards" title="{{localize 'ForienQuestLog.Tooltips.ShowAll'}}"><i class="fas fa-eye"></i> {{localize 'ForienQuestLog.Tooltips.ShowAll'}}</button>
+              <button class="show-all-rewards" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.ShowAll'}}"><i class="fas fa-eye"></i> {{localize 'ForienQuestLog.QuestPreview.Tooltips.ShowAll'}}</button>
             {{/if}}
             {{#if allRewardsUnlocked}}
-              <button class="lock-all-rewards" title="{{localize 'ForienQuestLog.Tooltips.LockAll'}}"><i class="fas fa-lock"></i> {{localize 'ForienQuestLog.Tooltips.LockAll'}}</button>
+              <button class="lock-all-rewards" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.LockAll'}}"><i class="fas fa-lock"></i> {{localize 'ForienQuestLog.QuestPreview.Tooltips.LockAll'}}</button>
             {{else}}
-              <button class="unlock-all-rewards" title="{{localize 'ForienQuestLog.Tooltips.UnlockAll'}}"><i class="fas fa-unlock-alt"></i> {{localize 'ForienQuestLog.Tooltips.UnlockAll'}}</button>
+              <button class="unlock-all-rewards" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.UnlockAll'}}"><i class="fas fa-unlock-alt"></i> {{localize 'ForienQuestLog.QuestPreview.Tooltips.UnlockAll'}}</button>
             {{/if}}
           {{/if}}
-          <button class="add-abstract" title="{{localize 'ForienQuestLog.Tooltips.AddAbstract'}}"><i class="fas fa-plus"></i> {{localize 'ForienQuestLog.Tooltips.AddAbstract'}}</button>
+          <button class="add-abstract" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.AddAbstract'}}"><i class="fas fa-plus"></i> {{localize 'ForienQuestLog.QuestPreview.Tooltips.AddAbstract'}}</button>
         {{/if}}
       </header>
       <div class="quest-box rewards-box">
@@ -198,9 +198,9 @@
               <i class="sort fas fa-sort" draggable="true"></i>
               <span class="spacer"></span>
               {{#if hidden}}
-                <i class="fas fa-eye-slash toggleHidden" data-target="reward" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.RewardHidden'}}"></i>
+                <i class="fas fa-eye-slash toggleHidden" data-target="reward" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.RewardHidden'}}"></i>
               {{else}}
-                <i class="fas fa-eye toggleHidden" data-target="reward" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.Tooltips.RewardVisible'}}"></i>
+                <i class="fas fa-eye toggleHidden" data-target="reward" data-uuidv4="{{uuidv4}}" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.RewardVisible'}}"></i>
               {{/if}}
             {{/if}}
             {{#if locked}}

@@ -1,7 +1,7 @@
 <header>
   <h1 style="flex: 1;">{{fql_format 'ForienQuestLog.Quests' (localize (lookup questStatusI18n tab))}}</h1>
   {{#if (or isGM canCreate)}}
-    <button class="new-quest-btn"><i class="fas fa-plus"></i> {{localize 'ForienQuestLog.Buttons.AddNewQuest'}}</button>
+    <button class="new-quest-btn"><i class="fas fa-plus"></i> {{localize 'ForienQuestLog.QuestLog.Buttons.AddQuest'}}</button>
   {{/if}}
 </header>
 <div class="table">
@@ -13,7 +13,7 @@
         <div class="img" style="background-image: url('{{giverData.img}}');" title="{{giverData.name}}"></div>
       {{/if}}
       {{#if (eq questIconType 'splash-image')}}
-        <div class="img" style="background-image: url('{{splash}}');background-position: {{splashPos}};" title="View Quest Image"></div>
+        <div class="img" style="background-image: url('{{splash}}')"></div>
       {{/if}}
       {{#if isPrimary}}<i class="is-primary fas fa-star pad-l-4" title="{{localize 'ForienQuestLog.Tooltips.PrimaryQuest'}}"></i>{{/if}}
       {{#if canEdit}}
@@ -27,7 +27,7 @@
         {{/if}}
       </div>
       {{#unless (eq ../../showTasks 'no')}}
-        <div class="tasks" title="{{localize 'ForienQuestLog.QuestLog.Table.Tasks'}}">{{checkedTasks}}{{#unless (eq ../../showTasks 'onlyCurrent')}}/{{totalTasks}}{{/unless}}</div>
+        <div class="tasks" title="{{localize 'ForienQuestLog.QuestLog.Tooltips.Objectives'}}">{{checkedTasks}}{{#unless (eq ../../showTasks 'onlyCurrent')}}/{{totalTasks}}{{/unless}}</div>
       {{/unless}}
       {{#if statusActions.length}}
         {{{statusActions}}}
