@@ -81,7 +81,7 @@
       "Description": "Beskrivning:",
       "DragDropActor": "Dra och släpp skådespelare, objekt eller journalanteckning eller vänsterklicka för att ställa in en anpassad källa.",
       "DragDropActorPlayer": "Dra och släpp skådespelare, artikel eller journalanteckning eller vänsterklicka för att ställa in en anpassad källa.",
-      "DragDropRewards": "Dra och släpp objekt här för att lägga till dem som belöningar",
+      "DragDropRewards": "Dra och släpp objekt här för att lägga till dem som belöningar.",
       "GMNotes": "GM Anteckningar:",
       "HeaderButtons": {
         "Show": "Visa för spelare"
@@ -102,10 +102,10 @@
         "WrongItemType": "Forien's Quest Log accepterar endast världs- och kompendiumobjekt som belöningar."
       },
       "Objective": "Mål",
-      "Objectives": "Mål",
+      "Objectives": "Mål:",
       "Reward": "Belöning",
       "RewardDrop": "FQL (uppdragsbelöning): {userName} tappade '{itemName}' till {actorName}",
-      "Rewards": "Belöningar",
+      "Rewards": "Belöningar:",
       "SubTitle": "Delfråga av {0}",
       "Tabs": {
         "Details": "Detaljer",

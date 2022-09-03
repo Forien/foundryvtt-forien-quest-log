@@ -26,7 +26,7 @@
     "Migration": {
       "ChatMessage": {
         "Footer": "您必须使用来自纲要或您的世界的有效文档数据手动更新上述任务。<br>",
-        "Header": "Forien 的任务日志 - (DB 洄游)<br>从以下任务中删除了未链接的任务给予者或奖励物品:<p>",
+        "Header": "Forien 的任务日志 - (DB 洄游)<br>从以下任务中删除了未链接的任务给予者或奖励物品：<p>",
         "Notification": "Forien 的任务日志 - 从一个或多个任务中删除未链接的任务给予者或奖励物品。请查看聊天消息以获取更多信息。",
         "QuestGiver": "任务给予者",
         "QuestRewards": "任务奖励"
@@ -38,7 +38,7 @@
     },
     "NewQuest": "新任务",
     "NoActiveQuests": "没有可用任务",
-    "NoDocument": "无法加载实体 UUID: {uuid}",
+    "NoDocument": "无法加载实体 UUID：{uuid}",
     "NoPermission": "您没有足够的权限查看此实体表。",
     "Notifications": {
       "CannotOpen": "无法查看任务详情。你可能缺少访问权限，或者该任务ID错误，或者该任务已被删除。",
@@ -81,7 +81,7 @@
       "Description": "描述：",
       "DragDropActor": "拖放演员、项目或日记条目或左键单击以设置自定义来源。",
       "DragDropActorPlayer": "拖放演员、项目或日记条目。",
-      "DragDropRewards": "将物品拖拽到此处以将其设为奖励",
+      "DragDropRewards": "将物品拖拽到此处以将其设为奖励。",
       "GMNotes": "GM 笔记：",
       "HeaderButtons": {
         "Show": "展示给玩家"
@@ -97,15 +97,15 @@
         "SplashQuestIcon": "设置为任务图标"
       },
       "Notifications": {
-        "BadUUID": "无法检索文档 UUID: {uuid}",
+        "BadUUID": "无法检索文档 UUID：{uuid}",
         "WrongDocType": "Forien 的任务日志仅接受世界/纲要演员、物品和日记条目作为任务提供者。",
         "WrongItemType": "Forien 的任务日志只接受世界和纲要物品作为奖励。"
       },
       "Objective": "客观的",
-      "Objectives": "目标",
+      "Objectives": "目标：",
       "Reward": "报酬",
       "RewardDrop": "FQL (任务奖励)：{userName} 将 '{itemName}' 放到 {actorName} 上",
-      "Rewards": "奖励",
+      "Rewards": "奖励：",
       "SubTitle": "支线任务{0}",
       "Tabs": {
         "Details": "详情",

@@ -78,10 +78,10 @@
     "QuestLogButton": "Registro de Missões",
     "QuestPreview": {
       "CustomSource": "Fonte personalizada",
-      "Description": "Descrição :",
+      "Description": "Descrição:",
       "DragDropActor": "Arraste e solte o ator que entregará a Missão aqui.",
       "DragDropActorPlayer": "Arraste e solte o ator, um objeto ou uma entrada do journal.",
-      "DragDropRewards": "Arraste e solte itens aqui para torná-los recompensas",
+      "DragDropRewards": "Arraste e solte itens aqui para torná-los recompensas.",
       "GMNotes": "Notas do Mestre :",
       "HeaderButtons": {
         "Show": "Exibir aos Jogadores"
@@ -90,9 +90,9 @@
       "Management": {
         "AddSubquest": "Criar uma Missão Secundária",
         "ConfigurePermissions": "Configurar as permissões",
-        "QuestBranching": "Missões Secundárias",
+        "QuestBranching": "Missões Secundárias:",
         "QuestSettings": "Configurações da missão:",
-        "SplashArt": "Ilustração",
+        "SplashArt": "Ilustração:",
         "SplashInfo": "Clique para definir uma imagem.",
         "SplashQuestIcon": "Definir como ícone de Missão"
       },

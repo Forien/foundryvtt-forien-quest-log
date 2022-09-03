@@ -78,10 +78,10 @@
     "QuestLogButton": "Journal des quêtes",
     "QuestPreview": {
       "CustomSource": "Source personnalisée",
-      "Description": "Description :",
+      "Description": "Description:",
       "DragDropActor": "Glisser/déposer un acteur, un objet, une entrée de journal ou clic gauche pour une source personnalisée.",
       "DragDropActorPlayer": "Glisser/déposer un acteur, un objet ou une entrée de journal.",
-      "DragDropRewards": "Glisser/Déposer les objets ici pour en faire des récompenses",
+      "DragDropRewards": "Glisser/Déposer les objets ici pour en faire des récompenses.",
       "GMNotes": "Notes du MJ :",
       "HeaderButtons": {
         "Show": "Montrer aux joueurs"
@@ -90,9 +90,9 @@
       "Management": {
         "AddSubquest": "Créer une quête secondaire",
         "ConfigurePermissions": "Configurer les permissions",
-        "QuestBranching": "Quêtes secondaires",
+        "QuestBranching": "Quêtes secondaires:",
         "QuestSettings": "Réglages des quêtes:",
-        "SplashArt": "Illustration",
+        "SplashArt": "Illustration:",
         "SplashInfo": "Cliquer pour définir une image.",
         "SplashQuestIcon": "Définissez comme icône de quête"
       },
@@ -101,11 +101,11 @@
         "WrongDocType": "Forien's Quest Log accepte seulement les acteurs, les objets et les entrées de journaux du monde /compendium comme commanditaires de quêtes",
         "WrongItemType": "Forien's Quest Log n'accepte que les objets du monde et des compendium items comme récompenses."
       },
-      "Objective": "Objectifs :",
-      "Objectives": "Objectifs",
+      "Objective": "Objectifs",
+      "Objectives": "Objectifs:",
       "Reward": "Récompense",
-      "RewardDrop": "FQL (récompense  de quête) : {userName} a donné '{itemName}' à {actorName}",
-      "Rewards": "Récompenses :",
+      "RewardDrop": "FQL (récompense de quête) : {userName} a donné '{itemName}' à {actorName}",
+      "Rewards": "Récompenses:",
       "SubTitle": "sous quête faisant partie de: {0}",
       "Tabs": {
         "Details": "Détails",

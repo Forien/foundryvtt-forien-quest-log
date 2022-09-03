@@ -89,7 +89,7 @@
       "InvalidQuestId": "Cannot open Quest Preview due to invalid Quest ID.",
       "Management": {
         "AddSubquest": "Unterquest hinzufügen",
-        "ConfigurePermissions": "Berechtigungen konfigurieren",
+        "ConfigurePermissions": "Berechtigungen Konfigurieren",
         "QuestBranching": "Unterquests:",
         "QuestSettings": "Questeinstellungen:",
         "SplashArt": "Splash Art:",

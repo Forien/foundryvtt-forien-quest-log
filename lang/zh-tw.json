@@ -32,13 +32,13 @@
               "QuestRewards": "任務獎勵"
           },
           "Complete": "Forien's Quest Log - 遷移資料完成.",
-          "CouldNotMigrate": "Forien's Quest Log - 無法遷移任務: '{name}'",
+          "CouldNotMigrate": "Forien's Quest Log - 無法遷移任務：'{name}'",
           "Schema": "Forien's Quest Log - 將資料遷移到版本 '{version}'",
           "Start": "Forien's Quest Log - 遷移資料中，請不要重新加載."
       },
       "NewQuest": "新任務",
       "NoActiveQuests": "沒有進行中的任務",
-      "NoDocument": "無法加載UUID：{uuid}",
+      "NoDocument": "無法加載 UUID：{uuid}",
       "NoPermission": "您沒有足夠的權限查看此entity表格。",
       "Notifications": {
           "CannotOpen": "無法查看任務詳情。你可能缺少訪問權限，或者該任務ID錯誤，或者該任務已被刪除。",
@@ -59,7 +59,7 @@
               "CopyQuestID": "複製任務 ID",
               "PrimaryQuest": "設定/取消設定為主要任務"
           },
-          "SubTitle": "支線部分: {0}",
+          "SubTitle": "支線部分：{0}",
           "Table": {
               "Actions": "行動",
               "QuestGiver": "委託人",
@@ -78,11 +78,11 @@
       "QuestLogButton": "任務欄",
       "QuestPreview": {
           "CustomSource": "自定義來源",
-          "Description": "描述:",
-          "DragDropActor": "拖放Actor、物品、日誌條目或左鍵單擊以設定自定義來源",
-          "DragDropActorPlayer": "拖放Actor、物品或日誌條目.",
-          "DragDropRewards": "將物品拖拽到此處以將其設為獎勵",
-          "GMNotes": "GM 筆記:",
+          "Description": "描述：",
+          "DragDropActor": "拖放Actor、物品、日誌條目或左鍵單擊以設定自定義來源。",
+          "DragDropActorPlayer": "拖放Actor、物品或日誌條目。",
+          "DragDropRewards": "將物品拖拽到此處以將其設為獎勵。",
+          "GMNotes": "GM 筆記：",
           "HeaderButtons": {
               "Show": "展示給玩家"
           },
@@ -90,22 +90,22 @@
           "Management": {
               "AddSubquest": "新建支線任務",
               "ConfigurePermissions": "配置權限",
-              "QuestBranching": "支線任務",
-              "QuestSettings": "任務設定:",
-              "SplashArt": "插畫",
+              "QuestBranching": "支線任務：",
+              "QuestSettings": "任務設定：",
+              "SplashArt": "插畫：",
               "SplashInfo": "點擊設定圖片.",
               "SplashQuestIcon": "設定為任務圖示"
           },
           "Notifications": {
-              "BadUUID": "無法搜索到 UUID 文檔: {uuid}",
+              "BadUUID": "無法搜索到 UUID 文檔：{uuid}",
               "WrongDocType": "Forien 的任務日誌只接受World/Compendium Actor、物品和日誌條目作為任務提供者。",
               "WrongItemType": "Forien 的任務日誌只接受World和Compendium items作為獎勵。"
           },
           "Objective": "目標",
-          "Objectives": "目標",
+          "Objectives": "目標：",
           "Reward": "獎勵",
           "RewardDrop": "FQL（任務獎勵）：{userName} 將 '{itemName}' 放到 {actorName} 上",
-          "Rewards": "獎勵",
+          "Rewards": "獎勵：",
           "SubTitle": "{0} 的子任務",
           "Tabs": {
               "Details": "詳情",
@@ -228,7 +228,7 @@
           "SetCompleted": "設定為已完成",
           "SetFailed": "設定為已失敗",
           "ShowAll": "顯示全部",
-          "Status": "狀態: {statusI18n}",
+          "Status": "狀態：{statusI18n}",
           "TaskHidden": "目標已隱藏，點擊查看。",
           "TaskVisible": "目標已可見，點擊隱藏。",
           "ToggleImage": "打開或關閉token/角色圖片",

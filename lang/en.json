@@ -124,7 +124,7 @@
       "Title": "Quest Tracker",
       "Tooltips": {
         "BackgroundShow": "Click to show background.",
-        "BackgroundUnshow": "Click to make the background transparent.",
+        "BackgroundUnshow": "Click to make background transparent.",
         "PrimaryQuestShow": "Click to show primary quest.",
         "PrimaryQuestUnshow": "Click to show all quests."
       }

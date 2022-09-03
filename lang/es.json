@@ -81,7 +81,7 @@
       "Description": "Descripción:",
       "DragDropActor": "Arrastre y Suelte al actor, elemento o entrada de diario o haga clic con el botón izquierdo para establecer un dador de misión personalizado.",
       "DragDropActorPlayer": "Arrastrar y Soltar actor, elemento o entrada de diario.",
-      "DragDropRewards": "Arrastra y Suelta elementos aquí para añadirlos como recompensas",
+      "DragDropRewards": "Arrastra y Suelta elementos aquí para añadirlos como recompensas.",
       "GMNotes": "Notas del GM:",
       "HeaderButtons": {
         "Show": "Mostrar a jugadores"
@@ -102,10 +102,10 @@
         "WrongItemType": "Forien's Quest Log solo acepta artículos del mundo y del compendio como recompensa."
       },
       "Objective": "Objetivo",
-      "Objectives": "Objetivos",
+      "Objectives": "Objetivos:",
       "Reward": "Premio",
       "RewardDrop": "FQL (recompensa de misión): {userName} entrego '{itemName}' a {actorName}",
-      "Rewards": "Recompensas",
+      "Rewards": "Recompensas:",
       "SubTitle": "Sub - Misión de: {0}",
       "Tabs": {
         "Details": "Detalles",

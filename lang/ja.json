@@ -102,10 +102,10 @@
         "WrongItemType": "Forien's Quest Logはワールドや辞典に指定された報酬のみを受け付けます。"
       },
       "Objective": "目標",
-      "Objectives": "目標",
+      "Objectives": "目標：",
       "Reward": "報酬",
-      "RewardDrop": "FQL (quest reward): {userName}が'{itemName}'を{actorName}に移動しました。",
-      "Rewards": "報酬",
+      "RewardDrop": "FQL (quest reward)：{userName}が'{itemName}'を{actorName}に移動しました。",
+      "Rewards": "報酬：",
       "SubTitle": "{0}に含まれています",
       "Tabs": {
         "Details": "内容",
