@@ -56,7 +56,6 @@
       "UserCantOpen": "User {user} doesn't have permission to open this quest."
     },
     "Quest": "Quest",
-    "QuestIs": "Quest is {statusLabel}",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "Add Quest"
@@ -167,7 +166,16 @@
         "available": "available",
         "completed": "completed",
         "failed": "failed",
-        "inactive": "inactive"
+        "inactive": "inactive",
+        "Status": "Quest is {statusLabel}"
+      },
+      "Tooltips": {
+        "SetActive": "Set as In Progress",
+        "SetAvailable": "Set as Available",
+        "SetCompleted": "Set as Completed",
+        "SetFailed": "Set as Failed",
+        "SetInactive": "Set as Inactive",
+        "Status": "Status: {statusI18n}"
       }
     },
     "Settings": {
@@ -236,13 +244,7 @@
       "Delete": "Delete",
       "Edit": "Edit",
       "HiddenQuestNoPlayers": "This Quest is hidden from all players.",
-      "PrimaryQuest": "Primary Quest",
-      "SetActive": "Set as In Progress",
-      "SetAvailable": "Set as Available",
-      "SetCompleted": "Set as Completed",
-      "SetFailed": "Set as Failed",
-      "SetInactive": "Set as Inactive",
-      "Status": "Status: {statusI18n}"
+      "PrimaryQuest": "Primary Quest"
     }
   }
 }

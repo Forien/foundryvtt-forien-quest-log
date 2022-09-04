@@ -56,7 +56,6 @@
       "UserCantOpen": "O usuário {user} não tem permissão para abrir esta missão."
     },
     "Quest": "Missão",
-    "QuestIs": "A missão está {statusLabel}",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "Adicionar Missão"
@@ -167,7 +166,16 @@
         "available": "disponível",
         "completed": "completa",
         "failed": "perdida",
-        "inactive": "inativa"
+        "inactive": "inativa",
+        "Status": "A missão está {statusLabel}"
+      },
+      "Tooltips": {
+        "SetActive": "Definir como Em Progresso",
+        "SetAvailable": "Definir como Disponível",
+        "SetCompleted": "Definir como Completa",
+        "SetFailed": "Definir como Perdida",
+        "SetInactive": "Definir como Inativo",
+        "Status": "Condição : {statusI18n}"
       }
     },
     "Settings": {
@@ -236,13 +244,7 @@
       "Delete": "Excluir",
       "Edit": "Editar",
       "HiddenQuestNoPlayers": "Esta missão está escondida de todos os jogadores.",
-      "PrimaryQuest": "Missão Principal",
-      "SetActive": "Definir como Em Progresso",
-      "SetAvailable": "Definir como Disponível",
-      "SetCompleted": "Definir como Completa",
-      "SetFailed": "Definir como Perdida",
-      "SetInactive": "Definir como Inativo",
-      "Status": "Condição : {statusI18n}"
+      "PrimaryQuest": "Missão Principal"
     }
   }
 }

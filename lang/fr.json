@@ -56,7 +56,6 @@
       "UserCantOpen": "L'utilisateur {user} n’a pas la permission d'ouvrir cette quête."
     },
     "Quest": "Quête",
-    "QuestIs": "La quête est {statusLabel}",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "Ajouter Quête"
@@ -167,7 +166,16 @@
         "available": "disponibles",
         "completed": "complétées",
         "failed": "échouées",
-        "inactive": "inactive"
+        "inactive": "inactive",
+        "Status": "La quête est {statusLabel}"
+      },
+      "Tooltips": {
+        "SetActive": "Définir comme En cours",
+        "SetAvailable": "Définir comme Disponible",
+        "SetCompleted": "Définir comme Achevée",
+        "SetFailed": "Définir comme Échouée",
+        "SetInactive": "Définir comme Inactif",
+        "Status": "Statut : {statusI18n}"
       }
     },
     "Settings": {
@@ -236,13 +244,7 @@
       "Delete": "Effacer",
       "Edit": "Éditer",
       "HiddenQuestNoPlayers": "Cette quête est cachée à tous les joueurs.",
-      "PrimaryQuest": "Quête primaire",
-      "SetActive": "Définir comme En cours",
-      "SetAvailable": "Définir comme Disponible",
-      "SetCompleted": "Définir comme Achevée",
-      "SetFailed": "Définir comme Échouée",
-      "SetInactive": "Définir comme Inactif",
-      "Status": "Statut : {statusI18n}"
+      "PrimaryQuest": "Quête primaire"
     }
   }
 }

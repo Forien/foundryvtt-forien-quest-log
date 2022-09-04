@@ -56,7 +56,6 @@
       "UserCantOpen": "Käyttäjällä {user} ei ole oikeuksia avata tätä tehtävää."
     },
     "Quest": "Tehtävä",
-    "QuestIs": "Tehtävä on {statusLabel}",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "Lisää tehtävä"
@@ -167,7 +166,16 @@
         "available": "saatavilla",
         "completed": "suoritettu",
         "failed": "epäonnistunut",
-        "inactive": "ei-aktiivinen"
+        "inactive": "ei-aktiivinen",
+        "Status": "Tehtävä on {statusLabel}"
+      },
+      "Tooltips": {
+        "SetActive": "Aseta kesken-tilaan",
+        "SetAvailable": "Aseta saatavilla-tilaan",
+        "SetCompleted": "Aseta suoritettu-tilaan",
+        "SetFailed": "Aseta epäonnistunut-tilaan",
+        "SetInactive": "Aseta ei-aktiivinen-tilaan",
+        "Status": "Tila: {statusI18n}"
       }
     },
     "Settings": {
@@ -236,13 +244,7 @@
       "Delete": "Poista",
       "Edit": "Muokkaa",
       "HiddenQuestNoPlayers": "Tämä tehtävä on piilotettu kaikilta pelaajilta.",
-      "PrimaryQuest": "Päätehtävä",
-      "SetActive": "Aseta kesken-tilaan",
-      "SetAvailable": "Aseta saatavilla-tilaan",
-      "SetCompleted": "Aseta suoritettu-tilaan",
-      "SetFailed": "Aseta epäonnistunut-tilaan",
-      "SetInactive": "Aseta ei-aktiivinen-tilaan",
-      "Status": "Tila: {statusI18n}"
+      "PrimaryQuest": "Päätehtävä"
     }
   }
 }

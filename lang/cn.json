@@ -56,7 +56,6 @@
       "UserCantOpen": "玩家 {user} 没有查看该任务的权限。"
     },
     "Quest": "寻求",
-    "QuestIs": "任务是 {statusLabel}",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "加入新任务"
@@ -167,7 +166,16 @@
         "available": "可用的",
         "completed": "已完成",
         "failed": "已失败",
-        "inactive": "不活跃"
+        "inactive": "不活跃",
+        "Status": "任务是 {statusLabel}"
+      },
+      "Tooltips": {
+        "SetActive": "设定为进行中",
+        "SetAvailable": "设定为可选",
+        "SetCompleted": "设定为已完成",
+        "SetFailed": "设定为已失败",
+        "SetInactive": "设置为非活动",
+        "Status": "地位：{statusI18n}"
       }
     },
     "Settings": {
@@ -236,13 +244,7 @@
       "Delete": "删除",
       "Edit": "编辑",
       "HiddenQuestNoPlayers": "这个任务对所有玩家都是隐藏的。",
-      "PrimaryQuest": "主要任务",
-      "SetActive": "设定为进行中",
-      "SetAvailable": "设定为可选",
-      "SetCompleted": "设定为已完成",
-      "SetFailed": "设定为已失败",
-      "SetInactive": "设置为非活动",
-      "Status": "地位：{statusI18n}"
+      "PrimaryQuest": "主要任务"
     }
   }
 }

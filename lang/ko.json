@@ -56,7 +56,6 @@
       "UserCantOpen": "{user} 플레이어는 이 퀘스트를 열람할 권한을 가지고 있지 않습니다."
     },
     "Quest": "퀘스트",
-    "QuestIs": "{statusLabel} 상태인 퀘스트입니다.",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "퀘스트 추가"
@@ -167,7 +166,16 @@
         "available": "활성화",
         "completed": "완료된",
         "failed": "실패한",
-        "inactive": "비공개"
+        "inactive": "비공개",
+        "Status": "{statusLabel} 상태인 퀘스트입니다."
+      },
+      "Tooltips": {
+        "SetActive": "진행 중으로 설정",
+        "SetAvailable": "활성화로 설정",
+        "SetCompleted": "완료로 설정",
+        "SetFailed": "실패로 설정",
+        "SetInactive": "비활성으로 설정",
+        "Status": "상태: {statusI18n}"
       }
     },
     "Settings": {
@@ -236,13 +244,7 @@
       "Delete": "삭제",
       "Edit": "편집",
       "HiddenQuestNoPlayers": "이 퀘스트는 모든 플레이어에게 숨겨져 있습니다.",
-      "PrimaryQuest": "중요 퀘스트",
-      "SetActive": "진행 중으로 설정",
-      "SetAvailable": "활성화로 설정",
-      "SetCompleted": "완료로 설정",
-      "SetFailed": "실패로 설정",
-      "SetInactive": "비활성으로 설정",
-      "Status": "상태: {statusI18n}"
+      "PrimaryQuest": "중요 퀘스트"
     }
   }
 }

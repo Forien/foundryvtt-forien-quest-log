@@ -56,7 +56,6 @@
       "UserCantOpen": "Användare {user} har inte behörighet att öppna det här uppdraget."
     },
     "Quest": "Uppdrag",
-    "QuestIs": "Uppdrag är {statusLabel}",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "Lägg till uppdrag"
@@ -167,7 +166,16 @@
         "available": "tillgängliga",
         "completed": "avklarade",
         "failed": "misslyckade",
-        "inactive": "inaktiva"
+        "inactive": "inaktiva",
+        "Status": "Uppdrag är {statusLabel}"
+      },
+      "Tooltips": {
+        "SetActive": "Ställ in som pågår",
+        "SetAvailable": "Ställ in som tillgänglig",
+        "SetCompleted": "Ställ in som slutfört",
+        "SetFailed": "Ställ in som misslyckad",
+        "SetInactive": "Ställ in som inaktiv",
+        "Status": "Status: {statusI18n}"
       }
     },
     "Settings": {
@@ -236,13 +244,7 @@
       "Delete": "Radera",
       "Edit": "Redigera",
       "HiddenQuestNoPlayers": "Detta uppdrag är dolt för alla spelare.",
-      "PrimaryQuest": "Primär Uppdrag",
-      "SetActive": "Ställ in som pågår",
-      "SetAvailable": "Ställ in som tillgänglig",
-      "SetCompleted": "Ställ in som slutfört",
-      "SetFailed": "Ställ in som misslyckad",
-      "SetInactive": "Ställ in som inaktiv",
-      "Status": "Status: {statusI18n}"
+      "PrimaryQuest": "Primär Uppdrag"
     }
   }
 }

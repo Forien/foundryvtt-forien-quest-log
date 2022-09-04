@@ -56,7 +56,6 @@
       "UserCantOpen": "Benutzer {user} hat nicht die Berechtigungen, um diese Quest zu öffnen."
     },
     "Quest": "Quest",
-    "QuestIs": "Quest ist {statusLabel}",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "Quest hinzufügen"
@@ -167,7 +166,16 @@
         "available": "verfügbar",
         "completed": "abgeschlossen",
         "failed": "fehlgeschlagen",
-        "inactive": "inaktiv"
+        "inactive": "inaktiv",
+        "Status": "Quest ist {statusLabel}"
+      },
+      "Tooltips": {
+        "SetActive": "Als Aktiv setzen",
+        "SetAvailable": "Als Verfügbar setzen",
+        "SetCompleted": "Als abgeschlossen setzen",
+        "SetFailed": "Als Fehlgeschlagen setzen",
+        "SetInactive": "Als Inaktiv setzen",
+        "Status": "Status: {statusI18n}"
       }
     },
     "Settings": {
@@ -236,13 +244,7 @@
       "Delete": "Löschen",
       "Edit": "Bearbeiten",
       "HiddenQuestNoPlayers": "Diese Quest ist vor allen Spielern verborgen.",
-      "PrimaryQuest": "Primäre Quest",
-      "SetActive": "Als Aktiv setzen",
-      "SetAvailable": "Als Verfügbar setzen",
-      "SetCompleted": "Als abgeschlossen setzen",
-      "SetFailed": "Als Fehlgeschlagen setzen",
-      "SetInactive": "Als Inaktiv setzen",
-      "Status": "Status: {statusI18n}"
+      "PrimaryQuest": "Primäre Quest"
     }
   }
 }

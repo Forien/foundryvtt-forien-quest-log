@@ -56,7 +56,6 @@
       "UserCantOpen": "Участник {user} не имеет разрешения для просмотра этого задания."
     },
     "Quest": "Задание",
-    "QuestIs": "Задание {statusLabel}",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "Добавить квест"
@@ -167,7 +166,16 @@
         "available": "доступно",
         "completed": "завершено",
         "failed": "провалено",
-        "inactive": "неактивно"
+        "inactive": "неактивно",
+        "Status": "Задание {statusLabel}"
+      },
+      "Tooltips": {
+        "SetActive": "Сделать текущим",
+        "SetAvailable": "Сделать доступным",
+        "SetCompleted": "Сделать завершённым",
+        "SetFailed": "Сделать проваленным",
+        "SetInactive": "Сделать неактивным",
+        "Status": "Состояние: {statusI18n}"
       }
     },
     "Settings": {
@@ -236,13 +244,7 @@
       "Delete": "Удаление",
       "Edit": "Изменение",
       "HiddenQuestNoPlayers": "Это задание скрыто от всех игроков.",
-      "PrimaryQuest": "Основное задание",
-      "SetActive": "Сделать текущим",
-      "SetAvailable": "Сделать доступным",
-      "SetCompleted": "Сделать завершённым",
-      "SetFailed": "Сделать проваленным",
-      "SetInactive": "Сделать неактивным",
-      "Status": "Состояние: {statusI18n}"
+      "PrimaryQuest": "Основное задание"
     }
   }
 }

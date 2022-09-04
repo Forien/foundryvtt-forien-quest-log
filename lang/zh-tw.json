@@ -56,7 +56,6 @@
       "UserCantOpen" : "玩家 {user} 沒有查看該任務的權限。"
     },
     "Quest" : "任務",
-    "QuestIs" : "任務是 {statusLabel}",
     "QuestLog" : {
       "Buttons": {
         "AddQuest": "添加任務"
@@ -167,7 +166,16 @@
         "available" : "可選",
         "completed" : "已完成",
         "failed" : "已失敗",
-        "inactive" : "未啓動"
+        "inactive" : "未啓動",
+        "Status" : "任務是 {statusLabel}"
+      },
+      "Tooltips": {
+        "SetActive" : "設定為進行中",
+        "SetAvailable" : "設定為可選",
+        "SetCompleted" : "設定為已完成",
+        "SetFailed" : "設定為已失敗",
+        "SetInactive" : "設置為非活動",
+        "Status" : "狀態：{statusI18n}"
       }
     },
     "Settings" : {
@@ -236,13 +244,7 @@
       "Delete" : "刪除",
       "Edit" : "編輯",
       "HiddenQuestNoPlayers" : "這個任務對所有玩家都是隱藏的。",
-      "PrimaryQuest" : "主要任務",
-      "SetActive" : "設定為進行中",
-      "SetAvailable" : "設定為可選",
-      "SetCompleted" : "設定為已完成",
-      "SetFailed" : "設定為已失敗",
-      "SetInactive" : "設置為非活動",
-      "Status" : "狀態：{statusI18n}"
+      "PrimaryQuest" : "主要任務"
     }
   }
 }

@@ -56,7 +56,6 @@
       "UserCantOpen": "User {user} doesn'{user}はこのクエストを開く権限を持っていません。"
     },
     "Quest": "クエスト",
-    "QuestIs": "クエスト状態{statusLabel}",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "クエスト追加"
@@ -167,7 +166,16 @@
         "available": "受注可能",
         "completed": "完了",
         "failed": "失敗",
-        "inactive": "無効"
+        "inactive": "無効",
+        "Status": "クエスト状態{statusLabel}"
+      },
+      "Tooltips": {
+        "SetActive": "進行中として設定",
+        "SetAvailable": "利用可能に設定",
+        "SetCompleted": "完了として設定",
+        "SetFailed": "失敗として設定",
+        "SetInactive": "非アクティブに設定",
+        "Status": "状態：{statusI18n}"
       }
     },
     "Settings": {
@@ -236,13 +244,7 @@
       "Delete": "削除",
       "Edit": "編集",
       "HiddenQuestNoPlayers": "このクエストはPLに表示されていません。",
-      "PrimaryQuest": "メインクエスト",
-      "SetActive": "進行中として設定",
-      "SetAvailable": "利用可能に設定",
-      "SetCompleted": "完了として設定",
-      "SetFailed": "失敗として設定",
-      "SetInactive": "非アクティブに設定",
-      "Status": "状態：{statusI18n}"
+      "PrimaryQuest": "メインクエスト"
     }
   }
 }
