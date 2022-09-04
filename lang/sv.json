@@ -8,6 +8,15 @@
           },
           "name": "Öppna ”{name}”"
         }
+      },
+      "QuestDB": {
+        "Labels": {
+          "NewQuest": "Nytt uppdrag"
+        }
+      },
+      "Utils": {
+        "NoDocument": "En enhet kunde inte laddas för UUID: {uuid}",
+        "NoPermission": "Du har inte tillräckliga behörigheter för att visa detta enhetsblad."
       }
     },
     "DeleteDialog": {
@@ -35,10 +44,6 @@
       "Schema": "Forien's Quest Log - Migrerar data till schemaversion '{version}'",
       "Start": "Forien's Quest Log - Migrerar data, vänligen ladda inte om."
     },
-    "NewQuest": "Nytt uppdrag",
-    "NoActiveQuests": "Det finns inga aktiva uppdrag",
-    "NoDocument": "En enhet kunde inte laddas för UUID: {uuid}",
-    "NoPermission": "Du har inte tillräckliga behörigheter för att visa detta enhetsblad.",
     "Notifications": {
       "CannotOpen": "Kan inte öppna Uppdragsdetaljer. Detta uppdrag kanske inte går att observera eller kanske inte längre existerar.",
       "FinishQuestAdded": "Slutför redigeringen och stäng aktuellt nytt uppdrag innan du lägger till ett nytt.",
@@ -61,7 +66,10 @@
         "CopyQuestID": "Kopiera uppdrags-ID",
         "PrimaryQuest": "Ställ in / avaktivera som primärt uppdrag"
       },
-      "SubTitle": "Delfråga av {0}",
+      "Labels": {
+        "TableHeader": "{0} Uppdrag",
+        "SubTitle": "Delfråga av {0}"
+      },
       "Tabs": {
         "Available": "Tillgängliga",
         "Completed": "Avsklarade",
@@ -74,7 +82,6 @@
         "Objectives": "Mål"
       }
     },
-    "QuestLogButton": "Uppdragslogg",
     "QuestPreview": {
       "Buttons": {
         "AddObjective": "Lägg till Mål",
@@ -110,7 +117,6 @@
       "Reward": "Belöning",
       "RewardDrop": "FQL (uppdragsbelöning): {userName} tappade '{itemName}' till {actorName}",
       "Rewards": "Belöningar:",
-      "SubTitle": "Delfråga av {0}",
       "Tabs": {
         "Details": "Detaljer",
         "GMNotes": "GM-anteckningar",
@@ -140,7 +146,6 @@
         "ViewSplashArt": "Se skvätt konst."
       }
     },
-    "Quests": "{0} Uppdrag",
     "QuestTracker": {
       "NoPrimary": "Inget primärt uppdrag tillgängligt.",
       "Title": "Målföljare",

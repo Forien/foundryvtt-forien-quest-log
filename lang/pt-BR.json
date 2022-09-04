@@ -8,6 +8,15 @@
           },
           "name": "Abrir a Missão ”{name}”"
         }
+      },
+      "QuestDB": {
+        "Labels": {
+          "NewQuest": "Nova Missão"
+        }
+      },
+      "Utils": {
+        "NoDocument": "Uma entidade não pôde ser carregada para IDuu : {uuid}",
+        "NoPermission": "Você não tem permissão para visualizar o documento desta entidade."
       }
     },
     "DeleteDialog": {
@@ -35,10 +44,6 @@
       "Schema": "Forien's Quest Log - Migrando dados sob a versão:  '{version}'",
       "Start": "Forien's Quest Log - Migrando dados, não recarregue."
     },
-    "NewQuest": "Nova Missão",
-    "NoActiveQuests": "Nenhuma missão Em Progresso",
-    "NoDocument": "Uma entidade não pôde ser carregada para IDuu : {uuid}",
-    "NoPermission": "Você não tem permissão para visualizar o documento desta entidade.",
     "Notifications": {
       "CannotOpen": "Não é possível abrir os detalhes da missão. Você não tem permissão, a missão não existe mais ou o ID fornecido é inválido.",
       "FinishQuestAdded": "Termine a edição e feche a nova missão atual antes de adicionar outra.",
@@ -61,7 +66,10 @@
         "CopyQuestID": "Copiar ID da missão",
         "PrimaryQuest": "Ativar / Desativar como missão principal."
       },
-      "SubTitle": "Parte da missão de: {0}",
+      "Labels": {
+        "TableHeader": "Missões {0}",
+        "SubTitle": "Parte da missão de: {0}"
+      },
       "Tabs": {
         "Available": "Disponível",
         "Completed": "Completa",
@@ -74,7 +82,6 @@
         "Objectives": "Objetivos"
       }
     },
-    "QuestLogButton": "Registro de Missões",
     "QuestPreview": {
       "Buttons": {
         "AddObjective": "Adicionar Objetivo",
@@ -110,7 +117,6 @@
       "Reward": "Recompensa",
       "RewardDrop": "FQL (recompensa de missão) : {userName} deu '{itemName}' para {actorName}",
       "Rewards": "Recompensas :",
-      "SubTitle": "Parte de: {0}",
       "Tabs": {
         "Details": "Detalhes",
         "GMNotes": "Notas do Mestre",
@@ -164,7 +170,6 @@
         "inactive": "inativa"
       }
     },
-    "Quests": "Missões {0}",
     "Settings": {
       "allowPlayersAccept": {
         "Enable": "Os jogadores podem aceitar",

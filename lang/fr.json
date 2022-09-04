@@ -8,6 +8,15 @@
           },
           "name": "Ouvrir la Quête ”{name}”"
         }
+      },
+      "QuestDB": {
+        "Labels": {
+          "NewQuest": "Nouvelle quête"
+        }
+      },
+      "Utils": {
+        "NoDocument": "Une entité ne pourra pas être chargée pour IDuu : {uuid}",
+        "NoPermission": "Vous n'avez pas la permission de voir la feuille de cette entité."
       }
     },
     "DeleteDialog": {
@@ -35,10 +44,6 @@
       "Schema": "Forien's Quest Log - Migration des données sous le schéma de version  '{version}'",
       "Start": "Forien's Quest Log - Migration en cours des données, ne pas recharger."
     },
-    "NewQuest": "Nouvelle quête",
-    "NoActiveQuests": "Il n'y a aucune quête en cours",
-    "NoDocument": "Une entité ne pourra pas être chargée pour IDuu : {uuid}",
-    "NoPermission": "Vous n'avez pas la permission de voir la feuille de cette entité.",
     "Notifications": {
       "CannotOpen": "Ne peut ouvrir les détails de la Quête. Soit vous n’avez pas la permission, soit la quête n’existe plus ou l’ID fournie était invalide.",
       "FinishQuestAdded": "Finissez d'éditer et fermez la nouvelle quête actuelle avant d'en ajouter une autre.",
@@ -61,7 +66,10 @@
         "CopyQuestID": "Copier l'ID de la quête",
         "PrimaryQuest": "Activer / Désactiver comme quête primaire."
       },
-      "SubTitle": "Quête faisant parti de: {0}",
+      "Labels": {
+        "TableHeader": "Quêtes {0}",
+        "SubTitle": "Quête faisant parti de: {0}"
+      },
       "Tabs": {
         "Available": "Disponible",
         "Completed": "Achevée",
@@ -74,7 +82,6 @@
         "Objectives": "Objectifs"
       }
     },
-    "QuestLogButton": "Journal des quêtes",
     "QuestPreview": {
       "Buttons": {
         "AddObjective": "Ajouter Objectif",
@@ -110,7 +117,6 @@
       "Reward": "Récompense",
       "RewardDrop": "FQL (récompense de quête) : {userName} a donné '{itemName}' à {actorName}",
       "Rewards": "Récompenses:",
-      "SubTitle": "sous quête faisant partie de: {0}",
       "Tabs": {
         "Details": "Détails",
         "GMNotes": "Notes MJ",
@@ -140,7 +146,6 @@
         "ViewSplashArt": "Voir l'illustration"
       }
     },
-    "Quests": "Quêtes {0}",
     "QuestTracker": {
       "NoPrimary": "Pas de quête primaire disponible.",
       "Title": "Traqueur de quêtes",

@@ -8,6 +8,15 @@
           },
           "name" : "打開任務 „{name}” "
         }
+      },
+      "QuestDB": {
+        "Labels": {
+          "NewQuest" : "新任務"
+        }
+      },
+      "Utils": {
+        "NoDocument" : "無法加載 UUID：{uuid}",
+        "NoPermission" : "您沒有足夠的權限查看此entity表格。"
       }
     },
     "DeleteDialog" : {
@@ -35,10 +44,6 @@
       "Schema" : "Forien's Quest Log - 將資料遷移到版本 '{version}'",
       "Start" : "Forien's Quest Log - 遷移資料中，請不要重新加載."
     },
-    "NewQuest" : "新任務",
-    "NoActiveQuests" : "沒有進行中的任務",
-    "NoDocument" : "無法加載 UUID：{uuid}",
-    "NoPermission" : "您沒有足夠的權限查看此entity表格。",
     "Notifications" : {
       "CannotOpen" : "無法查看任務詳情。你可能缺少訪問權限，或者該任務ID錯誤，或者該任務已被刪除。",
       "FinishQuestAdded" : "請先完成編輯並關閉當前的新任務，然後再添加另一個任務。",
@@ -61,7 +66,10 @@
         "CopyQuestID" : "複製任務 ID",
         "PrimaryQuest" : "設定/取消設定為主要任務"
       },
-      "SubTitle" : "支線部分：{0}",
+      "Labels": {
+        "TableHeader": "{0}任務",
+        "SubTitle": "的子任務 {0}"
+      },
       "Tabs" : {
         "Available" : "可選",
         "Completed" : "已完成",
@@ -74,7 +82,6 @@
         "Objectives" : "目標"
       }
     },
-    "QuestLogButton" : "任務欄",
     "QuestPreview" : {
       "Buttons": {
         "AddObjective": "添加目標",
@@ -110,7 +117,6 @@
       "Reward" : "獎勵",
       "RewardDrop" : "FQL（任務獎勵）：{userName} 將 '{itemName}' 放到 {actorName} 上",
       "Rewards" : "獎勵：",
-      "SubTitle" : "{0} 的子任務",
       "Tabs" : {
         "Details" : "詳情",
         "GMNotes" : "GM筆記",
@@ -140,7 +146,6 @@
         "ViewSplashArt": "查看插圖。"
       }
     },
-    "Quests" : "{0}任務",
     "QuestTracker" : {
       "NoPrimary" : "沒有可用的主要任務。",
       "Title" : "任務追踪器",

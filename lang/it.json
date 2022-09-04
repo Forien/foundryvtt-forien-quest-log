@@ -8,6 +8,15 @@
           },
           "name": "Aprire ”{name}”"
         }
+      },
+      "QuestDB": {
+        "Labels": {
+          "NewQuest": "Nuova Missione"
+        }
+      },
+      "Utils": {
+        "NoDocument": "Impossibile caricare un'entità UUID: {uuid}",
+        "NoPermission": "Non hai autorizzazioni sufficienti per visualizzare questo foglio di entità."
       }
     },
     "DeleteDialog": {
@@ -35,10 +44,6 @@
       "Schema": "Forien's Quest Log - Migrazione dei dati alla versione dello schema '{version}'",
       "Start": "Forien's Quest Log - Migrazione dei dati, non ricaricare."
     },
-    "NewQuest": "Nuova Missione",
-    "NoActiveQuests": "Non ci sono missioni attive",
-    "NoDocument": "Impossibile caricare un'entità UUID: {uuid}",
-    "NoPermission": "Non hai autorizzazioni sufficienti per visualizzare questo foglio di entità.",
     "Notifications": {
       "CannotOpen": "Impossibile aprire i dettagli della missione. Questa ricerca potrebbe non essere osservabile o potrebbe non esistere più.",
       "FinishQuestAdded": "Completa la modifica e chiudi la nuova missione corrente prima di aggiungerne un'altra.",
@@ -61,7 +66,10 @@
         "CopyQuestID": "Copia ID missione",
         "PrimaryQuest": "Attiva / Disattiva come missione principale"
       },
-      "SubTitle": "Sottomissione di {0}",
+      "Labels": {
+        "TableHeader": "Missioni {0}",
+        "SubTitle": "Sottomissione di {0}"
+      },
       "Tabs": {
         "Available": "A disposizione",
         "Completed": "Completato",
@@ -74,7 +82,6 @@
         "Objectives": "Obiettivi"
       }
     },
-    "QuestLogButton": "Registro Missione",
     "QuestPreview": {
       "Buttons": {
         "AddObjective": "Aggiungi Obiettivo",
@@ -110,7 +117,6 @@
       "Reward": "Ricompensa",
       "RewardDrop": "FQL (ricompensa missione): {userName} caduto '{itemName}' su {actorName}",
       "Rewards": "Ricompense:",
-      "SubTitle": "Sottomissione di {0}",
       "Tabs": {
         "Details": "Particolari",
         "GMNotes": "Note GM",
@@ -140,7 +146,6 @@
         "ViewSplashArt": "Visualizza l'art schizzo."
       }
     },
-    "Quests": "{0} Missioni",
     "QuestTracker": {
       "NoPrimary": "Nessuna missione principale disponibile.",
       "Title": "Tracciatore Missione",

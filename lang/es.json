@@ -8,6 +8,15 @@
           },
           "name": "Abierto ”{name}”"
         }
+      },
+      "QuestDB": {
+        "Labels": {
+          "NewQuest": "Nueva misión"
+        }
+      },
+      "Utils": {
+        "NoDocument": "No se pudo cargar una entidad para UUID: {uuid}",
+        "NoPermission": "No tiene suficientes permisos para ver esta hoja de entidad."
       }
     },
     "DeleteDialog": {
@@ -35,10 +44,6 @@
       "Schema": "Forien's Quest Log - Migración de datos a la versión del esquema '{version}'",
       "Start": "Forien's Quest Log - Migrando datos, por favor no recargar."
     },
-    "NewQuest": "Nueva misión",
-    "NoActiveQuests": "No hay misiones activas",
-    "NoDocument": "No se pudo cargar una entidad para UUID: {uuid}",
-    "NoPermission": "No tiene suficientes permisos para ver esta hoja de entidad.",
     "Notifications": {
       "CannotOpen": "No puedes abrir los detalles de la misión. Puede que te falten permisos, que la misión ya no exista o que el ID sea inválido.",
       "FinishQuestAdded": "Termina de editar y cierra la nueva misión actual antes de agregar otra.",
@@ -61,7 +66,10 @@
         "CopyQuestID": "Copiar ID de misión",
         "PrimaryQuest": "Establecer / Desestablecer como misión principal"
       },
-      "SubTitle": "Sub - Misión de: {0}",
+      "Labels": {
+        "TableHeader": "Misiones {0}",
+        "SubTitle": "Sub - Misión de: {0}"
+      },
       "Tabs": {
         "Available": "Disponibles",
         "Completed": "Completadas",
@@ -74,7 +82,6 @@
         "Objectives": "Objetivos"
       }
     },
-    "QuestLogButton": "Misiones",
     "QuestPreview": {
       "Buttons": {
         "AddObjective": "Añadir Objetivo",
@@ -110,7 +117,6 @@
       "Reward": "Premio",
       "RewardDrop": "FQL (recompensa de misión): {userName} entrego '{itemName}' a {actorName}",
       "Rewards": "Recompensas:",
-      "SubTitle": "Sub - Misión de: {0}",
       "Tabs": {
         "Details": "Detalles",
         "GMNotes": "Notas del GM",
@@ -140,7 +146,6 @@
         "ViewSplashArt": "Ver imagen de portada"
       }
     },
-    "Quests": "{0} Misiones",
     "QuestTracker": {
       "NoPrimary": "No hay misión principal disponible.",
       "Title": "Rastreador de Misiones",

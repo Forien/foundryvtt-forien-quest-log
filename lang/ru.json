@@ -8,6 +8,15 @@
           },
           "name": "Открыть ”{name}”"
         }
+      },
+      "QuestDB": {
+        "Labels": {
+          "NewQuest": "Новое задание"
+        }
+      },
+      "Utils": {
+        "NoDocument": "Не удаётся загрузить элемент для UUID: {uuid}",
+        "NoPermission": "У вас нет прав доступа к листу этого документа."
       }
     },
     "DeleteDialog": {
@@ -35,10 +44,6 @@
       "Schema": "Forien's Quest Log - Обновление данных до версии '{version}'",
       "Start": "Forien's Quest Log - Перенос данных, подождите."
     },
-    "NewQuest": "Новое задание",
-    "NoActiveQuests": "Нет активных заданий",
-    "NoDocument": "Не удаётся загрузить элемент для UUID: {uuid}",
-    "NoPermission": "У вас нет прав доступа к листу этого документа.",
     "Notifications": {
       "CannotOpen": "Не удаётся открыть подробности задания. Это задания может быть не доступно вам или больше не существует.",
       "FinishQuestAdded": "Завершите редактирование и закройте текущее задание перед добавлением нового.",
@@ -61,7 +66,10 @@
         "CopyQuestID": "Копирование ID задания",
         "PrimaryQuest": "Переключение главного задания"
       },
-      "SubTitle": "Подзадание у {0}",
+      "Labels": {
+        "TableHeader": "{0} задания",
+        "SubTitle": "Подзадание у {0}"
+      },
       "Tabs": {
         "Available": "Доступные",
         "Completed": "Завершённые",
@@ -74,7 +82,6 @@
         "Objectives": "Задачи"
       }
     },
-    "QuestLogButton": "Журнал заданий",
     "QuestPreview": {
       "Buttons": {
         "AddObjective": "Добавить цель",
@@ -110,7 +117,6 @@
       "Reward": "Награда",
       "RewardDrop": "FQL (награда): {userName} передал '{itemName}' к {actorName}",
       "Rewards": "Награда:",
-      "SubTitle": "Подзадание у {0}",
       "Tabs": {
         "Details": "Подробности",
         "GMNotes": "Примечания GM",
@@ -140,7 +146,6 @@
         "ViewSplashArt": "Посмотреть обложку."
       }
     },
-    "Quests": "{0} задания",
     "QuestTracker": {
       "NoPrimary": "Нет основного задания.",
       "Title": "Трекер заданий",

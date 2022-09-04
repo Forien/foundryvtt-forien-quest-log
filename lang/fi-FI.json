@@ -8,6 +8,15 @@
           },
           "name": "Avaa \"{name}\""
         }
+      },
+      "QuestDB": {
+        "Labels": {
+          "NewQuest": "Uusi tehtävä"
+        }
+      },
+      "Utils": {
+        "NoDocument": "Entiteettiä ei voitu ladata UUID:llä: {uuid}",
+        "NoPermission": "Sinulla ei ole tarvittavia oikeuksia nähdä tämän entiteetin lomaketta."
       }
     },
     "DeleteDialog": {
@@ -35,10 +44,6 @@
       "Schema": "Forien's Quest Log - Tietoja siirretään skeeman versioon \"{version}\"",
       "Start": "Forien's Quest Log - Tietoja siirretään, ethän lataa sivua uudelleen."
     },
-    "NewQuest": "Uusi tehtävä",
-    "NoActiveQuests": "Aktiivisia tehtäviä ei ole",
-    "NoDocument": "Entiteettiä ei voitu ladata UUID:llä: {uuid}",
-    "NoPermission": "Sinulla ei ole tarvittavia oikeuksia nähdä tämän entiteetin lomaketta.",
     "Notifications": {
       "CannotOpen": "Tehtävän yksityiskohtia ei voi avata. Tämä tehtävä ei välttämättä ole havaittavissa tai sitä ei enää ole.",
       "FinishQuestAdded": "Teethän muokkauksesi loppuun ja suljet nykyisen tehtävän, ennen kuin lisäät uuden.",
@@ -61,7 +66,10 @@
         "CopyQuestID": "Kopioi tehtävän ID",
         "PrimaryQuest": "Aseta / poista päätehtäväksi"
       },
-      "SubTitle": "Alitehtävä ({0})",
+      "Labels": {
+        "TableHeader": "{0} tehtävää",
+        "SubTitle": "Alitehtävä ({0})"
+      },
       "Tabs": {
         "Available": "Saatavilla",
         "Completed": "Suoritettu",
@@ -74,7 +82,6 @@
         "Objectives": "Tavoitteet"
       }
     },
-    "QuestLogButton": "Tehtäväloki",
     "QuestPreview": {
       "Buttons": {
         "AddObjective": "Lisää tavoite",
@@ -110,7 +117,6 @@
       "Reward": "Palkkio",
       "RewardDrop": "FQL (palkkio): {userName} raahasi tavaran \"{itemName}\" hahmolle {actorName}",
       "Rewards": "Palkkiot:",
-      "SubTitle": "Alitehtävä ({0})",
       "Tabs": {
         "Details": "Yksityiskohdat",
         "GMNotes": "PJ:n muistiinpanot",
@@ -140,7 +146,6 @@
         "ViewSplashArt": "Katso kansikuva"
       }
     },
-    "Quests": "{0} tehtävää",
     "QuestTracker": {
       "NoPrimary": "Päätehtävää ei saatavilla.",
       "Title": "Tehtäväseurain",

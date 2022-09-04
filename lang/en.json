@@ -8,6 +8,15 @@
           },
           "name": "Open ”{name}”"
         }
+      },
+      "QuestDB": {
+        "Labels": {
+          "NewQuest": "New Quest"
+        }
+      },
+      "Utils": {
+        "NoDocument": "An entity could not be loaded for UUID: {uuid}",
+        "NoPermission": "You do not have sufficient permissions to view this entity sheet."
       }
     },
     "DeleteDialog": {
@@ -35,10 +44,6 @@
       "Schema": "Forien's Quest Log - Migrating data to schema version '{version}'",
       "Start": "Forien's Quest Log - Migrating data, please do not reload."
     },
-    "NewQuest": "New Quest",
-    "NoActiveQuests": "There are no active quests",
-    "NoDocument": "An entity could not be loaded for UUID: {uuid}",
-    "NoPermission": "You do not have sufficient permissions to view this entity sheet.",
     "Notifications": {
       "CannotOpen": "Cannot open Quest Details. This quest may not be observable or may no longer exist.",
       "FinishQuestAdded": "Please finish editing and close current new quest before adding another.",
@@ -61,7 +66,10 @@
         "CopyQuestID": "Copy quest ID",
         "PrimaryQuest": "Set / Unset as primary quest"
       },
-      "SubTitle": "Subquest of {0}",
+      "Labels": {
+        "TableHeader": "{0} Quests",
+        "SubTitle": "Subquest of {0}"
+      },
       "Tabs": {
         "Available": "Available",
         "Completed": "Completed",
@@ -74,7 +82,6 @@
         "Objectives": "Objectives"
       }
     },
-    "QuestLogButton": "Quest Log",
     "QuestPreview": {
       "Buttons": {
         "AddObjective": "Add Objective",
@@ -110,7 +117,6 @@
       "Reward": "Reward",
       "RewardDrop": "FQL (quest reward): {userName} dropped '{itemName}' onto {actorName}",
       "Rewards": "Rewards:",
-      "SubTitle": "Subquest of {0}",
       "Tabs": {
         "Details": "Details",
         "GMNotes": "GM Notes",
@@ -140,7 +146,6 @@
         "ViewSplashArt": "View splash art."
       }
     },
-    "Quests": "{0} Quests",
     "QuestTracker": {
       "NoPrimary": "No primary quest available.",
       "Title": "Quest Tracker",

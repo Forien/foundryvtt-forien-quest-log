@@ -8,6 +8,15 @@
           },
           "name": "打开 ”{name}” 任务"
         }
+      },
+      "QuestDB": {
+        "Labels": {
+          "NewQuest": "新任务"
+        }
+      },
+      "Utils": {
+        "NoDocument": "无法加载实体 UUID：{uuid}",
+        "NoPermission": "您没有足够的权限查看此实体表。"
       }
     },
     "DeleteDialog": {
@@ -35,10 +44,6 @@
       "Schema": "Forien 的任务日志 - 将数据迁移到架构版本 '{version}'",
       "Start": "Forien 的任务日志 - 正在迁移数据，请不要重新加载。"
     },
-    "NewQuest": "新任务",
-    "NoActiveQuests": "没有可用任务",
-    "NoDocument": "无法加载实体 UUID：{uuid}",
-    "NoPermission": "您没有足够的权限查看此实体表。",
     "Notifications": {
       "CannotOpen": "无法查看任务详情。你可能缺少访问权限，或者该任务ID错误，或者该任务已被删除。",
       "FinishQuestAdded": "请在添加另一个任务之前完成编辑并关闭当前的新任务。",
@@ -61,7 +66,10 @@
         "CopyQuestID": "复制任务 ID",
         "PrimaryQuest": "设置/取消设置为主要任务"
       },
-      "SubTitle": "部分：{0}",
+      "Labels": {
+        "TableHeader": "{0}任务",
+        "SubTitle": "的子任务 {0}"
+      },
       "Tabs": {
         "Available": "可选",
         "Completed": "已完成",
@@ -74,7 +82,6 @@
         "Objectives": "目標"
       }
     },
-    "QuestLogButton": "任务栏",
     "QuestPreview": {
       "Buttons": {
         "AddObjective": "加入新目标",
@@ -110,7 +117,6 @@
       "Reward": "报酬",
       "RewardDrop": "FQL (任务奖励)：{userName} 将 '{itemName}' 放到 {actorName} 上",
       "Rewards": "奖励：",
-      "SubTitle": "支线任务{0}",
       "Tabs": {
         "Details": "详情",
         "GMNotes": "GM笔记",
@@ -140,7 +146,6 @@
         "ViewSplashArt": "查看插图"
       }
     },
-    "Quests": "{0}任务",
     "QuestTracker": {
       "NoPrimary": "没有可用的主要任务。",
       "Title": "任务追踪器",

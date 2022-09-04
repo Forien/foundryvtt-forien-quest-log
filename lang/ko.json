@@ -8,6 +8,15 @@
           },
           "name": "열려 있는 ”{name}”"
         }
+      },
+      "QuestDB": {
+        "Labels": {
+          "NewQuest": "새 퀘스트"
+        }
+      },
+      "Utils": {
+        "NoDocument": "UUID: {uuid}에 대해 엔티티를 불러올 수 없습니다.",
+        "NoPermission": "사용 권한이 부족하여 이 엔티티 시트를 볼 수 없습니다."
       }
     },
     "DeleteDialog": {
@@ -35,10 +44,6 @@
       "Schema": "Forien's Quest Log - 스키마 버전 '{version}' 데이터 마이그레이션 중 ",
       "Start": "Forien's Quest Log - 데이터 마이그레이션 중, 리로드하지 마십시오."
     },
-    "NewQuest": "새 퀘스트",
-    "NoActiveQuests": "진행 중인 퀘스트가 없습니다.",
-    "NoDocument": "UUID: {uuid}에 대해 엔티티를 불러올 수 없습니다.",
-    "NoPermission": "사용 권한이 부족하여 이 엔티티 시트를 볼 수 없습니다.",
     "Notifications": {
       "CannotOpen": "퀘스트 세부 정보를 열 수 없습니다. 권한이 없거나 퀘스트가 더 이상 존재하지 않거나 제공된 ID가 유효하지 않을 수 있습니다.",
       "FinishQuestAdded": "다른 퀘스트를 추가하기 전 현재 새 퀘스트를 편집 완료하여 닫으십시오.",
@@ -61,7 +66,10 @@
         "CopyQuestID": "퀘스트 ID 복사",
         "PrimaryQuest": "중요 퀘스트로 설정/해제."
       },
-      "SubTitle": "서브 퀘스트 : {0}",
+      "Labels": {
+        "TableHeader": "{0} 퀘스트",
+        "SubTitle": "서브 퀘스트 : {0}"
+      },
       "Tabs": {
         "Available": "활성화",
         "Completed": "완료됨",
@@ -74,7 +82,6 @@
         "Objectives": "목표"
       }
     },
-    "QuestLogButton": "퀘스트 로그",
     "QuestPreview": {
       "Buttons": {
         "AddObjective": "목표 추가",
@@ -110,7 +117,6 @@
       "Reward": "보상",
       "RewardDrop": "FQL (quest reward): {userName} 유저가 '{itemName}' 아이템을 {actorName} 액터에 가져갔습니다.",
       "Rewards": "보상:",
-      "SubTitle": "서브 퀘스트 : {0}",
       "Tabs": {
         "Details": "세부 정보",
         "GMNotes": "GM 노트",
@@ -140,7 +146,6 @@
         "ViewSplashArt": "스플래시 아트를 봅니다."
       }
     },
-    "Quests": "{0} 퀘스트",
     "QuestTracker": {
       "NoPrimary": "가능한 중요 퀘스트가 없습니다.",
       "Title": "퀘스트 트래커",

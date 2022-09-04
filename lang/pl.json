@@ -8,6 +8,15 @@
           },
           "name": "Otwórz ”{name}”"
         }
+      },
+      "QuestDB": {
+        "Labels": {
+          "NewQuest": "Nowa Misja"
+        }
+      },
+      "Utils": {
+        "NoDocument": "Nie można załadować dokumentu dla UUID: {uuid}",
+        "NoPermission": "Nie masz wystarczających uprawnień, aby wyświetlić ten arkusz encji."
       }
     },
     "DeleteDialog": {
@@ -35,10 +44,6 @@
       "Schema": "Forien's Quest Log - Migracja danych do wersji schematu '{version}'",
       "Start": "Forien's Quest Log - Migracja danych, nie ładuj przeładować."
     },
-    "NewQuest": "Nowa Misja",
-    "NoActiveQuests": "Brak aktywnych misji",
-    "NoDocument": "Nie można załadować dokumentu dla UUID: {uuid}",
-    "NoPermission": "Nie masz wystarczających uprawnień, aby wyświetlić ten arkusz encji.",
     "Notifications": {
       "CannotOpen": "Nie można otworzyć szczegółów misji. Ta misja może nie być obserwowalna lub może już nie istnieć.",
       "FinishQuestAdded": "Zakończ edycję i zamknij bieżącą misję przed dodaniem kolejnej.",
@@ -61,7 +66,10 @@
         "CopyQuestID": "Skopiuj identyfikator misji",
         "PrimaryQuest": "Ustaw / wyłącz jako misję główną"
       },
-      "SubTitle": "Zadanie podrzędne z {0}",
+      "Labels": {
+        "TableHeader": "{0} Misje",
+        "SubTitle": "Zadanie podrzędne z {0}"
+      },
       "Tabs": {
         "Available": "Dostępne",
         "Completed": "Zakończone",
@@ -74,7 +82,6 @@
         "Objectives": "Cele"
       }
     },
-    "QuestLogButton": "Dziennik Misji",
     "QuestPreview": {
       "Buttons": {
         "AddObjective": "Dodaj Cel",
@@ -110,7 +117,6 @@
       "Reward": "Nagroda",
       "RewardDrop": "FQL (nagroda za misję): {userName} umieszczony '{itemName}' na {actorName}",
       "Rewards": "Nagrody:",
-      "SubTitle": "Zadanie podrzędne z {0}",
       "Tabs": {
         "Details": "Szczegóły",
         "GMNotes": "Notatki GM",
@@ -140,7 +146,6 @@
         "ViewSplashArt": "Obejrzeć sztuka rozchlapania."
       }
     },
-    "Quests": "{0} Misje",
     "QuestTracker": {
       "NoPrimary": "Brak dostępnych głównych zadań.",
       "Title": "Śledzenie Misji",

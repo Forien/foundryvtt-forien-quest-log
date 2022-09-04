@@ -8,6 +8,15 @@
           },
           "name": "{name} - 開く"
         }
+      },
+      "QuestDB": {
+        "Labels": {
+          "NewQuest": "クエストを追加"
+        }
+      },
+      "Utils": {
+        "NoDocument": "UUID:{uuid}のデータを読み込めませんでした。",
+        "NoPermission": "このデータを閲覧する権限を持っていません。"
       }
     },
     "DeleteDialog": {
@@ -35,10 +44,6 @@
       "Schema": "Forien's Quest Log - データを最新スキーマバージョン'{version}'にマイグレーションしてます。",
       "Start": "Forien's Quest Log - データマイグレーション中です、リロードしないでください。"
     },
-    "NewQuest": "クエストを追加",
-    "NoActiveQuests": "アクティブなクエストがありません。",
-    "NoDocument": "UUID:{uuid}のデータを読み込めませんでした。",
-    "NoPermission": "このデータを閲覧する権限を持っていません。",
     "Notifications": {
       "CannotOpen": "クエストの内容を開けませんでした。権限が無いかクエストが存在しないかもしれません。",
       "FinishQuestAdded": "他のクエストを追加する前に現在のクエスト記入を完了してください。",
@@ -61,7 +66,10 @@
         "CopyQuestID": "クエストIDをコピー",
         "PrimaryQuest": "メインクエスト指定切り替え"
       },
-      "SubTitle": "{0}に含まれています",
+      "Labels": {
+        "TableHeader": "{0}クエスト",
+        "SubTitle": "{0}に含まれています"
+      },
       "Tabs": {
         "Available": "受注可能",
         "Completed": "完了",
@@ -74,7 +82,6 @@
         "Objectives": "目標"
       }
     },
-    "QuestLogButton": "クエストログ",
     "QuestPreview": {
       "Buttons": {
         "AddObjective": "目標を追加",
@@ -110,7 +117,6 @@
       "Reward": "報酬",
       "RewardDrop": "FQL (quest reward)：{userName}が'{itemName}'を{actorName}に移動しました。",
       "Rewards": "報酬：",
-      "SubTitle": "{0}に含まれています",
       "Tabs": {
         "Details": "内容",
         "GMNotes": "GMノート",
@@ -140,7 +146,6 @@
         "ViewSplashArt": "表紙画像を見る。"
       }
     },
-    "Quests": "{0}クエスト",
     "QuestTracker": {
       "NoPrimary": "メインクエスト無し",
       "Title": "クエスト一覧",
