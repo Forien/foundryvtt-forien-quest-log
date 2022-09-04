@@ -36,7 +36,7 @@ const jquery = {
 const noteControls = [
    {
       name: constants.moduleName,
-      title: 'ForienQuestLog.QuestLogButton',
+      title: 'ForienQuestLog.QuestLog.Title',
       icon: 'fas fa-scroll',
       visible: true,
       onClick: () => ViewManager.questLog.render(true, { focus: true }),

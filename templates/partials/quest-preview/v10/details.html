@@ -57,7 +57,7 @@
           </p>
           {{#if isSubquest}}
             <p class="quest-name-link" data-quest-id="{{data_parent.id}}">
-              {{fql_format 'ForienQuestLog.QuestPreview.SubTitle' data_parent.name}}
+              {{fql_format 'ForienQuestLog.QuestLog.Labels.SubTitle' data_parent.name}}
               <i class="fas fa-link"></i>
               {{#if data_parent.isPrimary}}<i class="is-primary fas fa-star" title="{{localize 'ForienQuestLog.Tooltips.PrimaryQuest'}}"></i>{{/if}}
             </p>

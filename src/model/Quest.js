@@ -212,8 +212,8 @@ export default class Quest
        * @type {string}
        * @private
        */
-      this._name =
-       typeof value === 'string' && value.length > 0 ? value : game.i18n.localize('ForienQuestLog.NewQuest');
+      this._name = typeof value === 'string' && value.length > 0 ? value :
+       game.i18n.localize('ForienQuestLog.Api.QuestDB.Labels.NewQuest');
    }
 
    /**
@@ -331,7 +331,7 @@ export default class Quest
     */
    initData(data)
    {
-      this.name = data.name || game.i18n.localize('ForienQuestLog.NewQuest');
+      this.name = data.name || game.i18n.localize('ForienQuestLog.Api.QuestDB.Labels.NewQuest');
 
       /**
        * @type {string}
@@ -512,7 +512,7 @@ export default class Quest
     * Saves Quest to JournalEntry's content, and if needed, moves JournalEntry to different folder.
     * Can also update JournalEntry's permissions.
     *
-    * @returns {Promise<string>} The ID of the quest saved.
+    * @returns {Promise<string|void>} The ID of the quest saved or undefined if user couldn't save the quest.
     */
    async save()
    {
@@ -524,7 +524,7 @@ export default class Quest
       // Save Quest JSON, but also potentially update the backing JournalEntry folder name.
       const update = {
          name: typeof this._name === 'string' && this._name.length > 0 ? this._name :
-          game.i18n.localize('ForienQuestLog.NewQuest'),
+          game.i18n.localize('ForienQuestLog.Api.QuestDB.Labels.NewQuest'),
          flags: {
             [constants.moduleName]: { json: this.toJSON() }
          }

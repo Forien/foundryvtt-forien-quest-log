@@ -458,7 +458,7 @@ export default class FQLHooks
       if (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers))
       {
          const button = $(`<button class="quest-log-btn">${game.i18n.localize(
-          'ForienQuestLog.QuestLogButton')}</button>`);
+          'ForienQuestLog.QuestLog.Title')}</button>`);
 
          let footer = html.find('.directory-footer');
          if (footer.length === 0)
