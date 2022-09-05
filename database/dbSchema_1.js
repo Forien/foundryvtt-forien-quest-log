@@ -69,7 +69,7 @@ export default async function()
          else
          {
             // Must delete any no conforming journal entries. This likely never occurs.
-            console.log(game.i18n.format('ForienQuestLog.Migration.CouldNotMigrate',
+            console.log(game.i18n.format('ForienQuestLog.Migration.Notifications.CouldNotMigrate',
              { name: V10Compat.get(entry, 'name') }));
             await entry.delete();
          }
@@ -77,7 +77,7 @@ export default async function()
       catch (err)
       {
          // Must delete any journal entries / quests that fail the migration process.
-         console.log(game.i18n.format('ForienQuestLog.Migration.CouldNotMigrate',
+         console.log(game.i18n.format('ForienQuestLog.Migration.Notifications.CouldNotMigrate',
           { name: V10Compat.get(entry, 'name') }));
          await entry.delete();
       }

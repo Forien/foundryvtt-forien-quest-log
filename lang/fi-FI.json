@@ -44,10 +44,12 @@
         "QuestGiver": "Tehtävänantaja",
         "QuestRewards": "Tehtävän palkkiot"
       },
-      "Complete": "Forien's Quest Log - Tietojen siirto valmis.",
-      "CouldNotMigrate": "Forien's Quest Log - Tehtävää ei voitu siirtää: \"{name}\"",
-      "Schema": "Forien's Quest Log - Tietoja siirretään skeeman versioon \"{version}\"",
-      "Start": "Forien's Quest Log - Tietoja siirretään, ethän lataa sivua uudelleen."
+      "Notifications": {
+        "Complete": "Forien's Quest Log - Tietojen siirto valmis.",
+        "CouldNotMigrate": "Forien's Quest Log - Tehtävää ei voitu siirtää: \"{name}\"",
+        "Schema": "Forien's Quest Log - Tietoja siirretään skeeman versioon \"{version}\"",
+        "Start": "Forien's Quest Log - Tietoja siirretään, ethän lataa sivua uudelleen."
+      }
     },
     "Notifications": {
       "CannotOpen": "Tehtävän yksityiskohtia ei voi avata. Tämä tehtävä ei välttämättä ole havaittavissa tai sitä ei enää ole.",

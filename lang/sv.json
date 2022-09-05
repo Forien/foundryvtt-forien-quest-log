@@ -44,10 +44,12 @@
         "QuestGiver": "Uppdrag Givare",
         "QuestRewards": "Uppdrag Belöningar"
       },
-      "Complete": "Forien's Quest Log - Migrering av data klar.",
-      "CouldNotMigrate": "Forien's Quest Log - Det gick inte att migrera uppdraget: '{name}'",
-      "Schema": "Forien's Quest Log - Migrerar data till schemaversion '{version}'",
-      "Start": "Forien's Quest Log - Migrerar data, vänligen ladda inte om."
+      "Notifications": {
+        "Complete": "Forien's Quest Log - Migrering av data klar.",
+        "CouldNotMigrate": "Forien's Quest Log - Det gick inte att migrera uppdraget: '{name}'",
+        "Schema": "Forien's Quest Log - Migrerar data till schemaversion '{version}'",
+        "Start": "Forien's Quest Log - Migrerar data, vänligen ladda inte om."
+      }
     },
     "Notifications": {
       "CannotOpen": "Kan inte öppna Uppdragsdetaljer. Detta uppdrag kanske inte går att observera eller kanske inte längre existerar.",

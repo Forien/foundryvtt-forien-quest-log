@@ -44,10 +44,12 @@
         "QuestGiver": "任务给予者",
         "QuestRewards": "任务奖励"
       },
-      "Complete": "Forien 的任务日志 - 迁移数据完成。",
-      "CouldNotMigrate": "Forien 的任务日志 - 无法迁移任务：'{name}'",
-      "Schema": "Forien 的任务日志 - 将数据迁移到架构版本 '{version}'",
-      "Start": "Forien 的任务日志 - 正在迁移数据，请不要重新加载。"
+      "Notifications": {
+        "Complete": "Forien 的任务日志 - 迁移数据完成。",
+        "CouldNotMigrate": "Forien 的任务日志 - 无法迁移任务：'{name}'",
+        "Schema": "Forien 的任务日志 - 将数据迁移到架构版本 '{version}'",
+        "Start": "Forien 的任务日志 - 正在迁移数据，请不要重新加载。"
+      }
     },
     "Notifications": {
       "CannotOpen": "无法查看任务详情。你可能缺少访问权限，或者该任务ID错误，或者该任务已被删除。",

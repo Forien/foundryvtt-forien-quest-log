@@ -44,10 +44,12 @@
         "QuestGiver": "Quest Giver",
         "QuestRewards": "Quest Rewards"
       },
-      "Complete": "Foriens Questlog - Migration der Daten abgeschlossen.",
-      "CouldNotMigrate": "Foriens Questlog - Quest konnte nicht migriert werden: '{name}'",
-      "Schema": "Foriens Questlog - Migriere Daten zu Schema-Version '{version}'",
-      "Start": "Foriens Questlog - Daten werden migriert, bitte nicht neu laden."
+      "Notifications": {
+        "Complete": "Foriens Questlog - Migration der Daten abgeschlossen.",
+        "CouldNotMigrate": "Foriens Questlog - Quest konnte nicht migriert werden: '{name}'",
+        "Schema": "Foriens Questlog - Migriere Daten zu Schema-Version '{version}'",
+        "Start": "Foriens Questlog - Daten werden migriert, bitte nicht neu laden."
+      }
     },
     "Notifications": {
       "CannotOpen": "Questdetails können nicht geöffnet werden. Möglicherweise kann die Quest nicht betrachtet werden oder existiert nicht mehr.",

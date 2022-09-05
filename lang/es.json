@@ -44,10 +44,12 @@
         "QuestGiver": "Dador de Misiones",
         "QuestRewards": "Recompensas de Misiones"
       },
-      "Complete": "Forien's Quest Log - Migración de datos completa.",
-      "CouldNotMigrate": "Forien's Quest Log - No se pudo migrar la misión: '{name}'",
-      "Schema": "Forien's Quest Log - Migración de datos a la versión del esquema '{version}'",
-      "Start": "Forien's Quest Log - Migrando datos, por favor no recargar."
+      "Notifications": {
+        "Complete": "Forien's Quest Log - Migración de datos completa.",
+        "CouldNotMigrate": "Forien's Quest Log - No se pudo migrar la misión: '{name}'",
+        "Schema": "Forien's Quest Log - Migración de datos a la versión del esquema '{version}'",
+        "Start": "Forien's Quest Log - Migrando datos, por favor no recargar."
+      }
     },
     "Notifications": {
       "CannotOpen": "No puedes abrir los detalles de la misión. Puede que te falten permisos, que la misión ya no exista o que el ID sea inválido.",

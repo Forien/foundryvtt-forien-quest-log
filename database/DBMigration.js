@@ -112,20 +112,20 @@ export default class DBMigration
             return;
          }
 
-         ui.notifications.info(game.i18n.localize('ForienQuestLog.Migration.Start'));
+         ui.notifications.info(game.i18n.localize('ForienQuestLog.Migration.Notifications.Start'));
 
          // Start at the schema version and stop when the version exceeds the max version.
          for (let version = schemaVersion; version <= this.version; version++)
          {
             if (version !== 0)
             {
-               ui.notifications.info(game.i18n.format('ForienQuestLog.Migration.Schema', { version }));
+               ui.notifications.info(game.i18n.format('ForienQuestLog.Migration.Notifications.Schema', { version }));
             }
 
             await migrateImpl[version]();
          }
 
-         ui.notifications.info(game.i18n.localize('ForienQuestLog.Migration.Complete'));
+         ui.notifications.info(game.i18n.localize('ForienQuestLog.Migration.Notifications.Complete'));
 
          Socket.refreshAll();
       }

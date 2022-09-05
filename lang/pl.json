@@ -44,10 +44,12 @@
         "QuestGiver": "Zleceniodawca Zadań",
         "QuestRewards": "Nagrody za Zadania"
       },
-      "Complete": "Forien's Quest Log - Migracja danych zakończona.",
-      "CouldNotMigrate": "Forien's Quest Log - Nie udało się przenieść misji: '{name}'",
-      "Schema": "Forien's Quest Log - Migracja danych do wersji schematu '{version}'",
-      "Start": "Forien's Quest Log - Migracja danych, nie ładuj przeładować."
+      "Notifications": {
+        "Complete": "Forien's Quest Log - Migracja danych zakończona.",
+        "CouldNotMigrate": "Forien's Quest Log - Nie udało się przenieść misji: '{name}'",
+        "Schema": "Forien's Quest Log - Migracja danych do wersji schematu '{version}'",
+        "Start": "Forien's Quest Log - Migracja danych, nie ładuj przeładować."
+      }
     },
     "Notifications": {
       "CannotOpen": "Nie można otworzyć szczegółów misji. Ta misja może nie być obserwowalna lub może już nie istnieć.",

@@ -64,13 +64,13 @@ export default async function()
          }
          else
          {
-            console.log(game.i18n.format('ForienQuestLog.Migration.CouldNotMigrate',
+            console.log(game.i18n.format('ForienQuestLog.Migration.Notifications.CouldNotMigrate',
              { name: V10Compat.get(entry, 'name') }));
          }
       }
       catch (err)
       {
-         console.log(game.i18n.format('ForienQuestLog.Migration.CouldNotMigrate',
+         console.log(game.i18n.format('ForienQuestLog.Migration.Notifications.CouldNotMigrate',
           { name: V10Compat.get(entry, 'name') }));
       }
    }

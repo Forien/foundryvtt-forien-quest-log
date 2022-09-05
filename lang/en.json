@@ -44,10 +44,12 @@
         "QuestGiver": "Quest Giver",
         "QuestRewards": "Quest Rewards"
       },
-      "Complete": "Forien's Quest Log - Migrating data complete.",
-      "CouldNotMigrate": "Forien's Quest Log - Could not migrate quest: '{name}'",
-      "Schema": "Forien's Quest Log - Migrating data to schema version '{version}'",
-      "Start": "Forien's Quest Log - Migrating data, please do not reload."
+      "Notifications": {
+        "Complete": "Forien's Quest Log - Migrating data complete.",
+        "CouldNotMigrate": "Forien's Quest Log - Could not migrate quest: '{name}'",
+        "Schema": "Forien's Quest Log - Migrating data to schema version '{version}'",
+        "Start": "Forien's Quest Log - Migrating data, please do not reload."
+      }
     },
     "Notifications": {
       "CannotOpen": "Cannot open Quest Details. This quest may not be observable or may no longer exist.",

@@ -44,10 +44,12 @@
         "QuestGiver": "Выдающий задание",
         "QuestRewards": "Награды задания"
       },
-      "Complete": "Forien's Quest Log - Перенос данных завершён.",
-      "CouldNotMigrate": "Forien's Quest Log - Не удалось перенести задание: '{name}'",
-      "Schema": "Forien's Quest Log - Обновление данных до версии '{version}'",
-      "Start": "Forien's Quest Log - Перенос данных, подождите."
+      "Notifications": {
+        "Complete": "Forien's Quest Log - Перенос данных завершён.",
+        "CouldNotMigrate": "Forien's Quest Log - Не удалось перенести задание: '{name}'",
+        "Schema": "Forien's Quest Log - Обновление данных до версии '{version}'",
+        "Start": "Forien's Quest Log - Перенос данных, подождите."
+      }
     },
     "Notifications": {
       "CannotOpen": "Не удаётся открыть подробности задания. Это задания может быть не доступно вам или больше не существует.",

@@ -44,10 +44,12 @@
         "QuestGiver": "Donneur de quête",
         "QuestRewards": "Récompenses de quête"
       },
-      "Complete": "Forien's Quest Log - Migration des données achevée.",
-      "CouldNotMigrate": "Forien's Quest Log - ne peut pas migrer la quête : '{name}'",
-      "Schema": "Forien's Quest Log - Migration des données sous le schéma de version  '{version}'",
-      "Start": "Forien's Quest Log - Migration en cours des données, ne pas recharger."
+      "Notifications": {
+        "Complete": "Forien's Quest Log - Migration des données achevée.",
+        "CouldNotMigrate": "Forien's Quest Log - ne peut pas migrer la quête : '{name}'",
+        "Schema": "Forien's Quest Log - Migration des données sous le schéma de version  '{version}'",
+        "Start": "Forien's Quest Log - Migration en cours des données, ne pas recharger."
+      }
     },
     "Notifications": {
       "CannotOpen": "Ne peut ouvrir les détails de la Quête. Soit vous n’avez pas la permission, soit la quête n’existe plus ou l’ID fournie était invalide.",

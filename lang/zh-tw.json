@@ -47,10 +47,12 @@
         "QuestGiver" : "任務給予者",
         "QuestRewards" : "任務獎勵"
       },
-      "Complete" : "Forien's Quest Log - 遷移資料完成.",
-      "CouldNotMigrate" : "Forien's Quest Log - 無法遷移任務：'{name}'",
-      "Schema" : "Forien's Quest Log - 將資料遷移到版本 '{version}'",
-      "Start" : "Forien's Quest Log - 遷移資料中，請不要重新加載."
+      "Notifications": {
+        "Complete" : "Forien's Quest Log - 遷移資料完成.",
+        "CouldNotMigrate" : "Forien's Quest Log - 無法遷移任務：'{name}'",
+        "Schema" : "Forien's Quest Log - 將資料遷移到版本 '{version}'",
+        "Start" : "Forien's Quest Log - 遷移資料中，請不要重新加載."
+      }
     },
     "Notifications" : {
       "CannotOpen" : "無法查看任務詳情。你可能缺少訪問權限，或者該任務ID錯誤，或者該任務已被刪除。",
