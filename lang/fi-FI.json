@@ -80,13 +80,6 @@
         "TableHeader": "{0} tehtävää",
         "SubTitle": "Alitehtävä ({0})"
       },
-      "Tabs": {
-        "Available": "Saatavilla",
-        "Completed": "Suoritettu",
-        "Failed": "Epäonnistunut",
-        "InActive": "Ei-aktiivinen",
-        "InProgress": "Kesken"
-      },
       "Title": "Tehtäväloki",
       "Tooltips": {
         "Objectives": "Tavoitteet"
@@ -167,16 +160,16 @@
       }
     },
     "QuestTypes": {
-      "Active": "Kesken",
-      "Available": "Saatavilla",
-      "Completed": "Suoritettu",
-      "Failed": "Epäonnistunut",
-      "InActive": "Ei-aktiivinen",
       "Labels": {
+        "Active": "Kesken",
         "active": "kesken",
+        "Available": "Saatavilla",
         "available": "saatavilla",
+        "Completed": "Suoritettu",
         "completed": "suoritettu",
+        "Failed": "Epäonnistunut",
         "failed": "epäonnistunut",
+        "InActive": "Ei-aktiivinen",
         "inactive": "ei-aktiivinen",
         "Status": "Tehtävä on {statusLabel}."
       },

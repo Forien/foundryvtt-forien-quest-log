@@ -80,13 +80,6 @@
         "TableHeader": "{0}任务",
         "SubTitle": "的子任务 {0}"
       },
-      "Tabs": {
-        "Available": "可选",
-        "Completed": "已完成",
-        "Failed": "已失败",
-        "InActive": "不活跃",
-        "InProgress": "进行中"
-      },
       "Title": "任务栏",
       "Tooltips": {
         "Objectives": "目標"
@@ -167,16 +160,16 @@
       }
     },
     "QuestTypes": {
-      "Active": "进行中",
-      "Available": "可用的",
-      "Completed": "已完成",
-      "Failed": "已失败",
-      "InActive": "不活跃",
       "Labels": {
+        "Active": "进行中",
         "active": "进行中",
+        "Available": "可用的",
         "available": "可用的",
+        "Completed": "已完成",
         "completed": "已完成",
+        "Failed": "已失败",
         "failed": "已失败",
+        "InActive": "不活跃",
         "inactive": "不活跃",
         "Status": "任务是 {statusLabel}。"
       },

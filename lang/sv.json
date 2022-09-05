@@ -80,13 +80,6 @@
         "TableHeader": "{0} Uppdrag",
         "SubTitle": "Delfråga av {0}"
       },
-      "Tabs": {
-        "Available": "Tillgängliga",
-        "Completed": "Avsklarade",
-        "Failed": "Misslyckade",
-        "InActive": "Inaktiv",
-        "InProgress": "Pågår"
-      },
       "Title": "Uppdragslogg",
       "Tooltips": {
         "Objectives": "Mål"
@@ -167,16 +160,16 @@
       }
     },
     "QuestTypes": {
-      "Active": "Aktiv",
-      "Available": "Tillgängliga",
-      "Completed": "Avklarade",
-      "Failed": "Misslyckade",
-      "InActive": "Inaktiva",
       "Labels": {
+        "Active": "Aktiv",
         "active": "aktiv",
+        "Available": "Tillgängliga",
         "available": "tillgängliga",
+        "Completed": "Avklarade",
         "completed": "avklarade",
+        "Failed": "Misslyckade",
         "failed": "misslyckade",
+        "InActive": "Inaktiva",
         "inactive": "inaktiva",
         "Status": "Uppdrag är {statusLabel}."
       },

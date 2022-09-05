@@ -80,13 +80,6 @@
         "TableHeader": "{0} Quests",
         "SubTitle": "Unterquest von {0}"
       },
-      "Tabs": {
-        "Available": "Verfügbar",
-        "Completed": "Abgeschlossen",
-        "Failed": "Fehlgeschlagen",
-        "InActive": "Inaktiv",
-        "InProgress": "Aktiv"
-      },
       "Title": "Questlog",
       "Tooltips": {
         "Objectives": "Ziele"
@@ -167,16 +160,16 @@
       }
     },
     "QuestTypes": {
-      "Active": "Aktive",
-      "Available": "Verfügbare",
-      "Completed": "Abgeschlossene",
-      "Failed": "Fehlgeschlagene",
-      "InActive": "Inaktive",
       "Labels": {
+        "Active": "Aktive",
         "active": "aktiv",
+        "Available": "Verfügbare",
         "available": "verfügbar",
+        "Completed": "Abgeschlossene",
         "completed": "abgeschlossen",
+        "Failed": "Fehlgeschlagene",
         "failed": "fehlgeschlagen",
+        "InActive": "Inaktive",
         "inactive": "inaktiv",
         "Status": "Quest ist {statusLabel}."
       },

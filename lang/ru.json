@@ -80,13 +80,6 @@
         "TableHeader": "{0} задания",
         "SubTitle": "Подзадание у {0}"
       },
-      "Tabs": {
-        "Available": "Доступные",
-        "Completed": "Завершённые",
-        "Failed": "Проваленные",
-        "InActive": "Неактивные",
-        "InProgress": "В процессе"
-      },
       "Title": "Журнал заданий",
       "Tooltips": {
         "Objectives": "Задачи"
@@ -167,17 +160,17 @@
       }
     },
     "QuestTypes": {
-      "Active": "В процессе",
-      "Available": "Доступные",
-      "Completed": "Завершённые",
-      "Failed": "Проваленные",
-      "InActive": "Неактивные",
       "Labels": {
+        "Active": "В процессе",
         "active": "в процессе",
-        "available": "доступно",
-        "completed": "завершено",
-        "failed": "провалено",
-        "inactive": "неактивно",
+        "Available": "Доступные",
+        "available": "доступные",
+        "Completed": "Завершённые",
+        "completed": "завершённые",
+        "Failed": "Проваленные",
+        "failed": "проваленные",
+        "InActive": "Неактивные",
+        "inactive": "неактивные",
         "Status": "Задание {statusLabel}."
       },
       "Tooltips": {

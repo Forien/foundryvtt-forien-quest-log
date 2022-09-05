@@ -80,13 +80,6 @@
         "TableHeader": "{0}クエスト",
         "SubTitle": "{0}に含まれています"
       },
-      "Tabs": {
-        "Available": "受注可能",
-        "Completed": "完了",
-        "Failed": "失敗",
-        "InActive": "秘匿",
-        "InProgress": "進行中"
-      },
       "Title": "クエストログ",
       "Tooltips": {
         "Objectives": "目標"
@@ -167,16 +160,16 @@
       }
     },
     "QuestTypes": {
-      "Active": "進行中",
-      "Available": "受注可能",
-      "Completed": "完了",
-      "Failed": "失敗",
-      "InActive": "無効",
       "Labels": {
+        "Active": "進行中",
         "active": "進行中",
+        "Available": "受注可能",
         "available": "受注可能",
+        "Completed": "完了",
         "completed": "完了",
+        "Failed": "失敗",
         "failed": "失敗",
+        "InActive": "無効",
         "inactive": "無効",
         "Status": "クエスト状態{statusLabel}。"
       },

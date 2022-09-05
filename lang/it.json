@@ -80,13 +80,6 @@
         "TableHeader": "Missioni {0}",
         "SubTitle": "Sottomissione di {0}"
       },
-      "Tabs": {
-        "Available": "A disposizione",
-        "Completed": "Completato",
-        "Failed": "Fallito",
-        "InActive": "Non attivo",
-        "InProgress": "In corso"
-      },
       "Title": "Registro Missione",
       "Tooltips": {
         "Objectives": "Obiettivi"
@@ -167,16 +160,16 @@
       }
     },
     "QuestTypes": {
-      "Active": "In corso",
-      "Available": "A disposizione",
-      "Completed": "Completato",
-      "Failed": "Fallito",
-      "InActive": "Non attivo",
       "Labels": {
+        "Active": "In corso",
         "active": "in corso",
+        "Available": "A disposizione",
         "available": "a disposizione",
+        "Completed": "Completato",
         "completed": "completato",
+        "Failed": "Fallito",
         "failed": "fallito",
+        "InActive": "Non attivo",
         "inactive": "non attivo",
         "Status": "La missione è {statusLabel}."
       },

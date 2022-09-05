@@ -80,13 +80,6 @@
         "TableHeader": "Missões {0}",
         "SubTitle": "Parte da missão de: {0}"
       },
-      "Tabs": {
-        "Available": "Disponível",
-        "Completed": "Completa",
-        "Failed": "Perdida",
-        "InActive": "Inativa",
-        "InProgress": "Em Progresso"
-      },
       "Title": "Registro de Missões",
       "Tooltips": {
         "Objectives": "Objetivos"
@@ -167,16 +160,16 @@
       }
     },
     "QuestTypes": {
-      "Active": "Em Progresso",
-      "Available": "Disponíveis",
-      "Completed": "Completas",
-      "Failed": "Perdidas",
-      "InActive": "Inativas",
       "Labels": {
+        "Active": "Em Progresso",
         "active": "em progresso",
+        "Available": "Disponíveis",
         "available": "disponível",
+        "Completed": "Completas",
         "completed": "completa",
+        "Failed": "Perdidas",
         "failed": "perdida",
+        "InActive": "Inativas",
         "inactive": "inativa",
         "Status": "A missão está {statusLabel}."
       },

@@ -80,13 +80,6 @@
         "TableHeader": "{0} Misje",
         "SubTitle": "Zadanie podrzędne z {0}"
       },
-      "Tabs": {
-        "Available": "Dostępne",
-        "Completed": "Zakończone",
-        "Failed": "Nieudane",
-        "InActive": "Nieaktywny",
-        "InProgress": "W trakcie"
-      },
       "Title": "Dziennik Misji",
       "Tooltips": {
         "Objectives": "Cele"
@@ -167,16 +160,16 @@
       }
     },
     "QuestTypes": {
-      "Active": "W trakcie",
-      "Available": "Dostępne",
-      "Completed": "Zakończone",
-      "Failed": "Nieudane",
-      "InActive": "Nieaktywny",
       "Labels": {
+        "Active": "W trakcie",
         "active": "w trakcie",
+        "Available": "Dostępne",
         "available": "dostępne",
+        "Completed": "Zakończone",
         "completed": "zakończone",
+        "Failed": "Nieudane",
         "failed": "nieudane",
+        "InActive": "Nieaktywny",
         "inactive": "nieaktywny",
         "Status": "Misja to {statusLabel}."
       },

@@ -80,13 +80,6 @@
         "TableHeader": "{0} 퀘스트",
         "SubTitle": "서브 퀘스트 : {0}"
       },
-      "Tabs": {
-        "Available": "활성화",
-        "Completed": "완료됨",
-        "Failed": "실패함",
-        "InActive": "비공개",
-        "InProgress": "진행 중"
-      },
       "Title": "퀘스트 로그",
       "Tooltips": {
         "Objectives": "목표"
@@ -167,16 +160,16 @@
       }
     },
     "QuestTypes": {
-      "Active": "진행 중",
-      "Available": "활성화",
-      "Completed": "성공",
-      "Failed": "실패",
-      "InActive": "비활성화",
       "Labels": {
+        "Active": "진행 중",
         "active": "진행 중",
+        "Available": "활성화",
         "available": "활성화",
+        "Completed": "성공",
         "completed": "완료된",
+        "Failed": "실패",
         "failed": "실패한",
+        "InActive": "비활성화",
         "inactive": "비공개",
         "Status": "{statusLabel} 상태인 퀘스트입니다."
       },

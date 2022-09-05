@@ -80,13 +80,6 @@
         "TableHeader": "Misiones {0}",
         "SubTitle": "Sub - Misión de: {0}"
       },
-      "Tabs": {
-        "Available": "Disponibles",
-        "Completed": "Completadas",
-        "Failed": "Fallidas",
-        "InActive": "Inactivas",
-        "InProgress": "En curso"
-      },
       "Title": "Misiones",
       "Tooltips": {
         "Objectives": "Objetivos"
@@ -167,16 +160,16 @@
       }
     },
     "QuestTypes": {
-      "Active": "En curso",
-      "Available": "Disponible",
-      "Completed": "Completadas",
-      "Failed": "Fallidas",
-      "InActive": "Inactivo",
       "Labels": {
+        "Active": "En curso",
         "active": "en curso",
+        "Available": "Disponible",
         "available": "disponible",
+        "Completed": "Completadas",
         "completed": "completadas",
+        "Failed": "Fallidas",
         "failed": "fallidas",
+        "InActive": "Inactivo",
         "inactive": "inactivo",
         "Status": "La Misión es {statusLabel}."
       },

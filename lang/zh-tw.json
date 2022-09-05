@@ -83,13 +83,6 @@
         "TableHeader": "{0}任務",
         "SubTitle": "的子任務 {0}"
       },
-      "Tabs" : {
-        "Available" : "可選",
-        "Completed" : "已完成",
-        "Failed" : "已失敗",
-        "InActive" : "未啓動",
-        "InProgress" : "進行中"
-      },
       "Title" : "任務欄",
       "Tooltips" : {
         "Objectives" : "目標"
@@ -170,16 +163,16 @@
       }
     },
     "QuestTypes" : {
-      "Active" : "進行中",
-      "Available" : "可選",
-      "Completed" : "已完成",
-      "Failed" : "已失敗",
-      "InActive" : "未啓動",
       "Labels" : {
+        "Active" : "進行中",
         "active" : "進行中",
+        "Available" : "可選",
         "available" : "可選",
+        "Completed" : "已完成",
         "completed" : "已完成",
+        "Failed" : "已失敗",
         "failed" : "已失敗",
+        "InActive" : "未啓動",
         "inactive" : "未啓動",
         "Status" : "任務是 {statusLabel}。"
       },

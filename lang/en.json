@@ -80,13 +80,6 @@
         "TableHeader": "{0} Quests",
         "SubTitle": "Subquest of {0}"
       },
-      "Tabs": {
-        "Available": "Available",
-        "Completed": "Completed",
-        "Failed": "Failed",
-        "InActive": "Inactive",
-        "InProgress": "In progress"
-      },
       "Title": "Quest Log",
       "Tooltips": {
         "Objectives": "Objectives"
@@ -167,16 +160,16 @@
       }
     },
     "QuestTypes": {
-      "Active": "In Progress",
-      "Available": "Available",
-      "Completed": "Completed",
-      "Failed": "Failed",
-      "InActive": "Inactive",
       "Labels": {
+        "Active": "In Progress",
         "active": "in progress",
+        "Available": "Available",
         "available": "available",
+        "Completed": "Completed",
         "completed": "completed",
+        "Failed": "Failed",
         "failed": "failed",
+        "InActive": "Inactive",
         "inactive": "inactive",
         "Status": "Quest is {statusLabel}."
       },

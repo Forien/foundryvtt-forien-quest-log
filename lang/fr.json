@@ -80,13 +80,6 @@
         "TableHeader": "Quêtes {0}",
         "SubTitle": "Quête faisant parti de : {0}"
       },
-      "Tabs": {
-        "Available": "Disponible",
-        "Completed": "Achevée",
-        "Failed": "Échouée",
-        "InActive": "Inactive",
-        "InProgress": "En cours"
-      },
       "Title": "Journal de Quête",
       "Tooltips": {
         "Objectives": "Objectifs"
@@ -167,16 +160,16 @@
       }
     },
     "QuestTypes": {
-      "Active": "En cours",
-      "Available": "Disponible",
-      "Completed": "Achevée",
-      "Failed": "Échouée",
-      "InActive": "Inactif",
       "Labels": {
+        "Active": "En cours",
         "active": "en cours",
+        "Available": "Disponible",
         "available": "disponibles",
+        "Completed": "Achevée",
         "completed": "complétées",
+        "Failed": "Échouée",
         "failed": "échouées",
+        "InActive": "Inactif",
         "inactive": "inactif",
         "Status": "La quête est {statusLabel}."
       },
