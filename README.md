@@ -11,7 +11,7 @@
 
 [![Weblate Translations](https://weblate.foundryvtt-hub.com/widgets/forien-quest-log/-/287x66-grey.png)](https://weblate.foundryvtt-hub.com/engage/forien-quest-log/)
 
-This module provides comprehensive Quest Log system for players and Game Masters to use with [Foundry Virtual Table Top](https://foundryvtt.com/).
+This module provides comprehensive Quest Log system for players and Game Masters to use with [Foundry VTT](https://foundryvtt.com/).
 
 **[Compatibility]**: _FoundryVTT_ `v9` & `v10` as of FQL version `0.7.10`.
 
@@ -43,10 +43,10 @@ and is being updated for stability across core Foundry updates. This stability a
 _main feature_ of FQL presently. You can rest assured that the quest log experience you know and _love_ will continue
 to be available now and into the future. 
 
-A new continuation module is also in the works by TyphonJS that moves the questing experience beyond FQL is being developed at 
-[typhonjs-fvtt/typhonjs-quest-log](https://github.com/typhonjs-fvtt/typhonjs-quest-log). There is no specific ETA for 
-this continuation module at this time. In the meantime FQL continues to bring an essential rock solid quest log 
-experience to Foundry VTT. TyphonJS is developing a [very modern UI library](https://github.com/typhonjs-fvtt-lib), 
+A new continuation quest log module is in the works by TyphonJS that moves the questing experience beyond FQL and is 
+being developed at [typhonjs-fvtt/typhonjs-quest-log](https://github.com/typhonjs-fvtt/typhonjs-quest-log). There is no 
+specific ETA for this continuation module at this time. In the meantime FQL continues to bring an essential rock solid 
+quest log experience to Foundry VTT. TyphonJS is developing a [very modern UI library](https://github.com/typhonjs-fvtt-lib), 
 available for any 3rd party Foundry developer right now, that underpins this new quest log and full time+ work has been 
 ongoing on this effort since October 2021. When this library is completed then work on the new quest log will be 
 finished.
@@ -54,7 +54,9 @@ finished.
 ## Usage
 
 A button to access the Quest Log is situated on the bottom of Journal Directory or in the left hand scene controls icon 
-toolbar under notes / journal entries where two new icons (scroll and list) opens the Quest Log and Quest Tracker.
+toolbar under notes / journal entries where two new icons (scroll and list) opens the Quest Log and Quest Tracker. There
+also are two `macro compendiums` available for FQL that provide ready to go macros to drop onto your hotbar that allow
+convenient access to FQL for players and several GM related options.
 
 There is a series of useful in depth video tutorials on YouTube that cover each recent release:
 - [v0.7.7](https://youtu.be/lfSYJXVQAcE)
