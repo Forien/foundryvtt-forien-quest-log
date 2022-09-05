@@ -43,11 +43,11 @@
     },
     "Migration": {
       "ChatMessage": {
-        "Footer": "Sie müssen die oben genannten Quests manuell mit gültigen Dokumentdaten aus Kompendien oder Ihrer Welt aktualisieren.<br>",
-        "Header": "Forien's Questlog (DB-Migration)<br>Unverknüpfte Questgeber oder Belohnungsgegenstände aus den folgenden Quests entfernt:<p>",
-        "Notification": "Forien's Questlog - Nicht verknüpfte Questgeber oder Belohnungsgegenstände aus einer oder mehreren Quests entfernt. Bitte überprüfen Sie die Chat-Nachricht für weitere Informationen.",
+        "Footer": "Du musst die obigen Quests manuell mit gültigen Dokumentdaten aus Kompendien oder deiner Welt aktualisieren.<br>",
+        "Header": "Forien's Questlog (DB-Migration)<br>Unverlinkte(r) Questgeber oder Questbelohnung von unten stehenden Quests entfernt:<p>",
+        "Notification": "Forien's Questlog - Unverlinkte(r) Questgeber oder Questbelohnung von mindestens einer Quest entfernt. Bitte Chatnachrichten für mehr Informationen nachlesen.",
         "QuestGiver": "Questgeber",
-        "QuestRewards": "Quest-Belohnungen"
+        "QuestRewards": "Questbelohnungen"
       },
       "Notifications": {
         "Complete": "Foriens Questlog - Migration der Daten abgeschlossen.",
