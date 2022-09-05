@@ -1,6 +1,7 @@
 # FoundryVTT - Forien's Quest Log
 
-<img title="Forien's Quest Log version" src="https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/master/module.json&label=Forien%27s+Quest+Log+version&query=version&style=flat-square&color=success"> ![Foundry Core Compatible Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2FLeague-of-Foundry-Developers%2Ffoundryvtt-forien-quest-log%2Fmaster%2Fmodule.json&label=Foundry%20Version&query=$.compatibleCoreVersion&colorB=orange)
+![FQL Version](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/master/module.json&label=Forien%27s+Quest+Log+version&query=version&style=flat-square&color=success")
+![Foundry Core Compatible Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2FLeague-of-Foundry-Developers%2Ffoundryvtt-forien-quest-log%2Fmaster%2Fmodule.json&label=Foundry%20Version&query=$.compatibleCoreVersion&colorB=orange)
 ![GitHub release](https://img.shields.io/github/release-date/League-of-Foundry-Developers/foundryvtt-forien-quest-log)
 [![GitHub commits](https://img.shields.io/github/commits-since/League-of-Foundry-Developers/foundryvtt-forien-quest-log/latest)](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/commits/)
 ![the latest version zip](https://img.shields.io/github/downloads/League-of-Foundry-Developers/foundryvtt-forien-quest-log/latest/module.zip)
@@ -8,106 +9,102 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![Foundry Hub Endorsements](https://img.shields.io/endpoint?logoColor=white&url=https%3A%2F%2Fwww.foundryvtt-hub.com%2Fwp-json%2Fhubapi%2Fv1%2Fpackage%2Fforien-quest-log%2Fshield%2Fendorsements)](https://www.foundryvtt-hub.com/package/forien-quest-log/)
 
-**NOTE** The `0.7.9` update to FQL brings compatibility to version 9 of Foundry VTT at the expense of disabling 
-"document linking" for quests. [Please see issue #6 regarding more details](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/issues/6). 
-There is a new continuation module for the quest log that will be released in the coming months that will enable this 
-functionality again.   
+[![Weblate Translations](https://weblate.foundryvtt-hub.com/widgets/forien-quest-log/-/287x66-grey.png)](https://weblate.foundryvtt-hub.com/engage/forien-quest-log/)
 
-**NOTE** This is an unofficial forked version of the module maintained by the [League of Foundry Developers](https://discord.gg/gzemMfHURH) to provide module continuity while Forien is unavailable. 
-The `0.7.x` series of FQL was guided by `TyphonJS` and is in maintenance mode. However, a new module in the works by TyphonJS that moves the questing experience beyond FQL is available at [typhonjs-fvtt/quest-log](https://github.com/typhonjs-fvtt/quest-log).
-The estimate for the new quest log release is late January / early February and there will be an easy upgrade path.
+This module provides comprehensive Quest Log system for players and Game Masters to use with [Foundry Virtual Table Top](https://foundryvtt.com/).
 
-**[Compatibility]**: _FoundryVTT_ 0.8.6 (as of version 0.6.0)
+**[Compatibility]**: _FoundryVTT_ `v9` & `v10` as of FQL version `0.7.10`.
 
-**[Systems]**: _any_
+**[Game Systems]**: _any_
 
-**[Languages]**: _Chinese, English, French, German, Japanese, Korean, Polish, Portuguese (Brazil), Spanish, Swedish_
-
-This module provides comprehensive Quest Log system for players and Game Masters to use with Foundry Virtual Table Top
+**[Language Translations]**: _Chinese, English, Finnish, French, German, Italian, Japanese, Korean, Polish, 
+Portuguese (Brazil), Russian, Spanish, Swedish_
 
 ## Installation
 
-1. Install Forien's Quest Log from the Foundry Module browser directly, or manually using manifest URL: https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/latest/download/module.json
-2. While loaded in World, enable **_Forien's Quest Log_** module.
+1. (Recommended) Install Forien's Quest Log from the Foundry package manager directly. 
+   - _or_ manually using the manifest URL: `https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/latest/download/module.json`
+2. While loaded in your World, enable **_Forien's Quest Log_** in the `Module Management` configuration. 
+
+## Updates
+
+**Note** The `0.7.10` update to FQL brings compatibility for _both_ version 9 & 10 of Foundry VTT and includes several 
+quality of life enhancements:
+
+- Quest document linking is enabled again.
+- Show quest log to players link in quest log app header (for GM).
+- Show quest tracker to players with icon in quest tracker header (for GM).
+- Ability to set quest tracker to transparent via fill icon in app header.
+- Expanded language / translation support.
+
+**NOTE** This module is hosted by the [League of Foundry Developers Discord](https://discord.gg/gzemMfHURH). The 
+`0.7.x` series of FQL is developed and maintained by [TyphonJS](https://github.com/typhonrt) / [TyphonJS Discord](https://discord.gg/mnbgN8f) 
+and is being updated for stability across core Foundry updates. This stability and long term maintenance of such is the 
+_main feature_ of FQL presently. You can rest assured that the quest log experience you know and _love_ will continue
+to be available now and into the future. 
+
+A new continuation module is also in the works by TyphonJS that moves the questing experience beyond FQL is being developed at 
+[typhonjs-fvtt/typhonjs-quest-log](https://github.com/typhonjs-fvtt/typhonjs-quest-log). There is no specific ETA for 
+this continuation module at this time. In the meantime FQL continues to bring an essential rock solid quest log 
+experience to Foundry VTT. TyphonJS is developing a [very modern UI library](https://github.com/typhonjs-fvtt-lib), 
+available for any 3rd party Foundry developer right now, that underpins this new quest log and full time+ work has been 
+ongoing on this effort since October 2021. When this library is completed then work on the new quest log will be 
+finished.
 
 ## Usage
 
-A button to access the Quest Log is situated on the bottom of Journal Directory or in the scene controls menu under notes / journal entries on the left-hand navigation bar where a scroll icon opens the Quest Log.
+A button to access the Quest Log is situated on the bottom of Journal Directory or in the left hand scene controls icon 
+toolbar under notes / journal entries where two new icons (scroll and list) opens the Quest Log and Quest Tracker.
 
-FQL is quite user-friendly with an intuitive UI, however you might want to [check out the Wiki](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/wiki) for more detailed usage including macros and Quest API details for external developers integrations. 
-
-There are also a series of useful in depth video tutorials on YouTube that cover each recent release:
+There is a series of useful in depth video tutorials on YouTube that cover each recent release:
 - [v0.7.7](https://youtu.be/lfSYJXVQAcE)
 - [v0.7.6](https://youtu.be/Dn2iprrcPpY)
 - [v0.7.5](https://youtu.be/cakE2a9MedM)
 
+FQL is quite user-friendly with an intuitive UI, however you might want to [check out the Wiki](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/wiki) for more detailed usage including macros and Quest API details for external developers integrations. 
 
 ## Features
 
-- Quest Log windows that lists all quests divided into `In Progress`, `Completed` and `Failed` tabs
-- Quest creator with WYSIWYG editors for description and GM notes
-- Quest objectives
-- Draggable Item rewards
-- Fully editable Quest Details window
-- Personal Quests
-- Quest Branching in the form of Sub Quests
+- Quest Log windows that lists all quests divided into `In Progress`, `Completed` and `Failed` tabs.
+- Quest creator with WYSIWYG editors for description and GM notes.
+- Quest objectives.
+- Draggable Item rewards.
+- Fully editable Quest Details window.
+- Personal Quests.
+- Quest Branching in the form of Sub Quests.
 
 ## Future plans (current ideas)
 
-Plans for future include:
+Rock solid stability through future releases of Foundry VTT and even more language / internationalization support.
+At this time a few quality of life features may be added in any given release as well, but major new feature 
+development will progress in the forthcoming continuation quest log module. Please file any ideas and review the planned
+new feature developments in the [TyphonJS Quest Log Issue Tracker](https://github.com/typhonjs-fvtt/typhonjs-quest-log/issues)
 
-- advanced sorting with additional data fields including user tagging.
-- experience / currency rewards with the option to split amongst the party.
+_If you think you have found a bug or usability issue with FQL itself please file an issue in the 
+[FQL Issue Tracker](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/issues)_.
 
-You can **always** check current and up-to-date [planned and requested features here](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement)
-
-_If you have **any** suggestion or idea on new contents, hit me up on Discord!_
+_If you have **any** suggestion or idea on new features please get in contact on my [Discord Server](https://discord.gg/mnbgN8f).
+Over the `0.7.x` release series I have implemented almost all community suggestions that improve the quest log 
+experience._
 
 ## Translations
 
-If you are interested in translating my module, simply make a new Pull Request with your changes, or contact me on Discord.
-
-#### How to contribute
-
-Please leave your preferred attribution name and optional email address in the AUTHORS file. Your GitHub noreply address can be found with [this tool](https://caius.github.io/github_id/) (use `<id+username@users.noreply.github.com>`).
-
-#### How to translate
-
-The League maintains the English translation of this module, so you check on that one to see how a translation file should look. It can be either expanded (nested) JSON like English, or flat JSON like Polish.
-
-Order of Localization Strings inside a `.json` file is indifferent.
-
-Localization file **must be** either completely flat, or completely expanded (nested). Not partially both.
-
-Please provide your attribution name and optional email address.
-
-#### What is `missing` Folder?
-
-The `lang/missing/` folder contains files for all languages showing all Localization Strings that are in the Module, but are not covered by that Language. For example, there are 6 strings not covered by Polish language, but since they are simply `API Error` messages, there is no need.
+FQL uses Weblate to coordinate language translation from community translators. Through this interface you are able to 
+provide language corrections and translations. I am more than willing to support even more language translations for 
+FQL, so if your language isn't represented yet please visit the [FQL Weblate Portal](https://weblate.foundryvtt-hub.com/engage/forien-quest-log/)
+and get in contact.
 
 ## Contact
 
-Michael Leahy aka TyphonJS is currently maintaining and adding new features as the main developer for Forien's Quest Log.
+Michael Leahy aka TyphonJS developed the `0.7.x` series of FQL releases and provides ongoing maintenance. 
 
-We request that you contact MLeahy#4299 for permission to use the name **Forien's Quest Log** in your fanworks, self-promotions, and advertisements. Do not use Forien's name or the names of other contributors without permission.
-
-Please feel free to join the following Discord servers:
+Please feel free to join my Discord server to get in touch:
 - [TyphonJS Discord server / current main FQL developer](https://discord.gg/mnbgN8f) for any questions.
-- [League of Foundry Developers Discord server](https://discord.gg/gzemMfHURH)
 
 ## Acknowledgments
 
-- Thanks to TyphonJS for significant improvements from `v0.7.0+` onward. 
-- Great thanks to sdenec for his invaluable help with UI overhaul!
-- Thanks to Atropos for his relentless work on developing and improving the Foundry VTT
-- Thanks to necxelos, TomChristoffer and Kralug for their massive lists of suggestions
-- Thanks to Brother Sharp for providing Japanese translation
-- Thanks to Acd-Jake for providing German translation
-- Thanks to KLO for providing Korean translation
-- Thanks to rectulo and Naoki for providing French translation
-- Thanks to JJBocanegra for providing Spanish translation
-- Thanks to Ztt1996 for providing Chinese translation
-- Thanks to Innocenti for providing Brazilian Portuguese translation
+See [Authors](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/blob/master/AUTHORS) and
+[Contributors](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/graphs/contributors)
 
 ## Support (Historical)
 
@@ -115,6 +112,6 @@ The original author, Forien, is no longer actively maintaining FQL, but for hist
 
 ## License
 
-Forien's Quest Log is a module for Foundry VTT by Forien and is licensed under a [MIT License](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/blob/master/LICENSE). List of contributors in [AUTHORS file](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/blob/master/AUTHORS).
+Forien's Quest Log is a module for Foundry VTT by Forien and is licensed under a [MIT License](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/blob/master/LICENSE). 
 
 This work is licensed under Foundry Virtual Tabletop [EULA - Limited License Agreement for module development from February 17, 2021](https://foundryvtt.com/article/license/).
