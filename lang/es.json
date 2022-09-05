@@ -21,7 +21,7 @@
       },
       "Utils": {
         "Notifications": {
-          "NoDocument": "No se pudo cargar una entidad para UUID: {uuid}",
+          "NoDocument": "No se pudo cargar una entidad para UUID: '{uuid}'.",
           "NoPermission": "No tiene suficientes permisos para ver esta hoja de entidad."
         }
       }

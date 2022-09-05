@@ -21,7 +21,7 @@
       },
       "Utils": {
         "Notifications": {
-          "NoDocument": "Entität mit UUID {uuid} konnte nicht geladen werden",
+          "NoDocument": "Entität mit UUID '{uuid}' konnte nicht geladen werden.",
           "NoPermission": "Du verfügst nicht über die nötigen Berechtigungen, um den Bogen dieser Entität einzusehen."
         }
       }

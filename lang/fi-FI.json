@@ -3,7 +3,7 @@
     "API": {
       "Hooks": {
         "Labels": {
-          "OpenMacro": "Avaa \"{name}\""
+          "OpenMacro": "Avaa ”{name}”"
         },
         "Notifications": {
           "NoQuest": "API virhe: Makroa ei voida luoda kelvottomalla tehtävän ID:llä."
@@ -16,12 +16,12 @@
       },
       "Socket": {
         "Notifications": {
-          "RewardDrop": "FQL (palkkio): {userName} raahasi tavaran \"{itemName}\" hahmolle {actorName}."
+          "RewardDrop": "FQL (palkkio): {userName} raahasi tavaran '{itemName}' hahmolle {actorName}."
         }
       },
       "Utils": {
         "Notifications": {
-          "NoDocument": "Entiteettiä ei voitu ladata UUID:llä: {uuid}",
+          "NoDocument": "Entiteettiä ei voitu ladata UUID:llä: '{uuid}'.",
           "NoPermission": "Sinulla ei ole tarvittavia oikeuksia nähdä tämän entiteetin lomaketta."
         }
       }
@@ -32,7 +32,7 @@
       "BodyReward": "Tämä palkkio ja sen tiedot poistetaan lopullisesti.",
       "Cancel": "Peruuta",
       "Delete": "Poista",
-      "HeaderDel": "Haluatko varmasti poistaa: <p>\"{name}\"</p>",
+      "HeaderDel": "Haluatko varmasti poistaa: <p>'{name}'</p>",
       "TitleDel": "Poista {title}"
     },
     "Labels": {
@@ -60,10 +60,10 @@
       "CannotOpen": "Tehtävän yksityiskohtia ei voi avata. Tämä tehtävä ei välttämättä ole havaittavissa tai sitä ei enää ole.",
       "FinishQuestAdded": "Teethän muokkauksesi loppuun ja suljet nykyisen tehtävän, ennen kuin lisäät uuden.",
       "LinkCopied": "Entiteetin linkki tähän tehtävään kopioitiin leikepöydälle.",
-      "QuestAdded": "Uusi tehtävä \"{name}\" lisättiin tilalla: {status}.",
+      "QuestAdded": "Uusi tehtävä '{name}' lisättiin tilalla: {status}.",
       "QuestIDCopied": "Tämän tehtävän ID kopioitiin leikepöydälle.",
-      "QuestMoved": "\"{name}\" siirrettiin uudeksi tilaksi asetettiin: {target}.",
-      "QuestPrimary": "\"{name}\" on uusi päätehtävä.",
+      "QuestMoved": "'{name}' siirrettiin uudeksi tilaksi asetettiin: {target}.",
+      "QuestPrimary": "'{name}' on uusi päätehtävä.",
       "QuestTrackerNoActive": "Tehtäväseurain on päällä, mutta keskeneräisiä tehtäviä ei tällä hetkellä ole.",
       "UserCantOpen": "Käyttäjällä {user} ei ole oikeuksia avata tätä tehtävää."
     },
@@ -196,7 +196,7 @@
       },
       "allowPlayersCreate": {
         "Enable": "Pelaajat voivat luoda tehtäviä",
-        "EnableHint": "Valitse salliaksesi pelaajien luoda tehtäviä. Pelaajien luomat tehtävät ilmestyvät Saatavilla-välilehdelle Pelaajan muokattava -oikeuksilla. VAATII \"luoda muistiinpanoja\" ydinoikeuden"
+        "EnableHint": "Valitse salliaksesi pelaajien luoda tehtäviä. Pelaajien luomat tehtävät ilmestyvät Saatavilla-välilehdelle Pelaajan muokattava -oikeuksilla. VAATII 'luoda muistiinpanoja' ydinoikeuden"
       },
       "allowPlayersDrag": {
         "Enable": "Salli pelaajien raahata palkkioita",
@@ -243,7 +243,7 @@
         "default": "Näytä tavoitteet: suoritettu / kaikki",
         "Enable": "Näytä tavoitteet tehtävälokissa",
         "EnableHint": "Valitse kuinka tavoitteiden määrä näytetään tehtävän otsikon vieressä tehtävälokissa. Tämä ei vaikuta tehtävän esikatseluun.",
-        "no": "Piilota \"Tavoitteet\" sarake",
+        "no": "Piilota 'Tavoitteet' sarake",
         "onlyCurrent": "Näytä tavoitteet: suoritettu"
       },
       "trustedPlayerEdit": {

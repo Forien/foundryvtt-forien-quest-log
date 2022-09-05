@@ -21,7 +21,7 @@
       },
       "Utils": {
         "Notifications": {
-          "NoDocument" : "無法加載 UUID：{uuid}",
+          "NoDocument" : "無法加載 UUID：'{uuid}'。",
           "NoPermission" : "您沒有足夠的權限查看此entity表格。"
         }
       }

@@ -21,7 +21,7 @@
       },
       "Utils": {
         "Notifications": {
-          "NoDocument": "En enhet kunde inte laddas för UUID: {uuid}",
+          "NoDocument": "En enhet kunde inte laddas för UUID: '{uuid}'.",
           "NoPermission": "Du har inte tillräckliga behörigheter för att visa detta enhetsblad."
         }
       }

@@ -21,7 +21,7 @@
       },
       "Utils": {
         "Notifications": {
-          "NoDocument": "Impossibile caricare un'entità UUID: {uuid}",
+          "NoDocument": "Impossibile caricare un'entità UUID: '{uuid}'.",
           "NoPermission": "Non hai autorizzazioni sufficienti per visualizzare questo foglio di entità."
         }
       }

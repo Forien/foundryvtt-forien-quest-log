@@ -6,7 +6,7 @@
           "OpenMacro": "{name} - 開く"
         },
         "Notifications": {
-          "NoQuest": "API Error: Can't create macro with invalid Quest ID."
+          "NoQuest": "API エラー: 無効なクエスト ID でマクロを作成できません。"
         }
       },
       "QuestDB": {
@@ -32,7 +32,7 @@
       "BodyReward": "この報酬とその内容はすべて削除されます。",
       "Cancel": "取り消す",
       "Delete": "削除",
-      "HeaderDel": "<p>'{name}'</p>を削除します本当によろしいですか？",
+      "HeaderDel": "消去してもよろしいですか：<p>'{name}'</p>",
       "TitleDel": "{name}を削除します"
     },
     "Labels": {
@@ -140,13 +140,13 @@
         "DeleteSplash": "カバー画像を削除します。",
         "HideAll": "全非表示",
         "LockAll": "全ロック",
-        "PrimaryQuestSet": "メインクエストに設定",
-        "PrimaryQuestUnset": "メインクエストから削除",
+        "PrimaryQuestSet": "メインクエストに設定。",
+        "PrimaryQuestUnset": "メインクエストから削除。",
         "RewardHidden": "報酬は非表示になっています。クリックで表示できます。",
         "RewardLocked": "報酬はロックされています。クリックでアンロックできます。",
-        "RewardLockedPlayer": "報酬はロックされています",
-        "RewardUnlocked": "報酬はアンロックされています",
-        "RewardUnlockedPlayer": "報酬はアンロックされています",
+        "RewardLockedPlayer": "報酬はロックされています。",
+        "RewardUnlocked": "報酬はアンロックされています。",
+        "RewardUnlockedPlayer": "報酬はアンロックされています。",
         "RewardVisible": "報酬は表示されています。クリックで非表示できます。",
         "ShowAll": "全表示",
         "TaskHidden": "目標は非表示になっています。クリックで表示できます。",
@@ -157,7 +157,7 @@
       }
     },
     "QuestTracker": {
-      "NoPrimary": "メインクエスト無し",
+      "NoPrimary": "メインクエスト無し。",
       "Title": "クエスト一覧",
       "Tooltips": {
         "BackgroundShow": "クリックすると背景が表示されます。",
@@ -225,7 +225,7 @@
         "bookmarks": "しおり風",
         "classic": "クラシック風",
         "Enable": "タブのスタイル",
-        "EnableHint": "クエストログのタブをどのように表示するのかを設定します"
+        "EnableHint": "クエストログのタブをどのように表示するのかを設定します。"
       },
       "notifyRewardDrop": {
         "Enable": "報酬ドロップ通知",

@@ -21,7 +21,7 @@
       },
       "Utils": {
         "Notifications": {
-          "NoDocument": "无法加载实体 UUID：{uuid}",
+          "NoDocument": "无法加载实体 UUID：'{uuid}'。",
           "NoPermission": "您没有足够的权限查看此实体表。"
         }
       }

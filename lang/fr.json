@@ -21,7 +21,7 @@
       },
       "Utils": {
         "Notifications": {
-          "NoDocument": "Une entité ne pourra pas être chargée pour IDuu : {uuid}",
+          "NoDocument": "Une entité ne pourra pas être chargée pour IDuu : '{uuid}'.",
           "NoPermission": "Vous n'avez pas la permission de voir la feuille de cette entité."
         }
       }

@@ -21,7 +21,7 @@
       },
       "Utils": {
         "Notifications": {
-          "NoDocument": "Не удаётся загрузить элемент для UUID: {uuid}",
+          "NoDocument": "Не удаётся загрузить элемент для UUID: '{uuid}'.",
           "NoPermission": "У вас нет прав доступа к листу этого документа."
         }
       }

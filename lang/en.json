@@ -21,7 +21,7 @@
       },
       "Utils": {
         "Notifications": {
-          "NoDocument": "An entity could not be loaded for UUID: {uuid}",
+          "NoDocument": "An entity could not be loaded for UUID: '{uuid}'.",
           "NoPermission": "You do not have sufficient permissions to view this entity sheet."
         }
       }
