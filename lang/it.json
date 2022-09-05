@@ -14,6 +14,11 @@
           "NewQuest": "Nuova Missione"
         }
       },
+      "Socket": {
+        "Notifications": {
+          "RewardDrop": "FQL (ricompensa missione): {userName} caduto '{itemName}' su {actorName}"
+        }
+      },
       "Utils": {
         "Notifications": {
           "NoDocument": "Impossibile caricare un'entità UUID: {uuid}",
@@ -89,20 +94,24 @@
     },
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "Aggiungi Obiettivo",
         "RewardCustom": "Definito dall'utente",
         "RewardHide": "Nascondi",
         "RewardLock": "Blocca",
         "RewardShow": "Mostra",
         "RewardUnlock": "Sblocca"
       },
-      "CustomSource": "Sorgente Personalizzata",
-      "Description": "Descrizione:",
-      "DragDropActor": "Trascina e Rilascia attore, elemento o voce di diario o fai clic con il pulsante sinistro del mouse per impostare una fonte personalizzata.",
-      "DragDropActorPlayer": "Trascina e Rilascia attore, elemento o voce di diario.",
-      "DragDropRewards": "Trascina e rilascia gli oggetti qui per aggiungerli come ricompense.",
-      "GMNotes": "Note GM:",
-      "InvalidQuestId": "Impossibile aprire l'anteprima della Missione a causa di un ID Missione non valido.",
+      "Labels": {
+        "CustomSource": "Sorgente Personalizzata",
+        "Description": "Descrizione:",
+        "DragDropActor": "Trascina e Rilascia attore, elemento o voce di diario o fai clic con il pulsante sinistro del mouse per impostare una fonte personalizzata.",
+        "DragDropActorPlayer": "Trascina e Rilascia attore, elemento o voce di diario.",
+        "DragDropRewards": "Trascina e rilascia gli oggetti qui per aggiungerli come ricompense.",
+        "GMNotes": "Note GM:",
+        "Objective": "Obbiettivo",
+        "Objectives": "Obiettivi:",
+        "Reward": "Ricompensa",
+        "Rewards": "Ricompense:"
+      },
       "Management": {
         "AddSubquest": "Aggiungi Sottomissione",
         "ConfigurePermissions": "Configura le Autorizzazioni",
@@ -117,11 +126,6 @@
         "WrongDocType": "Forien's Quest Log accetta solo attori del mondo / compendio, oggetti e voci di diario come fonte di missioni.",
         "WrongItemType": "Forien's Quest Log accetta solo oggetti del mondo e del compendio come ricompense."
       },
-      "Objective": "Obbiettivo",
-      "Objectives": "Obiettivi:",
-      "Reward": "Ricompensa",
-      "RewardDrop": "FQL (ricompensa missione): {userName} caduto '{itemName}' su {actorName}",
-      "Rewards": "Ricompense:",
       "Tabs": {
         "Details": "Particolari",
         "GMNotes": "Note GM",
@@ -130,6 +134,7 @@
       "Title": "Dettagli Missione - {name}",
       "Tooltips": {
         "AddCustom": "Aggiungi definito dall'utente",
+        "AddObjective": "Aggiungi Obiettivo",
         "ChangeSplashPos": "Cambia allineamento Schizzo.",
         "DeleteQuestGiver": "Elimina il donatore della missione.",
         "DeleteSplash": "Elimina schizzo arte.",

@@ -14,6 +14,11 @@
           "NewQuest": "クエストを追加"
         }
       },
+      "Socket": {
+        "Notifications": {
+          "RewardDrop": "FQL (quest reward)：{userName}が'{itemName}'を{actorName}に移動しました。"
+        }
+      },
       "Utils": {
         "Notifications": {
           "NoDocument": "UUID:{uuid}のデータを読み込めませんでした。",
@@ -89,20 +94,24 @@
     },
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "目標を追加",
         "RewardCustom": "ユーザー定義の",
         "RewardHide": "隠す",
         "RewardLock": "閉ざす",
         "RewardShow": "示す",
         "RewardUnlock": "ロック解除"
       },
-      "CustomSource": "カスタムソース",
-      "Description": "詳細：",
-      "DragDropActor": "キャラ、アイテム、資料をドラッグ＆ドロップすることでソースを手動で変更できます。",
-      "DragDropActorPlayer": "キャラ、アイテム、資料をドラッグ＆ドロップしてください。",
-      "DragDropRewards": "アイテムをここにドラッグ＆ドロップすると報酬として設定できます。",
-      "GMNotes": "GMノート：",
-      "InvalidQuestId": "クエストIDが存在しないため開けません。",
+      "Labels": {
+        "CustomSource": "カスタムソース",
+        "Description": "詳細：",
+        "DragDropActor": "キャラ、アイテム、資料をドラッグ＆ドロップすることでソースを手動で変更できます。",
+        "DragDropActorPlayer": "キャラ、アイテム、資料をドラッグ＆ドロップしてください。",
+        "DragDropRewards": "アイテムをここにドラッグ＆ドロップすると報酬として設定できます。",
+        "GMNotes": "GMノート：",
+        "Objective": "目標",
+        "Objectives": "目標：",
+        "Reward": "報酬",
+        "Rewards": "報酬："
+      },
       "Management": {
         "AddSubquest": "サブクエスト追加",
         "ConfigurePermissions": "権限設定",
@@ -117,11 +126,6 @@
         "WrongDocType": "Forien's Quest Logはワールドや辞典に指定されたキャラ、アイテム、資料のみをクエスト提供者として受け付けます。",
         "WrongItemType": "Forien's Quest Logはワールドや辞典に指定された報酬のみを受け付けます。"
       },
-      "Objective": "目標",
-      "Objectives": "目標：",
-      "Reward": "報酬",
-      "RewardDrop": "FQL (quest reward)：{userName}が'{itemName}'を{actorName}に移動しました。",
-      "Rewards": "報酬：",
       "Tabs": {
         "Details": "内容",
         "GMNotes": "GMノート",
@@ -130,6 +134,7 @@
       "Title": "クエスト詳細",
       "Tooltips": {
         "AddCustom": "ユーザー定義を追加",
+        "AddObjective": "目標を追加",
         "ChangeSplashPos": "画像の位置を調整。",
         "DeleteQuestGiver": "クエスト依頼主削除。",
         "DeleteSplash": "カバー画像を削除します。",

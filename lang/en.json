@@ -14,6 +14,11 @@
           "NewQuest": "New Quest"
         }
       },
+      "Socket": {
+        "Notifications": {
+          "RewardDrop": "FQL (quest reward): {userName} dropped '{itemName}' onto {actorName}"
+        }
+      },
       "Utils": {
         "Notifications": {
           "NoDocument": "An entity could not be loaded for UUID: {uuid}",
@@ -89,20 +94,24 @@
     },
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "Add Objective",
         "RewardCustom": "Custom",
         "RewardHide": "Hide",
         "RewardLock": "Lock",
         "RewardShow": "Show",
         "RewardUnlock": "Unlock"
       },
-      "CustomSource": "Custom Source",
-      "Description": "Description:",
-      "DragDropActor": "Drag & Drop Actor, Item or Journal Entry or left click to set a custom source.",
-      "DragDropActorPlayer": "Drag & Drop Actor, Item or Journal Entry.",
-      "DragDropRewards": "Drag & drop items here to add them as rewards.",
-      "GMNotes": "GM Notes:",
-      "InvalidQuestId": "Cannot open Quest Preview due to invalid Quest ID.",
+      "Labels": {
+        "CustomSource": "Custom Source",
+        "Description": "Description:",
+        "DragDropActor": "Drag & Drop Actor, Item or Journal Entry or left click to set a custom source.",
+        "DragDropActorPlayer": "Drag & Drop Actor, Item or Journal Entry.",
+        "DragDropRewards": "Drag & drop items here to add them as rewards.",
+        "GMNotes": "GM Notes:",
+        "Objective": "Objective",
+        "Objectives": "Objectives:",
+        "Reward": "Reward",
+        "Rewards": "Rewards:"
+      },
       "Management": {
         "AddSubquest": "Add Subquest",
         "ConfigurePermissions": "Configure Permissions",
@@ -117,11 +126,6 @@
         "WrongDocType": "Forien's Quest Log only accepts world / compendium actors, items, and journal entries as quest givers.",
         "WrongItemType": "Forien's Quest Log only accepts world and compendium items as rewards."
       },
-      "Objective": "Objective",
-      "Objectives": "Objectives:",
-      "Reward": "Reward",
-      "RewardDrop": "FQL (quest reward): {userName} dropped '{itemName}' onto {actorName}",
-      "Rewards": "Rewards:",
       "Tabs": {
         "Details": "Details",
         "GMNotes": "GM Notes",
@@ -130,6 +134,7 @@
       "Title": "Quest Details - {name}",
       "Tooltips": {
         "AddCustom": "Add Custom",
+        "AddObjective": "Add Objective",
         "ChangeSplashPos": "Change splash art alignment.",
         "DeleteQuestGiver": "Delete quest giver.",
         "DeleteSplash": "Delete splash art.",

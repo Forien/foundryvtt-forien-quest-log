@@ -14,6 +14,11 @@
           "NewQuest" : "新任務"
         }
       },
+      "Socket": {
+        "Notifications": {
+          "RewardDrop" : "FQL（任務獎勵）：{userName} 將 '{itemName}' 放到 {actorName} 上"
+        }
+      },
       "Utils": {
         "Notifications": {
           "NoDocument" : "無法加載 UUID：{uuid}",
@@ -92,20 +97,24 @@
     },
     "QuestPreview" : {
       "Buttons": {
-        "AddObjective": "添加目標",
         "RewardCustom": "添加用戶定義",
         "RewardHide": "隱藏所有",
         "RewardLock": "鎖定所有",
         "RewardShow": "顯示全部",
         "RewardUnlock": "全部解鎖"
       },
-      "CustomSource" : "自定義來源",
-      "Description" : "描述：",
-      "DragDropActor" : "拖放Actor、物品、日誌條目或左鍵單擊以設定自定義來源。",
-      "DragDropActorPlayer" : "拖放Actor、物品或日誌條目。",
-      "DragDropRewards" : "將物品拖拽到此處以將其設為獎勵。",
-      "GMNotes" : "GM 筆記：",
-      "InvalidQuestId" : "無法預覽任務：無效的任務ID。",
+      "Labels": {
+        "CustomSource" : "自定義來源",
+        "Description" : "描述：",
+        "DragDropActor" : "拖放Actor、物品、日誌條目或左鍵單擊以設定自定義來源。",
+        "DragDropActorPlayer" : "拖放Actor、物品或日誌條目。",
+        "DragDropRewards" : "將物品拖拽到此處以將其設為獎勵。",
+        "GMNotes" : "GM 筆記：",
+        "Objective" : "目標",
+        "Objectives" : "目標：",
+        "Reward" : "獎勵",
+        "Rewards" : "獎勵："
+      },
       "Management" : {
         "AddSubquest" : "新建支線任務",
         "ConfigurePermissions" : "配置權限",
@@ -120,11 +129,6 @@
         "WrongDocType" : "Forien 的任務日誌只接受World/Compendium Actor、物品和日誌條目作為任務提供者。",
         "WrongItemType" : "Forien 的任務日誌只接受World和Compendium items作為獎勵。"
       },
-      "Objective" : "目標",
-      "Objectives" : "目標：",
-      "Reward" : "獎勵",
-      "RewardDrop" : "FQL（任務獎勵）：{userName} 將 '{itemName}' 放到 {actorName} 上",
-      "Rewards" : "獎勵：",
       "Tabs" : {
         "Details" : "詳情",
         "GMNotes" : "GM筆記",
@@ -133,6 +137,7 @@
       "Title" : "任務詳情",
       "Tooltips" : {
         "AddCustom" : "添加用戶定義",
+        "AddObjective": "添加目標",
         "ChangeSplashPos" : "改變插畫對齊方式。",
         "DeleteQuestGiver" : "刪除任務給予者。",
         "DeleteSplash" : "刪除插畫。",

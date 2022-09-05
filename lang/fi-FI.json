@@ -14,6 +14,11 @@
           "NewQuest": "Uusi tehtävä"
         }
       },
+      "Socket": {
+        "Notifications": {
+          "RewardDrop": "FQL (palkkio): {userName} raahasi tavaran \"{itemName}\" hahmolle {actorName}"
+        }
+      },
       "Utils": {
         "Notifications": {
           "NoDocument": "Entiteettiä ei voitu ladata UUID:llä: {uuid}",
@@ -89,20 +94,24 @@
     },
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "Lisää tavoite",
         "RewardCustom": "Käyttäjän Määrittelemä",
         "RewardHide": "Kätkeä",
         "RewardLock": "Lukita",
         "RewardShow": "Näyttää",
         "RewardUnlock": "Avata"
       },
-      "CustomSource": "Mukautettu alkuperä",
-      "Description": "Kuvaus:",
-      "DragDropActor": "Raahaa & pudota hahmo, tavara tai muistiinpano tai napsauta vasemmalla asettaaksesi mukautetun alkuperän.",
-      "DragDropActorPlayer": "Raahaa & pudota hahmo, tavara tai muistiinpano.",
-      "DragDropRewards": "Raahaa & pudota tavaroita tähän asettaaksesi ne palkkioiksi.",
-      "GMNotes": "PJ:n muistiinpanot:",
-      "InvalidQuestId": "Tehtävän esikatselua ei voi avata, koska tehtävän ID ei ole kelvollinen.",
+      "Labels": {
+        "CustomSource": "Mukautettu alkuperä",
+        "Description": "Kuvaus:",
+        "DragDropActor": "Raahaa & pudota hahmo, tavara tai muistiinpano tai napsauta vasemmalla asettaaksesi mukautetun alkuperän.",
+        "DragDropActorPlayer": "Raahaa & pudota hahmo, tavara tai muistiinpano.",
+        "DragDropRewards": "Raahaa & pudota tavaroita tähän asettaaksesi ne palkkioiksi.",
+        "GMNotes": "PJ:n muistiinpanot:",
+        "Objective": "Tavoite",
+        "Objectives": "Tavoitteet:",
+        "Reward": "Palkkio",
+        "Rewards": "Palkkiot:"
+      },
       "Management": {
         "AddSubquest": "Lisää alitehtävä",
         "ConfigurePermissions": "Määritä oikeudet",
@@ -117,11 +126,6 @@
         "WrongDocType": "Forien's Quest Log hyväksyy vain maailman / hakemiston hahmoja, tavaroita ja muistiinpanoja tehtävänantajiksi.",
         "WrongItemType": "Forien's Quest Log hyväksyy vain maailman ja hakemiston tavaroita palkkioiksi."
       },
-      "Objective": "Tavoite",
-      "Objectives": "Tavoitteet:",
-      "Reward": "Palkkio",
-      "RewardDrop": "FQL (palkkio): {userName} raahasi tavaran \"{itemName}\" hahmolle {actorName}",
-      "Rewards": "Palkkiot:",
       "Tabs": {
         "Details": "Yksityiskohdat",
         "GMNotes": "PJ:n muistiinpanot",
@@ -130,6 +134,7 @@
       "Title": "Tehtävän yksityiskohdat - {name}",
       "Tooltips": {
         "AddCustom": "Lisää käyttäjän määrittämä",
+        "AddObjective": "Lisää tavoite",
         "ChangeSplashPos": "Muuta kansikuvan tasausta",
         "DeleteQuestGiver": "Poista tehtävänantaja",
         "DeleteSplash": "Poista kansikuva",

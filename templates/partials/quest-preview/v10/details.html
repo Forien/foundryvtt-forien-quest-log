@@ -4,9 +4,9 @@
       {{#if (or canEdit playerEdit)}}
         <span class="drop-info">
           {{#if canEdit}}
-            {{localize 'ForienQuestLog.QuestPreview.DragDropActor'}}
+            {{localize 'ForienQuestLog.QuestPreview.Labels.DragDropActor'}}
           {{else}}
-            {{localize 'ForienQuestLog.QuestPreview.DragDropActorPlayer'}}
+            {{localize 'ForienQuestLog.QuestPreview.Labels.DragDropActorPlayer'}}
           {{/if}}
         </span>
       {{/if}}
@@ -82,7 +82,7 @@
 <div class="quest-info">
 
   <div class="quest-description">
-    <h2>{{localize 'ForienQuestLog.QuestPreview.Description'}}</h2>
+    <h2>{{localize 'ForienQuestLog.QuestPreview.Labels.Description'}}</h2>
     {{#if (or canEdit playerEdit)}}
       {{{editor description target="description" button=true editable=true owner=true}}}
     {{else}}
@@ -96,8 +96,8 @@
 
     <div class="quest-tasks">
       <header>
-        <h2>{{localize 'ForienQuestLog.QuestPreview.Objectives'}}</h2>
-        {{#if (or canEdit playerEdit)}}<button class="add-new-task"><i class="fas fa-plus"></i> {{localize 'ForienQuestLog.QuestPreview.Buttons.AddObjective'}}</button>{{/if}}
+        <h2>{{localize 'ForienQuestLog.QuestPreview.Labels.Objectives'}}</h2>
+        {{#if (or canEdit playerEdit)}}<button class="add-new-task" title="{{localize 'ForienQuestLog.QuestPreview.Tooltips.AddObjective'}}"><i class="fas fa-plus"></i> {{localize 'ForienQuestLog.QuestPreview.Labels.Objective'}}</button>{{/if}}
       </header>
       <div class="quest-box tasks-box">
         <ul>
@@ -166,7 +166,7 @@
 
     <div class="quest-rewards">
       <header>
-        <h2>{{localize 'ForienQuestLog.QuestPreview.Rewards'}}</h2>
+        <h2>{{localize 'ForienQuestLog.QuestPreview.Labels.Rewards'}}</h2>
         {{#if canEdit}}
           {{#if data_rewards.length}}
             {{#if allRewardsVisible}}
@@ -222,7 +222,7 @@
         </li>
         {{/each}}
         {{#if canEdit}}
-          <li class="drop-info">{{localize 'ForienQuestLog.QuestPreview.DragDropRewards'}}</li>
+          <li class="drop-info">{{localize 'ForienQuestLog.QuestPreview.Labels.DragDropRewards'}}</li>
         {{/if}}
         </ul>
       </div>

@@ -14,6 +14,11 @@
           "NewQuest": "Neue Quest"
         }
       },
+      "Socket": {
+        "Notifications": {
+          "RewardDrop": "FQL (Questbelohnung): {userName} hat '{itemName}' auf {actorName} gezogen"
+        }
+      },
       "Utils": {
         "Notifications": {
           "NoDocument": "Entität mit UUID {uuid} konnte nicht geladen werden",
@@ -89,20 +94,24 @@
     },
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "Ziel hinzufügen",
         "RewardCustom": "Benutzerdefinierten",
         "RewardHide": "Verbergen",
         "RewardLock": "Sperren",
         "RewardShow": "Anzeigen",
         "RewardUnlock": "Entsperren"
       },
-      "CustomSource": "Eigene Quelle",
-      "Description": "Beschreibung:",
-      "DragDropActor": "Akteur, Gegenstand oder Notizbucheintrag hierher ziehen oder linksklicken, um sie als eigene Quelle festzulegen.",
-      "DragDropActorPlayer": "Akteur, Gegenstand oder Notizbucheintrag hierher ziehen.",
-      "DragDropRewards": "Gegenstände hierher ziehen, um sie als Belohnung festzulegen.",
-      "GMNotes": "GM-Notizen:",
-      "InvalidQuestId": "Cannot open Quest Preview due to invalid Quest ID.",
+      "Labels": {
+        "CustomSource": "Eigene Quelle",
+        "Description": "Beschreibung:",
+        "DragDropActor": "Akteur, Gegenstand oder Notizbucheintrag hierher ziehen oder linksklicken, um sie als eigene Quelle festzulegen.",
+        "DragDropActorPlayer": "Akteur, Gegenstand oder Notizbucheintrag hierher ziehen.",
+        "DragDropRewards": "Gegenstände hierher ziehen, um sie als Belohnung festzulegen.",
+        "GMNotes": "GM-Notizen:",
+        "Objective": "Ziel",
+        "Objectives": "Ziele:",
+        "Reward": "Belohnung",
+        "Rewards": "Belohnungen:"
+      },
       "Management": {
         "AddSubquest": "Unterquest hinzufügen",
         "ConfigurePermissions": "Berechtigungen Konfigurieren",
@@ -117,11 +126,6 @@
         "WrongDocType": "Foriens Questlog akzeptnur Welt-/Kompendium-Akteure, -Items und -Notizbucheinträge als Questgeber.",
         "WrongItemType": "Foriens Questlog akzeptiert nur Welt- und Kompendium-Items als Belohnungen."
       },
-      "Objective": "Ziel",
-      "Objectives": "Ziele:",
-      "Reward": "Belohnung",
-      "RewardDrop": "FQL (Questbelohnung): {userName} hat '{itemName}' auf {actorName} gezogen",
-      "Rewards": "Belohnungen:",
       "Tabs": {
         "Details": "Details",
         "GMNotes": "GM-Notizen",
@@ -130,6 +134,7 @@
       "Title": "Questdetails - {name}",
       "Tooltips": {
         "AddCustom": "Benutzerdefiniert Hinzufügen",
+        "AddObjective": "Ziel hinzufügen",
         "ChangeSplashPos": "Splash-Bildausrichtung ändern",
         "DeleteQuestGiver": "Questgeber löschen",
         "DeleteSplash": "Splash Art löschen",

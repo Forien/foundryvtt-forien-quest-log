@@ -14,6 +14,11 @@
           "NewQuest": "Новое задание"
         }
       },
+      "Socket": {
+        "Notifications": {
+          "RewardDrop": "FQL (награда): {userName} передал '{itemName}' к {actorName}"
+        }
+      },
       "Utils": {
         "Notifications": {
           "NoDocument": "Не удаётся загрузить элемент для UUID: {uuid}",
@@ -89,20 +94,24 @@
     },
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "Добавить цель",
         "RewardCustom": "Уникальный",
         "RewardHide": "Скрывать",
         "RewardLock": "Запирать",
         "RewardShow": "Показывать",
         "RewardUnlock": "Разблокировать"
       },
-      "CustomSource": "Свой источник",
-      "Description": "Описание:",
-      "DragDropActor": "Перенесите актёра, предмет или запись журнала или ЛКМ для выбора своего источника.",
-      "DragDropActorPlayer": "Перенесите актёра, предмет или запись журнала.",
-      "DragDropRewards": "Перенесите предмет, чтобы сделать его наградой.",
-      "GMNotes": "Заметки GM:",
-      "InvalidQuestId": "Не удаётся открыть подробности из-за несуществующего ID задания.",
+      "Labels": {
+        "CustomSource": "Свой источник",
+        "Description": "Описание:",
+        "DragDropActor": "Перенесите актёра, предмет или запись журнала или ЛКМ для выбора своего источника.",
+        "DragDropActorPlayer": "Перенесите актёра, предмет или запись журнала.",
+        "DragDropRewards": "Перенесите предмет, чтобы сделать его наградой.",
+        "GMNotes": "Заметки GM:",
+        "Objective": "Задача",
+        "Objectives": "Задачи:",
+        "Reward": "Награда",
+        "Rewards": "Награда:"
+      },
       "Management": {
         "AddSubquest": "Добавить подзадание",
         "ConfigurePermissions": "Настройка прав",
@@ -117,11 +126,6 @@
         "WrongDocType": "Forien's Quest Log принимает только актёров, предметы и записи журнала в качестве выдающего задание.",
         "WrongItemType": "Forien's Quest Log принимает только предметы из мира и библиотеки в качестве наград."
       },
-      "Objective": "Задача",
-      "Objectives": "Задачи:",
-      "Reward": "Награда",
-      "RewardDrop": "FQL (награда): {userName} передал '{itemName}' к {actorName}",
-      "Rewards": "Награда:",
       "Tabs": {
         "Details": "Подробности",
         "GMNotes": "Примечания GM",
@@ -130,6 +134,7 @@
       "Title": "Подробности задания - {name}",
       "Tooltips": {
         "AddCustom": "Добавить уникальный",
+        "AddObjective": "Добавить цель",
         "ChangeSplashPos": "Изменить расположение обложки.",
         "DeleteQuestGiver": "Удалить выдающего задание.",
         "DeleteSplash": "Удалить обложку.",

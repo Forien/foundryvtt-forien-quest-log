@@ -14,6 +14,11 @@
           "NewQuest": "Nowa Misja"
         }
       },
+      "Socket": {
+        "Notifications": {
+          "RewardDrop": "FQL (nagroda za misję): {userName} umieszczony '{itemName}' na {actorName}"
+        }
+      },
       "Utils": {
         "Notifications": {
           "NoDocument": "Nie można załadować dokumentu dla UUID: {uuid}",
@@ -89,20 +94,24 @@
     },
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "Dodaj Cel",
         "RewardCustom": "Określony przez użytkownika",
         "RewardHide": "Schowaj",
         "RewardLock": "Zablokuj",
         "RewardShow": "Pokazać",
         "RewardUnlock": "Odemknąć"
       },
-      "CustomSource": "Niestandardowe źródło",
-      "Description": "Opis:",
-      "DragDropActor": "Przeciągnij i upuść aktora, przedmiot lub wpis do dziennika lub kliknij lewym przyciskiem myszy, aby ustawić niestandardowe źródło.",
-      "DragDropActorPlayer": "Przeciągnij i upuść aktora, przedmiot lub wpis do dziennika.",
-      "DragDropRewards": "Przeciągnij i upuść elementy tutaj, aby dodać je jako nagrody.",
-      "GMNotes": "Notatki GM:",
-      "InvalidQuestId": "Nie można otworzyć podglądu misji z powodu nieprawidłowego identyfikatora misji.",
+      "Labels": {
+        "CustomSource": "Niestandardowe źródło",
+        "Description": "Opis:",
+        "DragDropActor": "Przeciągnij i upuść aktora, przedmiot lub wpis do dziennika lub kliknij lewym przyciskiem myszy, aby ustawić niestandardowe źródło.",
+        "DragDropActorPlayer": "Przeciągnij i upuść aktora, przedmiot lub wpis do dziennika.",
+        "DragDropRewards": "Przeciągnij i upuść elementy tutaj, aby dodać je jako nagrody.",
+        "GMNotes": "Notatki GM:",
+        "Objective": "Cel",
+        "Objectives": "Cele:",
+        "Reward": "Nagroda",
+        "Rewards": "Nagrody:"
+      },
       "Management": {
         "AddSubquest": "Dodaj misję podrzędną",
         "ConfigurePermissions": "Konfiguruj Uprawnienia",
@@ -117,11 +126,6 @@
         "WrongDocType": "Forien's Quest Log akceptuje tylko aktorów świata / kompendium, przedmioty i wpisy do dziennika jako zleceniodawców zadań.",
         "WrongItemType": "Forien's Quest Log akceptuje tylko przedmioty ze świata i kompendium jako nagrody."
       },
-      "Objective": "Cel",
-      "Objectives": "Cele:",
-      "Reward": "Nagroda",
-      "RewardDrop": "FQL (nagroda za misję): {userName} umieszczony '{itemName}' na {actorName}",
-      "Rewards": "Nagrody:",
       "Tabs": {
         "Details": "Szczegóły",
         "GMNotes": "Notatki GM",
@@ -130,6 +134,7 @@
       "Title": "Szczegóły Misji - {name}",
       "Tooltips": {
         "AddCustom": "Dodaj zdefiniowane przez użytkownika",
+        "AddObjective": "Dodaj Cel",
         "ChangeSplashPos": "Zmień pozycję obrazu powitalnego.",
         "DeleteQuestGiver": "Usuń zleceniodawcę misji.",
         "DeleteSplash": "Usuń grafikę pluśnięcie.",

@@ -14,6 +14,11 @@
           "NewQuest": "새 퀘스트"
         }
       },
+      "Socket": {
+        "Notifications": {
+          "RewardDrop": "FQL (quest reward): {userName} 유저가 '{itemName}' 아이템을 {actorName} 액터에 가져갔습니다."
+        }
+      },
       "Utils": {
         "Notifications": {
           "NoDocument": "UUID: {uuid}에 대해 엔티티를 불러올 수 없습니다.",
@@ -89,20 +94,24 @@
     },
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "목표 추가",
         "RewardCustom": "사용자 정의",
         "RewardHide": "모두 숨기기",
         "RewardLock": "모두 잠그다",
         "RewardShow": "모두 보기",
         "RewardUnlock": "모두 잠금 해제"
       },
-      "CustomSource": "사용자 지정 공급자",
-      "Description": "설명:",
-      "DragDropActor": "액터, 아이템, 저널 엔트리를 끌어다 놓아 퀘스트 제공자로 지정합니다.",
-      "DragDropActorPlayer": "액터, 아이템, 저널 엔트리를 드래그&드롭 하십시오.",
-      "DragDropRewards": "보상으로 추가할 아이템을 여기로 끌어다 놓으십시오.",
-      "GMNotes": "GM 메모:",
-      "InvalidQuestId": "퀘스트 ID가 잘못되어 미리보기를 열 수 없습니다.",
+      "Labels": {
+        "CustomSource": "사용자 지정 공급자",
+        "Description": "설명:",
+        "DragDropActor": "액터, 아이템, 저널 엔트리를 끌어다 놓아 퀘스트 제공자로 지정합니다.",
+        "DragDropActorPlayer": "액터, 아이템, 저널 엔트리를 드래그&드롭 하십시오.",
+        "DragDropRewards": "보상으로 추가할 아이템을 여기로 끌어다 놓으십시오.",
+        "GMNotes": "GM 메모:",
+        "Objective": "목표",
+        "Objectives": "목표:",
+        "Reward": "보상",
+        "Rewards": "보상:"
+      },
       "Management": {
         "AddSubquest": "새 서브 퀘스트 생성",
         "ConfigurePermissions": "권한 설정",
@@ -117,11 +126,6 @@
         "WrongDocType": "Forien's Quest Log는 월드/컴펜디움 액터, 아이템, 저널 항목만을 퀘스트 제공자로 받을 수 있습니다.",
         "WrongItemType": "Forien's Quest Log는 월드 아이템과 컴펜디움 아이템만을 보상으로 할 수 있습니다."
       },
-      "Objective": "목표",
-      "Objectives": "목표:",
-      "Reward": "보상",
-      "RewardDrop": "FQL (quest reward): {userName} 유저가 '{itemName}' 아이템을 {actorName} 액터에 가져갔습니다.",
-      "Rewards": "보상:",
       "Tabs": {
         "Details": "세부 정보",
         "GMNotes": "GM 노트",
@@ -130,6 +134,7 @@
       "Title": "퀘스트 세부 정보 - {name}",
       "Tooltips": {
         "AddCustom": "사용자 정의 추가",
+        "AddObjective": "목표 추가",
         "ChangeSplashPos": "스플래시 아트 정렬 변경.",
         "DeleteQuestGiver": "퀘스트 제공자 제거.",
         "DeleteSplash": "스플래시 아트 제거.",

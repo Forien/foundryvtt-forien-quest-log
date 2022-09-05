@@ -14,9 +14,14 @@
           "NewQuest": "Nova Missão"
         }
       },
+      "Socket": {
+        "Notifications": {
+          "RewardDrop": "FQL (recompensa de missão) : {userName} deu '{itemName}' para {actorName}"
+        }
+      },
       "Utils": {
         "Notifications": {
-          "NoDocument": "Uma entidade não pôde ser carregada para IDuu : {uuid}",
+          "NoDocument": "Uma entidade não pôde ser carregada para IDuu: {uuid}",
           "NoPermission": "Você não tem permissão para visualizar o documento desta entidade."
         }
       }
@@ -27,7 +32,7 @@
       "BodyReward": "Esta recompensa e seus dados serão apagados permanentemente.",
       "Cancel": "Cancelar",
       "Delete": "Remover",
-      "HeaderDel": "Tem certeza de que deseja excluir : <p>'{name}'</p>",
+      "HeaderDel": "Tem certeza de que deseja excluir: <p>'{name}'</p>",
       "TitleDel": "Excluir {title}"
     },
     "Labels": {
@@ -46,8 +51,8 @@
       },
       "Notifications": {
         "Complete": "Forien's Quest Log - Migração de dados completa.",
-        "CouldNotMigrate": "Forien's Quest Log - Não é possível migrar : '{name}'",
-        "Schema": "Forien's Quest Log - Migrando dados sob a versão:  '{version}'",
+        "CouldNotMigrate": "Forien's Quest Log - Não é possível migrar: '{name}'",
+        "Schema": "Forien's Quest Log - Migrando dados sob a versão: '{version}'",
         "Start": "Forien's Quest Log - Migrando dados, não recarregue."
       }
     },
@@ -89,20 +94,24 @@
     },
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "Adicionar Objetivo",
         "RewardCustom": "Usuário Definido",
         "RewardHide": "Esconder",
         "RewardLock": "Trancar",
         "RewardShow": "Mostrar",
         "RewardUnlock": "Desbloquear"
       },
-      "CustomSource": "Fonte personalizada",
-      "Description": "Descrição:",
-      "DragDropActor": "Arraste e solte o ator, item, journal ou clique com o botão esquerdo para definir uma fonte customizada.",
-      "DragDropActorPlayer": "Arraste e solte o ator, um objeto ou uma entrada do journal.",
-      "DragDropRewards": "Arraste e solte itens aqui para torná-los recompensas.",
-      "GMNotes": "Notas do Mestre :",
-      "InvalidQuestId": "Não pôde abrir a Visualização da missão, ID da Missão inválido.",
+      "Labels": {
+        "CustomSource": "Fonte personalizada",
+        "Description": "Descrição:",
+        "DragDropActor": "Arraste e solte o ator, item, journal ou clique com o botão esquerdo para definir uma fonte customizada.",
+        "DragDropActorPlayer": "Arraste e solte o ator, um objeto ou uma entrada do journal.",
+        "DragDropRewards": "Arraste e solte itens aqui para torná-los recompensas.",
+        "GMNotes": "Notas do Mestre :",
+        "Objective": "Objetivos",
+        "Objectives": "Objetivos:",
+        "Reward": "Recompensa",
+        "Rewards": "Recompensas:"
+      },
       "Management": {
         "AddSubquest": "Criar uma Missão Secundária",
         "ConfigurePermissions": "Configurar as permissões",
@@ -117,11 +126,6 @@
         "WrongDocType": "Forien's Quest Log só aceita atores, itens e entradas de log de mundo/compêndio como entregadores de missões",
         "WrongItemType": "O Registro de Missões de Forien só aceita itens de mundo e itens de compêndio como recompensas."
       },
-      "Objective": "Objetivos",
-      "Objectives": "Objetivos:",
-      "Reward": "Recompensa",
-      "RewardDrop": "FQL (recompensa de missão) : {userName} deu '{itemName}' para {actorName}",
-      "Rewards": "Recompensas :",
       "Tabs": {
         "Details": "Detalhes",
         "GMNotes": "Notas do Mestre",
@@ -130,6 +134,7 @@
       "Title": "Detalhes da Missão",
       "Tooltips": {
         "AddCustom": "Adicionar definido pelo usuário.",
+        "AddObjective": "Adicionar Objetivo",
         "ChangeSplashPos": "Modificar o alinhamento da imagem de ilustração.",
         "DeleteQuestGiver": "Excluir entragor da missão.",
         "DeleteSplash": "Excluir a ilustração.",

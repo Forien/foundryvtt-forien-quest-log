@@ -14,6 +14,11 @@
           "NewQuest": "Nytt uppdrag"
         }
       },
+      "Socket": {
+        "Notifications": {
+          "RewardDrop": "FQL (uppdragsbelöning): {userName} tappade '{itemName}' till {actorName}"
+        }
+      },
       "Utils": {
         "Notifications": {
           "NoDocument": "En enhet kunde inte laddas för UUID: {uuid}",
@@ -89,20 +94,24 @@
     },
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "Lägg till Mål",
         "RewardCustom": "Användardefinierad",
         "RewardHide": "Dölja",
         "RewardLock": "Låsa",
         "RewardShow": "Visa",
         "RewardUnlock": "Låsa Upp"
       },
-      "CustomSource": "Anpassad källa",
-      "Description": "Beskrivning:",
-      "DragDropActor": "Dra och släpp skådespelare, objekt eller journalanteckning eller vänsterklicka för att ställa in en anpassad källa.",
-      "DragDropActorPlayer": "Dra och släpp skådespelare, artikel eller journalanteckning eller vänsterklicka för att ställa in en anpassad källa.",
-      "DragDropRewards": "Dra och släpp objekt här för att lägga till dem som belöningar.",
-      "GMNotes": "GM Anteckningar:",
-      "InvalidQuestId": "Det går inte att öppna Uppdragsförvisning på grund av ogiltigt Uppdrags ID.",
+      "Labels": {
+        "CustomSource": "Anpassad källa",
+        "Description": "Beskrivning:",
+        "DragDropActor": "Dra och släpp skådespelare, objekt eller journalanteckning eller vänsterklicka för att ställa in en anpassad källa.",
+        "DragDropActorPlayer": "Dra och släpp skådespelare, artikel eller journalanteckning eller vänsterklicka för att ställa in en anpassad källa.",
+        "DragDropRewards": "Dra och släpp objekt här för att lägga till dem som belöningar.",
+        "GMNotes": "GM Anteckningar:",
+        "Objective": "Mål",
+        "Objectives": "Mål:",
+        "Reward": "Belöning",
+        "Rewards": "Belöningar:"
+      },
       "Management": {
         "AddSubquest": "Skapa underuppdrag",
         "ConfigurePermissions": "Konfigurera Behörigheter",
@@ -117,11 +126,6 @@
         "WrongDocType": "Forien's Quest Log accepterar endast världs-/kompendieskådespelare, föremål och journalanteckningar som uppdragsgivare.",
         "WrongItemType": "Forien's Quest Log accepterar endast världs- och kompendiumobjekt som belöningar."
       },
-      "Objective": "Mål",
-      "Objectives": "Mål:",
-      "Reward": "Belöning",
-      "RewardDrop": "FQL (uppdragsbelöning): {userName} tappade '{itemName}' till {actorName}",
-      "Rewards": "Belöningar:",
       "Tabs": {
         "Details": "Detaljer",
         "GMNotes": "GM-anteckningar",
@@ -130,6 +134,7 @@
       "Title": "Uppdragsdetaljer",
       "Tooltips": {
         "AddCustom": "Lägg till användardefinierad",
+        "AddObjective": "Lägg till Mål",
         "ChangeSplashPos": "Ändra stänkjustering.",
         "DeleteQuestGiver": "Ta bort uppdragsgivare.",
         "DeleteSplash": "Ta bort stänkkonst.",

@@ -14,6 +14,11 @@
           "NewQuest": "Nouvelle quête"
         }
       },
+      "Socket": {
+        "Notifications": {
+          "RewardDrop": "FQL (récompense de quête) : {userName} a donné '{itemName}' à {actorName}"
+        }
+      },
       "Utils": {
         "Notifications": {
           "NoDocument": "Une entité ne pourra pas être chargée pour IDuu : {uuid}",
@@ -89,20 +94,20 @@
     },
     "QuestPreview": {
       "Buttons": {
-        "AddObjective": "Ajouter Objectif",
         "RewardCustom": "Défini par l'utilisateur",
         "RewardHide": "Cacher",
         "RewardLock": "Bloquer",
         "RewardShow": "Montrer",
         "RewardUnlock": "Ouvrir"
       },
-      "CustomSource": "Source personnalisée",
-      "Description": "Description:",
-      "DragDropActor": "Glisser/déposer un acteur, un objet, une entrée de journal ou clic gauche pour une source personnalisée.",
-      "DragDropActorPlayer": "Glisser/déposer un acteur, un objet ou une entrée de journal.",
-      "DragDropRewards": "Glisser/Déposer les objets ici pour en faire des récompenses.",
-      "GMNotes": "Notes du MJ :",
-      "InvalidQuestId": "Impossible d'ouvrir la prévisualisation de la quête en raison d’une ID de Quête invalide.",
+      "Labels": {
+        "CustomSource": "Source personnalisée",
+        "Description": "Description:",
+        "DragDropActor": "Glisser/déposer un acteur, un objet, une entrée de journal ou clic gauche pour une source personnalisée.",
+        "DragDropActorPlayer": "Glisser/déposer un acteur, un objet ou une entrée de journal.",
+        "DragDropRewards": "Glisser/Déposer les objets ici pour en faire des récompenses.",
+        "GMNotes": "Notes du MJ :"
+      },
       "Management": {
         "AddSubquest": "Créer une quête secondaire",
         "ConfigurePermissions": "Configurer les permissions",
@@ -110,18 +115,17 @@
         "QuestSettings": "Réglages des quêtes:",
         "SplashArt": "Illustration:",
         "SplashInfo": "Cliquer pour définir une image.",
-        "SplashQuestIcon": "Définissez comme icône de quête"
+        "SplashQuestIcon": "Définissez comme icône de quête",
+        "Objective": "Objectif",
+        "Objectives": "Objectifs:",
+        "Reward": "Récompense",
+        "Rewards": "Récompenses:"
       },
       "Notifications": {
         "BadUUID": "Ne peut récupérr le document pour IDuu : {uuid}",
         "WrongDocType": "Forien's Quest Log accepte seulement les acteurs, les objets et les entrées de journaux du monde /compendium comme commanditaires de quêtes",
         "WrongItemType": "Forien's Quest Log n'accepte que les objets du monde et des compendium items comme récompenses."
       },
-      "Objective": "Objectif",
-      "Objectives": "Objectifs:",
-      "Reward": "Récompense",
-      "RewardDrop": "FQL (récompense de quête) : {userName} a donné '{itemName}' à {actorName}",
-      "Rewards": "Récompenses:",
       "Tabs": {
         "Details": "Détails",
         "GMNotes": "Notes MJ",
@@ -130,6 +134,7 @@
       "Title": "Détails sur la quête",
       "Tooltips": {
         "AddCustom": "Ajouter défini par l'utilisateur",
+        "AddObjective": "Ajouter Objectif",
         "ChangeSplashPos": "Modifier l'alignement de l'image d'illustration",
         "DeleteQuestGiver": "Supprimer le commanditaire",
         "DeleteSplash": "Supprimer l'illustration",

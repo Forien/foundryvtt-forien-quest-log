@@ -425,9 +425,10 @@ async function handleQuestRewardDrop(data)
 
       // Notify the GM that a user has dropped a reward item into an actor sheet.
       const notify = game.settings.get(constants.moduleName, settings.notifyRewardDrop);
+
       if (notify)
       {
-         ViewManager.notifications.info(game.i18n.format('ForienQuestLog.QuestPreview.RewardDrop', {
+         ViewManager.notifications.info(game.i18n.format('ForienQuestLog.API.Socket.Notifications.RewardDrop', {
             userName: fqlData.userName,
             itemName: fqlData.itemName,
             actorName: data.payload.actor.name

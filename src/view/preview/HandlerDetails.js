@@ -170,7 +170,7 @@ export default class HandlerDetails
          {
             quest.giver = 'abstract';
             quest.image = path;
-            quest.giverName = game.i18n.localize('ForienQuestLog.QuestPreview.CustomSource');
+            quest.giverName = game.i18n.localize('ForienQuestLog.QuestPreview.Labels.CustomSource');
             quest.giverData = await Enrich.giverFromQuest(quest);
             delete quest.giverData.uuid;
 

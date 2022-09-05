@@ -108,7 +108,7 @@ export default class FQLDialog
             result,
             questId,
             isQuestLog,
-            title: game.i18n.localize('ForienQuestLog.QuestPreview.Reward'),
+            title: game.i18n.localize('ForienQuestLog.QuestPreview.Labels.Reward'),
             body: 'ForienQuestLog.DeleteDialog.BodyReward'
          });
       }
@@ -123,7 +123,7 @@ export default class FQLDialog
             result,
             questId,
             isQuestLog,
-            title: game.i18n.localize('ForienQuestLog.QuestPreview.Reward'),
+            title: game.i18n.localize('ForienQuestLog.QuestPreview.Labels.Reward'),
             body: 'ForienQuestLog.DeleteDialog.BodyReward'
          });
 
@@ -153,7 +153,7 @@ export default class FQLDialog
             result,
             questId,
             isQuestLog,
-            title: game.i18n.localize('ForienQuestLog.QuestPreview.Objective'),
+            title: game.i18n.localize('ForienQuestLog.QuestPreview.Labels.Objective'),
             body: 'ForienQuestLog.DeleteDialog.BodyObjective'
          });
       }
@@ -168,7 +168,7 @@ export default class FQLDialog
             result,
             questId,
             isQuestLog,
-            title: game.i18n.localize('ForienQuestLog.QuestPreview.Objective'),
+            title: game.i18n.localize('ForienQuestLog.QuestPreview.Labels.Objective'),
             body: 'ForienQuestLog.DeleteDialog.BodyObjective'
          });
 
