@@ -6,7 +6,7 @@
           "OpenMacro": "Avaa ”{name}”"
         },
         "Notifications": {
-          "NoQuest": "API virhe: Makroa ei voida luoda kelvottomalla tehtävän ID:llä."
+          "NoQuest": "API virhe: Makroa ei voi luoda kelvottomalla tehtävän tunnisteella."
         }
       },
       "QuestDB": {
@@ -60,9 +60,9 @@
       "CannotOpen": "Tehtävän yksityiskohtia ei voi avata. Tämä tehtävä ei välttämättä ole havaittavissa tai sitä ei enää ole.",
       "FinishQuestAdded": "Teethän muokkauksesi loppuun ja suljet nykyisen tehtävän, ennen kuin lisäät uuden.",
       "LinkCopied": "Entiteetin linkki tähän tehtävään kopioitiin leikepöydälle.",
-      "QuestAdded": "Uusi tehtävä '{name}' lisättiin tilalla: '{status}'.",
-      "QuestIDCopied": "Tämän tehtävän ID kopioitiin leikepöydälle.",
-      "QuestMoved": "'{name}' siirrettiin uudeksi tilaksi asetettiin: '{target}'.",
+      "QuestAdded": "Uusi tehtävä '{name}' lisättiin tilassa: '{status}'.",
+      "QuestIDCopied": "Tämän tehtävän tunniste kopioitiin leikepöydälle.",
+      "QuestMoved": "'{name}' siirrettiin ja uudeksi tilaksi asetettiin: '{target}'.",
       "QuestPrimary": "'{name}' on uusi päätehtävä.",
       "QuestTrackerNoActive": "Tehtäväseurain on päällä, mutta keskeneräisiä tehtäviä ei tällä hetkellä ole.",
       "UserCantOpen": "Käyttäjällä '{user}' ei ole oikeuksia avata tätä tehtävää."
@@ -73,7 +73,7 @@
       },
       "ContextMenu": {
         "CopyEntityLink": "Kopioi entiteetin sisältölinkki",
-        "CopyQuestID": "Kopioi tehtävän ID",
+        "CopyQuestID": "Kopioi tehtävän tunniste",
         "PrimaryQuest": "Aseta / poista päätehtäväksi"
       },
       "Labels": {
@@ -88,7 +88,7 @@
     "QuestPreview": {
       "Buttons": {
         "RewardCustom": "Käyttäjän Määrittelemä",
-        "RewardHide": "Kätkeä",
+        "RewardHide": "Piilota",
         "RewardLock": "Lukita",
         "RewardShow": "Näyttää",
         "RewardUnlock": "Avata"
@@ -142,8 +142,8 @@
         "RewardUnlockedPlayer": "Palkkiota ei ole lukittu.",
         "RewardVisible": "Palkkio on näkyvillä. Paina piilottaaksesi sen.",
         "ShowAll": "Näytä kaikki",
-        "TaskHidden": "Tavoite on piilotettu. Paina näyttääksesi sen.",
-        "TaskVisible": "Tavoite on näkyvillä. Paina piilottaaksesi sen.",
+        "TaskHidden": "Tavoite on piilotettu. Napsauta näyttääksesi sen.",
+        "TaskVisible": "Tavoite on näkyvillä. Napsauta piilottaaksesi sen.",
         "ToggleImage": "Näytä / piilota pelinappulan / hahmon kuva.",
         "UnlockAll": "Avaa lukitus kaikista",
         "ViewSplashArt": "Katso kansikuva."
@@ -189,7 +189,7 @@
       },
       "allowPlayersCreate": {
         "Enable": "Pelaajat voivat luoda tehtäviä",
-        "EnableHint": "Valitse salliaksesi pelaajien luoda tehtäviä. Pelaajien luomat tehtävät ilmestyvät Saatavilla-välilehdelle Pelaajan muokattava -oikeuksilla. VAATII 'luoda muistiinpanoja' ydinoikeuden."
+        "EnableHint": "Valitse salliaksesi pelaajien luoda tehtäviä. Pelaajien luomat tehtävät ilmestyvät Saatavilla-välilehdelle Pelaajan muokattava -oikeuksilla. VAATII Luoda muistiinpanoja -ydinoikeuden."
       },
       "allowPlayersDrag": {
         "Enable": "Salli pelaajien raahata palkkioita",
@@ -236,7 +236,7 @@
         "default": "Näytä tavoitteet: suoritettu / kaikki",
         "Enable": "Näytä tavoitteet tehtävälokissa",
         "EnableHint": "Valitse kuinka tavoitteiden määrä näytetään tehtävän otsikon vieressä tehtävälokissa. Tämä ei vaikuta tehtävän esikatseluun.",
-        "no": "Piilota 'Tavoitteet' sarake",
+        "no": "Piilota Tavoitteet-sarake",
         "onlyCurrent": "Näytä tavoitteet: suoritettu"
       },
       "trustedPlayerEdit": {
