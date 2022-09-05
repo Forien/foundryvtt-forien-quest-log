@@ -32,7 +32,7 @@
       "BodyReward" : "此獎勵及其資料將被永久刪除。",
       "Cancel" : "取消",
       "Delete" : "刪除",
-      "HeaderDel" : "你確定要刪除：<p>'{name}'</p>？",
+      "HeaderDel" : "你確定要刪除：<p>'{name}'</p>",
       "TitleDel" : "刪除 {title}"
     },
     "HeaderLabels": {
@@ -62,7 +62,7 @@
     "Notifications" : {
       "CannotOpen" : "無法查看任務詳情。你可能缺少訪問權限，或者該任務ID錯誤，或者該任務已被刪除。",
       "FinishQuestAdded" : "請先完成編輯並關閉當前的新任務，然後再添加另一個任務。",
-      "LinkCopied" : "該任務的連結已複製到剪貼板中",
+      "LinkCopied" : "該任務的連結已複製到剪貼板中。",
       "QuestAdded" : "添加了 '{name}' 作為新任務，狀態為：'{status}'。",
       "QuestIDCopied" : "此任務的任務 ID 已複製到剪貼板。",
       "QuestMoved" : "移動該任務至新文件夾並更改其狀態為：'{target}'。",
@@ -195,7 +195,7 @@
         "EnableHint" : "勾選以允許玩家新建任務。玩家新建的任務將出現在可選任務欄中並且可被玩家編輯。需要給予玩家“新建日誌”權限。"
       },
       "allowPlayersDrag" : {
-        "Enable" : "允許玩家拖拽任務獎勵。",
+        "Enable" : "允許玩家拖拽任務獎勵",
         "EnableHint" : "勾選以允許玩家將獎勵物品從任務詳情中拖拽到自己的角色卡上。"
       },
       "countHidden" : {

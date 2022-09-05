@@ -45,7 +45,7 @@
       "ChatMessage": {
         "Footer": "Sinun täytyy päivittää yllä olevat tehtävät käsin käyttämään kelpaavia dokumenttien tietoja hakemistoista tai maailmastasi.<br>",
         "Header": "Forien's Quest Log (tietokannan siirto)<br>Alla olevien tehtävien linkittämättömät tehtävänantajat ja palkkiotavarat poistettiin:<p>",
-        "Notification": "Forien's Quest Log - Linkittämätön tehtävänantaja tai palkkiotavaroita poistettiin yhdestä tai useammasta tehtävästä.  Katso lisätietoja keskusteluviestistä.",
+        "Notification": "Forien's Quest Log - Linkittämätön tehtävänantaja tai palkkiotavaroita poistettiin yhdestä tai useammasta tehtävästä. Katso lisätietoja keskusteluviestistä.",
         "QuestGiver": "Tehtävänantaja",
         "QuestRewards": "Tehtävän palkkiot"
       },
@@ -128,9 +128,9 @@
       "Tooltips": {
         "AddCustom": "Lisää käyttäjän määrittämä",
         "AddObjective": "Lisää tavoite",
-        "ChangeSplashPos": "Muuta kansikuvan tasausta",
-        "DeleteQuestGiver": "Poista tehtävänantaja",
-        "DeleteSplash": "Poista kansikuva",
+        "ChangeSplashPos": "Muuta kansikuvan tasausta.",
+        "DeleteQuestGiver": "Poista tehtävänantaja.",
+        "DeleteSplash": "Poista kansikuva.",
         "HideAll": "Piilota kaikki",
         "LockAll": "Lukitse kaikki",
         "PrimaryQuestSet": "Napsauta asettaaksesi päätehtäväksi.",
@@ -144,9 +144,9 @@
         "ShowAll": "Näytä kaikki",
         "TaskHidden": "Tavoite on piilotettu. Paina näyttääksesi sen.",
         "TaskVisible": "Tavoite on näkyvillä. Paina piilottaaksesi sen.",
-        "ToggleImage": "Näytä / piilota pelinappulan / hahmon kuva",
+        "ToggleImage": "Näytä / piilota pelinappulan / hahmon kuva.",
         "UnlockAll": "Avaa lukitus kaikista",
-        "ViewSplashArt": "Katso kansikuva"
+        "ViewSplashArt": "Katso kansikuva."
       }
     },
     "QuestTracker": {
@@ -189,7 +189,7 @@
       },
       "allowPlayersCreate": {
         "Enable": "Pelaajat voivat luoda tehtäviä",
-        "EnableHint": "Valitse salliaksesi pelaajien luoda tehtäviä. Pelaajien luomat tehtävät ilmestyvät Saatavilla-välilehdelle Pelaajan muokattava -oikeuksilla. VAATII 'luoda muistiinpanoja' ydinoikeuden"
+        "EnableHint": "Valitse salliaksesi pelaajien luoda tehtäviä. Pelaajien luomat tehtävät ilmestyvät Saatavilla-välilehdelle Pelaajan muokattava -oikeuksilla. VAATII 'luoda muistiinpanoja' ydinoikeuden."
       },
       "allowPlayersDrag": {
         "Enable": "Salli pelaajien raahata palkkioita",
