@@ -60,12 +60,12 @@
       "CannotOpen": "Cannot open Quest Details. This quest may not be observable or may no longer exist.",
       "FinishQuestAdded": "Please finish editing and close current new quest before adding another.",
       "LinkCopied": "Entity Link for this quest has been copied to clipboard.",
-      "QuestAdded": "Added '{name}' as a new quest with status: {status}.",
+      "QuestAdded": "Added '{name}' as a new quest with status: '{status}'.",
       "QuestIDCopied": "Quest ID for this quest has been copied to clipboard.",
-      "QuestMoved": "Moved '{name}' and set new status to: {target}.",
+      "QuestMoved": "Moved '{name}' and set new status to: '{target}'.",
       "QuestPrimary": "'{name}' is the new primary quest.",
-      "QuestTrackerNoActive": "Quest Tracker is enabled, but there are no in progress quests currently.",
-      "UserCantOpen": "User {user} doesn't have permission to open this quest."
+      "QuestTrackerNoActive": "Quest Tracker is enabled, but there are currently no in progress quests.",
+      "UserCantOpen": "User '{user}' doesn't have permission to open this quest."
     },
     "QuestLog": {
       "Buttons": {

@@ -63,12 +63,12 @@
       "CannotOpen" : "無法查看任務詳情。你可能缺少訪問權限，或者該任務ID錯誤，或者該任務已被刪除。",
       "FinishQuestAdded" : "請先完成編輯並關閉當前的新任務，然後再添加另一個任務。",
       "LinkCopied" : "該任務的連結已複製到剪貼板中",
-      "QuestAdded" : "添加了 '{name}' 作為新任務，狀態為：{status}。",
+      "QuestAdded" : "添加了 '{name}' 作為新任務，狀態為：'{status}'。",
       "QuestIDCopied" : "此任務的任務 ID 已複製到剪貼板。",
-      "QuestMoved" : "移動該任務至新文件夾並更改其狀態為：{target}",
+      "QuestMoved" : "移動該任務至新文件夾並更改其狀態為：'{target}'。",
       "QuestPrimary" : "'{name}' 是新的主要任務。",
       "QuestTrackerNoActive" : "任務追踪器已啟用，但目前沒有正在進行的任務。",
-      "UserCantOpen" : "玩家 {user} 沒有查看該任務的權限。"
+      "UserCantOpen" : "玩家 '{user}' 沒有查看該任務的權限。"
     },
     "QuestLog" : {
       "Buttons": {

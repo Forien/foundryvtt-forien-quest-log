@@ -60,12 +60,12 @@
       "CannotOpen": "Tehtävän yksityiskohtia ei voi avata. Tämä tehtävä ei välttämättä ole havaittavissa tai sitä ei enää ole.",
       "FinishQuestAdded": "Teethän muokkauksesi loppuun ja suljet nykyisen tehtävän, ennen kuin lisäät uuden.",
       "LinkCopied": "Entiteetin linkki tähän tehtävään kopioitiin leikepöydälle.",
-      "QuestAdded": "Uusi tehtävä '{name}' lisättiin tilalla: {status}.",
+      "QuestAdded": "Uusi tehtävä '{name}' lisättiin tilalla: '{status}'.",
       "QuestIDCopied": "Tämän tehtävän ID kopioitiin leikepöydälle.",
-      "QuestMoved": "'{name}' siirrettiin uudeksi tilaksi asetettiin: {target}.",
+      "QuestMoved": "'{name}' siirrettiin uudeksi tilaksi asetettiin: '{target}'.",
       "QuestPrimary": "'{name}' on uusi päätehtävä.",
       "QuestTrackerNoActive": "Tehtäväseurain on päällä, mutta keskeneräisiä tehtäviä ei tällä hetkellä ole.",
-      "UserCantOpen": "Käyttäjällä {user} ei ole oikeuksia avata tätä tehtävää."
+      "UserCantOpen": "Käyttäjällä '{user}' ei ole oikeuksia avata tätä tehtävää."
     },
     "QuestLog": {
       "Buttons": {

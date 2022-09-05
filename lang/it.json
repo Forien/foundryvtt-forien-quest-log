@@ -60,12 +60,12 @@
       "CannotOpen": "Impossibile aprire i dettagli della missione. Questa ricerca potrebbe non essere osservabile o potrebbe non esistere più.",
       "FinishQuestAdded": "Completa la modifica e chiudi la nuova missione corrente prima di aggiungerne un'altra.",
       "LinkCopied": "Il link dell'entità per questa missione è stato copiato negli appunti.",
-      "QuestAdded": "Aggiunto '{name}' come una nuova missione con status: {status}.",
+      "QuestAdded": "Aggiunto '{name}' come una nuova missione con status: '{status}'.",
       "QuestIDCopied": "L'ID missione per questa missione è stato copiato negli appunti.",
-      "QuestMoved": "Mosso '{name}' e imposta il nuovo stato su: {target}.",
+      "QuestMoved": "Mosso '{name}' e imposta il nuovo stato su: '{target}'.",
       "QuestPrimary": "'{name}' è la nuova missione primaria.",
       "QuestTrackerNoActive": "Tracciatore di missione è abilitato, ma al momento non ci sono missioni in corso.",
-      "UserCantOpen": "Utente {user} non dispone dell'autorizzazione per aprire questa missione."
+      "UserCantOpen": "Utente '{user}' non dispone dell'autorizzazione per aprire questa missione."
     },
     "QuestLog": {
       "Buttons": {

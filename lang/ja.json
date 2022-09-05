@@ -33,7 +33,7 @@
       "Cancel": "取り消す",
       "Delete": "削除",
       "HeaderDel": "消去してもよろしいですか：<p>'{name}'</p>",
-      "TitleDel": "{name}を削除します"
+      "TitleDel": "{title} デリート"
     },
     "Labels": {
       "AppHeader": {
@@ -65,7 +65,7 @@
       "QuestMoved": "「{name}」を移動し、状態を「{target}」に変更しました。",
       "QuestPrimary": "「{name}」がメインクエストになりました。",
       "QuestTrackerNoActive": "クエスト一覧が有効になっていますが、進行中のクエストがありません。",
-      "UserCantOpen": "User {user} doesn'{user}はこのクエストを開く権限を持っていません。"
+      "UserCantOpen": "ユーザー「{user}」はこのクエストを開く権限を持っていません。"
     },
     "QuestLog": {
       "Buttons": {

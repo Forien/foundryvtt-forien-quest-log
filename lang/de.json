@@ -6,7 +6,7 @@
           "OpenMacro": "Offen ”{name}”"
         },
         "Notifications": {
-          "NoQuest": "API Error: Can't create macro with invalid Quest ID."
+          "NoQuest": "API-Fehler: Makro kann mit ungültiger Quest-ID nicht erstellt werden."
         }
       },
       "QuestDB": {
@@ -43,11 +43,11 @@
     },
     "Migration": {
       "ChatMessage": {
-        "Footer": "You must manually update the above quests with valid document data from compendiums or your world.<br>",
-        "Header": "Forien's Quest Log (DB migration)<br>Removed unlinked quest giver or reward items from the quests below:<p>",
-        "Notification": "Forien's Quest Log - Removed unlinked quest giver or reward items from one or more quests. Please review the chat message for more info.",
-        "QuestGiver": "Quest Giver",
-        "QuestRewards": "Quest Rewards"
+        "Footer": "Sie müssen die oben genannten Quests manuell mit gültigen Dokumentdaten aus Kompendien oder Ihrer Welt aktualisieren.<br>",
+        "Header": "Forien's Questlog (DB-Migration)<br>Unverknüpfte Questgeber oder Belohnungsgegenstände aus den folgenden Quests entfernt:<p>",
+        "Notification": "Forien's Questlog - Nicht verknüpfte Questgeber oder Belohnungsgegenstände aus einer oder mehreren Quests entfernt. Bitte überprüfen Sie die Chat-Nachricht für weitere Informationen.",
+        "QuestGiver": "Questgeber",
+        "QuestRewards": "Quest-Belohnungen"
       },
       "Notifications": {
         "Complete": "Foriens Questlog - Migration der Daten abgeschlossen.",
@@ -60,21 +60,21 @@
       "CannotOpen": "Questdetails können nicht geöffnet werden. Möglicherweise kann die Quest nicht betrachtet werden oder existiert nicht mehr.",
       "FinishQuestAdded": "Bitte schließe das Bearbeiten der Quest ab und schließe sie, bevor du eine neue hinzufügst.",
       "LinkCopied": "Entitätslink für diese Quest wurde in die Zwischenablage kopiert.",
-      "QuestAdded": "'{name}' als neue Quest mit Status {status} hinzugefügt.",
+      "QuestAdded": "'{name}' als neue Quest mit Status '{status}' hinzugefügt.",
       "QuestIDCopied": "Quest-ID für diese Quest wurde in die Zwischenablage kopiert.",
-      "QuestMoved": "'{name}' verschoben und Ziel gesetzt auf: {target}.",
+      "QuestMoved": "'{name}' verschoben und Ziel gesetzt auf: '{target}'.",
       "QuestPrimary": "'{name}' ist die neue primäre Quest.",
       "QuestTrackerNoActive": "Questtracker ist aktiviert, aber aktuell gibt es keine aktiven Quests.",
-      "UserCantOpen": "Benutzer {user} hat nicht die Berechtigungen, um diese Quest zu öffnen."
+      "UserCantOpen": "Benutzer '{user}' hat nicht die Berechtigungen, um diese Quest zu öffnen."
     },
     "QuestLog": {
       "Buttons": {
         "AddQuest": "Quest hinzufügen"
       },
       "ContextMenu": {
-        "CopyEntityLink": "Entität-Link kopieren.",
+        "CopyEntityLink": "Entität-Link kopieren",
         "CopyQuestID": "Copy quest ID",
-        "PrimaryQuest": "Als primäre Quest (de)aktivieren."
+        "PrimaryQuest": "Als primäre Quest (de)aktivieren"
       },
       "Labels": {
         "TableHeader": "{0} Quests",
@@ -135,9 +135,9 @@
       "Tooltips": {
         "AddCustom": "Benutzerdefiniert Hinzufügen",
         "AddObjective": "Ziel hinzufügen",
-        "ChangeSplashPos": "Splash-Bildausrichtung ändern",
-        "DeleteQuestGiver": "Questgeber löschen",
-        "DeleteSplash": "Splash Art löschen",
+        "ChangeSplashPos": "Splash-Bildausrichtung ändern.",
+        "DeleteQuestGiver": "Questgeber löschen.",
+        "DeleteSplash": "Splash Art löschen.",
         "HideAll": "Alle verbergen",
         "LockAll": "Alle sperren",
         "PrimaryQuestSet": "Anklicken, um als primäre Quest zu setzen.",
@@ -151,7 +151,7 @@
         "ShowAll": "Alle anzeigen",
         "TaskHidden": "Ziel ist verborgen. Anklicken zum Anzeigen.",
         "TaskVisible": "Ziel ist sichtbar. Anklicken zum Verbergen.",
-        "ToggleImage": "Figur/Akteur-Bild umschalten",
+        "ToggleImage": "Figur/Akteur-Bild umschalten.",
         "UnlockAll": "Alle entsperren",
         "ViewSplashArt": "Titelfoto ansehen."
       }

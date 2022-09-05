@@ -60,12 +60,12 @@
       "CannotOpen": "No puedes abrir los detalles de la misión. Puede que te falten permisos, que la misión ya no exista o que el ID sea inválido.",
       "FinishQuestAdded": "Termina de editar y cierra la nueva misión actual antes de agregar otra.",
       "LinkCopied": "El link a la entidad de esta misión ha sido copiado al portapapeles.",
-      "QuestAdded": "Se agregó '{name}' como una nueva misión con estado: {status}.",
+      "QuestAdded": "Se agregó '{name}' como una nueva misión con estado: '{status}'.",
       "QuestIDCopied": "El ID de misión para esta misión se ha copiado al portapapeles.",
-      "QuestMoved": "Se movió '{name}' y se estableció el nuevo estado en: {target}.",
+      "QuestMoved": "Se movió '{name}' y se estableció el nuevo estado en: '{target}'.",
       "QuestPrimary": "'{name}' es la nueva misión principal.",
       "QuestTrackerNoActive": "Rastreador de Misiones está habilitado, pero no hay misiones en curso actualmente.",
-      "UserCantOpen": "El usuario {user} no tiene permisos para abrir esta misión."
+      "UserCantOpen": "El usuario '{user}' no tiene permisos para abrir esta misión."
     },
     "QuestLog": {
       "Buttons": {

@@ -60,12 +60,12 @@
       "CannotOpen": "Kan inte öppna Uppdragsdetaljer. Detta uppdrag kanske inte går att observera eller kanske inte längre existerar.",
       "FinishQuestAdded": "Slutför redigeringen och stäng aktuellt nytt uppdrag innan du lägger till ett nytt.",
       "LinkCopied": "Entitetslänk för detta uppdrag har kopierats till urklipp.",
-      "QuestAdded": "Lagt till '{name}' som ett nytt uppdrag med status: {status}.",
+      "QuestAdded": "Lagt till '{name}' som ett nytt uppdrag med status: '{status}'.",
       "QuestIDCopied": "Uppdrags-ID för detta uppdrag har kopierats till urklipp.",
-      "QuestMoved": "Rörd '{name}' och ställ in ny status till: {target}.",
+      "QuestMoved": "Rörd '{name}' och ställ in ny status till: '{target}'.",
       "QuestPrimary": "'{name}' är det nya primära uppdraget.",
       "QuestTrackerNoActive": "Mål Spårare är aktiverat, men det finns inga pågående uppdrag för närvarande.",
-      "UserCantOpen": "Användare {user} har inte behörighet att öppna det här uppdraget."
+      "UserCantOpen": "Användare '{user}' har inte behörighet att öppna det här uppdraget."
     },
     "QuestLog": {
       "Buttons": {

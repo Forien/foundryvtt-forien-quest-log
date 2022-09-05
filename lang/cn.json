@@ -60,12 +60,12 @@
       "CannotOpen": "无法查看任务详情。你可能缺少访问权限，或者该任务ID错误，或者该任务已被删除。",
       "FinishQuestAdded": "请在添加另一个任务之前完成编辑并关闭当前的新任务。",
       "LinkCopied": "该任务的链接已复制到粘贴板中",
-      "QuestAdded": "添加了 '{name}' 作为新任务，状态为：{status}。",
+      "QuestAdded": "添加了 '{name}' 作为新任务，状态为：'{status}'。",
       "QuestIDCopied": "此任务的任务 ID 已复制到剪贴板。",
-      "QuestMoved": "移动了 '{name}'并将新状态设置为：{target}。",
+      "QuestMoved": "移动了 '{name}'并将新状态设置为：'{target}'。",
       "QuestPrimary": "'{name}' 是新的主要任务。",
       "QuestTrackerNoActive": "任务追踪器已启用，但目前没有正在进行的任务。",
-      "UserCantOpen": "玩家 {user} 没有查看该任务的权限。"
+      "UserCantOpen": "玩家 '{user}' 没有查看该任务的权限。"
     },
     "QuestLog": {
       "Buttons": {

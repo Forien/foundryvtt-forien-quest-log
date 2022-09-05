@@ -60,21 +60,21 @@
       "CannotOpen": "Ne peut ouvrir les détails de la Quête. Soit vous n’avez pas la permission, soit la quête n’existe plus ou l’ID fournie était invalide.",
       "FinishQuestAdded": "Finissez d'éditer et fermez la nouvelle quête actuelle avant d'en ajouter une autre.",
       "LinkCopied": "Le lien vers cette quête a été copié dans le presse-papier.",
-      "QuestAdded": "'{name}' est ajouté comme nouvelle quête avec le statut : {status}.",
+      "QuestAdded": "'{name}' est ajouté comme nouvelle quête avec le statut : '{status}'.",
       "QuestIDCopied": "L'ID de cette quête a été copiée vers le presse-papier.",
-      "QuestMoved": "Quête déplacée avec un nouveau statut : {target}",
+      "QuestMoved": "Quête déplacée avec un nouveau statut : '{target}'.",
       "QuestPrimary": "'{name}' est la nouvelle quête primaire.",
       "QuestTrackerNoActive": "Le traqueur de quête est activé, mais il n'y a pas pas de quête en cours actuellement.",
-      "UserCantOpen": "L'utilisateur {user} n’a pas la permission d'ouvrir cette quête."
+      "UserCantOpen": "L'utilisateur '{user}' n’a pas la permission d'ouvrir cette quête."
     },
     "QuestLog": {
       "Buttons": {
         "AddQuest": "Ajouter Quête"
       },
       "ContextMenu": {
-        "CopyEntityLink": "Copier le contenu du lien de l'entité.",
+        "CopyEntityLink": "Copier le contenu du lien de l'entité",
         "CopyQuestID": "Copier l'ID de la quête",
-        "PrimaryQuest": "Activer / Désactiver comme quête primaire."
+        "PrimaryQuest": "Activer / Désactiver comme quête primaire"
       },
       "Labels": {
         "TableHeader": "Quêtes {0}",
@@ -135,9 +135,9 @@
       "Tooltips": {
         "AddCustom": "Ajouter défini par l'utilisateur",
         "AddObjective": "Ajouter Objectif",
-        "ChangeSplashPos": "Modifier l'alignement de l'image d'illustration",
-        "DeleteQuestGiver": "Supprimer le commanditaire",
-        "DeleteSplash": "Supprimer l'illustration",
+        "ChangeSplashPos": "Modifier l'alignement de l'image d'illustration.",
+        "DeleteQuestGiver": "Supprimer le commanditaire.",
+        "DeleteSplash": "Supprimer l'illustration.",
         "HideAll": "Tout cacher",
         "LockAll": "Tout verrouiller",
         "PrimaryQuestSet": "Ciquer pour activer la quête primaire.",
@@ -151,9 +151,9 @@
         "ShowAll": "Montrer à tous",
         "TaskHidden": "Tache cachée. Cocher pour la montrer.",
         "TaskVisible": "Tâche visible. Cocher pour la cacher.",
-        "ToggleImage": "Activer l’image du token/acteur",
+        "ToggleImage": "Activer l’image du token/acteur.",
         "UnlockAll": "Tout débloquer",
-        "ViewSplashArt": "Voir l'illustration"
+        "ViewSplashArt": "Voir l'illustration."
       }
     },
     "QuestTracker": {
@@ -171,13 +171,13 @@
       "Available": "Disponible",
       "Completed": "Achevée",
       "Failed": "Échouée",
-      "InActive": "Inactive",
+      "InActive": "Inactif",
       "Labels": {
         "active": "en cours",
         "available": "disponibles",
         "completed": "complétées",
         "failed": "échouées",
-        "inactive": "inactive",
+        "inactive": "inactif",
         "Status": "La quête est {statusLabel}."
       },
       "Tooltips": {
@@ -192,7 +192,7 @@
     "Settings": {
       "allowPlayersAccept": {
         "Enable": "Joueurs peuvent accepter",
-        "EnableHint": "Cocher pour permettre aux joueurs d'accepter les quêtes dans l'onglet Disponible"
+        "EnableHint": "Cocher pour permettre aux joueurs d'accepter les quêtes dans l'onglet Disponible."
       },
       "allowPlayersCreate": {
         "Enable": "Joueurs peuvent créer",
@@ -224,7 +224,7 @@
       "navStyle": {
         "bookmarks": "Marque-page",
         "classic": "Onglets classiques",
-        "Enable": "Style de navigation ",
+        "Enable": "Style de navigation",
         "EnableHint": "Décider comment la navigation dans le journal de quête sera affichée."
       },
       "notifyRewardDrop": {
@@ -233,7 +233,7 @@
       },
       "questTrackerResizable": {
         "Enable": "Traqueur de quête redimensionnable",
-        "EnableHint": "Cocher pour autoriser le contrôle manuel du redimensionnement du Traqueur de quête"
+        "EnableHint": "Cocher pour autoriser le contrôle manuel du redimensionnement du Traqueur de quête."
       },
       "showFolder": {
         "Enable": "Montre le dossier des quêtes",
