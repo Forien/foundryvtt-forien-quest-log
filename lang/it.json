@@ -6,7 +6,7 @@
           "OpenMacro": "Aprire ”{name}”"
         },
         "Notifications": {
-          "NoQuest": "API Error: Can't create macro with invalid Quest ID."
+          "NoQuest": "Errore API: impossibile creare macro con ID Missione non valido."
         }
       },
       "QuestDB": {

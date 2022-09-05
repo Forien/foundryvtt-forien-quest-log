@@ -6,7 +6,7 @@
           "OpenMacro": "Ouvrir la Quête ”{name}”"
         },
         "Notifications": {
-          "NoQuest": "API Error: Can't create macro with invalid Quest ID."
+          "NoQuest": "Erreur API : impossible de créer une macro avec un ID de quête non valide."
         }
       },
       "QuestDB": {
@@ -43,7 +43,7 @@
     },
     "Migration": {
       "ChatMessage": {
-        "Footer": "Vous devez mettre à jour manuellement les quêtes ci-dessus avec des données de document valide  des compendiums ou de votre monde.<br>",
+        "Footer": "Vous devez mettre à jour manuellement les quêtes ci-dessus avec des données de document valide des compendiums ou de votre monde.<br>",
         "Header": "Forien's Quest Log (migration de DB)<br>A retiré le donneur de quête sans lien ou les objets récompense des quêtes ci-dessous :<p>",
         "Notification": "Forien's Quest Log - A retiré le donneur de quête sans lien ou les objets récompenses de quête d'une ou plusieurs quêtes. Regardez la conversation pour plus d'information.",
         "QuestGiver": "Donneur de quête",
@@ -51,8 +51,8 @@
       },
       "Notifications": {
         "Complete": "Forien's Quest Log - Migration des données achevée.",
-        "CouldNotMigrate": "Forien's Quest Log - ne peut pas migrer la quête: '{name}'.",
-        "Schema": "Forien's Quest Log - Migration des données sous le schéma de version  '{version}'.",
+        "CouldNotMigrate": "Forien's Quest Log - ne peut pas migrer la quête : '{name}'.",
+        "Schema": "Forien's Quest Log - Migration des données sous le schéma de version : '{version}'.",
         "Start": "Forien's Quest Log - Migration en cours des données, ne pas recharger."
       }
     },
@@ -60,7 +60,7 @@
       "CannotOpen": "Ne peut ouvrir les détails de la Quête. Soit vous n’avez pas la permission, soit la quête n’existe plus ou l’ID fournie était invalide.",
       "FinishQuestAdded": "Finissez d'éditer et fermez la nouvelle quête actuelle avant d'en ajouter une autre.",
       "LinkCopied": "Le lien vers cette quête a été copié dans le presse-papier.",
-      "QuestAdded": "'{name}' est ajouté comme nouvelle quête avec le statut: {status}.",
+      "QuestAdded": "'{name}' est ajouté comme nouvelle quête avec le statut : {status}.",
       "QuestIDCopied": "L'ID de cette quête a été copiée vers le presse-papier.",
       "QuestMoved": "Quête déplacée avec un nouveau statut : {target}",
       "QuestPrimary": "'{name}' est la nouvelle quête primaire.",
@@ -78,7 +78,7 @@
       },
       "Labels": {
         "TableHeader": "Quêtes {0}",
-        "SubTitle": "Quête faisant parti de: {0}"
+        "SubTitle": "Quête faisant parti de : {0}"
       },
       "Tabs": {
         "Available": "Disponible",
@@ -102,27 +102,27 @@
       },
       "Labels": {
         "CustomSource": "Source personnalisée",
-        "Description": "Description:",
+        "Description": "Description :",
         "DragDropActor": "Glisser/déposer un acteur, un objet, une entrée de journal ou clic gauche pour une source personnalisée.",
         "DragDropActorPlayer": "Glisser/déposer un acteur, un objet ou une entrée de journal.",
         "DragDropRewards": "Glisser/Déposer les objets ici pour en faire des récompenses.",
-        "GMNotes": "Notes du MJ:",
+        "GMNotes": "Notes du MJ :",
         "Objective": "Objectif",
-        "Objectives": "Objectifs:",
+        "Objectives": "Objectifs :",
         "Reward": "Récompense",
-        "Rewards": "Récompenses:"
+        "Rewards": "Récompenses :"
       },
       "Management": {
         "AddSubquest": "Créer une quête secondaire",
         "ConfigurePermissions": "Configurer les permissions",
-        "QuestBranching": "Quêtes secondaires:",
-        "QuestSettings": "Réglages des quêtes:",
-        "SplashArt": "Illustration:",
+        "QuestBranching": "Quêtes secondaires :",
+        "QuestSettings": "Réglages des quêtes :",
+        "SplashArt": "Illustration :",
         "SplashInfo": "Cliquer pour définir une image.",
         "SplashQuestIcon": "Définissez comme icône de quête"
       },
       "Notifications": {
-        "BadUUID": "Ne peut récupérr le document pour IDuu: '{uuid}'.",
+        "BadUUID": "Ne peut récupérr le document pour IDuu : '{uuid}'.",
         "WrongDocType": "Forien's Quest Log accepte seulement les acteurs, les objets et les entrées de journaux du monde /compendium comme commanditaires de quêtes.",
         "WrongItemType": "Forien's Quest Log n'accepte que les objets du monde et des compendium items comme récompenses."
       },

@@ -162,8 +162,8 @@
       "Tooltips": {
         "BackgroundShow": "クリックすると背景が表示されます。",
         "BackgroundUnshow": "クリックすると背景が透明になります。",
-        "PrimaryQuestShow": "クリックでメインクエストを表示",
-        "PrimaryQuestUnshow": "クリックですべてのクエスト表示"
+        "PrimaryQuestShow": "クリックでメインクエストを表示。",
+        "PrimaryQuestUnshow": "クリックですべてのクエスト表示。"
       }
     },
     "QuestTypes": {
@@ -178,7 +178,7 @@
         "completed": "完了",
         "failed": "失敗",
         "inactive": "無効",
-        "Status": "クエスト状態{statusLabel}"
+        "Status": "クエスト状態{statusLabel}。"
       },
       "Tooltips": {
         "SetActive": "進行中として設定",
