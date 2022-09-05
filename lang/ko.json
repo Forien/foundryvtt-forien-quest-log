@@ -1,12 +1,12 @@
 {
   "ForienQuestLog": {
-    "Api": {
-      "hooks": {
-        "createOpenQuestMacro": {
-          "error": {
-            "noQuest": "API Error: Can't create macro with invalid Quest ID."
-          },
-          "name": "열려 있는 ”{name}”"
+    "API": {
+      "Hooks": {
+        "Labels": {
+          "OpenMacro": "열려 있는 ”{name}”"
+        },
+        "Notifications": {
+          "NoQuest": "API Error: Can't create macro with invalid Quest ID."
         }
       },
       "QuestDB": {
@@ -15,8 +15,10 @@
         }
       },
       "Utils": {
-        "NoDocument": "UUID: {uuid}에 대해 엔티티를 불러올 수 없습니다.",
-        "NoPermission": "사용 권한이 부족하여 이 엔티티 시트를 볼 수 없습니다."
+        "Notifications": {
+          "NoDocument": "UUID: {uuid}에 대해 엔티티를 불러올 수 없습니다.",
+          "NoPermission": "사용 권한이 부족하여 이 엔티티 시트를 볼 수 없습니다."
+        }
       }
     },
     "DeleteDialog": {

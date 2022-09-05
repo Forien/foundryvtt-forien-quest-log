@@ -213,7 +213,7 @@ export default class Quest
        * @private
        */
       this._name = typeof value === 'string' && value.length > 0 ? value :
-       game.i18n.localize('ForienQuestLog.Api.QuestDB.Labels.NewQuest');
+       game.i18n.localize('ForienQuestLog.API.QuestDB.Labels.NewQuest');
    }
 
    /**
@@ -331,7 +331,7 @@ export default class Quest
     */
    initData(data)
    {
-      this.name = data.name || game.i18n.localize('ForienQuestLog.Api.QuestDB.Labels.NewQuest');
+      this.name = data.name || game.i18n.localize('ForienQuestLog.API.QuestDB.Labels.NewQuest');
 
       /**
        * @type {string}
@@ -524,7 +524,7 @@ export default class Quest
       // Save Quest JSON, but also potentially update the backing JournalEntry folder name.
       const update = {
          name: typeof this._name === 'string' && this._name.length > 0 ? this._name :
-          game.i18n.localize('ForienQuestLog.Api.QuestDB.Labels.NewQuest'),
+          game.i18n.localize('ForienQuestLog.API.QuestDB.Labels.NewQuest'),
          flags: {
             [constants.moduleName]: { json: this.toJSON() }
          }

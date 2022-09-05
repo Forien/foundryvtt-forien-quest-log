@@ -173,7 +173,7 @@ export default class Utils
 
          if (doc === null)
          {
-            ui.notifications.error(game.i18n.format('ForienQuestLog.Api.Utils.NoDocument', { uuid }));
+            ui.notifications.error(game.i18n.format('ForienQuestLog.API.Utils.Notifications.NoDocument', { uuid }));
             return null;
          }
 
@@ -181,7 +181,7 @@ export default class Utils
 
          if (checkPerm && !doc.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER))
          {
-            ui.notifications.warn('ForienQuestLog.Api.Utils.NoPermission', { localize: true });
+            ui.notifications.warn('ForienQuestLog.API.Utils.Notifications.NoPermission', { localize: true });
             return null;
          }
 
@@ -189,7 +189,7 @@ export default class Utils
       }
       catch (err)
       {
-         ui.notifications.error(game.i18n.format('ForienQuestLog.Api.Utils.NoDocument', { uuid }));
+         ui.notifications.error(game.i18n.format('ForienQuestLog.API.Utils.Notifications.NoDocument', { uuid }));
          console.error(err);
       }
 
@@ -364,13 +364,13 @@ export default class Utils
 
          if (document === null)
          {
-            ui.notifications.error(game.i18n.format('ForienQuestLog.Api.Utils.NoDocument', { uuid }));
+            ui.notifications.error(game.i18n.format('ForienQuestLog.API.Utils.Notifications.NoDocument', { uuid }));
             return null;
          }
 
          if (permissionCheck && !document.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER))
          {
-            ui.notifications.warn('ForienQuestLog.Api.Utils.NoPermission', { localize: true });
+            ui.notifications.warn('ForienQuestLog.API.Utils.Notifications.NoPermission', { localize: true });
             return null;
          }
 
@@ -390,7 +390,7 @@ export default class Utils
       }
       catch (err)
       {
-         ui.notifications.error(game.i18n.format('ForienQuestLog.Api.Utils.NoDocument', { uuid }));
+         ui.notifications.error(game.i18n.format('ForienQuestLog.API.Utils.Notifications.NoDocument', { uuid }));
          console.error(err);
          return null;
       }

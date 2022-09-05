@@ -1,12 +1,12 @@
 {
   "ForienQuestLog": {
-    "Api": {
-      "hooks": {
-        "createOpenQuestMacro": {
-          "error": {
-            "noQuest": "API Error: No se puede crear la macro sin un Quest ID valido"
-          },
-          "name": "Abierto ”{name}”"
+    "API": {
+      "Hooks": {
+        "Labels": {
+          "OpenMacro": "Abierto ”{name}”"
+        },
+        "Notifications": {
+          "NoQuest": "API Error: No se puede crear la macro sin un Quest ID valido."
         }
       },
       "QuestDB": {
@@ -15,8 +15,10 @@
         }
       },
       "Utils": {
-        "NoDocument": "No se pudo cargar una entidad para UUID: {uuid}",
-        "NoPermission": "No tiene suficientes permisos para ver esta hoja de entidad."
+        "Notifications": {
+          "NoDocument": "No se pudo cargar una entidad para UUID: {uuid}",
+          "NoPermission": "No tiene suficientes permisos para ver esta hoja de entidad."
+        }
       }
     },
     "DeleteDialog": {

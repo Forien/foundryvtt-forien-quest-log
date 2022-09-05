@@ -1,12 +1,12 @@
 {
   "ForienQuestLog": {
-    "Api": {
-      "hooks": {
-        "createOpenQuestMacro": {
-          "error": {
-            "noQuest": "API 错误：任务ID无效，无法创建宏。"
-          },
-          "name": "打开 ”{name}” 任务"
+    "API": {
+      "Hooks": {
+        "Labels": {
+          "OpenMacro": "打开 ”{name}” 任务"
+        },
+        "Notifications": {
+          "NoQuest": "API 错误：任务ID无效，无法创建宏。"
         }
       },
       "QuestDB": {
@@ -15,8 +15,10 @@
         }
       },
       "Utils": {
-        "NoDocument": "无法加载实体 UUID：{uuid}",
-        "NoPermission": "您没有足够的权限查看此实体表。"
+        "Notifications": {
+          "NoDocument": "无法加载实体 UUID：{uuid}",
+          "NoPermission": "您没有足够的权限查看此实体表。"
+        }
       }
     },
     "DeleteDialog": {

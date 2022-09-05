@@ -1,12 +1,12 @@
 {
   "ForienQuestLog": {
-    "Api": {
-      "hooks": {
-        "createOpenQuestMacro": {
-          "error": {
-            "noQuest": "API Error: Can't create macro with invalid Quest ID."
-          },
-          "name": "Open ”{name}”"
+    "API": {
+      "Hooks": {
+        "Labels": {
+          "OpenMacro": "Open ”{name}”"
+        },
+        "Notifications": {
+          "NoQuest": "API Error: Can't create macro with invalid Quest ID."
         }
       },
       "QuestDB": {
@@ -15,8 +15,10 @@
         }
       },
       "Utils": {
-        "NoDocument": "An entity could not be loaded for UUID: {uuid}",
-        "NoPermission": "You do not have sufficient permissions to view this entity sheet."
+        "Notifications": {
+          "NoDocument": "An entity could not be loaded for UUID: {uuid}",
+          "NoPermission": "You do not have sufficient permissions to view this entity sheet."
+        }
       }
     },
     "DeleteDialog": {

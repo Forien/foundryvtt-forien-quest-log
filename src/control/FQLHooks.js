@@ -275,14 +275,14 @@ export default class FQLHooks
       // Early out if Quest isn't in the QuestDB.
       if (!quest)
       {
-         throw new Error(game.i18n.localize('ForienQuestLog.Api.hooks.createOpenQuestMacro.error.noQuest'));
+         throw new Error(game.i18n.localize('ForienQuestLog.API.Hooks.Notifications.NoQuest'));
       }
 
       // The macro script data to open the quest via the public QuestAPI.
       const command = `game.modules.get('${constants.moduleName}').public.QuestAPI.open({ questId: '${questId}' });`;
 
       const macroData = {
-         name: game.i18n.format('ForienQuestLog.Api.hooks.createOpenQuestMacro.name', { name: quest.name }),
+         name: game.i18n.format('ForienQuestLog.API.Hooks.Labels.OpenMacro', { name: quest.name }),
          type: 'script',
          command
       };

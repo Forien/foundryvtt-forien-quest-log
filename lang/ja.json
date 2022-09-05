@@ -1,12 +1,12 @@
 {
   "ForienQuestLog": {
-    "Api": {
-      "hooks": {
-        "createOpenQuestMacro": {
-          "error": {
-            "noQuest": "API Error: Can't create macro with invalid Quest ID."
-          },
-          "name": "{name} - 開く"
+    "API": {
+      "Hooks": {
+        "Labels": {
+          "OpenMacro": "{name} - 開く"
+        },
+        "Notifications": {
+          "NoQuest": "API Error: Can't create macro with invalid Quest ID."
         }
       },
       "QuestDB": {
@@ -15,8 +15,10 @@
         }
       },
       "Utils": {
-        "NoDocument": "UUID:{uuid}のデータを読み込めませんでした。",
-        "NoPermission": "このデータを閲覧する権限を持っていません。"
+        "Notifications": {
+          "NoDocument": "UUID:{uuid}のデータを読み込めませんでした。",
+          "NoPermission": "このデータを閲覧する権限を持っていません。"
+        }
       }
     },
     "DeleteDialog": {

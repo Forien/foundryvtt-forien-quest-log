@@ -1,12 +1,12 @@
 {
   "ForienQuestLog" : {
-    "Api" : {
-      "hooks" : {
-        "createOpenQuestMacro" : {
-          "error" : {
-            "noQuest" : "API Error: Can't create macro with invalid Quest ID"
-          },
-          "name" : "打開任務 „{name}” "
+    "API" : {
+      "Hooks": {
+        "Labels": {
+          "OpenMacro": "打開任務 „{name}”"
+        },
+        "Notifications": {
+          "NoQuest": "API Error: Can't create macro with invalid Quest ID."
         }
       },
       "QuestDB": {
@@ -15,8 +15,10 @@
         }
       },
       "Utils": {
-        "NoDocument" : "無法加載 UUID：{uuid}",
-        "NoPermission" : "您沒有足夠的權限查看此entity表格。"
+        "Notifications": {
+          "NoDocument" : "無法加載 UUID：{uuid}",
+          "NoPermission" : "您沒有足夠的權限查看此entity表格。"
+        }
       }
     },
     "DeleteDialog" : {

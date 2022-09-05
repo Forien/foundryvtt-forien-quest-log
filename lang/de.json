@@ -1,12 +1,12 @@
 {
   "ForienQuestLog": {
-    "Api": {
-      "hooks": {
-        "createOpenQuestMacro": {
-          "error": {
-            "noQuest": "API Error: Can't create macro with invalid Quest ID."
-          },
-          "name": "Offen ”{name}”"
+    "API": {
+      "Hooks": {
+        "Labels": {
+          "OpenMacro": "Offen ”{name}”"
+        },
+        "Notifications": {
+          "NoQuest": "API Error: Can't create macro with invalid Quest ID."
         }
       },
       "QuestDB": {
@@ -15,8 +15,10 @@
         }
       },
       "Utils": {
-        "NoDocument": "Entität mit UUID {uuid} konnte nicht geladen werden",
-        "NoPermission": "Du verfügst nicht über die nötigen Berechtigungen, um den Bogen dieser Entität einzusehen."
+        "Notifications": {
+          "NoDocument": "Entität mit UUID {uuid} konnte nicht geladen werden",
+          "NoPermission": "Du verfügst nicht über die nötigen Berechtigungen, um den Bogen dieser Entität einzusehen."
+        }
       }
     },
     "DeleteDialog": {

@@ -1,12 +1,12 @@
 {
   "ForienQuestLog": {
-    "Api": {
-      "hooks": {
-        "createOpenQuestMacro": {
-          "error": {
-            "noQuest": "API virhe: Makroa ei voida luoda kelvottomalla tehtävän ID:llä."
-          },
-          "name": "Avaa \"{name}\""
+    "API": {
+      "Hooks": {
+        "Labels": {
+          "OpenMacro": "Avaa \"{name}\""
+        },
+        "Notifications": {
+          "NoQuest": "API virhe: Makroa ei voida luoda kelvottomalla tehtävän ID:llä."
         }
       },
       "QuestDB": {
@@ -15,8 +15,10 @@
         }
       },
       "Utils": {
-        "NoDocument": "Entiteettiä ei voitu ladata UUID:llä: {uuid}",
-        "NoPermission": "Sinulla ei ole tarvittavia oikeuksia nähdä tämän entiteetin lomaketta."
+        "Notifications": {
+          "NoDocument": "Entiteettiä ei voitu ladata UUID:llä: {uuid}",
+          "NoPermission": "Sinulla ei ole tarvittavia oikeuksia nähdä tämän entiteetin lomaketta."
+        }
       }
     },
     "DeleteDialog": {

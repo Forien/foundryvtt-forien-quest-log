@@ -1,12 +1,12 @@
 {
   "ForienQuestLog": {
-    "Api": {
-      "hooks": {
-        "createOpenQuestMacro": {
-          "error": {
-            "noQuest": "API Error: Can't create macro with invalid Quest ID"
-          },
-          "name": "Abrir a Missão ”{name}”"
+    "API": {
+      "Hooks": {
+        "Labels": {
+          "OpenMacro": "Abrir a Missão ”{name}”"
+        },
+        "Notifications": {
+          "NoQuest": "API Error: Can't create macro with invalid Quest ID."
         }
       },
       "QuestDB": {
@@ -15,8 +15,10 @@
         }
       },
       "Utils": {
-        "NoDocument": "Uma entidade não pôde ser carregada para IDuu : {uuid}",
-        "NoPermission": "Você não tem permissão para visualizar o documento desta entidade."
+        "Notifications": {
+          "NoDocument": "Uma entidade não pôde ser carregada para IDuu : {uuid}",
+          "NoPermission": "Você não tem permissão para visualizar o documento desta entidade."
+        }
       }
     },
     "DeleteDialog": {
