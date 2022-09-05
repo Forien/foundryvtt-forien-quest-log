@@ -65,7 +65,7 @@
       "QuestMoved": "Wzruszony '{name}' i ustaw nowy status na: '{target}'.",
       "QuestPrimary": "'{name}' to nowa główna misja.",
       "QuestTrackerNoActive": "Śledzenie misji jest włączone, ale obecnie nie ma żadnych misji w toku.",
-      "UserCantOpen": "Użytkownik {user} nie posiada uprawnień do otwarcia tej Misji."
+      "UserCantOpen": "Użytkownik '{user}' nie posiada uprawnień do otwarcia tej Misji."
     },
     "QuestLog": {
       "Buttons": {
