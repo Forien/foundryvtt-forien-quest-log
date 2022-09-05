@@ -112,7 +112,7 @@
         "QuestSettings": "Impostazioni Missione:",
         "SplashArt": "Foto di Copertina:",
         "SplashInfo": "Click per impostare l'immagine.",
-        "SplashQuestIcon": "Imposta come icona missione."
+        "SplashQuestIcon": "Imposta come icona missione"
       },
       "Notifications": {
         "BadUUID": "Impossibile recuperare il documento per l'UUID: '{uuid}'.",
