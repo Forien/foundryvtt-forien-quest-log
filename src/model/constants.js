@@ -71,11 +71,11 @@ const questStatus = {
  * @type {{active: string, available: string, completed: string, failed: string, inactive: string}}
  */
 const questStatusI18n = {
-   active: 'ForienQuestLog.QuestTypes.Active',
-   available: 'ForienQuestLog.QuestTypes.Available',
-   completed: 'ForienQuestLog.QuestTypes.Completed',
-   failed: 'ForienQuestLog.QuestTypes.Failed',
-   inactive: 'ForienQuestLog.QuestTypes.InActive'
+   active: 'ForienQuestLog.QuestTypes.Labels.Active',
+   available: 'ForienQuestLog.QuestTypes.Labels.Available',
+   completed: 'ForienQuestLog.QuestTypes.Labels.Completed',
+   failed: 'ForienQuestLog.QuestTypes.Labels.Failed',
+   inactive: 'ForienQuestLog.QuestTypes.Labels.InActive'
 };
 
 /**

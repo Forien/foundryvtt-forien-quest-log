@@ -1,11 +1,11 @@
 <div class="quest-log {{style}}">
   <nav class="log-tabs tabs {{style}}" data-group="primary">
-    <a class="item" data-tab="available">{{localize 'ForienQuestLog.QuestLog.Tabs.Available'}}</a>
-    <a class="item" data-tab="active">{{localize 'ForienQuestLog.QuestLog.Tabs.InProgress'}}</a>
-    <a class="item" data-tab="completed">{{localize 'ForienQuestLog.QuestLog.Tabs.Completed'}}</a>
-    <a class="item" data-tab="failed">{{localize 'ForienQuestLog.QuestLog.Tabs.Failed'}}</a>
+    <a class="item" data-tab="available">{{localize 'ForienQuestLog.QuestTypes.Labels.Available'}}</a>
+    <a class="item" data-tab="active">{{localize 'ForienQuestLog.QuestTypes.Labels.Active'}}</a>
+    <a class="item" data-tab="completed">{{localize 'ForienQuestLog.QuestTypes.Labels.Completed'}}</a>
+    <a class="item" data-tab="failed">{{localize 'ForienQuestLog.QuestTypes.Labels.Failed'}}</a>
     {{#if (or isGM isTrustedPlayerEdit)}}
-      <a class="item" data-tab="inactive">{{localize 'ForienQuestLog.QuestLog.Tabs.InActive'}}</a>
+      <a class="item" data-tab="inactive">{{localize 'ForienQuestLog.QuestTypes.Labels.InActive'}}</a>
     {{/if}}
   </nav>
   <section class="log-body {{style}}">
