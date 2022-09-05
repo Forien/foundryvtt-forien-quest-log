@@ -16,7 +16,7 @@
       },
       "Socket": {
         "Notifications": {
-          "RewardDrop": "FQL (ricompensa missione): {userName} caduto '{itemName}' su {actorName}"
+          "RewardDrop": "FQL (ricompensa missione): {userName} caduto '{itemName}' su {actorName}."
         }
       },
       "Utils": {
@@ -51,8 +51,8 @@
       },
       "Notifications": {
         "Complete": "Forien's Quest Log - Migrazione dei dati completata.",
-        "CouldNotMigrate": "Forien's Quest Log - Impossibile migrare la missione: '{name}'",
-        "Schema": "Forien's Quest Log - Migrazione dei dati alla versione dello schema '{version}'",
+        "CouldNotMigrate": "Forien's Quest Log - Impossibile migrare la missione: '{name}'.",
+        "Schema": "Forien's Quest Log - Migrazione dei dati alla versione dello schema '{version}'.",
         "Start": "Forien's Quest Log - Migrazione dei dati, non ricaricare."
       }
     },
@@ -122,7 +122,7 @@
         "SplashQuestIcon": "Imposta come icona missione"
       },
       "Notifications": {
-        "BadUUID": "Impossibile recuperare il documento per UUID: {uuid}",
+        "BadUUID": "Impossibile recuperare il documento per UUID: '{uuid}'.",
         "WrongDocType": "Forien's Quest Log accetta solo attori del mondo / compendio, oggetti e voci di diario come fonte di missioni.",
         "WrongItemType": "Forien's Quest Log accetta solo oggetti del mondo e del compendio come ricompense."
       },
@@ -178,7 +178,7 @@
         "completed": "completato",
         "failed": "fallito",
         "inactive": "non attivo",
-        "Status": "La missione è {statusLabel}"
+        "Status": "La missione è {statusLabel}."
       },
       "Tooltips": {
         "SetActive": "Imposta come In corso",

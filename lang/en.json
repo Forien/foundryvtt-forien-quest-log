@@ -16,7 +16,7 @@
       },
       "Socket": {
         "Notifications": {
-          "RewardDrop": "FQL (quest reward): {userName} dropped '{itemName}' onto {actorName}"
+          "RewardDrop": "FQL (quest reward): {userName} dropped '{itemName}' onto {actorName}."
         }
       },
       "Utils": {
@@ -51,8 +51,8 @@
       },
       "Notifications": {
         "Complete": "Forien's Quest Log - Migrating data complete.",
-        "CouldNotMigrate": "Forien's Quest Log - Could not migrate quest: '{name}'",
-        "Schema": "Forien's Quest Log - Migrating data to schema version '{version}'",
+        "CouldNotMigrate": "Forien's Quest Log - Could not migrate quest: '{name}'.",
+        "Schema": "Forien's Quest Log - Migrating data to schema version '{version}'.",
         "Start": "Forien's Quest Log - Migrating data, please do not reload."
       }
     },
@@ -122,7 +122,7 @@
         "SplashQuestIcon": "Set as quest icon"
       },
       "Notifications": {
-        "BadUUID": "Could not retrieve the document for UUID: {uuid}",
+        "BadUUID": "Could not retrieve the document for UUID: '{uuid}'.",
         "WrongDocType": "Forien's Quest Log only accepts world / compendium actors, items, and journal entries as quest givers.",
         "WrongItemType": "Forien's Quest Log only accepts world and compendium items as rewards."
       },
@@ -178,7 +178,7 @@
         "completed": "completed",
         "failed": "failed",
         "inactive": "inactive",
-        "Status": "Quest is {statusLabel}"
+        "Status": "Quest is {statusLabel}."
       },
       "Tooltips": {
         "SetActive": "Set as In Progress",

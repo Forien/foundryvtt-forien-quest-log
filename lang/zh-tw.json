@@ -6,7 +6,7 @@
           "OpenMacro": "打開任務 „{name}”"
         },
         "Notifications": {
-          "NoQuest": "API Error: Can't create macro with invalid Quest ID."
+          "NoQuest": "API Error: Can't create macro with invalid Quest ID。"
         }
       },
       "QuestDB": {
@@ -16,7 +16,7 @@
       },
       "Socket": {
         "Notifications": {
-          "RewardDrop" : "FQL（任務獎勵）：{userName} 將 '{itemName}' 放到 {actorName} 上"
+          "RewardDrop" : "FQL（任務獎勵）：{userName} 將 '{itemName}' 放到 {actorName} 上。"
         }
       },
       "Utils": {
@@ -53,10 +53,10 @@
         "QuestRewards" : "任務獎勵"
       },
       "Notifications": {
-        "Complete" : "Forien's Quest Log - 遷移資料完成.",
-        "CouldNotMigrate" : "Forien's Quest Log - 無法遷移任務：'{name}'",
-        "Schema" : "Forien's Quest Log - 將資料遷移到版本 '{version}'",
-        "Start" : "Forien's Quest Log - 遷移資料中，請不要重新加載."
+        "Complete" : "Forien's Quest Log - 遷移資料完成。",
+        "CouldNotMigrate" : "Forien's Quest Log - 無法遷移任務：'{name}'。",
+        "Schema" : "Forien's Quest Log - 將資料遷移到版本 '{version}'。",
+        "Start" : "Forien's Quest Log - 遷移資料中，請不要重新加載。"
       }
     },
     "Notifications" : {
@@ -125,7 +125,7 @@
         "SplashQuestIcon" : "設定為任務圖示"
       },
       "Notifications" : {
-        "BadUUID" : "無法搜索到 UUID 文檔：{uuid}",
+        "BadUUID" : "無法搜索到 UUID 文檔：'{uuid}'。",
         "WrongDocType" : "Forien 的任務日誌只接受World/Compendium Actor、物品和日誌條目作為任務提供者。",
         "WrongItemType" : "Forien 的任務日誌只接受World和Compendium items作為獎勵。"
       },
@@ -181,7 +181,7 @@
         "completed" : "已完成",
         "failed" : "已失敗",
         "inactive" : "未啓動",
-        "Status" : "任務是 {statusLabel}"
+        "Status" : "任務是 {statusLabel}。"
       },
       "Tooltips": {
         "SetActive" : "設定為進行中",

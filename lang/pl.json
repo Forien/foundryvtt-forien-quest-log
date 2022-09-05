@@ -6,7 +6,7 @@
           "OpenMacro": "Otwórz ”{name}”"
         },
         "Notifications": {
-          "NoQuest": "API Error: Can't create macro with invalid Quest ID."
+          "NoQuest": "Błąd interfejsu API: nie można utworzyć makra z nieprawidłowym identyfikatorem Misja."
         }
       },
       "QuestDB": {
@@ -16,7 +16,7 @@
       },
       "Socket": {
         "Notifications": {
-          "RewardDrop": "FQL (nagroda za misję): {userName} umieszczony '{itemName}' na {actorName}"
+          "RewardDrop": "FQL (nagroda za misję): {userName} umieszczony '{itemName}' na {actorName}."
         }
       },
       "Utils": {
@@ -51,8 +51,8 @@
       },
       "Notifications": {
         "Complete": "Forien's Quest Log - Migracja danych zakończona.",
-        "CouldNotMigrate": "Forien's Quest Log - Nie udało się przenieść misji: '{name}'",
-        "Schema": "Forien's Quest Log - Migracja danych do wersji schematu '{version}'",
+        "CouldNotMigrate": "Forien's Quest Log - Nie udało się przenieść misji: '{name}'.",
+        "Schema": "Forien's Quest Log - Migracja danych do wersji schematu '{version}'.",
         "Start": "Forien's Quest Log - Migracja danych, nie ładuj przeładować."
       }
     },
@@ -122,7 +122,7 @@
         "SplashQuestIcon": "Ustaw jako ikonę misji"
       },
       "Notifications": {
-        "BadUUID": "Nie można pobrać dokumentu dla UUID: {uuid}",
+        "BadUUID": "Nie można pobrać dokumentu dla UUID: '{uuid}'.",
         "WrongDocType": "Forien's Quest Log akceptuje tylko aktorów świata / kompendium, przedmioty i wpisy do dziennika jako zleceniodawców zadań.",
         "WrongItemType": "Forien's Quest Log akceptuje tylko przedmioty ze świata i kompendium jako nagrody."
       },
@@ -178,7 +178,7 @@
         "completed": "zakończone",
         "failed": "nieudane",
         "inactive": "nieaktywny",
-        "Status": "Misja to {statusLabel}"
+        "Status": "Misja to {statusLabel}."
       },
       "Tooltips": {
         "SetActive": "Ustaw na Aktywną",

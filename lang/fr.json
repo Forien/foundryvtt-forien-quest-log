@@ -16,7 +16,7 @@
       },
       "Socket": {
         "Notifications": {
-          "RewardDrop": "FQL (récompense de quête) : {userName} a donné '{itemName}' à {actorName}"
+          "RewardDrop": "FQL (récompense de quête) : {userName} a donné '{itemName}' à {actorName}."
         }
       },
       "Utils": {
@@ -51,8 +51,8 @@
       },
       "Notifications": {
         "Complete": "Forien's Quest Log - Migration des données achevée.",
-        "CouldNotMigrate": "Forien's Quest Log - ne peut pas migrer la quête : '{name}'",
-        "Schema": "Forien's Quest Log - Migration des données sous le schéma de version  '{version}'",
+        "CouldNotMigrate": "Forien's Quest Log - ne peut pas migrer la quête: '{name}'.",
+        "Schema": "Forien's Quest Log - Migration des données sous le schéma de version  '{version}'.",
         "Start": "Forien's Quest Log - Migration en cours des données, ne pas recharger."
       }
     },
@@ -122,8 +122,8 @@
         "SplashQuestIcon": "Définissez comme icône de quête"
       },
       "Notifications": {
-        "BadUUID": "Ne peut récupérr le document pour IDuu : {uuid}",
-        "WrongDocType": "Forien's Quest Log accepte seulement les acteurs, les objets et les entrées de journaux du monde /compendium comme commanditaires de quêtes",
+        "BadUUID": "Ne peut récupérr le document pour IDuu: '{uuid}'.",
+        "WrongDocType": "Forien's Quest Log accepte seulement les acteurs, les objets et les entrées de journaux du monde /compendium comme commanditaires de quêtes.",
         "WrongItemType": "Forien's Quest Log n'accepte que les objets du monde et des compendium items comme récompenses."
       },
       "Tabs": {
@@ -178,7 +178,7 @@
         "completed": "complétées",
         "failed": "échouées",
         "inactive": "inactive",
-        "Status": "La quête est {statusLabel}"
+        "Status": "La quête est {statusLabel}."
       },
       "Tooltips": {
         "SetActive": "Définir comme En cours",

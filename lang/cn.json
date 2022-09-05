@@ -16,7 +16,7 @@
       },
       "Socket": {
         "Notifications": {
-          "RewardDrop": "FQL (任务奖励)：{userName} 将 '{itemName}' 放到 {actorName} 上"
+          "RewardDrop": "FQL (任务奖励)：{userName} 将 '{itemName}' 放到 {actorName} 上。"
         }
       },
       "Utils": {
@@ -51,8 +51,8 @@
       },
       "Notifications": {
         "Complete": "Forien 的任务日志 - 迁移数据完成。",
-        "CouldNotMigrate": "Forien 的任务日志 - 无法迁移任务：'{name}'",
-        "Schema": "Forien 的任务日志 - 将数据迁移到架构版本 '{version}'",
+        "CouldNotMigrate": "Forien 的任务日志 - 无法迁移任务：'{name}'。",
+        "Schema": "Forien 的任务日志 - 将数据迁移到架构版本 '{version}'。",
         "Start": "Forien 的任务日志 - 正在迁移数据，请不要重新加载。"
       }
     },
@@ -122,7 +122,7 @@
         "SplashQuestIcon": "设置为任务图标"
       },
       "Notifications": {
-        "BadUUID": "无法检索文档 UUID：{uuid}",
+        "BadUUID": "无法检索文档 UUID：'{uuid}'。",
         "WrongDocType": "Forien 的任务日志仅接受世界/纲要演员、物品和日记条目作为任务提供者。",
         "WrongItemType": "Forien 的任务日志只接受世界和纲要物品作为奖励。"
       },
@@ -178,7 +178,7 @@
         "completed": "已完成",
         "failed": "已失败",
         "inactive": "不活跃",
-        "Status": "任务是 {statusLabel}"
+        "Status": "任务是 {statusLabel}。"
       },
       "Tooltips": {
         "SetActive": "设定为进行中",

@@ -16,7 +16,7 @@
       },
       "Socket": {
         "Notifications": {
-          "RewardDrop": "FQL (Questbelohnung): {userName} hat '{itemName}' auf {actorName} gezogen"
+          "RewardDrop": "FQL (Questbelohnung): {userName} hat '{itemName}' auf {actorName} gezogen."
         }
       },
       "Utils": {
@@ -122,7 +122,7 @@
         "SplashQuestIcon": "Als Questicon setzen"
       },
       "Notifications": {
-        "BadUUID": "Konnte Dokument mit UUID {uuid} nicht abrufen",
+        "BadUUID": "Konnte Dokument mit UUID {uuid} nicht abrufen.",
         "WrongDocType": "Foriens Questlog akzeptnur Welt-/Kompendium-Akteure, -Items und -Notizbucheinträge als Questgeber.",
         "WrongItemType": "Foriens Questlog akzeptiert nur Welt- und Kompendium-Items als Belohnungen."
       },
@@ -178,7 +178,7 @@
         "completed": "abgeschlossen",
         "failed": "fehlgeschlagen",
         "inactive": "inaktiv",
-        "Status": "Quest ist {statusLabel}"
+        "Status": "Quest ist {statusLabel}."
       },
       "Tooltips": {
         "SetActive": "Als Aktiv setzen",

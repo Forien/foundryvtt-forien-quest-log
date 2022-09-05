@@ -50,7 +50,7 @@
         "QuestRewards": "クエスト報酬"
       },
       "Notifications": {
-        "Complete": "Forien's Quest Log - マイグレーション完了",
+        "Complete": "Forien's Quest Log - マイグレーション完了。",
         "CouldNotMigrate": "Forien's Quest Log - クエスト'{name}'をマイグレーションできませんでした。",
         "Schema": "Forien's Quest Log - データを最新スキーマバージョン'{version}'にマイグレーションしてます。",
         "Start": "Forien's Quest Log - データマイグレーション中です、リロードしないでください。"

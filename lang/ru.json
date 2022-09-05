@@ -6,7 +6,7 @@
           "OpenMacro": "Открыть ”{name}”"
         },
         "Notifications": {
-          "NoQuest": "API Error: Can't create macro with invalid Quest ID."
+          "NoQuest": "Ошибка API: невозможно создать макрос с недопустимым идентификатором квеста."
         }
       },
       "QuestDB": {
@@ -16,7 +16,7 @@
       },
       "Socket": {
         "Notifications": {
-          "RewardDrop": "FQL (награда): {userName} передал '{itemName}' к {actorName}"
+          "RewardDrop": "FQL (награда): {userName} передал '{itemName}' к {actorName}."
         }
       },
       "Utils": {
@@ -51,8 +51,8 @@
       },
       "Notifications": {
         "Complete": "Forien's Quest Log - Перенос данных завершён.",
-        "CouldNotMigrate": "Forien's Quest Log - Не удалось перенести задание: '{name}'",
-        "Schema": "Forien's Quest Log - Обновление данных до версии '{version}'",
+        "CouldNotMigrate": "Forien's Quest Log - Не удалось перенести задание: '{name}'.",
+        "Schema": "Forien's Quest Log - Обновление данных до версии '{version}'.",
         "Start": "Forien's Quest Log - Перенос данных, подождите."
       }
     },
@@ -62,7 +62,7 @@
       "LinkCopied": "Ссылка на документ этого задания была скопирована в буфер.",
       "QuestAdded": "Добавлено новое задание '{name}' со статусом {status}.",
       "QuestIDCopied": "ID этого задания был скопирована в буфер.",
-      "QuestMoved": "'{name}' перемещено в новую папку со статусом: {target}",
+      "QuestMoved": "'{name}' перемещено в новую папку со статусом: {target}.",
       "QuestPrimary": "'{name}' теперь основное задание.",
       "QuestTrackerNoActive": "Трекер включён, но нет активных заданий.",
       "UserCantOpen": "Участник {user} не имеет разрешения для просмотра этого задания."
@@ -118,11 +118,11 @@
         "QuestBranching": "Подзадания:",
         "QuestSettings": "Настройки задания:",
         "SplashArt": "Обложка:",
-        "SplashInfo": "Выбор изображения",
+        "SplashInfo": "Выбор изображения.",
         "SplashQuestIcon": "Выбор иконки задания"
       },
       "Notifications": {
-        "BadUUID": "Не удаётся получить документ для UUID: {uuid}",
+        "BadUUID": "Не удаётся получить документ для UUID: '{uuid}'.",
         "WrongDocType": "Forien's Quest Log принимает только актёров, предметы и записи журнала в качестве выдающего задание.",
         "WrongItemType": "Forien's Quest Log принимает только предметы из мира и библиотеки в качестве наград."
       },
@@ -140,8 +140,8 @@
         "DeleteSplash": "Удалить обложку.",
         "HideAll": "Скрыть все",
         "LockAll": "Заблокировать все",
-        "PrimaryQuestSet": "Сделать основным заданием",
-        "PrimaryQuestUnset": "Сделать неосновным заданием",
+        "PrimaryQuestSet": "Сделать основным заданием.",
+        "PrimaryQuestUnset": "Сделать неосновным заданием.",
         "RewardHidden": "Награда скрыта. Нажмите, чтобы показать.",
         "RewardLocked": "Награда заблокирована. Нажмите для разблокирования.",
         "RewardLockedPlayer": "Награда заблокирована.",
@@ -160,10 +160,10 @@
       "NoPrimary": "Нет основного задания.",
       "Title": "Трекер заданий",
       "Tooltips": {
-        "BackgroundShow": "Сделать фон видимым",
-        "BackgroundUnshow": "Сделать фон прозрачным",
-        "PrimaryQuestShow": "Показать основное задание",
-        "PrimaryQuestUnshow": "Показать все задания"
+        "BackgroundShow": "Сделать фон видимым.",
+        "BackgroundUnshow": "Сделать фон прозрачным.",
+        "PrimaryQuestShow": "Показать основное задание.",
+        "PrimaryQuestUnshow": "Показать все задания."
       }
     },
     "QuestTypes": {
@@ -178,7 +178,7 @@
         "completed": "завершено",
         "failed": "провалено",
         "inactive": "неактивно",
-        "Status": "Задание {statusLabel}"
+        "Status": "Задание {statusLabel}."
       },
       "Tooltips": {
         "SetActive": "Сделать текущим",

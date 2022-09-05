@@ -16,7 +16,7 @@
       },
       "Socket": {
         "Notifications": {
-          "RewardDrop": "FQL (recompensa de misión): {userName} entrego '{itemName}' a {actorName}"
+          "RewardDrop": "FQL (recompensa de misión): {userName} entrego '{itemName}' a {actorName}."
         }
       },
       "Utils": {
@@ -51,15 +51,15 @@
       },
       "Notifications": {
         "Complete": "Forien's Quest Log - Migración de datos completa.",
-        "CouldNotMigrate": "Forien's Quest Log - No se pudo migrar la misión: '{name}'",
-        "Schema": "Forien's Quest Log - Migración de datos a la versión del esquema '{version}'",
+        "CouldNotMigrate": "Forien's Quest Log - No se pudo migrar la misión: '{name}'.",
+        "Schema": "Forien's Quest Log - Migración de datos a la versión del esquema '{version}'.",
         "Start": "Forien's Quest Log - Migrando datos, por favor no recargar."
       }
     },
     "Notifications": {
       "CannotOpen": "No puedes abrir los detalles de la misión. Puede que te falten permisos, que la misión ya no exista o que el ID sea inválido.",
       "FinishQuestAdded": "Termina de editar y cierra la nueva misión actual antes de agregar otra.",
-      "LinkCopied": "El link a la entidad de esta misión ha sido copiado al portapapeles",
+      "LinkCopied": "El link a la entidad de esta misión ha sido copiado al portapapeles.",
       "QuestAdded": "Se agregó '{name}' como una nueva misión con estado: {status}.",
       "QuestIDCopied": "El ID de misión para esta misión se ha copiado al portapapeles.",
       "QuestMoved": "Se movió '{name}' y se estableció el nuevo estado en: {target}.",
@@ -122,7 +122,7 @@
         "SplashQuestIcon": "Establecer como icono misión"
       },
       "Notifications": {
-        "BadUUID": "No se pudo recuperar el documento para UUID: {uuid}",
+        "BadUUID": "No se pudo recuperar el documento para UUID: '{uuid}'.",
         "WrongDocType": "Forien's Quest Log solo acepta actores del mundo/compendio, elementos y entradas de diario como dador de misiones.",
         "WrongItemType": "Forien's Quest Log solo acepta artículos del mundo y del compendio como recompensa."
       },
@@ -133,11 +133,11 @@
       },
       "Title": "Detalles de la misión - {name}",
       "Tooltips": {
-        "AddCustom": "Agregar definido por el usuario.",
+        "AddCustom": "Agregar definido por el usuario",
         "AddObjective": "Añadir Objetivo",
-        "ChangeSplashPos": "Cambiar la alineación de la imagen de misión",
-        "DeleteQuestGiver": "Eliminar dador de misiones",
-        "DeleteSplash": "Eliminar imagen de misión",
+        "ChangeSplashPos": "Cambiar la alineación de la imagen de misión.",
+        "DeleteQuestGiver": "Eliminar dador de misiones.",
+        "DeleteSplash": "Eliminar imagen de misión.",
         "HideAll": "Ocultar Todo",
         "LockAll": "Bloquear Todo",
         "PrimaryQuestSet": "Haz clic para hacer la misión principal.",
@@ -151,9 +151,9 @@
         "ShowAll": "Mostrar Todo",
         "TaskHidden": "El objetivo está oculto. Haz clic para mostrar.",
         "TaskVisible": "La tarea está visible. Haz clic para ocultar.",
-        "ToggleImage": "Alternar entre imagen de token o actor",
+        "ToggleImage": "Alternar entre imagen de token o actor.",
         "UnlockAll": "Desbloquear Todo",
-        "ViewSplashArt": "Ver imagen de portada"
+        "ViewSplashArt": "Ver imagen de portada."
       }
     },
     "QuestTracker": {
@@ -178,7 +178,7 @@
         "completed": "completadas",
         "failed": "fallidas",
         "inactive": "inactivo",
-        "Status": "La Misión es {statusLabel}"
+        "Status": "La Misión es {statusLabel}."
       },
       "Tooltips": {
         "SetActive": "Establecer como En Progreso",

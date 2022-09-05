@@ -6,7 +6,7 @@
           "OpenMacro": "Abrir a Missão ”{name}”"
         },
         "Notifications": {
-          "NoQuest": "API Error: Can't create macro with invalid Quest ID."
+          "NoQuest": "Erro de API: não é possível criar macro com ID de Quest inválido."
         }
       },
       "QuestDB": {
@@ -16,7 +16,7 @@
       },
       "Socket": {
         "Notifications": {
-          "RewardDrop": "FQL (recompensa de missão) : {userName} deu '{itemName}' para {actorName}"
+          "RewardDrop": "FQL (recompensa de missão) : {userName} deu '{itemName}' para {actorName}."
         }
       },
       "Utils": {
@@ -51,8 +51,8 @@
       },
       "Notifications": {
         "Complete": "Forien's Quest Log - Migração de dados completa.",
-        "CouldNotMigrate": "Forien's Quest Log - Não é possível migrar: '{name}'",
-        "Schema": "Forien's Quest Log - Migrando dados sob a versão: '{version}'",
+        "CouldNotMigrate": "Forien's Quest Log - Não é possível migrar: '{name}'.",
+        "Schema": "Forien's Quest Log - Migrando dados sob a versão: '{version}'.",
         "Start": "Forien's Quest Log - Migrando dados, não recarregue."
       }
     },
@@ -62,7 +62,7 @@
       "LinkCopied": "O link para esta missão foi copiado para a área de transferência.",
       "QuestAdded": "'{name}' foi adicionado como uma nova missão com a condição: {status}.",
       "QuestIDCopied": "Este ID de missão foi copiado para a área de transferência.",
-      "QuestMoved": "Missão movida com nova condição: {target}",
+      "QuestMoved": "Missão movida com nova condição: {target}.",
       "QuestPrimary": "'{name}' é a nova missão principal.",
       "QuestTrackerNoActive": "O rastreador de missões está ativado, mas não há missões ativas no momento.",
       "UserCantOpen": "O usuário {user} não tem permissão para abrir esta missão."
@@ -72,9 +72,9 @@
         "AddQuest": "Adicionar Missão"
       },
       "ContextMenu": {
-        "CopyEntityLink": "Copiar conteúdo do link da entidade.",
+        "CopyEntityLink": "Copiar conteúdo do link da entidade",
         "CopyQuestID": "Copiar ID da missão",
-        "PrimaryQuest": "Ativar / Desativar como missão principal."
+        "PrimaryQuest": "Ativar / Desativar como missão principal"
       },
       "Labels": {
         "TableHeader": "Missões {0}",
@@ -122,8 +122,8 @@
         "SplashQuestIcon": "Definir como ícone de Missão"
       },
       "Notifications": {
-        "BadUUID": "Não é possível recuperar documento para IDuu : {uuid}",
-        "WrongDocType": "Forien's Quest Log só aceita atores, itens e entradas de log de mundo/compêndio como entregadores de missões",
+        "BadUUID": "Não é possível recuperar documento para IDuu: '{uuid}'.",
+        "WrongDocType": "Forien's Quest Log só aceita atores, itens e entradas de log de mundo/compêndio como entregadores de missões.",
         "WrongItemType": "O Registro de Missões de Forien só aceita itens de mundo e itens de compêndio como recompensas."
       },
       "Tabs": {
@@ -133,7 +133,7 @@
       },
       "Title": "Detalhes da Missão",
       "Tooltips": {
-        "AddCustom": "Adicionar definido pelo usuário.",
+        "AddCustom": "Adicionar definido pelo usuário",
         "AddObjective": "Adicionar Objetivo",
         "ChangeSplashPos": "Modificar o alinhamento da imagem de ilustração.",
         "DeleteQuestGiver": "Excluir entragor da missão.",
@@ -178,7 +178,7 @@
         "completed": "completa",
         "failed": "perdida",
         "inactive": "inativa",
-        "Status": "A missão está {statusLabel}"
+        "Status": "A missão está {statusLabel}."
       },
       "Tooltips": {
         "SetActive": "Definir como Em Progresso",
@@ -192,7 +192,7 @@
     "Settings": {
       "allowPlayersAccept": {
         "Enable": "Os jogadores podem aceitar",
-        "EnableHint": "Marque para permitir que os jogadores aceitem missões na guia Disponível"
+        "EnableHint": "Marque para permitir que os jogadores aceitem missões na guia Disponível."
       },
       "allowPlayersCreate": {
         "Enable": "Jogadores podem Criar",
@@ -233,7 +233,7 @@
       },
       "questTrackerResizable": {
         "Enable": "Registro de Missões redimensionável",
-        "EnableHint": "Marque para permitir o controle manual do redimensionamento do Registro de Missões"
+        "EnableHint": "Marque para permitir o controle manual do redimensionamento do Registro de Missões."
       },
       "showFolder": {
         "Enable": "Exibir a Pasta de Missões",

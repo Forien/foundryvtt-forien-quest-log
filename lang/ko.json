@@ -6,7 +6,7 @@
           "OpenMacro": "열려 있는 ”{name}”"
         },
         "Notifications": {
-          "NoQuest": "API Error: Can't create macro with invalid Quest ID."
+          "NoQuest": "API 오류: 잘못된 퀘스트 ID로 매크로를 생성할 수 없습니다."
         }
       },
       "QuestDB": {
@@ -45,14 +45,14 @@
       "ChatMessage": {
         "Footer": "위 퀘스트를 컴펜디움 또는 월드의 유효 문서 데이터로 수동으로 업데이트 해야 합니다.<br>",
         "Header": "Forien's Quest Log (DB 마이그레이션)<br>아래 퀘스트에서 연결되지 않은 퀘스트 제공자 또는 보상 아이템을 제거했습니다.<p>",
-        "Notification": "Forien's Quest Log - 하나 이상의 연결되지 않은 퀘스트 제공자 또는 보상 아이템이 제거되었습니다. 자세한 내용은 채팅 메시지를 확인하십시오",
+        "Notification": "Forien's Quest Log - 하나 이상의 연결되지 않은 퀘스트 제공자 또는 보상 아이템이 제거되었습니다. 자세한 내용은 채팅 메시지를 확인하십시오.",
         "QuestGiver": "퀘스트 제공자",
         "QuestRewards": "퀘스트 보상"
       },
       "Notifications": {
         "Complete": "Forien's Quest Log - 데이터 마이그레이션 완료.",
-        "CouldNotMigrate": "Forien's Quest Log - 마이그레이션 할 수 없었음. 퀘스트: '{name}'",
-        "Schema": "Forien's Quest Log - 스키마 버전 '{version}' 데이터 마이그레이션 중 ",
+        "CouldNotMigrate": "Forien's Quest Log - 마이그레이션 할 수 없었음. 퀘스트: '{name}'.",
+        "Schema": "Forien's Quest Log - 스키마 버전 '{version}' 데이터 마이그레이션 중.",
         "Start": "Forien's Quest Log - 데이터 마이그레이션 중, 리로드하지 마십시오."
       }
     },
@@ -62,7 +62,7 @@
       "LinkCopied": "이 퀘스트에 대한 엔티티 링크가 클립보드에 복사 되었습니다.",
       "QuestAdded": "{status} 상태로 '{name}' 새 퀘스트가 추가되었습니다.",
       "QuestIDCopied": "이 퀘스트의 퀘스트 ID가 클립보드에 복사되었습니다.",
-      "QuestMoved": "퀘스트를 새 폴더로 이동하고 새 상태를 부여했습니다 : {target}",
+      "QuestMoved": "퀘스트를 새 폴더로 이동하고 새 상태를 부여했습니다: {target}.",
       "QuestPrimary": "'{name}' 퀘스트는 새로운 중요 퀘스트입니다..",
       "QuestTrackerNoActive": "퀘스트 트래커가 활성화 되었지만 진행 중인 퀘스트가 없습니다.",
       "UserCantOpen": "{user} 플레이어는 이 퀘스트를 열람할 권한을 가지고 있지 않습니다."
@@ -74,7 +74,7 @@
       "ContextMenu": {
         "CopyEntityLink": "엔티티 내용 링크 복사",
         "CopyQuestID": "퀘스트 ID 복사",
-        "PrimaryQuest": "중요 퀘스트로 설정/해제."
+        "PrimaryQuest": "중요 퀘스트로 설정/해제"
       },
       "Labels": {
         "TableHeader": "{0} 퀘스트",
@@ -118,7 +118,7 @@
         "QuestBranching": "서브 퀘스트:",
         "QuestSettings": "퀘스트 설정:",
         "SplashArt": "스플래시 아트:",
-        "SplashInfo": "클릭하여 이미지 설정",
+        "SplashInfo": "클릭하여 이미지 설정.",
         "SplashQuestIcon": "퀘스트 아이콘으로 설정"
       },
       "Notifications": {
