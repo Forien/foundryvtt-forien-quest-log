@@ -1,4 +1,18 @@
 # Changelog
+## Release 0.7.10
+This is a major release that brings dual compatibility on Foundry `v9` & `v10`. 
+
+Several quality of life improvements including:
+
+- Quest document linking is enabled again.
+- Show quest log to players link in quest log app header (for GM).
+- Show quest tracker to players with icon in quest tracker header (for GM).
+- Ability to set quest tracker to transparent via fill icon in app header.
+- Expanded language / translation support. 
+
+[Weblate setup](https://weblate.foundryvtt-hub.com/engage/forien-quest-log/) for language / translation community 
+updates.
+
 ## Release 0.7.9
 - Disable synthetic quest type registration for Foundry `v9+`. As it turns out `CONST` was locked down last
 minute in the v9 release cycle. The feature affected is "document linking" for quests. There is a replacement module / 
