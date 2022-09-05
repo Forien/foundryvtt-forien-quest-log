@@ -3,7 +3,7 @@
     "API": {
       "Hooks": {
         "Labels": {
-          "OpenMacro": "Avaa ”{name}”"
+          "OpenMacro": "Avaa \"{name}\""
         },
         "Notifications": {
           "NoQuest": "API virhe: Makroa ei voi luoda kelvottomalla tehtävän tunnisteella."
@@ -16,12 +16,12 @@
       },
       "Socket": {
         "Notifications": {
-          "RewardDrop": "FQL (palkkio): {userName} raahasi tavaran '{itemName}' hahmolle {actorName}."
+          "RewardDrop": "FQL (palkkio): {userName} raahasi tavaran \"{itemName}\" hahmolle {actorName}."
         }
       },
       "Utils": {
         "Notifications": {
-          "NoDocument": "Entiteettiä ei voitu ladata UUID:llä: '{uuid}'.",
+          "NoDocument": "Entiteettiä ei voitu ladata UUID:llä \"{uuid}\".",
           "NoPermission": "Sinulla ei ole tarvittavia oikeuksia nähdä tämän entiteetin lomaketta."
         }
       }
@@ -32,7 +32,7 @@
       "BodyReward": "Tämä palkkio ja sen tiedot poistetaan lopullisesti.",
       "Cancel": "Peruuta",
       "Delete": "Poista",
-      "HeaderDel": "Haluatko varmasti poistaa: <p>'{name}'</p>",
+      "HeaderDel": "Haluatko varmasti poistaa: <p>\"{name}\"</p>",
       "TitleDel": "Poista {title}"
     },
     "Labels": {
@@ -51,8 +51,8 @@
       },
       "Notifications": {
         "Complete": "Forien's Quest Log - Tietojen siirto valmis.",
-        "CouldNotMigrate": "Forien's Quest Log - Tehtävää ei voitu siirtää: '{name}'.",
-        "Schema": "Forien's Quest Log - Tietoja siirretään skeeman versioon '{version}'.",
+        "CouldNotMigrate": "Forien's Quest Log - Tehtävää \"{name}\" ei voitu siirtää.",
+        "Schema": "Forien's Quest Log - Tietoja siirretään skeeman versioon \"{version}\".",
         "Start": "Forien's Quest Log - Tietoja siirretään, ethän lataa sivua uudelleen."
       }
     },
@@ -60,12 +60,12 @@
       "CannotOpen": "Tehtävän yksityiskohtia ei voi avata. Tämä tehtävä ei välttämättä ole havaittavissa tai sitä ei enää ole.",
       "FinishQuestAdded": "Teethän muokkauksesi loppuun ja suljet nykyisen tehtävän, ennen kuin lisäät uuden.",
       "LinkCopied": "Entiteetin linkki tähän tehtävään kopioitiin leikepöydälle.",
-      "QuestAdded": "Uusi tehtävä '{name}' lisättiin tilassa: '{status}'.",
+      "QuestAdded": "Uusi tehtävä \"{name}\" lisättiin {status}-tilassa.",
       "QuestIDCopied": "Tämän tehtävän tunniste kopioitiin leikepöydälle.",
-      "QuestMoved": "'{name}' siirrettiin ja uudeksi tilaksi asetettiin: '{target}'.",
-      "QuestPrimary": "'{name}' on uusi päätehtävä.",
+      "QuestMoved": "\"{name}\" siirrettiin ja uudeksi tilaksi asetettiin \"{target}\".",
+      "QuestPrimary": "\"{name}\" on uusi päätehtävä.",
       "QuestTrackerNoActive": "Tehtäväseurain on päällä, mutta keskeneräisiä tehtäviä ei tällä hetkellä ole.",
-      "UserCantOpen": "Käyttäjällä '{user}' ei ole oikeuksia avata tätä tehtävää."
+      "UserCantOpen": "Käyttäjällä \"{user}\" ei ole oikeuksia avata tätä tehtävää."
     },
     "QuestLog": {
       "Buttons": {
@@ -74,7 +74,7 @@
       "ContextMenu": {
         "CopyEntityLink": "Kopioi entiteetin sisältölinkki",
         "CopyQuestID": "Kopioi tehtävän tunniste",
-        "PrimaryQuest": "Aseta / poista päätehtäväksi"
+        "PrimaryQuest": "Aseta/poista päätehtäväksi"
       },
       "Labels": {
         "TableHeader": "{0} tehtävää",
@@ -115,8 +115,8 @@
         "SplashQuestIcon": "Aseta tehtävän kuvakkeeksi"
       },
       "Notifications": {
-        "BadUUID": "Dokumenttia ei löytynyt UUID:llä: '{uuid}'.",
-        "WrongDocType": "Forien's Quest Log hyväksyy vain maailman / hakemiston hahmoja, tavaroita ja muistiinpanoja tehtävänantajiksi.",
+        "BadUUID": "Dokumenttia ei löytynyt UUID:llä \"{uuid}\".",
+        "WrongDocType": "Forien's Quest Log hyväksyy vain maailman/hakemiston hahmoja, tavaroita ja muistiinpanoja tehtävänantajiksi.",
         "WrongItemType": "Forien's Quest Log hyväksyy vain maailman ja hakemiston tavaroita palkkioiksi."
       },
       "Tabs": {
@@ -144,7 +144,7 @@
         "ShowAll": "Näytä kaikki",
         "TaskHidden": "Tavoite on piilotettu. Napsauta näyttääksesi sen.",
         "TaskVisible": "Tavoite on näkyvillä. Napsauta piilottaaksesi sen.",
-        "ToggleImage": "Näytä / piilota pelinappulan / hahmon kuva.",
+        "ToggleImage": "Näytä/piilota pelinappulan/hahmon kuva.",
         "UnlockAll": "Avaa lukitus kaikista",
         "ViewSplashArt": "Katso kansikuva."
       }
@@ -197,7 +197,7 @@
       },
       "countHidden": {
         "Enable": "Laske piilotetut tavoitteet",
-        "EnableHint": "Jos valittu, niin myös piilotetut tavoitteet lasketaan mukaan suoritettuihin / kaikkiin tavoitteisiin."
+        "EnableHint": "Jos valittu, niin myös piilotetut tavoitteet lasketaan mukaan suoritettuihin/kaikkiin tavoitteisiin."
       },
       "defaultPermissionLevel": {
         "Enable": "Tehtävän oletusoikeudet",
@@ -233,7 +233,7 @@
         "EnableHint": "Valitse näyttääksesi tehtävien tiedot kansiossa Muistiinpanot-välilehdellä. Vain TESTAUSKÄYTTÖÖN."
       },
       "showTasks": {
-        "default": "Näytä tavoitteet: suoritettu / kaikki",
+        "default": "Näytä tavoitteet: suoritettu/kaikki",
         "Enable": "Näytä tavoitteet tehtävälokissa",
         "EnableHint": "Valitse kuinka tavoitteiden määrä näytetään tehtävän otsikon vieressä tehtävälokissa. Tämä ei vaikuta tehtävän esikatseluun.",
         "no": "Piilota Tavoitteet-sarake",
