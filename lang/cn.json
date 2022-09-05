@@ -59,7 +59,7 @@
     "Notifications": {
       "CannotOpen": "无法查看任务详情。你可能缺少访问权限，或者该任务ID错误，或者该任务已被删除。",
       "FinishQuestAdded": "请在添加另一个任务之前完成编辑并关闭当前的新任务。",
-      "LinkCopied": "该任务的链接已复制到粘贴板中",
+      "LinkCopied": "该任务的链接已复制到粘贴板中。",
       "QuestAdded": "添加了 '{name}' 作为新任务，状态为：'{status}'。",
       "QuestIDCopied": "此任务的任务 ID 已复制到剪贴板。",
       "QuestMoved": "移动了 '{name}'并将新状态设置为：'{target}'。",
@@ -128,9 +128,9 @@
       "Tooltips": {
         "AddCustom": "添加用户定义",
         "AddObjective": "加入新目标",
-        "ChangeSplashPos": "更改插画对齐",
-        "DeleteQuestGiver": "删除发布者",
-        "DeleteSplash": "删除插画",
+        "ChangeSplashPos": "更改插画对齐。",
+        "DeleteQuestGiver": "删除发布者。",
+        "DeleteSplash": "删除插画。",
         "HideAll": "全部藏起来",
         "LockAll": "锁定所有",
         "PrimaryQuestSet": "单击以进行主要任务。",
@@ -144,9 +144,9 @@
         "ShowAll": "显示所有",
         "TaskHidden": "目标已隐藏，点击查看。",
         "TaskVisible": "目标已可见，点击隐藏。",
-        "ToggleImage": "打开或关闭token/角色图片",
+        "ToggleImage": "打开或关闭token/角色图片。",
         "UnlockAll": "全部解锁",
-        "ViewSplashArt": "查看插图"
+        "ViewSplashArt": "查看插图。"
       }
     },
     "QuestTracker": {
@@ -192,7 +192,7 @@
         "EnableHint": "勾选以允许玩家新建任务。玩家新建的任务将出现在可选任务栏中并且可被玩家编辑。需要给予玩家“新建日志”权限。"
       },
       "allowPlayersDrag": {
-        "Enable": "允许玩家拖拽任务奖励。",
+        "Enable": "允许玩家拖拽任务奖励",
         "EnableHint": "勾选以允许玩家将奖励物品从任务详情中拖拽到自己的角色卡上。"
       },
       "countHidden": {

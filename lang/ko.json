@@ -153,8 +153,8 @@
       "NoPrimary": "가능한 중요 퀘스트가 없습니다.",
       "Title": "퀘스트 트래커",
       "Tooltips": {
-        "BackgroundShow": "클릭하여 배경을 표시",
-        "BackgroundUnshow": "클릭하여 배경을 투명화",
+        "BackgroundShow": "클릭하여 배경을 표시.",
+        "BackgroundUnshow": "클릭하여 배경을 투명화.",
         "PrimaryQuestShow": "중요 퀘스트를 표시하려면 클릭한다.",
         "PrimaryQuestUnshow": "모든 퀘스트를 표시하려면 클릭한다."
       }
