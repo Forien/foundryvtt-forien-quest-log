@@ -106,7 +106,11 @@
         "DragDropActor": "Glisser/déposer un acteur, un objet, une entrée de journal ou clic gauche pour une source personnalisée.",
         "DragDropActorPlayer": "Glisser/déposer un acteur, un objet ou une entrée de journal.",
         "DragDropRewards": "Glisser/Déposer les objets ici pour en faire des récompenses.",
-        "GMNotes": "Notes du MJ :"
+        "GMNotes": "Notes du MJ:",
+        "Objective": "Objectif",
+        "Objectives": "Objectifs:",
+        "Reward": "Récompense",
+        "Rewards": "Récompenses:"
       },
       "Management": {
         "AddSubquest": "Créer une quête secondaire",
@@ -115,11 +119,7 @@
         "QuestSettings": "Réglages des quêtes:",
         "SplashArt": "Illustration:",
         "SplashInfo": "Cliquer pour définir une image.",
-        "SplashQuestIcon": "Définissez comme icône de quête",
-        "Objective": "Objectif",
-        "Objectives": "Objectifs:",
-        "Reward": "Récompense",
-        "Rewards": "Récompenses:"
+        "SplashQuestIcon": "Définissez comme icône de quête"
       },
       "Notifications": {
         "BadUUID": "Ne peut récupérr le document pour IDuu : {uuid}",
