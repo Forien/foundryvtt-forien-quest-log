@@ -30,8 +30,11 @@
       "HeaderDel": "Czy na pewno chcesz usunąć: <p>'{name}'</p>",
       "TitleDel": "Usuń {title}"
     },
-    "HeaderLabels": {
-      "Show": "Pokaż do Graczom"
+    "Labels": {
+      "AppHeader": {
+        "ShowPlayers": "Pokaż do Graczom"
+      },
+      "Quest": "Misja"
     },
     "Migration": {
       "ChatMessage": {
@@ -57,7 +60,6 @@
       "QuestTrackerNoActive": "Śledzenie misji jest włączone, ale obecnie nie ma żadnych misji w toku.",
       "UserCantOpen": "Użytkownik {user} nie posiada uprawnień do otwarcia tej Misji."
     },
-    "Quest": "Misja",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "Dodaj misję"

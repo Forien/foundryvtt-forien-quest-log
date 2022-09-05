@@ -30,8 +30,11 @@
       "HeaderDel": "你确定你要删除：<p>'{name}'</p>",
       "TitleDel": "删除 {title}"
     },
-    "HeaderLabels": {
-      "Show": "展示给玩家"
+    "Labels": {
+      "AppHeader": {
+        "ShowPlayers": "展示给玩家"
+      },
+      "Quest": "寻求"
     },
     "Migration": {
       "ChatMessage": {
@@ -57,7 +60,6 @@
       "QuestTrackerNoActive": "任务追踪器已启用，但目前没有正在进行的任务。",
       "UserCantOpen": "玩家 {user} 没有查看该任务的权限。"
     },
-    "Quest": "寻求",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "加入新任务"

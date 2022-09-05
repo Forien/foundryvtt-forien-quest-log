@@ -30,8 +30,11 @@
       "HeaderDel": "Tem certeza de que deseja excluir : <p>'{name}'</p>",
       "TitleDel": "Excluir {title}"
     },
-    "HeaderLabels": {
-      "Show": "Exibir aos Jogadores"
+    "Labels": {
+      "AppHeader": {
+        "ShowPlayers": "Exibir aos Jogadores"
+      },
+      "Quest": "Missão"
     },
     "Migration": {
       "ChatMessage": {
@@ -57,7 +60,6 @@
       "QuestTrackerNoActive": "O rastreador de missões está ativado, mas não há missões ativas no momento.",
       "UserCantOpen": "O usuário {user} não tem permissão para abrir esta missão."
     },
-    "Quest": "Missão",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "Adicionar Missão"

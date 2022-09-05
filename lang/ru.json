@@ -30,8 +30,11 @@
       "HeaderDel": "Вы уверены, что хотите удалить: <p>'{name}'</p>",
       "TitleDel": "Удаление {title}"
     },
-    "HeaderLabels": {
-      "Show": "Показать игрокам"
+    "Labels": {
+      "AppHeader": {
+        "ShowPlayers": "Показать игрокам"
+      },
+      "Quest": "Задание"
     },
     "Migration": {
       "ChatMessage": {
@@ -57,7 +60,6 @@
       "QuestTrackerNoActive": "Трекер включён, но нет активных заданий.",
       "UserCantOpen": "Участник {user} не имеет разрешения для просмотра этого задания."
     },
-    "Quest": "Задание",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "Добавить квест"

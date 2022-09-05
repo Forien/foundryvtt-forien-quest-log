@@ -208,7 +208,7 @@ export default class QuestTracker extends Application
       if (game.user.isGM)
       {
          buttons.unshift({
-            title: game.i18n.localize('ForienQuestLog.HeaderLabels.Show'),
+            title: game.i18n.localize('ForienQuestLog.Labels.AppHeader.ShowPlayers'),
             class: 'share-tracker',
             icon: 'fas fa-eye'
          });

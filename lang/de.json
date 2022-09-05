@@ -30,8 +30,11 @@
       "HeaderDel": "Bist du sicher, dass du <p>'{name}'</p> löschen willst",
       "TitleDel": "{title} löschen"
     },
-    "HeaderLabels": {
-      "Show": "Spielern zeigen"
+    "Labels": {
+      "AppHeader": {
+        "ShowPlayers": "Spielern zeigen"
+      },
+      "Quest": "Quest"
     },
     "Migration": {
       "ChatMessage": {
@@ -57,7 +60,6 @@
       "QuestTrackerNoActive": "Questtracker ist aktiviert, aber aktuell gibt es keine aktiven Quests.",
       "UserCantOpen": "Benutzer {user} hat nicht die Berechtigungen, um diese Quest zu öffnen."
     },
-    "Quest": "Quest",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "Quest hinzufügen"

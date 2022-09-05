@@ -7,7 +7,6 @@ import FQLDialog        from '../FQLDialog.js';
 import HandlerLog    from './HandlerLog.js';
 
 import { constants, jquery, questStatusI18n, questTabIndex, settings } from '../../model/constants.js';
-import HandlerDetails from "../preview/HandlerDetails.js";
 
 /**
  * Provides the main quest log app which shows the quests separated by status either with bookmark or classic tabs.
@@ -71,7 +70,7 @@ export default class QuestLog extends Application
       if (game.user.isGM)
       {
          buttons.unshift({
-            label: game.i18n.localize('ForienQuestLog.HeaderLabels.Show'),
+            label: game.i18n.localize('ForienQuestLog.Labels.AppHeader.ShowPlayers'),
             class: 'share-quest',
             icon: 'fas fa-eye',
             onclick: () => Socket.showQuestLog()

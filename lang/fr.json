@@ -30,8 +30,11 @@
       "HeaderDel": "Êtes vous certain de vouloir effacer : <p>'{name}'</p>",
       "TitleDel": "Effacer {title}"
     },
-    "HeaderLabels": {
-      "Show": "Montrer aux joueurs"
+    "Labels": {
+      "AppHeader": {
+        "ShowPlayers": "Montrer aux joueurs"
+      },
+      "Quest": "Quête"
     },
     "Migration": {
       "ChatMessage": {
@@ -57,7 +60,6 @@
       "QuestTrackerNoActive": "Le traqueur de quête est activé, mais il n'y a pas pas de quête en cours actuellement.",
       "UserCantOpen": "L'utilisateur {user} n’a pas la permission d'ouvrir cette quête."
     },
-    "Quest": "Quête",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "Ajouter Quête"

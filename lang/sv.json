@@ -30,8 +30,11 @@
       "HeaderDel": "Är du säker att du vill radera: <p>'{name}'</p>",
       "TitleDel": "Radera {title}"
     },
-    "HeaderLabels": {
-      "Show": "Visa för spelare"
+    "Labels": {
+      "AppHeader": {
+        "ShowPlayers": "Visa för spelare"
+      },
+      "Quest": "Uppdrag"
     },
     "Migration": {
       "ChatMessage": {
@@ -57,7 +60,6 @@
       "QuestTrackerNoActive": "Mål Spårare är aktiverat, men det finns inga pågående uppdrag för närvarande.",
       "UserCantOpen": "Användare {user} har inte behörighet att öppna det här uppdraget."
     },
-    "Quest": "Uppdrag",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "Lägg till uppdrag"

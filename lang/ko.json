@@ -30,8 +30,11 @@
       "HeaderDel": "정말로 삭제하시겠습니까? : <p>'{name}'</p>",
       "TitleDel": "{name} 삭제"
     },
-    "HeaderLabels": {
-      "Show": "플레이어에게 표시"
+    "Labels": {
+      "AppHeader": {
+        "ShowPlayers": "플레이어에게 표시"
+      },
+      "Quest": "퀘스트"
     },
     "Migration": {
       "ChatMessage": {
@@ -57,7 +60,6 @@
       "QuestTrackerNoActive": "퀘스트 트래커가 활성화 되었지만 진행 중인 퀘스트가 없습니다.",
       "UserCantOpen": "{user} 플레이어는 이 퀘스트를 열람할 권한을 가지고 있지 않습니다."
     },
-    "Quest": "퀘스트",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "퀘스트 추가"

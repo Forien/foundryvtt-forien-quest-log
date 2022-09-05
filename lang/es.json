@@ -30,8 +30,11 @@
       "HeaderDel": "¿Estás seguro que quieres eliminar? <p>'{name}'</p>",
       "TitleDel": "Eliminar {title}"
     },
-    "HeaderLabels": {
-      "Show": "Mostrar a jugadores"
+    "Labels": {
+      "AppHeader": {
+        "ShowPlayers": "Mostrar a jugadores"
+      },
+      "Quest": "Misión"
     },
     "Migration": {
       "ChatMessage": {
@@ -57,7 +60,6 @@
       "QuestTrackerNoActive": "Rastreador de Misiones está habilitado, pero no hay misiones en curso actualmente.",
       "UserCantOpen": "El usuario {user} no tiene permisos para abrir esta misión."
     },
-    "Quest": "Misión",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "Añadir misión"

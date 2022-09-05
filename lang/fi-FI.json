@@ -30,8 +30,11 @@
       "HeaderDel": "Haluatko varmasti poistaa: <p>\"{name}\"</p>",
       "TitleDel": "Poista {title}"
     },
-    "HeaderLabels": {
-      "Show": "Näytä pelaajille"
+    "Labels": {
+      "AppHeader": {
+        "ShowPlayers": "Näytä pelaajille"
+      },
+      "Quest": "Tehtävä"
     },
     "Migration": {
       "ChatMessage": {
@@ -57,7 +60,6 @@
       "QuestTrackerNoActive": "Tehtäväseurain on päällä, mutta keskeneräisiä tehtäviä ei tällä hetkellä ole.",
       "UserCantOpen": "Käyttäjällä {user} ei ole oikeuksia avata tätä tehtävää."
     },
-    "Quest": "Tehtävä",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "Lisää tehtävä"

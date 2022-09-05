@@ -30,8 +30,11 @@
       "HeaderDel": "<p>'{name}'</p>を削除します本当によろしいですか？",
       "TitleDel": "{name}を削除します"
     },
-    "HeaderLabels": {
-      "Show": "プレイヤーに表示"
+    "Labels": {
+      "AppHeader": {
+        "ShowPlayers": "プレイヤーに表示"
+      },
+      "Quest": "クエスト"
     },
     "Migration": {
       "ChatMessage": {
@@ -57,7 +60,6 @@
       "QuestTrackerNoActive": "クエスト一覧が有効になっていますが、進行中のクエストがありません。",
       "UserCantOpen": "User {user} doesn'{user}はこのクエストを開く権限を持っていません。"
     },
-    "Quest": "クエスト",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "クエスト追加"

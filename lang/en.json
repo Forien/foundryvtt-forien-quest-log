@@ -30,8 +30,11 @@
       "HeaderDel": "Are you sure you want to delete: <p>'{name}'</p>",
       "TitleDel": "Delete {title}"
     },
-    "HeaderLabels": {
-      "Show": "Show to Players"
+    "Labels": {
+      "AppHeader": {
+        "ShowPlayers": "Show to Players"
+      },
+      "Quest": "Quest"
     },
     "Migration": {
       "ChatMessage": {
@@ -57,7 +60,6 @@
       "QuestTrackerNoActive": "Quest Tracker is enabled, but there are no in progress quests currently.",
       "UserCantOpen": "User {user} doesn't have permission to open this quest."
     },
-    "Quest": "Quest",
     "QuestLog": {
       "Buttons": {
         "AddQuest": "Add Quest"

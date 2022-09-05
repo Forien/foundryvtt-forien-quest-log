@@ -33,6 +33,12 @@
     "HeaderLabels": {
       "Show": "展示給玩家"
     },
+    "Labels": {
+      "AppHeader": {
+        "ShowPlayers": "展示給玩家"
+      },
+      "Quest" : "任務"
+    },
     "Migration" : {
       "ChatMessage" : {
         "Footer" : "您必須使用來自Compendiums或你的World中的有效文檔資料，來手動更新上述任務。<br>",
@@ -57,7 +63,6 @@
       "QuestTrackerNoActive" : "任務追踪器已啟用，但目前沒有正在進行的任務。",
       "UserCantOpen" : "玩家 {user} 沒有查看該任務的權限。"
     },
-    "Quest" : "任務",
     "QuestLog" : {
       "Buttons": {
         "AddQuest": "添加任務"

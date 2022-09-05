@@ -63,7 +63,7 @@ export default class FQLDialog
             result,
             questId,
             isQuestLog,
-            title: game.i18n.localize('ForienQuestLog.Quest'),
+            title: game.i18n.localize('ForienQuestLog.Labels.Quest'),
             body: 'ForienQuestLog.DeleteDialog.BodyQuest'
          });
       }
@@ -78,7 +78,7 @@ export default class FQLDialog
             result,
             questId,
             isQuestLog,
-            title: game.i18n.localize('ForienQuestLog.Quest'),
+            title: game.i18n.localize('ForienQuestLog.Labels.Quest'),
             body: 'ForienQuestLog.DeleteDialog.BodyQuest'
          });
 

@@ -271,7 +271,7 @@ export default class QuestPreview extends FormApplication
       if (game.user.isGM)
       {
          buttons.unshift({
-            label: game.i18n.localize('ForienQuestLog.HeaderLabels.Show'),
+            label: game.i18n.localize('ForienQuestLog.Labels.AppHeader.ShowPlayers'),
             class: 'share-quest',
             icon: 'fas fa-eye',
             onclick: () => Socket.showQuestPreview(this._quest.id)
