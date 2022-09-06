@@ -183,7 +183,7 @@ export default class QuestTracker extends Application
       if (closeButton) { closeButton.label = void 0; }
 
       const showBackgroundState = sessionStorage.getItem(sessionConstants.trackerShowBackground) === 'true';
-      const showBackgroundIcon = showBackgroundState ? 'fas fa-fill on' : 'far fa-fill off';
+      const showBackgroundIcon = showBackgroundState ? 'fas fa-fill on' : 'fas fa-fill off';
       const showBackgroundTitle = showBackgroundState ? 'ForienQuestLog.QuestTracker.Tooltips.BackgroundUnshow' :
        'ForienQuestLog.QuestTracker.Tooltips.BackgroundShow';
 
