@@ -157,7 +157,7 @@ export default class QuestLog extends Application
             const questId = $(menu)?.closest('.drag-quest')?.data('quest-id');
             const quest = QuestDB.getQuest(questId);
 
-            if (quest && Utils.copyTextToClipboard(`@Quest[${quest.id}]{${quest.name}}`))
+            if (quest && Utils.copyTextToClipboard(`@JournalEntry[${quest.id}]{${quest.name}}`))
             {
                ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.LinkCopied'));
             }
