@@ -160,9 +160,11 @@ export default class TinyMCE
 /**
  * Defines the CSS URL to load into TinyMCE when editing.
  *
+ * Note: Foundry applies `getRoute` to add a route prefix as applicable.
+ *
  * @type {string}
  */
-const s_CSS_URL = foundry.utils.getRoute('/modules/forien-quest-log/css/init-tinymce.css');
+const s_CSS_URL = '/modules/forien-quest-log/css/init-tinymce.css';
 
 /**
  * Defines the fonts available.
