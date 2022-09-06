@@ -16,13 +16,13 @@
       },
       "Socket": {
         "Notifications": {
-          "RewardDrop": "FQL (uppdragsbelöning): {userName} tappade '{itemName}' till {actorName}."
+          "RewardDrop": "FQL (uppdragsbelöning): {userName} släppte '{itemName}' på {actorName}."
         }
       },
       "Utils": {
         "Notifications": {
-          "NoDocument": "En enhet kunde inte laddas för UUID: '{uuid}'.",
-          "NoPermission": "Du har inte tillräckliga behörigheter för att visa detta enhetsblad."
+          "NoDocument": "En entitet kunde inte laddas med UUID: '{uuid}'.",
+          "NoPermission": "Du har inte tillräckliga behörigheter för att visa detta entitetsblad."
         }
       }
     },
@@ -62,9 +62,9 @@
       "LinkCopied": "Entitetslänk för detta uppdrag har kopierats till urklipp.",
       "QuestAdded": "Lagt till '{name}' som ett nytt uppdrag med status: '{status}'.",
       "QuestIDCopied": "Uppdrags-ID för detta uppdrag har kopierats till urklipp.",
-      "QuestMoved": "Rörd '{name}' och ställ in ny status till: '{target}'.",
+      "QuestMoved": "Flyttat '{name}' och satt dess status till: '{target}'.",
       "QuestPrimary": "'{name}' är det nya primära uppdraget.",
-      "QuestTrackerNoActive": "Mål Spårare är aktiverat, men det finns inga pågående uppdrag för närvarande.",
+      "QuestTrackerNoActive": "Uppdragsspårare är aktiverad, men det finns inga pågående uppdrag för närvarande.",
       "UserCantOpen": "Användare '{user}' har inte behörighet att öppna det här uppdraget."
     },
     "QuestLog": {
@@ -74,11 +74,11 @@
       "ContextMenu": {
         "CopyEntityLink": "Kopiera entitetsinnehållslänk",
         "CopyQuestID": "Kopiera uppdrags-ID",
-        "PrimaryQuest": "Ställ in / avaktivera som primärt uppdrag"
+        "PrimaryQuest": "Välj / välj bort som primärt uppdrag"
       },
       "Labels": {
         "TableHeader": "{0} Uppdrag",
-        "SubTitle": "Delfråga av {0}"
+        "SubTitle": "Deluppdrag till {0}"
       },
       "Title": "Uppdragslogg",
       "Tooltips": {
@@ -96,10 +96,10 @@
       "Labels": {
         "CustomSource": "Anpassad källa",
         "Description": "Beskrivning:",
-        "DragDropActor": "Dra och släpp skådespelare, objekt eller journalanteckning eller vänsterklicka för att ställa in en anpassad källa.",
-        "DragDropActorPlayer": "Dra och släpp skådespelare, artikel eller journalanteckning eller vänsterklicka för att ställa in en anpassad källa.",
+        "DragDropActor": "Dra och släpp aktörer, saker eller journalanteckningar eller vänsterklicka för att ställa in en anpassad källa.",
+        "DragDropActorPlayer": "Dra och släpp aktörer, saker eller journalanteckningar.",
         "DragDropRewards": "Dra och släpp objekt här för att lägga till dem som belöningar.",
-        "GMNotes": "GM Anteckningar:",
+        "GMNotes": "SL-anteckningar:",
         "Objective": "Mål",
         "Objectives": "Mål:",
         "Reward": "Belöning",
@@ -109,28 +109,28 @@
         "AddSubquest": "Skapa underuppdrag",
         "ConfigurePermissions": "Konfigurera Behörigheter",
         "QuestBranching": "Underuppdrag:",
-        "QuestSettings": "Quest-Inställningar:",
+        "QuestSettings": "Uppdragsinställningar:",
         "SplashArt": "Skvätt Konst:",
         "SplashInfo": "Klicka för att ställa in bild.",
         "SplashQuestIcon": "Ställ in som uppdragsikon"
       },
       "Notifications": {
         "BadUUID": "Det gick inte att hämta dokumentet för UUID: '{uuid}'.",
-        "WrongDocType": "Forien's Quest Log accepterar endast världs-/kompendieskådespelare, föremål och journalanteckningar som uppdragsgivare.",
+        "WrongDocType": "Forien's Quest Log accepterar endast världs-/kompendieaktörer, saker och journalanteckningar som uppdragsgivare.",
         "WrongItemType": "Forien's Quest Log accepterar endast världs- och kompendiumobjekt som belöningar."
       },
       "Tabs": {
         "Details": "Detaljer",
-        "GMNotes": "GM-anteckningar",
+        "GMNotes": "SL-anteckningar",
         "QuestManagement": "Hantera uppdrag"
       },
       "Title": "Uppdragsdetaljer",
       "Tooltips": {
         "AddCustom": "Lägg till användardefinierad",
         "AddObjective": "Lägg till Mål",
-        "ChangeSplashPos": "Ändra stänkjustering.",
+        "ChangeSplashPos": "Ändra blänkarbild-justering.",
         "DeleteQuestGiver": "Ta bort uppdragsgivare.",
-        "DeleteSplash": "Ta bort stänkkonst.",
+        "DeleteSplash": "Ta bort blänkar-bild.",
         "HideAll": "Dölj Alla",
         "LockAll": "Lås allt",
         "PrimaryQuestSet": "Klicka för att göra primärt uppdrag.",
@@ -146,12 +146,12 @@
         "TaskVisible": "Mål är synligt. Klicka för att dölja.",
         "ToggleImage": "Toggla Spelfigursbild / Aktörsbild.",
         "UnlockAll": "Lås upp Alla",
-        "ViewSplashArt": "Se skvätt konst."
+        "ViewSplashArt": "Se blänkarbild."
       }
     },
     "QuestTracker": {
       "NoPrimary": "Inget primärt uppdrag tillgängligt.",
-      "Title": "Målföljare",
+      "Title": "Uppdragsspårare",
       "Tooltips": {
         "BackgroundShow": "Klicka för att visa bakgrund.",
         "BackgroundUnshow": "Klicka för att göra bakgrunden genomskinlig.",
@@ -174,7 +174,7 @@
         "Status": "Uppdrag är {statusLabel}."
       },
       "Tooltips": {
-        "SetActive": "Ställ in som pågår",
+        "SetActive": "Ställ in som Pågående",
         "SetAvailable": "Ställ in som tillgänglig",
         "SetCompleted": "Ställ in som slutfört",
         "SetFailed": "Ställ in som misslyckad",
@@ -207,12 +207,12 @@
         "OWNER": "Ägare"
       },
       "dynamicBookmarkBackground": {
-        "Enable": "Dynamisk bokmärke bakgrund",
+        "Enable": "Dynamisk bokmärkebakgrund",
         "EnableHint": "Om markerad, ställs bokmärkesflikens bakgrund dynamiskt in på fönstrets innehållsbakgrund."
       },
       "hideFQLFromPlayers": {
         "Enable": "Dölj Uppdragslogg från spelare",
-        "EnableHint": "När det här alternativet är aktiverat döljer Uppdragsloggen för alla spelare. Endast användare på GM-nivå kommer att kunna komma åt Uppdragsloggen."
+        "EnableHint": "När det här alternativet är aktiverat döljer Uppdragsloggen för alla spelare. Endast användare på SL-nivå kommer att kunna komma åt Uppdragsloggen."
       },
       "navStyle": {
         "bookmarks": "Bokmärken",
@@ -225,7 +225,7 @@
         "EnableHint": "Markera för att se UI-aviseringar när uppdragsbelöningar släpps på spelarark."
       },
       "questTrackerResizable": {
-        "Enable": "Quest Tracker kan ändra storlek",
+        "Enable": "Uppdragsspåraren kan ändra storlek",
         "EnableHint": "Markera för att tillåta manuell storleksändringskontroll av Quest Tracker."
       },
       "showFolder": {
@@ -248,7 +248,7 @@
       "Delete": "Radera",
       "Edit": "Redigera",
       "HiddenQuestNoPlayers": "Detta uppdrag är dolt för alla spelare.",
-      "PrimaryQuest": "Primär Uppdrag"
+      "PrimaryQuest": "Primärt Uppdrag"
     }
   }
 }
