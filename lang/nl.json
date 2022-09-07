@@ -1,1 +1,63 @@
-{}
+{
+  "ForienQuestLog": {
+    "API": {
+      "QuestDB": {
+        "Labels": {
+          "NewQuest": "Nieuwe Missie"
+        }
+      },
+      "Socket": {
+        "Notifications": {
+          "RewardDrop": "FQL (missiebeloning): {userName} heeft '{itemName}' op {actorName} neergezet."
+        }
+      },
+      "Utils": {
+        "Notifications": {
+          "NoDocument": "Entiteit met UUID '{uuid}' kan niet geladen worden.",
+          "NoPermission": "Je hebt niet de juiste rechten om het blad van deze entiteit te bekijken."
+        }
+      },
+      "Hooks": {
+        "Labels": {
+          "OpenMacro": "Open ”{name}”"
+        },
+        "Notifications": {
+          "NoQuest": "API-fout: Macro met invalide Quest-ID kan niet aangemaakt worden."
+        }
+      }
+    },
+    "DeleteDialog": {
+      "Delete": "Verwijderen",
+      "Cancel": "Annuleren",
+      "TitleDel": "Verwijder {title}",
+      "BodyObjective": "Dit doel en de bijbehorende data zullen permanent verwijderd worden.",
+      "BodyQuest": "Deze missie en de bijbehorende data zullen permanent verwijderd worden.",
+      "BodyReward": "Deze beloning en de bijbehorende data zullen permanent verwijderd worden.",
+      "HeaderDel": "Weet je zeker dat je <p>'{name}'</p> wil verwijderen"
+    },
+    "Labels": {
+      "AppHeader": {
+        "ShowPlayers": "Toon aan Spelers"
+      },
+      "Quest": "Missie"
+    },
+    "Migration": {
+      "ChatMessage": {
+        "Notification": "Forien's Quest Log - Onverbonden missiegever of beloningen verwijderd uit een of verscheidene missies verwijderd. Lees het chatbericht voor meer informatie.",
+        "QuestGiver": "Missiegever",
+        "QuestRewards": "Missiebeloningen",
+        "Footer": "Je moet handmatig de bovenstaande missies updaten met valide documentdata uit compendiums of je wereld.<br>",
+        "Header": "Forien's Quest Log (DB-migratie)<br>Onverbonden missiegever of beloningen verwijderd uit onderstaande missies:<p>"
+      },
+      "Notifications": {
+        "Complete": "Forien's Quest Log - Datamigratie afgerond.",
+        "CouldNotMigrate": "Forien's Quest Log - Missie kan niet gemigreerd worden: '{name}'.",
+        "Schema": "Forien's Quest Log - Data wordt naar schemaversie '{version}' gemigreerd.",
+        "Start": "Forien's Quest Log - Data wordt gemigreerd, herlaad de pagina niet."
+      }
+    },
+    "Notifications": {
+      "CannotOpen": "Kan missiedetails niet openen. Mogelijk is de missie niet meer te bekijken of bestaat de missie niet meer."
+    }
+  }
+}
