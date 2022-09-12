@@ -89,21 +89,21 @@
       "Buttons": {
         "RewardHide": "Verbergen",
         "RewardLock": "Op slot doen",
-        "RewardCustom": "Aangepast",
+        "RewardCustom": "Gebruikergedefinieerd",
         "RewardShow": "Weergeven",
         "RewardUnlock": "Ontgrendelen"
       },
       "Labels": {
-        "CustomSource": "Aangepaste Bron",
+        "CustomSource": "Gebruikergedefinieerde Bron",
         "Description": "Beschrijving:",
-        "DragDropActorPlayer": "Acteur, Voorwerp of Logboekinvoer hiernaartoe slepen.",
+        "DragDropActorPlayer": "Acteur, Voorwerp of Journaalboeking hiernaartoe slepen.",
         "DragDropRewards": "Sleep voorwerpen hiernaartoe om als beloning toe te voegen.",
         "GMNotes": "GM-Notities:",
         "Objective": "Doel",
         "Objectives": "Doelen:",
         "Reward": "Beloning",
         "Rewards": "Beloningen:",
-        "DragDropActor": "Acteur, object of logboekinvoer hiernaartoe slepen of (links) klikken om als aangepaste bron vast te leggen."
+        "DragDropActor": "Acteur, object of journaalboeking hiernaartoe slepen of (links) klikken om als gebruikergedefinieerde bron vast te leggen."
       },
       "Management": {
         "AddSubquest": "Sub-missie toevoegen",
@@ -121,7 +121,7 @@
       },
       "Title": "Missiedetails - {name}",
       "Tooltips": {
-        "AddCustom": "Aangepast Toevoegen",
+        "AddCustom": "Gebruikergedefinieerd Toevoegen",
         "AddObjective": "Doel toevoegen",
         "ChangeSplashPos": "Omslagfoto-uitlijning wijzigen.",
         "DeleteQuestGiver": "Missiegever verwijderen.",
@@ -146,7 +146,7 @@
       "Notifications": {
         "BadUUID": "Kon document met UUID {uuid} niet vinden.",
         "WrongItemType": "Foriens Questlog accepteert allen wereld- en compendiumvoorwerpen als beloningen.",
-        "WrongDocType": "Foriens Questlog accepteert alleen wereld-/compendiumacteurs, -voorwerpen en -logboekinvoeren als missiegever."
+        "WrongDocType": "Foriens Questlog accepteert alleen wereld-/compendiumacteurs, -voorwerpen en -journaalboekingen als missiegever."
       }
     },
     "QuestTracker": {
@@ -162,7 +162,7 @@
     "QuestTypes": {
       "Labels": {
         "Active": "Actief",
-        "active": "bezig",
+        "active": "actief",
         "Available": "Beschikbaar",
         "available": "beschikbaar",
         "Completed": "Voltooid",
@@ -189,7 +189,7 @@
       },
       "allowPlayersCreate": {
         "Enable": "Spelers kunnen missies aanmaken",
-        "EnableHint": "Schakel deze optie in om spelers toe te staan missies aan te maken. Door spelers gemaakte missies zullen in het Beschikbaar-tabblad verschijnen met Wijzigingsmachtigingen voor Spelers. VEREIST kernrecht 'maak logboek aan'."
+        "EnableHint": "Schakel deze optie in om spelers toe te staan missies aan te maken. Door spelers gemaakte missies zullen in het Beschikbaar-tabblad verschijnen met Wijzigingsmachtigingen voor Spelers. VEREIST kernrecht 'maak journaal aan'."
       },
       "allowPlayersDrag": {
         "Enable": "Sta spelers toe beloningen te verslepen",
@@ -230,7 +230,7 @@
       },
       "showFolder": {
         "Enable": "Missiemap tonen",
-        "EnableHint": "Indien aangevinkt wordt de missiedatamap in het Logboek-tabblad getoond. Alleen voor DEBUG-doeleinden."
+        "EnableHint": "Indien aangevinkt wordt de missiedatamap in het Journaal-tabblad getoond. Alleen voor DEBUG-doeleinden."
       },
       "showTasks": {
         "default": "Toon doelen: voltooid/totaal",
