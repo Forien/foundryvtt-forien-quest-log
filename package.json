@@ -13,9 +13,6 @@
     "dompurify": "^2.3.0"
   },
   "devDependencies": {
-    "@itsjamie/esdoc-core": "^0.3",
-    "@itsjamie/esdoc-cli": "^0.3",
-    "@itsjamie/esdoc-standard-plugin": "^0.3",
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-virtual": "^2.1.0",
