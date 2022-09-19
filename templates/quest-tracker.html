@@ -22,7 +22,7 @@
         {{/if}}
         </div>
 
-        {{#if (or subquests.length tasks.length)}}
+        {{#if hasObjectives}}
         <ul class="tasks">
           {{#each subquests}}
           <li class="task {{state}} subquest" {{#if (or isHidden isInactive)}}id="hidden"{{/if}}>
