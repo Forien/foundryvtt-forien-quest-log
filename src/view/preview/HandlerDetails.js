@@ -205,7 +205,16 @@ export default class HandlerDetails
    {
       event.preventDefault();
 
-      const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+      let data;
+
+      try
+      {
+         data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+      }
+      catch (err)
+      {
+         console.warn(`ForienQuestLog HandlerDetails.questGiverDropDocument warning: failed to parse data transfer`);
+      }
 
       const uuid = Utils.getUUID(data, ['Actor', 'Item', 'JournalEntry']);
 
@@ -534,7 +543,7 @@ export default class HandlerDetails
          return;
       }
 
-      if (data.mode === 'Sort' && data.type === 'Reward')
+      if (data?.mode === 'Sort' && data?.type === 'Reward')
       {
          const dt = event.target.closest('li.reward') || null;
          quest.sortRewards(data.uuidv4, dt?.dataset.uuidv4);
@@ -542,7 +551,7 @@ export default class HandlerDetails
          Socket.refreshQuestPreview({ questId: quest.id });
       }
 
-      if (data.type === 'Item' && data._fqlData === void 0)
+      if (data?.type === 'Item' && data?._fqlData === void 0)
       {
          const uuid = Utils.getUUID(data);
 
@@ -891,9 +900,17 @@ export default class HandlerDetails
    {
       event.preventDefault();
 
-      const data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+      let data;
+      try
+      {
+         data = JSON.parse(event.originalEvent.dataTransfer.getData('text/plain'));
+      }
+      catch (e)
+      {
+         return;
+      }
 
-      if (data.mode === 'Sort' && data.type === 'Task')
+      if (data?.mode === 'Sort' && data?.type === 'Task')
       {
          const dt = event.target.closest('li.task') || null;
          quest.sortTasks(data.uuidv4, dt?.dataset.uuidv4);
