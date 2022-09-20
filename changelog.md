@@ -1,4 +1,13 @@
 # Changelog
+## Release 0.7.11
+The minor `0.7.11` update brings to FQL:
+
+- Corrects a new compatibility warning that came up w/ the 10.285 Foundry release.
+- Provides workarounds for various misbehaving game systems (Gurps / L5R).
+- Refines the "show quest log to players" feature showing the players the specific quest status tab the GM currently
+  has selected.
+- Adds a Dutch language translation.
+
 ## Release 0.7.10
 This is a major release that brings dual compatibility on Foundry `v9` & `v10`. 
 
