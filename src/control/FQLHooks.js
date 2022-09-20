@@ -363,6 +363,8 @@ export default class FQLHooks
     * @param {number|null}          [opts.width] - The application width in pixels.
     *
     * @param {number|string|null}   [opts.height] - The application height in pixels.
+    *
+    * @param {string}               [opts.tabId] - The quest status tab to open.
     */
    static openQuestLog(opts)
    {
@@ -370,13 +372,17 @@ export default class FQLHooks
 
       let constraints = {};
 
+      let tabId;
+
       if (typeof opts === 'object')
       {
          // Select only constraint related parameters.
          constraints = (({ left, top, width, height }) => ({ left, top, width, height }))(opts);
+
+         if (typeof opts.tabId === 'string') { tabId = opts.tabId; }
       }
 
-      ViewManager.questLog.render(true, { focus: true, ...constraints });
+      ViewManager.questLog.render(true, { focus: true, ...constraints, tabId });
    }
 
    /**

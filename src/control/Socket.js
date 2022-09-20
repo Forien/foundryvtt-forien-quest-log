@@ -107,7 +107,7 @@ export default class Socket
                case s_MESSAGE_TYPES.questSetStatus: await handleQuestSetStatus(data); break;
                case s_MESSAGE_TYPES.refreshAll: handleRefreshAll(data); break;
                case s_MESSAGE_TYPES.refreshQuestPreview: handleRefreshQuestPreview(data); break;
-               case s_MESSAGE_TYPES.showQuestLog: handleShowQuestLog(); break;
+               case s_MESSAGE_TYPES.showQuestLog: handleShowQuestLog(data); break;
                case s_MESSAGE_TYPES.showQuestPreview: handleShowQuestPreview(data); break;
                case s_MESSAGE_TYPES.showQuestTracker: handleShowQuestTracker(); break;
                case s_MESSAGE_TYPES.userCantOpenQuest: handleUserCantOpenQuest(data); break;
@@ -326,11 +326,16 @@ export default class Socket
     * QuestLog for all remote clients.
     *
     * Handled on the receiving side by {@link handleShowQuestLog}.
+    *
+    * @param {string} tabId - A specific tab ID for the quest status to open.
     */
-   static showQuestLog()
+   static showQuestLog(tabId)
    {
       game.socket.emit(s_EVENT_NAME, {
-         type: s_MESSAGE_TYPES.showQuestLog
+         type: s_MESSAGE_TYPES.showQuestLog,
+         payload: {
+            tabId
+         }
       });
    }
 
@@ -605,10 +610,12 @@ function handleRefreshQuestPreview(data)
  * Handles opening the QuestLog app.
  *
  * This message is sent from {@link Socket.showQuestLog}.
+ *
+ * @param {object} data - Data payload contains a single `tabId` as a string.
  */
-function handleShowQuestLog()
+function handleShowQuestLog(data)
 {
-   ViewManager.questLog.render(true, { focus: true });
+   ViewManager.questLog.render(true, { focus: true, tabId: data.payload.tabId });
 }
 
 /**

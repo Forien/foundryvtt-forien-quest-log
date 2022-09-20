@@ -6,7 +6,7 @@ import FQLDialog        from '../FQLDialog.js';
 
 import HandlerLog    from './HandlerLog.js';
 
-import { constants, jquery, questStatusI18n, questTabIndex, settings } from '../../model/constants.js';
+import { constants, jquery, questStatus, questStatusI18n, questTabIndex, settings } from '../../model/constants.js';
 
 /**
  * Provides the main quest log app which shows the quests separated by status either with bookmark or classic tabs.
@@ -73,7 +73,10 @@ export default class QuestLog extends Application
             label: game.i18n.localize('ForienQuestLog.Labels.AppHeader.ShowPlayers'),
             class: 'share-quest',
             icon: 'fas fa-eye',
-            onclick: () => Socket.showQuestLog()
+            onclick: () =>
+            {
+               Socket.showQuestLog(this._tabs[0].active);
+            }
          });
       }
 
@@ -235,6 +238,34 @@ export default class QuestLog extends Application
          questStatusI18n,
          quests: QuestDB.sortCollect()
       });
+   }
+
+   /**
+    * Overrides the internal Application._render method to select the tab if the quest log is rendered with optional:
+    * `tabId` data that matches an entry in `constants.questStatus`. This comes into play as when a GM uses the
+    * `show to players` button in the app header as not only will the quest log open for players, but the specific tab
+    * selected by the GM will show. It is also possible to add `tabId` to the `ForienQuestLog.Open.QuestLog` hook to
+    * open a specific tab.
+    *
+    * @inheritDoc
+    */
+   async _render(force = false, options = {})
+   {
+      await super._render(force, options);
+
+      if (this._state === Application.RENDER_STATES.RENDERED && typeof options.tabId === 'string' &&
+       options.tabId in questStatus)
+      {
+         if (options.tabId === questStatus.inactive)
+         {
+            // Only switch to inactive tab if GM or trusted player w/ edit.
+            if (game.user.isGM || Utils.isTrustedPlayerEdit()) { this._tabs[0].activate(options.tabId); }
+         }
+         else
+         {
+            this._tabs[0].activate(options.tabId);
+         }
+      }
    }
 
    /**
