@@ -41,13 +41,13 @@ export default class ModuleSettings
          config: true,
          default: false,
          type: Boolean,
-         onChange: (value) =>
+         onChange: async (value) =>
          {
             // Swap macro image based on current state. No need to await.
-            if (game.user.isGM) { Utils.setMacroImage(settings.allowPlayersDrag, value); }
+            if (game.user.isGM) { await Utils.setMacroImage(settings.allowPlayersDrag, value); }
 
             // Must enrich all quests again in QuestDB.
-            QuestDB.enrichAll();
+            await QuestDB.enrichAll();
 
             // Render all views; immediately stops / enables player drag if Quest view is open.
             ViewManager.renderAll({ force: true, questPreview: true });
@@ -61,10 +61,10 @@ export default class ModuleSettings
          config: true,
          default: false,
          type: Boolean,
-         onChange: (value) =>
+         onChange: async (value) =>
          {
             // Swap macro image based on current state. No need to await.
-            if (game.user.isGM) { Utils.setMacroImage(settings.allowPlayersCreate, value); }
+            if (game.user.isGM) { await Utils.setMacroImage(settings.allowPlayersCreate, value); }
 
             // Render quest log to show / hide add quest button.
             if (ViewManager.questLog.rendered) { ViewManager.questLog.render(); }
@@ -78,13 +78,13 @@ export default class ModuleSettings
          config: true,
          default: false,
          type: Boolean,
-         onChange: (value) =>
+         onChange: async (value) =>
          {
             // Swap macro image based on current state. No need to await.
-            if (game.user.isGM) { Utils.setMacroImage(settings.allowPlayersAccept, value); }
+            if (game.user.isGM) { await Utils.setMacroImage(settings.allowPlayersAccept, value); }
 
             // Must enrich all quests again in QuestDB.
-            QuestDB.enrichAll();
+            await QuestDB.enrichAll();
 
             // Render all views as quest status actions need to be shown or hidden for some players.
             ViewManager.renderAll({ questPreview: true });
@@ -98,14 +98,14 @@ export default class ModuleSettings
          config: true,
          default: false,
          type: Boolean,
-         onChange: (value) =>
+         onChange: async (value) =>
          {
             // Swap macro image based on current state. No need to await.
-            if (game.user.isGM) { Utils.setMacroImage(settings.trustedPlayerEdit, value); }
+            if (game.user.isGM) { await Utils.setMacroImage(settings.trustedPlayerEdit, value); }
 
             // Must perform a consistency check as there are possible quests that need to be added / removed
             // from the in-memory DB based on trusted player edit status.
-            QuestDB.consistencyCheck();
+            await QuestDB.consistencyCheck();
 
             // Render all views as trusted player edit adds / removes capabilities.
             ViewManager.renderAll({ questPreview: true });
@@ -119,13 +119,13 @@ export default class ModuleSettings
          config: true,
          default: false,
          type: Boolean,
-         onChange: (value) =>
+         onChange: async (value) =>
          {
             // Swap macro image based on current state. No need to await.
-            if (game.user.isGM) { Utils.setMacroImage(settings.countHidden, value); }
+            if (game.user.isGM) { await Utils.setMacroImage(settings.countHidden, value); }
 
             // Must enrich all quests again in QuestDB.
-            QuestDB.enrichAll();
+            await QuestDB.enrichAll();
 
             // Must render the quest log / floating quest log / quest tracker.
             ViewManager.renderAll();
@@ -157,10 +157,10 @@ export default class ModuleSettings
             bookmarks: 'ForienQuestLog.Settings.navStyle.bookmarks',
             classic: 'ForienQuestLog.Settings.navStyle.classic'
          },
-         onChange: () =>
+         onChange: async () =>
          {
             // Must enrich all quests again in QuestDB.
-            QuestDB.enrichAll();
+            await QuestDB.enrichAll();
 
             // Must render the quest log.
             if (ViewManager.questLog.rendered) { ViewManager.questLog.render(); }
@@ -179,10 +179,10 @@ export default class ModuleSettings
             onlyCurrent: 'ForienQuestLog.Settings.showTasks.onlyCurrent',
             no: 'ForienQuestLog.Settings.showTasks.no'
          },
-         onChange: () =>
+         onChange: async () =>
          {
             // Must enrich all quests again in QuestDB.
-            QuestDB.enrichAll();
+            await QuestDB.enrichAll();
 
             // Must render the quest log.
             ViewManager.renderAll();
@@ -213,7 +213,7 @@ export default class ModuleSettings
          onChange: async(value) =>
          {
             // Swap macro image based on current state. No need to await.
-            if (game.user.isGM) { Utils.setMacroImage(settings.hideFQLFromPlayers, value); }
+            if (game.user.isGM) { await Utils.setMacroImage(settings.hideFQLFromPlayers, value); }
 
             if (!game.user.isGM)
             {
@@ -258,10 +258,10 @@ export default class ModuleSettings
          config: true,
          default: false,
          type: Boolean,
-         onChange: (value) =>
+         onChange: async (value) =>
          {
             // Swap macro image based on current state. No need to await.
-            if (game.user.isGM) { Utils.setMacroImage(settings.notifyRewardDrop, value); }
+            if (game.user.isGM) { await Utils.setMacroImage(settings.notifyRewardDrop, value); }
          }
       });
 
@@ -291,7 +291,7 @@ export default class ModuleSettings
          config: false,
          default: false,
          type: Boolean,
-         onChange: (value) =>
+         onChange: async (value) =>
          {
             // Potentially Post notification that the quest tracker is enabled, but not visible as there are no active
             // quests.
@@ -301,7 +301,7 @@ export default class ModuleSettings
             }
 
             // Swap macro image based on current state. No need to await.
-            Utils.setMacroImage(settings.questTrackerEnable, value);
+            await Utils.setMacroImage(settings.questTrackerEnable, value);
 
             ViewManager.renderOrCloseQuestTracker();
          }
@@ -322,7 +322,7 @@ export default class ModuleSettings
          config: false,
          default: '',
          type: String,
-         onChange: (value) =>
+         onChange: async (value) =>
          {
             // Any current primary quest.
             const currentQuestEntry = QuestDB.getQuestEntry(
@@ -363,7 +363,7 @@ export default class ModuleSettings
             // If any quest IDs were stored then update all QuestPreviews after enriching the quest data.
             if (updateQuestIds.length)
             {
-               QuestDB.enrichQuests(...updateQuestIds);
+               await QuestDB.enrichQuests(...updateQuestIds);
                ViewManager.refreshQuestPreview(updateQuestIds);
                ViewManager.renderAll({ force: true });
             }
@@ -402,12 +402,12 @@ export default class ModuleSettings
          config: true,
          default: false,
          type: Boolean,
-         onChange: (value) =>
+         onChange: async (value) =>
          {
             ViewManager.renderOrCloseQuestTracker();
 
             // Swap macro image based on current state. No need to await.
-            Utils.setMacroImage(settings.questTrackerResizable, value);
+            await Utils.setMacroImage(settings.questTrackerResizable, value);
          }
       });
    }

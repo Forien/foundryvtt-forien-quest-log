@@ -178,7 +178,8 @@ export default class Socket
     */
    static refreshAll(options = {})
    {
-      ViewManager.renderAll({ force: true, ...options });
+      // QuestDB Journal update hook is now async, so schedule on next microtask so local display is correct.
+      setTimeout(() => ViewManager.renderAll({ force: true, ...options }), 10);
 
       game.socket.emit(s_EVENT_NAME, {
          type: s_MESSAGE_TYPES.refreshAll,
@@ -204,7 +205,8 @@ export default class Socket
     */
    static refreshQuestPreview({ questId, updateLog = true, ...options })
    {
-      ViewManager.refreshQuestPreview(questId, options);
+      // QuestDB Journal update hook is now async, so schedule on next microtask so local display is correct.
+      setTimeout(() => ViewManager.refreshQuestPreview(questId, options), 10);
 
       // Send a socket message for remote clients to render.
       game.socket.emit(s_EVENT_NAME, {

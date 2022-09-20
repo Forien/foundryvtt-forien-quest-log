@@ -13,7 +13,7 @@ import { constants, questStatus, settings } from '../model/constants.js';
  * Stores all {@link QuestEntry} instances in a map of Maps. This provides fast retrieval and quick insert / removal
  * with quests pre-sorted by status.
  *
- * @type {Object.<string, Map<string, QuestEntry>>}
+ * @type {Object<string, Map<string, QuestEntry>>}
  */
 const s_QUESTS_MAP = {
    active: new Map(),
@@ -28,7 +28,7 @@ const s_QUESTS_MAP = {
  * and many other potential operations that {@link collect} / CollectJS collections provide for working with arrays of
  * object data. Each collection is built from the values of the {@link s_QUESTS_MAP} per status category.
  *
- * @type {Object.<string, Collection<QuestEntry>>}
+ * @type {Object<string, Collection<QuestEntry>>}
  * @see https://collect.js.org/api.html
  */
 const s_QUESTS_COLLECT = {
@@ -194,7 +194,7 @@ export default class QuestDB
 
          // Must hydrate all QuestEntry instances after all quests have been added to s_QUEST_MAP. Hydration will build
          // the cache of various getter functions and enriched data in QuestEntry.
-         for (const questEntry of QuestDB.iteratorEntries()) { questEntry.hydrate(); }
+         for (const questEntry of QuestDB.iteratorEntries()) { await questEntry.hydrate(); }
 
          // Create the CollectJS collections in build after hydration.
          for (const key of Object.keys(s_QUESTS_MAP))
@@ -238,7 +238,7 @@ export default class QuestDB
     *
     * @see {@link FQLSettings.trustedPlayerEdit}
     */
-   static consistencyCheck()
+   static async consistencyCheck()
    {
       const folder = Utils.getQuestFolder();
 
@@ -269,7 +269,7 @@ export default class QuestDB
                if (!questEntry)
                {
                   questEntry = new QuestEntry(new Quest(content, entry));
-                  s_SET_QUEST_ENTRY(questEntry.hydrate());
+                  s_SET_QUEST_ENTRY(await questEntry.hydrate());
 
                   Hooks.callAll(QuestDB.hooks.addQuestEntry, questEntry, entry.flags, { diff: false, render: true },
                    entry.id);
@@ -277,7 +277,7 @@ export default class QuestDB
                else
                {
                   // Otherwise update the quest with current data.
-                  questEntry.update(content, entry);
+                  await questEntry.update(content, entry);
                }
             }
             else
@@ -299,7 +299,7 @@ export default class QuestDB
       }
 
       // Enrich all after all updates are complete.
-      this.enrichAll();
+      await this.enrichAll();
    }
 
    /**
@@ -367,12 +367,19 @@ export default class QuestDB
          Socket.refreshQuestPreview({ questId: parentQuest.id });
       }
 
-      const quest = QuestDB.getQuest(entry.id);
+      // QuestDB Journal update hook is now async, so schedule on next microtask to be able to retrieve new quest.
+      return new Promise((resolve) =>
+      {
+         setTimeout(() =>
+         {
+            const quest = QuestDB.getQuest(entry.id);
 
-      // Players don't see Hidden tab, but assistant GM can, so emit anyway
-      Socket.refreshAll();
+            // Players don't see Hidden tab, but assistant GM can, so emit anyway
+            Socket.refreshAll();
 
-      return quest;
+            resolve(quest);
+         }, 10);
+      });
    }
 
    /**
@@ -390,7 +397,7 @@ export default class QuestDB
     *
     * @returns {Promise<DeleteData|void>} The IDs for quests that were updated.
     */
-   static async deleteQuest({ quest, questId })
+   static async deleteQuest({ quest, questId } = {})
    {
       const deleteId = quest ? quest.id : questId;
 
@@ -444,7 +451,7 @@ export default class QuestDB
          await deleteQuest.entry.delete();
       }
 
-      // Return the delete and saved IDs.
+      // Return the deleted and saved IDs.
       return {
          deleteId,
          savedIds
@@ -455,11 +462,11 @@ export default class QuestDB
     * Enriches all stored {@link QuestEntry} instances. This is particularly useful in various callbacks when settings
     * change in {@link ModuleSettings}.
     */
-   static enrichAll()
+   static async enrichAll()
    {
       for (const questEntry of QuestDB.iteratorEntries())
       {
-         questEntry.enrich = Enrich.quest(questEntry.quest);
+         questEntry.enrich = await Enrich.quest(questEntry.quest);
       }
    }
 
@@ -470,14 +477,14 @@ export default class QuestDB
     *
     * @param {...string} questIds - The quest IDs to enrich.
     */
-   static enrichQuests(...questIds)
+   static async enrichQuests(...questIds)
    {
       for (const questId of questIds)
       {
          const questEntry = QuestDB.getQuestEntry(questId);
          if (questEntry)
          {
-            questEntry.enrich = Enrich.quest(questEntry.quest);
+            questEntry.enrich = await Enrich.quest(questEntry.quest);
          }
       }
    }
@@ -573,7 +580,7 @@ export default class QuestDB
     * @param {object}   [options] - Optional parameters. If no options are provided the iteration occurs across all
     *                               quests.
     *
-    * @param {string}   [options.type] - The quest type / status to iterate.
+    * @param {string}   [options.status] - The quest type / status to iterate.
     *
     * @returns {QuestEntry} The QuestEntry, if found, otherwise undefined.
     * @see {@link Array#find}
@@ -825,7 +832,7 @@ export class QuestEntry
     *
     * @returns {QuestEntry} This QuestEntry.
     */
-   hydrate()
+   async hydrate()
    {
       this.id = this.quest.id;
       this.status = this.quest.status;
@@ -870,7 +877,7 @@ export class QuestEntry
       /**
        * @type {EnrichData}
        */
-      this.enrich = Enrich.quest(this.quest);
+      this.enrich = await Enrich.quest(this.quest);
 
       return this;
    }
@@ -882,25 +889,25 @@ export class QuestEntry
     *
     * @returns {boolean} Was s_SET_QUEST_ENTRY invoked.
     */
-   update(content, entry)
+   async update(content, entry)
    {
       this.quest.entry = entry;
       this.quest.initData(content);
       const status = this.status;
-      this.hydrate();
+      await this.hydrate();
 
       // Must hydrate any parent on a change.
       if (typeof this.quest.parent === 'string')
       {
          const parentEntry = s_GET_QUEST_ENTRY(this.quest.parent);
-         if (parentEntry) { parentEntry.hydrate(); }
+         if (parentEntry) { await parentEntry.hydrate(); }
       }
 
       // Must hydrate any subquests on a change.
       for (const subquest of this.quest.subquests)
       {
          const subquestEntry = s_GET_QUEST_ENTRY(subquest);
-         if (subquestEntry) { subquestEntry.hydrate(); }
+         if (subquestEntry) { await subquestEntry.hydrate(); }
       }
 
       if (status !== this.quest.status)
@@ -1026,7 +1033,7 @@ const s_JOURNAL_ENTRY_CREATE = async (entry, options, id) =>
       const quest = new Quest(content, entry);
 
       const questEntry = new QuestEntry(quest);
-      s_SET_QUEST_ENTRY(questEntry.hydrate());
+      s_SET_QUEST_ENTRY(await questEntry.hydrate());
 
       Hooks.callAll(QuestDB.hooks.createQuestEntry, questEntry, options, id);
 
@@ -1105,7 +1112,7 @@ const s_JOURNAL_ENTRY_DELETE = async (entry, options, id) =>
  *
  * @param {string}         id - The journal entry ID.
  */
-const s_JOURNAL_ENTRY_UPDATE = (entry, flags, options, id) =>
+const s_JOURNAL_ENTRY_UPDATE = async (entry, flags, options, id) =>
 {
    const content = entry.getFlag(constants.moduleName, constants.flagDB);
 
@@ -1121,7 +1128,7 @@ const s_JOURNAL_ENTRY_UPDATE = (entry, flags, options, id) =>
          // If the QuestEntry already exists in the QuestDB and is observable then update it.
          if (isObservable)
          {
-            questEntry.update(content, entry);
+            await questEntry.update(content, entry);
             Hooks.callAll(QuestDB.hooks.updateQuestEntry, questEntry, flags, options, id);
          }
          else // Else remove it from the QuestDB (this is not a deletion).
@@ -1132,14 +1139,14 @@ const s_JOURNAL_ENTRY_UPDATE = (entry, flags, options, id) =>
             if (typeof questEntry.quest.parent === 'string')
             {
                const parentEntry = s_GET_QUEST_ENTRY(questEntry.quest.parent);
-               if (parentEntry) { parentEntry.hydrate(); }
+               if (parentEntry) { await parentEntry.hydrate(); }
             }
 
             // Must hydrate any subquests on a change.
             for (const subquest of questEntry.quest.subquests)
             {
                const subquestEntry = s_GET_QUEST_ENTRY(subquest);
-               if (subquestEntry) { subquestEntry.hydrate(); }
+               if (subquestEntry) { await subquestEntry.hydrate(); }
             }
 
             // This quest is not deleted; it has been removed from the in-memory DB.
@@ -1149,20 +1156,20 @@ const s_JOURNAL_ENTRY_UPDATE = (entry, flags, options, id) =>
       else if (isObservable) // The Quest is not in the QuestDB and is observable so add it.
       {
          questEntry = new QuestEntry(new Quest(content, entry));
-         s_SET_QUEST_ENTRY(questEntry.hydrate());
+         s_SET_QUEST_ENTRY(await questEntry.hydrate());
 
          // Must hydrate any parent on a change.
          if (typeof questEntry.quest.parent === 'string')
          {
             const parentEntry = s_GET_QUEST_ENTRY(questEntry.quest.parent);
-            if (parentEntry) { parentEntry.hydrate(); }
+            if (parentEntry) { await parentEntry.hydrate(); }
          }
 
          // Must hydrate any subquests on a change.
          for (const subquest of questEntry.quest.subquests)
          {
             const subquestEntry = s_GET_QUEST_ENTRY(subquest);
-            if (subquestEntry) { subquestEntry.hydrate(); }
+            if (subquestEntry) { await subquestEntry.hydrate(); }
          }
 
          Hooks.callAll(QuestDB.hooks.addQuestEntry, questEntry, flags, options, id);
@@ -1317,7 +1324,7 @@ const s_SET_QUEST_ENTRY = (entry, generate = true) =>
  */
 
 /**
- * @typedef {Object.<string, Collection<QuestEntry>>} QuestsCollect Returns an object with keys indexed by
+ * @typedef {Object<string, Collection<QuestEntry>>} QuestsCollect Returns an object with keys indexed by
  * {@link questStatus} of CollectJS collections of QuestEntry instances.
  *
  * @property {Collection<QuestEntry>} active - Active quest entries CollectJS collections

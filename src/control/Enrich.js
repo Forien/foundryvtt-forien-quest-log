@@ -12,7 +12,7 @@ import { constants, questStatus, questStatusI18n, settings } from '../model/cons
  * subquests, status actions, and provides a UUID lookup for the quest giver image.
  *
  * All enrich methods should only be used in the {@link QuestDB} during the caching phase of the update / create
- * lifecycle. {@link Enrich.giverFromQuest} / {@link Enrich.giverFromUUID} are used in {@link HandlerDetails} to lookup
+ * lifecycle. {@link Enrich.giverFromQuest} / {@link Enrich.giverFromUUID} are used in {@link HandlerDetails} to look up
  * and store the quest giver image / name in {@link Quest.giverData} when a quest giver is set.
  */
 export default class Enrich
@@ -105,8 +105,8 @@ export default class Enrich
 
    /**
     * Builds the quest status / icons div to control quest status. There are many possible states to construct across
-    * three different user states from GM, trusted player edit, to player accept so it is easier to build and cache
-    * this data as performing this setup in the Handlebars template itself is cumbersome and error prone.
+    * three different user states from GM, trusted player edit, to player accept, so it is easier to build and cache
+    * this data as performing this setup in the Handlebars template itself is cumbersome and error-prone.
     *
     * @param {Quest} quest - The quest to build status action div / icons for based on current user state.
     *
@@ -200,9 +200,9 @@ export default class Enrich
     *
     * @param {Quest}  quest - Quest data to construct view data.
     *
-    * @returns {EnrichData} A single quest view or SortedQuests upgraded
+    * @returns {Promise<EnrichData>} A single quest view or SortedQuests upgraded
     */
-   static quest(quest)
+   static async quest(quest)
    {
       const data = JSON.parse(JSON.stringify(quest.toJSON()));
       data.id = quest.id;
@@ -234,12 +234,12 @@ export default class Enrich
       data.isPrimary = isPrimary;
 
       // Enrich w/ TextEditor, but first sanitize w/ DOMPurify, allowing only iframes with YouTube embed.
-      data.description = TextEditor.enrichHTML(DOMPurify.sanitizeWithVideo(data.description), {
+      data.description = await TextEditor.enrichHTML(DOMPurify.sanitizeWithVideo(data.description), {
          secrets: canEdit || playerEdit,
-         async: false
+         async: true
       });
 
-      data.gmnotes = TextEditor.enrichHTML(DOMPurify.sanitizeWithVideo(data.gmnotes), { async: false });
+      data.gmnotes = await TextEditor.enrichHTML(DOMPurify.sanitizeWithVideo(data.gmnotes), { async: true });
 
       data.questIconType = void 0;
 
@@ -374,15 +374,15 @@ export default class Enrich
             break;
       }
 
-      data.data_tasks = data.tasks.map((task) =>
+      data.data_tasks = await Promise.all(data.tasks.map(async (task) =>
       {
          return {
             ...task,
-            name: TextEditor.enrichHTML(DOMPurify.sanitize(task.name), { async: false })
+            name: await TextEditor.enrichHTML(DOMPurify.sanitize(task.name), { async: true })
          };
-      });
+      }));
 
-      data.data_rewards = data.rewards.map((item) =>
+      data.data_rewards = await Promise.all(data.rewards.map(async (item) =>
       {
          const type = item.type.toLowerCase();
 
@@ -402,7 +402,7 @@ export default class Enrich
          const itemLink = type === 'item' && !canEdit && !canPlayerDrag && !item.locked;
 
          return {
-            name: TextEditor.enrichHTML(DOMPurify.sanitize(item.data.name), { async: false }),
+            name: await TextEditor.enrichHTML(DOMPurify.sanitize(item.data.name), { async: true }),
             img: item.data.img,
             type,
             hidden: item.hidden,
@@ -415,7 +415,7 @@ export default class Enrich
              { uuid: item.data.uuid, uuidv4: item.uuidv4, name: item.data.name }) : void 0,
             uuidv4: item.uuidv4
          };
-      });
+      }));
 
       if (!canEdit)
       {
