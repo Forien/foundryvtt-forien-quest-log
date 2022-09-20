@@ -7,7 +7,8 @@
   "authors": [
     {
       "name": "Michael Leahy (TyphonJS) - MLeahy#4299",
-      "url": "https://www.typhonjs.io"
+      "url": "https://www.typhonjs.io",
+      "discord": "MLeahy#4299"
     },
     {
       "name": "Forien",
@@ -18,7 +19,7 @@
   "readme": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/blob/master/README.md",
   "bugs": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/issues",
   "changelog": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/latest/",
-  "version": "0.7.10",
+  "version": "0.7.11",
   "minimumCoreVersion": "9",
   "compatibleCoreVersion": "10",
   "compatibility": {
@@ -26,7 +27,6 @@
     "verified": "10",
     "maximum": "10"
   },
-  "scripts": [],
   "esmodules": [
     "./src/init.js"
   ],
@@ -80,6 +80,11 @@
       "path": "lang/ko.json"
     },
     {
+      "lang": "nl",
+      "name": "Nederlands",
+      "path": "lang/nl.json"
+    },
+    {
       "lang": "pl",
       "name": "Polski",
       "path": "lang/pl.json"
@@ -103,11 +108,6 @@
       "lang": "zh-tw",
       "name": "正體中文",
       "path": "lang/zh-tw.json"
-    },
-    {
-      "lang": "nl",
-      "name": "Nederlands",
-      "path": "lang/nl.json"
     }
   ],
   "packs": [
@@ -127,10 +127,9 @@
       "type": "Macro"
     }
   ],
-  "system": [],
   "socket": true,
   "manifest": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/latest/download/module.json",
-  "download": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/download/0.7.10/module.zip",
+  "download": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/download/0.7.11/module.zip",
   "protected": false,
   "coreTranslation": false,
   "library": false
