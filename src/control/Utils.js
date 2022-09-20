@@ -25,6 +25,11 @@ export default class Utils
     */
    static async copyTextToClipboard(text)
    {
+      if (typeof text !== 'string')
+      {
+         throw new TypeError(`FQL copyTextToClipboard error: 'text' is not a string.`);
+      }
+
       let success = false;
 
       if (navigator.clipboard)
