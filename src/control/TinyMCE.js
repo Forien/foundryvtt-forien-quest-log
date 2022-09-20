@@ -107,7 +107,7 @@ export default class TinyMCE
                         type: 'menuitem',
                         text: 'Copy background style selector',
                         icon: 'code-sample',
-                        onAction: () =>
+                        onAction: async () =>
                         {
                            // Defines the CSS selector to style the editor / content. Useful to style the background.
                            const backSelector = '<style>\n' +
@@ -115,7 +115,7 @@ export default class TinyMCE
                             '  }\n' +
                             '</style>\n';
 
-                           if (Utils.copyTextToClipboard(backSelector))
+                           if (await Utils.copyTextToClipboard(backSelector))
                            {
                               ViewManager.notifications.info(`Copied background style selector to clipboard.`);
                            }

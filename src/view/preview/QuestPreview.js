@@ -301,9 +301,9 @@ export default class QuestPreview extends FormApplication
          label: '',
          class: 'copy-link',
          icon: 'fas fa-link',
-         onclick: () =>
+         onclick: async () =>
          {
-            if (Utils.copyTextToClipboard(`@JournalEntry[${this._quest.id}]{${this._quest.name}}`))
+            if (await Utils.copyTextToClipboard(`@JournalEntry[${this._quest.id}]{${this._quest.name}}`))
             {
                ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.LinkCopied'));
             }

@@ -116,12 +116,12 @@ export default class QuestTracker extends Application
       const menuItemCopyLink = {
          name: 'ForienQuestLog.QuestLog.ContextMenu.CopyEntityLink',
          icon: '<i class="fas fa-link"></i>',
-         callback: (menu) =>
+         callback: async (menu) =>
          {
             const questId = $(menu)?.closest('.quest-tracker-header')?.data('quest-id');
             const quest = QuestDB.getQuest(questId);
 
-            if (quest && Utils.copyTextToClipboard(`@JournalEntry[${quest.id}]{${quest.name}}`))
+            if (quest && await Utils.copyTextToClipboard(`@JournalEntry[${quest.id}]{${quest.name}}`))
             {
                ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.LinkCopied'));
             }
@@ -138,12 +138,12 @@ export default class QuestTracker extends Application
          menuItems.push({
             name: 'ForienQuestLog.QuestLog.ContextMenu.CopyQuestID',
             icon: '<i class="fas fa-key"></i>',
-            callback: (menu) =>
+            callback: async (menu) =>
             {
                const questId = $(menu)?.closest('.quest-tracker-header')?.data('quest-id');
                const quest = QuestDB.getQuest(questId);
 
-               if (quest && Utils.copyTextToClipboard(quest.id))
+               if (quest && await Utils.copyTextToClipboard(quest.id))
                {
                   ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestIDCopied'));
                }
