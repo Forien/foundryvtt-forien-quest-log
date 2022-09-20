@@ -13,22 +13,24 @@
 
 This module provides comprehensive Quest Log system for players and Game Masters to use with [Foundry VTT](https://foundryvtt.com/).
 
-**[Compatibility]**: _FoundryVTT_ `v9` & `v10` as of FQL version `0.7.10`.
+**[Compatibility]**: _FoundryVTT_ `v9` & `v10` as of FQL version `0.7.11`.
 
 **[Game Systems]**: _any_
 
-**[Language Translations]**: _Chinese, English, Finnish, French, German, Italian, Japanese, Korean, Polish, 
+**[Language Translations]**: _Chinese (simplified / traditional), Dutch, English, Finnish, French, German, Italian, Japanese, Korean, Polish, 
 Portuguese (Brazil), Russian, Spanish, Swedish_
 
 ## Installation
 
 1. (Recommended) Install Forien's Quest Log from the Foundry package manager directly. 
    - _or_ manually using the manifest URL: `https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/latest/download/module.json`
+
+
 2. While loaded in your World, enable **_Forien's Quest Log_** in the `Module Management` configuration. 
 
-## Updates
+## Recent Updates
 
-**Note** The `0.7.10` update to FQL brings compatibility for _both_ version 9 & 10 of Foundry VTT and includes several 
+The `0.7.10` update to FQL brings compatibility for _both_ version 9 & 10 of Foundry VTT and includes several 
 quality of life enhancements:
 
 - Quest document linking is enabled again.
@@ -37,19 +39,13 @@ quality of life enhancements:
 - Ability to set quest tracker to transparent via fill icon in app header.
 - Expanded language / translation support.
 
-**NOTE** This module is hosted by the [League of Foundry Developers Discord](https://discord.gg/gzemMfHURH). The 
-`0.7.x` series of FQL is developed and maintained by [TyphonJS](https://github.com/typhonrt) / [TyphonJS Discord](https://discord.gg/mnbgN8f) 
-and is being updated for stability across core Foundry updates. This stability and long term maintenance of such is the 
-_main feature_ of FQL presently. You can rest assured that the quest log experience you know and _love_ will continue
-to be available now and into the future. 
+The minor `0.7.11` update to FQL:
 
-A new continuation quest log module is in the works by TyphonJS that moves the questing experience beyond FQL and is 
-being developed at [typhonjs-fvtt/typhonjs-quest-log](https://github.com/typhonjs-fvtt/typhonjs-quest-log). There is no 
-specific ETA for this continuation module at this time. In the meantime FQL continues to bring an essential rock solid 
-quest log experience to Foundry VTT. TyphonJS is developing a [very modern UI library](https://github.com/typhonjs-fvtt-lib), 
-available for any 3rd party Foundry developer right now, that underpins this new quest log and full time+ work has been 
-ongoing on this effort since October 2021. When this library is completed then work on the new quest log will be 
-finished.
+- Corrects a new compatibility warning that came up w/ the 10.285 Foundry release.
+- Provides workarounds for various misbehaving game systems (Gurps / L5R).
+- Refines the "show quest log to players" feature showing the players the specific quest status tab the GM currently 
+  has selected. 
+- Adds a Dutch language translation.
 
 ## Usage
 
@@ -59,6 +55,7 @@ also are two `macro compendiums` available for FQL that provide ready to go macr
 convenient access to FQL for players and several GM related options.
 
 There is a series of useful in depth video tutorials on YouTube that cover each recent release:
+- [v0.7.10](https://youtu.be/jaQJtCZOiIY)
 - [v0.7.7](https://youtu.be/lfSYJXVQAcE)
 - [v0.7.6](https://youtu.be/Dn2iprrcPpY)
 - [v0.7.5](https://youtu.be/cakE2a9MedM)
@@ -75,6 +72,29 @@ FQL is quite user-friendly with an intuitive UI, however you might want to [chec
 - Personal Quests.
 - Quest Branching in the form of Sub Quests.
 
+## About
+
+This module is hosted by the [League of Foundry Developers Discord](https://discord.gg/gzemMfHURH). The
+`0.7.x` series of FQL is developed and maintained by [TyphonJS](https://github.com/typhonrt) / [TyphonJS Discord](https://discord.gg/mnbgN8f)
+and is being updated for stability across core Foundry updates. This stability and long term maintenance of such is the
+_main feature_ of FQL presently. You can rest assured that the quest log experience you know and _love_ will continue
+to be available now and into the future.
+
+A new continuation quest log module is in the works by TyphonJS that moves the questing experience beyond FQL and is
+being developed at [typhonjs-fvtt/typhonjs-quest-log](https://github.com/typhonjs-fvtt/typhonjs-quest-log). There is no
+specific ETA for this continuation module at this time. In the meantime FQL continues to bring an essential rock solid
+quest log experience to Foundry VTT. TyphonJS is developing a [very modern UI library](https://github.com/typhonjs-fvtt-lib),
+available for any 3rd party Foundry developer right now, that underpins this new quest log and full time+ work has been
+ongoing on this effort since October 2021. When this library is completed then work on the new quest log will be
+finished.
+
+## Translations
+
+FQL uses Weblate to coordinate language translation from community translators. Through this interface you are able to
+provide language corrections and translations. I am more than willing to support even more language translations for
+FQL, so if your language isn't represented yet please visit the [FQL Weblate Portal](https://weblate.foundryvtt-hub.com/engage/forien-quest-log/)
+and get in contact.
+
 ## Future plans (current ideas)
 
 Rock solid stability through future releases of Foundry VTT and even more language / internationalization support.
@@ -88,13 +108,6 @@ _If you think you have found a bug or usability issue with FQL itself please fil
 _If you have **any** suggestion or idea on new features please get in contact on my [Discord Server](https://discord.gg/mnbgN8f).
 Over the `0.7.x` release series I have implemented almost all community suggestions that improve the quest log 
 experience._
-
-## Translations
-
-FQL uses Weblate to coordinate language translation from community translators. Through this interface you are able to 
-provide language corrections and translations. I am more than willing to support even more language translations for 
-FQL, so if your language isn't represented yet please visit the [FQL Weblate Portal](https://weblate.foundryvtt-hub.com/engage/forien-quest-log/)
-and get in contact.
 
 ## Contact
 
