@@ -16,7 +16,8 @@ const s_QUEST_DIR_NAME = '_fql_quests';
 export default class Utils
 {
    /**
-    * Uses `document.execCommand('copy')` to copy the given text to the clipboard.
+    * Uses `navigator.clipboard` if available then falls back to `document.execCommand('copy')` if available to copy
+    * the given text to the clipboard.
     *
     * @param {string}   text - Text to copy to the browser clipboard.
     *
