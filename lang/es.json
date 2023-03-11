@@ -64,7 +64,7 @@
       "QuestIDCopied": "El ID de misión para esta misión se ha copiado al portapapeles.",
       "QuestMoved": "Se movió '{name}' y se estableció el nuevo estado en: '{target}'.",
       "QuestPrimary": "'{name}' es la nueva misión principal.",
-      "QuestTrackerNoActive": "Registro de Misiones está habilitado, pero no hay misiones en curso actualmente.",
+      "QuestTrackerNoActive": "Seguimiento de Misiones está habilitado, pero no hay misiones en curso actualmente.",
       "UserCantOpen": "El usuario '{user}' no tiene permisos para abrir esta misión."
     },
     "QuestLog": {
@@ -80,7 +80,7 @@
         "TableHeader": "Misiones {0}",
         "SubTitle": "Sub-Misión de: {0}"
       },
-      "Title": "Misiones",
+      "Title": "Registro de Misiones",
       "Tooltips": {
         "Objectives": "Objetivos"
       }
@@ -151,7 +151,7 @@
     },
     "QuestTracker": {
       "NoPrimary": "No hay misión principal disponible.",
-      "Title": "Registro de Misiones",
+      "Title": "Seguimiento de Misiones",
       "Tooltips": {
         "BackgroundShow": "Haz clic para mostrar el fondo.",
         "BackgroundUnshow": "Haz clic para hacer que el fondo sea transparente.",
@@ -218,15 +218,15 @@
         "bookmarks": "Marcadores",
         "classic": "Pestañas clásicas",
         "Enable": "Estilo de navegación",
-        "EnableHint": "Decide cómo se visualizará el registro de misiones."
+        "EnableHint": "Decide cómo debe mostrarse la navegación del Registro de Misiones."
       },
       "notifyRewardDrop": {
         "Enable": "Mostrar notificaciones de entrega de recompensas",
         "EnableHint": "Verifique para ver notificaciones cuando las recompensas de misiones se colocan en las hojas de los jugadores."
       },
       "questTrackerResizable": {
-        "Enable": "Rastreador de misiones redimensionable",
-        "EnableHint": "Marque para permitir el control de cambio de tamaño manual del Rastreador de Misiones."
+        "Enable": "Seguimiento de misiones redimensionable",
+        "EnableHint": "Marque para permitir el control de cambio de tamaño manual de la ventana de Seguimiento de Misiones."
       },
       "showFolder": {
         "Enable": "Mostrar carpeta de misiones",
