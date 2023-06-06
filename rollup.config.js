@@ -1,15 +1,15 @@
-import path       from 'path';
+import path       from 'node:path';
 
 import commonjs   from '@rollup/plugin-commonjs';
 import resolve    from '@rollup/plugin-node-resolve';
-import { terser } from 'rollup-plugin-terser';        // Terser is used for minification / mangling
+import terser     from '@rollup/plugin-terser';        // Terser is used for minification / mangling
 import virtual    from '@rollup/plugin-virtual';
 
 // Terser config; refer to respective documentation for more information.
 const terserConfig = {
    compress: { passes: 3 },
    mangle: { toplevel: true, keep_classnames: true, keep_fnames: true },
-   ecma: 2020,
+   ecma: 2021,
    module: true
 };
 
@@ -75,7 +75,7 @@ export default () =>
             file: `${s_DEPLOY_PATH}${path.sep}collect.js`,
             format: 'es',
             plugins: outputPlugins,
-            preferConst: true,
+            generatedCode: { constBindings: true },
             sourcemap: s_SOURCEMAP,
          }],
          plugins: [
@@ -92,7 +92,7 @@ export default () =>
             file: `${s_DEPLOY_PATH}${path.sep}DOMPurify.js`,
             format: 'es',
             plugins: outputPlugins,
-            preferConst: true,
+            generatedCode: { constBindings: true },
             sourcemap: s_SOURCEMAP,
          }],
          plugins: [
