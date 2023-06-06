@@ -1,4 +1,12 @@
 # Changelog
+## Release 0.7.12
+The minor `0.7.12` update brings to FQL:
+
+- Foundry v11 support.
+- Removed support for v9 / v10 to prevent any compatibility warnings.
+- Fixed minor TinyMCE configuration for correct font support.
+- Updated Spanish translation.
+
 ## Release 0.7.11
 The minor `0.7.11` update brings to FQL:
 
