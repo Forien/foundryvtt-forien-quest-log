@@ -1,6 +1,6 @@
-import QuestDB                from '../../control/QuestDB.js';
-import ViewManager            from '../../control/ViewManager.js';
-import FQLPermissionControl   from '../FQLPermissionControl.js';
+import QuestDB                      from '../../control/QuestDB.js';
+import ViewManager                  from '../../control/ViewManager.js';
+import FQLDocumentOwnershipConfig   from '../FQLDocumentOwnershipConfig.js';
 
 /**
  * Provides all {@link JQuery} callbacks for the `management` tab.
@@ -17,10 +17,10 @@ export default class HandlerManage
    static async addSubquest(quest, questPreview)
    {
       // If a permission control app / dialog is open close it.
-      if (questPreview._permControl)
+      if (questPreview._ownershipControl)
       {
-         questPreview._permControl.close();
-         questPreview._permControl = void 0;
+         questPreview._ownershipControl.close();
+         questPreview._ownershipControl = void 0;
       }
 
       if (ViewManager.verifyQuestCanAdd())
@@ -41,15 +41,15 @@ export default class HandlerManage
    {
       if (quest.entry)
       {
-         if (!questPreview._permControl)
+         if (!questPreview._ownershipControl)
          {
-            questPreview._permControl = await FQLPermissionControl.create(quest.entry, {
+            questPreview._ownershipControl = new FQLDocumentOwnershipConfig(quest.entry, {
                top: Math.min(questPreview.position.top, window.innerHeight - 350),
                left: questPreview.position.left + 125
-            });
+            }).render(true, { focus: true });
          }
 
-         questPreview._permControl.render(true, {
+         questPreview._ownershipControl.render(true, {
             top: Math.min(questPreview.position.top, window.innerHeight - 350),
             left: questPreview.position.left + 125,
             focus: true

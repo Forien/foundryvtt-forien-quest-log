@@ -16,7 +16,7 @@ import { constants, jquery, settings }  from '../../model/constants.js';
  * QuestPreview is the main app / window of FQL for modifying individual Quest data. It appears reactive, but every
  * single time a data value is manipulated in the quest it is saved and this app renders again. There are many cases
  * when parent and subquests of the current quest also requires those QuestPreviews if visible and the {@link QuestLog}
- * to be rendered again. Additionally for remote clients socket events are broadcast to all users logged in to Foundry
+ * to be rendered again. Additionally, for remote clients socket events are broadcast to all users logged in to Foundry
  * in the same world. This is facilitated through {@link Socket} which controls local rendering and remote rendering.
  * In the future it will be possible to reduce reliance on {@link Socket} as the {@link QuestDB} has many lifecycle
  * hooks, {@link QuestDBHooks} which can replace manual control aspects found in {@link Socket}.
@@ -160,13 +160,13 @@ export default class QuestPreview extends FormApplication
        * Tracks any open FQLPermissionControl dialog that can be opened from the management tab, so that it can be
        * closed if this QuestPreview is closed or the tab is changed.
        *
-       * @type {FQLPermissionControlImpl|FQLDocumentOwnershipConfig}
+       * @type {FQLDocumentOwnershipConfig}
        * @package
        *
        * @see {@link HandlerManage.configurePermissions}
        * @see {@link QuestPreview.close}
        */
-      this._permControl = void 0;
+      this._ownershipControl = void 0;
 
       /**
        * Stores a single instance of the ImagePopup for the abstract reward image opened in
@@ -321,10 +321,10 @@ export default class QuestPreview extends FormApplication
     */
    _onChangeTab(event, tabs, active)
    {
-      if (this._permControl)
+      if (this._ownershipControl)
       {
-         this._permControl.close();
-         this._permControl = void 0;
+         this._ownershipControl.close();
+         this._ownershipControl = void 0;
       }
 
       super._onChangeTab(event, tabs, active);
@@ -543,7 +543,7 @@ export default class QuestPreview extends FormApplication
    /**
     * When closing this Foundry app:
     * - Close any associated dialogs via {@link FQLDialog.closeDialogs}
-    * - Close any associated {@link QuestPreview._permControl}
+    * - Close any associated {@link QuestPreview._ownershipControl}
     * - Close any associated {@link QuestPreview._rewardImagePopup}
     * - Close any associated {@link QuestPreview._splashImagePopup}
     * - If set invoke {@link QuestPreview._activeFocusOutFunction} or {@link QuestPreview.saveQuest} if the current
@@ -567,10 +567,10 @@ export default class QuestPreview extends FormApplication
       FQLDialog.closeDialogs({ questId: this._quest.id });
 
       // If a permission control app / dialog is open close it.
-      if (this._permControl)
+      if (this._ownershipControl)
       {
-         this._permControl.close();
-         this._permControl = void 0;
+         this._ownershipControl.close();
+         this._ownershipControl = void 0;
       }
 
       // Close any opened actor or reward item sheets.
