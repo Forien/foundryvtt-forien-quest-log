@@ -1,9 +1,8 @@
 import Utils            from '../control/Utils.js';
 import QuestPreviewShim from '../view/preview/QuestPreviewShim.js';
+import { FVTTCompat }   from '../FVTTCompat.js';
 
 import { constants, questStatus, settings } from './constants.js';
-
-import { V10Compat }    from '../V10Compat.js';
 
 /**
  * Stores the sheet class for Quest which is {@link QuestPreview}. This class / sheet is used to render Quest.
@@ -89,11 +88,11 @@ export default class Quest
    {
       let isHidden = true;
 
-      if (this.entry && typeof V10Compat.ownership(this.entry) === 'object')
+      if (this.entry && typeof FVTTCompat.ownership(this.entry) === 'object')
       {
-         if (V10Compat.ownership(this.entry).default >= CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER) { return false; }
+         if (FVTTCompat.ownership(this.entry).default >= CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER) { return false; }
 
-         for (const [userId, permission] of Object.entries(V10Compat.ownership(this.entry)))
+         for (const [userId, permission] of Object.entries(FVTTCompat.ownership(this.entry)))
          {
             if (userId === 'default') { continue; }
 
@@ -160,10 +159,10 @@ export default class Quest
    {
       let isPersonal = false;
 
-      if (this.entry && typeof V10Compat.ownership(this.entry) === 'object' &&
-       V10Compat.ownership(this.entry).default < CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER)
+      if (this.entry && typeof FVTTCompat.ownership(this.entry) === 'object' &&
+       FVTTCompat.ownership(this.entry).default < CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER)
       {
-         for (const [userId, permission] of Object.entries(V10Compat.ownership(this.entry)))
+         for (const [userId, permission] of Object.entries(FVTTCompat.ownership(this.entry)))
          {
             if (userId === 'default') { continue; }
 
@@ -285,9 +284,9 @@ export default class Quest
 
       const users = [];
 
-      if (this.entry && typeof V10Compat.ownership(this.entry) === 'object')
+      if (this.entry && typeof FVTTCompat.ownership(this.entry) === 'object')
       {
-         for (const [userId, permission] of Object.entries(V10Compat.ownership(this.entry)))
+         for (const [userId, permission] of Object.entries(FVTTCompat.ownership(this.entry)))
          {
             if (userId === 'default') { continue; }
 

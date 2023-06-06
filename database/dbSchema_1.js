@@ -1,7 +1,7 @@
-import DBMigration   from './DBMigration.js';
-import Utils         from '../src/control/Utils.js';
-import Quest         from '../src/model/Quest.js';
-import { V10Compat } from '../src/V10Compat.js';
+import DBMigration      from './DBMigration.js';
+import Utils            from '../src/control/Utils.js';
+import Quest            from '../src/model/Quest.js';
+import { FVTTCompat }   from '../src/FVTTCompat.js';
 
 import { constants, questStatus }   from '../src/model/constants.js';
 
@@ -30,7 +30,7 @@ export default async function()
    if (!folder) { return; }
 
    // Iterate through all journal entries from `_fql_quests`.
-   for (const entry of V10Compat.folderContents(folder))
+   for (const entry of FVTTCompat.folderContents(folder))
    {
       try
       {
@@ -45,7 +45,7 @@ export default async function()
             const quest = new Quest(content, entry);
 
             // Accept the default permission if defined otherwise set to observer.
-            const defaultPermission = V10Compat.ownership(entry)?.default ?? CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER;
+            const defaultPermission = FVTTCompat.ownership(entry)?.default ?? CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER;
 
             const data = {
                name: quest.name,
@@ -55,7 +55,7 @@ export default async function()
                }
             };
 
-            if (V10Compat.isV10)
+            if (FVTTCompat.isV10)
             {
                data.ownership = { default: defaultPermission };
             }
@@ -70,7 +70,7 @@ export default async function()
          {
             // Must delete any no conforming journal entries. This likely never occurs.
             console.log(game.i18n.format('ForienQuestLog.Migration.Notifications.CouldNotMigrate',
-             { name: V10Compat.get(entry, 'name') }));
+             { name: FVTTCompat.get(entry, 'name') }));
             await entry.delete();
          }
       }
@@ -78,7 +78,7 @@ export default async function()
       {
          // Must delete any journal entries / quests that fail the migration process.
          console.log(game.i18n.format('ForienQuestLog.Migration.Notifications.CouldNotMigrate',
-          { name: V10Compat.get(entry, 'name') }));
+          { name: FVTTCompat.get(entry, 'name') }));
          await entry.delete();
       }
    }
@@ -102,7 +102,7 @@ async function migrateData(entry)
    try
    {
       // Strip leading / trailing HTML tags in case someone attempted to look at / modify the JE.
-      let entryContent = V10Compat.get(entry, 'content');
+      let entryContent = FVTTCompat.get(entry, 'content');
       entryContent = entryContent.replace(/^<p>/, '');
       entryContent = entryContent.replace(/<\/p>$/, '');
 

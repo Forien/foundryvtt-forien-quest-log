@@ -1,4 +1,4 @@
-import {constants} from "./model/constants.js";
+import { constants } from './model/constants.js';
 
 let isV10 = false;
 
@@ -10,7 +10,7 @@ Hooks.once('init', () =>
 /**
  * Provides v10 Foundry core compatibility fixes providing a temporary shim for v9 to v10 changes.
  */
-export class V10Compat
+export class FVTTCompat
 {
    /**
     * Returns the author ID of a document depending on v10.

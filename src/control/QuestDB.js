@@ -5,7 +5,7 @@ import Quest            from '../model/Quest.js';
 import QuestPreviewShim from '../view/preview/QuestPreviewShim.js';
 import collect          from '../../external/collect.js';
 
-import { V10Compat }    from '../V10Compat.js';
+import { FVTTCompat }   from '../FVTTCompat.js';
 
 import { constants, questStatus, settings } from '../model/constants.js';
 
@@ -168,7 +168,7 @@ export default class QuestDB
          const isTrustedPlayerEdit = Utils.isTrustedPlayerEdit();
 
          // Iterate over all journal entries in `_fql_quests` folder.
-         const folderContents = V10Compat.folderContents(folder);
+         const folderContents = FVTTCompat.folderContents(folder);
 
          for (const entry of folderContents)
          {
@@ -252,7 +252,7 @@ export default class QuestDB
       const isTrustedPlayerEdit = Utils.isTrustedPlayerEdit();
 
       // Iterate over all quests.
-      const folderContents = V10Compat.folderContents(folder);
+      const folderContents = FVTTCompat.folderContents(folder);
 
       for (const entry of folderContents)
       {

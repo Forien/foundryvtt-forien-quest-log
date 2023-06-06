@@ -1,4 +1,4 @@
-import { V10Compat }                   from '../V10Compat.js';
+import { FVTTCompat }                  from '../FVTTCompat.js';
 
 import { constants, jquery, settings } from '../model/constants.js';
 
@@ -245,7 +245,7 @@ export default class Utils
       if (Array.isArray(type) && !type.includes(data.type)) { return void 0; }
       if (typeof type === 'string' && data.type !== type) { return void 0; }
 
-      if (V10Compat.isV10)
+      if (FVTTCompat.isV10)
       {
          if (typeof data.uuid === 'string')
          {
@@ -343,7 +343,7 @@ export default class Utils
             if (macroSetting !== currentSetting) { continue; }
 
             // Only set macro image if the author of the macro matches the user and the user is an owner.
-            const macroAuthor = V10Compat.authorID(macroEntry);
+            const macroAuthor = FVTTCompat.authorID(macroEntry);
             if (macroAuthor !== userID || !macroEntry.isOwner) { continue; }
 
             const state = value ?? game.settings.get(constants.moduleName, currentSetting);

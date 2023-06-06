@@ -1,11 +1,11 @@
-import DBMigration   from './DBMigration.js';
-import Enrich        from '../src/control/Enrich.js';
-import Utils         from '../src/control/Utils.js';
-import Quest         from '../src/model/Quest.js';
+import DBMigration      from './DBMigration.js';
+import Enrich           from '../src/control/Enrich.js';
+import Utils            from '../src/control/Utils.js';
+import Quest            from '../src/model/Quest.js';
 
-import { V10Compat } from '../src/V10Compat.js';
+import { FVTTCompat }   from '../src/FVTTCompat.js';
 
-import { constants } from '../src/model/constants.js';
+import { constants }    from '../src/model/constants.js';
 
 /**
  * Performs DB migration for v10 and all systems updating cached images / names of quest givers and reward items.
@@ -18,7 +18,7 @@ import { constants } from '../src/model/constants.js';
  */
 export default async function()
 {
-   if (!V10Compat.isV10) { return; }
+   if (!FVTTCompat.isV10) { return; }
 
    const folder = await Utils.initializeQuestFolder();
    if (!folder) { return; }
@@ -37,7 +37,7 @@ export default async function()
       }
    }
 
-   for (const entry of V10Compat.folderContents(folder))
+   for (const entry of FVTTCompat.folderContents(folder))
    {
       try
       {
@@ -65,13 +65,13 @@ export default async function()
          else
          {
             console.log(game.i18n.format('ForienQuestLog.Migration.Notifications.CouldNotMigrate',
-             { name: V10Compat.get(entry, 'name') }));
+             { name: FVTTCompat.get(entry, 'name') }));
          }
       }
       catch (err)
       {
          console.log(game.i18n.format('ForienQuestLog.Migration.Notifications.CouldNotMigrate',
-          { name: V10Compat.get(entry, 'name') }));
+          { name: FVTTCompat.get(entry, 'name') }));
       }
    }
 

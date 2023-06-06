@@ -10,7 +10,7 @@ import QuestPreview     from '../view/preview/QuestPreview.js';
 import ModuleSettings   from '../ModuleSettings.js';
 import DBMigration      from '../../database/DBMigration.js';
 
-import { V10Compat }    from '../V10Compat.js';
+import { FVTTCompat }   from '../FVTTCompat.js';
 
 import { constants, noteControls, sessionConstants, settings } from '../model/constants.js';
 
@@ -87,7 +87,7 @@ export default class FQLHooks
       if (typeof data !== 'object' || data?._fqlData?.type !== 'reward') { return; }
 
       await Socket.questRewardDrop({
-         actor: { id: actor.id, name: V10Compat.get(actor, 'name') },
+         actor: { id: actor.id, name: FVTTCompat.get(actor, 'name') },
          sheet: { id: sheet.id },
          data
       });
@@ -223,11 +223,11 @@ export default class FQLHooks
 
       if (!document) { return; }
 
-      const macroCommand = V10Compat.get(document, 'command');
+      const macroCommand = FVTTCompat.get(document, 'command');
 
       const existingMacro = game.macros.contents.find((m) =>
       {
-         return (V10Compat.authorID(m) === game.user.id && V10Compat.get(m, 'command') === macroCommand);
+         return (FVTTCompat.authorID(m) === game.user.id && FVTTCompat.get(m, 'command') === macroCommand);
       });
 
       let macro = existingMacro;
@@ -236,11 +236,11 @@ export default class FQLHooks
       if (!existingMacro)
       {
          const macroData = {
-            name: V10Compat.get(document, 'name'),
-            type: V10Compat.get(document, 'type'),
-            command: V10Compat.get(document, 'command'),
-            img: V10Compat.get(document, 'img'),
-            flags: V10Compat.get(document, 'flags')
+            name: FVTTCompat.get(document, 'name'),
+            type: FVTTCompat.get(document, 'type'),
+            command: FVTTCompat.get(document, 'command'),
+            img: FVTTCompat.get(document, 'img'),
+            flags: FVTTCompat.get(document, 'flags')
          };
 
          macro = await Macro.create(macroData, { displaySheet: false });
@@ -291,7 +291,7 @@ export default class FQLHooks
       macroData.img = quest.splashAsIcon && quest.splash.length ? quest.splash : quest?.giverData?.img;
 
       // Search for an already existing macro with the same command.
-      let macro = game.macros.contents.find((m) => (V10Compat.get(m, 'command') === command));
+      let macro = game.macros.contents.find((m) => (FVTTCompat.get(m, 'command') === command));
 
       // If not found then create a new macro with the command.
       if (!macro)
@@ -326,7 +326,7 @@ export default class FQLHooks
       let handled = false;
 
       // Verify if the hotbar drop is data that is handled; either a quest or macro from FQL macro compendium.
-      if (data.type === Quest.documentName || V10Compat.isFQLMacroDataTransfer(data))
+      if (data.type === Quest.documentName || FVTTCompat.isFQLMacroDataTransfer(data))
       {
          handled = true;
       }
@@ -335,7 +335,7 @@ export default class FQLHooks
       // pack then handle it.
       (async () =>
       {
-         if (V10Compat.isFQLMacroDataTransfer(data))
+         if (FVTTCompat.isFQLMacroDataTransfer(data))
          {
             await FQLHooks.handleMacroHotbarDrop(data, slot);
          }

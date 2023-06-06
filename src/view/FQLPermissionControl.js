@@ -1,4 +1,4 @@
-import { V10Compat } from "../V10Compat.js";
+import { FVTTCompat } from "../FVTTCompat.js";
 
 /**
  * A bit convoluted solution as to remove warning on v10 we have to use DocumentOwnershipConfig, but this class doesn't
@@ -8,7 +8,7 @@ export default class FQLPermissionControl
 {
    static async create(doc, options)
    {
-      if (V10Compat.isV10)
+      if (FVTTCompat.isV10)
       {
          // Must use dynamic import as DocumentOwnershipConfig does not exist in v9.
          const FQLDocumentOwnershipConfig = (await import('./FQLDocumentOwnershipConfig.js')).default;

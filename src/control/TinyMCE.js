@@ -1,6 +1,5 @@
 import ViewManager   from './ViewManager.js';
 import Utils         from './Utils.js';
-import { V10Compat } from '../V10Compat.js';
 
 /**
  * Provides custom options for TinyMCE.
@@ -12,7 +11,7 @@ export default class TinyMCE
    /**
     * Provides overrides for TinyMCE options. These options are selected for increased media embedding.
     *
-    * In addition a few extra options like support for the `Esc` key to cancel editing and providing a custom
+    * In addition, a few extra options like support for the `Esc` key to cancel editing and providing a custom
     * menu button for copying the background style selector useful for styling the background of the containing
     * element for the editor.
     *
@@ -44,8 +43,8 @@ export default class TinyMCE
       ].concat(s_DEFAULT_STYLE_FORMATS);
 
       return {
-         plugins: `${V10Compat.isV10 ? '' : 'hr'} emoticons image link lists typhonjs-oembed charmap table code save help`,
-         toolbar: `${V10Compat.isV10 ? 'styles' : 'styleselect'} | formatgroup | removeformat | insertgroup | table | bulletgroup | customcode | save | help`,
+         plugins: `emoticons image link lists typhonjs-oembed charmap table code save help`,
+         toolbar: 'styles | formatgroup | removeformat | insertgroup | table | bulletgroup | customcode | save | help',
          toolbar_groups: {
             bulletgroup: {
                icon: 'unordered-list',
@@ -55,7 +54,7 @@ export default class TinyMCE
             formatgroup: {
                icon: 'format',
                tooltip: 'Formatting',
-               items: `${V10Compat.isV10 ? 'fontfamily | fontsize' : 'fontselect | fontsizeselect'} | lineheight | forecolor backcolor`
+               items: 'fontfamily | fontsize | lineheight | forecolor backcolor'
             },
             insertgroup: {
                icon: 'plus',
@@ -65,15 +64,18 @@ export default class TinyMCE
          },
          content_css: CONFIG.TinyMCE.content_css.concat(s_CSS_URL),
          contextmenu: false,  // Prefer default browser context menu
-         font_formats: s_DEFAULT_FONTS,
-         fontsize_formats: s_DEFAULT_FONT_SIZE,
+         font_size_formats: s_DEFAULT_FONT_SIZE,
+         font_family_formats: s_DEFAULT_FONTS,
          file_picker_types: 'image media',
          image_advtab: true,
-         lineheight_formats: s_DEFAULT_LINE_HEIGHT,
+         line_height_formats: s_DEFAULT_LINE_HEIGHT,
+
+         // For typhonjs-oembed plugin when loaded.
          oembed_live_embeds: false,
          oembed_default_width: 424,
          oembed_default_height: 238,
          oembed_disable_file_source: true,
+
          style_formats,
          table_class_list: s_DEFAULT_TABLE_CLASS_LIST,
 
@@ -183,7 +185,7 @@ const s_DEFAULT_FONTS = 'Almendra=Almendra,serif; Arial=arial,helvetica,sans-ser
  *
  * @type {string}
  */
-const s_DEFAULT_FONT_SIZE = '10pt 12pt 13pt 14pt 15pt 16pt 18pt 22pt 28pt 32pt 36pt 42pt 48pt 64pt';
+const s_DEFAULT_FONT_SIZE = '10.5pt 12pt 13pt 14pt 15pt 16pt 18pt 22pt 28pt 32pt 36pt 42pt 48pt 64pt';
 
 /**
  * Defines the line-height styles available in the toolbar options.

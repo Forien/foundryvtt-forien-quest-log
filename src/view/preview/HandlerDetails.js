@@ -3,7 +3,7 @@ import Socket        from '../../control/Socket.js';
 import Utils         from '../../control/Utils.js';
 import FQLDialog     from '../FQLDialog.js';
 
-import { V10Compat } from '../../V10Compat.js';
+import { FVTTCompat } from '../../FVTTCompat.js';
 
 import { constants, jquery, settings } from '../../model/constants.js';
 
@@ -235,7 +235,7 @@ export default class HandlerDetails
       else
       {
          // Slightly awkward on v10 as we need to check if this is an actor owned item specifically.
-         if (V10Compat.isV10 && typeof data?.uuid === 'string' &&
+         if (FVTTCompat.isV10 && typeof data?.uuid === 'string' &&
           data.uuid.startsWith('Actor') && (data.uuid.match(/\./g) || []).length > 1)
          {
             ui.notifications.warn(game.i18n.localize('ForienQuestLog.QuestPreview.Notifications.WrongDocType'));
@@ -488,7 +488,7 @@ export default class HandlerDetails
          };
 
          // Pass on document data on v9; v10 systems should work solely w/ UUID.
-         if (!V10Compat.isV10)
+         if (!FVTTCompat.isV10)
          {
             dataTransfer.data = document.data;
          }
@@ -571,7 +571,7 @@ export default class HandlerDetails
          else
          {
             // Slightly awkward on v10 as we need to check if this is an actor owned item specifically.
-            if (V10Compat.isV10 && typeof data?.uuid === 'string' &&
+            if (FVTTCompat.isV10 && typeof data?.uuid === 'string' &&
              data.uuid.startsWith('Actor') && (data.uuid.match(/\./g) || []).length > 1)
             {
                ui.notifications.warn(game.i18n.localize('ForienQuestLog.QuestPreview.Notifications.WrongItemType'));
