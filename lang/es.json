@@ -3,7 +3,7 @@
     "API": {
       "Hooks": {
         "Labels": {
-          "OpenMacro": "Abierto ”{name}”"
+          "OpenMacro": "Abrir ”{name}”"
         },
         "Notifications": {
           "NoQuest": "API Error: No se puede crear la macro sin un Quest ID valido."
@@ -16,7 +16,7 @@
       },
       "Socket": {
         "Notifications": {
-          "RewardDrop": "FQL (recompensa de misión): {userName} entrego '{itemName}' a {actorName}."
+          "RewardDrop": "FQL (recompensa de misión): {userName} entregó '{itemName}' a {actorName}."
         }
       },
       "Utils": {
@@ -32,7 +32,7 @@
       "BodyReward": "Esta recompensa y sus datos se eliminarán de forma permanente.",
       "Cancel": "Cancelar",
       "Delete": "Eliminar",
-      "HeaderDel": "¿Estás seguro que quieres eliminar? <p>'{name}'</p>",
+      "HeaderDel": "¿Estás seguro de que quieres eliminar? <p>'{name}'</p>",
       "TitleDel": "Eliminar {title}"
     },
     "Labels": {
@@ -46,8 +46,8 @@
         "Footer": "Debes actualizar manualmente las misiones anteriores con datos de documentos válidos de compendios o de tu mundo.<br>",
         "Header": "Forien's Quest Log (DB migración)<br>Se eliminaron los elementos de recompensa o no se encuentra al dador de las misiones a continuación:<p>",
         "Notification": "Forien's Quest Log - Se eliminó al dador de misiones o los elementos de recompensa de una o más misiones. Revise el mensaje de chat para obtener más información.",
-        "QuestGiver": "Dador de Misiones",
-        "QuestRewards": "Recompensas de Misiones"
+        "QuestGiver": "Dador de Misión",
+        "QuestRewards": "Recompensas de Misión"
       },
       "Notifications": {
         "Complete": "Forien's Quest Log - Migración de datos completa.",
@@ -59,12 +59,12 @@
     "Notifications": {
       "CannotOpen": "No puedes abrir los detalles de la misión. Puede que te falten permisos, que la misión ya no exista o que el ID sea inválido.",
       "FinishQuestAdded": "Termina de editar y cierra la nueva misión actual antes de agregar otra.",
-      "LinkCopied": "El link a la entidad de esta misión ha sido copiado al portapapeles.",
+      "LinkCopied": "El enlace a la entidad de esta misión ha sido copiado al portapapeles.",
       "QuestAdded": "Se agregó '{name}' como una nueva misión con estado: '{status}'.",
       "QuestIDCopied": "El ID de misión para esta misión se ha copiado al portapapeles.",
       "QuestMoved": "Se movió '{name}' y se estableció el nuevo estado en: '{target}'.",
       "QuestPrimary": "'{name}' es la nueva misión principal.",
-      "QuestTrackerNoActive": "Rastreador de Misiones está habilitado, pero no hay misiones en curso actualmente.",
+      "QuestTrackerNoActive": "Seguimiento de Misiones está habilitado, pero no hay misiones en curso actualmente.",
       "UserCantOpen": "El usuario '{user}' no tiene permisos para abrir esta misión."
     },
     "QuestLog": {
@@ -78,41 +78,41 @@
       },
       "Labels": {
         "TableHeader": "Misiones {0}",
-        "SubTitle": "Sub - Misión de: {0}"
+        "SubTitle": "Sub-Misión de: {0}"
       },
-      "Title": "Misiones",
+      "Title": "Registro de Misiones",
       "Tooltips": {
         "Objectives": "Objetivos"
       }
     },
     "QuestPreview": {
       "Buttons": {
-        "RewardCustom": "Definido Usuario",
+        "RewardCustom": "Personalizado",
         "RewardHide": "Ocultar",
-        "RewardLock": "Cerrar",
+        "RewardLock": "Bloquear",
         "RewardShow": "Mostrar",
         "RewardUnlock": "Desbloquear"
       },
       "Labels": {
-        "CustomSource": "Nombre del Dador de la Misión",
+        "CustomSource": "Fuente Personalizada",
         "Description": "Descripción:",
-        "DragDropActor": "Arrastre y Suelte al actor, elemento o entrada de diario o haga clic con el botón izquierdo para establecer un dador de misión personalizado.",
+        "DragDropActor": "Arrastre y suelte al actor, elemento o entrada de diario o haga clic con el botón izquierdo para establecer una fuente personalizada.",
         "DragDropActorPlayer": "Arrastrar y Soltar actor, elemento o entrada de diario.",
         "DragDropRewards": "Arrastra y Suelta elementos aquí para añadirlos como recompensas.",
         "GMNotes": "Notas del GM:",
         "Objective": "Objetivo",
         "Objectives": "Objetivos:",
-        "Reward": "Premio",
+        "Reward": "Recompensa",
         "Rewards": "Recompensas:"
       },
       "Management": {
-        "AddSubquest": "Crear Sub - Misión",
+        "AddSubquest": "Crear Sub-Misión",
         "ConfigurePermissions": "Configurar Permisos",
-        "QuestBranching": "Sub - Misiones:",
+        "QuestBranching": "Sub-Misiones:",
         "QuestSettings": "Configuración de la Misión:",
         "SplashArt": "Imagen Portada:",
         "SplashInfo": "Haga clic para configurar la imagen.",
-        "SplashQuestIcon": "Establecer como icono misión"
+        "SplashQuestIcon": "Establecer como icono de misión"
       },
       "Notifications": {
         "BadUUID": "No se pudo recuperar el documento para UUID: '{uuid}'.",
@@ -126,14 +126,14 @@
       },
       "Title": "Detalles de la misión - {name}",
       "Tooltips": {
-        "AddCustom": "Agregar definido por el usuario",
+        "AddCustom": "Agregar personalizada",
         "AddObjective": "Añadir Objetivo",
         "ChangeSplashPos": "Cambiar la alineación de la imagen de misión.",
         "DeleteQuestGiver": "Eliminar dador de misiones.",
         "DeleteSplash": "Eliminar imagen de misión.",
         "HideAll": "Ocultar Todo",
         "LockAll": "Bloquear Todo",
-        "PrimaryQuestSet": "Haz clic para hacer la misión principal.",
+        "PrimaryQuestSet": "Haz clic para seleccionar la misión principal.",
         "PrimaryQuestUnset": "Haz clic para anular la misión principal.",
         "RewardHidden": "La recompensa está oculta. Haz clic para mostrar.",
         "RewardLocked": "La recompensa está bloqueada. Haz clic para desbloquear.",
@@ -151,7 +151,7 @@
     },
     "QuestTracker": {
       "NoPrimary": "No hay misión principal disponible.",
-      "Title": "Rastreador de Misiones",
+      "Title": "Seguimiento de Misiones",
       "Tooltips": {
         "BackgroundShow": "Haz clic para mostrar el fondo.",
         "BackgroundUnshow": "Haz clic para hacer que el fondo sea transparente.",
@@ -163,22 +163,22 @@
       "Labels": {
         "Active": "En curso",
         "active": "en curso",
-        "Available": "Disponible",
+        "Available": "Disponibles",
         "available": "disponible",
         "Completed": "Completadas",
-        "completed": "completadas",
+        "completed": "completada",
         "Failed": "Fallidas",
-        "failed": "fallidas",
-        "InActive": "Inactivo",
-        "inactive": "inactivo",
-        "Status": "La Misión es {statusLabel}."
+        "failed": "fallida",
+        "InActive": "Inactivas",
+        "inactive": "inactiva",
+        "Status": "La Misión está {statusLabel}."
       },
       "Tooltips": {
-        "SetActive": "Establecer como En Progreso",
+        "SetActive": "Establecer como En Curso",
         "SetAvailable": "Establecer como Disponible",
-        "SetCompleted": "Establecer como Completado",
-        "SetFailed": "Establecer como Fallido",
-        "SetInactive": "Establecer como Inactivo",
+        "SetCompleted": "Establecer como Completada",
+        "SetFailed": "Establecer como Fallida",
+        "SetInactive": "Establecer como Inactiva",
         "Status": "Estado: {statusI18n}"
       }
     },
@@ -218,15 +218,15 @@
         "bookmarks": "Marcadores",
         "classic": "Pestañas clásicas",
         "Enable": "Estilo de navegación",
-        "EnableHint": "Decide cómo se visualizará el registro de misiones."
+        "EnableHint": "Decide cómo debe mostrarse la navegación del Registro de Misiones."
       },
       "notifyRewardDrop": {
         "Enable": "Mostrar notificaciones de entrega de recompensas",
         "EnableHint": "Verifique para ver notificaciones cuando las recompensas de misiones se colocan en las hojas de los jugadores."
       },
       "questTrackerResizable": {
-        "Enable": "Rastreador de misiones redimensionable",
-        "EnableHint": "Marque para permitir el control de cambio de tamaño manual del Rastreador de Misiones."
+        "Enable": "Seguimiento de misiones redimensionable",
+        "EnableHint": "Marque para permitir el control de cambio de tamaño manual de la ventana de Seguimiento de Misiones."
       },
       "showFolder": {
         "Enable": "Mostrar carpeta de misiones",
@@ -235,7 +235,7 @@
       "showTasks": {
         "default": "Mostrar tareas: completadas / totales",
         "Enable": "Mostrar tareas en el registro de misiones",
-        "EnableHint": "Decide si y como se muestra la cantidad de tareas (objetivos) junto al nombre de la misión en el registro de misiones. Esto no tiene efecto en la visualización de la pantalla de detalle de misión.",
+        "EnableHint": "Decide si y cómo se muestra la cantidad de tareas (objetivos) junto al nombre de la misión en el registro de misiones. Esto no tiene efecto en la visualización de la pantalla de detalle de misión.",
         "no": "Ocultar columna \"Objetivos\"",
         "onlyCurrent": "Mostrar objetivos: completados"
       },
