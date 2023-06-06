@@ -9,25 +9,25 @@
     "Michael Leahy <support@typhonjs.io> (https://github.com/typhonrt)"
   ],
   "dependencies": {
-    "collect.js": "^4.28.0",
-    "dompurify": "^2.3.0"
+    "collect.js": "^4.36.0",
+    "dompurify": "^3.0.3"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^22.0.2",
-    "@rollup/plugin-node-resolve": "^13.3.0",
-    "@rollup/plugin-virtual": "^2.1.0",
-    "@types/jquery": "^3.5.14",
-    "@typhonjs-config/eslint-config": "^0.3.0",
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-virtual": "^3.0.1",
+    "@rollup/plugin-terser": "^0.4.3",
+    "@types/jquery": "3.5.16",
+    "@typhonjs-config/eslint-config": "^0.6.0",
     "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
-    "autoprefixer": "^10.4.8",
-    "cssnano": "^5.1.13",
-    "eslint": "^8.22.0",
-    "postcss": "^8.4.16",
-    "postcss-cli": "^10.0.0",
-    "postcss-preset-env": "^7.8.0",
-    "rollup": "^2.78.1",
-    "rollup-plugin-terser": "^7.0.2",
-    "sass": "^1.54.5"
+    "autoprefixer": "^10.4.14",
+    "cssnano": "^6.0.1",
+    "eslint": "^8.42.0",
+    "postcss": "^8.4.24",
+    "postcss-cli": "^10.1.0",
+    "postcss-preset-env": "^8.4.2",
+    "rollup": "^3.23.0",
+    "sass": "^1.62.0"
   },
   "browserslist": [">5%", "not IE 11"],
   "scripts": {
