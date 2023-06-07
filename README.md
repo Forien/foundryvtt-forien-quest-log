@@ -13,7 +13,7 @@
 
 This module provides comprehensive Quest Log system for players and Game Masters to use with [Foundry VTT](https://foundryvtt.com/).
 
-**[Compatibility]**: _FoundryVTT_ `v9` & `v10` as of FQL version `0.7.11`.
+**[Compatibility]**: _FoundryVTT_ `v11` as of FQL version `0.7.12`. For `v9` / `v10` use FQL `0.7.11`
 
 **[Game Systems]**: _any_
 
@@ -30,6 +30,21 @@ Portuguese (Brazil), Russian, Spanish, Swedish_
 
 ## Recent Updates
 
+The minor `0.7.12` update to FQL:
+
+- Foundry v11 support.
+- Removed support for v9 / v10 to prevent any compatibility warnings.
+- Fixed minor TinyMCE configuration for correct font support.
+- Updated Spanish translation.
+
+The minor `0.7.11` update to FQL:
+
+- Corrects a new compatibility warning that came up w/ the 10.285 Foundry release.
+- Provides workarounds for various misbehaving game systems (Gurps / L5R).
+- Refines the "show quest log to players" feature showing the players the specific quest status tab the GM currently
+  has selected.
+- Adds a Dutch language translation.
+
 The `0.7.10` update to FQL brings compatibility for _both_ version 9 & 10 of Foundry VTT and includes several 
 quality of life enhancements:
 
@@ -38,14 +53,6 @@ quality of life enhancements:
 - Show quest tracker to players with icon in quest tracker header (for GM).
 - Ability to set quest tracker to transparent via fill icon in app header.
 - Expanded language / translation support.
-
-The minor `0.7.11` update to FQL:
-
-- Corrects a new compatibility warning that came up w/ the 10.285 Foundry release.
-- Provides workarounds for various misbehaving game systems (Gurps / L5R).
-- Refines the "show quest log to players" feature showing the players the specific quest status tab the GM currently 
-  has selected. 
-- Adds a Dutch language translation.
 
 ## Usage
 
