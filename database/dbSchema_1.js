@@ -45,7 +45,7 @@ export default async function()
             const quest = new Quest(content, entry);
 
             // Accept the default permission if defined otherwise set to observer.
-            const defaultPermission = FVTTCompat.ownership(entry)?.default ?? CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER;
+            const defaultPermission = FVTTCompat.ownership(entry)?.default ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER;
 
             const data = {
                name: quest.name,

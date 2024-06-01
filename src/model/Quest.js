@@ -90,7 +90,7 @@ export default class Quest
 
       if (this.entry && typeof FVTTCompat.ownership(this.entry) === 'object')
       {
-         if (FVTTCompat.ownership(this.entry).default >= CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER) { return false; }
+         if (FVTTCompat.ownership(this.entry).default >= CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER) { return false; }
 
          for (const [userId, permission] of Object.entries(FVTTCompat.ownership(this.entry)))
          {
@@ -100,7 +100,7 @@ export default class Quest
 
             if (!user || user.isGM) { continue; }
 
-            if (permission >= CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER)
+            if (permission >= CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER)
             {
                isHidden = false;
                break;
@@ -135,7 +135,7 @@ export default class Quest
       if (Utils.isTrustedPlayerEdit() && isInactive) { return this.isOwner; }
 
       // Otherwise no one can see hidden / inactive quests; perform user permission check for observer.
-      return !isInactive && this.entry.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER);
+      return !isInactive && this.entry.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER);
    }
 
    /**
@@ -146,7 +146,7 @@ export default class Quest
    get isOwner()
    {
       return game.user.isGM ||
-       (this.entry && this.entry.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OWNER));
+       (this.entry && this.entry.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER));
    }
 
    /**
@@ -160,7 +160,7 @@ export default class Quest
       let isPersonal = false;
 
       if (this.entry && typeof FVTTCompat.ownership(this.entry) === 'object' &&
-       FVTTCompat.ownership(this.entry).default < CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER)
+       FVTTCompat.ownership(this.entry).default < CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER)
       {
          for (const [userId, permission] of Object.entries(FVTTCompat.ownership(this.entry)))
          {
@@ -170,7 +170,7 @@ export default class Quest
 
             if (!user || user.isGM) { continue; }
 
-            if (permission < CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER) { continue; }
+            if (permission < CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER) { continue; }
 
             isPersonal = true;
             break;
@@ -294,7 +294,7 @@ export default class Quest
 
             if (!user || user.isGM) { continue; }
 
-            if (permission < CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER) { continue; }
+            if (permission < CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER) { continue; }
 
             users.push(user);
          }

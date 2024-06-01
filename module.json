@@ -19,9 +19,9 @@
   "changelog": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/latest/",
   "version": "0.7.12",
   "compatibility": {
-    "minimum": "11",
-    "verified": "11",
-    "maximum": "11"
+    "minimum": "12",
+    "verified": "12",
+    "maximum": "12"
   },
   "esmodules": [
     "./src/init.js"
