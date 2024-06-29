@@ -13,7 +13,7 @@ import { constants, questStatus, settings } from '../model/constants.js';
  * Stores all {@link QuestEntry} instances in a map of Maps. This provides fast retrieval and quick insert / removal
  * with quests pre-sorted by status.
  *
- * @type {Object<string, Map<string, QuestEntry>>}
+ * @type {Record<string, Map<string, QuestEntry>>}
  */
 const s_QUESTS_MAP = {
    active: new Map(),
@@ -28,7 +28,7 @@ const s_QUESTS_MAP = {
  * and many other potential operations that {@link collect} / CollectJS collections provide for working with arrays of
  * object data. Each collection is built from the values of the {@link s_QUESTS_MAP} per status category.
  *
- * @type {Object<string, Collection<QuestEntry>>}
+ * @type {Record<string, Collection<QuestEntry>>}
  * @see https://collect.js.org/api.html
  */
 const s_QUESTS_COLLECT = {
@@ -1324,7 +1324,7 @@ const s_SET_QUEST_ENTRY = (entry, generate = true) =>
  */
 
 /**
- * @typedef {Object<string, Collection<QuestEntry>>} QuestsCollect Returns an object with keys indexed by
+ * @typedef {Record<string, Collection<QuestEntry>>} QuestsCollect Returns an object with keys indexed by
  * {@link questStatus} of CollectJS collections of QuestEntry instances.
  *
  * @property {Collection<QuestEntry>} active - Active quest entries CollectJS collections

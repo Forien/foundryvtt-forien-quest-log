@@ -470,7 +470,7 @@ function s_QUEST_PREVIEW_RENDER(questPreview)
 }
 
 /**
- * @typedef {Object} RenderOptions Additional rendering options which are applied to customize the way that the
+ * @typedef {object} RenderOptions Additional rendering options which are applied to customize the way that the
  * Application is rendered in the DOM.
  *
  * @property {number}   [left] - The left positioning attribute.

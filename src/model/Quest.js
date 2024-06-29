@@ -341,7 +341,7 @@ export default class Quest
       this.giver = data.giver || null;
 
       /**
-       * @type {Object|null}
+       * @type {object|null}
        */
       this.giverData = data.giverData || null;
 
@@ -982,7 +982,6 @@ export class Task
  * @property {boolean}  locked - Reward locked.
  *
  * @property {string}   uuidv4 - The FQL UUIDv4 / unique ID.
- *
  */
 
 /**

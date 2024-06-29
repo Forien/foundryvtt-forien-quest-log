@@ -3,8 +3,6 @@ import Socket        from '../../control/Socket.js';
 import Utils         from '../../control/Utils.js';
 import FQLDialog     from '../FQLDialog.js';
 
-import { FVTTCompat } from '../../FVTTCompat.js';
-
 import { constants, jquery, settings } from '../../model/constants.js';
 
 /**
