@@ -11,7 +11,7 @@ import dbSchema_3       from './dbSchema_3.js';
 /**
  * Defines the callback functions to execute for each schemaVersion level.
  *
- * @type {Object<number, Function>}
+ * @type {Record<string, Function>}
  */
 const migrateImpl = {
    0: () => {},   // Schema level 0 is a noop / assume all data is stored in JE content.
