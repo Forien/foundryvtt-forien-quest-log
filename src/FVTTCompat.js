@@ -1,14 +1,36 @@
 import { constants } from './model/constants.js';
 
-let isV10 = false;
-
-Hooks.once('init', () =>
-{
-   isV10 = !foundry.utils.isNewerVersion(10, game.version ?? game?.data?.version);
-});
-
 /**
- * Provides v10 Foundry core compatibility fixes providing a temporary shim for v9 to v10 changes.
+ * Provides potential shimming for the Foundry core API and potential support for other 3rd party modules like Monk's
+ * Enhanced Journal (MEJ). In the case for MEJ this module stores the image for a journal documents it owns in custom
+ * flags.
+ *
+ * Previously `FVTTCompat` provided v9 / v10+ shims for accessing Foundry core API. This compatibility layer is
+ * maintained in the codebase, but for the time being the latest FQL is released for v11+ and the shimming
+ * below just returns the current core API call / data. See the below sample code for how the shim is supposed to work
+ * if necessary to re-implement shims in the future.
+ *
+ * Example of how the shimming works:
+ * ```js
+ * let isV10 = false;
+ *
+ * Hooks.once('init', () =>
+ * {
+ *    isV10 = !foundry.utils.isNewerVersion(10, game.version ?? game?.data?.version);
+ * });
+ *
+ * export class FVTTCompat
+ * {
+ *    static get isV10() { return isV10; }
+ *
+ *    static authorID(doc)
+ *    {
+ *       if (!doc) { return void 0; }
+ *
+ *       return isV10 ? doc?.author?.id : doc?.data?.author;
+ *    }
+ * }
+ * ```
  */
 export class FVTTCompat
 {
@@ -22,7 +44,8 @@ export class FVTTCompat
    static authorID(doc)
    {
       if (!doc) { return void 0; }
-      return isV10 ? doc?.author?.id : doc?.data?.author;
+
+      return doc?.author?.id;
    }
 
    /**
@@ -35,7 +58,7 @@ export class FVTTCompat
    static folderContents(folder)
    {
       if (!folder) { return void 0; }
-      return folder?.contents ?? folder?.content ?? [];
+      return folder?.contents ?? [];
    }
 
    /**
@@ -47,16 +70,8 @@ export class FVTTCompat
    {
       if (data?.type !== 'Macro') { return false; }
 
-      return isV10 ? typeof data?.uuid === 'string' && data.uuid.startsWith(`Compendium.${constants.moduleName}`) :
-       typeof data?.pack === 'string' && data.pack.startsWith(constants.moduleName);
+      return typeof data?.uuid === 'string' && data.uuid.startsWith(`Compendium.${constants.moduleName}`);
    }
-
-   /**
-    * Returns true when Foundry is v10+
-    *
-    * @returns {boolean} Foundry v10+
-    */
-   static get isV10() { return isV10; }
 
    /**
     * Returns the data property depending on v10.
@@ -70,7 +85,7 @@ export class FVTTCompat
    static get(doc, property)
    {
       if (!doc || typeof property !== 'string') { return void 0; }
-      return isV10 ? doc[property] : doc.data[property];
+      return doc[property];
    }
 
    /**
@@ -78,15 +93,21 @@ export class FVTTCompat
     *
     * @param {foundry.abstract.Document|Document}  doc -
     *
-    * @returns {string} Journal image.
+    * @returns {string | undefined} Journal image.
     */
    static journalImage(doc)
    {
       if (!doc) { return void 0; }
 
-      if (isV10)
+      // Support Monk's Enhanced Journal which stores images in flags.
+      if (typeof doc?.flags?.['monks-enhanced-journal']?.img === 'string')
       {
-         // Search for the first JournalEntryPage embedded collection for an image.
+         return doc.flags['monks-enhanced-journal'].img;
+      }
+      else
+      {
+         // Treat as normal Foundry journal doc and search for the first JournalEntryPage embedded collection for an
+         // image.
          try
          {
             const pages = doc.getEmbeddedCollection('JournalEntryPage');
@@ -95,12 +116,10 @@ export class FVTTCompat
                if (page?.type === 'image') { return page?.src; }
             }
          }
-         catch (err) { return void 0; }
+         catch (err) { /**/ }
       }
-      else
-      {
-         return doc?.data?.img;
-      }
+
+      return void 0;
    }
 
    /**
@@ -111,7 +130,7 @@ export class FVTTCompat
    static ownership(doc)
    {
       if (!doc) { return void 0; }
-      return isV10 ? doc.ownership : doc.data.permission;
+      return doc.ownership;
    }
 
    /**
@@ -123,6 +142,6 @@ export class FVTTCompat
    {
       if (!doc) { return void 0; }
 
-      return isV10 ? doc?.prototypeToken?.texture?.src : doc?.data?.token?.img;
+      return doc?.prototypeToken?.texture?.src;
    }
 }

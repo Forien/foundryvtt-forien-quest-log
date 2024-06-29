@@ -316,10 +316,10 @@ export default class QuestDB
     */
    static async createQuest({ data = {}, parentId = void 0 } = {})
    {
-      // Get the default permission setting and attempt to set it if found in DOCUMENT_PERMISSION_LEVELS.
+      // Get the default ownership setting and attempt to set it if found in DOCUMENT_PERMISSION_LEVELS.
       const defaultPerm = game.settings.get(constants.moduleName, settings.defaultPermission);
 
-      const permission = {
+      const ownership = {
          default: typeof CONST.DOCUMENT_OWNERSHIP_LEVELS[defaultPerm] === 'number' ?
           CONST.DOCUMENT_OWNERSHIP_LEVELS[defaultPerm] : CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER
       };
@@ -329,7 +329,7 @@ export default class QuestDB
       if (!game.user.isGM)
       {
          data.status = Utils.isTrustedPlayerEdit() ? questStatus.inactive : questStatus.available;
-         permission[game.user.id] = CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER;
+         ownership[game.user.id] = CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER;
       }
 
       const parentQuest = QuestDB.getQuest(parentId);
@@ -352,7 +352,7 @@ export default class QuestDB
          name: tempQuest.name,
          folder: folder.id,
          content: '',
-         permission,
+         ownership,
          flags: {
             [constants.moduleName]: {
                json: tempQuest.toJSON()

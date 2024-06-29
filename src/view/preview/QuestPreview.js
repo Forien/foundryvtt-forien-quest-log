@@ -203,13 +203,9 @@ export default class QuestPreview extends FormApplication
     */
    static get defaultOptions()
    {
-      // TinyMCE editor Handlebars helper has changed. Load different templates for v10 or v9
-      const template = FVTTCompat.isV10 ? 'modules/forien-quest-log/templates/quest-preview-v10.html' :
-       'modules/forien-quest-log/templates/quest-preview-v9.html';
-
       return foundry.utils.mergeObject(super.defaultOptions, {
          classes: ['forien-quest-preview'],
-         template,
+         template: 'modules/forien-quest-log/templates/quest-preview.html',
          width: 1000,
          height: 640,
          minimizable: true,

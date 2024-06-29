@@ -234,20 +234,11 @@ export default class HandlerDetails
       }
       else
       {
-         // Slightly awkward on v10 as we need to check if this is an actor owned item specifically.
-         if (FVTTCompat.isV10 && typeof data?.uuid === 'string' &&
+         // Slightly awkward as we need to check if this is an actor owned item specifically.
+         if (typeof data?.uuid === 'string' &&
           data.uuid.startsWith('Actor') && (data.uuid.match(/\./g) || []).length > 1)
          {
             ui.notifications.warn(game.i18n.localize('ForienQuestLog.QuestPreview.Notifications.WrongDocType'));
-         }
-         else
-         {
-            // Document has data, but lacks a UUID, so it is a data copy. Inform user that quest giver may only be
-            // from world and compendium sources with a UUID.
-            if (typeof data?.data === 'object')
-            {
-               ui.notifications.warn(game.i18n.localize('ForienQuestLog.QuestPreview.Notifications.WrongDocType'));
-            }
          }
       }
    }
@@ -487,12 +478,6 @@ export default class HandlerDetails
             id: document.id
          };
 
-         // Pass on document data on v9; v10 systems should work solely w/ UUID.
-         if (!FVTTCompat.isV10)
-         {
-            dataTransfer.data = document.data;
-         }
-
          // Add compendium pack info if applicable
          if (uuidData && uuidData.pack) { dataTransfer.pack = uuidData.pack; }
 
@@ -570,20 +555,11 @@ export default class HandlerDetails
          }
          else
          {
-            // Slightly awkward on v10 as we need to check if this is an actor owned item specifically.
-            if (FVTTCompat.isV10 && typeof data?.uuid === 'string' &&
+            // Slightly awkward as we need to check if this is an actor owned item specifically.
+            if (typeof data?.uuid === 'string' &&
              data.uuid.startsWith('Actor') && (data.uuid.match(/\./g) || []).length > 1)
             {
                ui.notifications.warn(game.i18n.localize('ForienQuestLog.QuestPreview.Notifications.WrongItemType'));
-            }
-            else
-            {
-               // Document has data, but lacks a UUID, so it is a data copy. Inform user that rewards may only be
-               // items that are backed by a document with a UUID.
-               if (typeof data.data === 'object')
-               {
-                  ui.notifications.warn(game.i18n.localize('ForienQuestLog.QuestPreview.Notifications.WrongItemType'));
-               }
             }
          }
       }

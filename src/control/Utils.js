@@ -245,34 +245,19 @@ export default class Utils
       if (Array.isArray(type) && !type.includes(data.type)) { return void 0; }
       if (typeof type === 'string' && data.type !== type) { return void 0; }
 
-      if (FVTTCompat.isV10)
+      if (typeof data.uuid === 'string')
       {
-         if (typeof data.uuid === 'string')
+         // Must verify that this is not an owned item from an actor. Search for multiple `.`
+         if (data.uuid.startsWith('Actor') && (data.uuid.match(/\./g) || []).length > 1)
          {
-            // Must verify that this is not an owned item from an actor. Search for multiple `.`
-            if (data.uuid.startsWith('Actor') && (data.uuid.match(/\./g) || []).length > 1)
-            {
-               return void 0;
-            }
+            return void 0;
+         }
 
-            return data.uuid;
-         }
-         else
-         {
-            return void 0;
-         }
+         return data.uuid;
       }
-      else  // Create UUID from v9 data transfer.
+      else
       {
-         // Must contain `id` and not be an owned item.
-         if (typeof data.id === 'string')
-         {
-            return typeof data.pack === 'string' ? `Compendium.${data.pack}.${data.id}` : `${data.type}.${data.id}`;
-         }
-         else
-         {
-            return void 0;
-         }
+         return void 0;
       }
    }
 
@@ -421,10 +406,8 @@ export default class Utils
    {
       let templates = [
          "templates/partials/quest-log/tab.html",
-         "templates/partials/quest-preview/v9/gmnotes.html",
-         "templates/partials/quest-preview/v9/details.html",
-         "templates/partials/quest-preview/v10/gmnotes.html",
-         "templates/partials/quest-preview/v10/details.html",
+         "templates/partials/quest-preview/gmnotes.html",
+         "templates/partials/quest-preview/details.html",
          "templates/partials/quest-preview/management.html"
       ];
 
