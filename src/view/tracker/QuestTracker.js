@@ -9,20 +9,6 @@ import collect          from '../../../external/collect.js';
 import { constants, jquery, questStatus, sessionConstants, settings } from '../../model/constants.js';
 
 /**
- * Provides the default width for the QuestTracker if not defined.
- *
- * @type {number}
- */
-const s_DEFAULT_WIDTH = 296;
-
-/**
- * Provides the default position for the QuestTracker if not defined.
- *
- * @type {{top: number, width: number}}
- */
-const s_DEFAULT_POSITION = { top: 80, width: s_DEFAULT_WIDTH };
-
-/**
  * Provides the quest tracker which provides an overview of active quests and objectives which can be opened / closed
  * to show all objectives for a given quest. The folder / open state is stored in {@link sessionStorage}.
  *
@@ -33,6 +19,71 @@ const s_DEFAULT_POSITION = { top: 80, width: s_DEFAULT_WIDTH };
  */
 export default class QuestTracker extends Application
 {
+   /**
+    * Provides the default width for the QuestTracker if not defined.
+    *
+    * @type {Readonly<number>}
+    */
+   static #DEFAULT_WIDTH = 296;
+
+   /**
+    * Provides the default position for the QuestTracker if not defined.
+    *
+    * @type {Readonly<{top: number, width: number}>}
+    */
+   static #DEFAULT_POSITION = { top: 80, width: QuestTracker.#DEFAULT_WIDTH };
+
+   /**
+    * Defines the timeout length to gate saving position to settings.
+    *
+    * @type {Readonly<number>}
+    */
+   static #TIMEOUT_POSITION = 1000;
+
+   /**
+    * Stores the app / window extents from styles.
+    *
+    * @type {{minHeight: number, maxHeight: number, minWidth: number, maxWidth: number}}
+    */
+   #appExtents;
+
+   /**
+    * @type {JQuery} The window header element.
+    */
+   #elemWindowHeader;
+
+   /**
+    * @type {JQuery} The window content element.
+    */
+   #elemWindowContent;
+
+   /**
+    * @type {JQuery} The window resize handle.
+    */
+   #elemResizeHandle;
+
+   /**
+    * Stores whether the scroll bar is active.
+    *
+    * @type {boolean}
+    */
+   #scrollbarActive;
+
+   /**
+    * Stores the last call to setTimeout for {@link QuestTracker.setPosition} changes, so that they can be cancelled as
+    * new updates arrive gating the calls to saving position to settings.
+    *
+    * @type {number}
+    */
+   #timeoutPosition = void 0;
+
+   /**
+    * Stores the state of {@link FQLSettings.questTrackerResizable}.
+    *
+    * @type {boolean}
+    */
+   #windowResizable;
+
    /**
     * @inheritDoc
     * @see https://foundryvtt.com/api/Application.html
@@ -52,11 +103,12 @@ export default class QuestTracker extends Application
          this.position = JSON.parse(game.settings.get(constants.moduleName, settings.questTrackerPosition));
 
          // When upgrading to `v0.7.7` it is necessary to set the default width.
-         if (!this.position?.width) { this.position.width = s_DEFAULT_WIDTH; }
+         if (!this.position?.width) { this.position.width = QuestTracker.#DEFAULT_WIDTH; }
+
       }
       catch (err)
       {
-         this.position = s_DEFAULT_POSITION;
+         this.position = QuestTracker.#DEFAULT_POSITION;
       }
 
       /**
@@ -108,10 +160,8 @@ export default class QuestTracker extends Application
     * Create the context menu. There are two separate context menus for the active / in progress tab and all other tabs.
     *
     * @param {JQuery}   html - JQuery element for this application.
-    *
-    * @private
     */
-   _contextMenu(html)
+   #contextMenu(html)
    {
       const menuItemCopyLink = {
          name: 'ForienQuestLog.QuestLog.ContextMenu.CopyEntityLink',
@@ -222,7 +272,7 @@ export default class QuestTracker extends Application
     *
     * @returns {number} Minimum width.
     */
-   get minWidth() { return this._appExtents.minWidth || 275; }
+   get minWidth() { return this.#appExtents.minWidth || 275; }
 
    /**
     * Is the QuestTracker pinned to the sidebar.
@@ -270,7 +320,7 @@ export default class QuestTracker extends Application
       html.on(jquery.click, '.header-button.show-primary i', void 0, () => HandlerTracker.questPrimaryShow(this));
 
       // Add context menu.
-      this._contextMenu(html);
+      this.#contextMenu(html);
 
       Utils.createJQueryDblClick({
          selector: '#quest-tracker .quest-tracker-header',
@@ -283,58 +333,28 @@ export default class QuestTracker extends Application
       html.on(jquery.click, '.quest-tracker-task', void 0, async (event) =>
        await HandlerTracker.questTaskToggle(event));
 
-      /**
-       * @type {JQuery} The window header element.
-       *
-       * @private
-       */
-      this._elemWindowHeader = $('#quest-tracker .window-header');
+      this.#elemWindowHeader = $('#quest-tracker .window-header');
+      this.#elemWindowContent = $('#quest-tracker .window-content');
+      this.#elemResizeHandle = $('#quest-tracker .window-resizable-handle');
 
-      /**
-       * @type {JQuery} The window content element.
-       *
-       * @private
-       */
-      this._elemWindowContent = $('#quest-tracker .window-content');
-
-      /**
-       * @type {JQuery} The window resize handle.
-       *
-       * @private
-       */
-      this._elemResizeHandle = $('#quest-tracker .window-resizable-handle');
-
-      /**
-       * Stores the app / window extents from styles.
-       *
-       * @type {{minHeight: number, maxHeight: number, minWidth: number, maxWidth: number}}
-       *
-       * @private
-       */
-      this._appExtents = {
+      this.#appExtents = {
          minWidth: parseInt(this.element.css('min-width')),
          maxWidth: parseInt(this.element.css('max-width')),
          minHeight: parseInt(this.element.css('min-height')),
          maxHeight: parseInt(this.element.css('max-height'))
       };
 
-      /**
-       * Stores the state of {@link FQLSettings.questTrackerResizable}.
-       *
-       * @type {boolean}
-       * @private
-       */
-      this._windowResizable = game.settings.get(constants.moduleName, settings.questTrackerResizable);
+      this.#windowResizable = game.settings.get(constants.moduleName, settings.questTrackerResizable);
 
-      if (this._windowResizable)
+      if (this.#windowResizable)
       {
-         this._elemResizeHandle.show();
-         this.element.css('min-height', this._appExtents.minHeight);
+         this.#elemResizeHandle.show();
+         this.element.css('min-height', this.#appExtents.minHeight);
       }
       else
       {
-         this._elemResizeHandle.hide();
-         this.element.css('min-height', this._elemWindowHeader[0].scrollHeight);
+         this.#elemResizeHandle.hide();
+         this.element.css('min-height', this.#elemWindowHeader[0].scrollHeight);
 
          // A bit of a hack. We need to call the Application setPosition now to make sure the element parameters
          // are correctly set as the exact height for the element is calculated in this.setPosition which is called
@@ -345,17 +365,10 @@ export default class QuestTracker extends Application
          this.options.popOut = false;
       }
 
-      /**
-       * Stores whether the scroll bar is active.
-       *
-       * @type {boolean}
-       *
-       * @private
-       */
-      this._scrollbarActive = this._elemWindowContent[0].scrollHeight > this._elemWindowContent[0].clientHeight;
+      this.#scrollbarActive = this.#elemWindowContent[0].scrollHeight > this.#elemWindowContent[0].clientHeight;
 
       // Set current scrollbar active state and potentially set 'point-events' to 'auto'.
-      if (this._scrollbarActive) { this.element.css('pointer-events', 'auto'); }
+      if (this.#scrollbarActive) { this.element.css('pointer-events', 'auto'); }
    }
 
    /**
@@ -523,17 +536,17 @@ export default class QuestTracker extends Application
       const currentPosition = super.setPosition(opts);
       this.options.popOut = false;
 
-      if (!this._windowResizable)
+      if (!this.#windowResizable)
       {
          // Add the extra `2` for small format (1080P and below screen size).
-         currentPosition.height = this._elemWindowHeader[0].scrollHeight + this._elemWindowContent[0].scrollHeight + 2;
+         currentPosition.height = this.#elemWindowHeader[0].scrollHeight + this.#elemWindowContent[0].scrollHeight + 2;
       }
 
       // Pin width / height to min / max styles if defined.
-      if (currentPosition.width < this._appExtents.minWidth) { currentPosition.width = this._appExtents.minWidth; }
-      if (currentPosition.width > this._appExtents.maxWidth) { currentPosition.width = this._appExtents.maxWidth; }
-      if (currentPosition.height < this._appExtents.minHeight) { currentPosition.height = this._appExtents.minHeight; }
-      if (currentPosition.height > this._appExtents.maxHeight) { currentPosition.height = this._appExtents.maxHeight; }
+      if (currentPosition.width < this.#appExtents.minWidth) { currentPosition.width = this.#appExtents.minWidth; }
+      if (currentPosition.width > this.#appExtents.maxWidth) { currentPosition.width = this.#appExtents.maxWidth; }
+      if (currentPosition.height < this.#appExtents.minHeight) { currentPosition.height = this.#appExtents.minHeight; }
+      if (currentPosition.height > this.#appExtents.maxHeight) { currentPosition.height = this.#appExtents.maxHeight; }
 
       const el = this.element[0];
 
@@ -557,43 +570,27 @@ export default class QuestTracker extends Application
       el.style.width = `${currentPosition.width}px`;
       el.style.height = `${currentPosition.height}px`;
 
-      const scrollbarActive = this._elemWindowContent[0].scrollHeight > this._elemWindowContent[0].clientHeight;
+      const scrollbarActive = this.#elemWindowContent[0].scrollHeight > this.#elemWindowContent[0].clientHeight;
 
-      if (scrollbarActive !== this._scrollbarActive)
+      if (scrollbarActive !== this.#scrollbarActive)
       {
-         this._scrollbarActive = scrollbarActive;
+         this.#scrollbarActive = scrollbarActive;
          this.element.css('pointer-events', scrollbarActive ? 'auto' : 'none');
       }
 
       if (currentPosition && currentPosition.width && currentPosition.height)
       {
-         if (_timeoutPosition)
+         if (this.#timeoutPosition)
          {
-            clearTimeout(_timeoutPosition);
+            clearTimeout(this.#timeoutPosition);
          }
 
-         _timeoutPosition = setTimeout(() =>
+         this.#timeoutPosition = setTimeout(() =>
          {
             game.settings.set(constants.moduleName, settings.questTrackerPosition, JSON.stringify(currentPosition));
-         }, s_TIMEOUT_POSITION);
+         }, QuestTracker.#TIMEOUT_POSITION);
       }
 
       return currentPosition;
    }
 }
-
-/**
- * Defines the timeout length to gate saving position to settings.
- *
- * @type {number}
- */
-const s_TIMEOUT_POSITION = 1000;
-
-/**
- * Stores the last call to setTimeout for {@link QuestTracker.setPosition} changes, so that they can be cancelled as
- * new updates arrive gating the calls to saving position to settings.
- *
- * @type {number}
- * @private
- */
-let _timeoutPosition = void 0;

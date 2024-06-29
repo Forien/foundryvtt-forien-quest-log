@@ -9,17 +9,18 @@ import QuestAPI from '../../control/public/QuestAPI.js';
 export default class QuestPreviewShim
 {
    /**
+    * @type {string}
+    */
+   #questId;
+
+   /**
     * Stores the associated JournalEntry / quest ID
     *
     * @param {string}   questId - The quest ID to shim.
     */
    constructor(questId)
    {
-      /**
-       * @type {string}
-       * @private
-       */
-      this._questId = questId;
+      this.#questId = questId;
    }
 
    /**
@@ -47,7 +48,7 @@ export default class QuestPreviewShim
    /**
     * Defer to render as in some misuse cases by various modules _render can be invoked directly.
     *
-    * @private
+    * @protected
     */
    async _render()
    {
@@ -59,6 +60,6 @@ export default class QuestPreviewShim
     */
    render()
    {
-      QuestAPI.open({ questId: this._questId });
+      QuestAPI.open({ questId: this.#questId });
    }
 }

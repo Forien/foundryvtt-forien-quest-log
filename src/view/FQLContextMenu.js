@@ -11,6 +11,11 @@
 export default class FQLContextMenu extends ContextMenu
 {
    /**
+    * @type {{top: number, left: number}}
+    */
+   #position;
+
+   /**
     * @inheritDoc
     * @override
     */
@@ -31,11 +36,7 @@ export default class FQLContextMenu extends ContextMenu
       {
          event.preventDefault();
 
-         /**
-          * @type {{top: number, left: number}}
-          * @private
-          */
-         this._position = { left: event.pageX, top: event.pageY };
+         this.#position = { left: event.pageX, top: event.pageY };
       });
       super.bind();
    }
@@ -49,7 +50,7 @@ export default class FQLContextMenu extends ContextMenu
    _setPosition(html, target)
    {
       super._setPosition(html, target);
-      html.css(foundry.utils.mergeObject(this._position, s_DEFAULT_STYLE));
+      html.css(foundry.utils.mergeObject(this.#position, s_DEFAULT_STYLE));
    }
 }
 

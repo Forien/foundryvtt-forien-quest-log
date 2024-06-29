@@ -25,6 +25,12 @@ let SheetClass;
  */
 export default class Quest
 {
+   /** @type {string | null} */
+   #id;
+
+   /** @type {string} */
+   #name;
+
    /**
     * @param {QuestData}      data - The serialized quest data to set.
     *
@@ -32,11 +38,7 @@ export default class Quest
     */
    constructor(data = {}, entry = null)
    {
-      /**
-       * @type {string|null}
-       * @private
-       */
-      this._id = entry !== null ? entry.id : null;  // Foundry in the TextEditor system to create content links looks for `_id` & name.
+      this.#id = entry !== null ? entry.id : null;  // Foundry in the TextEditor system to create content links looks for `_id` & name.
 
       this.initData(data);
 
@@ -45,9 +47,9 @@ export default class Quest
        */
       this.entry = entry;
 
-      if (this.entry && this._id !== null)
+      if (this.entry && this.#id !== null)
       {
-         this.entry._sheet = new QuestPreviewShim(this._id);
+         this.entry._sheet = new QuestPreviewShim(this.#id);
       }
    }
 
@@ -58,7 +60,7 @@ export default class Quest
     */
    get id()
    {
-      return this._id;
+      return this.#id;
    }
 
    /**
@@ -68,7 +70,7 @@ export default class Quest
     */
    set id(id)
    {
-      this._id = id;
+      this.#id = id;
    }
 
    /**
@@ -187,7 +189,7 @@ export default class Quest
     */
    get isPrimary()
    {
-      return this._id === game.settings.get(constants.moduleName, settings.primaryQuest);
+      return this.#id === game.settings.get(constants.moduleName, settings.primaryQuest);
    }
 
    /**
@@ -197,7 +199,7 @@ export default class Quest
     */
    get name()
    {
-      return this._name;
+      return this.#name;
    }
 
    /**
@@ -207,11 +209,7 @@ export default class Quest
     */
    set name(value)
    {
-      /**
-       * @type {string}
-       * @private
-       */
-      this._name = typeof value === 'string' && value.length > 0 ? value :
+      this.#name = typeof value === 'string' && value.length > 0 ? value :
        game.i18n.localize('ForienQuestLog.API.QuestDB.Labels.NewQuest');
    }
 
@@ -515,14 +513,14 @@ export default class Quest
     */
    async save()
    {
-      const entry = this.entry ? this.entry : game.journal.get(this._id);
+      const entry = this.entry ? this.entry : game.journal.get(this.#id);
 
       // If the entry doesn't exist or the user can't modify the journal entry via ownership then early out.
       if (!entry || !entry.canUserModify(game.user, 'update')) { return; }
 
       // Save Quest JSON, but also potentially update the backing JournalEntry folder name.
       const update = {
-         name: typeof this._name === 'string' && this._name.length > 0 ? this._name :
+         name: typeof this.#name === 'string' && this.#name.length > 0 ? this.#name :
           game.i18n.localize('ForienQuestLog.API.QuestDB.Labels.NewQuest'),
          flags: {
             [constants.moduleName]: { json: this.toJSON() }
@@ -531,7 +529,7 @@ export default class Quest
 
       this.entry = await entry.update(update, { diff: false });
 
-      return this._id;
+      return this.#id;
    }
 
    /**
@@ -579,7 +577,7 @@ export default class Quest
       if (this.status !== questStatus.active)
       {
          const primaryQuestId = game.settings.get(constants.moduleName, settings.primaryQuest);
-         if (this._id === primaryQuestId)
+         if (this.#id === primaryQuestId)
          {
             await game.settings.set(constants.moduleName, settings.primaryQuest, '');
          }
@@ -591,7 +589,7 @@ export default class Quest
          }
       });
 
-      return this._id;
+      return this.#id;
    }
 
    /**
@@ -641,7 +639,7 @@ export default class Quest
    toJSON()
    {
       return {
-         name: this._name,
+         name: this.#name,
          status: this.status,
          giver: this.giver,
          giverData: this.giverData,
@@ -719,7 +717,7 @@ export default class Quest
     */
    testUserPermission(user, permission, options)
    {
-      const entry = game.journal.get(this._id);
+      const entry = game.journal.get(this.#id);
       return entry.testUserPermission(user, permission, options);
    }
 }

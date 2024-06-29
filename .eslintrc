@@ -9,7 +9,7 @@
   // ESLint configs are prone to particular choices, so if the first config below doesn't work for you then replace
   // with one that you do prefer. The second config defines globals defined in `foundry.js` for use w/ `no-shadow`.
   "extends": [
-    "@typhonjs-config/eslint-config/esm/2021/browser",
+    "@typhonjs-config/eslint-config/esm/2022/browser",
     "@typhonjs-fvtt/eslint-config-foundry.js"
   ],
 

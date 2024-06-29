@@ -128,7 +128,7 @@ export default class QuestLog extends Application
 
       html.on(jquery.click, '.actions.quest-status i.move', HandlerLog.questStatusSet);
 
-      this._contextMenu(html);
+      this.#contextMenu(html);
    }
 
    /**
@@ -147,10 +147,8 @@ export default class QuestLog extends Application
     * Create the context menu. There are two separate context menus for the active / in progress tab and all other tabs.
     *
     * @param {JQuery}   html - JQuery element for this application.
-    *
-    * @private
     */
-   _contextMenu(html)
+   #contextMenu(html)
    {
       const menuItemCopyLink = {
          name: 'ForienQuestLog.QuestLog.ContextMenu.CopyEntityLink',

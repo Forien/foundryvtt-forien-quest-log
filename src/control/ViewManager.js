@@ -274,44 +274,35 @@ export default class ViewManager
 class UINotifications
 {
    /**
+    * Stores the last notify warn time epoch in MS.
+    *
+    * @type {number}
     */
-   constructor()
-   {
-      /**
-       * Stores the last notify warn time epoch in MS.
-       *
-       * @type {number}
-       * @private
-       */
-      this._lastNotifyWarn = Date.now();
+   #lastNotifyWarn = Date.now();
 
-      /**
-       * Stores the last notify info time epoch in MS.
-       *
-       * @type {number}
-       * @private
-       */
-      this._lastNotifyInfo = Date.now();
+   /**
+    * Stores the last notify info time epoch in MS.
+    *
+    * @type {number}
+    */
+   #lastNotifyInfo = Date.now();
 
 
-      /**
-       * Stores the last call to setTimeout for info messages, so that they can be cancelled as new notifications
-       * arrive.
-       *
-       * @type {number}
-       * @private
-       */
-      this._timeoutInfo = void 0;
+   /**
+    * Stores the last call to setTimeout for info messages, so that they can be cancelled as new notifications
+    * arrive.
+    *
+    * @type {number}
+    */
+   #timeoutInfo = void 0;
 
-      /**
-       * Stores the last call to setTimeout for warn messages, so that they can be cancelled as new notifications
-       * arrive.
-       *
-       * @type {number}
-       * @private
-       */
-      this._timeoutWarn = void 0;
-   }
+   /**
+    * Stores the last call to setTimeout for warn messages, so that they can be cancelled as new notifications
+    * arrive.
+    *
+    * @type {number}
+    */
+   #timeoutWarn = void 0;
 
    /**
     * Potentially gates `warn` UI notifications to prevent overloading the UI notification system.
@@ -322,20 +313,20 @@ class UINotifications
     */
    warn(message, delay = 4000)
    {
-      if (Date.now() - this._lastNotifyWarn > delay)
+      if (Date.now() - this.#lastNotifyWarn > delay)
       {
          ui.notifications.warn(message);
-         this._lastNotifyWarn = Date.now();
+         this.#lastNotifyWarn = Date.now();
       }
       else
       {
-         if (this._timeoutWarn)
+         if (this.#timeoutWarn)
          {
-            clearTimeout(this._timeoutWarn);
-            this._timeoutWarn = void 0;
+            clearTimeout(this.#timeoutWarn);
+            this.#timeoutWarn = void 0;
          }
 
-         this._timeoutWarn = setTimeout(() =>
+         this.#timeoutWarn = setTimeout(() =>
          {
             ui.notifications.warn(message);
          }, delay);
@@ -351,20 +342,20 @@ class UINotifications
     */
    info(message, delay = 4000)
    {
-      if (Date.now() - this._lastNotifyInfo > delay)
+      if (Date.now() - this.#lastNotifyInfo > delay)
       {
          ui.notifications.info(message);
-         this._lastNotifyInfo = Date.now();
+         this.#lastNotifyInfo = Date.now();
       }
       else
       {
-         if (this._timeoutInfo)
+         if (this.#timeoutInfo)
          {
-            clearTimeout(this._timeoutInfo);
-            this._timeoutInfo = void 0;
+            clearTimeout(this.#timeoutInfo);
+            this.#timeoutInfo = void 0;
          }
 
-         this._timeoutInfo = setTimeout(() =>
+         this.#timeoutInfo = setTimeout(() =>
          {
             ui.notifications.info(message);
          }, delay);
