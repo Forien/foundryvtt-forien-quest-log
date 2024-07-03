@@ -502,7 +502,7 @@ export default class QuestPreview extends FormApplication
          html.on(jquery.click, '.quest-rewards .lock-all-rewards', async () =>
           await HandlerDetails.rewardsLockAll(this.#quest, this));
 
-         html.on(jquery.click, '.abstract-reward,.actor-reward,.item-reward .reward-image', async (event) =>
+         html.on(jquery.click, '.reward-image', async (event) =>
           await HandlerDetails.rewardSelectImage(event, this.#quest, this));
 
          html.on(jquery.click, '.quest-rewards .show-all-rewards', async () =>
