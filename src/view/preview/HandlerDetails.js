@@ -618,7 +618,7 @@ export default class HandlerDetails
     *
     * @returns {Promise<void>}
     */
-   static async rewardSelectAbstractImage(event, quest, questPreview)
+   static async rewardSelectImage(event, quest, questPreview)
    {
       const uuidv4 = $(event.target).data('uuidv4');
 
