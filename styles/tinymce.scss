@@ -80,6 +80,10 @@
     &.tox-tbtn--select {
       font-size: 14px;
     }
+
+    &.tox-tbtn--select[title="Format Paragraph"] {
+      width: 90px;
+    }
   }
 
   .tox.tox-tinymce .tox-tbtn[title="Formats"] {
