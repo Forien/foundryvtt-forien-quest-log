@@ -386,7 +386,8 @@ export default class Enrich
       {
          const type = item.type.toLowerCase();
 
-         const draggable = (canEdit || canPlayerDrag) && (canEdit || !item.locked) && type !== 'abstract';
+         // Only items are potentially draggable when `can player drag` is enabled or `can edit`.
+         const draggable = type === 'item' && (canEdit || canPlayerDrag) && (canEdit || !item.locked);
 
          const lockedTooltip = canEdit ? game.i18n.localize('ForienQuestLog.QuestPreview.Tooltips.RewardLocked') :
           game.i18n.localize('ForienQuestLog.QuestPreview.Tooltips.RewardLockedPlayer');
@@ -394,11 +395,11 @@ export default class Enrich
          const unlockedTooltip = canEdit ? game.i18n.localize('ForienQuestLog.QuestPreview.Tooltips.RewardUnlocked') :
           game.i18n.localize('ForienQuestLog.QuestPreview.Tooltips.RewardUnlockedPlayer');
 
-         // Defines if the pointer cursor is displayed. For abstract reward it always displayed for GM or when unlocked
-         // for players.
-         const abstractLink = type === 'abstract' && (canEdit || !item.locked);
+         // Defines if the pointer cursor is displayed. For abstract or actor reward it is always displayed for GM or
+         // when unlocked for players.
+         const isLink = (type === 'abstract' || type === 'actor') && (canEdit || !item.locked);
 
-         // For item rewards.
+         // For item rewards make them links when `can player drag` is not enabled.
          const itemLink = type === 'item' && !canEdit && !canPlayerDrag && !item.locked;
 
          return {
@@ -409,7 +410,7 @@ export default class Enrich
             locked: item.locked,
             lockedTooltip,
             unlockedTooltip,
-            isLink: abstractLink || itemLink,
+            isLink: isLink || itemLink,
             draggable,
             transfer: type !== 'abstract' ? JSON.stringify(
              { uuid: item.data.uuid, uuidv4: item.uuidv4, name: item.data.name }) : void 0,

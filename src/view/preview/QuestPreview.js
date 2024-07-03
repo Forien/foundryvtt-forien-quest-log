@@ -420,8 +420,11 @@ export default class QuestPreview extends FormApplication
       html.on(jquery.click, '.abstract-reward .editable-container', async (event) =>
        await HandlerDetails.rewardShowImagePopout(event, this.#quest, this));
 
+      html.on(jquery.click, '.actor-reward .editable-container', async (event) =>
+       await HandlerDetails.rewardShowSheet(event, this.#quest, this));
+
       html.on(jquery.click, '.item-reward .editable-container', async (event) =>
-       await HandlerDetails.rewardShowItemSheet(event, this.#quest, this));
+       await HandlerDetails.rewardShowSheet(event, this.#quest, this));
 
       html.on(jquery.click, '.splash-image-link', () => HandlerDetails.splashImagePopupShow(this.#quest, this));
 

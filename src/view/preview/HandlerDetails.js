@@ -534,7 +534,27 @@ export default class HandlerDetails
          Socket.refreshQuestPreview({ questId: quest.id });
       }
 
-      if (data?.type === 'Item' && data?._fqlData === void 0)
+      if (data?._fqlData !== void 0) { return; }
+
+      if (data?.type === 'Actor')
+      {
+         const uuid = Utils.getUUID(data);
+
+         if (typeof uuid === 'string')
+         {
+            const actor = await Enrich.giverFromUUID(uuid);
+            if (actor)
+            {
+               quest.addReward({ type: 'Actor', data: actor, hidden: true });
+               await questPreview.saveQuest();
+            }
+            else
+            {
+               ui.notifications.warn(game.i18n.format('ForienQuestLog.QuestPreview.Notifications.BadUUID', { uuid }));
+            }
+         }
+      }
+      else if (data?.type === 'Item')
       {
          const uuid = Utils.getUUID(data);
 
@@ -687,7 +707,7 @@ export default class HandlerDetails
     *
     * @returns {Promise<void>}
     */
-   static async rewardShowItemSheet(event, quest, questPreview)
+   static async rewardShowSheet(event, quest, questPreview)
    {
       event.stopPropagation();
       const data = $(event.currentTarget).data('transfer');
