@@ -102,6 +102,7 @@
         "GMNotes": "GM 메모:",
         "Objective": "목표",
         "Objectives": "목표:",
+        "PlayerNotes": "플레이어 노트:",
         "Reward": "보상",
         "Rewards": "보상:"
       },
@@ -122,6 +123,7 @@
       "Tabs": {
         "Details": "세부 정보",
         "GMNotes": "GM 노트",
+        "PlayerNotes": "플레이어 노트",
         "QuestManagement": "퀘스트 관리"
       },
       "Title": "퀘스트 세부 정보 - {name}",

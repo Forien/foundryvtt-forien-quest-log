@@ -102,6 +102,7 @@
         "GMNotes": "GMノート：",
         "Objective": "目標",
         "Objectives": "目標：",
+        "PlayerNotes": "プレイヤーのメモ：",
         "Reward": "報酬",
         "Rewards": "報酬："
       },
@@ -122,6 +123,7 @@
       "Tabs": {
         "Details": "内容",
         "GMNotes": "GMノート",
+        "PlayerNotes": "プレイヤーのメモ",
         "QuestManagement": "クエスト管理"
       },
       "Title": "クエスト詳細",

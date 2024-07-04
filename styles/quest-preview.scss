@@ -501,6 +501,13 @@
       }
     }
 
+    .playernotes {
+      .quest-playernotes {
+        height: 100%;
+        overflow-y: hidden;
+      }
+    }
+
     .gmnotes {
       .quest-gmnotes {
         height: 100%;

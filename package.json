@@ -10,7 +10,7 @@
   ],
   "dependencies": {
     "collect.js": "^4.36.0",
-    "dompurify": "^3.0.3"
+    "dompurify": "^3.1.5"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.0",
@@ -33,7 +33,6 @@
   "scripts": {
     "build-css": "npm run sass && npm run postcss && npm run sass2 && npm run postcss2",
     "eslint": "eslint .",
-    "esdoc": "esdoc",
     "sass": "sass ./styles/init.scss ./css/init.css",
     "sass2": "sass ./styles/init-tinymce.scss ./css/init-tinymce.css",
     "postcss": "postcss ./css/init.css -p sass -u autoprefixer postcss-preset-env cssnano -m -o ./css/init.css",

@@ -155,7 +155,7 @@ export default class QuestDB
       {
          if (game.user.isGM)
          {
-            console.log('ForienQuestLog - Failed to initialize QuestDB as the quest folder / _fql_quests is missing.');
+            console.warn('ForienQuestLog - Failed to initialize QuestDB as the quest folder / _fql_quests is missing.');
          }
 
          folder = { content: [] };
@@ -344,7 +344,7 @@ export default class QuestDB
       const folder = Utils.getQuestFolder();
       if (!folder)
       {
-         console.log('ForienQuestLog - QuestDB.createQuest - quest folder not found.');
+         console.warn('ForienQuestLog - QuestDB.createQuest - quest folder not found.');
          return;
       }
 

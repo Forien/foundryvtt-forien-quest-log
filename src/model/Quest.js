@@ -54,6 +54,16 @@ export default class Quest
    }
 
    /**
+    * @returns {boolean} Returns whether the current user can update the backing journal document.
+    */
+   get canUserUpdate()
+   {
+      const entry = this.entry ? this.entry : game.journal.get(this.#id);
+
+      return entry?.canUserModify?.(game.user, 'update') ?? false;
+   }
+
+   /**
     * Gets the Foundry ID associated with this Quest.
     *
     * @returns {string} The ID of the quest.
@@ -386,6 +396,11 @@ export default class Quest
       this.location = data.location || null;
 
       /**
+       * @type {string}
+       */
+      this.playernotes = data.playernotes || '';
+
+      /**
        * @type {number}
        */
       this.priority = data.priority || 0;
@@ -515,8 +530,8 @@ export default class Quest
    {
       const entry = this.entry ? this.entry : game.journal.get(this.#id);
 
-      // If the entry doesn't exist or the user can't modify the journal entry via ownership then early out.
-      if (!entry || !entry.canUserModify(game.user, 'update')) { return; }
+      // If the entry doesn't exist or the user can't update the journal entry via ownership then early out.
+      if (!entry || !this.canUserUpdate) { return; }
 
       // Save Quest JSON, but also potentially update the backing JournalEntry folder name.
       const update = {
@@ -645,6 +660,7 @@ export default class Quest
          giverData: this.giverData,
          description: this.description,
          gmnotes: this.gmnotes,
+         playernotes: this.playernotes,
          image: this.image,
          giverName: this.giverName,
          splash: this.splash,
@@ -944,6 +960,8 @@ export class Task
  * @property {boolean}           splashAsIcon - Use the splash image as the quest icon.
  *
  * @property {string|null}       location - Unused / future use for quest location.
+ *
+ * @property {string}            playernotes - The Player Notes.
  *
  * @property {number}            priority - Unused / future use for quest priority sorting.
  *

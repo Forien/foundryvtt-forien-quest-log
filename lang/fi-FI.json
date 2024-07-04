@@ -102,6 +102,7 @@
         "GMNotes": "PJ:n muistiinpanot:",
         "Objective": "Tavoite",
         "Objectives": "Tavoitteet:",
+        "PlayerNotes": "Pelaajan muistiinpanot:",
         "Reward": "Palkkio",
         "Rewards": "Palkkiot:"
       },
@@ -122,6 +123,7 @@
       "Tabs": {
         "Details": "Yksityiskohdat",
         "GMNotes": "PJ:n muistiinpanot",
+        "PlayerNotes": "Pelaajan muistiinpanot",
         "QuestManagement": "Hallitse tehtävää"
       },
       "Title": "Tehtävän yksityiskohdat - {name}",

@@ -241,6 +241,8 @@ export default class Enrich
 
       data.gmnotes = await TextEditor.enrichHTML(DOMPurify.sanitizeWithVideo(data.gmnotes), { async: true });
 
+      data.playernotes = await TextEditor.enrichHTML(DOMPurify.sanitizeWithVideo(data.playernotes), { async: true });
+
       data.questIconType = void 0;
 
       if (data.splashAsIcon && data.splash.length)
@@ -386,7 +388,8 @@ export default class Enrich
       {
          const type = item.type.toLowerCase();
 
-         const draggable = (canEdit || canPlayerDrag) && (canEdit || !item.locked) && type !== 'abstract';
+         // Only items are potentially draggable when `can player drag` is enabled or `can edit`.
+         const draggable = type === 'item' && (canEdit || canPlayerDrag) && (canEdit || !item.locked);
 
          const lockedTooltip = canEdit ? game.i18n.localize('ForienQuestLog.QuestPreview.Tooltips.RewardLocked') :
           game.i18n.localize('ForienQuestLog.QuestPreview.Tooltips.RewardLockedPlayer');
@@ -394,11 +397,11 @@ export default class Enrich
          const unlockedTooltip = canEdit ? game.i18n.localize('ForienQuestLog.QuestPreview.Tooltips.RewardUnlocked') :
           game.i18n.localize('ForienQuestLog.QuestPreview.Tooltips.RewardUnlockedPlayer');
 
-         // Defines if the pointer cursor is displayed. For abstract reward it always displayed for GM or when unlocked
-         // for players.
-         const abstractLink = type === 'abstract' && (canEdit || !item.locked);
+         // Defines if the pointer cursor is displayed. For abstract or actor reward it is always displayed for GM or
+         // when unlocked for players.
+         const isLink = (type === 'abstract' || type === 'actor') && (canEdit || !item.locked);
 
-         // For item rewards.
+         // For item rewards make them links when `can player drag` is not enabled.
          const itemLink = type === 'item' && !canEdit && !canPlayerDrag && !item.locked;
 
          return {
@@ -409,7 +412,7 @@ export default class Enrich
             locked: item.locked,
             lockedTooltip,
             unlockedTooltip,
-            isLink: abstractLink || itemLink,
+            isLink: isLink || itemLink,
             draggable,
             transfer: type !== 'abstract' ? JSON.stringify(
              { uuid: item.data.uuid, uuidv4: item.uuidv4, name: item.data.name }) : void 0,
@@ -523,6 +526,8 @@ export default class Enrich
  *
  * @property {string}      description - The enriched quest description via {@link TextEditor.enrichHTML}.
  *
+ * @property {string}      gmnotes - The GM Notes.
+ *
  * @property {boolean}     hasObjectives - Is there visible tasks & subjects.
  *
  * @property {string}      id - Quest ID / {@link Quest.id}
@@ -536,6 +541,8 @@ export default class Enrich
  * @property {boolean}     isPersonal - Is quest personal / not all players can access it / {@link Quest.isPersonal}
  *
  * @property {boolean}     isSubquest - Is quest a subquest.
+ *
+ * @property {string}      playerNotes - The player notes.
  *
  * @property {string[]}    personalActors - A sorted list of names for HTML tooltip / {@link Quest.personalActors}
  *

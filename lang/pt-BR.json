@@ -102,6 +102,7 @@
         "GMNotes": "Notas do Mestre :",
         "Objective": "Objetivos",
         "Objectives": "Objetivos:",
+        "PlayerNotes": "Notas do Jogador:",
         "Reward": "Recompensa",
         "Rewards": "Recompensas:"
       },
@@ -122,6 +123,7 @@
       "Tabs": {
         "Details": "Detalhes",
         "GMNotes": "Notas do Mestre",
+        "PlayerNotes": "Notas do Jogador",
         "QuestManagement": "Controle de Missões"
       },
       "Title": "Detalhes da Missão",
