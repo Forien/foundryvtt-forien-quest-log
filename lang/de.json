@@ -102,6 +102,7 @@
         "GMNotes": "GM-Notizen:",
         "Objective": "Ziel",
         "Objectives": "Ziele:",
+        "PlayerNotes": "Spielernotizen:",
         "Reward": "Belohnung",
         "Rewards": "Belohnungen:"
       },
@@ -122,6 +123,7 @@
       "Tabs": {
         "Details": "Details",
         "GMNotes": "GM-Notizen",
+        "PlayerNotes": "Spielernotizen",
         "QuestManagement": "Quest verwalten"
       },
       "Title": "Questdetails - {name}",

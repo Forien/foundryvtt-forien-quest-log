@@ -102,6 +102,7 @@
         "GMNotes": "Notatki GM:",
         "Objective": "Cel",
         "Objectives": "Cele:",
+        "PlayerNotes": "Notatki Gracza:",
         "Reward": "Nagroda",
         "Rewards": "Nagrody:"
       },
@@ -122,6 +123,7 @@
       "Tabs": {
         "Details": "Szczegóły",
         "GMNotes": "Notatki GM",
+        "PlayerNotes": "Notatki Gracza",
         "QuestManagement": "Zarządzaj Misją"
       },
       "Title": "Szczegóły Misji - {name}",

@@ -102,6 +102,7 @@
         "GMNotes": "GM 笔记：",
         "Objective": "客观的",
         "Objectives": "目标：",
+        "PlayerNotes": "玩家 笔记：",
         "Reward": "报酬",
         "Rewards": "奖励："
       },
@@ -122,6 +123,7 @@
       "Tabs": {
         "Details": "详情",
         "GMNotes": "GM笔记",
+        "PlayerNotes": "玩家 笔记",
         "QuestManagement": "管理任务"
       },
       "Title": "任务详情",

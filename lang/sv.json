@@ -102,6 +102,7 @@
         "GMNotes": "SL-anteckningar:",
         "Objective": "Mål",
         "Objectives": "Mål:",
+        "PlayerNotes": "Spelare-anteckningar:",
         "Reward": "Belöning",
         "Rewards": "Belöningar:"
       },
@@ -122,6 +123,7 @@
       "Tabs": {
         "Details": "Detaljer",
         "GMNotes": "SL-anteckningar",
+        "PlayerNotes": "Spelare-anteckningar",
         "QuestManagement": "Hantera uppdrag"
       },
       "Title": "Uppdragsdetaljer",

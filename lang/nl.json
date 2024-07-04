@@ -101,6 +101,7 @@
         "GMNotes": "GM-Notities:",
         "Objective": "Doel",
         "Objectives": "Doelen:",
+        "PlayerNotes": "Speler-Notities:",
         "Reward": "Beloning",
         "Rewards": "Beloningen:",
         "DragDropActor": "Acteur, object of journaalboeking hiernaartoe slepen of (links) klikken om als gebruikergedefinieerde bron vast te leggen."
@@ -117,6 +118,7 @@
       "Tabs": {
         "Details": "Details",
         "GMNotes": "GM-Notities",
+        "PlayerNotes": "Speler-Notities",
         "QuestManagement": "Missie beheren"
       },
       "Title": "Missiedetails - {name}",

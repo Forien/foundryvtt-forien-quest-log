@@ -102,6 +102,7 @@
         "GMNotes": "Notes du MJ :",
         "Objective": "Objectif",
         "Objectives": "Objectifs :",
+        "PlayerNotes": "Notes des joueurs:",
         "Reward": "Récompense",
         "Rewards": "Récompenses :"
       },
@@ -122,6 +123,7 @@
       "Tabs": {
         "Details": "Détails",
         "GMNotes": "Notes MJ",
+        "PlayerNotes": "Notes des joueurs",
         "QuestManagement": "Modifier la Quête"
       },
       "Title": "Détails sur la quête",

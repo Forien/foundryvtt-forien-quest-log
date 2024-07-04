@@ -105,6 +105,7 @@
         "GMNotes" : "GM 筆記：",
         "Objective" : "目標",
         "Objectives" : "目標：",
+        "PlayerNotes": "玩家 筆記：",
         "Reward" : "獎勵",
         "Rewards" : "獎勵："
       },
@@ -125,6 +126,7 @@
       "Tabs" : {
         "Details" : "詳情",
         "GMNotes" : "GM筆記",
+        "PlayerNotes": "玩家 筆記",
         "QuestManagement" : "管理任務"
       },
       "Title" : "任務詳情",
