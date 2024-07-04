@@ -22,6 +22,7 @@ const s_MESSAGE_TYPES = {
    questRewardDrop: 'questRewardDrop',
    refreshAll: 'refreshAll',
    refreshQuestPreview: 'refreshQuestPreview',
+   savePlayerNotes: 'savePlayerNotes',
    showQuestLog: 'showQuestLog',
    showQuestPreview: 'showQuestPreview',
    showQuestTracker: 'showQuestTracker',
@@ -107,6 +108,7 @@ export default class Socket
                case s_MESSAGE_TYPES.questSetStatus: await handleQuestSetStatus(data); break;
                case s_MESSAGE_TYPES.refreshAll: handleRefreshAll(data); break;
                case s_MESSAGE_TYPES.refreshQuestPreview: handleRefreshQuestPreview(data); break;
+               case s_MESSAGE_TYPES.savePlayerNotes: handleSavePlayerNotes(data); break;
                case s_MESSAGE_TYPES.showQuestLog: handleShowQuestLog(data); break;
                case s_MESSAGE_TYPES.showQuestPreview: handleShowQuestPreview(data); break;
                case s_MESSAGE_TYPES.showQuestTracker: handleShowQuestTracker(); break;
@@ -219,6 +221,28 @@ export default class Socket
 
       // Also update the quest log and other GUIs
       if (updateLog) { Socket.refreshAll(); }
+   }
+
+   /**
+    * Saves player notes by delegating to an active GM.
+    *
+    * @param {object}   opts - Optional parameters.
+    *
+    * @param {Quest}    opts.quest - The current quest being manipulated. It
+    *
+    * @param {string}   opts.playernotes - The player notes to save.
+    */
+   static savePlayerNotes({ quest, playernotes })
+   {
+      // Send a socket message for any remote GMs logged in to handle request.
+      game.socket.emit(s_EVENT_NAME, {
+         type: s_MESSAGE_TYPES.savePlayerNotes,
+         payload: {
+            questId: quest.id,
+            playernotes,
+            handled: false
+         }
+      });
    }
 
    /**
@@ -602,6 +626,31 @@ function handleRefreshQuestPreview(data)
 
          if (quest.isObservable) { questPreview.render(true, options); }
          else { questPreview.close(); }
+      }
+   }
+}
+
+/**
+ * Handles saving player notes via GM user.
+ *
+ * @param {object} data - Data payload contains a single `tabId` as a string.
+ */
+async function handleSavePlayerNotes(data)
+{
+   // If this message has not already been handled and this user is a GM then handle it now then set `handled` to true.
+   if (game.user.isGM && !data.payload.handled)
+   {
+      const quest = QuestDB.getQuest(data.payload.questId);
+      if (quest && typeof data.payload.playernotes === 'string')
+      {
+         quest.playernotes = data.payload.playernotes;
+
+         await quest.save();
+
+         // Set handled to true so no other GM level users act upon the move.
+         data.payload.handled = true;
+
+         Socket.refreshQuestPreview({ questId: quest.id });
       }
    }
 }

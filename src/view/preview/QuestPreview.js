@@ -638,11 +638,16 @@ export default class QuestPreview extends FormApplication
       this.canEdit = game.user.isGM || (this.#quest.isOwner && Utils.isTrustedPlayerEdit());
       this.playerEdit = this.#quest.isOwner;
 
-      // By default all normal players and trusted players without ownership of a quest are always on the the default
-      // tab 'details'. In the case of a trusted player who has permissions revoked to access the quest and is on the
-      // 'management' the details tab needs to be activated. This is possible in 'getData' as it is fairly early in the
-      // render process. At this time the internal state of the application is '1' for 'RENDERING'.
-      if (!this.canEdit && this._tabs[0] && this._tabs[0].active !== 'details')
+      // Player notes can be edited if current user is the owner of the journal document or there is an active GM
+      // online.
+      const canEditPlayerNotes = this.#quest.canUserUpdate || game.users.activeGM !== null;
+
+      // By default, all normal players and trusted players without ownership of a quest are always on the default
+      // tab 'details' or 'playernotes'. In the case of a trusted player who has permissions revoked to access the
+      // quest and is on the 'management' the details tab needs to be activated. This is possible in 'getData' as it
+      // is fairly early in the render process. At this time the internal state of the application is '1' for
+      // 'RENDERING'.
+      if (!this.canEdit && this._tabs[0] && this._tabs[0].active !== 'details' && this._tabs[0].active !== 'playernotes')
       {
          this._tabs[0].activate('details');
       }
@@ -650,8 +655,10 @@ export default class QuestPreview extends FormApplication
       const data = {
          isGM: game.user.isGM,
          isPlayer: !game.user.isGM,
+
          canAccept: this.canAccept,
          canEdit: this.canEdit,
+         canEditPlayerNotes,
          playerEdit: this.playerEdit
       };
 
@@ -683,8 +690,22 @@ export default class QuestPreview extends FormApplication
     * @inheritDoc
     * @see https://foundryvtt.com/api/FormApplication.html#saveEditor
     */
-   async saveEditor()
+   async saveEditor(name)
    {
+      // Any user regardless of ownership may edit player notes. If the user can't update the backing journal document
+      // Then send a socket request to a GM user who can perform the update.
+      if (name === 'playernotes' && !this.#quest.canUserUpdate && game.users.activeGM)
+      {
+         const playernotes = this.editors?.playernotes?.mce?.getContent();
+
+         if (typeof playernotes === 'string')
+         {
+            Socket.savePlayerNotes({ quest: this.#quest, playernotes });
+         }
+
+         return super.saveEditor(name);
+      }
+
       return this.saveQuest();
    }
 
