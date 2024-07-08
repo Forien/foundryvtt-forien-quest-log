@@ -1,7 +1,7 @@
 # FoundryVTT - Forien's Quest Log
 
 ![FQL Version](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/master/module.json&label=Forien%27s+Quest+Log+version&query=version&style=flat-square&color=success")
-![Foundry Core Compatible Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2FLeague-of-Foundry-Developers%2Ffoundryvtt-forien-quest-log%2Fmaster%2Fmodule.json&label=Foundry%20Version&query=$.compatibleCoreVersion&colorB=orange)
+![Foundry Core Compatible Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2FLeague-of-Foundry-Developers%2Ffoundryvtt-forien-quest-log%2Fmaster%2Fmodule.json&label=Foundry%20Version&query=$.compatibility.verified&colorB=orange)
 ![GitHub release](https://img.shields.io/github/release-date/League-of-Foundry-Developers/foundryvtt-forien-quest-log)
 [![GitHub commits](https://img.shields.io/github/commits-since/League-of-Foundry-Developers/foundryvtt-forien-quest-log/latest)](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/commits/)
 ![the latest version zip](https://img.shields.io/github/downloads/League-of-Foundry-Developers/foundryvtt-forien-quest-log/latest/module.zip)
@@ -13,7 +13,7 @@
 
 This module provides comprehensive Quest Log system for players and Game Masters to use with [Foundry VTT](https://foundryvtt.com/).
 
-**[Compatibility]**: _FoundryVTT_ `v11` as of FQL version `0.7.12`. For `v9` / `v10` use FQL `0.7.11`
+**[Compatibility]**: _FoundryVTT_ `v11` / `v12` as of FQL version `0.8.0`.
 
 **[Game Systems]**: _any_
 
@@ -29,6 +29,15 @@ Portuguese (Brazil), Russian, Spanish, Swedish_
 2. While loaded in your World, enable **_Forien's Quest Log_** in the `Module Management` configuration. 
 
 ## Recent Updates
+
+The major `0.8.0` update to FQL:
+
+- Foundry v11 / v12 dual support.
+- Actors can now be set as rewards allowing [Item Piles](https://foundryvtt.com/packages/item-piles) and various game 
+  system loot functionality to be utilized in rewards distribution for currency and items. 
+- Custom rewards may use game system text enrichment where available to distribute XP. For example with the `dnd5e` 
+  system use `[[/award 400xp]]`.
+- Player Notes - players can now leave notes on quests in a separate section similar to `GM Notes`.
 
 The minor `0.7.12` update to FQL:
 
@@ -62,6 +71,7 @@ also are two `macro compendiums` available for FQL that provide ready to go macr
 convenient access to FQL for players and several GM related options.
 
 There is a series of useful in depth video tutorials on YouTube that cover each recent release:
+- [v0.8.0]()
 - [v0.7.10](https://youtu.be/jaQJtCZOiIY)
 - [v0.7.7](https://youtu.be/lfSYJXVQAcE)
 - [v0.7.6](https://youtu.be/Dn2iprrcPpY)
@@ -81,19 +91,13 @@ FQL is quite user-friendly with an intuitive UI, however you might want to [chec
 
 ## About
 
-This module is hosted by the [League of Foundry Developers Discord](https://discord.gg/gzemMfHURH). The
-`0.7.x` series of FQL is developed and maintained by [TyphonJS](https://github.com/typhonrt) / [TyphonJS Discord](https://discord.gg/mnbgN8f)
-and is being updated for stability across core Foundry updates. This stability and long term maintenance of such is the
-_main feature_ of FQL presently. You can rest assured that the quest log experience you know and _love_ will continue
-to be available now and into the future.
+This module is hosted by the [League of Foundry Developers Discord](https://discord.gg/gzemMfHURH). FQL is being updated 
+for stability across core Foundry updates. This stability and long term maintenance of such is the _main feature_ of 
+FQL presently. You can rest assured that the quest log experience you know and _love_ will continue to be available 
+now and into the future.
 
-A new continuation quest log module is in the works by TyphonJS that moves the questing experience beyond FQL and is
-being developed at [typhonjs-fvtt/typhonjs-quest-log](https://github.com/typhonjs-fvtt/typhonjs-quest-log). There is no
-specific ETA for this continuation module at this time. In the meantime FQL continues to bring an essential rock solid
-quest log experience to Foundry VTT. TyphonJS is developing a [very modern UI library](https://github.com/typhonjs-fvtt-lib),
-available for any 3rd party Foundry developer right now, that underpins this new quest log and full time+ work has been
-ongoing on this effort since October 2021. When this library is completed then work on the new quest log will be
-finished.
+Moving forward FQL is transitioning back to ownership and maintenance by Forien who is active again with Foundry 3rd 
+party development. 
 
 ## Translations
 
@@ -105,20 +109,13 @@ and get in contact.
 ## Future plans (current ideas)
 
 Rock solid stability through future releases of Foundry VTT and even more language / internationalization support.
-At this time a few quality of life features may be added in any given release as well, but major new feature 
-development will progress in the forthcoming continuation quest log module. Please file any ideas and review the planned
-new feature developments in the [TyphonJS Quest Log Issue Tracker](https://github.com/typhonjs-fvtt/typhonjs-quest-log/issues)
+At this time a few quality of life features may be added in any given release as well.
 
 _If you think you have found a bug or usability issue with FQL itself please file an issue in the 
 [FQL Issue Tracker](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/issues)_.
 
-_If you have **any** suggestion or idea on new features please get in contact on my [Discord Server](https://discord.gg/mnbgN8f).
-Over the `0.7.x` release series I have implemented almost all community suggestions that improve the quest log 
-experience._
-
 ## Contact
 
-Michael Leahy aka TyphonJS developed the `0.7.x` series of FQL releases and provides ongoing maintenance. 
 
 Please feel free to join my Discord server to get in touch:
 - [TyphonJS Discord server / current main FQL developer](https://discord.gg/mnbgN8f) for any questions.
@@ -130,7 +127,8 @@ See [Authors](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-
 
 ## Support (Historical)
 
-The original author, Forien, is no longer actively maintaining FQL, but for historical correctness please visit: [Foundry Workshop Patreon](https://www.patreon.com/foundryworkshop).
+Between the summer of '21 and '24 FQL was developed and maintained by Michael Leahy aka [TyphonJS](https://github.com/typhonrt) / 
+[TyphonJS Discord](https://typhonjs.io/discord/). 
 
 ## License
 
