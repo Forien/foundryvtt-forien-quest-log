@@ -1,7 +1,6 @@
 import FQLDialog              from '../FQLDialog.js';
 import QuestDB                from '../../control/QuestDB.js';
 import Socket                 from '../../control/Socket.js';
-import TinyMCE                from '../../control/TinyMCE.js';
 import Utils                  from '../../control/Utils.js';
 
 import HandlerAny             from './HandlerAny.js';
@@ -360,30 +359,6 @@ export default class QuestPreview extends FormApplication
    get quest() { return this.#quest; }
 
    /**
-    * Provide TinyMCE overrides when an editor is activated. The overrides are important to provide custom options to
-    * configure TinyMCE. There are various other content plugins enabled in the custom options and the ability to
-    * respond to the `esc` key to quit editing.
-    *
-    * @override
-    * @see {@link Utils.tinyMCEOptions}
-    * @see https://foundryvtt.com/api/FormApplication.html#activateEditor
-    */
-   activateEditor(name, options = {}, initialContent = '')
-   {
-      const tinyMCEOptions = TinyMCE.options({
-         editorName: name,
-         initialContent,
-         questId: this.#quest.id
-      });
-
-      super.activateEditor(name, Object.assign({}, options, tinyMCEOptions), initialContent);
-
-      // Remove the activate editor button as FQL has a transparent toolbar background. If pressed twice it will create
-      // an error.
-      if (this.editors[name].button) { this.editors[name].button.remove(); }
-   }
-
-   /**
     * Defines all jQuery control callbacks with event listeners for click, drag, drop via various CSS selectors.
     * The callbacks are gated by several local variables defined in {@link QuestPreview.getData}.
     *
@@ -696,11 +671,16 @@ export default class QuestPreview extends FormApplication
       // Then send a socket request to a GM user who can perform the update.
       if (name === 'playernotes' && !this.#quest.canUserUpdate && game.users.activeGM)
       {
-         const playernotes = this.editors?.playernotes?.mce?.getContent();
+         const editorInstance = this.editors?.playernotes?.instance;
 
-         if (typeof playernotes === 'string')
+         if (editorInstance)
          {
-            Socket.savePlayerNotes({ quest: this.#quest, playernotes });
+            const playernotes = globalThis.ProseMirror.dom.serializeString(editorInstance.view.state.doc.content);
+
+            if (typeof playernotes === 'string')
+            {
+               Socket.savePlayerNotes({ quest: this.#quest, playernotes });
+            }
          }
 
          return super.saveEditor(name);
@@ -726,9 +706,9 @@ export default class QuestPreview extends FormApplication
       {
          const editor = this.editors[key];
 
-         if (editor.mce)
+         if (editor.instance)
          {
-            this.#quest[key] = editor.mce.getContent();
+            this.#quest[key] = globalThis.ProseMirror.dom.serializeString(editor.instance.view.state.doc.content);
             await super.saveEditor(key);
          }
       }

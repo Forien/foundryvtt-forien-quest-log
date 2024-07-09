@@ -84,7 +84,7 @@
   <div class="quest-description">
     <h2>{{localize 'ForienQuestLog.QuestPreview.Labels.Description'}}</h2>
     {{#if (or canEdit playerEdit)}}
-      {{{editor description target="description" button=true editable=true owner=true mceeverywhere=false}}}
+      {{{editor description target="description" engine="prosemirror" button=true editable=true owner=true}}}
     {{else}}
     <div class="description">
       <div class="description-content">{{{description}}}</div>

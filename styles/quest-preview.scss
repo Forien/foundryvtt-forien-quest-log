@@ -7,9 +7,6 @@
     flex-direction: column;
   }
 
-  // Include TinyMCE mixin to add styles for toolbar and editor content.
-  @include tinymce;
-
   .quest-preview {
     height: 100%;
     overflow-y: hidden;
