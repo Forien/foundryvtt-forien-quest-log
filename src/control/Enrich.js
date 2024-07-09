@@ -234,14 +234,14 @@ export default class Enrich
       data.isPrimary = isPrimary;
 
       // Enrich w/ TextEditor, but first sanitize w/ DOMPurify, allowing only iframes with YouTube embed.
-      data.description = await TextEditor.enrichHTML(DOMPurify.sanitizeWithVideo(data.description), {
+      data.description = await TextEditor.enrichHTML(DOMPurify.sanitize(data.description), {
          secrets: canEdit || playerEdit,
          async: true
       });
 
-      data.gmnotes = await TextEditor.enrichHTML(DOMPurify.sanitizeWithVideo(data.gmnotes), { async: true });
+      data.gmnotes = await TextEditor.enrichHTML(DOMPurify.sanitize(data.gmnotes), { async: true });
 
-      data.playernotes = await TextEditor.enrichHTML(DOMPurify.sanitizeWithVideo(data.playernotes), { async: true });
+      data.playernotes = await TextEditor.enrichHTML(DOMPurify.sanitize(data.playernotes), { async: true });
 
       data.questIconType = void 0;
 
