@@ -4,13 +4,12 @@
   "description": "Provides comprehensive Quest Log system for players and Game Masters",
   "authors": [
     {
-      "name": "Michael Leahy (TyphonJS) - MLeahy#4299",
-      "url": "https://www.typhonjs.io",
-      "discord": "MLeahy#4299"
-    },
-    {
       "name": "Forien",
       "url": "https://www.patreon.com/forien"
+    },
+    {
+      "name": "Michael Leahy (TyphonJS)",
+      "url": "https://www.typhonjs.io"
     }
   ],
   "url": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log",
