@@ -55,14 +55,7 @@ export default async function()
                }
             };
 
-            if (FVTTCompat.isV10)
-            {
-               data.ownership = { default: defaultPermission };
-            }
-            else
-            {
-               data.permission = { default: defaultPermission };
-            }
+            data.ownership = { default: defaultPermission };
 
             await entry.update(data);
          }

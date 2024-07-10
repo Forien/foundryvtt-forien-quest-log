@@ -18,8 +18,6 @@ import { constants }    from '../src/model/constants.js';
  */
 export default async function()
 {
-   if (!FVTTCompat.isV10) { return; }
-
    const folder = await Utils.initializeQuestFolder();
    if (!folder) { return; }
 
