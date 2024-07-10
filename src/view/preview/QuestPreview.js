@@ -7,6 +7,8 @@ import HandlerAny             from './HandlerAny.js';
 import HandlerDetails         from './HandlerDetails.js';
 import HandlerManage          from './HandlerManage.js';
 
+import { FVTTCompat }         from '../../FVTTCompat.js';
+
 import { constants, jquery, settings }  from '../../model/constants.js';
 
 /**
@@ -671,16 +673,11 @@ export default class QuestPreview extends FormApplication
       // Then send a socket request to a GM user who can perform the update.
       if (name === 'playernotes' && !this.#quest.canUserUpdate && game.users.activeGM)
       {
-         const editorInstance = this.editors?.playernotes?.instance;
+         const playernotes = FVTTCompat.getEditorContent(this.editors?.playernotes);
 
-         if (editorInstance)
+         if (typeof playernotes === 'string')
          {
-            const playernotes = globalThis.ProseMirror.dom.serializeString(editorInstance.view.state.doc.content);
-
-            if (typeof playernotes === 'string')
-            {
-               Socket.savePlayerNotes({ quest: this.#quest, playernotes });
-            }
+            Socket.savePlayerNotes({ quest: this.#quest, playernotes });
          }
 
          return super.saveEditor(name);
@@ -701,14 +698,16 @@ export default class QuestPreview extends FormApplication
     */
    async saveQuest({ refresh = true } = {})
    {
-      // Save any altered content from the TinyMCE editors.
+      // Save any altered content from the editors.
       for (const key of Object.keys(this.editors))
       {
          const editor = this.editors[key];
 
-         if (editor.instance)
+         const content = FVTTCompat.getEditorContent(editor);
+
+         if (content)
          {
-            this.#quest[key] = globalThis.ProseMirror.dom.serializeString(editor.instance.view.state.doc.content);
+            this.#quest[key] = content;
             await super.saveEditor(key);
          }
       }

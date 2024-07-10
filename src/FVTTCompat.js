@@ -89,6 +89,37 @@ export class FVTTCompat
    }
 
    /**
+    * Retrieves the content from either TinyMCE or ProseMirror based editors. This is important because the content is
+    * being retrieved directly from the editor instance to store in flags. Additional 3rd party modules may override
+    * the default editor (ProseMirror) and use TinyMCE. Treating the editors neutrally allows support for any editor.
+    *
+    * @param {object}   editor - Editor object from `FormApplication`.
+    *
+    * @returns {string | undefined} Editor HTML content.
+    */
+   static getEditorContent(editor)
+   {
+      let content;
+
+      try
+      {
+         // Attempt to retrieve content from TinyMCE editor instance.
+         content = editor?.mce?.getContent?.();
+
+         if (typeof content === 'string') { return content; }
+
+         // Attempt to retrieve content from ProseMirror editor instance.
+         if (editor?.instance?.view)
+         {
+            content = globalThis.ProseMirror.dom.serializeString(editor.instance.view.state.doc.content);
+         }
+      }
+      catch (err) { /**/ }
+
+      return content;
+   }
+
+   /**
     * Returns any associated journal image. For v10 journal docs this is the first page that is an image.
     *
     * @param {foundry.abstract.Document|Document}  doc -
