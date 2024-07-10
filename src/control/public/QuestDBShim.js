@@ -44,7 +44,7 @@ class QuestDBShim
     * @param {string}   [options.type] - The quest type / status to iterate.
     *
     * @returns {QuestEntry[]}  An Array of matched values
-    * @see {@link Array#filter}
+    * @see Array#filter
     */
    static filter(predicate, options)
    {
@@ -93,7 +93,7 @@ class QuestDBShim
     * @param {string}   [options.type] - The quest type / status to iterate.
     *
     * @returns {QuestEntry} The QuestEntry, if found, otherwise undefined.
-    * @see {@link Array#find}
+    * @see Array#find
     */
    static find(predicate, options)
    {

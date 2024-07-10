@@ -10,9 +10,9 @@ import { constants, questStatus, questStatusI18n, settings } from '../model/cons
  *
  * @type {{questLog: QuestLog, questPreview: Map<string, QuestPreview>, questTracker: QuestTracker}}
  *
- * @see {@link ViewManager.questLog}
- * @see {@link ViewManager.questPreview}
- * @see {@link ViewManager.questTracker}
+ * @see ViewManager.questLog
+ * @see ViewManager.questPreview
+ * @see ViewManager.questTracker
  */
 const Apps = {
    questLog: void 0,
@@ -71,7 +71,7 @@ export default class ViewManager
     * @returns {QuestLog} The main quest log app accessible from the left hand menu bar or
     *                     `Hook.call('ForienQuestLog.Open.QuestLog')`.
     *
-    * @see {@link FQLHooks.openQuestLog}
+    * @see FQLHooks.openQuestLog
     */
    static get questLog() { return Apps.questLog; }
 
@@ -95,7 +95,7 @@ export default class ViewManager
     *
     * @param {...*}     [opts.options] - Optional parameters passed onto {@link Application.close}
     *
-    * @see https://foundryvtt.com/api/Application.html#close
+    * @see https://foundryvtt.com/api/classes/client.Application.html#close
     */
    static closeAll({ questPreview = false, ...options } = {})
    {
@@ -160,7 +160,7 @@ export default class ViewManager
     *
     * @param {...*}     [opts.options] - Remaining options for the {@link Application.render} method.
     *
-    * @see https://foundryvtt.com/api/Application.html#render
+    * @see https://foundryvtt.com/api/classes/client.Application.html#render
     */
    static renderAll({ force = false, questPreview = false, ...options } = {})
    {

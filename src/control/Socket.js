@@ -42,11 +42,11 @@ const s_MESSAGE_TYPES = {
  *
  * Please see the following view control classes and the QuestDB for socket related usage:
  *
- * @see {@link HandlerAny}
- * @see {@link HandlerDetails}
- * @see {@link HandlerLog}
- * @see {@link HandlerManage}
- * @see {@link QuestDB.deleteQuest}
+ * @see HandlerAny
+ * @see HandlerDetails
+ * @see HandlerLog
+ * @see HandlerManage
+ * @see QuestDB.deleteQuest
  */
 export default class Socket
 {
@@ -60,7 +60,7 @@ export default class Socket
     *                                   deleted by quest ID.
     *
     * @returns {Promise<void>}
-    * @see {@link QuestDB} s_JOURNAL_ENTRY_DELETE
+    * @see QuestDB / s_JOURNAL_ENTRY_DELETE
     */
    static async deletedQuest(deleteData)
    {
@@ -307,8 +307,7 @@ export default class Socket
     * @param {string}   options.target - The target status. One of five {@link questStatus}.
     *
     * @returns {Promise<void>}
-    * @see {@link HandlerAny.questStatusSet}
-    * @see {@link HandlerLog.questStatusSet}
+    * @see HandlerAny.questStatusSet
     */
    static async setQuestStatus({ quest, target })
    {

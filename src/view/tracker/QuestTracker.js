@@ -86,7 +86,7 @@ export default class QuestTracker extends Application
 
    /**
     * @inheritDoc
-    * @see https://foundryvtt.com/api/Application.html
+    * @see https://foundryvtt.com/api/classes/client.Application.html
     */
    constructor(options = {})
    {
@@ -140,7 +140,7 @@ export default class QuestTracker extends Application
     * Default {@link Application} options
     *
     * @returns {object} options - Application options.
-    * @see https://foundryvtt.com/api/Application.html#options
+    * @see https://foundryvtt.com/api/classes/client.Application.html#options
     */
    static get defaultOptions()
    {
@@ -286,7 +286,7 @@ export default class QuestTracker extends Application
     *
     * @param {JQuery}  html - The jQuery instance for the window content of this Application.
     *
-    * @see https://foundryvtt.com/api/FormApplication.html#activateListeners
+    * @see https://foundryvtt.com/api/classes/client.FormApplication.html#activateListeners
     */
    activateListeners(html)
    {
@@ -376,7 +376,7 @@ export default class QuestTracker extends Application
     *
     * @override
     * @inheritDoc
-    * @see https://foundryvtt.com/api/Application.html#bringToTop
+    * @see https://foundryvtt.com/api/classes/client.Application.html#bringToTop
     */
    bringToTop() {}
 
@@ -404,7 +404,7 @@ export default class QuestTracker extends Application
     *
     * @override
     * @inheritDoc
-    * @see https://foundryvtt.com/api/FormApplication.html#getData
+    * @see https://foundryvtt.com/api/classes/client.FormApplication.html#getData
     */
    async getData(options = {})
    {

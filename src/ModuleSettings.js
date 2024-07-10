@@ -30,7 +30,7 @@ export default class ModuleSettings
    /**
     * Registers all module settings.
     *
-    * @see {@link settings}
+    * @see FQLSettings
     */
    static register()
    {

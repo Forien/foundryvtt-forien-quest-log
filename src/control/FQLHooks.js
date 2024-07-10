@@ -79,8 +79,8 @@ export default class FQLHooks
     * @param {RewardDropData} data - Any data drop, but only handle RewardDropData.
     *
     * @returns {Promise<void>}
-    * @see https://foundryvtt.com/api/Actor.html
-    * @see https://foundryvtt.com/api/ActorSheet.html
+    * @see https://foundryvtt.com/api/classes/client.Actor.html
+    * @see https://foundryvtt.com/api/classes/client.ActorSheet.html
     */
    static async dropActorSheetData(actor, sheet, data)
    {
@@ -195,8 +195,8 @@ export default class FQLHooks
     *
     * @param {SceneControl[]} controls - The scene controls to add FQL controls.
     *
-    * @see {@link noteControls}
-    * @see https://foundryvtt.com/api/SceneControls.html
+    * @see noteControls
+    * @see https://foundryvtt.com/api/classes/client.SceneControls.html
     */
    static getSceneControlButtons(controls)
    {
@@ -319,7 +319,7 @@ export default class FQLHooks
     * @param {number} slot - The target hotbar slot
     *
     * @returns {boolean} - Whether the callback was handled.
-    * @see https://foundryvtt.com/api/Hotbar.html
+    * @see https://foundryvtt.com/api/classes/client.Hotbar.html
     */
    static hotbarDrop(hotbar, data, slot)
    {
@@ -457,7 +457,7 @@ export default class FQLHooks
     *
     * @param {JQuery}            html - The jQuery element for the window content of the app.
     *
-    * @see https://foundryvtt.com/api/JournalDirectory.html
+    * @see https://foundryvtt.com/api/classes/client.JournalDirectory.html
     */
    static renderJournalDirectory(app, html)
    {
@@ -502,7 +502,7 @@ export default class FQLHooks
     *
     * @param {JQuery}         html - The jQuery element for the window content of the app.
     *
-    * @see https://foundryvtt.com/api/JournalSheet.html
+    * @see https://foundryvtt.com/api/classes/client.JournalSheet.html
     */
    static renderJournalSheet(app, html)
    {

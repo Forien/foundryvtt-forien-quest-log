@@ -218,7 +218,7 @@ export default class Utils
     * Returns the quest folder or initializes and returns the quest folder if it doesn't exist and `create` is true.
     *
     * @returns {Folder} The quest folder.
-    * @see https://foundryvtt.com/api/Folder.html
+    * @see https://foundryvtt.com/api/classes/client.Folder.html
     */
    static getQuestFolder()
    {
@@ -265,7 +265,7 @@ export default class Utils
     * Returns the quest folder or initializes and returns the quest folder if it doesn't exist and `create` is true.
     *
     * @returns {Promise<Folder>} The quest folder.
-    * @see https://foundryvtt.com/api/Folder.html
+    * @see https://foundryvtt.com/api/classes/client.Folder.html
     */
    static async initializeQuestFolder()
    {

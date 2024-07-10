@@ -48,7 +48,7 @@ import { constants, jquery, settings }  from '../../model/constants.js';
  * to the user. The GM and trusted players with edit capabilities have full access to editing all parameters of a quest
  * except no players have access to the GM notes tab which is for private notes for the GM only.
  *
- * The general control of Foundry when {@link https://foundryvtt.com/api/Application.html#render} is invoked goes as
+ * The general control of Foundry when {@link https://foundryvtt.com/api/classes/client.Application.html#render} is invoked goes as
  * follows:
  * - {@link QuestPreview.getData} prepares all data for the Handlebars template and sets the local user tracking
  * variables.
@@ -63,9 +63,9 @@ import { constants, jquery, settings }  from '../../model/constants.js';
  * {@link ViewManager} responds to `closeQuestPreview` and `renderQuestPreview` tracking the opened QuestPreview
  * instances.
  *
- * @see {@link HandlerAny}
- * @see {@link HandlerDetails}
- * @see {@link HandlerManage}
+ * @see HandlerAny
+ * @see HandlerDetails
+ * @see HandlerManage
  */
 export default class QuestPreview extends FormApplication
 {
@@ -83,7 +83,7 @@ export default class QuestPreview extends FormApplication
     *
     * @param {object}   options - The FormApplication options.
     *
-    * @see https://foundryvtt.com/api/FormApplication.html#options
+    * @see https://foundryvtt.com/api/classes/client.FormApplication.html#options
     */
    constructor(quest, options = {})
    {
@@ -101,7 +101,7 @@ export default class QuestPreview extends FormApplication
        * @type {boolean}
        * @package
        *
-       * @see {@link QuestPreview.getData}
+       * @see QuestPreview.getData
        */
       this.canAccept = false;
 
@@ -111,7 +111,7 @@ export default class QuestPreview extends FormApplication
        * @type {boolean}
        * @package
        *
-       * @see {@link QuestPreview.getData}
+       * @see QuestPreview.getData
        */
       this.canEdit = false;
 
@@ -121,7 +121,7 @@ export default class QuestPreview extends FormApplication
        * @type {boolean}
        * @package
        *
-       * @see {@link QuestPreview.getData}
+       * @see QuestPreview.getData
        */
       this.playerEdit = false;
 
@@ -140,10 +140,10 @@ export default class QuestPreview extends FormApplication
        * @type {Function}
        * @package
        *
-       * @see {@link HandlerDetails.questEditName}
-       * @see {@link HandlerDetails.questGiverCustomEditName}
-       * @see {@link HandlerDetails.rewardAbstractEditName}
-       * @see {@link HandlerDetails.taskEditName}
+       * @see HandlerDetails.questEditName
+       * @see HandlerDetails.questGiverCustomEditName
+       * @see HandlerDetails.rewardAbstractEditName
+       * @see HandlerDetails.taskEditName
        */
       this._activeFocusOutFunction = void 0;
 
@@ -163,8 +163,8 @@ export default class QuestPreview extends FormApplication
        * @type {FQLDocumentOwnershipConfig}
        * @package
        *
-       * @see {@link HandlerManage.configurePermissions}
-       * @see {@link QuestPreview.close}
+       * @see HandlerManage.configurePermissions
+       * @see QuestPreview.close
        */
       this._ownershipControl = void 0;
 
@@ -177,7 +177,7 @@ export default class QuestPreview extends FormApplication
        * @type {ImagePopout}
        * @package
        *
-       * @see {@link https://foundryvtt.com/api/ImagePopout.html}
+       * @see https://foundryvtt.com/api/classes/client.ImagePopout.html
        */
       this._rewardImagePopup = void 0;
 
@@ -190,7 +190,7 @@ export default class QuestPreview extends FormApplication
        * @type {ImagePopout}
        * @package
        *
-       * @see {@link https://foundryvtt.com/api/ImagePopout.html}
+       * @see https://foundryvtt.com/api/classes/client.ImagePopout.html
        */
       this._splashImagePopup = void 0;
    }
@@ -199,7 +199,7 @@ export default class QuestPreview extends FormApplication
     * Default Application options
     *
     * @returns {object} options - FormApplication options.
-    * @see https://foundryvtt.com/api/FormApplication.html#options
+    * @see https://foundryvtt.com/api/classes/client.FormApplication.html#options
     */
    static get defaultOptions()
    {
@@ -331,7 +331,7 @@ export default class QuestPreview extends FormApplication
     *
     * @protected
     * @inheritDoc
-    * @see https://foundryvtt.com/api/FormApplication.html#_onSubmit
+    * @see https://foundryvtt.com/api/classes/client.FormApplication.html#_onSubmit
     */
    async _onSubmit(event, options) // eslint-disable-line
    {
@@ -346,7 +346,7 @@ export default class QuestPreview extends FormApplication
     * @override
     * @protected
     * @inheritDoc
-    * @see https://foundryvtt.com/api/FormApplication.html#_updateObject
+    * @see https://foundryvtt.com/api/classes/client.FormApplication.html#_updateObject
     */
    async _updateObject(event, formData) // eslint-disable-line no-unused-vars
    {
@@ -366,13 +366,13 @@ export default class QuestPreview extends FormApplication
     *
     * @param {JQuery}  html - The jQuery instance for the window content of this Application.
     *
-    * @see {@link HandlerAny}
-    * @see {@link HandlerDetails}
-    * @see {@link HandlerManage}
-    * @see {@link QuestPreview.canAccept}
-    * @see {@link QuestPreview.canEdit}
-    * @see {@link QuestPreview.playerEdit}
-    * @see https://foundryvtt.com/api/FormApplication.html#activateListeners
+    * @see HandlerAny
+    * @see HandlerDetails
+    * @see HandlerManage
+    * @see QuestPreview.canAccept
+    * @see QuestPreview.canEdit
+    * @see QuestPreview.playerEdit
+    * @see https://foundryvtt.com/api/classes/client.FormApplication.html#activateListeners
     */
    activateListeners(html)
    {
@@ -534,8 +534,8 @@ export default class QuestPreview extends FormApplication
     *
     * @returns {Promise<void>}
     * @inheritDoc
-    * @see {@link FormApplication.close}
-    * @see https://foundryvtt.com/api/FormApplication.html#close
+    * @see FormApplication.close
+    * @see https://foundryvtt.com/api/classes/client.FormApplication.html#close
     */
    async close({ noSave = false, ...options } = {})
    {
@@ -602,10 +602,10 @@ export default class QuestPreview extends FormApplication
     *
     * @override
     * @inheritDoc
-    * @see {@link QuestPreview.canAccept}
-    * @see {@link QuestPreview.canEdit}
-    * @see {@link QuestPreview.playerEdit}
-    * @see https://foundryvtt.com/api/FormApplication.html#getData
+    * @see QuestPreview.canAccept
+    * @see QuestPreview.canEdit
+    * @see QuestPreview.playerEdit
+    * @see https://foundryvtt.com/api/classes/client.FormApplication.html#getData
     */
    async getData(options = {}) // eslint-disable-line no-unused-vars
    {
@@ -665,7 +665,7 @@ export default class QuestPreview extends FormApplication
     *
     * @override
     * @inheritDoc
-    * @see https://foundryvtt.com/api/FormApplication.html#saveEditor
+    * @see https://foundryvtt.com/api/classes/client.FormApplication.html#saveEditor
     */
    async saveEditor(name)
    {
@@ -694,7 +694,7 @@ export default class QuestPreview extends FormApplication
     * @param {boolean} options.refresh - Execute `QuestPreview.refresh`
     *
     * @returns {Promise<void>}
-    * @see {@link QuestPreview.refresh}
+    * @see QuestPreview.refresh
     */
    async saveQuest({ refresh = true } = {})
    {

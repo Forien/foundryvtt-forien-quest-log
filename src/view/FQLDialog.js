@@ -202,7 +202,7 @@ class FQLDialogImpl extends Dialog
        * The Dialog options to set.
        *
        * @type {object}
-       * @see https://foundryvtt.com/api/Dialog.html
+       * @see https://foundryvtt.com/api/classes/client.Dialog.html
        */
       this.data = {
          title: game.i18n.format('ForienQuestLog.DeleteDialog.TitleDel', this.#fqlOptions),

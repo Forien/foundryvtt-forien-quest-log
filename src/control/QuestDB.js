@@ -236,7 +236,7 @@ export default class QuestDB
     * user or adding quests that are now observable. This only really needs to occur after particular module setting
     * changes which right now is when trusted player edit is enabled / disabled.
     *
-    * @see {@link FQLSettings.trustedPlayerEdit}
+    * @see FQLSettings.trustedPlayerEdit
     */
    static async consistencyCheck()
    {
@@ -500,7 +500,7 @@ export default class QuestDB
     * @param {string}   [options.type] - The quest type / status to iterate.
     *
     * @returns {QuestEntry[]}  An Array of matched values.
-    * @see {@link Array#filter}
+    * @see Array#filter
     */
    static filter(predicate, options)
    {
@@ -583,7 +583,7 @@ export default class QuestDB
     * @param {string}   [options.status] - The quest type / status to iterate.
     *
     * @returns {QuestEntry} The QuestEntry, if found, otherwise undefined.
-    * @see {@link Array#find}
+    * @see Array#find
     */
    static find(predicate, options)
    {

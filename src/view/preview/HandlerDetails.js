@@ -49,8 +49,8 @@ export default class HandlerDetails
        * @returns {Promise<void>}
        * @package
        *
-       * @see {@link QuestPreview.close}
-       * @see {@link QuestPreview._activeFocusOutFunction}
+       * @see QuestPreview.close
+       * @see QuestPreview._activeFocusOutFunction
        */
       questPreview._activeFocusOutFunction = async (event, saveOptions = void 0) =>
       {
@@ -120,8 +120,8 @@ export default class HandlerDetails
        * @returns {Promise<void>}
        * @package
        *
-       * @see {@link QuestPreview.close}
-       * @see {@link QuestPreview._activeFocusOutFunction}
+       * @see QuestPreview.close
+       * @see QuestPreview._activeFocusOutFunction
        */
       questPreview._activeFocusOutFunction = async (event, saveOptions = void 0) =>
       {
@@ -334,8 +334,8 @@ export default class HandlerDetails
        * @returns {Promise<void>}
        * @package
        *
-       * @see {@link QuestPreview.close}
-       * @see {@link QuestPreview._activeFocusOutFunction}
+       * @see QuestPreview.close
+       * @see QuestPreview._activeFocusOutFunction
        */
       questPreview._activeFocusOutFunction = async (event, saveOptions = void 0) =>
       {
@@ -956,8 +956,8 @@ export default class HandlerDetails
        *
        * @returns {Promise<void>}
        * @protected
-       * @see {@link QuestPreview.close}
-       * @see {@link QuestPreview._activeFocusOutFunction}
+       * @see QuestPreview.close
+       * @see QuestPreview._activeFocusOutFunction
        */
       questPreview._activeFocusOutFunction = async (event, saveOptions = void 0) =>
       {

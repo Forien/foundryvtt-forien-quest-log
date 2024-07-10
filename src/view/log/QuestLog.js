@@ -24,7 +24,7 @@ export default class QuestLog extends Application
 {
    /**
     * @inheritDoc
-    * @see https://foundryvtt.com/api/Application.html
+    * @see https://foundryvtt.com/api/classes/client.Application.html
     */
    constructor(options = {})
    {
@@ -35,7 +35,7 @@ export default class QuestLog extends Application
     * Default Application options
     *
     * @returns {object} options - Application options.
-    * @see https://foundryvtt.com/api/Application.html#options
+    * @see https://foundryvtt.com/api/classes/client.Application.html#options
     */
    static get defaultOptions()
    {
@@ -89,7 +89,7 @@ export default class QuestLog extends Application
     *
     * @param {JQuery}  html - The jQuery instance for the window content of this Application.
     *
-    * @see https://foundryvtt.com/api/FormApplication.html#activateListeners
+    * @see https://foundryvtt.com/api/classes/client.FormApplication.html#activateListeners
     */
    activateListeners(html)
    {
@@ -220,7 +220,7 @@ export default class QuestLog extends Application
     *
     * @override
     * @inheritDoc
-    * @see https://foundryvtt.com/api/FormApplication.html#getData
+    * @see https://foundryvtt.com/api/classes/client.FormApplication.html#getData
     */
    async getData(options = {})
    {
