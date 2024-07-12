@@ -1,10 +1,10 @@
 import { DBMigration }  from '../DBMigration.js';
 
-import { Utils }        from '../../src/control/index.js';
+import {
+   FVTTCompat,
+   Utils }              from '../../src/control/index.js';
 
 import { Quest }        from '../../src/model/index.js';
-
-import { FVTTCompat }   from '../../src/FVTTCompat.js';
 
 import {
    constants,

@@ -1,6 +1,7 @@
 import Enrich                 from './Enrich.js';
 
 import {
+   FVTTCompat,
    Socket,
    Utils }                    from '../index.js';
 
@@ -9,8 +10,6 @@ import { Quest }              from '../../model/index.js';
 import { QuestPreviewShim }   from '../../view/index.js';
 
 import collect                from '../../../external/collect.js';
-
-import { FVTTCompat }         from '../../FVTTCompat.js';
 
 import {
    constants,

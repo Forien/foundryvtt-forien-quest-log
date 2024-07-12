@@ -2,18 +2,18 @@ import {
    FoundryUIManager,
    QuestDB,
    Utils,
-   ViewManager }     from './control/index.js';
+   ViewManager }     from './index.js';
 
 import {
    constants,
    questStatus,
    sessionConstants,
-   settings }        from './model/constants.js';
+   settings }        from '../model/constants.js';
 
 /**
  * Provides registration for all module settings.
  */
-export default class ModuleSettings
+export class ModuleSettings
 {
    /**
     * The default location for the QuestTracker

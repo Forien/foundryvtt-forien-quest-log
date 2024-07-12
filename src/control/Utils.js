@@ -1,4 +1,4 @@
-import { FVTTCompat }   from '../FVTTCompat.js';
+import { FVTTCompat }   from './index.js';
 
 import {
    constants,

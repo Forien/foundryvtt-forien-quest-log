@@ -1,5 +1,7 @@
 import {
    FoundryUIManager,
+   FVTTCompat,
+   ModuleSettings,
    QuestDB,
    Socket,
    ViewManager,
@@ -11,11 +13,7 @@ import { Quest }        from '../model/index.js';
 
 import { QuestPreview } from '../view/index.js';
 
-import ModuleSettings   from '../ModuleSettings.js';
-
 import { DBMigration }  from '../../database/DBMigration.js';
-
-import { FVTTCompat }   from '../FVTTCompat.js';
 
 import {
    constants,

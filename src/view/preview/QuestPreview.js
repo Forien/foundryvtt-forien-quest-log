@@ -1,4 +1,5 @@
 import {
+   FVTTCompat,
    QuestDB,
    Socket,
    Utils }                    from '../../control/index.js';
@@ -8,8 +9,6 @@ import { FQLDialog }          from '../internal/index.js';
 import { HandlerAny }         from './HandlerAny.js';
 import { HandlerDetails }     from './HandlerDetails.js';
 import { HandlerManage }      from './HandlerManage.js';
-
-import { FVTTCompat }         from '../../FVTTCompat.js';
 
 import {
    constants,
