@@ -7,31 +7,127 @@ import { FVTTCompat }         from '../FVTTCompat.js';
 import { constants, questStatus, settings } from './constants.js';
 
 /**
- * Stores the sheet class for Quest which is {@link QuestPreview}. This class / sheet is used to render Quest.
- * While directly accessible from Quest the main way a QuestPreview is shown is through {@link QuestAPI.open} which
- * provides the entry point for external API access and is also used internally when opening a quest.
- *
- * @type {QuestPreview}
- * @see Quest.sheet
- */
-let SheetClass;
-
-/**
  * Stores and makes accessible the minimum amount of data that defines a quest. A Quest is loaded from the backing
  * JournalEntry and has the JournalEntry stored for the ability to perform permissions checks. Please see QuestDB
  * as when a Quest is loaded it is stored in a QuestEntry which also contains the enriched quest data for display
  * in Handlebars templates along with caching of several of the methods available in Quest for fast sorting.
  *
+ * {@link Quest.giverFromQuest} / {@link Quest.giverFromUUID} are used in {@link HandlerDetails} to look up
+ * and store the quest giver image / name in {@link Quest.giverData} when a quest giver is set.
+ *
  * @see QuestDB
  * @see QuestEntry
  */
-export default class Quest
+export class Quest
 {
+   /**
+    * Stores the sheet class for Quest which is {@link QuestPreview}. This class / sheet is used to render Quest.
+    * While directly accessible from Quest the main way a QuestPreview is shown is through {@link QuestAPI.open} which
+    * provides the entry point for external API access and is also used internally when opening a quest.
+    *
+    * @type {typeof Application}
+    * @see Quest.sheet
+    */
+   static #SheetClass;
+
+   /**
+    * The backing JournalEntry document.
+    *
+    * @type {JournalEntry}
+    */
+   #entry;
+
    /** @type {string | null} */
    #id;
 
    /** @type {string} */
    #name;
+
+   /**
+    * Lookup the Quest giver by UUID and return the data stored in {@link Quest.giverData}.
+    *
+    * @param {Quest} quest - The quest to look up the quest giver.
+    *
+    * @returns {Promise<QuestImgNameData|null>} The image / name data associated with this Foundry UUID.
+    */
+   static async giverFromQuest(quest)
+   {
+      let data = null;
+
+      if (quest.giver === 'abstract')
+      {
+         data = {
+            name: quest.giverName,
+            img: quest.image,
+            hasTokenImg: false
+         };
+      }
+      else if (typeof quest.giver === 'string')
+      {
+         data = Quest.giverFromUUID(quest.giver, quest.image);
+      }
+
+      return data;
+   }
+
+   /**
+    * @param {string}   uuid - The Foundry UUID to lookup for image / name data.
+    *
+    * @param {string}   [imageType] - The image type: 'actor' or 'token'
+    *
+    * @returns {Promise<QuestImgNameData|null>} The image / name data associated with this Foundry UUID.
+    */
+   static async giverFromUUID(uuid, imageType = 'actor')
+   {
+      let data = null;
+
+      if (typeof uuid === 'string')
+      {
+         const document = await fromUuid(uuid);
+
+         if (document !== null)
+         {
+            switch (document.documentName)
+            {
+               case Actor.documentName:
+               {
+                  const actorImage = document.img;
+                  const tokenImage = FVTTCompat.tokenImg(document);
+
+                  const hasTokenImg = typeof tokenImage === 'string' && tokenImage !== actorImage;
+
+                  data = {
+                     uuid,
+                     name: document.name,
+                     img: imageType === 'token' && hasTokenImg ? tokenImage : actorImage,
+                     hasTokenImg
+                  };
+                  break;
+               }
+
+               case Item.documentName:
+                  data = {
+                     uuid,
+                     name: document.name,
+                     img: document.img,
+                     hasTokenImg: false
+                  };
+                  break;
+
+               case JournalEntry.documentName:
+                  data = {
+                     uuid,
+                     name: document.name,
+                     img: FVTTCompat.journalImage(document),
+                     hasTokenImg: false
+                  };
+                  break;
+            }
+         }
+      }
+
+      return data;
+   }
 
    /**
     * @param {QuestData}      data - The serialized quest data to set.
@@ -40,18 +136,15 @@ export default class Quest
     */
    constructor(data = {}, entry = null)
    {
-      this.#id = entry !== null ? entry.id : null;  // Foundry in the TextEditor system to create content links looks for `_id` & name.
+      this.#id = entry !== null ? entry.id : null;
 
       this.initData(data);
 
-      /**
-       * @type {JournalEntry}
-       */
-      this.entry = entry;
+      this.#entry = entry;
 
-      if (this.entry && this.#id !== null)
+      if (this.#entry && this.#id !== null)
       {
-         this.entry._sheet = new QuestPreviewShim(this.#id);
+         this.#entry._sheet = new QuestPreviewShim(this.#id);
       }
    }
 
@@ -66,6 +159,14 @@ export default class Quest
    }
 
    /**
+    * @returns {JournalEntry} The associated backing journal entry document.
+    */
+   get entry()
+   {
+      return this.#entry;
+   }
+
+   /**
     * Gets the Foundry ID associated with this Quest.
     *
     * @returns {string} The ID of the quest.
@@ -73,6 +174,16 @@ export default class Quest
    get id()
    {
       return this.#id;
+   }
+
+   /**
+    * Sets the associated backing journal entry document.
+    *
+    * @param {JournalEntry}   entry - A journal entry document.
+    */
+   set entry(entry)
+   {
+      this.#entry = entry;
    }
 
    /**
@@ -316,9 +427,9 @@ export default class Quest
    /**
     * Returns any stored Foundry sheet class.
     *
-    * @returns {*} The associated sheet class.
+    * @returns {typeof Application} The associated sheet class.
     */
-   static getSheet() { return SheetClass; }
+   static getSheet() { return Quest.#SheetClass; }
 
    /**
     * Gets a task by UUID v4.
@@ -552,9 +663,9 @@ export default class Quest
    /**
     * Sets any stored Foundry sheet class.
     *
-    * @param {object}   NewSheetClass - The sheet class.
+    * @param {typeof Application}   NewSheetClass - The sheet class.
     */
-   static setSheet(NewSheetClass) { SheetClass = NewSheetClass; }
+   static setSheet(NewSheetClass) { Quest.#SheetClass = NewSheetClass; }
 
    /**
     * Sets new status for the quest. Also updates any timestamp / date data depending on status set.
@@ -710,33 +821,15 @@ export default class Quest
    }
 
    /**
-    * This mirrors document.sheet and is used in TextEditor._onClickContentLink
+    * This mirrors document.sheet and constructs a new instance of the sheet class.
     *
-    * @returns {QuestPreview} An associated sheet instance.
+    * @returns {Application} An associated sheet instance.
     */
    get sheet()
    {
-      return SheetClass ? new SheetClass(this) : void 0;
-   }
+      const SheetClass = Quest.#SheetClass;
 
-   /**
-    * Test whether a certain User has a requested permission level (or greater) over the Document.
-    * This mirrors document.testUserPermission and forwards on the request to the backing journal entry.
-    *
-    * @param {documents.BaseUser} user       The User being tested
-    *
-    * @param {string|number} permission      The permission level from DOCUMENT_PERMISSION_LEVELS to test
-    *
-    * @param {object} options                Additional options involved in the permission test
-    *
-    * @param {boolean} [options.exact=false]     Require the exact permission level requested?
-    *
-    * @returns {boolean}                      Does the user have this permission level over the Document?
-    */
-   testUserPermission(user, permission, options)
-   {
-      const entry = game.journal.get(this.#id);
-      return entry.testUserPermission(user, permission, options);
+      return SheetClass ? new SheetClass(this) : void 0;
    }
 }
 

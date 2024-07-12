@@ -1,6 +1,7 @@
-import Enrich        from '../../control/Enrich.js';
 import Socket        from '../../control/Socket.js';
 import Utils         from '../../control/Utils.js';
+
+import { Quest }     from '../../model/index.js';
 
 import { FQLDialog } from '../internal/index.js';
 
@@ -170,7 +171,7 @@ export class HandlerDetails
             quest.giver = 'abstract';
             quest.image = path;
             quest.giverName = game.i18n.localize('ForienQuestLog.QuestPreview.Labels.CustomSource');
-            quest.giverData = await Enrich.giverFromQuest(quest);
+            quest.giverData = await Quest.giverFromQuest(quest);
             delete quest.giverData.uuid;
 
             await questPreview.saveQuest();
@@ -219,7 +220,7 @@ export class HandlerDetails
 
       if (typeof uuid === 'string')
       {
-         const giverData = await Enrich.giverFromUUID(uuid);
+         const giverData = await Quest.giverFromUUID(uuid);
          if (giverData)
          {
             quest.giver = uuid;
@@ -273,7 +274,7 @@ export class HandlerDetails
    {
       quest.toggleImage();
 
-      const giverData = await Enrich.giverFromQuest(quest);
+      const giverData = await Quest.giverFromQuest(quest);
       if (giverData)
       {
          quest.giverData = giverData;
@@ -543,7 +544,7 @@ export class HandlerDetails
 
          if (typeof uuid === 'string')
          {
-            const actor = await Enrich.giverFromUUID(uuid);
+            const actor = await Quest.giverFromUUID(uuid);
             if (actor)
             {
                quest.addReward({ type: 'Actor', data: actor, hidden: true });
@@ -561,7 +562,7 @@ export class HandlerDetails
 
          if (typeof uuid === 'string')
          {
-            const item = await Enrich.giverFromUUID(uuid);
+            const item = await Quest.giverFromUUID(uuid);
             if (item)
             {
                quest.addReward({ type: 'Item', data: item, hidden: true });

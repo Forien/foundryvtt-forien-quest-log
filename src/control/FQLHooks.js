@@ -7,7 +7,8 @@ import {
    ViewManager }        from './index.js';
 
 import QuestAPI         from './public/QuestAPI.js';
-import Quest            from '../model/Quest.js';
+
+import { Quest }        from '../model/index.js';
 
 import { QuestPreview } from '../view/index.js';
 
@@ -106,7 +107,7 @@ export default class FQLHooks
     */
    static dropCanvasData(foundryCanvas, data)
    {
-      if (data.type === 'Quest' && QuestDB.getQuest(data.id) !== void 0)
+      if (data.type === Quest.documentName && QuestDB.getQuest(data.id) !== void 0)
       {
          data.type = 'JournalEntry';
          data.uuid = `JournalEntry.${data.id}`;

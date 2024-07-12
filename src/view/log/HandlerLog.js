@@ -5,6 +5,8 @@ import { ViewManager }  from '../../control/index.js';
 
 import Socket        from '../../control/Socket.js';
 
+import { Quest }     from "../../model/index.js";
+
 import { FQLDialog } from '../internal/index.js';
 
 /**
@@ -53,7 +55,7 @@ export class HandlerLog
    static questDragStart(event)
    {
       const dataTransfer = {
-         type: 'Quest',
+         type: Quest.documentName,
          id: $(event.target).data('quest-id')
       };
 

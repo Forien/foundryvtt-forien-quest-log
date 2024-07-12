@@ -1,8 +1,7 @@
 import QuestDB          from './QuestDB.js';
 import Utils            from './Utils.js';
-import DOMPurify        from '../../external/DOMPurify.js';
 
-import { FVTTCompat }   from '../FVTTCompat.js';
+import DOMPurify        from '../../external/DOMPurify.js';
 
 import { constants, questStatus, questStatusI18n, settings } from '../model/constants.js';
 
@@ -12,97 +11,10 @@ import { constants, questStatus, questStatusI18n, settings } from '../model/cons
  * subquests, status actions, and provides a UUID lookup for the quest giver image.
  *
  * All enrich methods should only be used in the {@link QuestDB} during the caching phase of the update / create
- * lifecycle. {@link Enrich.giverFromQuest} / {@link Enrich.giverFromUUID} are used in {@link HandlerDetails} to look up
- * and store the quest giver image / name in {@link Quest.giverData} when a quest giver is set.
+ * lifecycle.
  */
 export default class Enrich
 {
-   /**
-    * Lookup the Quest giver by UUID and return the data stored in {@link Quest.giverData}.
-    *
-    * @param {Quest} quest - The quest to lookup the quest giver.
-    *
-    * @returns {Promise<QuestImgNameData|null>} The image / name data associated with this Foundry UUID.
-    */
-   static async giverFromQuest(quest)
-   {
-      let data = null;
-
-      if (quest.giver === 'abstract')
-      {
-         data = {
-            name: quest.giverName,
-            img: quest.image,
-            hasTokenImg: false
-         };
-      }
-      else if (typeof quest.giver === 'string')
-      {
-         data = Enrich.giverFromUUID(quest.giver, quest.image);
-      }
-
-      return data;
-   }
-
-   /**
-    * @param {string}   uuid - The Foundry UUID to lookup for image / name data.
-    *
-    * @param {string}   [imageType] - The image type: 'actor' or 'token'
-    *
-    * @returns {Promise<QuestImgNameData|null>} The image / name data associated with this Foundry UUID.
-    */
-   static async giverFromUUID(uuid, imageType = 'actor')
-   {
-      let data = null;
-
-      if (typeof uuid === 'string')
-      {
-         const document = await fromUuid(uuid);
-
-         if (document !== null)
-         {
-            switch (document.documentName)
-            {
-               case Actor.documentName:
-               {
-                  const actorImage = document.img;
-                  const tokenImage = FVTTCompat.tokenImg(document);
-
-                  const hasTokenImg = typeof tokenImage === 'string' && tokenImage !== actorImage;
-
-                  data = {
-                     uuid,
-                     name: document.name,
-                     img: imageType === 'token' && hasTokenImg ? tokenImage : actorImage,
-                     hasTokenImg
-                  };
-                  break;
-               }
-
-               case Item.documentName:
-                  data = {
-                     uuid,
-                     name: document.name,
-                     img: document.img,
-                     hasTokenImg: false
-                  };
-                  break;
-
-               case JournalEntry.documentName:
-                  data = {
-                     uuid,
-                     name: document.name,
-                     img: FVTTCompat.journalImage(document),
-                     hasTokenImg: false
-                  };
-                  break;
-            }
-         }
-      }
-
-      return data;
-   }
-
    /**
     * Builds the quest status / icons div to control quest status. There are many possible states to construct across
     * three different user states from GM, trusted player edit, to player accept, so it is easier to build and cache

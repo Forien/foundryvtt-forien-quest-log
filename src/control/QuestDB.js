@@ -2,7 +2,7 @@ import Enrich                 from './Enrich.js';
 import Socket                 from './Socket.js';
 import Utils                  from './Utils.js';
 
-import Quest                  from '../model/Quest.js';
+import { Quest }              from '../model/index.js';
 
 import { QuestPreviewShim }   from '../view/index.js';
 
