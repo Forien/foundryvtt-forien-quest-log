@@ -11,6 +11,19 @@
 export default class FQLContextMenu extends ContextMenu
 {
    /**
+    * Defines the default CSS styles for the context menu.
+    *
+    * @type {{"box-shadow": string, width: string, "font-size": string, "font-family": string, position: string}}
+    */
+   static #defaultStyle = {
+      position: 'fixed',
+      width: 'fit-content',
+      'font-family': '"Signika", sans-serif',
+      'font-size': '14px',
+      'box-shadow': '0 0 10px #000'
+   };
+
+   /**
     * @type {{top: number, left: number}}
     */
    #position;
@@ -50,19 +63,6 @@ export default class FQLContextMenu extends ContextMenu
    _setPosition(html, target)
    {
       super._setPosition(html, target);
-      html.css(foundry.utils.mergeObject(this.#position, s_DEFAULT_STYLE));
+      html.css(foundry.utils.mergeObject(this.#position, FQLContextMenu.#defaultStyle));
    }
 }
-
-/**
- * Defines the default CSS styles for the context menu.
- *
- * @type {{"box-shadow": string, width: string, "font-size": string, "font-family": string, position: string}}
- */
-const s_DEFAULT_STYLE = {
-   position: 'fixed',
-   width: 'fit-content',
-   'font-family': '"Signika", sans-serif',
-   'font-size': '14px',
-   'box-shadow': '0 0 10px #000'
-};

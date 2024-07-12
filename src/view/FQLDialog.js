@@ -1,11 +1,4 @@
 /**
- * Stores any open FQLDialogImpl.
- *
- * @type {FQLDialogImpl}
- */
-let s_DELETE_DIALOG = void 0;
-
-/**
  * Provides a single dialog for confirming quest, task, & reward deletion.
  *
  * Note: You have been warned. This is tricky code. Please understand it before modifying. Feel free to ask questions:
@@ -23,6 +16,13 @@ let s_DELETE_DIALOG = void 0;
 export default class FQLDialog
 {
    /**
+    * Stores any open FQLDialogImpl.
+    *
+    * @type {FQLDialogImpl}
+    */
+   static #deleteDialog = void 0;
+
+   /**
     * Closes any open FQLDialogImpl that is associated with the questId or quest log. FQLDialogImpl gets associated
     * with the last app that invoked the dialog.
     *
@@ -34,10 +34,11 @@ export default class FQLDialog
     */
    static closeDialogs({ questId, isQuestLog = false } = {})
    {
-      if (s_DELETE_DIALOG && (s_DELETE_DIALOG.fqlQuestId === questId || s_DELETE_DIALOG.fqlIsQuestLog === isQuestLog))
+      if (this.#deleteDialog && (this.#deleteDialog.fqlQuestId === questId ||
+       this.#deleteDialog.fqlIsQuestLog === isQuestLog))
       {
-         s_DELETE_DIALOG.close();
-         s_DELETE_DIALOG = void 0;
+         this.#deleteDialog.close();
+         this.#deleteDialog = void 0;
       }
    }
 
@@ -56,9 +57,9 @@ export default class FQLDialog
     */
    static async confirmDeleteQuest({ name, result, questId, isQuestLog = false })
    {
-      if (s_DELETE_DIALOG && s_DELETE_DIALOG.rendered)
+      if (this.#deleteDialog && this.#deleteDialog.rendered)
       {
-         return s_DELETE_DIALOG.updateFQLData({
+         return this.#deleteDialog.updateFQLData({
             name,
             result,
             questId,
@@ -68,11 +69,11 @@ export default class FQLDialog
          });
       }
 
-      s_DELETE_DIALOG = void 0;
+      this.#deleteDialog = void 0;
 
       return new Promise((resolve) =>
       {
-         s_DELETE_DIALOG = new FQLDialogImpl({
+         this.#deleteDialog = new FQLDialogImpl({
             resolve,
             name,
             result,
@@ -82,7 +83,7 @@ export default class FQLDialog
             body: 'ForienQuestLog.DeleteDialog.BodyQuest'
          });
 
-         s_DELETE_DIALOG.render(true);
+         this.#deleteDialog.render(true);
       });
    }
 
@@ -101,9 +102,9 @@ export default class FQLDialog
     */
    static async confirmDeleteReward({ name, result, questId, isQuestLog = false })
    {
-      if (s_DELETE_DIALOG && s_DELETE_DIALOG.rendered)
+      if (this.#deleteDialog && this.#deleteDialog.rendered)
       {
-         return s_DELETE_DIALOG.updateFQLData({
+         return this.#deleteDialog.updateFQLData({
             name,
             result,
             questId,
@@ -113,11 +114,11 @@ export default class FQLDialog
          });
       }
 
-      s_DELETE_DIALOG = void 0;
+      this.#deleteDialog = void 0;
 
       return new Promise((resolve) =>
       {
-         s_DELETE_DIALOG = new FQLDialogImpl({
+         this.#deleteDialog = new FQLDialogImpl({
             resolve,
             name,
             result,
@@ -127,7 +128,7 @@ export default class FQLDialog
             body: 'ForienQuestLog.DeleteDialog.BodyReward'
          });
 
-         s_DELETE_DIALOG.render(true);
+         this.#deleteDialog.render(true);
       });
    }
 
@@ -146,9 +147,9 @@ export default class FQLDialog
     */
    static async confirmDeleteTask({ name, result, questId, isQuestLog = false })
    {
-      if (s_DELETE_DIALOG && s_DELETE_DIALOG.rendered)
+      if (this.#deleteDialog && this.#deleteDialog.rendered)
       {
-         return s_DELETE_DIALOG.updateFQLData({
+         return this.#deleteDialog.updateFQLData({
             name,
             result,
             questId,
@@ -158,11 +159,11 @@ export default class FQLDialog
          });
       }
 
-      s_DELETE_DIALOG = void 0;
+      this.#deleteDialog = void 0;
 
       return new Promise((resolve) =>
       {
-         s_DELETE_DIALOG = new FQLDialogImpl({
+         this.#deleteDialog = new FQLDialogImpl({
             resolve,
             name,
             result,
@@ -172,7 +173,7 @@ export default class FQLDialog
             body: 'ForienQuestLog.DeleteDialog.BodyObjective'
          });
 
-         s_DELETE_DIALOG.render(true);
+         this.#deleteDialog.render(true);
       });
    }
 }

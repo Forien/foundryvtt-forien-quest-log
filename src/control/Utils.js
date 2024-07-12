@@ -3,18 +3,18 @@ import { FVTTCompat }                  from '../FVTTCompat.js';
 import { constants, jquery, settings } from '../model/constants.js';
 
 /**
- * The hidden FQL quests folder name.
- *
- * @type {string}
- */
-const s_QUEST_DIR_NAME = '_fql_quests';
-
-/**
  * Provides several general utility methods interacting with Foundry via UUID lookups to generating UUIDv4 internal
- * FQL IDs. There are also several general methods for Handlebars and TinyMCE setup.
+ * FQL IDs. There are also several general methods for Handlebars setup.
  */
 export default class Utils
 {
+   /**
+    * The hidden FQL quests folder name.
+    *
+    * @type {string}
+    */
+   static #questDirName = '_fql_quests';
+
    /**
     * Uses `navigator.clipboard` if available then falls back to `document.execCommand('copy')` if available to copy
     * the given text to the clipboard.
@@ -222,7 +222,7 @@ export default class Utils
     */
    static getQuestFolder()
    {
-      return game.journal.directory.folders.find((f) => f.name === s_QUEST_DIR_NAME);
+      return game.journal.directory.folders.find((f) => f.name === this.#questDirName);
    }
 
    /**
@@ -269,15 +269,15 @@ export default class Utils
     */
    static async initializeQuestFolder()
    {
-      const folder = game.journal.directory.folders.find((f) => f.name === s_QUEST_DIR_NAME);
+      const folder = game.journal.directory.folders.find((f) => f.name === this.#questDirName);
       if (folder !== void 0) { return folder; }
 
       if (game.user.isGM)
       {
-         await Folder.create({ name: s_QUEST_DIR_NAME, type: 'JournalEntry', parent: null });
+         await Folder.create({ name: this.#questDirName, type: 'JournalEntry', parent: null });
       }
 
-      return game.journal.directory.folders.find((f) => f.name === s_QUEST_DIR_NAME);
+      return game.journal.directory.folders.find((f) => f.name === this.#questDirName);
    }
 
    /**

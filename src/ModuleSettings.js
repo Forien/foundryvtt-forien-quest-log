@@ -6,27 +6,27 @@ import ViewManager      from './control/ViewManager.js';
 import { constants, noteControls, questStatus, sessionConstants, settings } from './model/constants.js';
 
 /**
- * The default location for the QuestTracker
- *
- * @type {{top: number}}
- */
-const s_QUEST_TRACKER_DEFAULT = { top: 80, width: 296 };
-
-/**
- * Constants for setting scope type.
- *
- * @type {{world: string, client: string}}
- */
-const scope = {
-   client: 'client',
-   world: 'world'
-};
-
-/**
  * Provides registration for all module settings.
  */
 export default class ModuleSettings
 {
+   /**
+    * The default location for the QuestTracker
+    *
+    * @type {{top: number, width: number}}
+    */
+   static #defaultQuestTrackerPosition = { top: 80, width: 296 };
+
+   /**
+    * Constants for setting scope type.
+    *
+    * @type {{world: string, client: string}}
+    */
+   static #scope = {
+      client: 'client',
+      world: 'world'
+   };
+
    /**
     * Registers all module settings.
     *
@@ -37,7 +37,7 @@ export default class ModuleSettings
       game.settings.register(constants.moduleName, settings.allowPlayersDrag, {
          name: 'ForienQuestLog.Settings.allowPlayersDrag.Enable',
          hint: 'ForienQuestLog.Settings.allowPlayersDrag.EnableHint',
-         scope: scope.world,
+         scope: this.#scope.world,
          config: true,
          default: false,
          type: Boolean,
@@ -57,7 +57,7 @@ export default class ModuleSettings
       game.settings.register(constants.moduleName, settings.allowPlayersCreate, {
          name: 'ForienQuestLog.Settings.allowPlayersCreate.Enable',
          hint: 'ForienQuestLog.Settings.allowPlayersCreate.EnableHint',
-         scope: scope.world,
+         scope: this.#scope.world,
          config: true,
          default: false,
          type: Boolean,
@@ -74,7 +74,7 @@ export default class ModuleSettings
       game.settings.register(constants.moduleName, settings.allowPlayersAccept, {
          name: 'ForienQuestLog.Settings.allowPlayersAccept.Enable',
          hint: 'ForienQuestLog.Settings.allowPlayersAccept.EnableHint',
-         scope: scope.world,
+         scope: this.#scope.world,
          config: true,
          default: false,
          type: Boolean,
@@ -94,7 +94,7 @@ export default class ModuleSettings
       game.settings.register(constants.moduleName, settings.trustedPlayerEdit, {
          name: 'ForienQuestLog.Settings.trustedPlayerEdit.Enable',
          hint: 'ForienQuestLog.Settings.trustedPlayerEdit.EnableHint',
-         scope: scope.world,
+         scope: this.#scope.world,
          config: true,
          default: false,
          type: Boolean,
@@ -115,7 +115,7 @@ export default class ModuleSettings
       game.settings.register(constants.moduleName, settings.countHidden, {
          name: 'ForienQuestLog.Settings.countHidden.Enable',
          hint: 'ForienQuestLog.Settings.countHidden.EnableHint',
-         scope: scope.world,
+         scope: this.#scope.world,
          config: true,
          default: false,
          type: Boolean,
@@ -135,7 +135,7 @@ export default class ModuleSettings
       game.settings.register(constants.moduleName, settings.dynamicBookmarkBackground, {
          name: 'ForienQuestLog.Settings.dynamicBookmarkBackground.Enable',
          hint: 'ForienQuestLog.Settings.dynamicBookmarkBackground.EnableHint',
-         scope: scope.world,
+         scope: this.#scope.world,
          config: true,
          default: true,
          type: Boolean,
@@ -149,7 +149,7 @@ export default class ModuleSettings
       game.settings.register(constants.moduleName, settings.navStyle, {
          name: 'ForienQuestLog.Settings.navStyle.Enable',
          hint: 'ForienQuestLog.Settings.navStyle.EnableHint',
-         scope: scope.client,
+         scope: this.#scope.client,
          config: true,
          default: 'bookmarks',
          type: String,
@@ -170,7 +170,7 @@ export default class ModuleSettings
       game.settings.register(constants.moduleName, settings.showTasks, {
          name: 'ForienQuestLog.Settings.showTasks.Enable',
          hint: 'ForienQuestLog.Settings.showTasks.EnableHint',
-         scope: scope.world,
+         scope: this.#scope.world,
          config: true,
          default: 'default',
          type: String,
@@ -192,7 +192,7 @@ export default class ModuleSettings
       game.settings.register(constants.moduleName, settings.defaultPermission, {
          name: 'ForienQuestLog.Settings.defaultPermissionLevel.Enable',
          hint: 'ForienQuestLog.Settings.defaultPermissionLevel.EnableHint',
-         scope: scope.world,
+         scope: this.#scope.world,
          config: true,
          default: 'Observer',
          type: String,
@@ -206,7 +206,7 @@ export default class ModuleSettings
       game.settings.register(constants.moduleName, settings.hideFQLFromPlayers, {
          name: 'ForienQuestLog.Settings.hideFQLFromPlayers.Enable',
          hint: 'ForienQuestLog.Settings.hideFQLFromPlayers.EnableHint',
-         scope: scope.world,
+         scope: this.#scope.world,
          config: true,
          default: false,
          type: Boolean,
@@ -254,7 +254,7 @@ export default class ModuleSettings
       game.settings.register(constants.moduleName, settings.notifyRewardDrop, {
          name: 'ForienQuestLog.Settings.notifyRewardDrop.Enable',
          hint: 'ForienQuestLog.Settings.notifyRewardDrop.EnableHint',
-         scope: scope.world,
+         scope: this.#scope.world,
          config: true,
          default: false,
          type: Boolean,
@@ -268,7 +268,7 @@ export default class ModuleSettings
       game.settings.register(constants.moduleName, settings.showFolder, {
          name: 'ForienQuestLog.Settings.showFolder.Enable',
          hint: 'ForienQuestLog.Settings.showFolder.EnableHint',
-         scope: scope.world,
+         scope: this.#scope.world,
          config: true,
          default: false,
          type: Boolean,
@@ -280,14 +280,14 @@ export default class ModuleSettings
       // Currently provides a hidden setting to set the default abstract reward image.
       // It may never be displayed in the module settings menu, but if it is in the future this is where it would go.
       game.settings.register(constants.moduleName, settings.defaultAbstractRewardImage, {
-         scope: scope.world,
+         scope: this.#scope.world,
          config: false,
          default: 'icons/svg/item-bag.svg',
          type: String
       });
 
       game.settings.register(constants.moduleName, settings.questTrackerEnable, {
-         scope: scope.client,
+         scope: this.#scope.client,
          config: false,
          default: false,
          type: Boolean,
@@ -318,7 +318,7 @@ export default class ModuleSettings
        * `value` may be a quest ID or an empty string.
        */
       game.settings.register(constants.moduleName, settings.primaryQuest, {
-         scope: scope.world,
+         scope: this.#scope.world,
          config: false,
          default: '',
          type: String,
@@ -378,7 +378,7 @@ export default class ModuleSettings
       });
 
       game.settings.register(constants.moduleName, settings.questTrackerPinned, {
-         scope: scope.client,
+         scope: this.#scope.client,
          config: false,
          type: Boolean,
          default: false,
@@ -390,15 +390,15 @@ export default class ModuleSettings
       });
 
       game.settings.register(constants.moduleName, settings.questTrackerPosition, {
-         scope: scope.client,
+         scope: this.#scope.client,
          config: false,
-         default: s_QUEST_TRACKER_DEFAULT,
+         default: this.#defaultQuestTrackerPosition,
       });
 
       game.settings.register(constants.moduleName, settings.questTrackerResizable, {
          name: 'ForienQuestLog.Settings.questTrackerResizable.Enable',
          hint: 'ForienQuestLog.Settings.questTrackerResizable.EnableHint',
-         scope: scope.client,
+         scope: this.#scope.client,
          config: true,
          default: false,
          type: Boolean,
