@@ -4,12 +4,13 @@ import QuestDB       from '../../control/QuestDB.js';
 import { ViewManager }  from '../../control/index.js';
 
 import Socket        from '../../control/Socket.js';
-import FQLDialog     from '../FQLDialog.js';
+
+import { FQLDialog } from '../internal/index.js';
 
 /**
  * Provides all {@link JQuery} callbacks for the {@link QuestLog}.
  */
-export default class HandlerLog
+export class HandlerLog
 {
    /**
     * Handles the quest add button.

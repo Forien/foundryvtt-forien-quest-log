@@ -1,10 +1,12 @@
-import HandlerTracker   from './HandlerTracker.js';
-import { FoundryUIManager } from '../../control/index.js';
-import QuestDB          from '../../control/QuestDB.js';
-import Socket           from '../../control/Socket.js';
-import Utils            from '../../control/Utils.js';
-import FQLContextMenu   from '../FQLContextMenu.js';
-import collect          from '../../../external/collect.js';
+import { FoundryUIManager }   from '../../control/index.js';
+import QuestDB                from '../../control/QuestDB.js';
+import Socket                 from '../../control/Socket.js';
+import Utils                  from '../../control/Utils.js';
+
+import { HandlerTracker }     from './HandlerTracker.js';
+import { FQLContextMenu }     from '../internal/index.js';
+
+import collect                from '../../../external/collect.js';
 
 import { constants, jquery, questStatus, sessionConstants, settings } from '../../model/constants.js';
 
@@ -17,7 +19,7 @@ import { constants, jquery, questStatus, sessionConstants, settings } from '../.
  * used in the {@link Handlebars} template. In the future this may be cached in a similar way that {@link Quest} data
  * is cached for {@link QuestLog}.
  */
-export default class QuestTracker extends Application
+export class QuestTracker extends Application
 {
    /**
     * Provides the default width for the QuestTracker if not defined.

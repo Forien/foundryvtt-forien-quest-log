@@ -1,13 +1,13 @@
-import QuestDB                      from '../../control/QuestDB.js';
+import QuestDB                         from '../../control/QuestDB.js';
 import {
-   ViewManager }                    from '../../control/index.js';
+   ViewManager }                       from '../../control/index.js';
 
-import FQLDocumentOwnershipConfig   from '../FQLDocumentOwnershipConfig.js';
+import { FQLDocumentOwnershipConfig }  from '../internal/index.js';
 
 /**
  * Provides all {@link JQuery} callbacks for the `management` tab.
  */
-export default class HandlerManage
+export class HandlerManage
 {
    /**
     * @param {Quest}          quest - The current quest being manipulated.

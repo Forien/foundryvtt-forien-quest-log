@@ -1,12 +1,20 @@
 import QuestDB          from '../../control/QuestDB.js';
 import Socket           from '../../control/Socket.js';
 import Utils            from '../../control/Utils.js';
-import FQLContextMenu   from '../FQLContextMenu.js';
-import FQLDialog        from '../FQLDialog.js';
 
-import HandlerLog    from './HandlerLog.js';
+import {
+   FQLContextMenu,
+   FQLDialog }          from '../internal/index.js';
 
-import { constants, jquery, questStatus, questStatusI18n, questTabIndex, settings } from '../../model/constants.js';
+import { HandlerLog }   from './HandlerLog.js';
+
+import {
+   constants,
+   jquery,
+   questStatus,
+   questStatusI18n,
+   questTabIndex,
+   settings }           from '../../model/constants.js';
 
 /**
  * Provides the main quest log app which shows the quests separated by status either with bookmark or classic tabs.
@@ -20,7 +28,7 @@ import { constants, jquery, questStatus, questStatusI18n, questTabIndex, setting
  * {@link JQuery} control callbacks are setup in {@link QuestLog.activateListeners} and are located in a separate static
  * control class {@link HandlerLog}.
  */
-export default class QuestLog extends Application
+export class QuestLog extends Application
 {
    /**
     * @inheritDoc

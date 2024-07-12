@@ -1,14 +1,15 @@
 import Enrich        from '../../control/Enrich.js';
 import Socket        from '../../control/Socket.js';
 import Utils         from '../../control/Utils.js';
-import FQLDialog     from '../FQLDialog.js';
+
+import { FQLDialog } from '../internal/index.js';
 
 import { constants, jquery, settings } from '../../model/constants.js';
 
 /**
  * Provides all {@link JQuery} callbacks for the `details` tab.
  */
-export default class HandlerDetails
+export class HandlerDetails
 {
    /**
     * @param {JQuery.ClickEvent} event - JQuery.ClickEvent.

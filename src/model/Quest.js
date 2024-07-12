@@ -1,6 +1,8 @@
-import Utils            from '../control/Utils.js';
-import QuestPreviewShim from '../view/preview/QuestPreviewShim.js';
-import { FVTTCompat }   from '../FVTTCompat.js';
+import Utils                  from '../control/Utils.js';
+
+import { QuestPreviewShim }   from '../view/index.js';
+
+import { FVTTCompat }         from '../FVTTCompat.js';
 
 import { constants, questStatus, settings } from './constants.js';
 

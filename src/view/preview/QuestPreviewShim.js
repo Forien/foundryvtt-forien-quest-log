@@ -6,7 +6,7 @@ import QuestAPI from '../../control/public/QuestAPI.js';
  * is clicked in the {@link JournalDirectory} via {@link SidebarDirectory._onClickEntityName}. This shim
  * is set to {@link JournalEntry._sheet} in {@link QuestDB} when JE docs are created or loaded.
  */
-export default class QuestPreviewShim
+export class QuestPreviewShim
 {
    /**
     * @type {string}

@@ -8,7 +8,8 @@ import {
 
 import QuestAPI         from './public/QuestAPI.js';
 import Quest            from '../model/Quest.js';
-import QuestPreview     from '../view/preview/QuestPreview.js';
+
+import { QuestPreview } from '../view/index.js';
 
 import ModuleSettings   from '../ModuleSettings.js';
 import DBMigration      from '../../database/DBMigration.js';

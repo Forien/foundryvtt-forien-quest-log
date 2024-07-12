@@ -13,7 +13,7 @@
  * operation and brings the dialog to front and renders again. This provides reasonable semi-modal behavior from just a
  * single dialog instance shared across confirmation to delete quests, tasks, and rewards.
  */
-export default class FQLDialog
+export class FQLDialog
 {
    /**
     * Stores any open FQLDialogImpl.

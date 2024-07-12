@@ -1,11 +1,14 @@
-import Enrich           from './Enrich.js';
-import Socket           from './Socket.js';
-import Utils            from './Utils.js';
-import Quest            from '../model/Quest.js';
-import QuestPreviewShim from '../view/preview/QuestPreviewShim.js';
-import collect          from '../../external/collect.js';
+import Enrich                 from './Enrich.js';
+import Socket                 from './Socket.js';
+import Utils                  from './Utils.js';
 
-import { FVTTCompat }   from '../FVTTCompat.js';
+import Quest                  from '../model/Quest.js';
+
+import { QuestPreviewShim }   from '../view/index.js';
+
+import collect                from '../../external/collect.js';
+
+import { FVTTCompat }         from '../FVTTCompat.js';
 
 import { constants, questStatus, settings } from '../model/constants.js';
 

@@ -8,7 +8,7 @@ import { constants, sessionConstants, settings } from '../../model/constants.js'
 /**
  * Provides all {@link JQuery} and {@link PointerEvent} callbacks for the {@link QuestTracker}.
  */
-export default class HandlerTracker
+export class HandlerTracker
 {
    /**
     * Handles the pointer down event from the header to reset the pinned state.

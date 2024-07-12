@@ -1,11 +1,12 @@
-import FQLDialog              from '../FQLDialog.js';
+import { FQLDialog }          from '../internal/index.js';
+
 import QuestDB                from '../../control/QuestDB.js';
 import Socket                 from '../../control/Socket.js';
 import Utils                  from '../../control/Utils.js';
 
-import HandlerAny             from './HandlerAny.js';
-import HandlerDetails         from './HandlerDetails.js';
-import HandlerManage          from './HandlerManage.js';
+import { HandlerAny }         from './HandlerAny.js';
+import { HandlerDetails }     from './HandlerDetails.js';
+import { HandlerManage }      from './HandlerManage.js';
 
 import { FVTTCompat }         from '../../FVTTCompat.js';
 
@@ -67,7 +68,7 @@ import { constants, jquery, settings }  from '../../model/constants.js';
  * @see HandlerDetails
  * @see HandlerManage
  */
-export default class QuestPreview extends FormApplication
+export class QuestPreview extends FormApplication
 {
    /**
     * Stores the quest being displayed / edited.

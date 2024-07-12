@@ -1,10 +1,17 @@
 import QuestDB             from '../QuestDB.js';
-import { UINotifications } from './UINotifications.js';
-import QuestLog            from '../../view/log/QuestLog.js';
-import QuestPreview        from '../../view/preview/QuestPreview.js';
-import QuestTracker        from '../../view/tracker/QuestTracker.js';
 
-import { constants, questStatus, questStatusI18n, settings } from '../../model/constants.js';
+import {
+   QuestLog,
+   QuestPreview,
+   QuestTracker }          from '../../view/index.js';
+
+import { UINotifications } from './UINotifications.js';
+
+import {
+   constants,
+   questStatus,
+   questStatusI18n,
+   settings }              from '../../model/constants.js';
 
 /**
  * Stores and manages all the GUI apps / view for FQL.

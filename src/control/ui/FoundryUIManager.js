@@ -1,6 +1,6 @@
 import { ViewManager }           from './ViewManager.js';
 
-import QuestTracker              from '../../view/tracker/QuestTracker.js';
+import { QuestTracker }          from '../../view/index.js';
 
 import { constants, settings }   from '../../model/constants.js';
 

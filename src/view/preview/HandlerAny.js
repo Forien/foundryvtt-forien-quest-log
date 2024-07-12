@@ -1,12 +1,13 @@
 import QuestAPI   from '../../control/public/QuestAPI.js';
 import QuestDB    from '../../control/QuestDB.js';
 import Socket     from '../../control/Socket.js';
-import FQLDialog  from '../FQLDialog.js';
+
+import { FQLDialog } from '../internal/index.js';
 
 /**
  * These handler {@link JQuery} callbacks can be called on any tab.
  */
-export default class HandlerAny
+export class HandlerAny
 {
    /**
     * Confirms deleting a quest with {@link FQLDialog.confirmDeleteQuest} before invoking {@link QuestDB.deleteQuest}.
