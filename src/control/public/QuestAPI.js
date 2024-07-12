@@ -1,6 +1,7 @@
 import QuestDBShim   from './QuestDBShim.js';
 import Socket        from '../Socket.js';
-import ViewManager   from '../ViewManager.js';
+import {
+   ViewManager }  from '../index.js';
 
 import { constants, settings } from '../../model/constants.js';
 

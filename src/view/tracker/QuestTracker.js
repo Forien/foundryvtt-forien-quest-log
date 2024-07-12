@@ -1,5 +1,5 @@
 import HandlerTracker   from './HandlerTracker.js';
-import FoundryUIManager from '../../control/FoundryUIManager.js';
+import { FoundryUIManager } from '../../control/index.js';
 import QuestDB          from '../../control/QuestDB.js';
 import Socket           from '../../control/Socket.js';
 import Utils            from '../../control/Utils.js';

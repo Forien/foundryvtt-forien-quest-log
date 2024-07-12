@@ -1,4 +1,4 @@
-import FoundryUIManager from '../../control/FoundryUIManager.js';
+import { FoundryUIManager } from '../../control/index.js';
 import QuestAPI         from '../../control/public/QuestAPI.js';
 import QuestDB          from '../../control/QuestDB.js';
 import Socket           from '../../control/Socket.js';

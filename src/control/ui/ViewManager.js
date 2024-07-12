@@ -1,43 +1,53 @@
-import QuestDB       from './QuestDB.js';
-import QuestLog      from '../view/log/QuestLog.js';
-import QuestPreview  from '../view/preview/QuestPreview.js';
-import QuestTracker  from '../view/tracker/QuestTracker.js';
+import QuestDB             from '../QuestDB.js';
+import { UINotifications } from './UINotifications.js';
+import QuestLog            from '../../view/log/QuestLog.js';
+import QuestPreview        from '../../view/preview/QuestPreview.js';
+import QuestTracker        from '../../view/tracker/QuestTracker.js';
 
-import { constants, questStatus, questStatusI18n, settings } from '../model/constants.js';
-
-/**
- * Locally stores the app instances which are accessible by getter methods.
- *
- * @type {{questLog: QuestLog, questPreview: Map<string, QuestPreview>, questTracker: QuestTracker}}
- *
- * @see ViewManager.questLog
- * @see ViewManager.questPreview
- * @see ViewManager.questTracker
- */
-const Apps = {
-   questLog: void 0,
-   questTracker: void 0,
-   questPreview: new Map()
-};
-
-/**
- * Stores the QuestPreview app that is the current newly added quest. It needs to be closed before more quests can be
- * added as a gate to prevent many quests from being added rapidly.
- */
-let s_ADD_QUEST_PREVIEW;
+import { constants, questStatus, questStatusI18n, settings } from '../../model/constants.js';
 
 /**
  * Stores and manages all the GUI apps / view for FQL.
  */
-export default class ViewManager
+export class ViewManager
 {
+   /**
+    * Locally stores the app instances which are accessible by getter methods.
+    *
+    * @type {{questLog: QuestLog, questPreview: Map<string, QuestPreview>, questTracker: QuestTracker}}
+    *
+    * @see ViewManager.questLog
+    * @see ViewManager.questPreview
+    * @see ViewManager.questTracker
+    */
+   static #Apps = {
+      questLog: void 0,
+      questTracker: void 0,
+      questPreview: new Map()
+   };
+
+   /**
+    * Stores the QuestPreview app that is the current newly added quest. It needs to be closed before more quests can be
+    * added as a gate to prevent many quests from being added rapidly.
+    *
+    * @type {QuestPreview}
+    */
+   static #newQuestPreviewApp = void 0;
+
+   /**
+    * Stores the UINotifications instance to return in {@link ViewManager.notifications}.
+    *
+    * @type {UINotifications}
+    */
+   static #uiNotifications = new UINotifications();
+
    /**
     * Initializes all GUI apps.
     */
    static init()
    {
-      Apps.questLog = new QuestLog();
-      Apps.questTracker = new QuestTracker();
+      this.#Apps.questLog = new QuestLog();
+      this.#Apps.questTracker = new QuestTracker();
 
       // Load and set the quest tracker position from settings.
       try
@@ -45,7 +55,7 @@ export default class ViewManager
          const position = JSON.parse(game.settings.get(constants.moduleName, settings.questTrackerPosition));
          if (position && position.width && position.height)
          {
-            Apps.questTracker.position = position;
+            this.#Apps.questTracker.position = position;
          }
       }
       catch (err) { /**/ }
@@ -53,19 +63,19 @@ export default class ViewManager
       ViewManager.renderOrCloseQuestTracker();
 
       // Whenever a QuestPreview closes and matches any tracked app that is adding a new quest set it to undefined.
-      Hooks.on('closeQuestPreview', s_QUEST_PREVIEW_CLOSED);
-      Hooks.on('renderQuestPreview', s_QUEST_PREVIEW_RENDER);
+      Hooks.on('closeQuestPreview', this.#handleQuestPreviewClosed.bind(this));
+      Hooks.on('renderQuestPreview', this.#handleQuestPreviewRender.bind(this));
 
       // Right now ViewManager responds to permission changes across add, remove, update of quests.
-      Hooks.on(QuestDB.hooks.addQuestEntry, s_QUEST_ENTRY_ADD);
-      Hooks.on(QuestDB.hooks.removeQuestEntry, s_QUEST_ENTRY_REMOVE);
-      Hooks.on(QuestDB.hooks.updateQuestEntry, s_QUEST_ENTRY_UPDATE);
+      Hooks.on(QuestDB.hooks.addQuestEntry, this.#handleQuestEntryAdd.bind(this));
+      Hooks.on(QuestDB.hooks.removeQuestEntry, this.#handleQuestEntryRemove.bind(this));
+      Hooks.on(QuestDB.hooks.updateQuestEntry, this.#handleQuestEntryUpdate.bind(this));
    }
 
    /**
     * @returns {UINotifications} Returns the UINotifications helper.
     */
-   static get notifications() { return s_NOTIFICATIONS; }
+   static get notifications() { return this.#uiNotifications; }
 
    /**
     * @returns {QuestLog} The main quest log app accessible from the left hand menu bar or
@@ -73,20 +83,20 @@ export default class ViewManager
     *
     * @see FQLHooks.openQuestLog
     */
-   static get questLog() { return Apps.questLog; }
+   static get questLog() { return this.#Apps.questLog; }
 
    /**
     * @returns {Map<string, QuestPreview>} A Map that contains all currently rendered / visible QuestPreview instances
     *                                      indexed by questId / string which is the Foundry 'id' of quests and the
     *                                      backing journal entries.
     */
-   static get questPreview() { return Apps.questPreview; }
+   static get questPreview() { return this.#Apps.questPreview; }
 
    /**
     * @returns {QuestTracker} Returns the quest tracker overlap app. This app is accessible when module setting
     *                         {@link FQLSettings.questTrackerEnable} is enabled.
     */
-   static get questTracker() { return Apps.questTracker; }
+   static get questTracker() { return this.#Apps.questTracker; }
 
    /**
     * @param {object}   opts - Optional parameters
@@ -235,7 +245,7 @@ export default class ViewManager
          questSheet.render(true, { focus: true });
 
          // Set current QuestPreview being tracked as the add app.
-         s_ADD_QUEST_PREVIEW = questSheet;
+         this.#newQuestPreviewApp = questSheet;
       }
    }
 
@@ -248,224 +258,110 @@ export default class ViewManager
     */
    static verifyQuestCanAdd()
    {
-      if (s_ADD_QUEST_PREVIEW !== void 0)
+      if (this.#newQuestPreviewApp !== void 0)
       {
-         if (s_ADD_QUEST_PREVIEW.rendered)
+         if (this.#newQuestPreviewApp.rendered)
          {
-            s_ADD_QUEST_PREVIEW.bringToTop();
+            this.#newQuestPreviewApp.bringToTop();
             ViewManager.notifications.warn(game.i18n.localize('ForienQuestLog.Notifications.FinishQuestAdded'));
             return false;
          }
          else
          {
-            s_ADD_QUEST_PREVIEW = void 0;
+            this.#newQuestPreviewApp = void 0;
          }
       }
 
       return true;
    }
-}
 
-/**
- * Provides a helper class to gate UI notifications that may come in from various players in a rapid fashion
- * through Socket. By default a 4 second delay is applied between each notification, but the last notification
- * received will always be displayed.
- */
-class UINotifications
-{
-   /**
-    * Stores the last notify warn time epoch in MS.
-    *
-    * @type {number}
-    */
-   #lastNotifyWarn = Date.now();
+   // Internal implementation ----------------------------------------------------------------------------------------
 
    /**
-    * Stores the last notify info time epoch in MS.
+    * Handles the `addQuestEntry` hook.
     *
-    * @type {number}
+    * @param {QuestEntry}  questEntry - The added QuestEntry.
+    *
+    * @param {object}      flags - Quest flags.
+    *
+    * @returns {Promise<void>}
     */
-   #lastNotifyInfo = Date.now();
-
-
-   /**
-    * Stores the last call to setTimeout for info messages, so that they can be cancelled as new notifications
-    * arrive.
-    *
-    * @type {number}
-    */
-   #timeoutInfo = void 0;
-
-   /**
-    * Stores the last call to setTimeout for warn messages, so that they can be cancelled as new notifications
-    * arrive.
-    *
-    * @type {number}
-    */
-   #timeoutWarn = void 0;
-
-   /**
-    * Potentially gates `warn` UI notifications to prevent overloading the UI notification system.
-    *
-    * @param {string}   message - Message to post.
-    *
-    * @param {number}   delay - The delay in MS between UI notifications posted.
-    */
-   warn(message, delay = 4000)
+   static async #handleQuestEntryAdd(questEntry, flags)
    {
-      if (Date.now() - this.#lastNotifyWarn > delay)
+      if ('ownership' in flags)
       {
-         ui.notifications.warn(message);
-         this.#lastNotifyWarn = Date.now();
-      }
-      else
-      {
-         if (this.#timeoutWarn)
-         {
-            clearTimeout(this.#timeoutWarn);
-            this.#timeoutWarn = void 0;
-         }
-
-         this.#timeoutWarn = setTimeout(() =>
-         {
-            ui.notifications.warn(message);
-         }, delay);
+         ViewManager.refreshQuestPreview(questEntry.questIds);
+         ViewManager.renderAll();
       }
    }
 
    /**
-    * Potentially gates `info` UI notifications to prevent overloading the UI notification system.
+    * Handles the `removeQuestEntry` hook.
     *
-    * @param {string}   message - Message to post.
+    * @param {QuestEntry}  questEntry - The added QuestEntry.
     *
-    * @param {number}   delay - The delay in MS between UI notifications posted.
+    * @param {object}      flags - Quest flags.
+    *
+    * @returns {Promise<void>}
     */
-   info(message, delay = 4000)
+   static async #handleQuestEntryRemove(questEntry, flags)
    {
-      if (Date.now() - this.#lastNotifyInfo > delay)
-      {
-         ui.notifications.info(message);
-         this.#lastNotifyInfo = Date.now();
-      }
-      else
-      {
-         if (this.#timeoutInfo)
-         {
-            clearTimeout(this.#timeoutInfo);
-            this.#timeoutInfo = void 0;
-         }
+      const quest = questEntry.quest;
 
-         this.#timeoutInfo = setTimeout(() =>
-         {
-            ui.notifications.info(message);
-         }, delay);
+      const questPreview = ViewManager.questPreview.get(quest.id);
+      if (questPreview && questPreview.rendered) { await questPreview.close({ noSave: true }); }
+
+      if ('ownership' in flags)
+      {
+         ViewManager.refreshQuestPreview(questEntry.questIds);
+         ViewManager.renderAll();
       }
    }
 
    /**
-    * Post all error messages with no gating.
+    * Handles the `updateQuestEntry` hook.
     *
-    * @param {string}   message - Message to post.
+    * @param {QuestEntry}  questEntry - The added QuestEntry.
+    *
+    * @param {object}      flags - Quest flags.
     */
-   error(message)
+   static #handleQuestEntryUpdate(questEntry, flags)
    {
-      ui.notifications.error(message);
+      if ('ownership' in flags)
+      {
+         ViewManager.refreshQuestPreview(questEntry.questIds);
+         ViewManager.renderAll();
+      }
    }
-}
 
-/**
- * Stores the UINotifications instance to return in {@link ViewManager.notifications}.
- *
- * @type {UINotifications}
- */
-const s_NOTIFICATIONS = new UINotifications();
-
-/**
- * Handles the `addQuestEntry` hook.
- *
- * @param {QuestEntry}  questEntry - The added QuestEntry.
- *
- * @param {object}      flags - Quest flags.
- *
- * @returns {Promise<void>}
- */
-async function s_QUEST_ENTRY_ADD(questEntry, flags)
-{
-   if ('permission' in flags)
+   /**
+    * Handles the `closeQuestPreview` hook. Removes the QuestPreview from tracking and removes any current set
+    * `#newQuestPreviewApp` state if QuestPreview matches.
+    *
+    * @param {QuestPreview}   questPreview - The closed QuestPreview.
+    */
+   static #handleQuestPreviewClosed(questPreview)
    {
-      ViewManager.refreshQuestPreview(questEntry.questIds);
-      ViewManager.renderAll();
-   }
-}
+      if (!(questPreview instanceof QuestPreview)) { return; }
 
-/**
- * Handles the `removeQuestEntry` hook.
- *
- * @param {QuestEntry}  questEntry - The added QuestEntry.
- *
- * @param {object}      flags - Quest flags.
- *
- * @returns {Promise<void>}
- */
-async function s_QUEST_ENTRY_REMOVE(questEntry, flags)
-{
-   const quest = questEntry.quest;
+      if (this.#newQuestPreviewApp === questPreview) { this.#newQuestPreviewApp = void 0; }
 
-   const questPreview = ViewManager.questPreview.get(quest.id);
-   if (questPreview && questPreview.rendered) { await questPreview.close({ noSave: true }); }
-
-   if ('permission' in flags)
-   {
-      ViewManager.refreshQuestPreview(questEntry.questIds);
-      ViewManager.renderAll();
-   }
-}
-
-/**
- * Handles the `updateQuestEntry` hook.
- *
- * @param {QuestEntry}  questEntry - The added QuestEntry.
- *
- * @param {object}      flags - Quest flags.
- *
- * @returns {Promise<void>}
- */
-async function s_QUEST_ENTRY_UPDATE(questEntry, flags)
-{
-   if ('permission' in flags)
-   {
-      ViewManager.refreshQuestPreview(questEntry.questIds);
-      ViewManager.renderAll();
-   }
-}
-
-/**
- * Handles the `closeQuestPreview` hook. Removes the QuestPreview from tracking and removes any current set
- * `s_ADD_QUEST_PREVIEW` state if QuestPreview matches.
- *
- * @param {QuestPreview}   questPreview - The closed QuestPreview.
- */
-function s_QUEST_PREVIEW_CLOSED(questPreview)
-{
-   if (!(questPreview instanceof QuestPreview)) { return; }
-
-   if (s_ADD_QUEST_PREVIEW === questPreview) { s_ADD_QUEST_PREVIEW = void 0; }
-
-   const quest = questPreview.quest;
-   if (quest !== void 0) { ViewManager.questPreview.delete(quest.id); }
-}
-
-/**
- * Handles the `renderQuestPreview` hook; adding the quest preview to tracking.
- *
- * @param {QuestPreview}   questPreview - The rendered QuestPreview.
- */
-function s_QUEST_PREVIEW_RENDER(questPreview)
-{
-   if (questPreview instanceof QuestPreview)
-   {
       const quest = questPreview.quest;
-      if (quest !== void 0) { ViewManager.questPreview.set(quest.id, questPreview); }
+      if (quest !== void 0) { this.questPreview.delete(quest.id); }
+   }
+
+   /**
+    * Handles the `renderQuestPreview` hook; adding the quest preview to tracking.
+    *
+    * @param {QuestPreview}   questPreview - The rendered QuestPreview.
+    */
+   static #handleQuestPreviewRender(questPreview)
+   {
+      if (questPreview instanceof QuestPreview)
+      {
+         const quest = questPreview.quest;
+         if (quest !== void 0) { ViewManager.questPreview.set(quest.id, questPreview); }
+      }
    }
 }
 

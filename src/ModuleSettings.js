@@ -1,9 +1,10 @@
-import FoundryUIManager from './control/FoundryUIManager.js';
 import QuestDB          from './control/QuestDB.js';
 import Utils            from './control/Utils.js';
-import ViewManager      from './control/ViewManager.js';
+import {
+   FoundryUIManager,
+   ViewManager }        from './control/index.js';
 
-import { constants, noteControls, questStatus, sessionConstants, settings } from './model/constants.js';
+import { constants, questStatus, sessionConstants, settings } from './model/constants.js';
 
 /**
  * Provides registration for all module settings.
@@ -236,7 +237,7 @@ export default class ModuleSettings
 
                   // Add back ui.controls
                   const notes = ui?.controls?.controls.find((c) => c.name === 'notes');
-                  if (notes) { notes.tools.push(...noteControls); }
+                  if (notes) { notes.tools.push(...FoundryUIManager.noteControls); }
                }
 
                ui?.controls?.render(true);

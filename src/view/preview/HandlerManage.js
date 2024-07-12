@@ -1,5 +1,7 @@
 import QuestDB                      from '../../control/QuestDB.js';
-import ViewManager                  from '../../control/ViewManager.js';
+import {
+   ViewManager }                    from '../../control/index.js';
+
 import FQLDocumentOwnershipConfig   from '../FQLDocumentOwnershipConfig.js';
 
 /**

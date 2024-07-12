@@ -1,5 +1,3 @@
-import ViewManager from '../control/ViewManager.js';
-
 /**
  * Defines the main FQL constants for module name and the DB flag.
  *
@@ -27,30 +25,6 @@ const jquery = {
    keydown: 'keydown',
    mousedown: 'mousedown'
 };
-
-/**
- * Defines the left-hand UI control note buttons.
- *
- * @type {object[]}
- */
-const noteControls = [
-   {
-      name: constants.moduleName,
-      title: 'ForienQuestLog.QuestLog.Title',
-      icon: 'fas fa-scroll',
-      visible: true,
-      onClick: () => ViewManager.questLog.render(true, { focus: true }),
-      button: true
-   },
-   {
-      name: 'forien-quest-log-floating-window',
-      title: 'ForienQuestLog.QuestTracker.Title',
-      icon: 'fas fa-tasks',
-      visible: true,
-      onClick: async () => { await game.settings.set(constants.moduleName, settings.questTrackerEnable, true); },
-      button: true
-   }
-];
 
 /**
  * Stores strings for quest types (statuses)
@@ -128,7 +102,7 @@ const settings = {
    trustedPlayerEdit: 'trustedPlayerEdit'
 };
 
-export { constants, jquery, noteControls, questStatus, questStatusI18n, questTabIndex, sessionConstants, settings };
+export { constants, jquery, questStatus, questStatusI18n, questTabIndex, sessionConstants, settings };
 
 /**
  * @typedef {object} FQLSessionConstants

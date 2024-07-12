@@ -1,8 +1,11 @@
-import FoundryUIManager from './FoundryUIManager.js';
 import QuestDB          from './QuestDB.js';
 import Socket           from './Socket.js';
 import Utils            from './Utils.js';
-import ViewManager      from './ViewManager.js';
+
+import {
+   FoundryUIManager,
+   ViewManager }        from './index.js';
+
 import QuestAPI         from './public/QuestAPI.js';
 import Quest            from '../model/Quest.js';
 import QuestPreview     from '../view/preview/QuestPreview.js';
@@ -12,7 +15,7 @@ import DBMigration      from '../../database/DBMigration.js';
 
 import { FVTTCompat }   from '../FVTTCompat.js';
 
-import { constants, noteControls, sessionConstants, settings } from '../model/constants.js';
+import { constants, sessionConstants, settings } from '../model/constants.js';
 
 /**
  * Provides implementations for all Foundry hooks that FQL responds to and registers under. Please view the
@@ -203,7 +206,7 @@ export default class FQLHooks
       if (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers))
       {
          const notes = controls.find((c) => c.name === 'notes');
-         if (notes) { notes.tools.push(...noteControls); }
+         if (notes) { notes.tools.push(...FoundryUIManager.noteControls); }
       }
    }
 

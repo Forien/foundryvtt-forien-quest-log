@@ -1,7 +1,8 @@
 import QuestAPI      from './public/QuestAPI.js';
 import QuestDB       from './QuestDB.js';
 import Utils         from './Utils.js';
-import ViewManager   from './ViewManager.js';
+import {
+   ViewManager }  from './index.js';
 
 import { constants, questStatus, questStatusI18n, settings }  from '../model/constants.js';
 
