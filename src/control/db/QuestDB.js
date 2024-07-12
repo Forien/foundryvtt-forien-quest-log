@@ -1,4 +1,4 @@
-import Enrich                 from './Enrich.js';
+import { Enrich }             from './Enrich.js';
 
 import {
    FVTTCompat,
@@ -143,6 +143,14 @@ const s_QUEST_INDEX = new Map();
  */
 export class QuestDB
 {
+   /**
+    * @private
+    */
+   constructor()
+   {
+      throw new Error('This is a static class that should not be instantiated.');
+   }
+
    /**
     * Initializes the QuestDB. If FQL is hidden from the current user then no quests load. All quests are loaded based
     * on observability by the current user.

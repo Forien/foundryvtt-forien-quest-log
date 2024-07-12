@@ -35,6 +35,14 @@ import { constants } from '../model/constants.js';
 export class FVTTCompat
 {
    /**
+    * @private
+    */
+   constructor()
+   {
+      throw new Error('This is a static class that should not be instantiated.');
+   }
+
+   /**
     * Returns the author ID of a document depending on v10.
     *
     * @param {foundry.abstract.Document|Document}  doc -

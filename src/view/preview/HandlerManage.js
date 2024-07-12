@@ -10,6 +10,14 @@ import { FQLDocumentOwnershipConfig }  from '../internal/index.js';
 export class HandlerManage
 {
    /**
+    * @private
+    */
+   constructor()
+   {
+      throw new Error('This is a static class that should not be instantiated.');
+   }
+
+   /**
     * @param {Quest}          quest - The current quest being manipulated.
     *
     * @param {QuestPreview}   questPreview - The QuestPreview being manipulated.

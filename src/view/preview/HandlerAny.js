@@ -12,6 +12,14 @@ import { FQLDialog } from '../internal/index.js';
 export class HandlerAny
 {
    /**
+    * @private
+    */
+   constructor()
+   {
+      throw new Error('This is a static class that should not be instantiated.');
+   }
+
+   /**
     * Confirms deleting a quest with {@link FQLDialog.confirmDeleteQuest} before invoking {@link QuestDB.deleteQuest}.
     *
     * @param {JQuery.ClickEvent} event - JQuery.ClickEvent

@@ -42,6 +42,15 @@ const migrateImpl = {
 export class DBMigration
 {
    /**
+    * @private
+    */
+   constructor()
+   {
+      throw new Error('This is a static class that should not be instantiated.');
+   }
+
+
+   /**
     * Defines the current max schema version.
     *
     * @returns {number} max schema version.

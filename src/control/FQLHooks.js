@@ -50,6 +50,14 @@ import {
 export class FQLHooks
 {
    /**
+    * @private
+    */
+   constructor()
+   {
+      throw new Error('This is a static class that should not be instantiated');
+   }
+
+   /**
     * Initializes all hooks that FQL responds to in the Foundry lifecycle and in game hooks.
     */
    static init()

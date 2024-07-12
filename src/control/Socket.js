@@ -53,6 +53,14 @@ const s_MESSAGE_TYPES = {
 export class Socket
 {
    /**
+    * @private
+    */
+   constructor()
+   {
+      throw new Error('This is a static class that should not be instantiated.');
+   }
+
+   /**
     * Refreshes the parent & subquest GUI apps as applicable and closes the associated QuestPreview for the quest that
     * was deleted. This method is invoked from the private module method `QuestDB.s_JOURNAL_ENTRY_DELETE`.
     *

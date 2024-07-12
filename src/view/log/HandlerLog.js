@@ -15,6 +15,14 @@ import { FQLDialog } from '../internal/index.js';
 export class HandlerLog
 {
    /**
+    * @private
+    */
+   constructor()
+   {
+      throw new Error('This is a static class that should not be instantiated.');
+   }
+
+   /**
     * Handles the quest add button.
     *
     * @returns {Promise<void>}

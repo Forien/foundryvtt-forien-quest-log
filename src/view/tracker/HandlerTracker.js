@@ -16,6 +16,14 @@ import {
 export class HandlerTracker
 {
    /**
+    * @private
+    */
+   constructor()
+   {
+      throw new Error('This is a static class that should not be instantiated.');
+   }
+
+   /**
     * Handles the pointer down event from the header to reset the pinned state.
     *
     * @param {PointerEvent}   event - PointerEvent

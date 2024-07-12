@@ -16,6 +16,15 @@
 export class FQLDialog
 {
    /**
+    * @private
+    */
+   constructor()
+   {
+      throw new Error('This is a static class that should not be instantiated.');
+   }
+
+
+   /**
     * Stores any open FQLDialogImpl.
     *
     * @type {FQLDialogImpl}

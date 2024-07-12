@@ -16,6 +16,14 @@ import {
 export class ModuleSettings
 {
    /**
+    * @private
+    */
+   constructor()
+   {
+      throw new Error('This is a static class that should not be instantiated.');
+   }
+
+   /**
     * The default location for the QuestTracker
     *
     * @type {{top: number, width: number}}

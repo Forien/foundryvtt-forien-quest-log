@@ -18,8 +18,16 @@ import {
  * All enrich methods should only be used in the {@link QuestDB} during the caching phase of the update / create
  * lifecycle.
  */
-export default class Enrich
+export class Enrich
 {
+   /**
+    * @private
+    */
+   constructor()
+   {
+      throw new Error('This is a static class that should not be instantiated.');
+   }
+
    /**
     * Builds the quest status / icons div to control quest status. There are many possible states to construct across
     * three different user states from GM, trusted player edit, to player accept, so it is easier to build and cache

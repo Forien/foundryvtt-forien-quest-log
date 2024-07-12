@@ -12,6 +12,14 @@ import {
 class QuestDBShim
 {
    /**
+    * @private
+    */
+   constructor()
+   {
+      throw new Error('This is a static class that should not be instantiated.');
+   }
+
+   /**
     * @returns {QuestDBHooks} The QuestDB hooks.
     */
    static get hooks() { return QuestDB.hooks; }

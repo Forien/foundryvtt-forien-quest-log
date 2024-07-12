@@ -17,6 +17,14 @@ import {
 export class HandlerDetails
 {
    /**
+    * @private
+    */
+   constructor()
+   {
+      throw new Error('This is a static class that should not be instantiated.');
+   }
+
+   /**
     * @param {JQuery.ClickEvent} event - JQuery.ClickEvent.
     *
     * @param {Quest}             quest - The current quest being manipulated.

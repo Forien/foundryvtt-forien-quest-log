@@ -18,6 +18,14 @@ import {
 class QuestAPI
 {
    /**
+    * @private
+    */
+   constructor()
+   {
+      throw new Error('This is a static class that should not be instantiated.');
+   }
+
+   /**
     * @returns {QuestDBShim} Public QuestDB access.
     */
    static get DB() { return QuestDBShim; }

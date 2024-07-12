@@ -12,6 +12,14 @@ import {
 export class Utils
 {
    /**
+    * @private
+    */
+   constructor()
+   {
+      throw new Error('This is a static class that should not be instantiated.');
+   }
+
+   /**
     * The hidden FQL quests folder name.
     *
     * @type {string}
