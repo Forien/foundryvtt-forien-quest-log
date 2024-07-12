@@ -9,7 +9,7 @@ import { Quest }              from '../../model/index.js';
 
 import { QuestPreviewShim }   from '../../view/index.js';
 
-import collect                from '../../../external/collect.js';
+import { collect }            from '../../../external/index.js';
 
 import {
    constants,

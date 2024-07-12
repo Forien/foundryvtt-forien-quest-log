@@ -2,7 +2,7 @@ import {
    QuestDB,
    Utils }           from '../index.js';
 
-import DOMPurify     from '../../../external/DOMPurify.js';
+import { DOMPurify } from '../../../external/index.js';
 
 import {
    constants,

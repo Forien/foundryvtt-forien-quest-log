@@ -8,7 +8,7 @@ import { HandlerTracker }  from './HandlerTracker.js';
 
 import { FQLContextMenu }  from '../internal/index.js';
 
-import collect             from '../../../external/collect.js';
+import { collect }         from '../../../external/index.js';
 
 import {
    constants,
