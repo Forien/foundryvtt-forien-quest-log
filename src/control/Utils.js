@@ -1,12 +1,15 @@
-import { FVTTCompat }                  from '../FVTTCompat.js';
+import { FVTTCompat }   from '../FVTTCompat.js';
 
-import { constants, jquery, settings } from '../model/constants.js';
+import {
+   constants,
+   jquery,
+   settings }           from '../model/constants.js';
 
 /**
  * Provides several general utility methods interacting with Foundry via UUID lookups to generating UUIDv4 internal
  * FQL IDs. There are also several general methods for Handlebars setup.
  */
-export default class Utils
+export class Utils
 {
    /**
     * The hidden FQL quests folder name.

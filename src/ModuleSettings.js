@@ -1,10 +1,14 @@
-import QuestDB          from './control/QuestDB.js';
-import Utils            from './control/Utils.js';
 import {
    FoundryUIManager,
-   ViewManager }        from './control/index.js';
+   QuestDB,
+   Utils,
+   ViewManager }     from './control/index.js';
 
-import { constants, questStatus, sessionConstants, settings } from './model/constants.js';
+import {
+   constants,
+   questStatus,
+   sessionConstants,
+   settings }        from './model/constants.js';
 
 /**
  * Provides registration for all module settings.

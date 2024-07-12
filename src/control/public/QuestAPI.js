@@ -1,9 +1,12 @@
-import QuestDBShim   from './QuestDBShim.js';
-import Socket        from '../Socket.js';
-import {
-   ViewManager }  from '../index.js';
+import { QuestDBShim }  from './QuestDBShim.js';
 
-import { constants, settings } from '../../model/constants.js';
+import {
+   Socket,
+   ViewManager }        from '../index.js';
+
+import {
+   constants,
+   settings }           from '../../model/constants.js';
 
 /**
  * Quest public API. QuestAPI exposes control capabilities publicly. This functionality is gated as necessary depending
@@ -82,4 +85,4 @@ class QuestAPI
 
 Object.freeze(QuestAPI);
 
-export default QuestAPI;
+export { QuestAPI };

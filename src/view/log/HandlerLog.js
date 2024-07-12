@@ -1,11 +1,11 @@
-import QuestAPI      from '../../control/public/QuestAPI.js';
-import QuestDB       from '../../control/QuestDB.js';
+import {
+   QuestDB,
+   Socket,
+   ViewManager }     from '../../control/index.js';
 
-import { ViewManager }  from '../../control/index.js';
+import { QuestAPI }  from '../../control/public/index.js';
 
-import Socket        from '../../control/Socket.js';
-
-import { Quest }     from "../../model/index.js";
+import { Quest }     from '../../model/index.js';
 
 import { FQLDialog } from '../internal/index.js';
 

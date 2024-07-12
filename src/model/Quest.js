@@ -1,10 +1,13 @@
-import Utils                  from '../control/Utils.js';
+import { Utils }              from '../control/index.js';
 
 import { QuestPreviewShim }   from '../view/index.js';
 
 import { FVTTCompat }         from '../FVTTCompat.js';
 
-import { constants, questStatus, settings } from './constants.js';
+import {
+   constants,
+   questStatus,
+   settings }                 from './constants.js';
 
 /**
  * Stores and makes accessible the minimum amount of data that defines a quest. A Quest is loaded from the backing

@@ -1,4 +1,4 @@
-import QuestDB             from '../QuestDB.js';
+import { QuestDB }         from '../index.js';
 
 import {
    QuestLog,

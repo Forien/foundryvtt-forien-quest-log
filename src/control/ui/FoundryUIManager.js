@@ -1,8 +1,10 @@
-import { ViewManager }           from './ViewManager.js';
+import { ViewManager }  from './ViewManager.js';
 
-import { QuestTracker }          from '../../view/index.js';
+import { QuestTracker } from '../../view/index.js';
 
-import { constants, settings }   from '../../model/constants.js';
+import {
+   constants,
+   settings }           from '../../model/constants.js';
 
 /**
  * Defines a rectangle with essential contains check. Used to define the pinning rectangle next to the

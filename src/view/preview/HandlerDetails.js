@@ -1,11 +1,15 @@
-import Socket        from '../../control/Socket.js';
-import Utils         from '../../control/Utils.js';
+import {
+   Socket,
+   Utils }           from '../../control/index.js';
 
 import { Quest }     from '../../model/index.js';
 
 import { FQLDialog } from '../internal/index.js';
 
-import { constants, jquery, settings } from '../../model/constants.js';
+import {
+   constants,
+   jquery,
+   settings }        from '../../model/constants.js';
 
 /**
  * Provides all {@link JQuery} callbacks for the `details` tab.

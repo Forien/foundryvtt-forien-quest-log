@@ -1,10 +1,13 @@
-import Socket           from '../src/control/Socket.js';
-import Utils            from '../src/control/Utils.js';
-import { constants }    from '../src/model/constants.js';
+import {
+   Socket,
+   Utils }           from '../src/control/index.js';
 
-// import dbSchema_1       from './dbSchema_1.js';
-// import dbSchema_2       from './dbSchema_2.js';
-// import dbSchema_3       from './dbSchema_3.js';
+import { constants } from '../src/model/constants.js';
+
+import {
+   dbSchema_1,
+   dbSchema_2,
+   dbSchema_3 }      from './schema/index.js';
 
 /**
  * Defines the callback functions to execute for each schemaVersion level.
@@ -34,7 +37,7 @@ const migrateImpl = {
  *
  * @see registerHooks
  */
-export default class DBMigration
+export class DBMigration
 {
    /**
     * Defines the current max schema version.

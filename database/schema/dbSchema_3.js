@@ -1,11 +1,12 @@
-import DBMigration      from './DBMigration.js';
-import Enrich           from '../src/control/Enrich.js';
-import Utils            from '../src/control/Utils.js';
-import Quest            from '../src/model/Quest.js';
+import { DBMigration }  from '../DBMigration.js';
 
-import { FVTTCompat }   from '../src/FVTTCompat.js';
+import { Utils }        from '../../src/control/index.js';
 
-import { constants }    from '../src/model/constants.js';
+import { Quest }        from '../../src/model/index.js';
+
+import { FVTTCompat }   from '../../src/FVTTCompat.js';
+
+import { constants }    from '../../src/model/constants.js';
 
 /**
  * Performs DB migration for v10 and all systems updating cached images / names of quest givers and reward items.
@@ -16,7 +17,7 @@ import { constants }    from '../src/model/constants.js';
  *
  * @returns {Promise<void>}
  */
-export default async function()
+export async function dbSchema_3()
 {
    const folder = await Utils.initializeQuestFolder();
    if (!folder) { return; }
@@ -200,7 +201,7 @@ async function handleQuestGiver(quest, removedDataEntry, dnd5eIconMap)
 
             if (doc)
             {
-               const data = await Enrich.giverFromQuest(quest);
+               const data = await Quest.giverFromQuest(quest);
                if (data && typeof data.img === 'string' && data.img.length) { quest.giverData = data; }
             }
             else

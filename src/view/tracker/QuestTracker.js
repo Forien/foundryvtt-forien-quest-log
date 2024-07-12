@@ -1,14 +1,21 @@
-import { FoundryUIManager }   from '../../control/index.js';
-import QuestDB                from '../../control/QuestDB.js';
-import Socket                 from '../../control/Socket.js';
-import Utils                  from '../../control/Utils.js';
+import {
+   FoundryUIManager,
+   QuestDB,
+   Socket,
+   Utils }                 from '../../control/index.js';
 
-import { HandlerTracker }     from './HandlerTracker.js';
-import { FQLContextMenu }     from '../internal/index.js';
+import { HandlerTracker }  from './HandlerTracker.js';
 
-import collect                from '../../../external/collect.js';
+import { FQLContextMenu }  from '../internal/index.js';
 
-import { constants, jquery, questStatus, sessionConstants, settings } from '../../model/constants.js';
+import collect             from '../../../external/collect.js';
+
+import {
+   constants,
+   jquery,
+   questStatus,
+   sessionConstants,
+   settings }              from '../../model/constants.js';
 
 /**
  * Provides the quest tracker which provides an overview of active quests and objectives which can be opened / closed

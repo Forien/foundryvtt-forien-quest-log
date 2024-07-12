@@ -1,9 +1,14 @@
-import DBMigration      from './DBMigration.js';
-import Utils            from '../src/control/Utils.js';
-import Quest            from '../src/model/Quest.js';
-import { FVTTCompat }   from '../src/FVTTCompat.js';
+import { DBMigration }  from '../DBMigration.js';
 
-import { constants, questStatus }   from '../src/model/constants.js';
+import { Utils }        from '../../src/control/index.js';
+
+import { Quest }        from '../../src/model/index.js';
+
+import { FVTTCompat }   from '../../src/FVTTCompat.js';
+
+import {
+   constants,
+   questStatus }        from '../../src/model/constants.js';
 
 /**
  * Performs DB migration from schema 0 to 1.
@@ -24,7 +29,7 @@ import { constants, questStatus }   from '../src/model/constants.js';
  *
  * @returns {Promise<void>}
  */
-export default async function()
+export async function dbSchema_1()
 {
    const folder = await Utils.initializeQuestFolder();
    if (!folder) { return; }

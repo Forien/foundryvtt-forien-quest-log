@@ -1,16 +1,20 @@
-import DBMigration      from './DBMigration.js';
-import Enrich           from '../src/control/Enrich.js';
-import Utils            from '../src/control/Utils.js';
-import Quest            from '../src/model/Quest.js';
-import { FVTTCompat }   from '../src/FVTTCompat.js';
+import { DBMigration }  from '../DBMigration.js';
 
-import { constants, questStatus } from '../src/model/constants.js';
+import { Utils }        from '../../src/control/index.js';
+
+import { Quest }        from '../../src/model/index.js';
+
+import { FVTTCompat }   from '../../src/FVTTCompat.js';
+
+import {
+   constants,
+   questStatus }        from '../../src/model/constants.js';
 
 /**
  * Performs DB migration from schema 1 to 2.
  *
  * New data field:
- * {string} giverData - Stores the quest giver data from {@link Enrich.giverFromQuest}.
+ * {string} giverData - Stores the quest giver data from {@link Quest.giverFromQuest}.
  *
  * Convert data:
  * {string} status - convert 'hidden' to 'inactive' for code clarity.
@@ -26,7 +30,7 @@ import { constants, questStatus } from '../src/model/constants.js';
  *
  * @returns {Promise<void>}
  */
-export default async function()
+export async function dbSchema_2()
 {
    const folder = await Utils.initializeQuestFolder();
    if (!folder) { return; }
@@ -44,7 +48,7 @@ export default async function()
             // Load quest giver assets and store as 'giverData'.
             if (typeof quest.giver === 'string')
             {
-               const data = await Enrich.giverFromQuest(quest);
+               const data = await Quest.giverFromQuest(quest);
                if (data && typeof data.img === 'string' && data.img.length) { quest.giverData = data; }
             }
 

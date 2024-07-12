@@ -1,8 +1,9 @@
-import QuestAPI      from './public/QuestAPI.js';
-import QuestDB       from './QuestDB.js';
-import Utils         from './Utils.js';
+import { QuestAPI }  from './public/index.js';
+
 import {
-   ViewManager }  from './index.js';
+   QuestDB,
+   Utils,
+   ViewManager }     from './index.js';
 
 import { constants, questStatus, questStatusI18n, settings }  from '../model/constants.js';
 
@@ -49,7 +50,7 @@ const s_MESSAGE_TYPES = {
  * @see HandlerManage
  * @see QuestDB.deleteQuest
  */
-export default class Socket
+export class Socket
 {
    /**
     * Refreshes the parent & subquest GUI apps as applicable and closes the associated QuestPreview for the quest that

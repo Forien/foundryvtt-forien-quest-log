@@ -1,16 +1,21 @@
 import Enrich                 from './Enrich.js';
-import Socket                 from './Socket.js';
-import Utils                  from './Utils.js';
 
-import { Quest }              from '../model/index.js';
+import {
+   Socket,
+   Utils }                    from '../index.js';
 
-import { QuestPreviewShim }   from '../view/index.js';
+import { Quest }              from '../../model/index.js';
 
-import collect                from '../../external/collect.js';
+import { QuestPreviewShim }   from '../../view/index.js';
 
-import { FVTTCompat }         from '../FVTTCompat.js';
+import collect                from '../../../external/collect.js';
 
-import { constants, questStatus, settings } from '../model/constants.js';
+import { FVTTCompat }         from '../../FVTTCompat.js';
+
+import {
+   constants,
+   questStatus,
+   settings }                 from '../../model/constants.js';
 
 /**
  * Stores all {@link QuestEntry} instances in a map of Maps. This provides fast retrieval and quick insert / removal
@@ -137,7 +142,7 @@ const s_QUEST_INDEX = new Map();
  * {@link s_JOURNAL_ENTRY_UPDATE}: A quest that is currently in QuestDB has been updated.
  * ```
  */
-export default class QuestDB
+export class QuestDB
 {
    /**
     * Initializes the QuestDB. If FQL is hidden from the current user then no quests load. All quests are loaded based

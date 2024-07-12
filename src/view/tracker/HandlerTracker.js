@@ -1,9 +1,14 @@
-import { FoundryUIManager } from '../../control/index.js';
-import QuestAPI         from '../../control/public/QuestAPI.js';
-import QuestDB          from '../../control/QuestDB.js';
-import Socket           from '../../control/Socket.js';
+import {
+   FoundryUIManager,
+   QuestDB,
+   Socket }          from '../../control/index.js';
 
-import { constants, sessionConstants, settings } from '../../model/constants.js';
+import { QuestAPI }  from '../../control/public/index.js';
+
+import {
+   constants,
+   sessionConstants,
+   settings }        from '../../model/constants.js';
 
 /**
  * Provides all {@link JQuery} and {@link PointerEvent} callbacks for the {@link QuestTracker}.

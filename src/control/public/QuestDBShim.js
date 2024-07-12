@@ -1,5 +1,8 @@
-import QuestDB                 from '../QuestDB.js';
-import { constants, settings } from '../../model/constants.js';
+import { QuestDB }   from '../index.js';
+
+import {
+   constants,
+   settings }        from '../../model/constants.js';
 
 /**
  * Provides a shim to the publicly exposed methods of QuestDB. Except for {@link QuestDBShim.createQuest} all other
@@ -213,4 +216,4 @@ class QuestDBShim
 
 Object.freeze(QuestDBShim);
 
-export default QuestDBShim;
+export { QuestDBShim };

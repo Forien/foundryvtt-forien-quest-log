@@ -1,23 +1,26 @@
-import QuestDB          from './QuestDB.js';
-import Socket           from './Socket.js';
-import Utils            from './Utils.js';
-
 import {
    FoundryUIManager,
-   ViewManager }        from './index.js';
+   QuestDB,
+   Socket,
+   ViewManager,
+   Utils }              from './index.js';
 
-import QuestAPI         from './public/QuestAPI.js';
+import { QuestAPI }     from './public/index.js';
 
 import { Quest }        from '../model/index.js';
 
 import { QuestPreview } from '../view/index.js';
 
 import ModuleSettings   from '../ModuleSettings.js';
-import DBMigration      from '../../database/DBMigration.js';
+
+import { DBMigration }  from '../../database/DBMigration.js';
 
 import { FVTTCompat }   from '../FVTTCompat.js';
 
-import { constants, sessionConstants, settings } from '../model/constants.js';
+import {
+   constants,
+   sessionConstants,
+   settings }           from '../model/constants.js';
 
 /**
  * Provides implementations for all Foundry hooks that FQL responds to and registers under. Please view the
@@ -46,7 +49,7 @@ import { constants, sessionConstants, settings } from '../model/constants.js';
  * - `ForienQuestLog.Lifecycle.ready` - {@link FQLHooks.foundryReady} - Called at the end of the `ready` hook when FQL
  * is fully setup.
  */
-export default class FQLHooks
+export class FQLHooks
 {
    /**
     * Initializes all hooks that FQL responds to in the Foundry lifecycle and in game hooks.
