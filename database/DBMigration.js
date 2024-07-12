@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import {
    Socket,
    Utils }           from '../src/control/index.js';
