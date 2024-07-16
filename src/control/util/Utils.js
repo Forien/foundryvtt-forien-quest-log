@@ -3,7 +3,7 @@ import { FVTTCompat }   from './index.js';
 import {
    constants,
    jquery,
-   settings }           from '../model/constants.js';
+   settings }           from '../../model/constants.js';
 
 /**
  * Provides several general utility methods interacting with Foundry via UUID lookups to generating UUIDv4 internal

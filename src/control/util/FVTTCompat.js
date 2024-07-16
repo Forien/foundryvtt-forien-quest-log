@@ -1,4 +1,4 @@
-import { constants } from '../model/constants.js';
+import { constants } from '../../model/constants.js';
 
 /**
  * Provides potential shimming for the Foundry core API and potential support for other 3rd party modules like Monk's
