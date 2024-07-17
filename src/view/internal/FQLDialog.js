@@ -2,8 +2,6 @@
  * Provides a single dialog for confirming quest, task, & reward deletion.
  *
  * Note: You have been warned. This is tricky code. Please understand it before modifying. Feel free to ask questions:
-
- * Discord: MLeahy#4299 / Michael Leahy <support@typhonjs.io> (https://github.com/typhonrt)
  *
  * There presently is no modal dialog in Foundry and this dialog implementation repurposes a single dialog instance
  * through potentially multiple cycles of obtaining and resolving Promises storing the resolve function in the dialog

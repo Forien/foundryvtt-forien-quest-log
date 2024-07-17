@@ -490,7 +490,7 @@ export class HandlerDetails
             id: document.id
          };
 
-         // Add compendium pack info if applicable
+         // Add compendium pack info if applicable.
          if (uuidData && uuidData.pack) { dataTransfer.pack = uuidData.pack; }
 
          event.originalEvent.dataTransfer.setData('text/plain', JSON.stringify(dataTransfer));
@@ -1061,7 +1061,7 @@ export class HandlerDetails
  *
  * @property {string} itemName - The reward item name.
  *
- * @property {string} userName - The user name who is dropping the item.
+ * @property {string} userName - The username who is dropping the item.
  */
 
 /**
@@ -1076,4 +1076,6 @@ export class HandlerDetails
  * @property {string}      uuid - The UUID of the document.
  *
  * @property {id}          id - The ID of the document.
+ *
+ * @property {string}      [pack] - Any associated compendium pack.
  */

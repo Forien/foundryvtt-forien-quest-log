@@ -1225,6 +1225,8 @@ export class QuestDB
    }
 
    /**
+    * Updates an existing {@link QuestEntry} when the backing quest data changes.
+    *
     * @param {QuestEntry}     questEntry - Target quest entry.
     *
     * @param {QuestData}      content - The FQL quest data from journal entry.

@@ -276,8 +276,8 @@ export class QuestLog extends Application
    }
 
    /**
-    * Some game systems and custom UI theming modules provide hard overrides on overflow-x / overflow-y styles. Alas we
-    * need to set these for '.window-content' to 'visible' which will cause an issue for very long tables. Thus we must
+    * Some game systems and custom UI theming modules provide hard overrides on overflow-x / overflow-y styles. Alas, we
+    * need to set these for '.window-content' to 'visible' which will cause an issue for very long tables. Thus, we must
     * manually set the table max-heights based on the position / height of the {@link Application}.
     *
     * @param {object}               opts - Optional parameters.
