@@ -1,4 +1,13 @@
 # Changelog
+## Release 0.8.0
+This major `0.8.0` update brings to FQL:
+- Actors can be set as quest rewards (Item Piles / game system loot support).
+- Player Notes - players can now leave notes on quests in a separate section similar to `GM Notes`
+- ProseMirror editor support / removed TinyMCE.
+- Streamlined codebase updating to ES2022.
+- Dual v11 / v12 support.
+- This is the last release by Michael Leahy (TyphonJS) before FQL returned to Forien.
+
 ## Release 0.7.12
 The minor `0.7.12` update brings to FQL:
 
@@ -112,6 +121,8 @@ and much more!
 Total rewrite that fixes most known bugs, courtesy of @typhonrt.
 Existing quests will be migrated, except that quest rewards will be removed and need to re-added manually.
 Remember to back up your world before installing.
+
+This is the first release from Michael Leahy (TyphonJS).
 
 ## Release 0.6.0
 * Set compatible with Foundry 0.8.6 (and removes compatibility with lower versions)
