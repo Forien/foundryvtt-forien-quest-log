@@ -1,40 +1,30 @@
 <div class="quest-log {{style}}">
-    <nav class="log-tabs tabs {{style}}" data-group="primary">
-        {{#if availableTab}}
-        <a class="item" data-tab="available">{{localize 'ForienQuestLog.QuestLog.Tabs.Available'}}</a>
-        {{/if}}
-        <a class="item" data-tab="progress">{{localize 'ForienQuestLog.QuestLog.Tabs.InProgress'}}</a>
-        <a class="item" data-tab="completed">{{localize 'ForienQuestLog.QuestLog.Tabs.Completed'}}</a>
-        <a class="item" data-tab="failed">{{localize 'ForienQuestLog.QuestLog.Tabs.Failed'}}</a>
-        {{#if isGM}}
-        <a class="item" data-tab="hidden">{{localize 'ForienQuestLog.QuestLog.Tabs.Hidden'}}</a>
-        {{/if}}
-    </nav>
-    <section class="log-body {{style}}">
-        {{#if availableTab}}
-        <div class="tab available" data-group="primary" data-tab="available">
-            {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="available" quests=quests.available}}
-        </div>
-        {{/if}}
-        <div class="tab in-progress" data-group="primary" data-tab="progress">
-            {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="active" quests=quests.active}}
-        </div>
-        <div class="tab completed" data-group="primary" data-tab="completed">
-            {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="completed" quests=quests.completed}}
-        </div>
-        <div class="tab failed" data-group="primary" data-tab="failed">
-            {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="failed" quests=quests.failed}}
-        </div>
-        {{#if isGM}}
-        <div class="tab hidden" data-group="primary" data-tab="hidden">
-            {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="hidden" quests=quests.hidden}}
-        </div>
-        {{/if}}
-    </section>
-    {{#if (or isGM canCreate)}}
-    <footer>
-        <button class="new-quest-btn">{{localize 'ForienQuestLog.Buttons.AddNewQuest'}}</button>
-        <!-- <button class="new-folder-btn">{{localize 'ForienQuestLog.Buttons.AddNewFolder'}}</button> -->
-    </footer>
+  <nav class="log-tabs tabs {{style}}" data-group="primary">
+    <a class="item" data-tab="available">{{localize 'ForienQuestLog.QuestTypes.Labels.Available'}}</a>
+    <a class="item" data-tab="active">{{localize 'ForienQuestLog.QuestTypes.Labels.Active'}}</a>
+    <a class="item" data-tab="completed">{{localize 'ForienQuestLog.QuestTypes.Labels.Completed'}}</a>
+    <a class="item" data-tab="failed">{{localize 'ForienQuestLog.QuestTypes.Labels.Failed'}}</a>
+    {{#if (or isGM isTrustedPlayerEdit)}}
+      <a class="item" data-tab="inactive">{{localize 'ForienQuestLog.QuestTypes.Labels.InActive'}}</a>
     {{/if}}
+  </nav>
+  <section class="log-body {{style}}">
+    <div class="tab available" data-group="primary" data-tab="available">
+      {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="available" quests=quests.available}}
+    </div>
+    <div class="tab active" data-group="primary" data-tab="active">
+      {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="active" quests=quests.active}}
+    </div>
+    <div class="tab completed" data-group="primary" data-tab="completed">
+      {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="completed" quests=quests.completed}}
+    </div>
+    <div class="tab failed" data-group="primary" data-tab="failed">
+      {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="failed" quests=quests.failed}}
+    </div>
+    {{#if (or isGM isTrustedPlayerEdit)}}
+      <div class="tab inactive" data-group="primary" data-tab="inactive">
+        {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="inactive" quests=quests.inactive}}
+      </div>
+    {{/if}}
+  </section>
 </div>

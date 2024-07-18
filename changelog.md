@@ -1,6 +1,165 @@
 # Changelog
+## Release 0.8.0
+This major `0.8.0` update brings to FQL:
+- Actors can be set as quest rewards (Item Piles / game system loot support).
+- Player Notes - players can now leave notes on quests in a separate section similar to `GM Notes`
+- ProseMirror editor support / removed TinyMCE.
+- Streamlined codebase updating to ES2022.
+- Dual v11 / v12 support.
+- This is the last release by Michael Leahy (TyphonJS) before FQL returned to Forien.
 
-### v0.5.1
+## Release 0.7.12
+The minor `0.7.12` update brings to FQL:
+
+- Foundry v11 support.
+- Removed support for v9 / v10 to prevent any compatibility warnings.
+- Fixed minor TinyMCE configuration for correct font support.
+- Updated Spanish translation.
+
+## Release 0.7.11
+The minor `0.7.11` update brings to FQL:
+
+- Corrects a new compatibility warning that came up w/ the 10.285 Foundry release.
+- Provides workarounds for various misbehaving game systems (Gurps / L5R).
+- Refines the "show quest log to players" feature showing the players the specific quest status tab the GM currently
+  has selected.
+- Adds a Dutch language translation.
+
+## Release 0.7.10
+This is a major release that brings dual compatibility on Foundry `v9` & `v10`. 
+
+Several quality of life improvements including:
+
+- Quest document linking is enabled again.
+- Show quest log to players link in quest log app header (for GM).
+- Show quest tracker to players with icon in quest tracker header (for GM).
+- Ability to set quest tracker to transparent via fill icon in app header.
+- Expanded language / translation support. 
+
+[Weblate setup](https://weblate.foundryvtt-hub.com/engage/forien-quest-log/) for language / translation community 
+updates.
+
+## Release 0.7.9
+- Disable synthetic quest type registration for Foundry `v9+`. As it turns out `CONST` was locked down last
+minute in the v9 release cycle. The feature affected is "document linking" for quests. There is a replacement module / 
+continuing the quest log that will enable this functionality again with a different implementation. You can join the 
+TyphonJS Discord server to get an announcement when the new module is available: https://discord.gg/mnbgN8f
+
+## Release 0.7.8
+- A few fixes for external module conflicts.
+
+## Release 0.7.7
+This release is a major quality of life update.
+
+- Quest Tracker overhaul 
+  - Removed floating quest log.
+  - Quest tracker is now dockable / resizable.
+  - UI management 
+
+- Macro Compendiums
+  - GM & Player macro compendiums.
+  - Most common macros to control FQL are pre-made and ready to drop in hotbar.
+
+- TinyMCE Corrections
+  - Default font in editor is the same when viewing quest.
+  - New smaller font sizes.
+  - Correct implementation for line spacing.
+
+- Theming 
+  - Support for Whetstone.
+  - Support for Lib Themer (beta) / not officially released yet.
+
+## Release 0.7.6
+This release is a major quality of life update. There is deeper integration with Foundry allowing quests to be made into Notes on the canvas and many enhancements to the TinyMCE content editing capabilities.
+
+- FQL journal entry opens quest details.
+- Drag FQL journal entry or quest from quest log to canvas as a Note.
+- Quest tracker / floating log can interact w/ objectives.
+- Content entity linking in objectives / abstract rewards
+- TinyMCE
+   - New fonts
+   - oEmbed plugin
+      - style border
+      - style drop shadow
+   - Styles
+      - Blend mode
+      - Border
+      - Filters
+         - Blur
+         - Drop Shadow
+         - Grayscale
+      - Float
+      - Fonts
+         - Neon
+         - Line height
+      - Margin
+      - Opacity
+   - Source Code Editing
+   - CSS selector
+      - background gradient
+      - background before / after
+     
+## Release 0.7.5
+Small quality of life update.
+
+Fix for Issue #98.
+Esc key now cancels all single line input editing.
+For all single line input fields cursor is set to end of input.
+The default module setting for countHidden is now false instead of true.
+Updated French translation / language file.
+
+## Release 0.7.4
+Brings substantial finishing aspects to FQL
+
+Improved user experience
+Trusted Player Edit
+New quest creation workflow
+In-memory QuestDB
+and much more!
+
+## Release 0.7.0-0.7.3
+Total rewrite that fixes most known bugs, courtesy of @typhonrt.
+Existing quests will be migrated, except that quest rewards will be removed and need to re-added manually.
+Remember to back up your world before installing.
+
+This is the first release from Michael Leahy (TyphonJS).
+
+## Release 0.6.0
+* Set compatible with Foundry 0.8.6 (and removes compatibility with lower versions)
+* Left sidebar buttons moved from it's own menu (the pen icon) to buttons under the Notes menu (the bookmark icon)
+
+## Release 0.5.8
+* Set compatible with Foundry 0.7.10
+* Updated Chinese localization courtesy of FuyuEnnju
+* Localization fix courtesy of FuyuEnnju
+
+## Release 0.5.7
+* Buttons to delete and change vertical alignment of quest giver and splash image added courtesy of @Dilomos
+
+## Release 0.5.6
+* Added the QuestTracker from the 'party-unit-frames' project courtesy of @p4535992
+* Added support for Bug Reporter
+* Hopefully fixed the broken release flow...
+
+## Release 0.5.5
+* Failed release, withdrawn
+
+## Release 0.5.4
+* A floating quest window, by Rughalt
+* Translation to zh-tw, by zeteticl
+* Set compatible Foundry version to 0.7.9 (as that is what I tested the above with)
+
+## Release v0.5.3
+* [BUG] Quest not loading when user removed from world (@xdy)
+* Add Svenska (Swedish) translation (@xdy)
+* Updated release to point to the League fork instead of the death-save one (@eclarke12)
+
+## v0.5.2
+* [BUG] Quest Preview not saving
+* [BUG] Can't close new Quest Window
+* Provide compatibility with Foundry VTT 0.7.7
+
+## v0.5.1
 * [BUG] "_fql_quests" folder not being created on fresh installs
 
 ## v0.5.0

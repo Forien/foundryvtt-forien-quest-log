@@ -1,0 +1,58 @@
+<div id="quest-tracker" class="fql-app fql-window-app" data-appid="{{appId}}">
+  <header class="window-header flexrow">
+    <h4 class="window-title">{{title}}</h4>
+    {{#each headerButtons}}
+    <a class="header-button {{this.class}}"><i class="{{this.icon}}" title="{{localize this.title}}"></i>{{localize this.label}}</a>
+    {{/each}}
+  </header>
+
+  <section class="window-content">
+    {{#if hasQuests}}<div class="quests">{{/if}}
+      {{#each quests}}
+      <div class="quest">
+        <div class="title" {{#if (or isHidden isInactive)}}id="hidden"{{/if}}>
+        <div class="quest-tracker-header" data-quest-id="{{id}}">
+          <a>{{name}}</a>
+        </div>
+        <span class="quest-tracker-span"></span>
+        {{#if (eq id ../primaryQuestId)}}<i class="is-primary fas fa-star pad-l-4" title="{{localize 'ForienQuestLog.Tooltips.PrimaryQuest'}}"></i>{{/if}}
+        {{#if isGM}}
+          {{#if isHidden}}<i class="is-hidden fas fa-eye-slash pad-l-4" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
+          {{#if isPersonal}}<i class="is-personal fas fa-user-shield pad-l-4" title="{{{personalActors}}}"></i>{{/if}}
+        {{/if}}
+        </div>
+
+        {{#if hasObjectives}}
+        <ul class="tasks">
+          {{#each subquests}}
+          <li class="task {{state}} subquest" {{#if (or isHidden isInactive)}}id="hidden"{{/if}}>
+          <a class="quest-tracker-link {{state}}" data-quest-id="{{id}}" title="{{statusTooltip}}">{{name}}</a>
+          <span class="quest-tracker-span"></span>
+          {{#if (eq id ../../primaryQuestId)}}<i class="is-primary fas fa-star pad-l-4" title="{{localize 'ForienQuestLog.Tooltips.PrimaryQuest'}}"></i>{{/if}}
+          {{#if ../isGM}}
+            {{#if isHidden}}<i class="is-hidden fas fa-eye-slash pad-l-4" title="{{localize 'ForienQuestLog.Tooltips.HiddenQuestNoPlayers'}}"></i>{{/if}}
+            {{#if isPersonal}}<i class="is-personal fas fa-user-shield pad-l-4" title="{{{personalActors}}}"></i>{{/if}}
+          {{/if}}
+          </li>
+          {{/each}}
+          {{#if (and subquests.length tasks.length)}}<li class="subquest-separator"></li>{{/if}}
+          {{#each tasks}}
+          {{#if (or ../canEdit ../playerEdit)}}
+            <li class="quest-tracker-task" data-quest-id="{{../id}}" data-uuidv4="{{uuidv4}}">
+              <div class="task {{state}}" {{#if hidden}}id="hidden"{{/if}}><span class="{{state}}">{{{name}}}</span></div>
+            </li>
+          {{else}}
+            <li class="task {{state}}" {{#if hidden}}id="hidden"{{/if}}><span class="{{state}}">{{{name}}}</span></li>
+          {{/if}}
+        {{/each}}
+        </ul>
+        {{/if}}
+      </div>
+      {{/each}}
+    {{#if hasQuests}}
+      </div>
+    {{else}}
+      <div class="no-quests">{{localize 'ForienQuestLog.QuestTracker.NoPrimary'}}</div>
+    {{/if}}
+  </section>
+</div>

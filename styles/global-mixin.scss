@@ -1,0 +1,89 @@
+@mixin button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $primary-color-bg-buttonspan;
+  border-radius: 5px;
+  width: 22px;
+  height: 22px;
+  transition: color .3s ease;
+  cursor: pointer;
+
+  &:hover {
+    color: $primary-color-accent;
+  }
+
+  i {
+    font-size: 16px;
+    border-radius: 50%;
+    line-height: 1;
+  }
+}
+
+@mixin fonts {
+  /* almendra-regular - latin */
+  @font-face {
+    font-family: 'Almendra';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''),
+    url('../assets/fonts/almendra-v15-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('../assets/fonts/almendra-v15-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  }
+
+  /* audiowide-regular - latin */
+  @font-face {
+    font-family: 'Audiowide';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''),
+    url('../assets/fonts/audiowide-v9-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('../assets/fonts/audiowide-v9-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  }
+
+  /* bilbo-swash-caps-regular - latin */
+  @font-face {
+    font-family: 'Bilbo Swash Caps';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''),
+    url('../assets/fonts/bilbo-swash-caps-v15-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('../assets/fonts/bilbo-swash-caps-v15-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  }
+
+  /* medievalsharp-regular - latin */
+  @font-face {
+    font-family: 'MedievalSharp';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''),
+    url('../assets/fonts/medievalsharp-v14-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('../assets/fonts/medievalsharp-v14-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  }
+
+  /* metamorphous-regular - latin */
+  @font-face {
+    font-family: 'Metamorphous';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''),
+    url('../assets/fonts/metamorphous-v13-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('../assets/fonts/metamorphous-v13-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  }
+
+  /* nova-square-regular - latin */
+  @font-face {
+    font-family: 'Nova Square';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''),
+    url('../assets/fonts/nova-square-v15-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('../assets/fonts/nova-square-v15-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  }
+}
+
+@mixin header-buttons {
+  display: flex;
+  border-bottom: 2px solid $primary-color-borderheader;
+  border-block-end: 2px solid $primary-color-borderheader;
+}

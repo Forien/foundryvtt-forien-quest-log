@@ -1,0 +1,8 @@
+<div class="quest-playernotes">
+  <h1>{{localize 'ForienQuestLog.QuestPreview.Labels.PlayerNotes'}}</h1>
+  {{#if canEditPlayerNotes}}
+    {{{editor playernotes target="playernotes" engine="prosemirror" button=true editable=true owner=true}}}
+  {{else}}
+    {{{editor playernotes target="playernotes" engine="prosemirror" button=false editable=false owner=true}}}
+  {{/if}}
+</div>

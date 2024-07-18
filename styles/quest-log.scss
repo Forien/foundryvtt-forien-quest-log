@@ -2,42 +2,49 @@
   min-width: 500px;
   min-height: 640px;
 
-  .quest-log {
-    height: 100%;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    background: rgba(0,0,0,.1);
-    padding: 0 0 24px 0;
+  // Necessary to ensure the bookmark tabs show. See `QuestLog.setPosition` for the manual positioning necessary.
+  // Some game systems and UI theming modules override `overflow`, so we must visible, but then handle very long
+  // list of quests / `.table` below manually based on the Application / setPosition.
+  &.window-app .window-content {
+    overflow: visible;
   }
 
-  .quest-log.bookmarks nav {
+  $quest-min-height: 42px;  // Defines the height of the quest <li> and children elements.
+
+  .quest-log {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 16px 0;
+  }
+
+  .quest-log.bookmarks nav.log-tabs {
     position: absolute;
     left: 0;
-    transform: translateX(-100%);
+    transform: translateX(-97%);
     flex-direction: column;
     align-items: flex-end;
     background: none;
     padding: 0;
     flex: 0;
+    border-block-end: none;
 
     .item {
-      background: $background-parchment;
+      // The dynamic jQuery module setting overrides this with the window content background image. This is the fallback.
+      background: $log-bookmark-image-background;
+
       text-align: right;
-      margin: 0;
-      margin-bottom: 4px;
+      margin: 0 0 4px 0;
       padding: 8px 16px;
       width: 150px;
       border-radius: 5px 0 0 5px;
       position: relative;
       z-index: 1;
-      box-shadow: 
-        -5px 0 5px -5px rgba(0, 0, 0, 0.25) inset,
+      box-shadow:
         0 5px 5px -5px rgba(0, 0, 0, 0.3),
-        0 -5px 5px -5px rgba(0, 0, 0, 0.3),
-        -2px 0 5px -2px rgba(0, 0, 0, 0.3);
+        0 -5px 5px -5px rgba(0, 0, 0, 0.3);
+
       transition: padding .3s ease, width .3s ease, color .3s ease;
-      
+
       &:hover {
         padding-right: 32px;
         width: 166px;
@@ -55,7 +62,6 @@
         height: 100%;
         top: 0;
         left: 0;
-        background: rgba(0,0,0,.1);
         border-radius: 5px 0 0 5px;
         z-index: -1;
       }
@@ -64,13 +70,31 @@
 
   .quest-log .log-body {
     flex: 1;
-    overflow-y: hidden;
     padding: 0 16px;
+
+    header {
+      @include header-buttons;
+      justify-content: space-between;
+      margin-top: 0;
+      padding-top: 0;
+      margin-bottom: 4px;
+
+      h1 {
+        align-self: flex-end;
+        border: none;
+        margin: 0;
+        padding-bottom: 4px;
+      }
+
+      button {
+        flex: 0 0 fit-content;
+      }
+    }
   }
 
   .quest-log .tab {
     flex-direction: column;
-    padding: 16px 0 0 0;
+    padding: 4px 0 0 0;
 
     &.active {
       display: flex;
@@ -79,6 +103,9 @@
     .table {
       flex: 1;
       overflow-y: auto;
+
+      // For Firefox.
+      scrollbar-width: thin;
     }
   }
 
@@ -87,7 +114,7 @@
     margin: 0;
     padding: 0;
 
-    li {
+    li.drag-quest {
       display: flex;
       justify-content: flex-start;
       align-items: center;
@@ -95,26 +122,25 @@
       background: rgba(255, 255, 255, .3);
       border: 1px solid transparent;
       border-radius: 5px;
-      height: 42px;
+      min-height: $quest-min-height;
       transition: border-color .3s ease, box-shadow .3s ease;
 
       &:hover {
-        border-color: $primary-accent-color;
-        box-shadow: 0 0 2px $primary-accent-color inset;
+        border-color: $primary-color-accent;
+        box-shadow: 0 0 2px $primary-color-accent inset;
       }
+    }
+
+    .open-quest {
+      cursor: pointer;
     }
 
     .img {
       flex: 0 0 40px;
       width: 40px;
       height: 40px;
-      border-radius: 5px 0 0 5px;
+      border-radius: 5px;
       background-size: cover;
-      background-position: center;
-    }
-
-    .personal-quest-icon {
-      margin-left: 8px
     }
 
     .title {
@@ -122,9 +148,9 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      height: 100%;
-      padding: 0 8px;
-      cursor: pointer;
+      padding-left: 2px;
+      padding-right: 8px;
+      min-height: $quest-min-height;
 
       h2 {
         margin: 0;
@@ -143,20 +169,22 @@
       }
     }
 
+    // The height parameter hard codes the height for the border to show, but in the future this may need to be
+    // adjustable.
     .tasks {
-      flex: 0 0 60px;
+      font-size: 18px;
+      flex: 0 0 50px;
       border-left: 1px solid rgba(0,0,0,.15);
-      height: 100%;
+      min-height: $quest-min-height;
       display: flex;
       justify-content: center;
       align-items: center;
     }
-  }
 
-  .quest-log footer {
-    flex: 0 0 1px;
-    padding: 8px 16px 0 16px;
-    display: flex;
+    // The height parameter hard codes the height for the border to show, but in the future this may need to be
+    // adjustable.
+    .actions {
+      min-height: $quest-min-height;
+    }
   }
-
 }

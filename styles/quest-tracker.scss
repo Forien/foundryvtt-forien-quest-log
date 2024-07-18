@@ -1,0 +1,246 @@
+#quest-tracker {
+  pointer-events: none;
+  min-width: 275px;
+  min-height: 72px;
+  max-width: 400px;
+  max-height: 750px;
+
+  @keyframes fql-jiggle {
+    0% {
+      transform: rotate(-0.25deg);
+      animation-timing-function: ease-in;
+    }
+
+    50% {
+      transform: rotate(0.5deg);
+      animation-timing-function: ease-out;
+    }
+  }
+
+  .window-content {
+    // For Firefox.
+    scrollbar-width: thin;
+  }
+
+  a.content-link {
+    background: $tracker-color-background-entitylink;
+    border: none;
+    color: $tracker-color-text-entitylink;
+  }
+
+  &.fql-app {
+    background: $tracker-image-background;
+    background-color: $tracker-color-background;
+    background-blend-mode: $tracker-image-background-blend-mode;
+    box-shadow: 0 0 12px #000;
+
+    // The no-background class is added by QuestTrackerShell.svelte removing the background and setting the scrollbar
+    // and window resizable transparent.
+    &.no-background {
+      background: none;
+      box-shadow: none;
+
+      // For Firefox.
+      scrollbar-color: rgba(80, 80, 80, 0.7) rgba(60, 60, 60, 0.5);
+
+      ::-webkit-scrollbar-thumb {
+        background: rgba(60, 60, 60, 0.5);
+        border: rgba(80, 80, 80, 0.7);
+      }
+
+      .window-resizable-handle {
+        opacity: 0.4;
+      }
+    }
+
+    // Doesn't work quite right as game systems can provide specific colors.
+    //a:hover {
+    //  text-shadow: 0 0 8px $tracker-color-text-hover;
+    //}
+  }
+
+  .window-content {
+    padding: 0 8px 0 8px;
+    color: $tracker-color-text;
+    font-family: "Open Sans", Lato, Signika, sans-serif;
+    overflow-y: auto;
+  }
+
+  .window-header {
+    color: $tracker-color-text;
+    pointer-events: auto;
+
+    h4 {
+      font-family: Signika, sans-serif;
+    }
+  }
+
+  .window-resizable-handle {
+    pointer-events: auto;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  #hidden {
+    color: $tracker-color-text-hidden;
+  }
+
+  .quest:not(:last-child) {
+    margin-bottom: 16px;
+  }
+
+  .quests {
+    flex: none;
+    padding: 8px 0 8px 0;
+  }
+
+  .no-quests {
+    flex: none;
+    padding: 12px 0 8px 0;
+
+    // Must specifically target elements to support context menu.
+    filter: drop-shadow(1px 1px 1px #000);
+  }
+
+  .quest {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    .title {
+      a, i {
+        // Must specifically target elements to support context menu.
+        filter: drop-shadow(1px 1px 1px #000);
+      }
+    }
+
+    i {
+      cursor: pointer;
+      pointer-events: auto;
+
+      // Add additional width to last icon such that there is space between any previous icon.
+      &:last-of-type {
+        flex: 0 0 26px;
+        text-align: right;
+      }
+    }
+
+    .title {
+      display: flex;
+      flex-direction: row;
+      margin: 0;
+      font-size: 18px;
+      align-items: center;
+    }
+
+    .quest-tracker-header {
+      cursor: pointer;
+      pointer-events: auto;
+      width: fit-content;
+      height:auto;
+    }
+
+    .quest-tracker-span {
+      flex: 1;
+    }
+
+    .quest-tracker-link {
+      pointer-events: auto;
+    }
+
+    .tasks {
+      margin: 3px 0 0 0;
+      list-style: none;
+      padding-left: 4px;
+
+      i {
+        // Add additional width to last icon such that there is space between any previous icon.
+        &:last-of-type {
+          flex: 0 0 21px;
+          text-align: right;
+        }
+      }
+
+      .subquest {
+        // Must specifically target elements to support context menu.
+        filter: drop-shadow(1px 1px 1px #000);
+      }
+
+      .quest-tracker-task {
+        cursor: pointer;
+        width: fit-content;
+
+        // Must specifically target elements to support context menu.
+        filter: drop-shadow(1px 1px 1px #000);
+
+        span {
+          cursor: pointer;
+          pointer-events: auto;
+          &.check-square, &.minus-square {
+            text-decoration: line-through;
+          }
+        }
+      }
+
+      .subquest-separator {
+        margin-top: 3px;
+        margin-bottom: 4px;
+        width: 50px;
+        height: 1px;
+        background-color: rgba(255, 255, 255, .5);
+      }
+
+      .task {
+        margin: 2px 0 0 0;
+        display: flex;
+        align-items: center;
+
+        span {
+          cursor: pointer;
+          &.check-square, &.minus-square {
+            text-decoration: line-through;
+          }
+        }
+
+        &::before {
+          content: "\f0c8";
+          display: inline-block;
+          padding-right: 4px;
+          font-weight: 400;
+          font-family: "Font Awesome 5 Free";
+          min-width: 14px;
+          width: fit-content;
+          pointer-events: auto;
+          align-self: flex-start;
+        }
+
+        &.minus-square {
+          &::before {
+            content: "\f00d";
+            display: inline-block;
+            font-weight: 900;
+            padding-left: 1px;
+            min-width: 13px;
+            width: fit-content;
+          }
+        }
+
+        &.check-square {
+          &::before {
+            display: inline-block;
+            content: "\f00c";
+            font-weight: 900;
+            min-width: 14px;
+            width: fit-content;
+          }
+        }
+      }
+    }
+  }
+}

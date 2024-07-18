@@ -1,5 +1,5 @@
 .window-app.forien-quest-preview {
-  min-width: 940px;
+  min-width: 1000px;
   min-height: 640px;
 
   .tab.active {
@@ -13,35 +13,49 @@
     display: flex;
     flex-direction: column;
     background: rgba(0, 0, 0, .1);
-    padding: 0 0 24px 0;
+    padding: 0;
   }
 
   .quest-body {
     height: 100%;
     flex: 1;
+    overflow-x: hidden;
     overflow-y: auto;
-    padding: 16px 16px 0 16px;
+    padding: 6px 14px 14px 14px;
 
     .details-header {
       display: flex;
       flex: 0 0 1px;
-      margin-bottom: 16px;
+      margin-bottom: 6px;
 
       .quest-giver-gc {
-        width: 100px;
-        height: 100px;
-        background-color: rgba(0, 0, 0, .1);
+        width: 116px;
+        height: 116px;
+        background-color: $primary-color-bg-drop;
         border-radius: 5px;
-        flex: 0 0 100px;
-        margin-right: 16px;
+        flex: 0 0 116px;
+        margin-right: 8px;
         position: relative;
+
+        font-size: 12px;
+        line-height: 1.2;
+        font-weight: 700;
+        text-align: center;
+
+        .drop-info {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          height: 100%;
+          border: 2px dashed rgba(0,0,0,.5);
+          border-radius: 5px;
+        }
 
         .quest-giver-image {
           height: 100%;
           width: 100%;
           background-size: cover;
-          background-position: center;
-          cursor: pointer;
           border-radius: 5px;
         }
 
@@ -49,24 +63,14 @@
           position: absolute;
           top: 0;
           left: 0;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background: #efefef;
-          border-radius: 5px;
-          width: 22px;
-          height: 22px;
-          transition: color .3s ease;
+          @include button;
+        }
 
-          &:hover {
-            color: $primary-accent-color;
-          }
-
-          i {
-            font-size: 16px;
-            border-radius: 50%;
-            line-height: 1;
-          }
+        .deleteQuestGiver {
+          position: absolute;
+          top: 0;
+          right: 0;
+          @include button;
         }
       }
 
@@ -83,6 +87,7 @@
 
         .editable-container {
           flex: 1;
+          padding-left: 6px;
 
           input {
             margin-bottom: 8px;
@@ -93,7 +98,6 @@
         .splash-image-link {
           flex: 0 0 100px;
           background-size: cover;
-          background-position: center;
           position: relative;
           cursor: pointer;
 
@@ -119,31 +123,13 @@
           }
         }
 
-        .actions {
-          flex: 0 0 1px;
-          padding: 0 8px;
-
-          i {
-            font-size: 18px;
-            transition: color .3s ease;
-            cursor: pointer;
-
-            &:hover {
-              color: $primary-accent-color;
-            }
-          }
-        }
-
-        .quest-title .actions {
-          border: none;
-        }
-
         section {
           flex: 1;
           display: flex;
           background: rgba(255, 255, 255, .15);
           border-radius: 5px;
           overflow: hidden;
+          margin-right: 4px;
         }
 
         .quest-details {
@@ -151,7 +137,23 @@
           display: flex;
           flex-direction: column;
           justify-content: center;
-          padding: 8px 16px;
+          padding-right: 16px;
+        }
+
+        .quest-giver-name {
+          display: inline-flex;
+          justify-content: left;
+          flex-direction: row;
+        }
+
+        .quest-giver-name .editable-container {
+          flex: 0 0 auto;
+
+          input {
+            margin-bottom: 2px;
+            padding: 0;
+            height: 22px;
+          }
         }
 
         .quest-giver-name h2 {
@@ -162,12 +164,17 @@
           transition: color .3s ease;
 
           &:hover {
-            color: $primary-accent-color;
+            color: $primary-color-accent;
           }
+        }
+
+        .quest-giver-name .action-single {
+          flex: 0 0 1px;
         }
 
         .quest-status {
           display: flex;
+          padding-left: 6px;
 
           p {
             margin: 0 8px 0 0;
@@ -186,7 +193,7 @@
             content: none;
           }
 
-          .quest-name {
+          .quest-name-link {
             transition: color .3s ease;
             cursor: pointer;
 
@@ -195,7 +202,7 @@
             }
 
             &:hover {
-              color: $primary-accent-color;
+              color: $primary-color-accent;
             }
           }
         }
@@ -215,8 +222,8 @@
       .quest-col-right button {
         flex: 0 0 1px;
         white-space: nowrap;
-        height: 18px;
-        font-size: 12px;
+        height: 20px;
+        font-size: 15px;
         line-height: 1;
 
         i {
@@ -225,14 +232,14 @@
       }
 
       .quest-description {
-        flex: 0 0 50%;
+        flex: 0 0 48%;
         height: 100%;
         overflow-y: hidden;
         margin-right: 8px;
 
         .description {
-          height: calc(100% - 26px);
-          overflow: hidden;
+          height: calc(100% - 30px);
+          overflow: auto;
           background: rgba(255, 255, 255, .4);
           border-radius: 5px;
           padding: 8px;
@@ -246,19 +253,23 @@
       }
 
       .quest-col-right {
-        flex: 1;
+        flex: 0 0 51%;
         display: flex;
         flex-direction: column;
 
         h2 {
           border: none;
-          margin: 0;
+          margin: 0 auto 0 0;
         }
 
         header {
-          border-bottom: 2px solid #782e22;
+          @include header-buttons;
           margin-bottom: 4px;
           flex: 0 0 1px;
+        }
+
+        span.spacer-edit {
+          flex: 0 0 18px;
         }
 
         .quest-tasks,
@@ -285,45 +296,40 @@
             li {
               display: flex;
               border-radius: 5px;
-              background: rgba(255, 255, 255, .3);
+              background: $primary-color-bg-li;
               margin: 0 4px 2px 0;
               align-items: center;
             }
+
+            li:last-of-type {
+              margin-bottom: 0;
+            }
           }
 
-          .actions {
-            flex: 0 0 100px;
-            height: 100%;
-            cursor: default;
-
-            i {
-              min-width: 16px;
-              text-align: center;
-            }
-
-            .fa-sort {
-              cursor: move;
-            }
-
-            .del-btn {
-              color: rgba(255, 0, 0, .4);
-
-              &:hover {
-                color: $primary-accent-color;
-              }
-            }
-
-            .fa-pen {
-              font-size: 14px;
-            }
+          .is-link {
+            cursor: pointer;
           }
 
           .editable-container {
             flex: 1;
-            padding: 4px 8px;
+            padding: 4px 4px;
 
             p {
               margin: 0;
+              max-width: 290px;
+              word-wrap: break-word;
+
+              &.can-edit {
+                max-width: 290px;
+              }
+
+              &.player-edit {
+                max-width: 330px;
+              }
+
+              &.player {
+                max-width: 400px;
+              }
             }
 
             input {
@@ -349,7 +355,7 @@
             transition: color .3s ease;
 
             &:hover {
-              color: $primary-accent-color;
+              color: $primary-color-accent;
             }
           }
 
@@ -379,15 +385,28 @@
             }
           }
 
-          .quest-name {
+          .quest-name-link {
             cursor: pointer;
             transition: color .3s ease;
             margin: 0;
-            padding: 4px 8px;
-            display: inline-block;
+            padding: 4px 4px;
+            flex: 1;
+            word-wrap: break-word;
+
+            .can-edit {
+              max-width: 290px;
+            }
+
+            .player-edit {
+              max-width: 330px;
+            }
+
+            .player {
+              max-width: 390px;
+            }
 
             &:hover {
-              color: $primary-accent-color;
+              color: $primary-color-accent;
             }
 
             i {
@@ -396,7 +415,7 @@
           }
 
           .task-hidden {
-            background: rgba(0, 0, 0, .15);
+            background: $primary-color-bg-li-hidden;
 
             .task-name {
               opacity: .5;
@@ -405,26 +424,38 @@
         }
 
         .quest-rewards {
+          button {
+            &.hide-all-rewards, &.show-all-rewards {
+              flex: 0 0 90px;
+            }
+
+            &.lock-all-rewards, &.unlock-all-rewards {
+              flex: 0 0 98px;
+            }
+          }
 
           .reward {
             flex: 0 0 25px;
           }
 
+          span.spacer-edit {
+            flex: 0 0 18px;
+          }
+
           .drop-info {
             flex: 1 0 25px;
             line-height: 20px;
-            border: 2px dashed rgba(0, 0, 0, .5);
+            border: 2px dashed $primary-color-border-drop;
             border-radius: 5px;
             padding: 0 16px;
             text-align: center;
             margin-right: 4px;
-            margin-bottom: 4px;
             background: transparent;
             justify-content: center;
           }
 
           .reward-hidden {
-            background: rgba(0, 0, 0, .15);
+            background: $primary-color-bg-li-hidden;
 
             .reward-image {
               opacity: .5;
@@ -443,6 +474,10 @@
             border-radius: 5px 0 0 5px;
             overflow: hidden;
             background-color: #222;
+
+            &.can-edit {
+              cursor: pointer;
+            }
           }
 
           .reward-image {
@@ -461,11 +496,23 @@
           }
         }
       }
+    }
 
+    .playernotes {
+      .quest-playernotes {
+        height: 100%;
+        overflow-y: hidden;
+      }
+    }
+
+    .gmnotes {
+      .quest-gmnotes {
+        height: 100%;
+        overflow-y: hidden;
+      }
     }
 
     .management {
-
       .row {
         display: flex;
         flex: 0 0 1px;
@@ -480,27 +527,6 @@
 
         .setting-groups {
           flex: 0 0 1px;
-
-          .personal-quest-description {
-            font-size: 13px;
-            margin: 4px 0 2px 26px;
-          }
-        }
-
-        .input-group {
-          display: flex;
-          align-items: center;
-          background: rgba(255, 255, 255, .4);
-          border-radius: 5px;
-          padding: 2px;
-          margin-bottom: 2px;
-        }
-
-        input[type="checkbox"] {
-          flex: 0 0 20px;
-          width: 20px;
-          height: 20px;
-          margin: 0;
         }
 
         label {
@@ -511,76 +537,73 @@
         }
       }
 
-      .personal-quest-settings {
-        margin-left: 26px;
-        flex: 1;
-        overflow: hidden;
-
-        ul {
-          margin: 0;
-          padding: 0 2px 0 0;
-          list-style: none;
-          display: flex;
-          flex-wrap: wrap;
-          width: calc(100% + 2px);
-          margin-left: -2px;
-          height: 100%;
-          overflow-y: auto;
-
-          &.disabled {
-            opacity: .5;
-
-            li {
-              cursor: default;
-
-              &:hover {
-                background: inherit;
-              }
-            }
-
-            input, label {
-              cursor: default;
-            }
-          }
-
-          li {
-            cursor: pointer;
-            flex: 0 0 calc(100% / 4 - 4px);
-            display: flex;
-            align-items: center;
-            background: rgba(255, 255, 255, .4);
-            border-radius: 5px;
-            padding: 2px 8px 2px 2px;
-            margin: 2px;
-            white-space: nowrap;
-            overflow: hidden;
-
-            &:hover {
-              background: rgba(255, 255, 255, .6);
-            }
-
-            input, label {
-              cursor: pointer;
-            }
-          }
-        }
-      }
-
       .quest-splash {
-        flex: 0 0 calc(100% / 3);
+        flex: 0 0 calc(100% / 2.5);
+        position: relative;
 
         .splash-image {
           width: 100%;
           height: 200px;
           background-size: cover;
-          background-position: center;
-          background-color: rgba(255, 255, 255, .4);
+          background-color: $primary-color-bg-drop;
           border-radius: 5px;
-          cursor: pointer;
 
           &:hover {
-            background-color: rgba(255, 255, 255, .6);
+            background-color: $primary-color-hover-drop;
           }
+        }
+
+        .state-container {
+          margin-left: 12px;
+          position: relative;
+
+          input[type="checkbox"] {
+            vertical-align: center;
+            display: inline;
+            position: absolute;
+            top: 1px;
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            cursor: pointer;
+          }
+
+          label {
+            position: absolute;
+            left: 22px;
+            width: 260px;
+            display: inline;
+            font-weight: lighter;
+          }
+        }
+
+        .drop-info {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          border: 2px dashed $primary-color-border-drop;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+
+        .splash-border {
+          border: 2px dashed $primary-color-border-drop;
+        }
+
+        .delete-splash {
+          position: relative;
+          top: 0;
+          left: calc(100% - 22px);
+          @include button;
+        }
+
+        .change-splash-pos {
+          position: relative;
+          top: calc(100% - 44px);
+          left: calc(100% - 22px);
+          right: 0;
+          @include button;
         }
       }
 
@@ -591,8 +614,23 @@
         margin-top: 16px;
         overflow: hidden;
 
+        header {
+          @include header-buttons;
+          justify-content: space-between;
+          margin-top: 0;
+          padding-top: 0;
+          margin-bottom: 4px;
+        }
+
         h2 {
-          flex: 0 0 1px;
+          align-self: flex-end;
+          border: none;
+          margin: 0;
+          padding-bottom: 0;
+        }
+
+        button {
+          flex: 0 0 fit-content;
         }
 
         .subquests-box {
@@ -613,65 +651,31 @@
             transition: border-color .3s ease, box-shadow .3s ease;
 
             &:hover {
-              border-color: $primary-accent-color;
-              box-shadow: 0 0 2px $primary-accent-color inset;
+              border-color: $primary-color-accent;
+              box-shadow: 0 0 2px $primary-color-accent inset;
             }
           }
 
           h2 {
             flex: 1;
             border: none;
-            margin: 0 8px;
+            margin: 0 4px;
+            align-self: center;
             font-size: 14px;
             line-height: 30px;
             cursor: pointer;
             transition: color .3s ease;
           }
-
-          .actions {
-            flex: 0 0 100px;
-            height: 100%;
-          }
-        }
-
-        footer {
-          flex: 0 0 1px;
-          margin: 8px 0 0 0;
         }
       }
-
     }
 
     .editor {
-      height: calc(100% - 26px);
+      height: calc(100% - 30px);
     }
 
     .gmnotes .editor {
       height: calc(100% - 36px);
     }
-
-    .tox .tox-toolbar-overlord {
-      background-color: transparent;
-      border-bottom: 1px solid #222;
-      padding-bottom: 4px;
-    }
-
-    .tox .tox-toolbar,
-    .tox .tox-toolbar__overflow,
-    .tox .tox-toolbar__primary {
-      background: transparent;
-      background-color: transparent;
-    }
-
-    .tox.tox-tinymce .tox-tbtn {
-      padding: 0;
-      margin: 0 0 0 4px;
-      width: 32px;
-    }
-
-    .tox.tox-tinymce .tox-tbtn[title="Formats"] {
-      width: 90px;
-    }
-
   }
 }

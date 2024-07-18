@@ -1,202 +1,256 @@
 {
   "ForienQuestLog": {
-    "NewQuest": "Nouvelle quête",
-    "QuestLogButton": "Journal des quêtes",
-    "Quests": "Quêtes {0}",
-    "SampleReward": "ex : 300 Points d’Expérience",
-    "SampleTask": "ex : Tuer tous les rats dans l’Auberge de „La cheville tordue” ",
-
-    "QuestTypes": {
-      "InProgress": "En cours",
-      "Completed": "Achevée",
-      "Failed": "Échouée",
-      "Hidden": "Cachée",
-      "Labels": {
-        "available": "disponibles",
-        "active": "en cours",
-        "completed": "complétées",
-        "failed": "échouées",
-        "hidden": "cachées"
+    "API": {
+      "Hooks": {
+        "Labels": {
+          "OpenMacro": "Ouvrir la Quête ”{name}”"
+        },
+        "Notifications": {
+          "NoQuest": "Erreur API : impossible de créer une macro avec un ID de quête non valide."
+        }
+      },
+      "QuestDB": {
+        "Labels": {
+          "NewQuest": "Nouvelle quête"
+        }
+      },
+      "Socket": {
+        "Notifications": {
+          "RewardDrop": "FQL (récompense de quête) : {userName} a donné '{itemName}' à {actorName}."
+        }
+      },
+      "Utils": {
+        "Notifications": {
+          "NoDocument": "Une entité ne pourra pas être chargée pour IDuu : '{uuid}'.",
+          "NoPermission": "Vous n'avez pas la permission de voir la feuille de cette entité."
+        }
       }
     },
-
-    "Buttons": {
-      "AddNewQuest": "Ajouter nouvelle Quête",
-      "AddNewTask": "Ajouter nouvelle Tâche"
-    },
-
-    "QuestForm": {
-      "Title": "Ajouter nouvelle Quête",
-      "QuestGiver": "Commanditaire",
-      "QuestGiverPlaceholder": "Nom ou ID du commanditaire(Acteur ou Journal)",
-      "QuestTitle": "Nom de la Quête",
-      "DragDropActor": "Glisser/Déposer un acteur ou un journal ici pour en faire un commanditaire",
-      "QuestDescription": "Description de la quête",
-      "QuestGMNotes": "Notes du MJ",
-      "Submit": "Valider",
-      "SubquestOf": "Quête secondaire de {name}"
-    },
-
-    "QuestLog": {
-      "Title": "Journal de Quête",
-      "SubTitle": "Quête faisant parti de: {0}",
-      "Table": {
-        "QuestGiver": "Commanditaire",
-        "QuestTitle": "Nom de la Quête",
-        "Tasks": "Tâche(s)",
-        "Actions": "Actions"
-      },
-      "Tabs": {
-        "Available": "Disponible",
-        "InProgress": "En cours",
-        "Completed": "Achevée",
-        "Failed": "Échouée",
-        "Hidden": "Cachée"
-      }
-    },
-
-    "QuestPreview": {
-      "Title": "Détails sur la quête",
-      "SubTitle": "Quête faisant parti de: {0}",
-      "Objectives": "Objectifs",
-      "Rewards": "Récompenses",
-      "DragDropRewards": "Glisser/Déposer les objets ici pour en faire des récompenses",
-      "InvalidQuestId": "Impossible d'ouvrir la prévisualisation de la quête en raison d’une ID de Quête invalide.",
-      "HeaderButtons": {
-        "Show": "Montrer aux joueurs"
-      },
-
-      "Management": {
-        "IsPersonalQuest": "Est-ce une quête personnelle ?",
-        "IsPersonalQuestDescription": "Cocher pour donner à la quête un personnage. Cela sera invisible pour tous les joueurs sauf ceux spécifiquement marqués ci-dessous. Décocher cette option retirera toutes les permissions et déplacera la quête dans l’onglet Cachée.",
-        "SplashArt": "Illustration",
-        "QuestBranching": "Quêtes secondaires",
-        "AddSubquest": "Créer une quête secondaire",
-        "CanPlayerEdit": "Autoriser les joueurs a modifier les détails de la quête"
-      },
-
-      "Tabs": {
-        "Details": "Détails",
-        "QuestManagement": "Modifier la Quête",
-        "GMNotes": "Notes MJ"
-      }
-
-    },
-
     "DeleteDialog": {
-      "Title": "Effacer {name}",
-      "Header": "Êtes-vous sûr ?",
-      "Body": "Cette quête et ces données seront effacées définitivement.",
+      "BodyObjective": "Cet objectif et ses données seront effacées définitivement.",
+      "BodyQuest": "Cette quête et ses données seront effacées définitivement.",
+      "BodyReward": "Cette récompense et ses données seront effacées définitivement.",
+      "Cancel": "Annuler",
       "Delete": "Effacer",
-      "Cancel": "Annuler"
+      "HeaderDel": "Êtes vous certain de vouloir effacer : <p>'{name}'</p>",
+      "TitleDel": "Effacer {title}"
     },
-
-    "CloseDialog": {
-      "Title": "Quitter le Formulaire",
-      "Header": "Êtes vous sûrs ?",
-      "Body": "Êtes vous sûrs de vouloir fermer le formulaire ? Toutes données non sauvegardées serons perdus.",
-      "Discard": "Abandonner les modifications",
-      "Cancel": "Annuler"
+    "Labels": {
+      "AppHeader": {
+        "ShowPlayers": "Montrer aux joueurs"
+      },
+      "Quest": "Quête"
     },
-
+    "Migration": {
+      "ChatMessage": {
+        "Footer": "Vous devez mettre à jour manuellement les quêtes ci-dessus avec des données de document valide des compendiums ou de votre monde.<br>",
+        "Header": "Forien's Quest Log (migration de DB)<br>A retiré le donneur de quête sans lien ou les objets récompense des quêtes ci-dessous :<p>",
+        "Notification": "Forien's Quest Log - A retiré le donneur de quête sans lien ou les objets récompenses de quête d'une ou plusieurs quêtes. Regardez la conversation pour plus d'information.",
+        "QuestGiver": "Donneur de quête",
+        "QuestRewards": "Récompenses de quête"
+      },
+      "Notifications": {
+        "Complete": "Forien's Quest Log - Migration des données achevée.",
+        "CouldNotMigrate": "Forien's Quest Log - ne peut pas migrer la quête : '{name}'.",
+        "Schema": "Forien's Quest Log - Migration des données sous le schéma de version : '{version}'.",
+        "Start": "Forien's Quest Log - Migration en cours des données, ne pas recharger."
+      }
+    },
     "Notifications": {
       "CannotOpen": "Ne peut ouvrir les détails de la Quête. Soit vous n’avez pas la permission, soit la quête n’existe plus ou l’ID fournie était invalide.",
-      "UserCantOpen": "L'utilisateur {user} n’a pas la permission d'ouvrir cette quête.",
-      "LinkCopied": "Le lien vers cette quête a était copier dans le presse-papier.",
-      "QuestMoved": "Quête déplacée dans un nouveau dossier avec un nouveau : {target}"
+      "FinishQuestAdded": "Finissez d'éditer et fermez la nouvelle quête actuelle avant d'en ajouter une autre.",
+      "LinkCopied": "Le lien vers cette quête a été copié dans le presse-papier.",
+      "QuestAdded": "'{name}' est ajouté comme nouvelle quête avec le statut : '{status}'.",
+      "QuestIDCopied": "L'ID de cette quête a été copiée vers le presse-papier.",
+      "QuestMoved": "Quête déplacée avec un nouveau statut : '{target}'.",
+      "QuestPrimary": "'{name}' est la nouvelle quête primaire.",
+      "QuestTrackerNoActive": "Le traqueur de quête est activé, mais il n'y a pas pas de quête en cours actuellement.",
+      "UserCantOpen": "L'utilisateur '{user}' n’a pas la permission d'ouvrir cette quête."
     },
-
+    "QuestLog": {
+      "Buttons": {
+        "AddQuest": "Ajouter Quête"
+      },
+      "ContextMenu": {
+        "CopyEntityLink": "Copier le contenu du lien de l'entité",
+        "CopyQuestID": "Copier l'ID de la quête",
+        "PrimaryQuest": "Activer / Désactiver comme quête primaire"
+      },
+      "Labels": {
+        "TableHeader": "Quêtes {0}",
+        "SubTitle": "Quête faisant parti de : {0}"
+      },
+      "Title": "Journal de Quête",
+      "Tooltips": {
+        "Objectives": "Objectifs"
+      }
+    },
+    "QuestPreview": {
+      "Buttons": {
+        "RewardCustom": "Défini par l'utilisateur",
+        "RewardHide": "Cacher",
+        "RewardLock": "Bloquer",
+        "RewardShow": "Montrer",
+        "RewardUnlock": "Ouvrir"
+      },
+      "Labels": {
+        "CustomSource": "Source personnalisée",
+        "Description": "Description :",
+        "DragDropActor": "Glisser/déposer un acteur, un objet, une entrée de journal ou clic gauche pour une source personnalisée.",
+        "DragDropActorPlayer": "Glisser/déposer un acteur, un objet ou une entrée de journal.",
+        "DragDropRewards": "Glisser/Déposer les objets ici pour en faire des récompenses.",
+        "GMNotes": "Notes du MJ :",
+        "Objective": "Objectif",
+        "Objectives": "Objectifs :",
+        "PlayerNotes": "Notes des joueurs:",
+        "Reward": "Récompense",
+        "Rewards": "Récompenses :"
+      },
+      "Management": {
+        "AddSubquest": "Créer une quête secondaire",
+        "ConfigurePermissions": "Configurer les permissions",
+        "QuestBranching": "Quêtes secondaires :",
+        "QuestSettings": "Réglages des quêtes :",
+        "SplashArt": "Illustration :",
+        "SplashInfo": "Cliquer pour définir une image.",
+        "SplashQuestIcon": "Définissez comme icône de quête"
+      },
+      "Notifications": {
+        "BadUUID": "Ne peut récupérr le document pour IDuu : '{uuid}'.",
+        "WrongDocType": "Forien's Quest Log accepte seulement les acteurs, les objets et les entrées de journaux du monde /compendium comme commanditaires de quêtes.",
+        "WrongItemType": "Forien's Quest Log n'accepte que les objets du monde et des compendium items comme récompenses."
+      },
+      "Tabs": {
+        "Details": "Détails",
+        "GMNotes": "Notes MJ",
+        "PlayerNotes": "Notes des joueurs",
+        "QuestManagement": "Modifier la Quête"
+      },
+      "Title": "Détails sur la quête",
+      "Tooltips": {
+        "AddCustom": "Ajouter défini par l'utilisateur",
+        "AddObjective": "Ajouter Objectif",
+        "ChangeSplashPos": "Modifier l'alignement de l'image d'illustration.",
+        "DeleteQuestGiver": "Supprimer le commanditaire.",
+        "DeleteSplash": "Supprimer l'illustration.",
+        "HideAll": "Tout cacher",
+        "LockAll": "Tout verrouiller",
+        "PrimaryQuestSet": "Ciquer pour activer la quête primaire.",
+        "PrimaryQuestUnset": "Cliquer pour désactiver la quête primaire.",
+        "RewardHidden": "Récompense cachée. Cocher pour la montrer.",
+        "RewardLocked": "Récompense bloquée. Cliquer pour débloquer.",
+        "RewardLockedPlayer": "Récompense bloquée.",
+        "RewardUnlocked": "Récompense débloquée. Cliquer pour bloquer.",
+        "RewardUnlockedPlayer": "Récompense est débloquée.",
+        "RewardVisible": "Récompense visible. Cocher pour la cacher.",
+        "ShowAll": "Montrer à tous",
+        "TaskHidden": "Tache cachée. Cocher pour la montrer.",
+        "TaskVisible": "Tâche visible. Cocher pour la cacher.",
+        "ToggleImage": "Activer l’image du token/acteur.",
+        "UnlockAll": "Tout débloquer",
+        "ViewSplashArt": "Voir l'illustration."
+      }
+    },
+    "QuestTracker": {
+      "NoPrimary": "Pas de quête primaire disponible.",
+      "Title": "Traqueur de quêtes",
+      "Tooltips": {
+        "BackgroundShow": "Cliquez pour afficher l'arrière-plan.",
+        "BackgroundUnshow": "Cliquer pour un arrière plan transparent.",
+        "PrimaryQuestShow": "Cliquer pour montrer la quête primaire.",
+        "PrimaryQuestUnshow": "Cliquer pour cacher toutes les quêtes."
+      }
+    },
+    "QuestTypes": {
+      "Labels": {
+        "Active": "En cours",
+        "active": "en cours",
+        "Available": "Disponible",
+        "available": "disponibles",
+        "Completed": "Achevée",
+        "completed": "complétées",
+        "Failed": "Échouée",
+        "failed": "échouées",
+        "InActive": "Inactif",
+        "inactive": "inactif",
+        "Status": "La quête est {statusLabel}."
+      },
+      "Tooltips": {
+        "SetActive": "Définir comme En cours",
+        "SetAvailable": "Définir comme Disponible",
+        "SetCompleted": "Définir comme Achevée",
+        "SetFailed": "Définir comme Échouée",
+        "SetInactive": "Définir comme Inactif",
+        "Status": "Statut : {statusI18n}"
+      }
+    },
     "Settings": {
+      "allowPlayersAccept": {
+        "Enable": "Joueurs peuvent accepter",
+        "EnableHint": "Cocher pour permettre aux joueurs d'accepter les quêtes dans l'onglet Disponible."
+      },
+      "allowPlayersCreate": {
+        "Enable": "Joueurs peuvent créer",
+        "EnableHint": "Cocher pour permettre aux joueurs de créer des Quêtes. Les quêtes créées par des joueurs atterissent dans l'onglet 'Disponible', NECESSITE l'autorisation 'Créer Journal' dans le core."
+      },
       "allowPlayersDrag": {
         "Enable": "Permettre aux joueurs de récupérer les récompenses",
-        "EnableHint": "Cocher pour autoriser les joueurs à récupérer les récompenses de la fenêtre Détails de la quête à leur propres Acteurs."
-      },
-      "availableQuests": {
-        "Enable": "Montre l’onglet disponible",
-        "EnableHint": "Cocher pour montrer un nouvelle onglet \"Disponible\" dans le journal des quêtes, où les joueurs pourront voir toutes les quêtes non-cachées avant qu’elles soient acceptées."
+        "EnableHint": "Cocher pour autoriser les joueurs à récupérer les récompenses de la fenêtre Détails de la quête vers leur propres Acteurs."
       },
       "countHidden": {
         "Enable": "Montrer le nombre de tâches cachées",
         "EnableHint": "Cocher pour que le nombre de tâche Completer/Total inclue aussi les tâches cachées."
       },
+      "defaultPermissionLevel": {
+        "Enable": "Niveau de permission des quêtes nouvelles",
+        "EnableHint": "Fixer les permissions par défaut lorsque de nouvelles quêtes sont créées.",
+        "NONE": "Aucun",
+        "OBSERVER": "Observateur",
+        "OWNER": "Propriétaire"
+      },
+      "dynamicBookmarkBackground": {
+        "Enable": "Marques pages dynamiques en arrière plan",
+        "EnableHint": "Cochez pour que l'onglet marque page soit affichée de manière dynamique sur la fenêtre de contenu de l'arrière plan."
+      },
+      "hideFQLFromPlayers": {
+        "Enable": "Cacher le journal de quête aux joueurs",
+        "EnableHint": "Activer cette option cache le journal de quêts à tous les joueurs. Seul less joueurs ayant le nivveau MJ seront capables d'accéder au journal de quêtes."
+      },
       "navStyle": {
-        "Enable": "Style de navigation ",
-        "EnableHint": "Décider comment la navigation dans le journal de quête sera affichée.",
         "bookmarks": "Marque-page",
-        "classic": "Onglets classiques"
+        "classic": "Onglets classiques",
+        "Enable": "Style de navigation",
+        "EnableHint": "Décider comment la navigation dans le journal de quête sera affichée."
+      },
+      "notifyRewardDrop": {
+        "Enable": "Montrer les notification de récompenses accordées",
+        "EnableHint": "Cocher pour voir les notification de l'Interface utilisateur lorsque des récompenses de quêtes sont déposées sur les feuilles des joueurs."
+      },
+      "questTrackerResizable": {
+        "Enable": "Traqueur de quête redimensionnable",
+        "EnableHint": "Cocher pour autoriser le contrôle manuel du redimensionnement du Traqueur de quête."
       },
       "showFolder": {
         "Enable": "Montre le dossier des quêtes",
         "EnableHint": "Cocher pour montrer le dossier des données de quête dans l’onglet Journal. Seulement pour DÉBUGGER."
       },
       "showTasks": {
-        "Enable": "Montre les tâches dans le Journal de quête",
-        "EnableHint": "Décide si ou comment montrer le montant des tâches (objectifs) à côté du titre de la Quête dans le journal de quête. Cela n’a pas d’effet sur la prévisualisation de la Quête individuelle.",
         "default": "montre les tâches : effectuées/total",
-        "onlyCurrent": "Montre les tâches : effectuées",
-        "no": "Cache la colonne \"tâches\""
+        "Enable": "Montre les tâches dans le Journal de quête",
+        "EnableHint": "Décide si ou comment montrer le nombre d'objectifs à côté du Titre de la quête dans le Journal de quête. Cela n’a pas d’effet sur la prévisualisation de la Quête.",
+        "no": "Cacher la colonne \"objectifs\"",
+        "onlyCurrent": "Montre les tâches : effectuées"
       },
-      "titleAlign": {
-        "Enable": "Alignement du titre de la quête",
-        "EnableHint": "Décide comment positionner les titres de quête dans la table de l’onglet du Journal de quête.",
-        "left": "Alignés à gauche",
-        "center": "Centrés"
-      },
-      "playersWelcomeScreen": {
-        "Enable": "Affiche un message bienvenue aux Joueurs.",
-        "EnableHint": "Décocher pour empécher les joueurs de voir le message de bienvenue qui apparait aprés une mise a jour, ce dernier est toujours accessible en cliquant sur le bouton 'Aide' trouvable dans le journal quête"
-      },
-      "allowPlayersAccept": {
-        "Enable": "Les joueurs peuvent Accepter",
-        "EnableHint": "Cocher pour permettre aux joueurs d'accepter les quêtes dans l'onglet Disponible"
-      },
-      "allowPlayersCreate": {
-        "Enable": "Les joueurs peuvent créer",
-        "EnableHint": "Cocher pour permettre aux joueurs de créer des Quêtes. Les quêtes créer par des joueurs atterissent dans l'onglet 'Disponible', NECESSITE 'Créer Journal' Permission"
+      "trustedPlayerEdit": {
+        "Enable": "Permettre aux joueurs de confiance d'éditer",
+        "EnableHint": "Cochez pour permettre aux joueurs de disposer de capacités d'édition et de contrôle du statut des quêtes étendues pour les quêtes dont ils sont propriétaires."
       }
     },
-
     "Tooltips": {
-      "SetAvailable": "Définir comme Disponible",
-      "SetActive": "Définir comme En cours",
-      "SetCompleted": "Définir comme Achevée",
-      "SetFailed": "Définir comme Échouée",
-      "Hide": "Cacher",
       "Delete": "Effacer",
-      "AddAbstractReward": "Ajouter une récompense abstraite",
-      "PersonalQuestButNoPlayers": "C’est une quête personnelle, personne ne peut la voir",
-      "PersonalQuestVisibleFor": "C’est une quête personnelle pour ",
-      "RewardHidden": "Récompense cachée. Cocher pour la montrer.",
-      "RewardVisible": "Récompense visible. Cocher pour la cacher.",
-      "TaskHidden": "Tache cachée. Cocher pour la montrer.",
-      "TaskVisible": "Tâche visible. Cocher pour la cacher.",
-      "ToggleImage": "Activer l’image du token/acteur"
-    },
-
-    "Api": {
-      "__COMMENT__": "No need for translating lines starting with 'API ERROR', they show in console for developers only.",
-      "create": {
-        "title": "API Error: Title property is required to create new Quest"
-      },
-      "hooks": {
-        "createOpenQuestMacro": {
-          "name": "Ouvrir la Quête „{name}”",
-          "error": {
-            "noQuest": "API Error: Can't create macro with invalid Quest ID"
-          }
-        }
-      },
-      "reward": {
-        "create": {
-          "data": "API Error: Data property with at least {name, img} is required to create new Reward",
-          "type": "API Error: Type property is required to create new Reward"
-        }
-      },
-      "task": {
-        "create": {
-          "name": "API Error: Name property is required to create new Task"
-        }
-      }
+      "Edit": "Éditer",
+      "HiddenQuestNoPlayers": "Cette quête est cachée à tous les joueurs.",
+      "PrimaryQuest": "Quête primaire"
     }
   }
 }
