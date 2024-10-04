@@ -173,7 +173,7 @@
         "failed": "已失败",
         "InActive": "不活跃",
         "inactive": "不活跃",
-        "Status": "任务是 {statusLabel}。"
+        "Status": "该任务{statusLabel}。"
       },
       "Tooltips": {
         "SetActive": "设定为进行中",
