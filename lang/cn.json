@@ -3,10 +3,10 @@
     "API": {
       "Hooks": {
         "Labels": {
-          "OpenMacro": "打开 ”{name}” 任务"
+          "OpenMacro": "打开“{name}”任务"
         },
         "Notifications": {
-          "NoQuest": "API 错误：任务ID无效，无法创建宏。"
+          "NoQuest": "API错误：任务ID无效，无法创建宏。"
         }
       },
       "QuestDB": {
@@ -21,7 +21,7 @@
       },
       "Utils": {
         "Notifications": {
-          "NoDocument": "无法加载实体 UUID：'{uuid}'。",
+          "NoDocument": "无法加载实体UUID：'{uuid}'。",
           "NoPermission": "您没有足够的权限查看此实体表。"
         }
       }
@@ -33,7 +33,7 @@
       "Cancel": "取消",
       "Delete": "删除",
       "HeaderDel": "你确定你要删除：<p>'{name}'</p>",
-      "TitleDel": "删除 {title}"
+      "TitleDel": "删除{title}"
     },
     "Labels": {
       "AppHeader": {
@@ -78,7 +78,7 @@
       },
       "Labels": {
         "TableHeader": "{0}任务",
-        "SubTitle": "的子任务 {0}"
+        "SubTitle": "{0}的子任务"
       },
       "Title": "任务栏",
       "Tooltips": {
@@ -99,10 +99,10 @@
         "DragDropActor": "拖放演员、项目或日记条目或左键单击以设置自定义来源。",
         "DragDropActorPlayer": "拖放演员、项目或日记条目。",
         "DragDropRewards": "将物品拖拽到此处以将其设为奖励。",
-        "GMNotes": "GM 笔记：",
+        "GMNotes": "GM笔记：",
         "Objective": "客观的",
         "Objectives": "目标：",
-        "PlayerNotes": "玩家 笔记：",
+        "PlayerNotes": "玩家笔记：",
         "Reward": "报酬",
         "Rewards": "奖励："
       },
@@ -123,7 +123,7 @@
       "Tabs": {
         "Details": "详情",
         "GMNotes": "GM笔记",
-        "PlayerNotes": "玩家 笔记",
+        "PlayerNotes": "玩家笔记",
         "QuestManagement": "管理任务"
       },
       "Title": "任务详情",
@@ -155,10 +155,10 @@
       "NoPrimary": "没有可用的主要任务。",
       "Title": "任务追踪器",
       "Tooltips": {
-        "BackgroundShow": "點擊顯示背景。",
-        "BackgroundUnshow": "單擊以使背景透明。",
+        "BackgroundShow": "单击以显示背景。",
+        "BackgroundUnshow": "单击以使背景透明。",
         "PrimaryQuestShow": "单击以显示主要任务。",
-        "PrimaryQuestUnshow": "点击显示所有任务。"
+        "PrimaryQuestUnshow": "单击以显示所有任务。"
       }
     },
     "QuestTypes": {
@@ -173,7 +173,7 @@
         "failed": "已失败",
         "InActive": "不活跃",
         "inactive": "不活跃",
-        "Status": "任务是 {statusLabel}。"
+        "Status": "该任务{statusLabel}。"
       },
       "Tooltips": {
         "SetActive": "设定为进行中",
