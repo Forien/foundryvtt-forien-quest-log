@@ -731,7 +731,7 @@ export class HandlerDetails
 
       if (reward && (questPreview.canEdit || !reward.locked))
       {
-         const appId = await Utils.showSheetFromUUID(data, { permissionCheck: false, editable: false });
+         const appId = await Utils.showSheetFromUUID(data, { permissionCheck: false, editable: questPreview.canEdit });
 
          // If a new sheet is rendered push it to the opened appIds.
          if (appId && !questPreview._openedAppIds.includes(appId)) { questPreview._openedAppIds.push(appId); }

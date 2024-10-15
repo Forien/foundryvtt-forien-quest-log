@@ -1,4 +1,10 @@
 # Changelog
+
+## Release 0.8.1
+The minor `0.8.1` update brings to FQL:
+- Improvements to Chinese Localization ([#137](https://github.com/Forien/foundryvtt-forien-quest-log/pull/137)) by AlphaStarguide/Kuroni
+- [DND5e] Fix to [#135](https://github.com/Forien/foundryvtt-forien-quest-log/issues/135) – not being able to Award from an Encounter set as a Reward
+
 ## Release 0.8.0
 This major `0.8.0` update brings to FQL:
 - Actors can be set as quest rewards (Item Piles / game system loot support).
