@@ -468,11 +468,11 @@ export class FQLHooks
     *
     * @param {JournalDirectory}  app - The JournalDirectory app.
     *
-    * @param {HTMLElement}       html - The jQuery element for the window content of the app.
+    * @param {HTMLElement}       html - The HTML Element for the window content of the app.
     *
     * @see https://foundryvtt.com/api/classes/client.JournalDirectory.html
     */
-   static renderJournalDirectory(app, html, con, opt, d)
+   static renderJournalDirectory(app, html)
    {
       if (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers))
       {
@@ -483,7 +483,8 @@ export class FQLHooks
          let footer = html.querySelector('.directory-footer');
          if (footer.length === 0)
          {
-            footer = $(`<footer class="directory-footer"></footer>`);
+            footer = document.createElement("footer");
+            footer.classList.add("directory-footer");
             html.append(footer);
          }
          footer.append(button);
