@@ -5,22 +5,22 @@
   "authors": [
     {
       "name": "Forien",
-      "url": "https://www.patreon.com/forien"
+      "url": "https://www.patreon.com/foundryworkshop"
     },
     {
       "name": "Michael Leahy (TyphonJS)",
       "url": "https://www.typhonjs.io"
     }
   ],
-  "url": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log",
-  "readme": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/blob/master/README.md",
-  "bugs": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/issues",
-  "changelog": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/latest/",
-  "version": "0.8.0",
+  "url": "https://github.com/Forien/foundryvtt-forien-quest-log",
+  "readme": "https://github.com/Forien/foundryvtt-forien-quest-log/blob/master/README.md",
+  "bugs": "https://github.com/Forien/foundryvtt-forien-quest-log/issues",
+  "changelog": "https://github.com/Forien/foundryvtt-forien-quest-log/releases/latest/",
+  "version": "0.9.0",
   "compatibility": {
-    "minimum": "11",
-    "verified": "12",
-    "maximum": "12"
+    "minimum": "13",
+    "verified": "13",
+    "maximum": "13"
   },
   "esmodules": [
     "./src/init.js"
@@ -126,8 +126,8 @@
     }
   ],
   "socket": true,
-  "manifest": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/latest/download/module.json",
-  "download": "https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/releases/download/0.8.0/module.zip",
+  "manifest": "https://github.com/Forien/foundryvtt-forien-quest-log/releases/latest/download/module.json",
+  "download": "https://github.com/Forien/foundryvtt-forien-quest-log/releases/download/0.9.0/module.zip",
   "protected": false,
   "coreTranslation": false,
   "library": false

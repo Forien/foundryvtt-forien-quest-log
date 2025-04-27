@@ -6,7 +6,7 @@
  * fire {@link QuestDBHooks} that other parts of FQL can respond to handle as necessary. In particular
  * {@link ViewManager} handles these hooks to update the GUI on local and remote clients when ownership change.
  */
-export class FQLDocumentOwnershipConfig extends DocumentOwnershipConfig // eslint-disable-line no-undef
+export class FQLDocumentOwnershipConfig extends foundry.applications.apps.DocumentOwnershipConfig // eslint-disable-line no-undef
 {
    /** @override */
    async _updateObject(event, formData)

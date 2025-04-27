@@ -216,8 +216,7 @@ export class FQLHooks
    {
       if (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers))
       {
-         const notes = controls.find((c) => c.name === 'notes');
-         if (notes) { notes.tools.push(...FoundryUIManager.noteControls); }
+         controls.notes.tools = foundry.utils.mergeObject(controls.notes.tools, FoundryUIManager.noteControls);
       }
    }
 
@@ -469,18 +468,19 @@ export class FQLHooks
     *
     * @param {JournalDirectory}  app - The JournalDirectory app.
     *
-    * @param {JQuery}            html - The jQuery element for the window content of the app.
+    * @param {HTMLElement}       html - The jQuery element for the window content of the app.
     *
     * @see https://foundryvtt.com/api/classes/client.JournalDirectory.html
     */
-   static renderJournalDirectory(app, html)
+   static renderJournalDirectory(app, html, con, opt, d)
    {
       if (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers))
       {
-         const button = $(`<button class="quest-log-btn">${game.i18n.localize(
-          'ForienQuestLog.QuestLog.Title')}</button>`);
+         const button = document.createElement('button');
+         button.classList.add("quest-log-btn");
+         button.innerText = game.i18n.localize('ForienQuestLog.QuestLog.Title');
 
-         let footer = html.find('.directory-footer');
+         let footer = html.querySelector('.directory-footer');
          if (footer.length === 0)
          {
             footer = $(`<footer class="directory-footer"></footer>`);
@@ -488,10 +488,7 @@ export class FQLHooks
          }
          footer.append(button);
 
-         button.click(() =>
-         {
-            ViewManager.questLog.render(true);
-         });
+         button.addEventListener("click", () => ViewManager.questLog.render(true));
       }
 
       if (!(game.user.isGM && game.settings.get(constants.moduleName, settings.showFolder)))
@@ -499,7 +496,7 @@ export class FQLHooks
          const folder = Utils.getQuestFolder();
          if (folder !== void 0)
          {
-            const element = html.find(`.folder[data-folder-id="${folder.id}"]`);
+            const element = html.querySelector(`.folder[data-folder-id="${folder.id}"]`);
             if (element !== void 0)
             {
                element.remove();

@@ -235,8 +235,12 @@ export class ModuleSettings
                {
                   ViewManager.closeAll({ questPreview: true, updateSetting: false });
 
-                  const notes = ui?.controls?.controls.find((c) => c.name === 'notes');
-                  if (notes) { notes.tools = notes?.tools.filter((c) => !c.name.startsWith(constants.moduleName)); }
+                  const controls = ui?.controls?.controls;
+                  if (controls)
+                  {
+                     delete controls.notes.tools.quest_log;
+                     delete controls.notes.tools.quest_tracker;
+                  }
 
                   // Remove all quests from in-memory DB. This is required so that users can not retrieve quests
                   // from the QuestAPI or content links in Foundry resolve when FQL is hidden.
@@ -248,8 +252,11 @@ export class ModuleSettings
                   await QuestDB.init();
 
                   // Add back ui.controls
-                  const notes = ui?.controls?.controls.find((c) => c.name === 'notes');
-                  if (notes) { notes.tools.push(...FoundryUIManager.noteControls); }
+                  const controls = ui?.controls?.controls;
+                  if (controls)
+                  {
+                     controls.notes.tools = foundry.utils.mergeObject(controls.notes.tools, FoundryUIManager.noteControls);
+                  }
                }
 
                ui?.controls?.render(true);

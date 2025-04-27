@@ -60,24 +60,24 @@ export class FoundryUIManager
     *
     * @type {object[]}
     */
-   static #noteControls = [
-      {
-         name: constants.moduleName,
+   static #noteControls = {
+      quest_log: {
+         name: 'quest_log',
          title: 'ForienQuestLog.QuestLog.Title',
          icon: 'fas fa-scroll',
          visible: true,
-         onClick: () => ViewManager.questLog.render(true, { focus: true }),
+         onChange: () => ViewManager.questLog.render(true, { focus: true }),
          button: true
       },
-      {
-         name: 'forien-quest-log-floating-window',
+      quest_tracker: {
+         name: 'quest_tracker',
          title: 'ForienQuestLog.QuestTracker.Title',
          icon: 'fas fa-tasks',
          visible: true,
-         onClick: async () => { await game.settings.set(constants.moduleName, settings.questTrackerEnable, true); },
+         onChange: async () => { await game.settings.set(constants.moduleName, settings.questTrackerEnable, true); },
          button: true
       }
-   ];
+   };
 
    /**
     * Stores the constraints and other state tracked from various Foundry UI elements.
@@ -291,7 +291,10 @@ export class FoundryUIManager
 
       let width = FoundryUIManager.#uiState.navigation.left + sidebarData.width + FoundryUIManager.#bufferSpaceNavX;
       width += pinned ? tracker.position.width : 0;
-      ui?.nav?.element?.css('width', `calc(100% - ${width}px`);
+      if (ui?.nav?.element)
+      {
+         ui.nav.element.style.width = `calc(100% - ${width}px`;
+      }
    }
 
    /**
@@ -334,7 +337,7 @@ export class FoundryUIManager
       const sidebarElem = ui?.sidebar?.element[0];
       const sidebarRect = sidebarElem?.getBoundingClientRect();
 
-      const navLeft = ui?.nav?.element?.css('left');
+      const navLeft = ui?.nav?.element?.style.left;
       if (typeof navLeft === 'string') { FoundryUIManager.#uiState.navigation.left = parseInt(navLeft, 10); }
 
       if (sidebarRect)

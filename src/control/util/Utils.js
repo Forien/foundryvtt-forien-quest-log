@@ -233,7 +233,7 @@ export class Utils
     */
    static getQuestFolder()
    {
-      return game.journal.directory.folders.find((f) => f.name === this.#questDirName);
+      return game.journal.folders.find((f) => f.name === this.#questDirName);
    }
 
    /**
@@ -280,7 +280,7 @@ export class Utils
     */
    static async initializeQuestFolder()
    {
-      const folder = game.journal.directory.folders.find((f) => f.name === this.#questDirName);
+      const folder = game.journal.folders.find((f) => f.name === this.#questDirName);
       if (folder !== void 0) { return folder; }
 
       if (game.user.isGM)
@@ -288,7 +288,7 @@ export class Utils
          await Folder.create({ name: this.#questDirName, type: 'JournalEntry', parent: null });
       }
 
-      return game.journal.directory.folders.find((f) => f.name === this.#questDirName);
+      return game.journal.folders.find((f) => f.name === this.#questDirName);
    }
 
    /**

@@ -56,7 +56,7 @@ export class HandlerManage
             questPreview._ownershipControl = new FQLDocumentOwnershipConfig(quest.entry, {
                top: Math.min(questPreview.position.top, window.innerHeight - 350),
                left: questPreview.position.left + 125
-            }).render(true, { focus: true });
+            });
          }
 
          questPreview._ownershipControl.render(true, {
