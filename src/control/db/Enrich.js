@@ -129,6 +129,7 @@ export class Enrich
     */
    static async quest(quest)
    {
+      const TextEditor = foundry.applications.ux.TextEditor.implementation;
       const data = JSON.parse(JSON.stringify(quest.toJSON()));
       data.id = quest.id;
       data.isActive = quest.isActive;

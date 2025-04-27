@@ -8,7 +8,7 @@
  * window. FQLContextMenu does not reposition the inserted HTML which is relative to the element containing the context
  * menu.
  */
-export class FQLContextMenu extends ContextMenu
+export class FQLContextMenu extends foundry.applications.ux.ContextMenu
 {
    /**
     * Defines the default CSS styles for the context menu.

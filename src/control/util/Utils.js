@@ -424,7 +424,7 @@ export class Utils
       ];
 
       templates = templates.map((t) => `modules/forien-quest-log/${t}`);
-      loadTemplates(templates);
+      foundry.applications.handlebars.loadTemplates(templates);
    }
 
    /**
