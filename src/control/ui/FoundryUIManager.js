@@ -334,7 +334,7 @@ export class FoundryUIManager
     */
    static #storeState()
    {
-      const sidebarElem = ui?.sidebar?.element[0];
+      const sidebarElem = ui?.sidebar?.element;
       const sidebarRect = sidebarElem?.getBoundingClientRect();
 
       const navLeft = ui?.nav?.element?.style.left;
@@ -377,7 +377,7 @@ export class FoundryUIManager
          sidebarData.rectDock.x = sidebarData.left - sidebarData.rectDock.width;
       }
 
-      const hotbarElem = ui?.hotbar?.element[0];
+      const hotbarElem = ui?.hotbar?.element;
       const hotbarRect = hotbarElem?.getBoundingClientRect();
 
       if (hotbarRect)
