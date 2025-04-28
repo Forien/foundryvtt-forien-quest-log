@@ -4,6 +4,11 @@
 - Compatibility with Foundry v13
   - This does not include migration to ApplicationV2 as that will take longer and I wanted to release v13 update as soon as possible
 - "Jump To Pin" Context Menu option. ([#142](https://github.com/Forien/foundryvtt-forien-quest-log/issues/142))
+- Added Keybindings
+  - `openQuestLog` (default: `CTRL+Q`) — Opens Quest Log ([#140](https://github.com/Forien/foundryvtt-forien-quest-log/issues/140))
+  - `openPrimaryQuest` (default: `CTRL+SHIFT+Q`) — Opens Primary Quest (if any)
+  - `toggleQuestTracker` (default: `CTRL+ALT+Q`) — Toggles the Quest Tracker
+- Added `openPrimary` API method, which opens the Quest Preview / Quest Sheet for the current Primary Quest
 
 ## Release 0.8.1
 The minor `0.8.1` update brings to FQL:

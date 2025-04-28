@@ -2,11 +2,14 @@ import { QuestDBShim }  from './QuestDBShim.js';
 
 import {
    Socket,
-   ViewManager }        from '../index.js';
+   ViewManager
+} from '../index.js';
 
 import {
    constants,
-   settings }           from '../../model/constants.js';
+   sessionConstants,
+   settings
+} from '../../model/constants.js';
 
 /**
  * Quest public API. QuestAPI exposes control capabilities publicly. This functionality is gated as necessary depending
@@ -41,7 +44,7 @@ class QuestAPI
     *
     * @param {boolean}  [options.notify=true] - Post UI notification on any error.
     */
-   static open({ questId, notify = true })
+   static open({ questId, notify = true } = {})
    {
       if (!game.user.isGM && game.settings.get(constants.moduleName, settings.hideFQLFromPlayers)) { return; }
 
@@ -88,6 +91,21 @@ class QuestAPI
             Socket.userCantOpenQuest();
          }
       }
+   }
+
+   /**
+    * Opens the Quest sheet / QuestPreview for the Primary Quest
+    *
+    * @see QuestAPI.open
+    *
+    * @param {object}   options - Optional parameters.
+    *
+    * @param {boolean}  [options.notify=true] - Post UI notification on any error.
+    */
+   static openPrimary({ notify = true } = {})
+   {
+      const questId = sessionStorage.getItem(sessionConstants.currentPrimaryQuest);
+      this.open({ questId, notify });
    }
 }
 

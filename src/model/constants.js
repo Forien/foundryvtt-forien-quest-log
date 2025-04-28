@@ -102,7 +102,16 @@ const settings = {
    trustedPlayerEdit: 'trustedPlayerEdit'
 };
 
-export { constants, jquery, questStatus, questStatusI18n, questTabIndex, sessionConstants, settings };
+/**
+ * @type {FQLKeybindings} Defines all the module keybindings for world and client.
+ */
+const keybindings = {
+   openQuestLog: 'openQuestLog',
+   openPrimaryQuest: 'openPrimaryQuest',
+   toggleQuestTracker: 'toggleQuestTracker',
+};
+
+export { constants, jquery, questStatus, questStatusI18n, questTabIndex, sessionConstants, settings, keybindings };
 
 /**
  * @typedef {object} FQLSessionConstants
@@ -154,4 +163,14 @@ export { constants, jquery, questStatus, questStatusI18n, questTabIndex, session
  * @property {string}   showTasks - Determines if objective counts are rendered.
  *
  * @property {string}   trustedPlayerEdit - Allows trusted players to have full quest editing capabilities.
+ */
+
+/**
+ * @typedef {object} FQLKeybindings
+ *
+ * @property {string}   openQuestLog - Press to open Quest Log.
+ *
+ * @property {string}   openPrimaryQuest - Press to open Primary Quest
+ *
+ * @property {string}   toggleQuestTracker - Press to toggle Quest Tracker
  */
