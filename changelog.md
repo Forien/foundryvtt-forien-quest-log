@@ -1,5 +1,10 @@
 # Changelog
 
+## Release 0.9.0
+- Compatibility with Foundry v13
+  - This does not include migration to ApplicationV2 as that will take longer and I wanted to release v13 update as soon as possible
+- "Jump To Pin" Context Menu option. ([#142](https://github.com/Forien/foundryvtt-forien-quest-log/issues/142))
+
 ## Release 0.8.1
 The minor `0.8.1` update brings to FQL:
 - Improvements to Chinese Localization ([#137](https://github.com/Forien/foundryvtt-forien-quest-log/pull/137)) by AlphaStarguide/Kuroni

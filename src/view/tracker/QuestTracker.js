@@ -177,7 +177,10 @@ export class QuestTracker extends Application
       /**
        * @type {object[]}
        */
-      const menuItems = [contextOptions.menuItemCopyLink];
+      const menuItems = [
+       contextOptions.menuItemCopyLink,
+       contextOptions.jumpToPin
+      ];
 
       if (game.user.isGM)
       {

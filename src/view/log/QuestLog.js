@@ -163,12 +163,18 @@ export class QuestLog extends Application
       /**
        * @type {object[]}
        */
-      const menuItemsOther = [contextOptions.menuItemCopyLink];
+      const menuItemsOther = [
+         contextOptions.menuItemCopyLink,
+         contextOptions.jumpToPin
+      ];
 
       /**
        * @type {object[]}
        */
-      const menuItemsActive = [contextOptions.menuItemCopyLink];
+      const menuItemsActive = [
+         contextOptions.menuItemCopyLink,
+         contextOptions.jumpToPin
+      ];
 
       if (game.user.isGM)
       {
@@ -230,7 +236,8 @@ export class QuestLog extends Application
          if (options.tabId === questStatus.inactive)
          {
             // Only switch to inactive tab if GM or trusted player w/ edit.
-            if (game.user.isGM || Utils.isTrustedPlayerEdit()) { this._tabs[0].activate(options.tabId); }
+            if (game.user.isGM || Utils.isTrustedPlayerEdit())
+            { this._tabs[0].activate(options.tabId); }
          }
          else
          {

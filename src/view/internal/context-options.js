@@ -63,3 +63,14 @@ export const togglePrimaryQuest = {
       if (quest) { Socket.setQuestPrimary({ quest }); }
    }
 };
+
+export const jumpToPin = {
+   name: "SIDEBAR.JumpPin",
+   icon: '<i class="fa-solid fa-crosshairs"></i>',
+   condition: (menu) => !!getQuestFromElement(menu)?.entry.sceneNote,
+   callback: (menu) =>
+   {
+      const quest = getQuestFromElement(menu);
+      quest.entry.panToNote();
+   }
+};
