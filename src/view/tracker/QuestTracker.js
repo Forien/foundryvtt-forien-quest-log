@@ -221,7 +221,7 @@ export class QuestTracker extends Application
          });
       }
 
-      new FQLContextMenu(html, '.quest-tracker-header', menuItems);
+      new FQLContextMenu(html, '.quest-tracker-header', menuItems, { fixed: true });
    }
 
    /**

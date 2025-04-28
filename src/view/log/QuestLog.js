@@ -218,8 +218,8 @@ export class QuestLog extends Application
 
       // Must show two different context menus as only the active / in progress tab potentially has the menu option to
       // allow the GM to set the primary quest.
-      new FQLContextMenu(html, '.tab:not([data-tab="active"]) .drag-quest', menuItemsOther);
-      new FQLContextMenu(html, '.tab[data-tab="active"] .drag-quest', menuItemsActive);
+      new FQLContextMenu(html, '.tab:not([data-tab="active"]) .drag-quest', menuItemsOther, { fixed: true });
+      new FQLContextMenu(html, '.tab[data-tab="active"] .drag-quest', menuItemsActive, { fixed: true });
    }
 
    /**
