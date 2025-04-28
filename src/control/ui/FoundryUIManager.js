@@ -285,16 +285,17 @@ export class FoundryUIManager
     */
    static updateTrackerPinned()
    {
-      const tracker = ViewManager.questTracker;
-      const pinned = tracker.pinned;
-      const sidebarData = FoundryUIManager.#uiState.sidebar.open;
-
-      let width = FoundryUIManager.#uiState.navigation.left + sidebarData.width + FoundryUIManager.#bufferSpaceNavX;
-      width += pinned ? tracker.position.width : 0;
-      if (ui?.nav?.element)
-      {
-         ui.nav.element.style.width = `calc(100% - ${width}px`;
-      }
+      /** Commented code for now, most likely not needed anymore with v13 */
+      // const tracker = ViewManager.questTracker;
+      // const pinned = tracker.pinned;
+      // const sidebarData = FoundryUIManager.#uiState.sidebar.open;
+      //
+      // let width = FoundryUIManager.#uiState.navigation.left + sidebarData.width + FoundryUIManager.#bufferSpaceNavX;
+      // width += pinned ? tracker.position.width : 0;
+      // if (ui?.nav?.element)
+      // {
+      //    ui.nav.element.style.width = `calc(100% - ${width}px`;
+      // }
    }
 
    /**
