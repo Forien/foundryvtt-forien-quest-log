@@ -30,7 +30,7 @@ import * as contextOptions from "../internal/context-options.js";
  * {@link JQuery} control callbacks are setup in {@link QuestLog.activateListeners} and are located in a separate static
  * control class {@link HandlerLog}.
  */
-export class QuestLog extends Application
+export class QuestLog extends foundry.appv1.api.Application
 {
    /**
     * @inheritDoc

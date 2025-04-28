@@ -28,7 +28,7 @@ import * as contextOptions from "../internal/context-options.js";
  * used in the {@link Handlebars} template. In the future this may be cached in a similar way that {@link Quest} data
  * is cached for {@link QuestLog}.
  */
-export class QuestTracker extends Application
+export class QuestTracker extends foundry.appv1.api.Application
 {
    /**
     * Provides the default width for the QuestTracker if not defined.
