@@ -39,15 +39,14 @@ _any_
 
 ## Recent Updates
 
-The major `0.8.0` update to FQL:
+The major `0.9.0` update to FQL:
 
-- Foundry v11 / v12 dual support.
-- Actors can now be set as rewards allowing [Item Piles](https://foundryvtt.com/packages/item-piles) and various game 
-  system loot functionality to be utilized in rewards distribution for currency and items. 
-- Custom rewards may use game system text enrichment where available to distribute XP. For example with the `dnd5e` 
-  system use `[[/award 400xp]]`.
-- Player Notes - players can now leave notes on quests in a separate section similar to `GM Notes`.
-- Editors switched to ProseMirror.
+- Foundry v13 support.
+- "Jump To Pin" Context Menu option.
+- Added Keybindings
+  - `openQuestLog` (default: `CTRL+Q`) — Opens Quest Log (if GM or not hidden)
+  - `openPrimaryQuest` (default: `CTRL+SHIFT+Q`) — Opens Primary Quest (if any)
+  - `toggleQuestTracker` (default: `CTRL+ALT+Q`) — Toggles the Quest Tracker
 
 ## Usage
 
@@ -76,9 +75,6 @@ FQL is quite user-friendly with an intuitive UI, however you might want to [chec
 FQL is being updated for stability across core Foundry updates. This stability and long term maintenance of such is 
 the _main feature_ of FQL presently. You can rest assured that the quest log experience you know and _love_ will 
 continue to be available now and into the future.
-
-Moving forward FQL is transitioning back to ownership and maintenance by Forien who is active again with Foundry 3rd 
-party development. 
 
 ## Translations
 
