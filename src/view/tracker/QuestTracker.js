@@ -17,6 +17,8 @@ import {
    sessionConstants,
    settings }              from '../../model/constants.js';
 
+import * as contextOptions from "../internal/context-options.js";
+
 /**
  * Provides the quest tracker which provides an overview of active quests and objectives which can be opened / closed
  * to show all objectives for a given quest. The folder / open state is stored in {@link sessionStorage}.
@@ -26,7 +28,7 @@ import {
  * used in the {@link Handlebars} template. In the future this may be cached in a similar way that {@link Quest} data
  * is cached for {@link QuestLog}.
  */
-export class QuestTracker extends Application
+export class QuestTracker extends foundry.appv1.api.Application
 {
    /**
     * Provides the default width for the QuestTracker if not defined.
@@ -172,56 +174,23 @@ export class QuestTracker extends Application
     */
    #contextMenu(html)
    {
-      const menuItemCopyLink = {
-         name: 'ForienQuestLog.QuestLog.ContextMenu.CopyEntityLink',
-         icon: '<i class="fas fa-link"></i>',
-         callback: async (menu) =>
-         {
-            const questId = $(menu)?.closest('.quest-tracker-header')?.data('quest-id');
-            const quest = QuestDB.getQuest(questId);
-
-            if (quest && await Utils.copyTextToClipboard(`@JournalEntry[${quest.id}]{${quest.name}}`))
-            {
-               ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.LinkCopied'));
-            }
-         }
-      };
-
       /**
        * @type {object[]}
        */
-      const menuItems = [menuItemCopyLink];
+      const menuItems = [
+       contextOptions.menuItemCopyLink,
+       contextOptions.jumpToPin
+      ];
 
       if (game.user.isGM)
       {
-         menuItems.push({
-            name: 'ForienQuestLog.QuestLog.ContextMenu.CopyQuestID',
-            icon: '<i class="fas fa-key"></i>',
-            callback: async (menu) =>
-            {
-               const questId = $(menu)?.closest('.quest-tracker-header')?.data('quest-id');
-               const quest = QuestDB.getQuest(questId);
-
-               if (quest && await Utils.copyTextToClipboard(quest.id))
-               {
-                  ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestIDCopied'));
-               }
-            }
-         });
-
-         menuItems.push({
-            name: 'ForienQuestLog.QuestLog.ContextMenu.PrimaryQuest',
-            icon: '<i class="fas fa-star"></i>',
-            callback: (menu) =>
-            {
-               const questId = $(menu)?.closest('.quest-tracker-header')?.data('quest-id');
-               const quest = QuestDB.getQuest(questId);
-               if (quest) { Socket.setQuestPrimary({ quest }); }
-            }
-         });
+         menuItems.push(
+          contextOptions.copyQuestId,
+          contextOptions.togglePrimaryQuest
+         );
       }
 
-      new FQLContextMenu(html, '.quest-tracker-header', menuItems);
+      new FQLContextMenu(html, '.quest-tracker-header', menuItems, { fixed: true });
    }
 
    /**

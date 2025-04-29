@@ -16,6 +16,7 @@ import {
    questStatusI18n,
    questTabIndex,
    settings }           from '../../model/constants.js';
+import * as contextOptions from "../internal/context-options.js";
 
 /**
  * Provides the main quest log app which shows the quests separated by status either with bookmark or classic tabs.
@@ -29,7 +30,7 @@ import {
  * {@link JQuery} control callbacks are setup in {@link QuestLog.activateListeners} and are located in a separate static
  * control class {@link HandlerLog}.
  */
-export class QuestLog extends Application
+export class QuestLog extends foundry.appv1.api.Application
 {
    /**
     * @inheritDoc
@@ -159,67 +160,36 @@ export class QuestLog extends Application
     */
    #contextMenu(html)
    {
-      const menuItemCopyLink = {
-         name: 'ForienQuestLog.QuestLog.ContextMenu.CopyEntityLink',
-         icon: '<i class="fas fa-link"></i>',
-         callback: async (menu) =>
-         {
-            const questId = $(menu)?.closest('.drag-quest')?.data('quest-id');
-            const quest = QuestDB.getQuest(questId);
-
-            if (quest && await Utils.copyTextToClipboard(`@JournalEntry[${quest.id}]{${quest.name}}`))
-            {
-               ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.LinkCopied'));
-            }
-         }
-      };
+      /**
+       * @type {object[]}
+       */
+      const menuItemsOther = [
+         contextOptions.menuItemCopyLink,
+         contextOptions.jumpToPin
+      ];
 
       /**
        * @type {object[]}
        */
-      const menuItemsOther = [menuItemCopyLink];
-
-      /**
-       * @type {object[]}
-       */
-      const menuItemsActive = [menuItemCopyLink];
+      const menuItemsActive = [
+         contextOptions.menuItemCopyLink,
+         contextOptions.jumpToPin
+      ];
 
       if (game.user.isGM)
       {
-         const menuItemQuestID = {
-            name: 'ForienQuestLog.QuestLog.ContextMenu.CopyQuestID',
-            icon: '<i class="fas fa-key"></i>',
-            callback: async (menu) =>
-            {
-               const questId = $(menu)?.closest('.drag-quest')?.data('quest-id');
-               const quest = QuestDB.getQuest(questId);
+         menuItemsActive.push(
+          contextOptions.copyQuestId,
+          contextOptions.togglePrimaryQuest
+         );
 
-               if (quest && await Utils.copyTextToClipboard(quest.id))
-               {
-                  ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestIDCopied'));
-               }
-            }
-         };
-
-         menuItemsActive.push(menuItemQuestID);
-         menuItemsOther.push(menuItemQuestID);
-
-         menuItemsActive.push({
-            name: 'ForienQuestLog.QuestLog.ContextMenu.PrimaryQuest',
-            icon: '<i class="fas fa-star"></i>',
-            callback: (menu) =>
-            {
-               const questId = $(menu)?.closest('.drag-quest')?.data('quest-id');
-               const quest = QuestDB.getQuest(questId);
-               if (quest) { Socket.setQuestPrimary({ quest }); }
-            }
-         });
+         menuItemsOther.push(contextOptions.copyQuestId);
       }
 
       // Must show two different context menus as only the active / in progress tab potentially has the menu option to
       // allow the GM to set the primary quest.
-      new FQLContextMenu(html, '.tab:not([data-tab="active"]) .drag-quest', menuItemsOther);
-      new FQLContextMenu(html, '.tab[data-tab="active"] .drag-quest', menuItemsActive);
+      new FQLContextMenu(html, '.tab:not([data-tab="active"]) .drag-quest', menuItemsOther, { fixed: true });
+      new FQLContextMenu(html, '.tab[data-tab="active"] .drag-quest', menuItemsActive, { fixed: true });
    }
 
    /**
@@ -266,7 +236,8 @@ export class QuestLog extends Application
          if (options.tabId === questStatus.inactive)
          {
             // Only switch to inactive tab if GM or trusted player w/ edit.
-            if (game.user.isGM || Utils.isTrustedPlayerEdit()) { this._tabs[0].activate(options.tabId); }
+            if (game.user.isGM || Utils.isTrustedPlayerEdit())
+            { this._tabs[0].activate(options.tabId); }
          }
          else
          {

@@ -3,7 +3,7 @@ Open Source projects function most efficiently when everyone communicates well w
 
 ### **Did you find a bug? Do you want to suggest an enhancement?**
 
-* **Ensure your contribution is novel** by searching the [Issues](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/issues) page. Be sure to look through both open and closed issues, especially for enhancement suggestions as rejected suggestions will be closed.
+* **Ensure your contribution is novel** by searching the [Issues](https://github.com/Forien/foundryvtt-forien-quest-log/issues) page. Be sure to look through both open and closed issues, especially for enhancement suggestions as rejected suggestions will be closed.
 
 * If applicable **use the appropriate issue templates** to automatically apply the relevant tag to the created issue. This allows issues to be quickly differentiated as bug reports, enhancement suggestions, or whatever else without a maintainer manually adding the tag to the issue. The bug report template will specify which information to add that will aid in reproducing the bug.
 
@@ -27,11 +27,11 @@ Open Source projects function most efficiently when everyone communicates well w
 
 ### **Do you want to submit/update a translation?**
 
-* **Submit a pull request** with your new / updated JSON file in the [lang folder](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/tree/master/lang).
+* **Submit a pull request** with your new / updated JSON file in the [lang folder](https://github.com/Forien/foundryvtt-forien-quest-log/tree/master/lang).
 
 * Be sure that the JSON file is either completely flat or completely nested.
 
-* If your localization does not include translations for any strings please indicate as much in the [lang / missing folder](https://github.com/League-of-Foundry-Developers/foundryvtt-forien-quest-log/tree/master/lang/missing).
+* If your localization does not include translations for any strings please indicate as much in the [lang / missing folder](https://github.com/Forien/foundryvtt-forien-quest-log/tree/master/lang/missing).
 
 ### **Do you want to contribute documentation?**
 

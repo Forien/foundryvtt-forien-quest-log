@@ -35,6 +35,20 @@
       "HeaderDel": "Are you sure you want to delete: <p>'{name}'</p>",
       "TitleDel": "Delete {title}"
     },
+    "Keybindings": {
+      "openQuestLog": {
+        "Name": "Open Quest Log",
+        "Hint": "Opens the Quest Log if used by GM or if Quest Log is not hidden."
+      },
+      "openPrimaryQuest": {
+        "Name": "Open Primary Quest",
+        "Hint": "Opens the Preview / Sheet for the Primary Quest if any. Checks if the user is GM or has permission to view the Quest."
+      },
+      "toggleQuestTracker": {
+        "Name": "Toggle Quest Tracker",
+        "Hint": ""
+      }
+    },
     "Labels": {
       "AppHeader": {
         "ShowPlayers": "Show to Players"

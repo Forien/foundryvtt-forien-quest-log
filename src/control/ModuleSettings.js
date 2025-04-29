@@ -5,10 +5,13 @@ import {
    ViewManager }     from './index.js';
 
 import {
-   constants,
+   constants, keybindings,
    questStatus,
    sessionConstants,
-   settings }        from '../model/constants.js';
+   settings
+} from '../model/constants.js';
+
+import { QuestAPI } from "./public/index.js";
 
 /**
  * Provides registration for all module settings.
@@ -41,11 +44,20 @@ export class ModuleSettings
    };
 
    /**
+    * Registers all module settings and keybindings.
+    */
+   static register()
+   {
+      this.registerSettings();
+      this.registerKeybindings();
+   }
+
+   /**
     * Registers all module settings.
     *
     * @see FQLSettings
     */
-   static register()
+   static registerSettings()
    {
       game.settings.register(constants.moduleName, settings.allowPlayersDrag, {
          name: 'ForienQuestLog.Settings.allowPlayersDrag.Enable',
@@ -235,8 +247,12 @@ export class ModuleSettings
                {
                   ViewManager.closeAll({ questPreview: true, updateSetting: false });
 
-                  const notes = ui?.controls?.controls.find((c) => c.name === 'notes');
-                  if (notes) { notes.tools = notes?.tools.filter((c) => !c.name.startsWith(constants.moduleName)); }
+                  const controls = ui?.controls?.controls;
+                  if (controls)
+                  {
+                     delete controls.notes.tools.quest_log;
+                     delete controls.notes.tools.quest_tracker;
+                  }
 
                   // Remove all quests from in-memory DB. This is required so that users can not retrieve quests
                   // from the QuestAPI or content links in Foundry resolve when FQL is hidden.
@@ -248,8 +264,11 @@ export class ModuleSettings
                   await QuestDB.init();
 
                   // Add back ui.controls
-                  const notes = ui?.controls?.controls.find((c) => c.name === 'notes');
-                  if (notes) { notes.tools.push(...FoundryUIManager.noteControls); }
+                  const controls = ui?.controls?.controls;
+                  if (controls)
+                  {
+                     controls.notes.tools = foundry.utils.mergeObject(controls.notes.tools, FoundryUIManager.noteControls);
+                  }
                }
 
                ui?.controls?.render(true);
@@ -421,6 +440,65 @@ export class ModuleSettings
 
             // Swap macro image based on current state. No need to await.
             await Utils.setMacroImage(settings.questTrackerResizable, value);
+         }
+      });
+   }
+
+   /**
+    * Registers all module settings.
+    *
+    * @see FQLKeybindings
+    */
+   static registerKeybindings()
+   {
+
+      const { SHIFT, CONTROL, ALT } = foundry.helpers.interaction.KeyboardManager.MODIFIER_KEYS;
+
+      game.keybindings.register(constants.moduleName, keybindings.openQuestLog, {
+         name: `ForienQuestLog.Keybindings.openQuestLog.Name`,
+         hint: `ForienQuestLog.Keybindings.openQuestLog.Hint`,
+         editable: [
+            {
+               modifiers: [CONTROL],
+               key: "KeyQ",
+            }
+         ],
+         onDown: () =>
+         {
+            ViewManager.questLog.render(true);
+         }
+      });
+
+      game.keybindings.register(constants.moduleName, keybindings.openPrimaryQuest, {
+         name: `ForienQuestLog.Keybindings.openPrimaryQuest.Name`,
+         hint: `ForienQuestLog.Keybindings.openPrimaryQuest.Hint`,
+         precedence: CONST.KEYBINDING_PRECEDENCE.DEFERRED,
+         editable: [
+            {
+               modifiers: [SHIFT, CONTROL],
+               key: "KeyQ",
+            }
+         ],
+         onDown: () =>
+         {
+            QuestAPI.openPrimary();
+         }
+      });
+
+      game.keybindings.register(constants.moduleName, keybindings.toggleQuestTracker, {
+         name: `ForienQuestLog.Keybindings.toggleQuestTracker.Name`,
+         hint: `ForienQuestLog.Keybindings.toggleQuestTracker.Hint`,
+         precedence: CONST.KEYBINDING_PRECEDENCE.DEFERRED,
+         editable: [
+            {
+               modifiers: [SHIFT, ALT],
+               key: "KeyQ",
+            }
+         ],
+         onDown: () =>
+         {
+            const state = game.settings.get(constants.moduleName, settings.questTrackerEnable);
+            game.settings.set(constants.moduleName, settings.questTrackerEnable, !state);
          }
       });
    }
