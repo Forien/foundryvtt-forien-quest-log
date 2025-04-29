@@ -34,6 +34,8 @@ class FQLRect extends DOMRect
  */
 export class FoundryUIManager
 {
+   static DEBOUNCE_TIME = 250;
+
    /**
     * Buffer space between sidebar and right side of quest tracker.
     *
@@ -54,6 +56,13 @@ export class FoundryUIManager
     * @type {number}
     */
    static #bufferSpaceNavX = 22;
+
+   /**
+    * Debounce timeout for the update tracker callback.
+    *
+    * @type {null|number}
+    */
+   static #debounce = null;
 
    /**
     * Defines the left-hand UI control note buttons.
@@ -79,12 +88,35 @@ export class FoundryUIManager
       }
    };
 
+
+   /**
+    * Defines the UI Manager callbacks. Please see {@link FoundryUIManager} for more documentation.
+    *
+    * @type {FoundryUIManagerHooks}
+    */
+   static #hooks = Object.freeze({
+      preUpdateQuestTracker: 'preUpdateQuestTracker',
+      updateQuestTracker: 'updateQuestTracker',
+      questTrackerBoundaries: 'questTrackerBoundaries',
+   });
+
    /**
     * Stores the constraints and other state tracked from various Foundry UI elements.
     *
     * @type {object}
     */
    static #uiState = {
+      /**
+       * Stores the bounds of the scene controls.
+       */
+      controls: {
+         gapX: -1,
+         gapY: -1,
+         top: -1,
+         right: -1,
+         width: -1,
+         height: -1
+      },
       /**
        * Stores the bounds of the hotbar.
        */
@@ -104,6 +136,14 @@ export class FoundryUIManager
          left: ''
       },
 
+      boundaries: Object.seal({
+         top: -1,
+         right: -1,
+         bottom: -1,
+         left: -1,
+         rectDock: new FQLRect(0, 0, 15, 30),
+      }),
+
       /**
        * Stores the state of the sidebar.
        */
@@ -116,8 +156,7 @@ export class FoundryUIManager
             top: -1,
             left: -1,
             width: -1,
-            height: -1,
-            rectDock: new FQLRect(0, 0, 15, 30)
+            height: -1
          },
 
          open: {
@@ -126,8 +165,7 @@ export class FoundryUIManager
             top: -1,
             left: -1,
             width: -1,
-            height: -1,
-            rectDock: new FQLRect(0, 0, 15, 30)
+            height: -1
          }
       }
    };
@@ -141,6 +179,21 @@ export class FoundryUIManager
    }
 
    /**
+    * @returns {{top: number, right: number, bottom: number, left: number, rectDock: FQLRect}} Boundaries for the Tracker
+    */
+   static get boundaries()
+   {
+      return this.#uiState.boundaries;
+   }
+
+
+   /**
+    *
+    * @returns {FoundryUIManagerHooks} - the Foundry UI Manager Hooks
+    */
+   static get hooks() { return this.#hooks; }
+
+   /**
     * Registers browser window resize event callback and Foundry render Hook for {@link SceneNavigation} and
     * {@link QuestTracker}.
     */
@@ -150,8 +203,9 @@ export class FoundryUIManager
       Hooks.on('collapseSidebar', this.collapseSidebar);
       Hooks.on('renderSceneNavigation', this.updateTrackerPinned);
       Hooks.on('renderQuestTracker', this.#handleQuestTrackerRendered);
+      Hooks.on('updateQuestTrackerState', this.#updateQuestTrackerState);
 
-      FoundryUIManager.#uiState.sidebar.currentCollapsed = ui?.sidebar?._collapsed || false;
+      // FoundryUIManager.#uiState.sidebar.currentCollapsed = !ui?.sidebar?.expanded || false;
       this.#storeState();
 
       FoundryUIManager.updateTrackerPinned();
@@ -166,47 +220,62 @@ export class FoundryUIManager
     */
    static checkPosition(position)
    {
-      const sidebarData = FoundryUIManager.#uiState.sidebar.currentCollapsed ?
-       FoundryUIManager.#uiState.sidebar.collapsed : FoundryUIManager.#uiState.sidebar.open;
+      const controlsData = FoundryUIManager.#uiState.controls;
+      const boundaries = FoundryUIManager.#uiState.boundaries;
 
       const tracker = ViewManager.questTracker;
 
       // Detect if the new position overlaps with the sidebar.
-      if (sidebarData.gapX >= 0 && position.left + tracker.position.width > sidebarData.left -
-       FoundryUIManager.#bufferSpaceX)
+      if (boundaries.right >= 0 &&
+       position.left + tracker.position.width > boundaries.right)
       {
          // This is a resize width change, so limit the new position width to the sidebar left side.
          if (position.resizeWidth)
          {
-            position.width = sidebarData.left - FoundryUIManager.#bufferSpaceX - position.left;
+            position.width = boundaries.right - FoundryUIManager.#bufferSpaceX - position.left;
          }
          else // Otherwise move the new position to the left pinning the position to the sidebar left.
          {
-            position.left = sidebarData.left - FoundryUIManager.#bufferSpaceX - tracker.position.width;
-            if (position.left < 0) { position.left = 0; }
+            position.left = boundaries.right - FoundryUIManager.#bufferSpaceX - tracker.position.width;
          }
       }
 
       // If not pinned adjust the position top based on the hotbar top.
-      if (!tracker.pinned && FoundryUIManager.#uiState.hotbar.gapY >= 0 &&
-       position.top + position.height > FoundryUIManager.#uiState.hotbar.top)
+      if (!tracker.pinned && boundaries.bottom >= 0 &&
+       position.top + position.height > boundaries.bottom + FoundryUIManager.#bufferSpaceY)
       {
          if (position.resizeHeight)
          {
-            position.height = FoundryUIManager.#uiState.hotbar.top - FoundryUIManager.#bufferSpaceY - position.top;
+            position.height = boundaries.bottom - FoundryUIManager.#bufferSpaceY - position.top;
             tracker.position.height = position.height;
          }
          else
          {
-            position.top = FoundryUIManager.#uiState.hotbar.top - FoundryUIManager.#bufferSpaceY - position.height;
-            if (position.top < 0) { position.top = 0; }
+            position.top = boundaries.bottom - FoundryUIManager.#bufferSpaceY - position.height;
          }
       }
 
-      // If pinned always make sure the position top is the sidebar top.
-      if (tracker.pinned) { position.top = sidebarData.top; }
+      if (boundaries.top >= 0 && position.top < boundaries.top)
+      {
+         position.top = boundaries.top;
+      }
 
-      return sidebarData.rectDock.contains(position.left + position.width, position.top);
+      if (boundaries.left >= 0 && controlsData.gapX >= 0 && position.left < boundaries.left + FoundryUIManager.#bufferSpaceX)
+      {
+         position.left = boundaries.left + FoundryUIManager.#bufferSpaceX;
+      }
+
+      if (position.top < 0) { position.top = 0; }
+      if (position.left < 0) { position.left = 0; }
+
+      // If pinned always make sure the position top is the sidebar top.
+      if (tracker.pinned)
+      {
+         position.top = boundaries.top;
+         position.left = boundaries.right - position.width - FoundryUIManager.#bufferSpaceX;
+      }
+
+      return boundaries.rectDock.contains(position.left + position.width, position.top);
    }
 
    /**
@@ -219,8 +288,26 @@ export class FoundryUIManager
    static collapseSidebar(sidebarUI, collapsed)
    {
       FoundryUIManager.#uiState.sidebar.currentCollapsed = collapsed;
-      FoundryUIManager.#storeState();
-      FoundryUIManager.updateTracker();
+      FoundryUIManager.#updateQuestTrackerState();
+   }
+
+   /**
+    * Updates the state of the quest tracker by storing the current state
+    * and updating the tracker's position.
+    *
+    * @returns {void} Does not return a value.
+    */
+   static #updateQuestTrackerState()
+   {
+      // waiting for animation to ensure proper rect bounds
+      clearTimeout(FoundryUIManager.#debounce);
+      FoundryUIManager.#debounce = setTimeout(() =>
+       {
+          FoundryUIManager.#storeState();
+          FoundryUIManager.updateTracker();
+       },
+       FoundryUIManager.DEBOUNCE_TIME
+      );
    }
 
    /**
@@ -233,8 +320,7 @@ export class FoundryUIManager
       // Make sure the tracker is rendered or rendering.
       if (!tracker.rendered && Application.RENDER_STATES.RENDERING !== tracker._state) { return; }
 
-      const sidebarData = FoundryUIManager.#uiState.sidebar.currentCollapsed ?
-       FoundryUIManager.#uiState.sidebar.collapsed : FoundryUIManager.#uiState.sidebar.open;
+      const boundaries = FoundryUIManager.#uiState.boundaries;
 
       // Store the current position before any modification.
       const position = {
@@ -245,27 +331,42 @@ export class FoundryUIManager
          height: tracker.position.height
       };
 
+      Hooks.callAll(FoundryUIManager.hooks.preUpdateQuestTracker, tracker, position, boundaries);
+
       // If the tracker is pinned set the top / left based on the sidebar.
       if (tracker.pinned)
       {
-         position.top = sidebarData.top;
-         position.left = sidebarData.left - tracker.position.width - FoundryUIManager.#bufferSpaceX;
+         position.top = boundaries.top;
+         position.left = boundaries.right - tracker.position.width - FoundryUIManager.#bufferSpaceX;
       }
       else // Make sure the tracker isn't overlapping the sidebar or hotbar.
       {
          const trackerRight = tracker.position.left + tracker.position.width;
-         if (trackerRight > sidebarData.left - FoundryUIManager.#bufferSpaceX)
+         if (boundaries.right >= 0 && trackerRight > boundaries.right - FoundryUIManager.#bufferSpaceX)
          {
-            position.left = sidebarData.left - tracker.position.width - FoundryUIManager.#bufferSpaceX;
+            position.left = boundaries.right - tracker.position.width - FoundryUIManager.#bufferSpaceX;
 
             if (position.left < 0) { position.left = 0; }
          }
 
          const trackerBottom = tracker.position.top + tracker.position.height;
-         if (trackerBottom > FoundryUIManager.#uiState.hotbar.top - FoundryUIManager.#bufferSpaceY)
+         if (boundaries.bottom >= 0 && trackerBottom > boundaries.bottom - FoundryUIManager.#bufferSpaceY)
          {
-            position.top = FoundryUIManager.#uiState.hotbar.top - tracker.position.height -
-             FoundryUIManager.#bufferSpaceY;
+            position.top = boundaries.top - tracker.position.height - FoundryUIManager.#bufferSpaceY;
+
+            if (position.top < 0) { position.top = 0; }
+         }
+
+         if (boundaries.left >= 0 && tracker.position.left < boundaries.left + FoundryUIManager.#bufferSpaceX)
+         {
+            position.left = boundaries.left + FoundryUIManager.#bufferSpaceX;
+
+            if (position.left < 0) { position.left = 0; }
+         }
+
+         if (boundaries.top >= 0 && tracker.position.top < boundaries.top + FoundryUIManager.#bufferSpaceY)
+         {
+            position.top = boundaries.top + FoundryUIManager.#bufferSpaceY;
 
             if (position.top < 0) { position.top = 0; }
          }
@@ -277,6 +378,8 @@ export class FoundryUIManager
       {
          tracker.setPosition(position);
       }
+
+      Hooks.callAll(FoundryUIManager.hooks.updateQuestTracker, tracker, position, boundaries);
    }
 
    /**
@@ -341,6 +444,7 @@ export class FoundryUIManager
       const navLeft = ui?.nav?.element?.style.left;
       if (typeof navLeft === 'string') { FoundryUIManager.#uiState.navigation.left = parseInt(navLeft, 10); }
 
+      debugger;
       if (sidebarRect)
       {
          const sidebarData = FoundryUIManager.#uiState.sidebar.currentCollapsed ?
@@ -375,7 +479,8 @@ export class FoundryUIManager
          sidebarData.width = sidebarRect.width + sidebarData.gapX;
          sidebarData.height = sidebarRect.height + sidebarData.gapY;
 
-         sidebarData.rectDock.x = sidebarData.left - sidebarData.rectDock.width;
+         FoundryUIManager.#uiState.boundaries.rectDock.x = sidebarData.left - FoundryUIManager.#uiState.boundaries.rectDock.width;
+         FoundryUIManager.#uiState.boundaries.right = sidebarData.left;
       }
 
       const hotbarElem = ui?.hotbar?.element;
@@ -412,6 +517,61 @@ export class FoundryUIManager
          FoundryUIManager.#uiState.hotbar.top = hotbarRect.top - FoundryUIManager.#uiState.hotbar.gapY;
          FoundryUIManager.#uiState.hotbar.width = hotbarRect.width + FoundryUIManager.#uiState.hotbar.gapX;
          FoundryUIManager.#uiState.hotbar.height = hotbarRect.height + FoundryUIManager.#uiState.hotbar.gapY;
+
+         FoundryUIManager.#uiState.boundaries.bottom = hotbarRect.top;
       }
+
+      const controlsElem = ui?.controls?.element;
+      const controlsRect = controlsElem?.getBoundingClientRect();
+
+      if (controlsRect)
+      {
+         // Store gapX / gapY calculating including any ::before elements if it has not already been set.
+         // This is only calculated one time on startup.
+         if (FoundryUIManager.#uiState.controls.gapX < 0)
+         {
+            let beforeWidth;
+            let beforeHeight;
+            try
+            {
+               const style = window.getComputedStyle(controlsElem, 'before');
+
+               const width = parseInt(style.getPropertyValue('width'), 10);
+               if (!Number.isNaN(width)) { beforeWidth = width; }
+
+               const height = parseInt(style.getPropertyValue('height'), 10);
+               if (!Number.isNaN(height)) { beforeHeight = height; }
+            }
+            catch (err) { /**/ }
+
+            FoundryUIManager.#uiState.controls.gapX = beforeWidth && beforeWidth > controlsRect.width ?
+             beforeWidth - controlsRect.width : 0;
+
+            FoundryUIManager.#uiState.controls.gapY = beforeHeight && beforeHeight > controlsRect.height ?
+             beforeHeight - controlsRect.height : 0;
+         }
+
+         FoundryUIManager.#uiState.controls.right = controlsRect.left + controlsRect.width + FoundryUIManager.#uiState.controls.gapX;
+         FoundryUIManager.#uiState.controls.top = controlsRect.top - FoundryUIManager.#uiState.controls.gapY;
+         FoundryUIManager.#uiState.controls.width = controlsRect.width + FoundryUIManager.#uiState.controls.gapX;
+         FoundryUIManager.#uiState.controls.height = controlsRect.height + FoundryUIManager.#uiState.controls.gapY;
+
+         FoundryUIManager.#uiState.boundaries.left = FoundryUIManager.#uiState.controls.right;
+      }
+
+      Hooks.callAll(FoundryUIManager.hooks.questTrackerBoundaries, FoundryUIManager.#uiState.boundaries);
+
+      FoundryUIManager.#uiState.boundaries.rectDock.x = FoundryUIManager.#uiState.boundaries.right - FoundryUIManager.#uiState.boundaries.rectDock.width;
+      FoundryUIManager.#uiState.boundaries.rectDock.y = FoundryUIManager.#uiState.boundaries.top;
    }
 }
+
+/**
+ * @typedef {object} FoundryUIManagerHooks
+ *
+ * @property {string}   preUpdateQuestTracker Invoked in {@link FoundryUIManager.updateTracker} before any position is calculated.
+ *
+ * @property {string}   updateQuestTracker Invoked in {@link FoundryUIManager.updateTracker} after all position is calculated and tracker position updated.
+ *
+ * @property {string}   questTrackerBoundaries Invoked in {@link FoundryUIManager.#storeState} when boundaries are calculated but before pinning rect is defined
+ */

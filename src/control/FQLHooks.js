@@ -23,6 +23,7 @@ import {
 /**
  * Provides implementations for all Foundry hooks that FQL responds to and registers under. Please view the
  * {@link QuestDB} documentation for hooks that it fires in the QuestDB lifecycle.
+ * {@link FoundryUIManager} documentation for hooks that it fires in the UI Manager lifecycle.
  *
  * Foundry lifecycle:
  * - `init` - {@link FQLHooks.foundryInit}
