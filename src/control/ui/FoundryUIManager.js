@@ -444,7 +444,6 @@ export class FoundryUIManager
       const navLeft = ui?.nav?.element?.style.left;
       if (typeof navLeft === 'string') { FoundryUIManager.#uiState.navigation.left = parseInt(navLeft, 10); }
 
-      debugger;
       if (sidebarRect)
       {
          const sidebarData = FoundryUIManager.#uiState.sidebar.currentCollapsed ?
