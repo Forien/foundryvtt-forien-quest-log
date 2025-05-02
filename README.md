@@ -12,7 +12,7 @@
 [![Patreon](https://img.shields.io/badge/Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white)](https://www.patreon.com/foundryworkshop)
 [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/forien)
 
-[![Weblate Translations](https://weblate.foundryvtt-hub.com/widgets/forien-quest-log/-/287x66-grey.png)](https://weblate.foundryvtt-hub.com/engage/forien-quest-log/)
+[![Translation status](https://hosted.weblate.org/widget/foriens-quest-log/287x66-black.png)](https://hosted.weblate.org/engage/foriens-quest-log/)
 
 This module provides comprehensive Quest Log system for players and Game Masters to use with [Foundry VTT](https://foundryvtt.com/).
 
@@ -80,7 +80,7 @@ continue to be available now and into the future.
 
 FQL uses Weblate to coordinate language translation from community translators. Through this interface you are able to
 provide language corrections and translations. I am more than willing to support even more language translations for
-FQL, so if your language isn't represented yet please visit the [FQL Weblate Portal](https://weblate.foundryvtt-hub.com/engage/forien-quest-log/)
+FQL, so if your language isn't represented yet please visit the [FQL Weblate Portal](https://hosted.weblate.org/projects/foriens-quest-log/)
 and get in contact.
 
 The following Translations are available:
