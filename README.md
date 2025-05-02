@@ -2,8 +2,8 @@
 
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/Forien/foundryvtt-forien-quest-log?style=for-the-badge&label=Forien%27s+Quest+Log+version)
 ![GitHub release](https://img.shields.io/github/release-date/Forien/foundryvtt-forien-quest-log?style=for-the-badge)
-![Foundry Core Compatible Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2FFoundry-Workshop%2Ftoken-action-hud-bf%2Fmaster%2Fdist%2Fmodule.json&label=Foundry%20Min%20Version&query=$.compatibility.minimum&colorB=orange&style=for-the-badge)
-![Foundry Core Verified Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2FFoundry-Workshop%2Ftoken-action-hud-bf%2Fmaster%2Fdist%2Fmodule.json&label=Foundry%20Verified&query=$.compatibility.verified&colorB=orange&style=for-the-badge)
+![Foundry Core Compatible Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2FForien%2Ffoundryvtt-forien-quest-log%2Fmaster%2Fmodule.json&label=Foundry%20Min%20Version&query=$.compatibility.minimum&colorB=orange&style=for-the-badge)
+![Foundry Core Verified Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2FForien%2Ffoundryvtt-forien-quest-log%2Fmaster%2Fmodule.json&label=Foundry%20Verified&query=$.compatibility.verified&colorB=orange&style=for-the-badge)
 ![License](https://img.shields.io/github/license/Forien/foundryvtt-forien-quest-log?style=for-the-badge)
 ![Zip Downloads](https://img.shields.io/github/downloads/Forien/foundryvtt-forien-quest-log/latest/module.zip?style=for-the-badge)
 [![GitHub commits](https://img.shields.io/github/commits-since/Forien/foundryvtt-forien-quest-log/latest?style=for-the-badge)](https://github.com/Forien/foundryvtt-forien-quest-log/commits/)
